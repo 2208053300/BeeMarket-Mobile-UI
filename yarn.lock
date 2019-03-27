@@ -629,7 +629,7 @@
     core-js "^2.6.5"
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.3.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.4.2":
   version "7.4.2"
   resolved "http://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.4.2.tgz#f5ab6897320f16decd855eed70b705908a313fe8"
   integrity sha1-9atolzIPFt7NhV7tcLcFkIoxP+g=
@@ -729,12 +729,12 @@
   resolved "http://registry.npm.taobao.org/@types/q/download/@types/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha1-aQoUdbhPKohP0HzXl8APXzE1bqg=
 
-"@vant/icons@1.1.3":
-  version "1.1.3"
-  resolved "http://registry.npm.taobao.org/@vant/icons/download/@vant/icons-1.1.3.tgz#15bd7d58f2fa57c736875f0ecf7ce81992fc49ea"
-  integrity sha1-Fb19WPL6V8c2h18Oz3zoGZL8Seo=
+"@vant/icons@1.1.4":
+  version "1.1.4"
+  resolved "http://registry.npm.taobao.org/@vant/icons/download/@vant/icons-1.1.4.tgz#9bb662520d426e5f6a5058b854745b9d3e0bc4d0"
+  integrity sha1-m7ZiUg1Cbl9qUFi4VHRbnT4LxNA=
 
-"@vue/babel-helper-vue-jsx-merge-props@^1.0.0-beta.2", "@vue/babel-helper-vue-jsx-merge-props@^1.0.0-beta.3":
+"@vue/babel-helper-vue-jsx-merge-props@^1.0.0-beta.3":
   version "1.0.0-beta.3"
   resolved "http://registry.npm.taobao.org/@vue/babel-helper-vue-jsx-merge-props/download/@vue/babel-helper-vue-jsx-merge-props-1.0.0-beta.3.tgz#e4c2e7125b3e0d2a9d493e457850b2abb0fd3cad"
   integrity sha1-5MLnEls+DSqdST5FeFCyq7D9PK0=
@@ -1427,6 +1427,14 @@ aws4@^1.8.0:
   version "1.8.0"
   resolved "http://registry.npm.taobao.org/aws4/download/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
   integrity sha1-8OAD2cqef1nHpQiUXXsu+aBKVC8=
+
+axios@^0.18.0:
+  version "0.18.0"
+  resolved "http://registry.npm.taobao.org/axios/download/axios-0.18.0.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Faxios%2Fdownload%2Faxios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
+  integrity sha1-MtU+SFHv3AoRmTts0AB4nXDAUQI=
+  dependencies:
+    follow-redirects "^1.3.0"
+    is-buffer "^1.1.5"
 
 babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
   version "6.26.0"
@@ -3517,7 +3525,7 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-follow-redirects@^1.0.0:
+follow-redirects@^1.0.0, follow-redirects@^1.3.0:
   version "1.7.0"
   resolved "http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.7.0.tgz#489ebc198dc0e7f64167bd23b03c4c19b5784c76"
   integrity sha1-SJ68GY3A5/ZBZ70jsDxMGbV4THY=
@@ -6375,7 +6383,7 @@ regenerate@^1.2.1, regenerate@^1.4.0:
 
 regenerator-runtime@^0.13.2:
   version "0.13.2"
-  resolved "http://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
+  resolved "http://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.2.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
   integrity sha1-MuWcmm+5saSv8JtJMMotRHc0NEc=
 
 regenerator-transform@^0.13.4:
@@ -7676,13 +7684,13 @@ validate-npm-package-license@^3.0.1:
     spdx-expression-parse "^3.0.0"
 
 vant@^1.6.10:
-  version "1.6.10"
-  resolved "http://registry.npm.taobao.org/vant/download/vant-1.6.10.tgz#f81d71bea898f97ae144f50a5768e19569206b38"
-  integrity sha1-+B1xvqiY+XrhRPUKV2jhlWkgazg=
+  version "1.6.11"
+  resolved "http://registry.npm.taobao.org/vant/download/vant-1.6.11.tgz#a904a2f5dec0cfd02d78b6ba46c3ed7372e15974"
+  integrity sha1-qQSi9d7Az9AteLa6RsPtc3LhWXQ=
   dependencies:
-    "@babel/runtime" "^7.3.4"
-    "@vant/icons" "1.1.3"
-    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0-beta.2"
+    "@babel/runtime" "^7.4.2"
+    "@vant/icons" "1.1.4"
+    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0-beta.3"
     vue-lazyload "1.2.3"
 
 vary@~1.1.2:
