@@ -1,7 +1,11 @@
 <template>
   <div>
     <!-- 轮播 -->
-    <van-swipe class="banner" :autoplay="3000" indicator-color="white">
+    <van-swipe
+      class="banner"
+      :autoplay="3000"
+      indicator-color="white"
+    >
       <van-swipe-item>1</van-swipe-item>
       <van-swipe-item>2</van-swipe-item>
       <van-swipe-item>3</van-swipe-item>
@@ -14,7 +18,11 @@
           淮安农产品推荐
         </van-col>
         <van-col span="16">
-          <van-swipe class="banner" :autoplay="3000" indicator-color="white">
+          <van-swipe
+            class="banner"
+            :autoplay="3000"
+            indicator-color="white"
+          >
             <van-swipe-item>1</van-swipe-item>
             <van-swipe-item>2</van-swipe-item>
             <van-swipe-item>3</van-swipe-item>
@@ -27,7 +35,10 @@
         <li>
           <div class="item-box">
             <div class="img">
-              <img src="" alt="">
+              <img
+                src=""
+                alt=""
+              >
             </div>
             <p class="title">
               商品标题
@@ -40,7 +51,10 @@
         <li>
           <div class="item-box">
             <div class="img">
-              <img src="" alt="">
+              <img
+                src=""
+                alt=""
+              >
             </div>
             <p class="title">
               商品标题
@@ -53,7 +67,10 @@
         <li>
           <div class="item-box">
             <div class="img">
-              <img src="" alt="">
+              <img
+                src=""
+                alt=""
+              >
             </div>
             <p class="title">
               商品标题
@@ -66,7 +83,10 @@
         <li>
           <div class="item-box">
             <div class="img">
-              <img src="" alt="">
+              <img
+                src=""
+                alt=""
+              >
             </div>
             <p class="title">
               商品标题
@@ -97,15 +117,26 @@ export default {
 </script>
 
 <style scoped lang="less">
-.banner{
-  background:#ddd;
-  height:200px;
+.banner {
+  background: #ddd;
+  height: 200px;
 }
-.farm-recom{
-  .banner{height: 150px}
+.farm-recom {
+  .banner {
+    height: 150px;
+  }
 }
-.farm-list{width: 100%; overflow-x: scroll; display: -webkit-box;
-  li{width: 33%;padding: 0 10px ;}
-  .item-box{width: 100%; background: #f3f3f3;}
+.farm-list {
+  width: 100%;
+  overflow-x: scroll;
+  display: -webkit-box;
+  li {
+    width: 33%;
+    padding: 0 10px;
+  }
+  .item-box {
+    width: 100%;
+    background: #f3f3f3;
+  }
 }
 </style>

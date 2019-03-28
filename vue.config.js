@@ -21,5 +21,17 @@ module.exports = {
     // 输出文件名会被推导为 `subpage.html`。
     // NOTE 新增活动页
     // active: 'src/pages/active/main.js'
+  },
+  // FIXME 注入全局环境变量BASE_API
+  chainWebpack: config => {
+    if (process.env.NODE_ENV !== 'production') {
+      config.plugin('define')
+        .tap(definitions => {
+          Object.assign(definitions[0]['process.env'], {
+            BASE_API: '"http://192.168.0.195:7300/mock/5c9af05716daf1002030e891/BeeMarket-Web"'
+          })
+          return definitions
+        })
+    }
   }
 }

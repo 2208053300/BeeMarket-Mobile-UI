@@ -12,7 +12,6 @@ export default new Router({
   },
   {
     path: '/category',
-    name: 'BeeCategory',
     component: () => import('@/pages/index/views/BeeCategory'),
     children: [{
       path: '/',
@@ -26,7 +25,6 @@ export default new Router({
   },
   {
     path: '/discover',
-    name: 'BeeDiscover',
     component: () => import('@/pages/index/views/BeeDiscover'),
     children: [{
       path: '/',
@@ -36,7 +34,6 @@ export default new Router({
   },
   {
     path: '/cart',
-    name: 'BeeCart',
     component: () => import('@/pages/index/views/BeeCart'),
     children: [{
       path: '/',
@@ -52,7 +49,6 @@ export default new Router({
   },
   {
     path: '/persion',
-    name: 'BeePersion',
     component: () => import('@/pages/index/views/BeePersion'),
     children: [{
       path: '/',
