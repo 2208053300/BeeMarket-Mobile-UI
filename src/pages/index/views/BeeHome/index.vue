@@ -102,17 +102,47 @@
 </template>
 
 <script>
+
+import Carousel from './components/Carousel'
+import FarmRecom from './components/FarmRecom'
+import PublicBinefit from './components/PublicBinefit'
+import LimitSale from './components/LimitSale'
+import NewGoods from './components/NewGoods'
+import ProjectSelection from './components/ProjectSelection'
+import ProjectList from './components/ProjectList'
+import GuessList from './components/GuessList'
 export default {
-  components: {},
+  components: {
+    Carousel,
+    FarmRecom,
+    PublicBinefit,
+    LimitSale,
+    NewGoods,
+    ProjectSelection,
+    ProjectList,
+    GuessList
+  },
   props: {},
   data() {
-    return {}
+    return {
+      // 是否在下拉刷新中
+      isLoading: false
+    }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    // 下拉刷新
+    onRefresh() {
+      setTimeout(() => {
+        this.$toast('刷新成功')
+        this.isLoading = false
+        this.count++
+      }, 500)
+    }
+  }
 }
 </script>
 
@@ -139,4 +169,5 @@ export default {
     background: #f3f3f3;
   }
 }
+.carousel{height: 2rem}
 </style>
