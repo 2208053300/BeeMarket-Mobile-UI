@@ -71,10 +71,8 @@ export default {
 .title{margin: 0; padding: 0.2rem}
 .list {
   padding: 0 0.1rem;
-  -webkit-column-width: 3.52rem;
-  -moz-column-width: 3.52rem;
-  -webkit-column-gap: 0.1rem;
-  -moz-column-gap: 0.1rem;
+  column-width: 3.52rem;
+  column-gap: 0.1rem;
   -webkit-column-count: 2; /* Chrome, Safari, Opera */
   -moz-column-count: 2; /* Firefox */
   column-count: 2;
