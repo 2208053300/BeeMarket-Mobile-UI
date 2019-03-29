@@ -4,6 +4,7 @@ import router from '@/route/router'
 import store from '@/store'
 import '@/styles/normalize.min.css'
 import './styles/index.less'
+// NOTE 定义rem基准
 import '@/utils/flexiable'
 // NOTE 全局引入vant所有组件
 import Vant from 'vant'
