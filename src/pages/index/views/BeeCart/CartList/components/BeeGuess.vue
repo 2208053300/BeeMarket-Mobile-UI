@@ -31,6 +31,7 @@
 </template>
 
 <script>
+
 import { getGuess } from '@/api/cart'
 
 export default {

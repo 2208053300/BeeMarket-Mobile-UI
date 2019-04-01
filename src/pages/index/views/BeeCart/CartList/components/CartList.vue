@@ -1,23 +1,171 @@
 <template>
-  <div>
-    666
+  <div class="cart-list">
+    <div
+      v-for="(store, index) in cart.cartInfo"
+      :key="index"
+      class="bee-store"
+    >
+      <!-- <van-checkbox-group
+        v-model="cart.cartSelected[index]"
+        class="store-name"
+      >
+      </van-checkbox-group> -->
+      <van-checkbox
+        v-model="allSelectedBox[index]"
+        :checked-color="BeeDefault"
+        style="margin-top:0"
+        @click="allSelected(index,store.product,allSelectedBox[index])"
+      >
+        <van-icon name="shop-o" />
+        {{ store.storeName }}
+      </van-checkbox>
+      <van-checkbox-group v-model="cart.cartSelected">
+        <van-checkbox
+          v-for="item in store.product"
+          :key="item.id"
+          :name="item"
+          :checked-color="BeeDefault"
+          @click="changeAll(index,store.product,allSelectedBox[index])"
+        >
+          <van-card
+            :thumb="item.previewImg"
+            @click.stop="showDetails(item.id)"
+          >
+            <span
+              slot="title"
+              class="card-title"
+            >{{ item.name }}</span>
+            <span
+              slot="desc"
+              class="card-sku"
+            >
+              {{ item.sku }}
+              <van-icon name="arrow-down" />
+            </span>
+            <span
+              slot="price"
+              class="card-price"
+            >
+              ￥{{ item.currentPrice }}
+            </span>
+            <van-stepper
+              slot="num"
+              v-model="item.num"
+            />
+          </van-card>
+        </van-checkbox>
+      </van-checkbox-group>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { BeeDefault } from '../../../../styles/variables.less'
+
 export default {
   components: {},
   props: {},
   data() {
-    return {}
+    return {
+      BeeDefault,
+      allSelectedBox: []
+    }
   },
-  computed: {},
+  computed: {
+    ...mapState(['cart'])
+  },
   watch: {},
   created() {},
-  mounted() {},
-  methods: {}
+  mounted() {
+    for (let index = 0; index < this.cart.cartInfo.length; index++) {
+      this.$set(this.allSelectedBox, index, false)
+    }
+  },
+  methods: {
+    // NOTE 全选
+    allSelected(index, val, isAll) {
+      const addVal = val.filter(item => {
+        return this.cart.cartSelected.indexOf(item) === -1
+      })
+      if (isAll) {
+        this.cart.cartSelected.push(...addVal)
+      } else if (addVal.length === 0) {
+        // NOTE 如果已经全选
+        val.map(item1 => {
+          this.cart.cartSelected.map((item2, index) => {
+            if (item2 === item1) {
+              this.cart.cartSelected.splice(index, 1)
+            }
+          })
+        })
+      }
+    },
+    // FIXME 有点小问题，选中子类全选可能出错
+    changeAll(index, val, isAll) {
+      if (isAll) {
+        this.allSelectedBox[index] = false
+        return
+      }
+      const addVal = val.filter(item => {
+        return this.cart.cartSelected.indexOf(item) === -1
+      })
+      if (addVal.length === 0) {
+        this.allSelectedBox[index] = true
+      }
+    },
+    showDetails(id) {
+      console.log(id)
+    }
+  }
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less">
+@import "../../../../styles/variables.less";
+.cart-list {
+  margin: 0.2rem 0.3rem 0;
+  .bee-store {
+    margin-bottom: 0.2rem;
+    background-color: #fff;
+    padding: 0.3rem 0.2rem;
+    .van-card {
+      background-color: #ffffff;
+      padding: 0;
+    }
+    .van-checkbox {
+      margin-top: 0.4rem;
+      .van-checkbox__label {
+        width: 90%;
+      }
+      .van-card__bottom {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+    }
+    .card-price {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      font-size: 0.28rem;
+      color: @Grey2;
+      font-weight: normal;
+    }
+    .card-title {
+      width: 100%;
+      font-size: 0.28rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .card-sku {
+      max-width: 50%;
+      border-radius: 0.05rem;
+      background-color: @GreyBg;
+      font-size: 0.24rem;
+      color: @Grey2;
+    }
+  }
+}
 </style>

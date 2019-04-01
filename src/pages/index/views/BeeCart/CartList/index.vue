@@ -16,7 +16,10 @@
         /> -->
       </div>
     </van-nav-bar>
-    <div class="container">
+    <div
+      class="container"
+      :class="{hasSubmit:cartSelected.length!==0}"
+    >
       <div class="bee-above">
         <div
           v-if="cart.cartInfo.length===0"
@@ -31,13 +34,15 @@
             去添加
           </van-button>
         </div>
-        <cart-list v-else />
+        <cart-list
+          v-else
+        />
       </div>
       <div class="bee-below">
         <bee-guess />
       </div>
       <van-submit-bar
-        v-if="cart.cartInfo.length===0"
+        v-if="cartSelected.length!==0"
         :price="3050"
         button-text="结算"
         style="bottom:50px"
@@ -55,6 +60,7 @@
 import CartList from './components/CartList'
 import BeeGuess from './components/BeeGuess'
 import { mapState } from 'vuex'
+import { getCartList } from '@/api/cart'
 
 export default {
   components: {
@@ -63,14 +69,22 @@ export default {
   },
   props: {},
   data() {
-    return {}
+    return {
+      cartSelected: []
+    }
   },
   computed: {
     ...mapState(['cart'])
   },
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    getCartList()
+      .then(res => {
+        this.cart.cartInfo = res.data.cartData
+      })
+      .catch(() => {})
+  },
   methods: {}
 }
 </script>
@@ -109,5 +123,8 @@ export default {
       }
     }
   }
+}
+.hasSubmit {
+  margin-bottom: 110px;
 }
 </style>

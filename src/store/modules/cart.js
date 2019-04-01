@@ -1,10 +1,14 @@
 const cart = {
   state: {
-    cartInfo: []
+    cartInfo: [],
+    cartSelected: []
   },
   mutations: {
     SET_CartINFO: (state, cartInfo) => {
       state.cartInfo = cartInfo
+    },
+    SET_CARTSELECTED: (state, cartSelected) => {
+      state.cartSelected = cartSelected
     }
   },
   actions: {

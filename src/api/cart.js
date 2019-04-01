@@ -1,5 +1,13 @@
 // NOTE 购物车接口
 import request from '@/utils/request'
+// NOTE 获取购物车列表
+export function getCartList(data) {
+  return request({
+    url: '/card/getCartList',
+    method: 'get',
+    params: data
+  })
+}
 // NOTE 获取猜你喜欢
 export function getGuess(data) {
   return request({

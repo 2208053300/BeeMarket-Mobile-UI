@@ -8,7 +8,10 @@ export default new Router({
   routes: [{
     path: '/',
     name: 'BeeHome',
-    component: Home
+    component: Home,
+    meta: {
+      keepAlive: true // NOTE 需要被缓存
+    }
   },
   {
     path: '/category',
@@ -38,7 +41,10 @@ export default new Router({
     children: [{
       path: '/',
       name: 'CartList',
-      component: () => import('@/pages/index/views/BeeCart/CartList')
+      component: () => import('@/pages/index/views/BeeCart/CartList'),
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/share',
