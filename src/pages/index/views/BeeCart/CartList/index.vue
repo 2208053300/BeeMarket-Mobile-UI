@@ -33,6 +33,13 @@
           >
             去添加
           </van-button>
+          <van-button
+            type="default"
+            class="add-btn"
+            @click="goSharePage"
+          >
+            去分享
+          </van-button>
         </div>
         <cart-list
           v-else
@@ -85,7 +92,13 @@ export default {
       })
       .catch(() => {})
   },
-  methods: {}
+  methods: {
+    goSharePage() {
+      this.$router.push({
+        path: '/share'
+      })
+    }
+  }
 }
 </script>
 
