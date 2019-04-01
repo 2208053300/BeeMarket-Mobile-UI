@@ -16,7 +16,7 @@
         style="margin-top:0"
         @click="allSelected(index,store.product,allSelectedBox[index])"
       >
-        <van-icon name="shop-o" />
+        <van-icon name="shop-o" style="vertical-align: text-top;" />
         {{ store.storeName }}
       </van-checkbox>
       <van-checkbox-group v-model="cart.cartSelected">
@@ -35,13 +35,14 @@
               slot="title"
               class="card-title"
             >{{ item.name }}</span>
-            <span
+            <div
               slot="desc"
               class="card-sku"
+              @click.stop="showSku(item.id)"
             >
               {{ item.sku }}
               <van-icon name="arrow-down" />
-            </span>
+            </div>
             <span
               slot="price"
               class="card-price"
@@ -56,20 +57,25 @@
         </van-checkbox>
       </van-checkbox-group>
     </div>
+    <!-- <bee-sku :show-base="beeskuShow" /> -->
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import BeeSku from '../../../../components/BeeSku'
 import { BeeDefault } from '../../../../styles/variables.less'
 
 export default {
-  components: {},
+  components: {
+    BeeSku
+  },
   props: {},
   data() {
     return {
       BeeDefault,
-      allSelectedBox: []
+      allSelectedBox: [],
+      beeskuShow: false
     }
   },
   computed: {
@@ -114,8 +120,16 @@ export default {
         this.allSelectedBox[index] = true
       }
     },
+    // TODO 跳转详情
     showDetails(id) {
       console.log(id)
+      this.$router.push({
+        path: '/category/details'
+      })
+    },
+    // TODO 显示SKU选择器
+    showSku(id) {
+      this.beeskuShow = true
     }
   }
 }
@@ -165,6 +179,46 @@ export default {
       background-color: @GreyBg;
       font-size: 0.24rem;
       color: @Grey2;
+      align-self: flex-start;
+      padding: 0.03rem;
+      .van-icon {
+        vertical-align: text-top;
+      }
+    }
+    .van-card__num {
+      .van-stepper {
+        // NOTE 覆盖步进器样式
+        .van-stepper__minus {
+          height: 0.4rem;
+          background-color: #fff;
+          margin: 0;
+          padding: 0.22rem;
+          border: 0.01rem solid rgb(226, 226, 226);
+          border-right: none;
+          border-top-left-radius: 45%;
+          border-bottom-left-radius: 45%;
+          color: #c5c5c5;
+        }
+        .van-stepper__input {
+          height: 0.4rem;
+          background-color: #fff;
+          margin: 0;
+          border: 0.01rem solid rgb(156, 156, 156);
+          font-size: 0.2rem;
+          color: @Grey2;
+        }
+        .van-stepper__plus {
+          height: 0.4rem;
+          background-color: #fff;
+          margin: 0;
+          padding: 0.22rem;
+          border: 0.01rem solid rgb(156, 156, 156);
+          border-left: none;
+          border-top-right-radius: 45%;
+          border-bottom-right-radius: 45%;
+          color: @Grey2;
+        }
+      }
     }
   }
 }

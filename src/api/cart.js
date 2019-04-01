@@ -16,11 +16,3 @@ export function getGuess(data) {
     params: data
   })
 }
-// NOTE 获取分享购物车列表
-export function getShareCartList(data) {
-  return request({
-    url: '/cart/getShareCartList',
-    method: 'get',
-    params: data
-  })
-}
