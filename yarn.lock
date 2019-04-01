@@ -6383,7 +6383,7 @@ regenerate@^1.2.1, regenerate@^1.4.0:
 
 regenerator-runtime@^0.13.2:
   version "0.13.2"
-  resolved "http://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.2.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
+  resolved "http://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
   integrity sha1-MuWcmm+5saSv8JtJMMotRHc0NEc=
 
 regenerator-transform@^0.13.4:
@@ -7684,9 +7684,9 @@ validate-npm-package-license@^3.0.1:
     spdx-expression-parse "^3.0.0"
 
 vant@^1.6.10:
-  version "1.6.11"
-  resolved "http://registry.npm.taobao.org/vant/download/vant-1.6.11.tgz#a904a2f5dec0cfd02d78b6ba46c3ed7372e15974"
-  integrity sha1-qQSi9d7Az9AteLa6RsPtc3LhWXQ=
+  version "1.6.12"
+  resolved "http://registry.npm.taobao.org/vant/download/vant-1.6.12.tgz#5183baab9594a59099b336d91d994cc1816e2621"
+  integrity sha1-UYO6q5WUpZCZszbZHZlMwYFuJiE=
   dependencies:
     "@babel/runtime" "^7.4.2"
     "@vant/icons" "1.1.4"

@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // NOTE 获取购物车列表
 export function getCartList(data) {
   return request({
-    url: '/card/getCartList',
+    url: '/cart/getCartList',
     method: 'get',
     params: data
   })
@@ -11,7 +11,7 @@ export function getCartList(data) {
 // NOTE 获取猜你喜欢
 export function getGuess(data) {
   return request({
-    url: '/card/getGuess',
+    url: '/cart/getGuess',
     method: 'get',
     params: data
   })
