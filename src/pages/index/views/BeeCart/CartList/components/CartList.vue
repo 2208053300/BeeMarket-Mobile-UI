@@ -16,7 +16,10 @@
         style="margin-top:0"
         @click="allSelected(index,store.product,allSelectedBox[index])"
       >
-        <van-icon name="shop-o" style="vertical-align: text-top;" />
+        <van-icon
+          name="shop-o"
+          style="vertical-align: text-top;"
+        />
         {{ store.storeName }}
       </van-checkbox>
       <van-checkbox-group v-model="cart.cartSelected">
@@ -27,13 +30,17 @@
           :checked-color="BeeDefault"
           @click="changeAll(index,store.product,allSelectedBox[index])"
         >
-          <van-card
-            :thumb="item.previewImg"
-            @click.stop="showDetails(item.id)"
-          >
+          <van-card @click.stop="">
+            <img
+              slot="thumb"
+              :src="item.previewImg"
+              alt="商品预览图"
+              @click.stop="showDetails(item.id)"
+            >
             <span
               slot="title"
               class="card-title"
+              @click.stop="showDetails(item.id)"
             >{{ item.name }}</span>
             <div
               slot="desc"
@@ -52,6 +59,7 @@
             <van-stepper
               slot="num"
               v-model="item.num"
+              @click.stop="changeNum"
             />
           </van-card>
         </van-checkbox>
@@ -130,6 +138,9 @@ export default {
     // TODO 显示SKU选择器
     showSku(id) {
       this.beeskuShow = true
+    },
+    changeNum() {
+      console.log(123)
     }
   }
 }
