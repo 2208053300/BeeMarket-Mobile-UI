@@ -9,11 +9,12 @@
           name="edit"
           size="20px"
           style="margin-right:21px"
-        />
+        /> -->
         <van-icon
           name="share"
           size="20px"
-        /> -->
+          @click="goSharePage"
+        />
       </div>
     </van-nav-bar>
     <div
@@ -32,13 +33,6 @@
             class="add-btn"
           >
             去添加
-          </van-button>
-          <van-button
-            type="default"
-            class="add-btn"
-            @click="goSharePage"
-          >
-            去分享
           </van-button>
         </div>
         <cart-list
@@ -93,6 +87,7 @@ export default {
       .catch(() => {})
   },
   methods: {
+    // 跳转到购物车分享页面
     goSharePage() {
       this.$router.push({
         path: '/share'

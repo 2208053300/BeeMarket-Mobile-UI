@@ -1,7 +1,10 @@
 <template>
   <div>
     <van-nav-bar title="购物车">
-      <div slot="right" class="nav-right">
+      <div
+        slot="right"
+        class="nav-right"
+      >
         <!-- <van-icon
           name="edit"
           size="20px"
@@ -9,38 +12,23 @@
         /> -->
       </div>
     </van-nav-bar>
-    <div class="wrapper bg-gray cart-share">
+    <div class="wrapper bg-gray">
       <ul class="shop-list margin-b-20">
-        <li
-          v-for="(store, index) in cart.cartInfo"
-          :key="index"
-          class="shop-box bg-white margin-b-20"
-        >
-          <div class="flex align-center margin-b-20">
-            <van-checkbox
-              v-model="allSelectedBox[index]"
-              :checked-color="BeeDefault"
-              @click="allSelected(index, store.product, allSelectedBox[index])"
-            />
-            <van-icon name="shop-o" class="shop-icon" />
-            <span> {{ store.storeName }} </span>
-          </div>
-          <van-checkbox-group v-model="cart.cartSelected">
-            <van-checkbox
-              v-for="item in store.product"
-              :key="item.id"
-              :name="item"
-              :checked-color="BeeDefault"
-              class="checkbox"
-              @click="changeAll(index, store.product, allSelectedBox[index])"
-            >
-              <!-- <van-card
-                :thumb="item.previewImg"
-                @click.stop="showDetails(item.id)"
-              /> -->
-              <img :src="item.previewImg" class="goods-img">
-            </van-checkbox>
-          </van-checkbox-group>
+        <li v-for="(store, index) in cart.cartInfo" :key="index" class="shop-box bg-white margin-b-20">
+          <van-row gutter="20">
+            <van-col span="24" class="flex align-center margin-b-20">
+              <van-checkbox v-model="allSelectedBox[index]" @click="allSelected(index,store.product,allSelectedBox[index])" />
+              <span> {{ store.storeName }} </span>
+            </van-col>
+            <van-checkbox-group v-model="cart.cartSelected">
+              <van-col v-for="item in store.product" :key="item.id" span="8" class="margin-b-20">
+                <div class="goods-item bg-gray">
+                  <img :src="item.previewImg" class="goods-img">
+                  <van-checkbox class="checkbox" @click="changeAll(index,store.product,allSelectedBox[index])" />
+                </div>
+              </van-col>
+            </van-checkbox-group>
+          </van-row>
         </li>
       </ul>
     </div>
@@ -48,7 +36,6 @@
 </template>
 
 <script>
-import { BeeDefault } from '../../../styles/variables.less'
 import { mapState } from 'vuex'
 // import { getShareCartList } from '@/api/cart'
 export default {
@@ -56,7 +43,7 @@ export default {
   props: {},
   data() {
     return {
-      BeeDefault,
+      checked: '',
       shareCartList: [],
       allSelectedBox: []
     }
@@ -113,52 +100,25 @@ export default {
       if (addVal.length === 0) {
         this.allSelectedBox[index] = true
       }
-    },
-
-    showDetails(id) {
-      console.log(id)
     }
+
   }
 }
 </script>
 
-<style lang="less">
-.wrapper {
-  padding: 0.2rem;
+<style scoped lang="less">
+.wrapper{padding: 0.2rem}
+.goods-item{
+  position: relative;
+  .checkbox{
+    position: absolute;
+    right: 0.2rem;
+    bottom: 0.2rem;
+  }
 }
-.shop-box {
+.shop-box{
   padding: 0.2rem 0.2rem 0.1rem 0.2rem;
   border-radius: 0.1rem;
 }
-
-.checkbox {
-  position: relative;
-  width: 2rem;
-  margin-right: 0.2rem;
-  margin-bottom: 0.2rem;
-  .van-checkbox__icon {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    z-index: 2;
-  }
-}
-.cart-share {
-  .van-checkbox-group {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-  .goods-img {
-    width: 2rem;
-    height: 2rem;
-    display: block;
-    border-radius: 0.1rem;
-  }
-  .shop-icon {
-    margin-right: 0.1rem;
-    margin-left: 0.2rem;
-  }
-}
+.goods-img{width: 2rem; height: 2rem}
 </style>
