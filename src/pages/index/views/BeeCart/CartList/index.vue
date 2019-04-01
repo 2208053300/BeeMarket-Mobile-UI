@@ -17,6 +17,7 @@
             :color="Grey2"
             name="share"
             size="20px"
+            @click="goSharePage"
           />
         </div>
         <span
@@ -155,7 +156,7 @@ export default {
     // 跳转到购物车分享页面
     goSharePage() {
       this.$router.push({
-        path: '/share'
+        path: '/CartShare'
       })
     },
     // NOTE 全选

@@ -53,6 +53,7 @@
         align="center"
       />
       <bee-order />
+      <span @click="goSetting">功能设置</span>
     </div>
   </div>
 </template>
@@ -74,7 +75,13 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goSetting() {
+      this.$router.push({
+        path: '/functionSetting'
+      })
+    }
+  }
 }
 </script>
 

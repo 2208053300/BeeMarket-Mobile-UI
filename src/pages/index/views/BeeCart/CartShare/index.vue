@@ -34,22 +34,31 @@
               class="checkbox"
               @click="changeAll(index, store.product, allSelectedBox[index])"
             >
-              <!-- <van-card
-                :thumb="item.previewImg"
-                @click.stop="showDetails(item.id)"
-              /> -->
               <img :src="item.previewImg" class="goods-img">
             </van-checkbox>
           </van-checkbox-group>
         </li>
       </ul>
+      <van-submit-bar
+        v-if="cart.cartSelected.length!==0"
+        button-text="分享"
+      >
+        <van-checkbox
+          v-model="allSelec"
+          :checked-color="BeeDefault"
+          style="margin-left: 0.3rem;"
+          @click="allSelected1"
+        >
+          全选
+        </van-checkbox>
+      </van-submit-bar>
     </div>
   </div>
 </template>
 
 <script>
 import { BeeDefault } from '../../../styles/variables.less'
-import { mapState } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 // import { getShareCartList } from '@/api/cart'
 export default {
   components: {},
@@ -58,29 +67,42 @@ export default {
     return {
       BeeDefault,
       shareCartList: [],
-      allSelectedBox: []
+      allSelectedBox: [],
+      allSelectedData: [],
+      allSelec: false,
+      beeFooter: {
+        show: false,
+        avtive: 3
+      }
     }
   },
   computed: {
-    ...mapState(['cart'])
+    ...mapState(['cart']),
+    ...mapState(['app']),
+    ...mapActions(['ChangeBeeFooter'])
+
   },
   watch: {},
   created() {},
   mounted() {
     // this.getList()
-    console.log('cartInfo22', this.cart.cartInfo)
+
     for (let index = 0; index < this.cart.cartInfo.length; index++) {
       this.$set(this.allSelectedBox, index, false)
     }
+    // 隐藏顶部 tab  导航栏
+    // console.log('test', this.$store.state.app.beeFooter.show)
+    // console.log('test1', this.ChangeBeeFooter, typeof this.ChangeBeeFooter)
+    // this.app.beeFooter = this.beeFooter
+
+    // console.log(this.app.beeFooter)
+    // this.ChangeBeeFooter(this.beeFooter)
+    // this.$store.dispatch(
+    //   'ChangeBeeFooter',
+    //   this.beeFooter
+    // )
   },
   methods: {
-    // 获取购物车分享列表
-    // getList() {
-    //   getShareCartList()
-    //     .then(res => {
-    //       this.shareCartList = res.data.shareCartList
-    //     })
-    // },
 
     // NOTE 全选
     allSelected(index, val, isAll) {
@@ -100,7 +122,14 @@ export default {
         })
       }
     },
-
+    // // NOTE 全选
+    allSelected1() {
+      if (this.allSelec) {
+        this.cart.cartSelected = this.allSelectedData
+      } else {
+        this.cart.cartSelected = []
+      }
+    },
     // FIXME 有点小问题，选中子类全选可能出错
     changeAll(index, val, isAll) {
       if (isAll) {
@@ -123,6 +152,7 @@ export default {
 </script>
 
 <style lang="less">
+@import "../../../styles/variables.less";
 .wrapper {
   padding: 0.2rem;
 }
@@ -133,8 +163,6 @@ export default {
 
 .checkbox {
   position: relative;
-  width: 2rem;
-  margin-right: 0.2rem;
   margin-bottom: 0.2rem;
   .van-checkbox__icon {
     position: absolute;
@@ -159,6 +187,10 @@ export default {
   .shop-icon {
     margin-right: 0.1rem;
     margin-left: 0.2rem;
+  }
+  .van-button--danger {
+    background: @BeeDefault;
+    border-color: @BeeDefault
   }
 }
 </style>
