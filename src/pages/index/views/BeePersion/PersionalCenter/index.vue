@@ -156,7 +156,7 @@ export default {
     // 跳转到功能设置页面
     goSetting() {
       this.$router.push({
-        path: '/persion/BeeSetting/functionSetting'
+        path: '/persion/BeeSetting'
       })
     }
   }

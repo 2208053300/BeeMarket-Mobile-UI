@@ -87,7 +87,6 @@ export default new Router({
           name: 'functionFeedBack',
           component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionFeedBack')
         }
-
       ]
     },
     {
@@ -114,13 +113,7 @@ export default new Router({
         name: 'addAddress',
         component: () => import('@/pages/index/views/BeePersion/AddressSetting/AddAddress')
       }]
-    },
-    {
-      path: '/functionSetting',
-      name: 'functionSetting',
-      component: () => import('@/pages/index/views/BeePersion/FunctionSetting')
     }
-
     ]
   },
   {
