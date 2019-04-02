@@ -78,40 +78,43 @@
               name="close"
               :color="BeeDefault"
             />
-            <span>我的收藏</span>
+            <span>地址管理</span>
           </van-col>
           <van-col span="8">
             <van-icon
               name="close"
               :color="BeeDefault"
             />
-            <span>我的收藏</span>
+            <span>足迹历史</span>
           </van-col>
         </van-row>
         <van-row style="margin-top:0.5rem;">
           <van-col span="8">
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>我的收藏</span>
+            <div @click="goServiceHelp">
+              <van-icon
+                name="close"
+                :color="BeeDefault"
+              />
+              <span>客服帮助</span>
+            </div>
           </van-col>
           <van-col span="8">
             <van-icon
               name="close"
               :color="BeeDefault"
             />
-            <span>我的收藏</span>
+            <span>关于集市</span>
           </van-col>
           <van-col
             span="8"
-            @click="goSetting"
           >
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>功能设置</span>
+            <div @click="goSetting">
+              <van-icon
+                name="close"
+                :color="BeeDefault"
+              />
+              <span>功能设置</span>
+            </div>
           </van-col>
         </van-row>
       </div>
@@ -137,9 +140,19 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    goSetting() {
+
+    // 跳转到客服帮助页面
+    goServiceHelp() {
+      this.$store.state.app.beeFooter.show = false
       this.$router.push({
-        path: '/functionSetting'
+        path: '/persion/ServiceHelper'
+      })
+    },
+    // 跳转到功能设置页面
+    goSetting() {
+      this.$store.state.app.beeFooter.show = false
+      this.$router.push({
+        path: '/persion/BeeSetting/functionSetting'
       })
     }
   }

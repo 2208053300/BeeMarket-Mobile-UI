@@ -69,15 +69,35 @@ export default new Router({
       component: () => import('@/pages/index/views/BeePersion/MyOrder')
     },
     {
-      path: '/functionFeedBack',
-      name: 'functionFeedBack',
-      component: () => import('@/pages/index/views/BeePersion/FunctionFeedBack')
+      path: '/persion/BeeSetting',
+      name: 'BeeSetting',
+      component: () => import('@/pages/index/views/BeePersion/BeeSetting'),
+      children: [
+        {
+          path: '/persion/BeeSetting/functionFeedBack',
+          name: 'functionFeedBack',
+          component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionFeedBack')
+        },
+        {
+          path: '/persion/BeeSetting/functionSetting',
+          name: 'functionSetting',
+          component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionSetting')
+        }
+      ]
     },
     {
-      path: '/functionSetting',
-      name: 'functionSetting',
-      component: () => import('@/pages/index/views/BeePersion/FunctionSetting')
+      path: '/persion/ServiceHelper',
+      name: 'ServiceHelper',
+      component: () => import('@/pages/index/views/BeePersion/ServiceHelper/ServiceHelperIndex'),
+      children: [
+        {
+          path: '/persion/ServiceHelper/QustionList',
+          name: 'QustionList',
+          component: () => import('@/pages/index/views/BeePersion/ServiceHelper/QustionList')
+        }
+      ]
     }
+
     ]
   },
   {
