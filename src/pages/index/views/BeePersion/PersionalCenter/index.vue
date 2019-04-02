@@ -67,51 +67,60 @@
       <div class="more-op">
         <van-row>
           <van-col span="8">
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>我的收藏</span>
+            <div @click="goSetting">
+              <van-icon
+                name="like-o"
+                :color="BeeDefault"
+              />
+              <span>我的收藏</span>
+            </div>
           </van-col>
           <van-col span="8">
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>我的收藏</span>
+            <div @click="$router.push('/addressSetting')">
+              <van-icon
+                name="location-o"
+                :color="BeeDefault"
+              />
+              <span>地址管理</span>
+            </div>
           </van-col>
           <van-col span="8">
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>我的收藏</span>
+            <div @click="goSetting">
+              <van-icon
+                name="browsing-history-o"
+                :color="BeeDefault"
+              />
+              <span>历史足迹</span>
+            </div>
           </van-col>
         </van-row>
         <van-row style="margin-top:0.5rem;">
           <van-col span="8">
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>我的收藏</span>
+            <div @click="goSetting">
+              <van-icon
+                name="service-o"
+                :color="BeeDefault"
+              />
+              <span>客服帮助</span>
+            </div>
           </van-col>
           <van-col span="8">
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>我的收藏</span>
+            <div @click="goSetting">
+              <van-icon
+                name="question-o"
+                :color="BeeDefault"
+              />
+              <span>关于集市</span>
+            </div>
           </van-col>
-          <van-col
-            span="8"
-            @click="goSetting"
-          >
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>功能设置</span>
+          <van-col span="8">
+            <div @click="goSetting">
+              <van-icon
+                name="setting-o"
+                :color="BeeDefault"
+              />
+              <span>功能设置</span>
+            </div>
           </van-col>
         </van-row>
       </div>
@@ -138,6 +147,8 @@ export default {
   mounted() {},
   methods: {
     goSetting() {
+      console.log(123465)
+
       this.$router.push({
         path: '/functionSetting'
       })

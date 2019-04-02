@@ -74,6 +74,11 @@ export default new Router({
       component: () => import('@/pages/index/views/BeePersion/FunctionFeedBack')
     },
     {
+      path: '/addressSetting',
+      name: 'addressSetting',
+      component: () => import('@/pages/index/views/BeePersion/AddressSetting')
+    },
+    {
       path: '/functionSetting',
       name: 'functionSetting',
       component: () => import('@/pages/index/views/BeePersion/FunctionSetting')
