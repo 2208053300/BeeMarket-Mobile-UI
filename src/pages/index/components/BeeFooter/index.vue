@@ -40,7 +40,6 @@
 
 <script>
 import { BeeDefault } from '../../styles/variables.less'
-import { test1 } from '@/api/user'
 export default {
   components: {},
   props: {},
@@ -93,13 +92,7 @@ export default {
     }
   },
   created() {},
-  mounted() {
-    test1()
-      .then(res => {
-        console.log(res)
-      })
-      .catch(() => {})
-  },
+  mounted() {},
   methods: {}
 }
 </script>

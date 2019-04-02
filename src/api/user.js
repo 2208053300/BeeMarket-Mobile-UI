@@ -1,10 +1,10 @@
 // NOTE 数据统计接口
 import request from '@/utils/request'
 // ANCHOR 商品
-// NOTE 获取商品详情
-export function test1(data) {
+// NOTE 获取用户收货地址
+export function getAddressList(data) {
   return request({
-    url: '/test1',
+    url: '/persion/getAddressList',
     method: 'get',
     params: data
   })
