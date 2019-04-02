@@ -27,6 +27,7 @@
         >完成</span>
       </div>
     </van-nav-bar>
+    <p> {{ app }}</p>
     <div
       class="container"
       :class="{hasSubmit:cart.cartSelected.length!==0}"
@@ -104,7 +105,7 @@
 <script>
 import CartList from './components/CartList'
 import BeeGuess from './components/BeeGuess'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { getCartList } from '@/api/cart'
 import { BeeDefault, Grey2 } from '../../../styles/variables.less'
 
@@ -125,7 +126,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['cart'])
+    ...mapState(['cart', 'app'])
   },
   watch: {
     'cart.cartSelected': {
@@ -138,7 +139,12 @@ export default {
       deep: true
     }
   },
-  created() {},
+  created() {
+    this.ChangeBeeFooter({
+      show: false,
+      avtive: 3
+    })
+  },
   mounted() {
     getCartList()
       .then(res => {
@@ -153,8 +159,17 @@ export default {
       .catch(() => {})
   },
   methods: {
+    ...mapActions(['ChangeBeeFooter']),
     // 跳转到购物车分享页面
     goSharePage() {
+      // this.ChangeBeeFooter({
+      //   show: false,
+      //   avtive: 3
+      // })
+      this.$store.commit('SET_BEEFOOTER', {
+        show: false,
+        avtive: 3
+      })
       this.$router.push({
         path: '/CartShare'
       })
