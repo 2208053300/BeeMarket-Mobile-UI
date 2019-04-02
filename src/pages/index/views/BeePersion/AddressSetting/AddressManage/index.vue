@@ -12,15 +12,22 @@
       />
     </van-nav-bar>
     <div class="container">
-      <div class="null-img">
+      <div
+        v-if="addressList.length===0"
+        class="null-img"
+      >
         <img
           src=""
           alt=""
         >
         <span>还没有收货地址呢</span>
       </div>
+      <address-list v-else />
       <div class="new-address">
-        <van-button class="new-button" @click="$router.push('/persion/addressSetting/addAddress')">
+        <van-button
+          class="new-button"
+          @click="$router.push('/persion/addressSetting/addAddress')"
+        >
           <van-icon name="plus" />
           新增收货地址
         </van-button>
@@ -30,17 +37,28 @@
 </template>
 
 <script>
+import { getAddressList } from '@/api/user'
+import AddressList from './components/AddressList'
 export default {
-  components: {},
+  components: {
+    AddressList
+  },
   props: {},
   data() {
-    return {}
+    return {
+      addressList: []
+    }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {
     this.$store.state.app.beeFooter.show = false
+    getAddressList()
+      .then(res => {
+        this.addressList = res.data.addressData
+      })
+      .catch(() => {})
   },
   methods: {
     back() {
