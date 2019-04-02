@@ -12,11 +12,11 @@ const app = {
   },
   actions: {
     ChangeBeeFooter({
-      commit,
-      beeFooter
-    }) {
+      commit
+    }, beeFooter) {
+      commit('SET_BEEFOOTER', beeFooter)
       return new Promise(resolve => {
-        commit('SET_BEEFOOTER', beeFooter)
+        console.log('app changefooter', beeFooter)
         resolve()
       })
     }

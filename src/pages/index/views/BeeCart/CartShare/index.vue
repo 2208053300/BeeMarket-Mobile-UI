@@ -1,14 +1,15 @@
 <template>
   <div>
     <van-nav-bar title="购物车">
-      <div slot="right" class="nav-right">
-        <!-- <van-icon
-          name="edit"
+      <div slot="left" class="nav-right">
+        <van-icon
+          name="arrow-left"
           size="20px"
-          style="margin-right:21px; float:left"
-        /> -->
+          @click="back"
+        />
       </div>
     </van-nav-bar>
+    <p>{{ app }}</p>
     <div class="wrapper bg-gray cart-share">
       <ul class="shop-list margin-b-20">
         <li
@@ -78,8 +79,7 @@ export default {
   },
   computed: {
     ...mapState(['cart']),
-    ...mapState(['app']),
-    ...mapActions(['ChangeBeeFooter'])
+    ...mapState(['app'])
 
   },
   watch: {},
@@ -90,20 +90,18 @@ export default {
     for (let index = 0; index < this.cart.cartInfo.length; index++) {
       this.$set(this.allSelectedBox, index, false)
     }
-    // 隐藏顶部 tab  导航栏
-    // console.log('test', this.$store.state.app.beeFooter.show)
-    // console.log('test1', this.ChangeBeeFooter, typeof this.ChangeBeeFooter)
-    // this.app.beeFooter = this.beeFooter
-
-    // console.log(this.app.beeFooter)
-    // this.ChangeBeeFooter(this.beeFooter)
-    // this.$store.dispatch(
-    //   'ChangeBeeFooter',
-    //   this.beeFooter
-    // )
   },
   methods: {
+    // ...mapActions(['ChangeBeeFooter']),
 
+    // 返回并显示底部导航
+    back() {
+      this.$router.go(-1)
+      this.ChangeBeeFooter({
+        show: true,
+        avtive: 3
+      })
+    },
     // NOTE 全选
     allSelected(index, val, isAll) {
       const addVal = val.filter(item => {
