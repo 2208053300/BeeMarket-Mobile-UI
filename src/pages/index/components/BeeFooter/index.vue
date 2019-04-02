@@ -56,10 +56,7 @@ export default {
         return this.$store.state.app.beeFooter.avtive
       },
       set(val) {
-        this.$store.commit('SET_BEEFOOTER', {
-          show: true,
-          avtive: val
-        })
+        this.$store.state.app.beeFooter.avtive = val
       }
     }
   },
@@ -67,15 +64,30 @@ export default {
     // NOTE 如果动态更改route,图标高亮
     $route(to, from) {
       if (to.path.indexOf('category') !== -1) {
-        this.avtive = 1
+        this.$store.commit('SET_BEEFOOTER', {
+          show: true,
+          avtive: 1
+        })
       } else if (to.path.indexOf('discover') !== -1) {
-        this.avtive = 2
+        this.$store.commit('SET_BEEFOOTER', {
+          show: true,
+          avtive: 2
+        })
       } else if (to.path.indexOf('cart') !== -1) {
-        this.avtive = 3
+        this.$store.commit('SET_BEEFOOTER', {
+          show: true,
+          avtive: 3
+        })
       } else if (to.path.indexOf('persion') !== -1) {
-        this.avtive = 4
+        this.$store.commit('SET_BEEFOOTER', {
+          show: true,
+          avtive: 4
+        })
       } else {
-        this.avtive = 0
+        this.$store.commit('SET_BEEFOOTER', {
+          show: true,
+          avtive: 0
+        })
       }
     }
   },

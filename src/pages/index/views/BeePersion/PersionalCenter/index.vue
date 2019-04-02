@@ -53,6 +53,65 @@
         align="center"
       />
       <bee-order />
+      <van-row
+        class="persion-op"
+        type="flex"
+        align="center"
+      />
+      <van-row
+        class="persion-op"
+        type="flex"
+        align="center"
+      />
+
+      <div class="more-op">
+        <van-row>
+          <van-col span="8">
+            <van-icon
+              name="close"
+              :color="BeeDefault"
+            />
+            <span>我的收藏</span>
+          </van-col>
+          <van-col span="8">
+            <van-icon
+              name="close"
+              :color="BeeDefault"
+            />
+            <span>我的收藏</span>
+          </van-col>
+          <van-col span="8">
+            <van-icon
+              name="close"
+              :color="BeeDefault"
+            />
+            <span>我的收藏</span>
+          </van-col>
+        </van-row>
+        <van-row style="margin-top:0.5rem;">
+          <van-col span="8">
+            <van-icon
+              name="close"
+              :color="BeeDefault"
+            />
+            <span>我的收藏</span>
+          </van-col>
+          <van-col span="8">
+            <van-icon
+              name="close"
+              :color="BeeDefault"
+            />
+            <span>我的收藏</span>
+          </van-col>
+          <van-col span="8">
+            <van-icon
+              name="close"
+              :color="BeeDefault"
+            />
+            <span>我的收藏</span>
+          </van-col>
+        </van-row>
+      </div>
     </div>
   </div>
 </template>
@@ -85,7 +144,7 @@ export default {
 }
 .container {
   width: auto;
-  margin: 0 0.16rem;
+  margin: 0 0.16rem 50px;
   .van-row {
     margin: 0.1rem 0;
     border-radius: 0.2rem;
@@ -123,6 +182,26 @@ export default {
   .persion-op {
     height: 1.58rem;
     background-color: #fff;
+  }
+  .more-op {
+    margin: 0.1rem 0;
+    border-radius: 0.2rem;
+    overflow: hidden;
+    background-color: #fff;
+    padding: 0.32rem 0;
+    text-align: center;
+    font-size: 0.26rem;
+    .van-icon {
+      display: block;
+      font-size: 0.5rem;
+      margin-bottom: 0.2rem;
+    }
+    .van-row {
+      position: relative;
+      .van-col:not(:last-child) {
+      border-right: 0.01rem solid @Grey4;
+    }
+    }
   }
 }
 </style>

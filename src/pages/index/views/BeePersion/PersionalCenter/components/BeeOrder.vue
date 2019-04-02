@@ -65,6 +65,7 @@
               </div>
             </van-col>
             <van-col span="6">
+              <!-- TODO 动态变更颜色 -->
               <div class="status-text">
                 运输中
               </div>
@@ -170,8 +171,11 @@ export default {
       padding-left: 0.3rem;
       white-space: nowrap;
     }
-    .status-text{
-      align-items: center;
+    .status-text {
+      height: 1rem;
+      line-height: 1rem;
+      text-align: right;
+      font-size: 0.28rem;
     }
   }
 }
