@@ -75,19 +75,19 @@ export default new Router({
     },
     {
       path: '/persion/BeeSetting',
-      name: 'BeeSetting',
       component: () => import('@/pages/index/views/BeePersion/BeeSetting'),
       children: [
+        {
+          path: '/',
+          name: 'functionSetting',
+          component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionSetting')
+        },
         {
           path: '/persion/BeeSetting/functionFeedBack',
           name: 'functionFeedBack',
           component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionFeedBack')
-        },
-        {
-          path: '/persion/BeeSetting/functionSetting',
-          name: 'functionSetting',
-          component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionSetting')
         }
+
       ]
     },
     {

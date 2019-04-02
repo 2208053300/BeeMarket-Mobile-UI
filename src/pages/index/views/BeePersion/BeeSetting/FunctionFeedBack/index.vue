@@ -74,7 +74,7 @@ export default {
 
   },
   mounted() {
-
+    this.$store.state.app.beeFooter.show = false
   },
   methods: {
     // 返回
