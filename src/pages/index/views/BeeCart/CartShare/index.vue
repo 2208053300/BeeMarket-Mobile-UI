@@ -86,7 +86,10 @@ export default {
   created() {},
   mounted() {
     // this.getList()
-
+    this.$store.commit('SET_BEEFOOTER', {
+      show: false,
+      avtive: 3
+    })
     for (let index = 0; index < this.cart.cartInfo.length; index++) {
       this.$set(this.allSelectedBox, index, false)
     }
@@ -97,10 +100,10 @@ export default {
     // 返回并显示底部导航
     back() {
       this.$router.go(-1)
-      this.ChangeBeeFooter({
-        show: true,
-        avtive: 3
-      })
+      // this.ChangeBeeFooter({
+      //   show: true,
+      //   avtive: 3
+      // })
     },
     // NOTE 全选
     allSelected(index, val, isAll) {

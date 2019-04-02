@@ -170,10 +170,7 @@ export default {
       //   show: false,
       //   avtive: 3
       // })
-      this.$store.commit('SET_BEEFOOTER', {
-        show: false,
-        avtive: 3
-      })
+
       this.$router.push({
         path: '/CartShare'
       })
