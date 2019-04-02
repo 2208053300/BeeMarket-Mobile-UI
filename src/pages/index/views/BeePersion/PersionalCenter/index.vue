@@ -67,50 +67,56 @@
       <div class="more-op">
         <van-row>
           <van-col span="8">
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>我的收藏</span>
+            <div @click="goSetting">
+              <van-icon
+                name="like-o"
+                :color="BeeDefault"
+              />
+              <span>我的收藏</span>
+            </div>
           </van-col>
           <van-col span="8">
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>地址管理</span>
+            <div @click="$router.push('/persion/addressSetting')">
+              <van-icon
+                name="location-o"
+                :color="BeeDefault"
+              />
+              <span>地址管理</span>
+            </div>
           </van-col>
           <van-col span="8">
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>足迹历史</span>
+            <div @click="goSetting">
+              <van-icon
+                name="browsing-history-o"
+                :color="BeeDefault"
+              />
+              <span>历史足迹</span>
+            </div>
           </van-col>
         </van-row>
         <van-row style="margin-top:0.5rem;">
           <van-col span="8">
             <div @click="goServiceHelp">
               <van-icon
-                name="close"
+                name="service-o"
                 :color="BeeDefault"
               />
               <span>客服帮助</span>
             </div>
           </van-col>
           <van-col span="8">
-            <van-icon
-              name="close"
-              :color="BeeDefault"
-            />
-            <span>关于集市</span>
-          </van-col>
-          <van-col
-            span="8"
-          >
             <div @click="goSetting">
               <van-icon
-                name="close"
+                name="question-o"
+                :color="BeeDefault"
+              />
+              <span>关于集市</span>
+            </div>
+          </van-col>
+          <van-col span="8">
+            <div @click="goSetting">
+              <van-icon
+                name="setting-o"
                 :color="BeeDefault"
               />
               <span>功能设置</span>
@@ -143,14 +149,12 @@ export default {
 
     // 跳转到客服帮助页面
     goServiceHelp() {
-      this.$store.state.app.beeFooter.show = false
       this.$router.push({
         path: '/persion/ServiceHelper'
       })
     },
     // 跳转到功能设置页面
     goSetting() {
-      this.$store.state.app.beeFooter.show = false
       this.$router.push({
         path: '/persion/BeeSetting/functionSetting'
       })
