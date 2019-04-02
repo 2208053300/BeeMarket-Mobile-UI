@@ -15,6 +15,11 @@ export default new Router({
     }
   },
   {
+    path: '/404',
+    name: '404',
+    component: () => import('@/pages/BeeError/404')
+  },
+  {
     path: '/category',
     component: () => import('@/pages/index/views/BeeCategory'),
     children: [{
@@ -74,9 +79,17 @@ export default new Router({
       component: () => import('@/pages/index/views/BeePersion/FunctionFeedBack')
     },
     {
-      path: '/addressSetting',
-      name: 'addressSetting',
-      component: () => import('@/pages/index/views/BeePersion/AddressSetting')
+      path: '/persion/addressSetting',
+      component: () => import('@/pages/index/views/BeePersion/AddressSetting'),
+      children: [{
+        path: '/',
+        name: 'addressManage',
+        component: () => import('@/pages/index/views/BeePersion/AddressSetting/AddressManage')
+      }, {
+        path: '/persion/addressSetting/addAddress',
+        name: 'addAddress',
+        component: () => import('@/pages/index/views/BeePersion/AddressSetting/AddAddress')
+      }]
     },
     {
       path: '/functionSetting',
@@ -89,6 +102,9 @@ export default new Router({
     path: '/login',
     name: 'BeeLogin',
     component: () => import('@/pages/index/views/BeeLogin')
+  }, {
+    path: '*',
+    redirect: '/404'
   }
   ]
 })

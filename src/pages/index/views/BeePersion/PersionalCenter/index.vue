@@ -76,7 +76,7 @@
             </div>
           </van-col>
           <van-col span="8">
-            <div @click="$router.push('/addressSetting')">
+            <div @click="$router.push('/persion/addressSetting')">
               <van-icon
                 name="location-o"
                 :color="BeeDefault"
