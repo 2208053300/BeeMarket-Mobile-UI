@@ -10,6 +10,7 @@
       </div>
     </van-nav-bar>
     <p>{{ app }}</p>
+
     <div class="wrapper bg-gray cart-share">
       <ul class="shop-list margin-b-20">
         <li
@@ -86,25 +87,23 @@ export default {
   created() {},
   mounted() {
     // this.getList()
-    this.$store.commit('SET_BEEFOOTER', {
-      show: false,
-      avtive: 3
-    })
+    this.hideNavBar()
+
     for (let index = 0; index < this.cart.cartInfo.length; index++) {
       this.$set(this.allSelectedBox, index, false)
     }
   },
   methods: {
-    // ...mapActions(['ChangeBeeFooter']),
-
+    // 隐藏底部导航栏
+    hideNavBar() {
+      this.$store.state.app.beeFooter.show = false
+    },
     // 返回并显示底部导航
     back() {
+      this.$store.state.app.beeFooter.show = true
       this.$router.go(-1)
-      // this.ChangeBeeFooter({
-      //   show: true,
-      //   avtive: 3
-      // })
     },
+
     // NOTE 全选
     allSelected(index, val, isAll) {
       const addVal = val.filter(item => {

@@ -166,11 +166,7 @@ export default {
     ...mapActions(['ChangeBeeFooter']),
     // 跳转到购物车分享页面
     goSharePage() {
-      // this.ChangeBeeFooter({
-      //   show: false,
-      //   avtive: 3
-      // })
-
+      this.$store.state.app.beeFooter.show = false
       this.$router.push({
         path: '/CartShare'
       })

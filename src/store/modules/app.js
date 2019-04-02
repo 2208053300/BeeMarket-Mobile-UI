@@ -14,9 +14,8 @@ const app = {
     ChangeBeeFooter({
       commit
     }, beeFooter) {
-      commit('SET_BEEFOOTER', beeFooter)
       return new Promise(resolve => {
-        console.log('app changefooter', beeFooter)
+        commit('SET_BEEFOOTER', beeFooter)
         resolve()
       })
     }
