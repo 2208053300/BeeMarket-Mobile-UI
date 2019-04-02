@@ -22,7 +22,10 @@
         >
         <span>还没有收货地址呢</span>
       </div>
-      <address-list v-else />
+      <address-list
+        v-else
+        :address-list="addressList"
+      />
       <div class="new-address">
         <van-button
           class="new-button"

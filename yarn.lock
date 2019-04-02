@@ -2586,6 +2586,11 @@ deepmerge@^1.5.2:
   resolved "http://registry.npm.taobao.org/deepmerge/download/deepmerge-1.5.2.tgz#10499d868844cdad4fee0842df8c7f6f0c95a753"
   integrity sha1-EEmdhohEza1P7ghC34x/bwyVp1M=
 
+deepmerge@^3.2.0:
+  version "3.2.0"
+  resolved "http://registry.npm.taobao.org/deepmerge/download/deepmerge-3.2.0.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Fdeepmerge%2Fdownload%2Fdeepmerge-3.2.0.tgz#58ef463a57c08d376547f8869fdc5bcee957f44e"
+  integrity sha1-WO9GOlfAjTdlR/iGn9xbzulX9E4=
+
 default-gateway@^4.0.1:
   version "4.2.0"
   resolved "http://registry.npm.taobao.org/default-gateway/download/default-gateway-4.2.0.tgz#167104c7500c2115f6dd69b0a536bb8ed720552b"
@@ -4780,6 +4785,11 @@ lodash.get@^4.4.2:
   resolved "http://registry.npm.taobao.org/lodash.get/download/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
+lodash.isplainobject@^4.0.6:
+  version "4.0.6"
+  resolved "http://registry.npm.taobao.org/lodash.isplainobject/download/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
+  integrity sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=
+
 lodash.kebabcase@^4.1.1:
   version "4.1.1"
   resolved "http://registry.npm.taobao.org/lodash.kebabcase/download/lodash.kebabcase-4.1.1.tgz#8489b1cb0d29ff88195cceca448ff6d6cc295c36"
@@ -4804,6 +4814,11 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "http://registry.npm.taobao.org/lodash.uniq/download/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
+
+lodash.uniqueid@^4.0.1:
+  version "4.0.1"
+  resolved "http://registry.npm.taobao.org/lodash.uniqueid/download/lodash.uniqueid-4.0.1.tgz#3268f26a7c88e4f4b1758d679271814e31fa5b26"
+  integrity sha1-MmjyanyI5PSxdY1nknGBTjH6WyY=
 
 lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0:
   version "4.17.11"
@@ -5364,7 +5379,7 @@ oauth-sign@~0.9.0:
   resolved "http://registry.npm.taobao.org/oauth-sign/download/oauth-sign-0.9.0.tgz#47a7b016baa68b5fa0ecf3dee08a85c679ac6455"
   integrity sha1-R6ewFrqmi1+g7PPe4IqFxnmsZFU=
 
-object-assign@^4.0.1, object-assign@^4.1.0:
+object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "http://registry.npm.taobao.org/object-assign/download/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
@@ -7763,6 +7778,16 @@ vue-loader@^15.6.4:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-meta@^1.6.0:
+  version "1.6.0"
+  resolved "http://registry.npm.taobao.org/vue-meta/download/vue-meta-1.6.0.tgz#89b664f6011a207e098e8ba3b9d32e29c819b65d"
+  integrity sha1-ibZk9gEaIH4JjoujudMuKcgZtl0=
+  dependencies:
+    deepmerge "^3.2.0"
+    lodash.isplainobject "^4.0.6"
+    lodash.uniqueid "^4.0.1"
+    object-assign "^4.1.1"
 
 vue-router@^3.0.1:
   version "3.0.2"
