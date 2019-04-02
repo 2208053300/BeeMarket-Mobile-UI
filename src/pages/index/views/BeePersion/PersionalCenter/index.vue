@@ -103,12 +103,15 @@
             />
             <span>我的收藏</span>
           </van-col>
-          <van-col span="8">
+          <van-col
+            span="8"
+            @click="goSetting"
+          >
             <van-icon
               name="close"
               :color="BeeDefault"
             />
-            <span>我的收藏</span>
+            <span>功能设置</span>
           </van-col>
         </van-row>
       </div>
@@ -133,7 +136,13 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goSetting() {
+      this.$router.push({
+        path: '/functionSetting'
+      })
+    }
+  }
 }
 </script>
 
@@ -199,8 +208,8 @@ export default {
     .van-row {
       position: relative;
       .van-col:not(:last-child) {
-      border-right: 0.01rem solid @Grey4;
-    }
+        border-right: 0.01rem solid @Grey4;
+      }
     }
   }
 }

@@ -17,6 +17,7 @@
             :color="Grey2"
             name="share"
             size="20px"
+            @click="goSharePage"
           />
         </div>
         <span
@@ -42,13 +43,6 @@
             class="add-btn"
           >
             去添加
-          </van-button>
-          <van-button
-            type="default"
-            class="add-btn"
-            @click="goSharePage"
-          >
-            去分享
           </van-button>
         </div>
         <cart-list v-else />
@@ -159,9 +153,10 @@ export default {
       .catch(() => {})
   },
   methods: {
+    // 跳转到购物车分享页面
     goSharePage() {
       this.$router.push({
-        path: '/share'
+        path: '/CartShare'
       })
     },
     // NOTE 全选

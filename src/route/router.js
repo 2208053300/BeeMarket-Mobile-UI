@@ -38,19 +38,21 @@ export default new Router({
   {
     path: '/cart',
     component: () => import('@/pages/index/views/BeeCart'),
-    children: [{
-      path: '/',
-      name: 'CartList',
-      component: () => import('@/pages/index/views/BeeCart/CartList'),
-      meta: {
-        keepAlive: true
+    children: [
+      {
+        path: '/',
+        name: 'CartList',
+        component: () => import('@/pages/index/views/BeeCart/CartList'),
+        meta: {
+          keepAlive: true
+        }
+      },
+      {
+        path: '/CartShare',
+        name: 'CartShare',
+        component: () => import('@/pages/index/views/BeeCart/CartShare')
       }
-    },
-    {
-      path: '/share',
-      name: 'CartShare',
-      component: () => import('@/pages/index/views/BeeCart/CartShare')
-    }
+
     ]
   },
   {
@@ -65,6 +67,16 @@ export default new Router({
       path: '/order',
       name: 'MyOrder',
       component: () => import('@/pages/index/views/BeePersion/MyOrder')
+    },
+    {
+      path: '/functionFeedBack',
+      name: 'functionFeedBack',
+      component: () => import('@/pages/index/views/BeePersion/FunctionFeedBack')
+    },
+    {
+      path: '/functionSetting',
+      name: 'functionSetting',
+      component: () => import('@/pages/index/views/BeePersion/FunctionSetting')
     }
     ]
   },
