@@ -10,7 +10,8 @@ export default new Router({
     name: 'BeeHome',
     component: Home,
     meta: {
-      keepAlive: true // NOTE 需要被缓存
+      // NOTE 需要被缓存
+      keepAlive: true
     }
   },
   {
@@ -38,20 +39,19 @@ export default new Router({
   {
     path: '/cart',
     component: () => import('@/pages/index/views/BeeCart'),
-    children: [
-      {
-        path: '/',
-        name: 'CartList',
-        component: () => import('@/pages/index/views/BeeCart/CartList'),
-        meta: {
-          keepAlive: true
-        }
-      },
-      {
-        path: '/CartShare',
-        name: 'CartShare',
-        component: () => import('@/pages/index/views/BeeCart/CartShare')
+    children: [{
+      path: '/',
+      name: 'CartList',
+      component: () => import('@/pages/index/views/BeeCart/CartList'),
+      meta: {
+        keepAlive: true
       }
+    },
+    {
+      path: '/CartShare',
+      name: 'CartShare',
+      component: () => import('@/pages/index/views/BeeCart/CartShare')
+    }
 
     ]
   },

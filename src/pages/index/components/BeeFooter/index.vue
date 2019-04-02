@@ -56,6 +56,10 @@ export default {
         return this.$store.state.app.beeFooter.avtive
       },
       set(val) {
+        // this.$store.commit('SET_BEEFOOTER', {
+        //   show: true,
+        //   avtive: val
+        // })
         this.$store.state.app.beeFooter.avtive = val
       }
     }
@@ -84,10 +88,7 @@ export default {
           avtive: 4
         })
       } else {
-        this.$store.commit('SET_BEEFOOTER', {
-          show: true,
-          avtive: 0
-        })
+        this.active = 0
       }
     }
   },
@@ -97,8 +98,7 @@ export default {
       .then(res => {
         console.log(res)
       })
-      .catch(() => {
-      })
+      .catch(() => {})
   },
   methods: {}
 }

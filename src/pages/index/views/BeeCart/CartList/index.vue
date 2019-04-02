@@ -146,6 +146,10 @@ export default {
     })
   },
   mounted() {
+    this.$store.commit('SET_BEEFOOTER', {
+      show: true,
+      avtive: 3
+    })
     getCartList()
       .then(res => {
         this.cart.cartInfo = res.data.cartData
