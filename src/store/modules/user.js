@@ -1,10 +1,14 @@
 const user = {
   state: {
-    userInfo: {}
+    userInfo: {},
+    addressData: {}
   },
   mutations: {
     SET_USERINFO: (state, userInfo) => {
       state.userInfo = userInfo
+    },
+    SET_ADDRESSDATE: (state, addressData) => {
+      state.addressData = addressData
     }
   },
   actions: {

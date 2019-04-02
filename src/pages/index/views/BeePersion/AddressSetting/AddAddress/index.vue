@@ -49,21 +49,21 @@
           <div class="tags">
             <div
               class="tag"
-              :class="{tagSelected: beeForm.tag===1}"
+              :class="{tagSelected: beeForm.tag==='家'}"
               @click="beeForm.tag=1"
             >
               家
             </div>
             <div
               class="tag"
-              :class="{tagSelected: beeForm.tag===2}"
+              :class="{tagSelected: beeForm.tag==='公司'}"
               @click="beeForm.tag=2"
             >
               公司
             </div>
             <div
               class="tag"
-              :class="{tagSelected: beeForm.tag===3}"
+              :class="{tagSelected: beeForm.tag==='学校'}"
               @click="beeForm.tag=3"
             >
               学校
@@ -75,6 +75,7 @@
         <van-switch-cell
           v-model="beeForm.default"
           title="设为默认"
+          :active-color="BeeDefault"
         />
       </van-cell-group>
     </div>
@@ -90,6 +91,7 @@
 </template>
 
 <script>
+import { BeeDefault } from '../../../../styles/variables.less'
 export default {
   components: {},
   props: {},
@@ -101,7 +103,8 @@ export default {
         details: '',
         tag: '',
         default: false
-      }
+      },
+      BeeDefault
     }
   },
   computed: {},
@@ -109,6 +112,13 @@ export default {
   created() {},
   mounted() {
     this.$store.state.app.beeFooter.show = false
+    // NOTE 如果是编辑地址
+    if (this.$store.state.user.addressData) {
+      this.beeForm = this.$store.state.user.addressData
+    }
+  },
+  beforeDestroy() {
+    this.$store.state.user.addressData = {}
   },
   methods: {
     back() {
