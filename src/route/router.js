@@ -69,7 +69,7 @@ export default new Router({
       component: () => import('@/pages/index/views/BeePersion/PersionalCenter')
     },
     {
-      path: '/order',
+      path: '/persion/order',
       name: 'MyOrder',
       component: () => import('@/pages/index/views/BeePersion/MyOrder')
     },
