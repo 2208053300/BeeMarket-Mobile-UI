@@ -3,6 +3,7 @@
     <van-nav-bar
       title="新增地址"
       left-arrow
+      fixed
     >
       <van-icon
         slot="left"
@@ -151,7 +152,7 @@ export default {
 <style lang="less">
 @import "../../../../styles/variables.less";
 .add-address {
-  margin-top: 0.2rem;
+  margin-top: 60px;
   .van-cell {
     min-height: 0.86rem;
     .van-cell__title {

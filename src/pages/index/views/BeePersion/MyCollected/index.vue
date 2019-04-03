@@ -1,6 +1,9 @@
 <template>
   <div>
-    <van-nav-bar title="我的收藏">
+    <van-nav-bar
+      title="我的收藏"
+      fixed
+    >
       <van-icon
         slot="left"
         name="arrow-left"
@@ -17,7 +20,7 @@
             size="20px"
             style="margin-right:0.3rem;"
           />
-          <span>编辑</span>
+          <span @click="editProduct">编辑</span>
         </div>
       </div>
     </van-nav-bar>
@@ -28,7 +31,10 @@
       >
         <van-tab title="商品">
           <div class="bee-above">
-            <div class="null-collected">
+            <div
+              v-if="productList.length===0"
+              class="null-collected"
+            >
               <div class="null-img" />
               <span class="null-text">还没有添加收藏的商品呦</span>
               <van-button
@@ -38,6 +44,16 @@
                 逛逛分类
               </van-button>
             </div>
+            <div
+              v-else
+              class="collected-list"
+            >
+              <collected-classify />
+              <product-collected
+                ref="ProductCollected"
+                :product-list="productList"
+              />
+            </div>
           </div>
           <div class="bee-below">
             <bee-guess />
@@ -46,7 +62,7 @@
         <van-tab title="店铺">
           <div class="bee-above">
             <div
-              v-if="storeList===0"
+              v-if="storeList.length===0"
               class="null-collected"
             >
               <div
@@ -69,18 +85,24 @@
 <script>
 import BeeGuess from '@/pages/index/components/BeeGuess'
 import StoreCollected from './components/StoreCollected'
-import { getStoreCollected } from '@/api/user'
+import CollectedClassify from './components/CollectedClassify'
+import ProductCollected from './components/ProductCollected'
+import { getStoreCollected, getProductCollected } from '@/api/user'
 
 export default {
   components: {
     BeeGuess,
-    StoreCollected
+    StoreCollected,
+    CollectedClassify,
+    ProductCollected
   },
   props: {},
   data() {
     return {
       activeTab: 0,
-      storeList: []
+      storeList: [],
+      productList: [],
+      activeClassify: '全部类目'
     }
   },
   computed: {},
@@ -88,6 +110,7 @@ export default {
   created() {},
   mounted() {
     this.$store.state.app.beeFooter.show = false
+    this.getProductCollected()
   },
   methods: {
     back() {
@@ -96,12 +119,29 @@ export default {
     changeTab(index, title) {
       // NOTE 如果切换到店铺列表
       if (index) {
-        getStoreCollected()
-          .then(res => {
-            this.storeList = res.data.storeList
-          })
-          .catch(() => {})
+        this.getStoreCollected()
+      } else {
+        this.getProductCollected()
       }
+    },
+    getStoreCollected() {
+      getStoreCollected()
+        .then(res => {
+          this.storeList = res.data.storeList
+        })
+        .catch(() => {})
+    },
+    getProductCollected() {
+      getProductCollected()
+        .then(res => {
+          this.productList = res.data.productList
+        })
+        .catch(() => {})
+    },
+    editProduct() {
+      // TODO 判断是店铺还是商品收藏编辑
+      this.$refs.ProductCollected.editStatus = !this.$refs.ProductCollected
+        .editStatus
     }
   }
 }
@@ -109,6 +149,13 @@ export default {
 
 <style lang="less">
 @import "../../../styles/variables.less";
+.van-nav-bar {
+  // NOTE 需要在新增蒙版之上
+  z-index: 101 !important;
+}
+[class*="van-hairline"]::after {
+  content: none;
+}
 .nav-right {
   color: @Grey1;
   .van-icon {
@@ -116,7 +163,7 @@ export default {
   }
 }
 .collected-container {
-  margin-bottom: 60px;
+  margin: 46px 0 60px;
   .van-tabs {
     .van-tabs__line {
       width: 0.9rem !important;
@@ -162,6 +209,9 @@ export default {
         width: 1.8rem;
         margin: 1.2rem 0 1rem;
       }
+    }
+    .collected-list {
+      position: relative;
     }
   }
   .bee-below {

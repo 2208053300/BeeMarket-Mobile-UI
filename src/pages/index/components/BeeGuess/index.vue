@@ -48,7 +48,6 @@ export default {
   mounted() {
     getGuess()
       .then(res => {
-        console.log(res)
         this.guessData = res.data.guessData
       })
       .catch(() => {})
