@@ -76,33 +76,31 @@ export default new Router({
     {
       path: '/persion/BeeSetting',
       component: () => import('@/pages/index/views/BeePersion/BeeSetting'),
-      children: [
-        {
-          path: '/',
-          name: 'functionSetting',
-          component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionSetting')
-        },
-        {
-          path: '/persion/BeeSetting/functionFeedBack',
-          name: 'functionFeedBack',
-          component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionFeedBack')
-        }
+      children: [{
+        path: '/',
+        name: 'functionSetting',
+        component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionSetting')
+      },
+      {
+        path: '/persion/BeeSetting/functionFeedBack',
+        name: 'functionFeedBack',
+        component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionFeedBack')
+      }
       ]
     },
     {
       path: '/persion/ServiceHelper',
       component: () => import('@/pages/index/views/BeePersion/ServiceHelper'),
-      children: [
-        {
-          path: '/',
-          name: 'QustionList',
-          component: () => import('@/pages/index/views/BeePersion/ServiceHelper/ServiceHelperIndex')
-        },
-        {
-          path: '/persion/ServiceHelper/QustionList',
-          name: 'QustionList',
-          component: () => import('@/pages/index/views/BeePersion/ServiceHelper/QustionList')
-        }
+      children: [{
+        path: '/',
+        name: 'QustionList',
+        component: () => import('@/pages/index/views/BeePersion/ServiceHelper/ServiceHelperIndex')
+      },
+      {
+        path: '/persion/ServiceHelper/QustionList',
+        name: 'QustionList',
+        component: () => import('@/pages/index/views/BeePersion/ServiceHelper/QustionList')
+      }
       ]
     },
     {
@@ -117,6 +115,11 @@ export default new Router({
         name: 'addAddress',
         component: () => import('@/pages/index/views/BeePersion/AddressSetting/AddAddress')
       }]
+    },
+    {
+      path: '/persion/myCollected',
+      name: 'myCollected',
+      component: () => import('@/pages/index/views/BeePersion/MyCollected')
     }
     ]
   },

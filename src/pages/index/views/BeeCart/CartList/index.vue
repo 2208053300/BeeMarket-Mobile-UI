@@ -104,7 +104,7 @@
 
 <script>
 import CartList from './components/CartList'
-import BeeGuess from './components/BeeGuess'
+import BeeGuess from '@/pages/index/components/BeeGuess'
 import { mapState, mapActions } from 'vuex'
 import { getCartList } from '@/api/cart'
 import { BeeDefault, Grey2 } from '../../../styles/variables.less'
@@ -222,6 +222,7 @@ export default {
       .add-btn {
         font-size: 0.26rem;
         border: 1px solid @BeeDefault;
+        background-color: transparent;
         border-radius: 0.1rem;
         color: @BeeDefault;
         height: 0.54rem;

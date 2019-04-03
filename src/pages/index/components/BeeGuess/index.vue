@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "../../../../styles/variables.less";
+@import "../../styles/variables.less";
 .bee-guess {
   padding: 0 0.3rem 0.3rem;
   background-color: #ffffff;

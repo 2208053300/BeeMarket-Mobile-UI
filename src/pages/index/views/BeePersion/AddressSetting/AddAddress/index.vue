@@ -29,12 +29,14 @@
           title="所在地区"
           is-link
           value="请选择"
+          @click="showArea=true"
         />
         <van-cell
           title="街道"
           is-link
           value="请选择"
         />
+        <!-- TODO 添加街道选择 -->
         <van-field
           v-model="beeForm.details"
           type="textarea"
@@ -78,6 +80,17 @@
           :active-color="BeeDefault"
         />
       </van-cell-group>
+      <van-popup
+        v-model="showArea"
+        position="bottom"
+        @click-overlay="showArea=false"
+      >
+        <van-area
+          :area-list="areaList"
+          @confirm="showArea=false"
+          @cancel="showArea=false"
+        />
+      </van-popup>
     </div>
     <div class="save-address">
       <van-button
@@ -91,6 +104,7 @@
 </template>
 
 <script>
+import areaList from '@/assets/area'
 import { BeeDefault } from '../../../../styles/variables.less'
 export default {
   components: {},
@@ -104,7 +118,9 @@ export default {
         tag: '',
         default: false
       },
-      BeeDefault
+      BeeDefault,
+      areaList,
+      showArea: false
     }
   },
   computed: {},
