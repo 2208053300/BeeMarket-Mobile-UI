@@ -5,11 +5,6 @@
       :key="index"
       class="bee-store"
     >
-      <!-- <van-checkbox-group
-        v-model="cart.cartSelected[index]"
-        class="store-name"
-      >
-      </van-checkbox-group> -->
       <van-checkbox
         v-model="allSelectedBox[index]"
         :checked-color="BeeDefault"

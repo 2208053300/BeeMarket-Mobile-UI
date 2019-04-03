@@ -37,13 +37,15 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style scoped  lang="less">
 @import url(../../../../styles/variables.less);
+
 .bottom-btn{
   position: fixed;
   bottom: 0;
   width: 100%;
   padding: 0.2rem 0;
+  border-top: 1px solid #ddd;
 }
 .contact-btn{
   background-color:@BeeDefault;

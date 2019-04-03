@@ -1,42 +1,44 @@
 <template>
   <div>
     <!-- Navbar -->
-    <van-nav-bar title="客服帮助" left-arrow @click-left="back" />
+    <van-nav-bar title="客服帮助" fixed left-arrow @click-left="back" />
     <!-- 用户信息 -->
-    <div class="user-info flex align-center bg-white">
-      <img :src="user.img" class="avatar">
-      <div class="info">
-        <p class="name">
-          <span>{{ user.name }}</span>，您好！
-        </p>
-        <p class="tip">
-          欢迎来到服务中心，很高兴为您服务
-        </p>
-      </div>
-    </div>
-    <!-- 热点问题 -->
-    <p class="helper-title">
-      热点问题
-    </p>
-    <van-cell-group>
-      <van-cell v-for="(item, index) in hotQustion" :key="index" :title="item.title" @click="showAnswer(item.id)" />
-    </van-cell-group>
-    <!-- 问题分类 -->
-    <p class="helper-title">
-      问题类型
-    </p>
-    <van-row class="bg-white sort-div">
-      <van-col v-for="(item, index) in sortList" :key="index" span="8">
-        <div class="text-center sort-box" @click="goList(item.id)">
-          <p class="sort-name">
-            {{ item.title }}
+    <div class="container">
+      <div class="user-info flex align-center bg-white">
+        <img :src="user.img" class="avatar">
+        <div class="info">
+          <p class="name">
+            <span>{{ user.name }}</span>，您好！
           </p>
-          <p class="sort-desc">
-            {{ item.desc }}
+          <p class="tip">
+            欢迎来到服务中心，很高兴为您服务
           </p>
         </div>
-      </van-col>
-    </van-row>
+      </div>
+      <!-- 热点问题 -->
+      <p class="helper-title">
+        热点问题
+      </p>
+      <van-cell-group>
+        <van-cell v-for="(item, index) in hotQustion" :key="index" :title="item.title" @click="showAnswer(item.id)" />
+      </van-cell-group>
+      <!-- 问题分类 -->
+      <p class="helper-title">
+        问题类型
+      </p>
+      <van-row class="bg-white sort-div">
+        <van-col v-for="(item, index) in sortList" :key="index" span="8">
+          <div class="text-center sort-box" @click="goList(item.id)">
+            <p class="sort-name">
+              {{ item.title }}
+            </p>
+            <p class="sort-desc">
+              {{ item.desc }}
+            </p>
+          </div>
+        </van-col>
+      </van-row>
+    </div>
     <!-- 底部联系客服按钮 -->
     <ContactCustomer />
     <!-- 答案遮罩弹框 -->

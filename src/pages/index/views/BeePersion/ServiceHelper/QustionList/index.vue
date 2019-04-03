@@ -1,20 +1,24 @@
 <template>
   <div>
     <!-- Navbar -->
-    <van-nav-bar :title="sortName" left-arrow @click-left="back" />
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <van-cell
-        v-for="item in list"
-        :key="item.id"
-        :title="item.num+'、'+item.title"
-        @click="showAnswer(item.id)"
-      />
-    </van-list>
+    <van-nav-bar :title="sortName" fixed left-arrow @click-left="back" />
+    <div class="container">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <van-cell
+          v-for="(item,index) in list"
+          :key="item.id"
+          :title="(index+1)+'、'+item.title"
+          @click="showAnswer(item.id)"
+        />
+      </van-list>
+    </div>
+    <!-- 底部联系客服按钮 -->
+    <ContactCustomer />
     <!-- 答案遮罩弹框 -->
     <AnswerPop ref="AnswerPop" :is-show="isShow" @getShow="getShow" />
   </div>
@@ -23,9 +27,11 @@
 <script>
 // 引入帮助客服api
 import { getSortList } from '@/api/serviceHelp'
+import ContactCustomer from '../components/ContactCustomer'
 import AnswerPop from '../components/AnswerPop'
 export default {
   components: {
+    ContactCustomer,
     AnswerPop
   },
   props: {
@@ -37,7 +43,8 @@ export default {
       sortName: '',
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      page: 1
     }
   },
   computed: {
@@ -51,6 +58,7 @@ export default {
   },
   mounted() {
     // this.getData()
+    this.$store.state.app.beeFooter.show = false
   },
   methods: {
     // 返回
@@ -59,14 +67,13 @@ export default {
     },
     // 获取数据
     getData() {
-      getSortList(this.$route.query.id).then(res => {
-        this.list.push(...res.data.listData)
-        console.log(this.list)
-
+      getSortList(this.$route.query.id, this.page).then(res => {
         this.sortName = res.data.sortName
-
-        this.loading = false
-        if (this.list.length > 40) {
+        if (res.data.listData.length > 0) {
+          this.list.push(...res.data.listData)
+          console.log(this.list, this.page)
+          this.loading = false
+        } else {
           this.finished = true
         }
       })
@@ -83,11 +90,13 @@ export default {
     },
     onLoad() {
       this.getData()
+      this.page += 1
+      console.log(this.page)
     }
   }
 }
 </script>
 
 <style scoped lang="less">
-
+.container{margin-bottom: 75px;}
 </style>

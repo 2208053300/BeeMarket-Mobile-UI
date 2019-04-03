@@ -95,7 +95,7 @@ export default new Router({
       children: [
         {
           path: '/',
-          name: 'QustionList',
+          name: 'ServiceHelperIndex',
           component: () => import('@/pages/index/views/BeePersion/ServiceHelper/ServiceHelperIndex')
         },
         {
@@ -116,6 +116,19 @@ export default new Router({
         path: '/persion/addressSetting/addAddress',
         name: 'addAddress',
         component: () => import('@/pages/index/views/BeePersion/AddressSetting/AddAddress')
+      }]
+    },
+    {
+      path: '/persion/history',
+      component: () => import('@/pages/index/views/BeePersion/History'),
+      children: [{
+        path: '/',
+        name: 'historyIndex',
+        component: () => import('@/pages/index/views/BeePersion/History/HistoryIndex')
+      }, {
+        path: '/persion/history/historyEdit',
+        name: 'historyEdit',
+        component: () => import('@/pages/index/views/BeePersion/History/HistoryEdit')
       }]
     }
     ]
