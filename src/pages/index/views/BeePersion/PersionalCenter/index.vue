@@ -85,7 +85,7 @@
             </div>
           </van-col>
           <van-col span="8">
-            <div @click="goSetting">
+            <div @click="$router.push('/persion/history')">
               <van-icon
                 name="browsing-history-o"
                 :color="BeeDefault"
@@ -96,7 +96,7 @@
         </van-row>
         <van-row style="margin-top:0.5rem;">
           <van-col span="8">
-            <div @click="goServiceHelp">
+            <div @click="$router.push('/persion/ServiceHelper')">
               <van-icon
                 name="service-o"
                 :color="BeeDefault"
@@ -105,7 +105,7 @@
             </div>
           </van-col>
           <van-col span="8">
-            <div @click="goSetting">
+            <div @click="">
               <van-icon
                 name="question-o"
                 :color="BeeDefault"
@@ -114,7 +114,7 @@
             </div>
           </van-col>
           <van-col span="8">
-            <div @click="goSetting">
+            <div @click="$router.push('/persion/BeeSetting')">
               <van-icon
                 name="setting-o"
                 :color="BeeDefault"
@@ -147,18 +147,6 @@ export default {
   mounted() {},
   methods: {
 
-    // 跳转到客服帮助页面
-    goServiceHelp() {
-      this.$router.push({
-        path: '/persion/ServiceHelper'
-      })
-    },
-    // 跳转到功能设置页面
-    goSetting() {
-      this.$router.push({
-        path: '/persion/BeeSetting'
-      })
-    }
   }
 }
 </script>

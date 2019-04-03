@@ -91,17 +91,18 @@ export default new Router({
     {
       path: '/persion/ServiceHelper',
       component: () => import('@/pages/index/views/BeePersion/ServiceHelper'),
-      children: [{
-        path: '/',
-        name: 'QustionList',
-        component: () => import('@/pages/index/views/BeePersion/ServiceHelper/ServiceHelperIndex')
-      },
-      {
-        path: '/persion/ServiceHelper/QustionList',
-        name: 'QustionList',
-        component: () => import('@/pages/index/views/BeePersion/ServiceHelper/QustionList')
-      }
-      ]
+      children: [
+        {
+          path: '/',
+          name: 'ServiceHelperIndex',
+          component: () => import('@/pages/index/views/BeePersion/ServiceHelper/ServiceHelperIndex')
+        },
+        {
+          path: '/persion/ServiceHelper/QustionList',
+          name: 'QustionList',
+          component: () => import('@/pages/index/views/BeePersion/ServiceHelper/QustionList')
+        }]
+
     },
     {
       path: '/persion/addressSetting',
@@ -115,6 +116,20 @@ export default new Router({
         name: 'addAddress',
         component: () => import('@/pages/index/views/BeePersion/AddressSetting/AddAddress')
       }]
+    },
+    {
+      path: '/persion/history',
+      component: () => import('@/pages/index/views/BeePersion/History'),
+      children: [{
+        path: '/',
+        name: 'historyIndex',
+        component: () => import('@/pages/index/views/BeePersion/History/HistoryIndex')
+      }, {
+        path: '/persion/history/historyEdit',
+        name: 'historyEdit',
+        component: () => import('@/pages/index/views/BeePersion/History/HistoryEdit')
+      }]
+
     },
     {
       path: '/persion/myCollected',

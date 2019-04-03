@@ -17,7 +17,31 @@ export function getProductCollected(data) {
     params: data
   })
 }
-
+// history 历史足迹
+// 获取历史足迹列表
+export function getHistoryList(data) {
+  return request({
+    url: '/persion/getHistoryList',
+    method: 'get',
+    params: data
+  })
+}
+// 从历史记录加入收藏
+export function collectProduct(data) {
+  return request({
+    url: '/persion/collectProduct',
+    method: 'get',
+    params: data
+  })
+}
+// 从历史记录中删除
+export function delHistoryItem(data) {
+  return request({
+    url: '/persion/delHistoryItem',
+    method: 'get',
+    params: data
+  })
+}
 // NOTE 获取用户已收藏店铺
 export function getStoreCollected(data) {
   return request({
