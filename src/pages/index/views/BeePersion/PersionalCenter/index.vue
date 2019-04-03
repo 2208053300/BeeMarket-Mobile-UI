@@ -67,7 +67,7 @@
       <div class="more-op">
         <van-row>
           <van-col span="8">
-            <div @click="">
+            <div @click="$router.push('/persion/myCollected')">
               <van-icon
                 name="like-o"
                 :color="BeeDefault"

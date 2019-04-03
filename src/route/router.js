@@ -69,24 +69,23 @@ export default new Router({
       component: () => import('@/pages/index/views/BeePersion/PersionalCenter')
     },
     {
-      path: '/order',
+      path: '/persion/order',
       name: 'MyOrder',
       component: () => import('@/pages/index/views/BeePersion/MyOrder')
     },
     {
       path: '/persion/BeeSetting',
       component: () => import('@/pages/index/views/BeePersion/BeeSetting'),
-      children: [
-        {
-          path: '/',
-          name: 'functionSetting',
-          component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionSetting')
-        },
-        {
-          path: '/persion/BeeSetting/functionFeedBack',
-          name: 'functionFeedBack',
-          component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionFeedBack')
-        }
+      children: [{
+        path: '/',
+        name: 'functionSetting',
+        component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionSetting')
+      },
+      {
+        path: '/persion/BeeSetting/functionFeedBack',
+        name: 'functionFeedBack',
+        component: () => import('@/pages/index/views/BeePersion/BeeSetting/FunctionFeedBack')
+      }
       ]
     },
     {
@@ -102,8 +101,8 @@ export default new Router({
           path: '/persion/ServiceHelper/QustionList',
           name: 'QustionList',
           component: () => import('@/pages/index/views/BeePersion/ServiceHelper/QustionList')
-        }
-      ]
+        }]
+
     },
     {
       path: '/persion/addressSetting',
@@ -130,6 +129,12 @@ export default new Router({
         name: 'historyEdit',
         component: () => import('@/pages/index/views/BeePersion/History/HistoryEdit')
       }]
+
+    },
+    {
+      path: '/persion/myCollected',
+      name: 'myCollected',
+      component: () => import('@/pages/index/views/BeePersion/MyCollected')
     }
     ]
   },
