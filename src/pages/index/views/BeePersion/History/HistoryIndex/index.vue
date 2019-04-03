@@ -156,6 +156,7 @@ export default {
 @import "../../../../styles/variables.less";
 .wrapper {
   padding: 0 0.2rem;
+margin-top: 56px;
   box-sizing: border-box;
 }
 

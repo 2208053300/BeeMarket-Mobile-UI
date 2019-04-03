@@ -63,7 +63,7 @@
 
 <script>
 import { getHistoryList, delHistoryItem } from '@/api/user'
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import { BeeDefault } from '../../../../styles/variables.less'
 
 export default {
@@ -202,7 +202,8 @@ export default {
   }
 }
 .wrapper {
-  padding: 0.2rem;
+  padding:0 0.2rem;
+  margin-top: 56px;
 }
 
 </style>

@@ -57,6 +57,7 @@ export default {
 </script>
 
 <style scoped lang="less">
+.container{margin-top: 56px}
 img{display: block}
 .logo-info{
   padding: 0.3rem 0;

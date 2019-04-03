@@ -6,6 +6,9 @@
       fixed
       @click-left="back"
     />
+    <div class="container">
+      用户协议
+    </div>
   </div>
 </template>
 
@@ -43,5 +46,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-
+.container{margin-top: 56px;}
 </style>
