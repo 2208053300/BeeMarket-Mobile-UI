@@ -129,7 +129,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-
+.container{margin-top: 56px;}
 .avatar{width: 0.98rem; height: 0.98rem; border-radius: 50%; margin-right:0.3rem;}
 .user-info{
   padding: 0 0.3rem;

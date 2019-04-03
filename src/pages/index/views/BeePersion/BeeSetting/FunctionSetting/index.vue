@@ -20,7 +20,7 @@
       <van-cell title="功能反馈" is-link @click="goFeedBack" />
     </div>
     <div class="fun-list margin-t-20">
-      <van-cell title="关于" is-link to="/functionFeedBack" />
+      <van-cell title="关于" is-link to="/persion/beeSetting/about" />
     </div>
 
     <van-button type="primary" block class="margin-t-20 logout-btn">

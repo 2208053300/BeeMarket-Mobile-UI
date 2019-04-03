@@ -129,12 +129,31 @@ export default new Router({
         name: 'historyEdit',
         component: () => import('@/pages/index/views/BeePersion/History/HistoryEdit')
       }]
-
     },
     {
       path: '/persion/myCollected',
       name: 'myCollected',
       component: () => import('@/pages/index/views/BeePersion/MyCollected')
+    },
+    {
+      path: '/persion/beeSetting/about',
+      component: () => import('@/pages/index/views/BeePersion/BeeSetting/About'),
+      children: [{
+        path: '/',
+        name: 'aboutIndex',
+        component: () => import('@/pages/index/views/BeePersion/BeeSetting/About/AboutIndex')
+      },
+      {
+        path: '/persion/beeSetting/about/useHelp',
+        name: 'useHelp',
+        component: () => import('@/pages/index/views/BeePersion/BeeSetting/About/UseHelp')
+      },
+      {
+        path: '/persion/beeSetting/about/userAgreement',
+        name: 'userAgreement',
+        component: () => import('@/pages/index/views/BeePersion/BeeSetting/About/UserAgreement')
+      }
+      ]
     }
     ]
   },

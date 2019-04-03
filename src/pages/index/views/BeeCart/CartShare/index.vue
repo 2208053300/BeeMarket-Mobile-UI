@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="购物车">
+    <van-nav-bar title="购物车" fixed>
       <div slot="left" class="nav-right">
         <van-icon
           name="arrow-left"
@@ -9,7 +9,6 @@
         />
       </div>
     </van-nav-bar>
-    <p>{{ app }}</p>
 
     <div class="wrapper bg-gray cart-share">
       <ul class="shop-list margin-b-20">
@@ -41,20 +40,20 @@
           </van-checkbox-group>
         </li>
       </ul>
-      <van-submit-bar
-        v-if="cart.cartSelected.length!==0"
-        button-text="分享"
-      >
-        <van-checkbox
-          v-model="allSelec"
-          :checked-color="BeeDefault"
-          style="margin-left: 0.3rem;"
-          @click="allSelected1"
-        >
-          全选
-        </van-checkbox>
-      </van-submit-bar>
     </div>
+    <van-submit-bar
+      v-if="cart.cartSelected.length!==0"
+      button-text="分享"
+    >
+      <van-checkbox
+        v-model="allSelec"
+        :checked-color="BeeDefault"
+        style="margin-left: 0.3rem;"
+        @click="allSelected1"
+      >
+        全选
+      </van-checkbox>
+    </van-submit-bar>
   </div>
 </template>
 
@@ -154,7 +153,8 @@ export default {
 <style lang="less">
 @import "../../../styles/variables.less";
 .wrapper {
-  padding: 0.2rem;
+  padding: 0 0.2rem;
+  margin-top: 56px;
 }
 .shop-box {
   padding: 0.2rem 0.2rem 0.1rem 0.2rem;
