@@ -91,9 +91,13 @@ export default new Router({
     },
     {
       path: '/persion/ServiceHelper',
-      name: 'ServiceHelper',
-      component: () => import('@/pages/index/views/BeePersion/ServiceHelper/ServiceHelperIndex'),
+      component: () => import('@/pages/index/views/BeePersion/ServiceHelper'),
       children: [
+        {
+          path: '/',
+          name: 'QustionList',
+          component: () => import('@/pages/index/views/BeePersion/ServiceHelper/ServiceHelperIndex')
+        },
         {
           path: '/persion/ServiceHelper/QustionList',
           name: 'QustionList',

@@ -19,7 +19,7 @@
       热点问题
     </p>
     <van-cell-group>
-      <van-cell v-for="(item, index) in hotQustion" :key="index" :title="item.title" />
+      <van-cell v-for="(item, index) in hotQustion" :key="index" :title="item.title" @click="showAnswer(item.id)" />
     </van-cell-group>
     <!-- 问题分类 -->
     <p class="helper-title">
@@ -27,7 +27,7 @@
     </p>
     <van-row class="bg-white sort-div">
       <van-col v-for="(item, index) in sortList" :key="index" span="8">
-        <div class="text-center sort-box">
+        <div class="text-center sort-box" @click="goList(item.id)">
           <p class="sort-name">
             {{ item.title }}
           </p>
@@ -37,20 +37,29 @@
         </div>
       </van-col>
     </van-row>
+    <!-- 底部联系客服按钮 -->
+    <ContactCustomer />
+    <!-- 答案遮罩弹框 -->
+    <AnswerPop ref="AnswerPop" :is-show="isShow" @getShow="getShow" />
   </div>
 </template>
 
 <script>
+// 引入帮助客服api
 import { getServiceIndex } from '@/api/serviceHelp'
+import ContactCustomer from '../components/ContactCustomer'
+import AnswerPop from '../components/AnswerPop'
 export default {
   components: {
-
+    ContactCustomer,
+    AnswerPop
   },
   props: {
 
   },
   data() {
     return {
+      isShow: false,
       user: {
         name: '',
         img: ''
@@ -93,6 +102,25 @@ export default {
         this.hotQustion = res.data.hotQustion
         this.sortList = res.data.sortList
       })
+    },
+    // 根据id获取答案
+    showAnswer(id) {
+      console.log(id)
+      this.isShow = true
+      this.$refs.AnswerPop.getAnswer(id)
+    },
+    // 接收答案弹框返回的 isShow 值
+    getShow(v) {
+      this.isShow = v
+    },
+    // 跳转到分类下的问题列表
+    goList(id) {
+      this.$router.push({
+        path: '/persion/ServiceHelper/QustionList',
+        query: {
+          id: id
+        }
+      })
     }
   }
 }
@@ -129,4 +157,5 @@ export default {
 .sort-div .van-col:nth-child(3n){
   .sort-box{border-right: none}
 }
+
 </style>
