@@ -3,6 +3,7 @@
     <van-nav-bar
       title="地址管理"
       left-arrow
+      fixed
     >
       <van-icon
         slot="left"
@@ -75,6 +76,7 @@ export default {
 <style scoped lang="less">
 @import "../../../../styles/variables.less";
 .container {
+  margin-top: 50px;
   .null-img {
     margin-top: 2.1rem;
     text-align: center;

@@ -9,6 +9,15 @@ export function getAddressList(data) {
     params: data
   })
 }
+// NOTE 获取用户已收藏商品
+export function getProductCollected(data) {
+  return request({
+    url: '/persion/getProductCollected',
+    method: 'get',
+    params: data
+  })
+}
+
 // NOTE 获取用户已收藏店铺
 export function getStoreCollected(data) {
   return request({
