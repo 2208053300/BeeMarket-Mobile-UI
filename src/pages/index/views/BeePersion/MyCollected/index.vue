@@ -124,19 +124,13 @@ export default {
         this.getProductCollected()
       }
     },
-    getStoreCollected() {
-      getStoreCollected()
-        .then(res => {
-          this.storeList = res.data.storeList
-        })
-        .catch(() => {})
+    async getStoreCollected() {
+      const res = await getStoreCollected()
+      this.storeList = res.data.storeList
     },
-    getProductCollected() {
-      getProductCollected()
-        .then(res => {
-          this.productList = res.data.productList
-        })
-        .catch(() => {})
+    async getProductCollected() {
+      const res = await getProductCollected()
+      this.productList = res.data.productList
     },
     editProduct() {
       // TODO 判断是店铺还是商品收藏编辑
