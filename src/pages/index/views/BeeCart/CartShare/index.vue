@@ -10,7 +10,7 @@
       </div>
     </van-nav-bar> -->
 
-    <BeeNavBar :title="购物车" />
+    <BeeHeader />
 
     <div class="wrapper bg-gray cart-share">
       <ul class="shop-list margin-b-20">
@@ -62,11 +62,11 @@
 <script>
 import { BeeDefault } from '../../../styles/variables.less'
 import { mapState } from 'vuex'
-import BeeNavBar from '@/pages/index/components/BeeNavBar'
+import BeeHeader from '@/pages/index/components/BeeHeader'
 // import { getShareCartList } from '@/api/cart'
 export default {
   components: {
-    BeeNavBar
+    BeeHeader
   },
   props: {},
   data() {
@@ -151,6 +151,9 @@ export default {
     showDetails(id) {
       console.log(id)
     }
+  },
+  metaInfo: {
+    title: '购物车'
   }
 }
 </script>

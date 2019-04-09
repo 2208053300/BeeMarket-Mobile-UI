@@ -41,6 +41,9 @@ export default {
     back() {
       this.$router.go(-1)
     }
+  },
+  metaInfo: {
+    title: '使用帮助'
   }
 }
 </script>

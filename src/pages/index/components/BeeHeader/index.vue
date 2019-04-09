@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar>
+    <van-nav-bar fixed>
       <van-icon
         slot="left"
         name="wap-home"
@@ -24,7 +24,9 @@
 import { BeeDefault } from '../../styles/variables.less'
 export default {
   components: {},
-  props: {},
+  props: {
+
+  },
   data() {
     return {
       BeeDefault
