@@ -1,25 +1,26 @@
 const app = {
   state: {
+    beeHeader: false,
     beeFooter: {
       show: true,
-      avtive: 0
+      active: 0
     }
   },
   mutations: {
     SET_BEEFOOTER: (state, beeFooter) => {
       state.beeFooter = beeFooter
+    },
+    SET_BEEHEADER: (state, beeHeader) => {
+      state.beeHeader = beeHeader
     }
   },
   actions: {
-    ChangeBeeFooter({
-      commit
-    }, beeFooter) {
+    ChangeBeeFooter({ commit }, beeFooter) {
       return new Promise(resolve => {
         commit('SET_BEEFOOTER', beeFooter)
         resolve()
       })
     }
-
   }
 }
 

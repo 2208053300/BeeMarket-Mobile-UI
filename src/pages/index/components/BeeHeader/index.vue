@@ -1,48 +1,55 @@
 <template>
   <div>
-    <van-nav-bar
-      :left-text="beeHeader.lextText"
-      left-arrow
-      @click-left="$router.go(-1)"
-      @click-right="setMethods(beeHeader.clickRight,)"
-    >
+    <van-nav-bar>
+      <van-icon
+        slot="left"
+        name="wap-home"
+        size="0.5rem"
+        :color="BeeDefault"
+        @click="goHome"
+      />
+      <span slot="title">蜂集市</span>
       <van-icon
         slot="right"
-        name="search"
-      />
-      <van-search
-        slot="title"
-        placeholder="请输入搜索关键词"
-        style="padding:0"
+        name="cart-o"
+        size="0.5rem"
+        :color="BeeDefault"
+        @click="goCart"
       />
     </van-nav-bar>
   </div>
 </template>
 
 <script>
+import { BeeDefault } from '../../styles/variables.less'
 export default {
   components: {},
   props: {},
   data() {
-    return {}
-  },
-  computed: {
-    beeHeader: {
-      get() {
-        return this.$store.state.app.beeHeader
-      }
+    return {
+      BeeDefault
     }
   },
+  computed: {},
   watch: {},
   created() {},
   mounted() {},
   methods: {
-    // NOTE 动态设置header的方法
-    setMethods(methodsName, ...parameters) {
-      this[methodsName](...parameters)
-    },
     goHome() {
+      this.$store.state.app.beeHeader = false
+      this.$store.state.app.beeFooter = {
+        show: true,
+        active: 0
+      }
       this.$router.push('/')
+    },
+    goCart() {
+      this.$store.state.app.beeHeader = false
+      this.$store.state.app.beeFooter.show = {
+        show: true,
+        active: 3
+      }
+      this.$router.push('/cart')
     }
   }
 }

@@ -1,5 +1,13 @@
 <template>
   <div class="product-collected">
+    <div>
+      <van-icon
+        name="search"
+        size="20px"
+        style="margin-right:0.3rem;"
+      />
+      <span @click="editProduct">编辑</span>
+    </div>
     <div class="product-container">
       <van-checkbox-group v-model="editData">
         <div
@@ -129,6 +137,10 @@ export default {
     cancelCollected() {
       // TODO 取消收藏
       console.log(this.editData)
+    },
+    editProduct() {
+      // TODO 判断是店铺还是商品收藏编辑
+      this.editStatus = !this.editStatus
     }
   }
 }

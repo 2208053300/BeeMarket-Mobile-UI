@@ -1,17 +1,5 @@
 <template>
   <div>
-    <van-nav-bar
-      title="地址管理"
-      left-arrow
-      fixed
-    >
-      <van-icon
-        slot="left"
-        name="arrow-left"
-        color="#666666"
-        @click="back"
-      />
-    </van-nav-bar>
     <div class="container">
       <div
         v-if="addressList.length===0"
@@ -44,6 +32,9 @@
 import { getAddressList } from '@/api/user'
 import AddressList from './components/AddressList'
 export default {
+  metaInfo: {
+    title: '地址管理'
+  },
   components: {
     AddressList
   },
@@ -57,6 +48,7 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     getAddressList()
       .then(res => {
@@ -64,19 +56,13 @@ export default {
       })
       .catch(() => {})
   },
-  methods: {
-    back() {
-      this.$router.go(-1)
-      this.$store.state.app.beeFooter.show = true
-    }
-  }
+  methods: {}
 }
 </script>
 
 <style scoped lang="less">
 @import "../../../../styles/variables.less";
 .container {
-  margin-top: 50px;
   .null-img {
     margin-top: 2.1rem;
     text-align: center;

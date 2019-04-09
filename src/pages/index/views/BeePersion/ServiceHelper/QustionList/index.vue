@@ -1,7 +1,6 @@
 <template>
   <div>
     <!-- Navbar -->
-    <van-nav-bar :title="sortName" fixed left-arrow @click-left="back" />
     <div class="container">
       <van-list
         v-model="loading"
@@ -20,7 +19,11 @@
     <!-- 底部联系客服按钮 -->
     <ContactCustomer />
     <!-- 答案遮罩弹框 -->
-    <AnswerPop ref="AnswerPop" :is-show="isShow" @getShow="getShow" />
+    <AnswerPop
+      ref="AnswerPop"
+      :is-show="isShow"
+      @getShow="getShow"
+    />
   </div>
 </template>
 
@@ -30,13 +33,17 @@ import { getSortList } from '@/api/serviceHelp'
 import ContactCustomer from '../components/ContactCustomer'
 import AnswerPop from '../components/AnswerPop'
 export default {
+  // NOTE 动态表头数据需要函数方法
+  metaInfo() {
+    return {
+      title: this.sortName
+    }
+  },
   components: {
     ContactCustomer,
     AnswerPop
   },
-  props: {
-
-  },
+  props: {},
   data() {
     return {
       isShow: false,
@@ -47,24 +54,16 @@ export default {
       page: 1
     }
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
-  created() {
-
-  },
+  computed: {},
+  watch: {},
+  created() {},
   mounted() {
     // this.getData()
+    this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    console.log(this)
   },
   methods: {
-    // 返回
-    back() {
-      this.$router.go(-1)
-    },
     // 获取数据
     getData() {
       getSortList(this.$route.query.id, this.page).then(res => {
@@ -98,5 +97,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.container{margin-bottom: 75px;margin-top: 56px;}
+.container {
+  margin-bottom: 75px;
+}
 </style>

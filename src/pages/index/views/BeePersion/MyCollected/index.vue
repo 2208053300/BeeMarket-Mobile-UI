@@ -1,29 +1,5 @@
 <template>
   <div>
-    <van-nav-bar
-      title="我的收藏"
-      fixed
-    >
-      <van-icon
-        slot="left"
-        name="arrow-left"
-        color="#666666"
-        @click="back"
-      />
-      <div
-        slot="right"
-        class="nav-right"
-      >
-        <div>
-          <van-icon
-            name="search"
-            size="20px"
-            style="margin-right:0.3rem;"
-          />
-          <span @click="editProduct">编辑</span>
-        </div>
-      </div>
-    </van-nav-bar>
     <div class="collected-container">
       <van-tabs
         v-model="activeTab"
@@ -49,6 +25,7 @@
               class="collected-list"
             >
               <collected-classify />
+
               <product-collected
                 ref="ProductCollected"
                 :product-list="productList"
@@ -90,6 +67,9 @@ import ProductCollected from './components/ProductCollected'
 import { getStoreCollected, getProductCollected } from '@/api/user'
 
 export default {
+  metaInfo: {
+    title: '我的收藏'
+  },
   components: {
     BeeGuess,
     StoreCollected,
@@ -109,13 +89,11 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getProductCollected()
   },
   methods: {
-    back() {
-      this.$router.go(-1)
-    },
     changeTab(index, title) {
       // NOTE 如果切换到店铺列表
       if (index) {
@@ -124,24 +102,13 @@ export default {
         this.getProductCollected()
       }
     },
-    getStoreCollected() {
-      getStoreCollected()
-        .then(res => {
-          this.storeList = res.data.storeList
-        })
-        .catch(() => {})
+    async getStoreCollected() {
+      const res = await getStoreCollected()
+      this.storeList = res.data.storeList
     },
-    getProductCollected() {
-      getProductCollected()
-        .then(res => {
-          this.productList = res.data.productList
-        })
-        .catch(() => {})
-    },
-    editProduct() {
-      // TODO 判断是店铺还是商品收藏编辑
-      this.$refs.ProductCollected.editStatus = !this.$refs.ProductCollected
-        .editStatus
+    async getProductCollected() {
+      const res = await getProductCollected()
+      this.productList = res.data.productList
     }
   }
 }
@@ -163,7 +130,7 @@ export default {
   }
 }
 .collected-container {
-  margin: 46px 0 60px;
+  margin: 0 0 60px;
   .van-tabs {
     .van-tabs__line {
       width: 0.9rem !important;
