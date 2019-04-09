@@ -1,11 +1,12 @@
 <template>
   <div>
-    <!-- Navbar -->
-    <van-nav-bar title="客服帮助" fixed left-arrow @click-left="back" />
     <!-- 用户信息 -->
     <div class="container">
       <div class="user-info flex align-center bg-white">
-        <img :src="user.img" class="avatar">
+        <img
+          :src="user.img"
+          class="avatar"
+        >
         <div class="info">
           <p class="name">
             <span>{{ user.name }}</span>，您好！
@@ -20,15 +21,27 @@
         热点问题
       </p>
       <van-cell-group>
-        <van-cell v-for="(item, index) in hotQustion" :key="index" :title="item.title" @click="showAnswer(item.id)" />
+        <van-cell
+          v-for="(item, index) in hotQustion"
+          :key="index"
+          :title="item.title"
+          @click="showAnswer(item.id)"
+        />
       </van-cell-group>
       <!-- 问题分类 -->
       <p class="helper-title">
         问题类型
       </p>
       <van-row class="bg-white sort-div">
-        <van-col v-for="(item, index) in sortList" :key="index" span="8">
-          <div class="text-center sort-box" @click="goList(item.id)">
+        <van-col
+          v-for="(item, index) in sortList"
+          :key="index"
+          span="8"
+        >
+          <div
+            class="text-center sort-box"
+            @click="goList(item.id)"
+          >
             <p class="sort-name">
               {{ item.title }}
             </p>
@@ -42,7 +55,11 @@
     <!-- 底部联系客服按钮 -->
     <ContactCustomer />
     <!-- 答案遮罩弹框 -->
-    <AnswerPop ref="AnswerPop" :is-show="isShow" @getShow="getShow" />
+    <AnswerPop
+      ref="AnswerPop"
+      :is-show="isShow"
+      @getShow="getShow"
+    />
   </div>
 </template>
 
@@ -52,13 +69,14 @@ import { getServiceIndex } from '@/api/serviceHelp'
 import ContactCustomer from '../components/ContactCustomer'
 import AnswerPop from '../components/AnswerPop'
 export default {
+  metaInfo: {
+    title: '客服帮助'
+  },
   components: {
     ContactCustomer,
     AnswerPop
   },
-  props: {
-
-  },
+  props: {},
   data() {
     return {
       isShow: false,
@@ -66,10 +84,12 @@ export default {
         name: '',
         img: ''
       },
-      hotQustion: [{
-        id: 1,
-        title: ''
-      }],
+      hotQustion: [
+        {
+          id: 1,
+          title: ''
+        }
+      ],
       sortList: [
         {
           id: 1,
@@ -79,24 +99,15 @@ export default {
       ]
     }
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
-  created() {
-
-  },
+  computed: {},
+  watch: {},
+  created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getIndexData()
   },
   methods: {
-    // 返回
-    back() {
-      this.$router.go(-1)
-    },
     // 获取帮助首页信息
     getIndexData() {
       getServiceIndex().then(res => {
@@ -129,35 +140,49 @@ export default {
 </script>
 
 <style scoped lang="less">
-.container{margin-top: 56px;}
-.avatar{width: 0.98rem; height: 0.98rem; border-radius: 50%; margin-right:0.3rem;}
-.user-info{
+.avatar {
+  width: 0.98rem;
+  height: 0.98rem;
+  border-radius: 50%;
+  margin-right: 0.3rem;
+}
+.user-info {
   padding: 0 0.3rem;
-  .name{
-    font-size:0.28rem;
-    color:#000;
+  .name {
+    font-size: 0.28rem;
+    color: #000;
     margin-bottom: 0.2rem;
   }
-  .tip{
-    font-size:0.24rem;
-    color:#999;
+  .tip {
+    font-size: 0.24rem;
+    color: #999;
   }
 }
-.helper-title{
+.helper-title {
   font-size: 0.22rem;
-  padding-left: 0.3rem
+  padding-left: 0.3rem;
 }
 
-.sort-box{
-  border-right:1px solid #ddd;
-  border-bottom:1px solid #ddd;
+.sort-box {
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 0.2rem 0;
-  p{margin: 0}
-  .sort-name{font-size: 0.26rem; color: #333; margin-bottom: 0.2rem}
-  .sort-desc{font-size: 0.2rem; color:#999;}
+  p {
+    margin: 0;
+  }
+  .sort-name {
+    font-size: 0.26rem;
+    color: #333;
+    margin-bottom: 0.2rem;
+  }
+  .sort-desc {
+    font-size: 0.2rem;
+    color: #999;
+  }
 }
-.sort-div .van-col:nth-child(3n){
-  .sort-box{border-right: none}
+.sort-div .van-col:nth-child(3n) {
+  .sort-box {
+    border-right: none;
+  }
 }
-
 </style>

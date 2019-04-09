@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-tabbar
-      v-model="avtive"
+      v-model="active"
       :active-color="BeeDefault"
     >
       <van-tabbar-item
@@ -50,16 +50,16 @@ export default {
   },
   computed: {
     // NOTE 高亮图标与state绑定
-    avtive: {
+    active: {
       get() {
-        return this.$store.state.app.beeFooter.avtive
+        return this.$store.state.app.beeFooter.active
       },
       set(val) {
         // this.$store.commit('SET_BEEFOOTER', {
         //   show: true,
-        //   avtive: val
+        //   active: val
         // })
-        this.$store.state.app.beeFooter.avtive = val
+        this.$store.state.app.beeFooter.active = val
       }
     }
   },
@@ -69,22 +69,22 @@ export default {
       if (to.path.indexOf('category') !== -1) {
         this.$store.commit('SET_BEEFOOTER', {
           show: true,
-          avtive: 1
+          active: 1
         })
       } else if (to.path.indexOf('discover') !== -1) {
         this.$store.commit('SET_BEEFOOTER', {
           show: true,
-          avtive: 2
+          active: 2
         })
       } else if (to.path.indexOf('cart') !== -1) {
         this.$store.commit('SET_BEEFOOTER', {
           show: true,
-          avtive: 3
+          active: 3
         })
       } else if (to.path.indexOf('persion') !== -1) {
         this.$store.commit('SET_BEEFOOTER', {
           show: true,
-          avtive: 4
+          active: 4
         })
       } else {
         this.active = 0

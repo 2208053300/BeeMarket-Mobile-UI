@@ -1,17 +1,5 @@
 <template>
   <div>
-    <van-nav-bar
-      title="新增地址"
-      left-arrow
-      fixed
-    >
-      <van-icon
-        slot="left"
-        name="arrow-left"
-        color="#666666"
-        @click="back"
-      />
-    </van-nav-bar>
     <div class="add-address">
       <van-cell-group>
         <van-field
@@ -108,6 +96,9 @@
 import areaList from '@/assets/area'
 import { BeeDefault } from '../../../../styles/variables.less'
 export default {
+  metaInfo: {
+    title: '新增地址'
+  },
   components: {},
   props: {},
   data() {
@@ -128,6 +119,7 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     // NOTE 如果是编辑地址
     if (this.$store.state.user.addressData) {
@@ -152,7 +144,6 @@ export default {
 <style lang="less">
 @import "../../../../styles/variables.less";
 .add-address {
-  margin-top: 60px;
   .van-cell {
     min-height: 0.86rem;
     .van-cell__title {

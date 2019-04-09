@@ -1,20 +1,5 @@
 <template>
   <div>
-    <van-nav-bar title="功能反馈">
-      <div
-        slot="left"
-        class="nav-right"
-      >
-        <div>
-          <van-icon
-            name="arrow-left"
-            size="20px"
-            @click="back"
-          />
-        </div>
-      </div>
-    </van-nav-bar>
-
     <van-cell-group class="margin-t-20">
       <van-field
         v-model="username"
@@ -36,15 +21,24 @@
     <van-cell-group class="margin-t-20 upload-img">
       <div class="van-cell van-field ">
         <div class="img-label">
-          <span>  上传图片（最多六张）</span>
+          <span> 上传图片（最多六张）</span>
         </div>
       </div>
-      <van-uploader :after-read="onRead" accept="image/gif, image/jpeg" multiple class="uploader-img">
+      <van-uploader
+        :after-read="onRead"
+        accept="image/gif, image/jpeg"
+        multiple
+        class="uploader-img"
+      >
         <van-icon name="photograph" />
       </van-uploader>
     </van-cell-group>
 
-    <van-button type="primary" block class="margin-t-20 subimit-btn">
+    <van-button
+      type="primary"
+      block
+      class="margin-t-20 subimit-btn"
+    >
       提交反馈
     </van-button>
   </div>
@@ -52,54 +46,42 @@
 
 <script>
 export default {
-  components: {
-
+  metaInfo: {
+    title: '功能反馈'
   },
-  props: {
-
-  },
+  components: {},
+  props: {},
   data() {
     return {
       username: '',
       message: ''
     }
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
-  created() {
-
-  },
+  computed: {},
+  watch: {},
+  created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
   },
   methods: {
-    // 返回
-    back() {
-      this.$router.go(-1)
-    },
     // 读取图片完成后的回调函数
-    onRead() {
-
-    }
+    onRead() {}
   }
 }
 </script>
 
 <style  lang="less">
 @import url(../../../../styles/variables.less);
-.upload-img .img-label{
+.upload-img .img-label {
   width: 200px;
   font-size: 14px;
 }
-.uploader-img{
-  margin:20px 15px;
+.uploader-img {
+  margin: 20px 15px;
 }
-.subimit-btn{
-  background:@BeeDefault;
+.subimit-btn {
+  background: @BeeDefault;
   border-color: @BeeDefault;
 }
 </style>

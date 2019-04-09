@@ -1,17 +1,8 @@
 <template>
   <div>
-    <!-- title -->
-    <van-nav-bar title="历史足迹" fixed>
-      <div slot="left" class="nav-right">
-        <van-icon name="arrow-left" size="20px" @click="back" />
-      </div>
-      <div slot="right">
-        <span @click="$router.push('/persion/history/historyEdit')">编辑</span>
-      </div>
-    </van-nav-bar>
-
     <!-- 内容 -->
     <div class="wrapper container bg-gray hitory-index">
+      <span @click="$router.push('/persion/history/historyEdit')">编辑</span>
       <van-row
         v-for="(item, index) in history.historyInfo"
         :key="index"
@@ -27,7 +18,11 @@
           class="shop-box margin-b-20"
         >
           <div class="goodsItem">
-            <img :src="pro.img" alt="" class="img">
+            <img
+              :src="pro.img"
+              alt=""
+              class="img"
+            >
             <p class="title no-wrap">
               {{ pro.title }}
             </p>
@@ -53,13 +48,22 @@
       :overlay="true"
       class="text-center"
     >
-      <p class="collect" @click="collect()">
+      <p
+        class="collect"
+        @click="collect()"
+      >
         加入收藏
       </p>
-      <p class="del" @click="del()">
+      <p
+        class="del"
+        @click="del()"
+      >
         删除
       </p>
-      <p class="cancel" @click="cancel()">
+      <p
+        class="cancel"
+        @click="cancel()"
+      >
         取消
       </p>
     </van-popup>
@@ -72,6 +76,9 @@ import { mapState, mapActions } from 'vuex'
 import { BeeDefault } from '../../../../styles/variables.less'
 
 export default {
+  metaInfo: {
+    title: '历史足迹'
+  },
   components: {},
   props: {},
   data() {
@@ -99,14 +106,8 @@ export default {
     ...mapActions(['GetHistoryInfo']),
     // 隐藏底部导航栏
     hideNavBar() {
+      this.$store.state.app.beeHeader = true
       this.$store.state.app.beeFooter.show = false
-    },
-    // 返回并显示底部导航
-    back() {
-      this.$store.state.app.beeFooter.show = true
-      this.$router.push({
-        path: '/persion'
-      })
     },
     // 获取历史足迹数据
     getList() {
@@ -156,7 +157,6 @@ export default {
 @import "../../../../styles/variables.less";
 .wrapper {
   padding: 0 0.2rem;
-margin-top: 56px;
   box-sizing: border-box;
 }
 

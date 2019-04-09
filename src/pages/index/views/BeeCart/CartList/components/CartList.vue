@@ -146,6 +146,7 @@ export default {
 .cart-list {
   margin: 0.2rem 0.3rem 0;
   .bee-store {
+    border-radius: 0.2rem;
     margin-bottom: 0.2rem;
     background-color: #fff;
     padding: 0.3rem 0.2rem;

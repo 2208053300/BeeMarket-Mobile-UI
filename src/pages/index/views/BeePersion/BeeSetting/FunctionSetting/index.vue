@@ -1,29 +1,26 @@
 
 <template>
   <div>
-    <van-nav-bar title="功能设置">
-      <div
-        slot="left"
-        class="nav-right"
-      >
-        <div>
-          <van-icon
-            name="arrow-left"
-            size="20px"
-            @click="back"
-          />
-        </div>
-      </div>
-    </van-nav-bar>
-
     <div class="fun-list margin-t-20">
-      <van-cell title="功能反馈" is-link @click="goFeedBack" />
+      <van-cell
+        title="功能反馈"
+        is-link
+        @click="goFeedBack"
+      />
     </div>
     <div class="fun-list margin-t-20">
-      <van-cell title="关于" is-link to="/persion/beeSetting/about" />
+      <van-cell
+        title="关于"
+        is-link
+        to="/persion/beeSetting/about"
+      />
     </div>
 
-    <van-button type="primary" block class="margin-t-20 logout-btn">
+    <van-button
+      type="primary"
+      block
+      class="margin-t-20 logout-btn"
+    >
       退出
     </van-button>
   </div>
@@ -31,34 +28,22 @@
 
 <script>
 export default {
-  components: {
-
+  metaInfo: {
+    title: '功能设置'
   },
-  props: {
-
-  },
+  components: {},
+  props: {},
   data() {
-    return {
-
-    }
+    return {}
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
-  created() {
-
-  },
+  computed: {},
+  watch: {},
+  created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
   },
   methods: {
-    // 返回
-    back() {
-      this.$router.go(-1)
-    },
     // 跳转到功能反馈
     goFeedBack() {
       this.$store.state.app.beeFooter.show = false
@@ -71,9 +56,9 @@ export default {
 </script>
 
 <style scoped lang="less">
-.logout-btn{
+.logout-btn {
   background: #fff;
-  border-color:#fff;
-  color: #323233
+  border-color: #fff;
+  color: #323233;
 }
 </style>

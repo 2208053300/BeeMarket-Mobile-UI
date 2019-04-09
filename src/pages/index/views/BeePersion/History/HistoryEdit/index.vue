@@ -1,17 +1,9 @@
 <template>
   <div class="history-edit">
-    <van-nav-bar title="历史足迹" fixed>
-      <div slot="left" class="nav-right">
-        <van-icon name="arrow-left" size="20px" @click="back" />
-      </div>
-      <div slot="right">
-        <span @click="$router.push('/persion/history')">完成</span>
-      </div>
-    </van-nav-bar>
-
     <!-- 内容 -->
     <div class="wrapper container bg-gray hitory-index">
       <p>{{ historySelected }}</p>
+      <span @click="$router.push('/persion/history')">完成</span>
       <van-row
         v-for="(item, index) in historyInfo"
         :key="index"
@@ -20,7 +12,10 @@
         <p class="date">
           {{ item.date }}
         </p>
-        <van-checkbox-group v-model="historySelected" class="flex flex-wrap">
+        <van-checkbox-group
+          v-model="historySelected"
+          class="flex flex-wrap"
+        >
           <van-checkbox
             v-for="pro in item.dayData"
             :key="pro.id"
@@ -30,7 +25,11 @@
             @click="changeAll(index,item.dayData,allSelectedBox[index])"
           >
             <div class="goodsItem">
-              <img :src="pro.img" alt="" class="img">
+              <img
+                :src="pro.img"
+                alt=""
+                class="img"
+              >
               <p class="title no-wrap">
                 {{ pro.title }}
               </p>
@@ -38,7 +37,10 @@
                 <p class="price">
                   ￥{{ pro.price }}
                 </p>
-                <van-icon name="ellipsis" color="#dcdcdc" />
+                <van-icon
+                  name="ellipsis"
+                  color="#dcdcdc"
+                />
               </div>
             </div>
           </van-checkbox>
@@ -67,6 +69,9 @@ import { mapState } from 'vuex'
 import { BeeDefault } from '../../../../styles/variables.less'
 
 export default {
+  metaInfo: {
+    title: '历史足迹'
+  },
   components: {},
   props: {},
   data() {
@@ -96,7 +101,6 @@ export default {
     this.hideNavBar()
   },
   methods: {
-
     getList() {
       getHistoryList().then(res => {
         this.historyInfo = res.data.historyList
@@ -116,12 +120,6 @@ export default {
     // 隐藏底部导航栏
     hideNavBar() {
       this.$store.state.app.beeFooter.show = false
-    },
-    // 返回并显示底部导航
-    back() {
-      this.$router.push({
-        path: '/persion/history'
-      })
     },
 
     // NOTE 全选
@@ -171,7 +169,6 @@ export default {
         this.allSelec = false
       })
     }
-
   }
 }
 </script>
@@ -179,11 +176,11 @@ export default {
 <style lang="less">
 @import "../../../../styles/variables.less";
 .history-edit {
-  .van-checkbox{
+  .van-checkbox {
     width: 100%;
   }
-  .van-checkbox__label{
-    margin-left:0;
+  .van-checkbox__label {
+    margin-left: 0;
   }
   .checkbox {
     width: 33%;
@@ -198,12 +195,10 @@ export default {
   }
   .van-button--danger {
     background: @BeeDefault;
-    border-color: @BeeDefault
+    border-color: @BeeDefault;
   }
 }
 .wrapper {
-  padding:0 0.2rem;
-  margin-top: 56px;
+  padding: 0 0.2rem;
 }
-
 </style>
