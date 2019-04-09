@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="购物车" fixed>
+    <!-- <van-nav-bar title="购物车" fixed>
       <div slot="left" class="nav-right">
         <van-icon
           name="arrow-left"
@@ -8,7 +8,9 @@
           @click="back"
         />
       </div>
-    </van-nav-bar>
+    </van-nav-bar> -->
+
+    <BeeNavBar :title="购物车" />
 
     <div class="wrapper bg-gray cart-share">
       <ul class="shop-list margin-b-20">
@@ -60,9 +62,12 @@
 <script>
 import { BeeDefault } from '../../../styles/variables.less'
 import { mapState } from 'vuex'
+import BeeNavBar from '@/pages/index/components/BeeNavBar'
 // import { getShareCartList } from '@/api/cart'
 export default {
-  components: {},
+  components: {
+    BeeNavBar
+  },
   props: {},
   data() {
     return {

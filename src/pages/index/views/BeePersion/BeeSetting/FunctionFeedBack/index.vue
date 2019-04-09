@@ -39,7 +39,7 @@
           <span>  上传图片（最多六张）</span>
         </div>
       </div>
-      <van-uploader :after-read="onRead" accept="image/gif, image/jpeg" multiple class="uploader-img">
+      <van-uploader name="uploader" :after-read="onRead" accept="image/gif, image/jpeg" multiple class="uploader-img">
         <van-icon name="photograph" />
       </van-uploader>
     </van-cell-group>
@@ -82,8 +82,8 @@ export default {
       this.$router.go(-1)
     },
     // 读取图片完成后的回调函数
-    onRead() {
-
+    onRead(file, detail) {
+      console.log(file, detail)
     }
   }
 }

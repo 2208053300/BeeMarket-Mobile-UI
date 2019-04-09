@@ -103,7 +103,7 @@ export default {
         const tempData = []
         const tempDataId = []
         for (let index = 0; index < this.historyInfo.length; index++) {
-          // this.$set(this.allSelectedBox, index, false)
+          this.$set(this.allSelectedBox, index, false)
           for (let i = 0; i < this.historyInfo[index].dayData.length; i++) {
             tempDataId.push(this.historyInfo[index].dayData[i].id)
             tempData.push(this.historyInfo[index].dayData[i])
@@ -137,6 +137,7 @@ export default {
     },
     // // FIXME 有点小问题，选中子类全选可能出错
     changeAll(index, val, isAll) {
+      console.log(index, val, isAll)
       if (isAll) {
         this.allSelectedBox[index] = false
         return
