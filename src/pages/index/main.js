@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from '@/route/router'
+import router from '@/route/index'
 import store from '@/store'
 import Meta from 'vue-meta'
 import '@/styles/normalize.min.css'
