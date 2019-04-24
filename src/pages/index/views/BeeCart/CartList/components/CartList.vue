@@ -66,12 +66,12 @@
 
 <script>
 import { mapState } from 'vuex'
-import BeeSku from '../../../../components/BeeSku'
+// import BeeSku from '../../../../components/BeeSku'
 import { BeeDefault } from '../../../../styles/variables.less'
 
 export default {
   components: {
-    BeeSku
+    // BeeSku
   },
   props: {},
   data() {
