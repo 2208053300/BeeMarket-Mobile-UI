@@ -26,7 +26,13 @@ export default new Router({
       path: '/',
       name: 'CategoryList',
       component: () => import('@/pages/index/views/BeeCategory/CategoryList')
-    }, {
+    },
+    {
+      path: '/SecCategoryList',
+      name: 'SecCategoryList',
+      component: () => import('@/pages/index/views/BeeCategory/SecCategoryList')
+    },
+    {
       path: 'details',
       name: 'CommodityDetails',
       component: () => import('@/pages/index/views/BeeCategory/CommodityDetails')

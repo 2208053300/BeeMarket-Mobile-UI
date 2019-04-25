@@ -24,7 +24,9 @@
 import { BeeDefault } from '../../styles/variables.less'
 export default {
   components: {},
-  props: {},
+  props: {
+
+  },
   data() {
     return {
       BeeDefault
