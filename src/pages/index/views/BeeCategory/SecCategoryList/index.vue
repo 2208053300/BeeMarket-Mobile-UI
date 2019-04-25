@@ -154,7 +154,9 @@ export default {
 
 <style  lang="less">
 @import url(../../../styles/variables.less);
+
 .sec-category{
+
   .van-tabs__wrap{
     z-index: 0;
   }

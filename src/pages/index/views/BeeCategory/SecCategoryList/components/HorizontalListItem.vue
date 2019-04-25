@@ -65,7 +65,13 @@ export default {
   width: 3.3rem;
   height: 5rem;
   border: 1px solid #ddd;
-   border-radius: 0.1rem;
+  border-radius: 0.1rem;
+  margin-right: 0.1rem;
+  margin-bottom: 0.2rem;
+
+  &:nth-of-type(2n) {
+    margin-right: 0;
+  }
 }
 .img {
   width: 3.3rem;
