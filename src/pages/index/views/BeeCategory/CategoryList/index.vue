@@ -68,6 +68,7 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    // NOTE 当点击搜索栏时，更改样式
     changeLeft() {
       this.searchStatus = true
       this.searchAlign = 'left'
@@ -84,7 +85,7 @@ export default {
 <style  lang="less">
 @import "../../../styles/variables.less";
 .bee-category {
-    height: 100%;
+  height: 100%;
   .van-nav-bar__title {
     max-width: 6.24rem;
   }

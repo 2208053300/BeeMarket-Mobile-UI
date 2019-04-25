@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar>
+    <van-nav-bar fixed>
       <van-icon
         slot="left"
         name="wap-home"

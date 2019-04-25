@@ -32,3 +32,11 @@ export function getRecommendData(data) {
     params: data
   })
 }
+// NOTE 获取商品详情
+export function getCommodityDetails(data) {
+  return request({
+    url: '/category/getCommodityDetails',
+    method: 'get',
+    params: data
+  })
+}

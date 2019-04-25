@@ -18,6 +18,16 @@
           <div class="product-name">
             {{ item.name }}
           </div>
+          <div class="product-tag">
+            <div
+              v-for="item2 in item.tags"
+              :key="item2"
+              class="bee-tag"
+              :class="{hotTag:item2==='热销'}"
+            >
+              {{ item2 }}
+            </div>
+          </div>
           <div class="product-currentPrice">
             <span style="font-size:0.24rem">￥</span><span>{{ item.currentPrice }}</span>
           </div>
@@ -31,7 +41,6 @@
 </template>
 
 <script>
-
 import { getGuess } from '@/api/cart'
 
 export default {
@@ -59,6 +68,7 @@ export default {
 <style scoped lang="less">
 @import "../../styles/variables.less";
 .bee-guess {
+  margin-top: 0.2rem;
   padding: 0 0.3rem 0.3rem;
   background-color: #ffffff;
   border-top-left-radius: 0.2rem;
@@ -88,8 +98,30 @@ export default {
         height: 0.8;
         margin: 0.2rem;
         position: relative;
+        .product-tag {
+          height: 0.6rem;
+          display: flex;
+          align-items: flex-end;
+          .bee-tag {
+            display: inline-block;
+            font-size: 0.2rem;
+            color: @BeeDefault;
+            border: 0.02rem solid @BeeDefault;
+            border-radius: 0.2rem;
+            padding: 0.05rem 0.1rem;
+            &:not(:last-child) {
+              margin-right: 0.12rem;
+            }
+          }
+          .hotTag{
+            border-color: #ffffff;
+            color: #ffffff;
+            background: linear-gradient(to right, @BeeDefault, #ff7116);
+          }
+        }
+
         .product-name {
-          width: 3rem;
+          max-width: 3rem;
           font-size: 0.26rem;
           overflow: hidden;
           text-overflow: ellipsis;

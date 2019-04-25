@@ -68,6 +68,7 @@ export default {
     onChange(key) {
       this.activeKey = key
     },
+    // TODO 点击一级分类，更新二级分类
     async getCategory1() {
       const res = await getCategory1()
       this.category1 = res.data.categoryDate
@@ -85,11 +86,26 @@ export default {
 .category-list {
   height: 100%;
   display: flex;
+      background-color: #fff;
   .select-category {
     width: 21%;
     min-width: 1.6rem;
     height: 100%;
     overflow-y: scroll;
+    .van-badge {
+      font-size: 0.24rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      background-color: @GreyBg;
+      &::after {
+
+      }
+    }
+    .van-badge--select {
+      background-color: #ffffff;
+      border-color: @BeeDefault;
+    }
   }
   .category2-container {
     width: 79%;
@@ -109,6 +125,7 @@ export default {
         padding: 0.2rem 0;
       }
       .category3-container {
+        box-shadow: 0 0 0.3rem @Grey6;
         background-color: #fff;
         padding: 0.34rem;
         display: grid;
