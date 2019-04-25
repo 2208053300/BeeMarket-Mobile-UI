@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="item flex">
-      <img :src="item.img" class="img">
+      <div class="img">
+        <img :src="item.img">
+      </div>
       <div class="info flex flex-column flex-between">
         <p class="name">
           {{ item.name }}
@@ -64,15 +66,18 @@ export default {
 
 <style scoped lang="less">
 @import url(../../../../styles/variables.less);
-.item{margin-bottom: 0.1rem;}
+// .item{margin-bottom: 0.1rem;}
 .img{
   width: 2.8rem;
   height: 2.8rem;
   border-radius: 0.1rem;
+  border: 1px solid #ddd;
+  img{width:100%;height:100%;}
 }
 .info{
   padding: 0.2rem 0;
   margin-left: 0.2rem;
+  flex: 1;
 }
 .name{
   font-size: 0.28rem;

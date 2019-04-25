@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <van-nav-bar fixed>
+  <div style="position:relative; z-index:9999;">
+    <van-nav-bar fixed class="fixed-header">
       <van-icon
         slot="left"
         name="wap-home"
@@ -57,5 +57,6 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style  lang="less">
+.fixed-header{z-index: 9999;}
 </style>

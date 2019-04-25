@@ -16,6 +16,22 @@ export function getCategory2(data) {
     params: data
   })
 }
+// NOTE 根据二级分类 id 获取三级分类
+export function getCategoryThird(data) {
+  return request({
+    url: '/category/getCategoryThird',
+    method: 'post',
+    params: data
+  })
+}
+// NOTE 根据三级分类 id 获取商品列表分类
+export function getCategoryGoodsList(data) {
+  return request({
+    url: '/category/getCategoryGoodsList',
+    method: 'post',
+    params: data
+  })
+}
 // NOTE 获取搜索历史
 export function getSearchHistory(data) {
   return request({
