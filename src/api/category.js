@@ -56,3 +56,11 @@ export function getCommodityDetails(data) {
     params: data
   })
 }
+// NOTE 获取评价
+export function getAssessment(data) {
+  return request({
+    url: '/category/getAssessment',
+    method: 'get',
+    params: data
+  })
+}

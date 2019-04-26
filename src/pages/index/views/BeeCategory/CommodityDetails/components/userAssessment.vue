@@ -1,60 +1,65 @@
 <template>
   <div class="user-assessment">
-    <div class="assessment-title">
-      <div>用户评价（）</div>
-      <div class="good-rate">
-        <span><span class="percent">99%</span> 好评率</span>
-        <van-icon name="arrow" />
-      </div>
-    </div>
-    <div class="assessment-pre">
-      <div
-        v-for="item in commodityData.assessmentData"
-        :key="item.name"
-        class="assessment-container"
-      >
-        <div class="assessment-header">
-          <div class="user">
-            <div class="head-img">
-              <img
-                :src="item.head_img"
-                alt=""
-              >
-            </div>
-            <span class="user-name">
-              {{ item.name|hide_name }}
-            </span>
-          </div>
-          <van-rate
-            v-model="item.rate"
-            readonly
-          />
-        </div>
-        <div class="assessment-details">
-          <span class="assessment">{{ item.desc }}</span>
-          <div class="assessment-img">
-            <div
-              v-for="item2 in item.assessmentImg"
-              :key="item2"
-              class="assessment-img-container"
-            >
-              <img
-                :src="item2"
-                alt=""
-              >
-            </div>
-          </div>
+    <div class="has-assessment">
+      <div class="assessment-title" @click="goAssessment()">
+        <div>用户评价（）</div>
+        <div class="good-rate">
+          <span><span class="percent">99%</span> 好评率</span>
+          <van-icon name="arrow" />
         </div>
       </div>
+      <div class="assessment-pre">
+        <div
+          v-for="item in commodityData.assessmentData"
+          :key="item.name"
+          class="assessment-container"
+        >
+          <div class="assessment-header">
+            <div class="user">
+              <div class="head-img">
+                <img
+                  :src="item.head_img"
+                  alt=""
+                >
+              </div>
+              <span class="user-name">
+                {{ item.name|hide_name }}
+              </span>
+            </div>
+            <van-rate
+              v-model="item.rate"
+              readonly
+            />
+          </div>
+          <div class="assessment-details">
+            <span class="assessment">{{ item.desc }}</span>
+            <div class="assessment-img">
+              <div
+                v-for="item2 in item.assessmentImg"
+                :key="item2"
+                class="assessment-img-container"
+              >
+                <img
+                  :src="item2"
+                  alt=""
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="show-all">
+        <van-button
+          type="default"
+          round
+        >
+          查看全部评价
+        </van-button>
+      </div>
     </div>
-    <div class="show-all">
-      <van-button
-        type="default"
-        round
-      >
-        查看全部评价
-      </van-button>
-    </div>
+    <!-- <div v-if="" class="no-assessment">
+      暂无用户评价
+    </div> -->
   </div>
 </template>
 
@@ -83,7 +88,11 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goAssessment() {
+      this.$router.push('/category/userAssessment')
+    }
+  }
 }
 </script>
 
@@ -93,6 +102,9 @@ export default {
   margin-top: 0.2rem;
   padding: 0.32rem;
   background-color: #fff;
+  .no-assessment{
+    font-size: 0.28rem;
+  }
   .assessment-title {
     font-size: 0.28rem;
     display: flex;

@@ -36,6 +36,10 @@ export default new Router({
       path: 'details',
       name: 'CommodityDetails',
       component: () => import('@/pages/index/views/BeeCategory/CommodityDetails')
+    }, {
+      path: 'userAssessment',
+      name: 'userAssessment',
+      component: () => import('@/pages/index/views/BeeCategory/UserAssessment')
     }]
   },
   {

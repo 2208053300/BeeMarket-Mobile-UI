@@ -38,6 +38,9 @@ import richDetails from './components/richDetails'
 import BeeGuess from '@/pages/index/components/BeeGuess'
 
 export default {
+  metaInfo: {
+    title: '商品详情'
+  },
   components: {
     commodityPre,
     goodsAction,
