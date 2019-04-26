@@ -1,5 +1,8 @@
 <template>
-  <div class="rich-details">
+  <div
+    v-lazy-container="{ selector: 'img' }"
+    class="rich-details"
+  >
     <!-- TODO 没有商品详情富文本时显示 -->
     暂无商品详情
   </div>
@@ -15,7 +18,10 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    console.log(this)
+
+  },
   methods: {}
 }
 </script>
