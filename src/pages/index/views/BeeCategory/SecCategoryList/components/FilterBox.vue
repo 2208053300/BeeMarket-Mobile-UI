@@ -23,13 +23,13 @@
         >
           <span class="name">价格</span>
           <img
-            v-show="!priceFlag"
+            v-show="priceFlag"
             class="price-icon"
             src="@/assets/category/list_icon_price_low.png"
             alt=""
           >
           <img
-            v-show="priceFlag"
+            v-show="!priceFlag"
             class="price-icon"
             src="@/assets/category/list_icon_price_high.png"
             alt=""
@@ -59,19 +59,32 @@ export default {
   },
   props: {
 
+    type: {
+      type: Number,
+      default: 0
+    }
   },
   data() {
     return {
       nowIndex: 0, // 筛选条件
-      priceFlag: false, // 价格升降序
-      isVertical: false //  商品列表是1列还是2列
+      priceFlag: false, // 价格升降序 false 降序  true 升序
+      isVertical: true,
+      // 点击价格次数
+      count: 0
     }
   },
   computed: {
 
   },
   watch: {
-
+    type: {
+      handler(newType, oldtype) {
+        this.nowIndex = newType
+        // this.getGoodsList(newCondition)
+      },
+      immediate: true,
+      deep: true
+    }
   },
   created() {
 
@@ -82,18 +95,31 @@ export default {
   methods: {
     getList(type) {
       this.nowIndex = type
+
       // 0按综合获取 1销量 2价格
       if (type === 0) {
         console.log(type, this.nowIndex)
+        this.$emit('getFilter', type)
+        this.priceFlag = false
+        this.count = 0
       } else if (type === 1) {
         console.log(type, this.nowIndex)
+        this.$emit('getFilter', type)
+        this.priceFlag = false
+        this.count = 0
       } else if (type === 2) {
-        console.log(type, this.nowIndex)
-        this.priceFlag = !this.priceFlag
+        this.count++
+        console.log(type, this.nowIndex, this.count)
+        this.$emit('getFilter', type)
+        if (this.count > 1) { // this.count == 1 是选中价格，>1 时筛选按价格升序还是降序
+          this.count % 2 === 0 ? this.priceFlag = true : this.priceFlag = false
+          this.$emit('getFilter', { type, priceFlag: this.priceFlag })
+        }
       }
     },
     showListWay() {
       this.isVertical = !this.isVertical
+      this.$emit('showWay', this.isVertical)
     }
   }
 
