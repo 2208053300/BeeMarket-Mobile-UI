@@ -8,7 +8,10 @@
       请分享给好友等待对方接受或转赠
     </van-notice-bar>
     <div class="order-gift">
-      <div class="bg-content">
+      <div
+        class="bg-content"
+        @click="showExplain()"
+      >
         <div class="gift-step">
           <div class="step-content">
             <div class="step-img">
@@ -77,23 +80,7 @@
         </p>
       </div>
     </div>
-    <div
-      v-if="giftStatus===0"
-      class="gift-way"
-    >
-      <span class="way-title">请点击赠送</span>
-      <div class="way-gird">
-        <div class="way-content">
-          <div class="way-img">
-            <img
-              src=""
-              alt=""
-            >
-          </div>
-          <span class="way-text">微信</span>
-        </div>
-      </div>
-    </div>
+    <share-channel v-if="giftStatus===0" />
     <div
       v-else
       class="gift-end"
@@ -111,19 +98,25 @@
         继续逛逛
       </van-button>
     </div>
+    <give-explain ref="showExplain" />
   </div>
 </template>
 
 <script>
+import shareChannel from './components/shareChannel'
+import giveExplain from './components/giveExplain'
 export default {
   metaInfo: {
     title: '赠送好友'
   },
-  components: {},
+  components: {
+    shareChannel,
+    giveExplain
+  },
   props: {},
   data() {
     return {
-      giftStatus: 1
+      giftStatus: 0
     }
   },
   computed: {},
@@ -133,7 +126,12 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
   },
-  methods: {}
+  methods: {
+    // NOTE 显示上拉菜单
+    showExplain() {
+      this.$refs.showExplain.showExplain = true
+    }
+  }
 }
 </script>
 
@@ -211,29 +209,7 @@ export default {
       }
     }
   }
-  .gift-way {
-    padding: 0.4rem 0.2rem;
-    margin: 0.16rem;
-    border-radius: 0.2rem;
-    box-sizing: border-box;
-    background-color: #fff;
-    position: relative;
-    top: -0.2rem;
-    .way-gird {
-      margin: 0.4rem 0.2rem 0 0.2rem;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      .way-content {
-        text-align: center;
-        .way-img {
-          margin-bottom: 0.2rem;
-        }
-        .way-text {
-          font-size: 0.28rem;
-        }
-      }
-    }
-  }
+
   .gift-end {
     text-align: center;
     .show-order {

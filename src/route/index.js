@@ -61,6 +61,11 @@ export default new Router({
               name: 'giveFirends',
               component: () =>
                 import('@/pages/index/BeeCategory/CommodityDetails/GiveFirends')
+            }, {
+              path: 'payForAnother',
+              name: 'payForAnother',
+              component: () =>
+                import('@/pages/index/BeeCategory/CommodityDetails/PayForAnother')
             }
           ]
         }
