@@ -64,3 +64,19 @@ export function getAssessment(data) {
     params: data
   })
 }
+// NOTE 获取默认收货地址
+export function getDefaultAddress(data) {
+  return request({
+    url: '/category/getDefaultAddress',
+    method: 'get',
+    params: data
+  })
+}
+// NOTE 获取订单商品详情
+export function getOrderCommodity(data) {
+  return request({
+    url: '/category/getOrderCommodity',
+    method: 'get',
+    params: data
+  })
+}

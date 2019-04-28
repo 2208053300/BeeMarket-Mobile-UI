@@ -40,6 +40,10 @@ export default new Router({
       path: 'userAssessment',
       name: 'userAssessment',
       component: () => import('@/pages/index/views/BeeCategory/UserAssessment')
+    }, {
+      path: 'confirmOrder',
+      name: 'confirmOrder',
+      component: () => import('@/pages/index/views/BeeCategory/ConfirmOrder')
     }]
   },
   {
