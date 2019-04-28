@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-tabs
-      v-model="buy_for"
+      v-model="buyFor"
       :color="BeeDefault"
       :title-active-color="BeeDefault"
       :line-width="30"
@@ -25,7 +25,10 @@
             <div class="address-details">
               <div class="user-details">
                 <span class="name">{{ detaultAddress.username }}</span>
-                <span v-if="detaultAddress.phone" class="phone">{{ detaultAddress.phone|toTel }}</span>
+                <span
+                  v-if="detaultAddress.phone"
+                  class="phone"
+                >{{ detaultAddress.phone|toTel }}</span>
               </div>
               <div class="address">
                 <div class="address-tag default-tag">
@@ -92,8 +95,8 @@ export default {
   data() {
     return {
       BeeDefault,
-      buy_for: 0,
-      detaultAddress: {}
+      detaultAddress: {},
+      buyFor: 0
     }
   },
   computed: {},

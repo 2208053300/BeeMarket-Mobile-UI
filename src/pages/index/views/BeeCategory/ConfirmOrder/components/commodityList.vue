@@ -46,12 +46,10 @@
         </div>
         <div class="commodity-message">
           <span class="message-text">留言：</span>
-          <van-cell-group>
-            <van-field
-              v-model="commodityMessage"
-              placeholder="选填您的要求"
-            />
-          </van-cell-group>
+          <van-field
+            v-model="commodityMessage"
+            placeholder="选填您的要求"
+          />
         </div>
       </div>
     </div>
@@ -151,7 +149,14 @@ export default {
       .commodity-message {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        .message-text{
+          white-space: nowrap;
+          font-size: 0.28rem;
+        }
+        .van-field{
+          font-size: 0.28rem;
+          color: @Grey1;
+        }
       }
     }
   }
