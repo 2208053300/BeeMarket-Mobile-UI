@@ -157,7 +157,7 @@ export default {
       this.$router.push('/persion/addressSetting')
     },
     sendToFirend() {
-
+      this.$router.push('/category/details/giveFirends')
     }
   }
 }

@@ -90,7 +90,7 @@ export default {
   mounted() {},
   methods: {
     goAssessment() {
-      this.$router.push('/category/commodityDetails/userAssessment')
+      this.$router.push('/category/details/userAssessment')
     }
   }
 }

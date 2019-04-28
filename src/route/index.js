@@ -25,25 +25,22 @@ export default new Router({
       component: () => import('@/pages/index/BeeCategory'),
       children: [
         {
-          path: '/',
+          path: '',
           name: 'CategoryList',
-          component: () =>
-            import('@/pages/index/BeeCategory/CategoryList')
+          component: () => import('@/pages/index/BeeCategory/CategoryList')
         },
         {
-          path: '/SecCategoryList',
+          path: 'SecCategoryList',
           name: 'SecCategoryList',
-          component: () =>
-            import('@/pages/index/BeeCategory/SecCategoryList')
+          component: () => import('@/pages/index/BeeCategory/SecCategoryList')
         },
         {
           path: 'details',
           name: 'CommodityDetails',
-          component: () =>
-            import('@/pages/index/BeeCategory/CommodityDetails'),
+          component: () => import('@/pages/index/BeeCategory/CommodityDetails'),
           children: [
             {
-              path: '/',
+              path: '',
               component: () =>
                 import('@/pages/index/BeeCategory/CommodityDetails/CommodityDetails')
             },
@@ -58,6 +55,12 @@ export default new Router({
               name: 'confirmOrder',
               component: () =>
                 import('@/pages/index/BeeCategory/CommodityDetails/ConfirmOrder')
+            },
+            {
+              path: 'giveFirends',
+              name: 'giveFirends',
+              component: () =>
+                import('@/pages/index/BeeCategory/CommodityDetails/GiveFirends')
             }
           ]
         }
@@ -68,10 +71,9 @@ export default new Router({
       component: () => import('@/pages/index/BeeDiscover'),
       children: [
         {
-          path: '/',
+          path: '',
           name: 'DiscoverList',
-          component: () =>
-            import('@/pages/index/BeeDiscover/DiscoverList')
+          component: () => import('@/pages/index/BeeDiscover/DiscoverList')
         }
       ]
     },
@@ -80,7 +82,7 @@ export default new Router({
       component: () => import('@/pages/index/BeeCart'),
       children: [
         {
-          path: '/',
+          path: '',
           name: 'CartList',
           component: () => import('@/pages/index/BeeCart/CartList'),
           meta: {
@@ -88,7 +90,7 @@ export default new Router({
           }
         },
         {
-          path: '/CartShare',
+          path: 'CartShare',
           name: 'CartShare',
           component: () => import('@/pages/index/BeeCart/CartShare')
         }
@@ -99,18 +101,17 @@ export default new Router({
       component: () => import('@/pages/index/BeePersion'),
       children: [
         {
-          path: '/',
+          path: '',
           name: 'PersionalCenter',
-          component: () =>
-            import('@/pages/index/BeePersion/PersionalCenter')
+          component: () => import('@/pages/index/BeePersion/PersionalCenter')
         },
         {
-          path: '/persion/order',
+          path: 'order',
           name: 'MyOrder',
           component: () => import('@/pages/index/BeePersion/MyOrder')
         },
         {
-          path: '/persion/BeeSetting',
+          path: 'BeeSetting',
           component: () => import('@/pages/index/BeePersion/BeeSetting'),
           children: [
             {
@@ -120,7 +121,7 @@ export default new Router({
                 import('@/pages/index/BeePersion/BeeSetting/FunctionSetting')
             },
             {
-              path: '/persion/BeeSetting/functionFeedBack',
+              path: 'functionFeedBack',
               name: 'functionFeedBack',
               component: () =>
                 import('@/pages/index/BeePersion/BeeSetting/FunctionFeedBack')
@@ -128,18 +129,17 @@ export default new Router({
           ]
         },
         {
-          path: '/persion/ServiceHelper',
-          component: () =>
-            import('@/pages/index/BeePersion/ServiceHelper'),
+          path: 'ServiceHelper',
+          component: () => import('@/pages/index/BeePersion/ServiceHelper'),
           children: [
             {
-              path: '/',
+              path: '',
               name: 'ServiceHelperIndex',
               component: () =>
                 import('@/pages/index/BeePersion/ServiceHelper/ServiceHelperIndex')
             },
             {
-              path: '/persion/ServiceHelper/QustionList',
+              path: 'QustionList',
               name: 'QustionList',
               component: () =>
                 import('@/pages/index/BeePersion/ServiceHelper/QustionList')
@@ -147,18 +147,17 @@ export default new Router({
           ]
         },
         {
-          path: '/persion/addressSetting',
-          component: () =>
-            import('@/pages/index/BeePersion/AddressSetting'),
+          path: 'addressSetting',
+          component: () => import('@/pages/index/BeePersion/AddressSetting'),
           children: [
             {
-              path: '/',
+              path: '',
               name: 'addressManage',
               component: () =>
                 import('@/pages/index/BeePersion/AddressSetting/AddressManage')
             },
             {
-              path: '/persion/addressSetting/addAddress',
+              path: 'addAddress',
               name: 'addAddress',
               component: () =>
                 import('@/pages/index/BeePersion/AddressSetting/AddAddress')
@@ -166,17 +165,17 @@ export default new Router({
           ]
         },
         {
-          path: '/persion/history',
+          path: 'history',
           component: () => import('@/pages/index/BeePersion/History'),
           children: [
             {
-              path: '/',
+              path: '',
               name: 'historyIndex',
               component: () =>
                 import('@/pages/index/BeePersion/History/HistoryIndex')
             },
             {
-              path: '/persion/history/historyEdit',
+              path: 'historyEdit',
               name: 'historyEdit',
               component: () =>
                 import('@/pages/index/BeePersion/History/HistoryEdit')
@@ -184,29 +183,28 @@ export default new Router({
           ]
         },
         {
-          path: '/persion/myCollected',
+          path: 'myCollected',
           name: 'myCollected',
           component: () => import('@/pages/index/BeePersion/MyCollected')
         },
         {
-          path: '/persion/beeSetting/about',
-          component: () =>
-            import('@/pages/index/BeePersion/BeeSetting/About'),
+          path: 'about',
+          component: () => import('@/pages/index/BeePersion/BeeSetting/About'),
           children: [
             {
-              path: '/',
+              path: '',
               name: 'aboutIndex',
               component: () =>
                 import('@/pages/index/BeePersion/BeeSetting/About/AboutIndex')
             },
             {
-              path: '/persion/beeSetting/about/useHelp',
+              path: 'useHelp',
               name: 'useHelp',
               component: () =>
                 import('@/pages/index/BeePersion/BeeSetting/About/UseHelp')
             },
             {
-              path: '/persion/beeSetting/about/userAgreement',
+              path: 'userAgreement',
               name: 'userAgreement',
               component: () =>
                 import('@/pages/index/BeePersion/BeeSetting/About/UserAgreement')

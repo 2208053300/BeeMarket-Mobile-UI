@@ -23,7 +23,7 @@
         primary
         text="立即购买"
         class="buy-now"
-        to="/category/confirmOrder"
+        to="/category/details/confirmOrder"
       />
     </van-goods-action>
   </div>

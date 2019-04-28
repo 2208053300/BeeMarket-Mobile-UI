@@ -1,6 +1,5 @@
 <template>
   <div class="sec-category">
-    <BeeHeader />
     <div class="container position-ab-top-46">
       <van-search placeholder="请输入搜索关键词" style="position:relative; z-index:9999;" @click="goSearchPage" />
       <van-tabs v-model="nowThirdIndex" swipeable @click="getCateId">
@@ -43,13 +42,11 @@
 
 <script>
 import { getCategoryThird } from '@/api/category'
-import BeeHeader from '@/components/index/BeeHeader'
 import FilterBox from './components/FilterBox'
 import VerticalList from './components/VerticalList'
 import HorizontalList from './components/HorizontalList'
 export default {
   components: {
-    BeeHeader,
     FilterBox,
     VerticalList,
     HorizontalList
