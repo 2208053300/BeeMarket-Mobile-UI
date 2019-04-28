@@ -20,8 +20,8 @@
   </div>
 </template>
 <script>
-import BeeHeader from './components/BeeHeader'
-import BeeFooter from './components/BeeFooter'
+import BeeHeader from '@/components/index/BeeHeader'
+import BeeFooter from '@/components/index/BeeFooter'
 
 export default {
   metaInfo: {

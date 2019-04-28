@@ -4,7 +4,7 @@ import router from '@/route/index'
 import store from '@/store'
 import Meta from 'vue-meta'
 import '@/styles/normalize.min.css'
-import './styles/index.less'
+import '@/styles/index/index.less'
 // NOTE 定义rem基准
 import '@/utils/flexiable'
 // NOTE 全局引入vant所有组件

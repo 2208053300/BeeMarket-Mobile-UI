@@ -1,3 +1,4 @@
+const path = require('path')
 module.exports = {
   lintOnSave: undefined,
   pages: {
@@ -25,13 +26,39 @@ module.exports = {
   // FIXME 注入全局环境变量BASE_API
   chainWebpack: config => {
     if (process.env.NODE_ENV !== 'production') {
-      config.plugin('define')
-        .tap(definitions => {
-          Object.assign(definitions[0]['process.env'], {
-            BASE_API: '"http://192.168.0.230:7300/mock/5c9af05716daf1002030e891/BeeMarket-Web"'
-          })
-          return definitions
+      config.plugin('define').tap(definitions => {
+        Object.assign(definitions[0]['process.env'], {
+          BASE_API:
+            '"http://192.168.0.230:7300/mock/5c9af05716daf1002030e891/BeeMarket-Web"'
         })
+        return definitions
+      })
     }
+    // NOTE 引入less全局变量
+    const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
+    types.forEach(type =>
+      addStyleResource(config.module.rule('less').oneOf(type))
+    )
   }
+  // css: {
+  //   loaderOptions: {
+  //     less: {
+  //       data: `@/styles/index/variables.less`
+  //     }
+  //   }
+  // }
+  // pluginOptions: {
+  //   'style-resources-loader': {
+  //     preProcessor: 'less',
+  //     patterns: [path.resolve(__dirname, './src/styles/index/variables.less')]
+  //   }
+  // }
+}
+function addStyleResource(rule) {
+  rule
+    .use('style-resource')
+    .loader('style-resources-loader')
+    .options({
+      patterns: [path.resolve(__dirname, './src/styles/index/variables.less')]
+    })
 }
