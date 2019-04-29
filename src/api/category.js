@@ -80,3 +80,11 @@ export function getOrderCommodity(data) {
     params: data
   })
 }
+// NOTE 获取店铺详情
+export function getStoreDetails(data) {
+  return request({
+    url: '/category/getStoreDetails',
+    method: 'get',
+    params: data
+  })
+}

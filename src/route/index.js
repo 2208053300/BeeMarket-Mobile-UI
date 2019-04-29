@@ -68,6 +68,24 @@ export default new Router({
                 import('@/pages/index/BeeCategory/CommodityDetails/PayForAnother')
             }
           ]
+        },
+        {
+          path: 'store',
+          name: 'store',
+          component: () => import('@/pages/index/BeeCategory/Store'),
+          children: [
+            {
+              path: '',
+              component: () =>
+                import('@/pages/index/BeeCategory/Store/StoreHome')
+            },
+            {
+              path: 'license',
+              name: 'StoreLicense',
+              component: () =>
+                import('@/pages/index/BeeCategory/Store/StoreLicense')
+            }
+          ]
         }
       ]
     },

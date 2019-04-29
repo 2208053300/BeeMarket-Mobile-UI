@@ -24,6 +24,7 @@
           round
           type="default"
           class="stroll"
+          @click="$router.push('/category/store')"
         >
           进店逛逛
         </van-button>
