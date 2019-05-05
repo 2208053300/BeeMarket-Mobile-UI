@@ -1,15 +1,43 @@
 <template>
-  <div>
-    发现公益项目/集市
+  <div class="discover-container">
+    <van-tabs
+      v-model="active"
+      :color="BeeDefault"
+      :title-active-color="BeeDefault"
+      :line-width="60"
+      background="transparent"
+    >
+      <van-tab>
+        <div slot="title">
+          公益行动
+        </div>
+        <action-list />
+      </van-tab>
+      <van-tab>
+        <div slot="title">
+          集市动态
+        </div>
+        <article-list />
+      </van-tab>
+    </van-tabs>
   </div>
 </template>
 
 <script>
+import { BeeDefault } from '@/styles/index/variables.less'
+import actionList from './components/actionList'
+import articleList from './components/articleList'
 export default {
-  components: {},
+  components: {
+    actionList,
+    articleList
+  },
   props: {},
   data() {
-    return {}
+    return {
+      BeeDefault,
+      active: 0
+    }
   },
   computed: {},
   watch: {},
@@ -19,5 +47,17 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less">
+.discover-container {
+  padding: 0.1rem 0.3rem 60px;
+  box-sizing: border-box;
+  .van-tabs {
+    .van-tabs__wrap{
+      margin: 0 0.6rem;
+    }
+    .van-hairline--top-bottom::after{
+      border:none;
+    }
+  }
+}
 </style>

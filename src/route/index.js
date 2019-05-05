@@ -97,6 +97,14 @@ export default new Router({
           path: '',
           name: 'DiscoverList',
           component: () => import('@/pages/index/BeeDiscover/DiscoverList')
+        }, {
+          path: 'action',
+          name: 'ActionDetail',
+          component: () => import('@/pages/index/BeeDiscover/ActionDetail')
+        }, {
+          path: 'article',
+          name: 'ArticleDetail',
+          component: () => import('@/pages/index/BeeDiscover/ArticleDetail')
         }
       ]
     },
