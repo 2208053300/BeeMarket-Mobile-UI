@@ -8,6 +8,14 @@ export function getActionList(data) {
     params: data
   })
 }
+// NOTE 获取项目详情
+export function getActionDetails(data) {
+  return request({
+    url: '/discover/getActionDetails',
+    method: 'get',
+    params: data
+  })
+}
 // NOTE 获取集市动态
 export function getArticleList(data) {
   return request({

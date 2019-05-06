@@ -14,6 +14,7 @@
           v-for="item in actionList"
           :key="item.title"
           class="action-content"
+          @click="$router.push('/discover/action')"
         >
           <div class="action-img">
             <img
