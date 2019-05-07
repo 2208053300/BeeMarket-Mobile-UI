@@ -68,8 +68,8 @@
         >
           删除订单
         </van-button>
-        <!-- v-if="card.toFriend===0&&(card.orderStatus===1)" -->
         <van-button
+          v-if="card.toFriend===0&&(card.orderStatus===1)"
           round
           class="order-button"
           @click="$router.push('/persion/order/comment')"
@@ -84,11 +84,11 @@
         >
           再次购买
         </van-button>
+        <!-- v-if="card.toFriend===0&&(card.orderStatus===2)" -->
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===2)"
           round
           class="order-button"
-          @click=""
+          @click="$router.push('/persion/order/logistics')"
         >
           物流追踪
         </van-button>

@@ -154,6 +154,16 @@ export default new Router({
               name: 'Comment',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/Comment')
+            }, {
+              path: 'logistics',
+              name: 'LogisticsList',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/LogisticsList')
+            }, {
+              path: 'logisticsDetail',
+              name: 'LogisticsDetail',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/LogisticsDetail')
             }
           ]
         },
