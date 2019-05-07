@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="error-response">
     404
   </div>
 </template>
@@ -20,4 +20,8 @@ export default {
 </script>
 
 <style scoped lang="less">
+.error-response{
+  font-size: 3rem;
+  text-align: center;
+}
 </style>

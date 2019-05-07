@@ -4,7 +4,8 @@
     <keep-alive>
       <router-view
         v-if="$route.meta.keepAlive"
->
+        style="height:100%"
+      >
         <!-- 这里是会被缓存的视图组件，比如 Home！ -->
       </router-view>
     </keep-alive>
@@ -19,8 +20,8 @@
   </div>
 </template>
 <script>
-import BeeHeader from './components/BeeHeader'
-import BeeFooter from './components/BeeFooter'
+import BeeHeader from '@/components/index/BeeHeader'
+import BeeFooter from '@/components/index/BeeFooter'
 
 export default {
   metaInfo: {
