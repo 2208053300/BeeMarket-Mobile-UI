@@ -5,7 +5,7 @@
         title="我的订单"
         is-link
         value="查看全部订单"
-        to="index"
+        to="/persion/order"
       />
       <div class="order-op">
         <div class="op-type">

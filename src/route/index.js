@@ -61,7 +61,8 @@ export default new Router({
               name: 'giveFirends',
               component: () =>
                 import('@/pages/index/BeeCategory/CommodityDetails/GiveFirends')
-            }, {
+            },
+            {
               path: 'payForAnother',
               name: 'payForAnother',
               component: () =>
@@ -97,11 +98,13 @@ export default new Router({
           path: '',
           name: 'DiscoverList',
           component: () => import('@/pages/index/BeeDiscover/DiscoverList')
-        }, {
+        },
+        {
           path: 'action',
           name: 'ActionDetail',
           component: () => import('@/pages/index/BeeDiscover/ActionDetail')
-        }, {
+        },
+        {
           path: 'article',
           name: 'ArticleDetail',
           component: () => import('@/pages/index/BeeDiscover/ArticleDetail')
@@ -139,14 +142,22 @@ export default new Router({
         {
           path: 'order',
           name: 'MyOrder',
-          component: () => import('@/pages/index/BeePersion/MyOrder')
+          component: () => import('@/pages/index/BeePersion/MyOrder'),
+          children: [
+            {
+              path: '',
+              name: 'AllOrder',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/AllOrder')
+            }
+          ]
         },
         {
           path: 'BeeSetting',
           component: () => import('@/pages/index/BeePersion/BeeSetting'),
           children: [
             {
-              path: '/',
+              path: '',
               name: 'functionSetting',
               component: () =>
                 import('@/pages/index/BeePersion/BeeSetting/FunctionSetting')

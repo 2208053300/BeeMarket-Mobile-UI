@@ -50,3 +50,11 @@ export function getStoreCollected(data) {
     params: data
   })
 }
+// NOTE 获取用户订单列表
+export function getOrderList(data) {
+  return request({
+    url: '/persion/getOrderList',
+    method: 'get',
+    params: data
+  })
+}
