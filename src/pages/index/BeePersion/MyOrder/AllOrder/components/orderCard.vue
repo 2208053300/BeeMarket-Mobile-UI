@@ -68,11 +68,11 @@
         >
           删除订单
         </van-button>
+        <!-- v-if="card.toFriend===0&&(card.orderStatus===1)" -->
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===1)"
           round
           class="order-button"
-          @click=""
+          @click="$router.push('/persion/order/comment')"
         >
           评价晒单
         </van-button>

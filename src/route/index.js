@@ -149,6 +149,11 @@ export default new Router({
               name: 'AllOrder',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/AllOrder')
+            }, {
+              path: 'comment',
+              name: 'Comment',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/Comment')
             }
           ]
         },
