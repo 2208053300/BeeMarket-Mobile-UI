@@ -12,12 +12,13 @@
         </div>
         <div class="order-status">
           <!-- TODO 状态之后根据接口再V-IF -->
-          <span v-if="card.orderStatus===0">已取消</span>
-          <span v-if="card.orderStatus===1">待评价</span>
-          <span v-if="card.orderStatus===2">待收货</span>
-          <span v-if="card.orderStatus===3">交易关闭</span>
-          <span v-if="card.orderStatus===4">待发货</span>
-          <span v-if="card.orderStatus===5">待付款</span>
+          <span v-if="card.orderStatus===0">待支付</span>
+          <span v-if="card.orderStatus===1">待发货</span>
+          <span v-if="card.orderStatus===2">部分发货</span>
+          <span v-if="card.orderStatus===3">待收货</span>
+          <span v-if="card.orderStatus===4">待评价</span>
+          <span v-if="card.orderStatus===5">已评价</span>
+          <span v-if="card.orderStatus===6">交易关闭</span>
         </div>
       </div>
       <div class="card-content">
@@ -61,7 +62,7 @@
       </div>
       <div class="order-op">
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===0||card.orderStatus===1||card.orderStatus===0||3)"
+          v-if="card.toFriend===0&&(card.orderStatus===0||card.orderStatus===4||card.orderStatus===6||card.order_status===-1)"
           round
           class="order-button"
           @click=""
@@ -69,7 +70,7 @@
           删除订单
         </van-button>
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===1)"
+          v-if="card.toFriend===0&&(card.orderStatus===4)"
           round
           class="order-button"
           @click="$router.push('/persion/order/comment')"
@@ -77,15 +78,15 @@
           评价晒单
         </van-button>
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===0||card.orderStatus===1)"
+          v-if="card.toFriend===0&&(card.orderStatus===6||card.orderStatus===4||card.order_status===-1)"
           round
           class="order-button"
           @click=""
         >
           再次购买
         </van-button>
-        <!-- v-if="card.toFriend===0&&(card.orderStatus===2)" -->
         <van-button
+          v-if="card.toFriend===0&&(card.orderStatus===2||card.orderStatus===3)"
           round
           class="order-button"
           @click="$router.push('/persion/order/logistics')"
@@ -93,7 +94,7 @@
           物流追踪
         </van-button>
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===2)"
+          v-if="card.toFriend===0&&(card.orderStatus===2||card.orderStatus===3)"
           round
           class="order-button"
           @click=""
@@ -101,7 +102,7 @@
           确认收货
         </van-button>
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===4)"
+          v-if="card.toFriend===0&&(card.orderStatus===1||card.orderStatus===2)"
           round
           class="order-button"
           @click=""
@@ -109,18 +110,18 @@
           提醒发货
         </van-button>
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===5)"
+          v-if="card.orderStatus===0"
           round
           class="order-button"
           @click=""
         >
           付款<span>23:59</span>
         </van-button>
+        <!-- v-if="card.toFriend===1&&(card.orderStatus===2||card.orderStatus===3)" -->
         <van-button
-          v-if="card.toFriend===1"
           round
           class="order-button"
-          @click=""
+          @click="$router.push('/persion/order/orderDetail')"
         >
           查看详情
         </van-button>

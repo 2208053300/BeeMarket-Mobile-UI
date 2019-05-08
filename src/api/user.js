@@ -58,3 +58,11 @@ export function getOrderList(data) {
     params: data
   })
 }
+// NOTE 获取用户订单详情
+export function getOrderDetail(data) {
+  return request({
+    url: '/persion/getOrderDetail',
+    method: 'get',
+    params: data
+  })
+}
