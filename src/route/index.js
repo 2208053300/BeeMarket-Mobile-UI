@@ -149,26 +149,61 @@ export default new Router({
               name: 'AllOrder',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/AllOrder')
-            }, {
+            },
+            {
               path: 'comment',
               name: 'Comment',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/Comment')
-            }, {
+            },
+            {
               path: 'logistics',
               name: 'LogisticsList',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/LogisticsList')
-            }, {
+            },
+            {
               path: 'logisticsDetail',
               name: 'LogisticsDetail',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/LogisticsDetail')
-            }, {
+            },
+            {
               path: 'orderDetail',
               name: 'orderDetail',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/OrderDetail')
+            },
+            {
+              path: 'applyAfter',
+              name: 'applyAfter',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/ApplyAfter'),
+              children: [
+                {
+                  path: '',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/ApplyAfter/AfterType')
+                },
+                {
+                  path: 'refund',
+                  name: 'refund',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/ApplyAfter/Refund')
+                },
+                // {
+                //   path: 'exchange',
+                //   name: 'exchange',
+                //   component: () =>
+                //     import('@/pages/index/BeePersion/MyOrder/ApplyAfter/Exchange')
+                // },
+                {
+                  path: 'fill',
+                  name: 'fill',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/ApplyAfter/Fill')
+                }
+              ]
             }
           ]
         },

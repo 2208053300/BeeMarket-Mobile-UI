@@ -42,7 +42,10 @@
               <van-icon name="clear" />
             </div>
           </div>
-          <div class="upload-img">
+          <div
+            v-if="commentImgs.length<6"
+            class="upload-img"
+          >
             <van-uploader :after-read="onRead">
               <van-icon name="photograph" />
             </van-uploader>

@@ -66,3 +66,11 @@ export function getOrderDetail(data) {
     params: data
   })
 }
+// NOTE 获取售后商品详情
+export function getCommodityDetail(data) {
+  return request({
+    url: '/persion/getCommodityDetail',
+    method: 'get',
+    params: data
+  })
+}

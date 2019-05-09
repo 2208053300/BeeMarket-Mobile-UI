@@ -7,6 +7,7 @@
         value="查看全部订单"
         to="/persion/order"
       />
+      <!-- TODO 跳转时带上订单状态，安装后直接切换标签栏 -->
       <div class="order-op">
         <div class="op-type">
           <div class="op-text">

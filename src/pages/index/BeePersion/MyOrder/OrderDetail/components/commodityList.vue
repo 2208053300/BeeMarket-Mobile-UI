@@ -44,7 +44,10 @@
             v-if="[1,2,3].indexOf(orderDetail.status)!==-1"
             class="apply-after"
           >
-            <van-button class="apply-button">
+            <van-button
+              class="apply-button"
+              @click="$router.push('/persion/order/applyAfter')"
+            >
               申请售后
             </van-button>
           </div>
