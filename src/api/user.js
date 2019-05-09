@@ -74,3 +74,19 @@ export function getCommodityDetail(data) {
     params: data
   })
 }
+// NOTE 获取售后订单列表
+export function getAfterList(data) {
+  return request({
+    url: '/persion/getAfterList',
+    method: 'get',
+    params: data
+  })
+}
+// NOTE 获取售后单订单列表
+export function getAfterDetail(data) {
+  return request({
+    url: '/persion/getAfterDetail',
+    method: 'get',
+    params: data
+  })
+}

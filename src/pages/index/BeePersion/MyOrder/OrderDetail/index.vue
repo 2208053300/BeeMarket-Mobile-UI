@@ -47,7 +47,7 @@
       />
       <div class="order-detail2 details-card">
         <div class="details2-title">
-          订单详情
+          订单信息
         </div>
         <div class="details2-content">
           <div class="details2-text">

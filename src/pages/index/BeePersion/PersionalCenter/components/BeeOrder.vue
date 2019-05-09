@@ -38,7 +38,10 @@
             />
             待评价
           </div>
-          <div class="op-text">
+          <div
+            class="op-text"
+            @click="$router.push('/persion/order/afterList')"
+          >
             <van-icon
               name="after-sale"
               :color="BeeDefault"

@@ -175,6 +175,25 @@ export default new Router({
                 import('@/pages/index/BeePersion/MyOrder/OrderDetail')
             },
             {
+              path: 'afterList',
+              name: 'afterList',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/AfterList'),
+              children: [
+                {
+                  path: '',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/AfterList/AfterList')
+                },
+                {
+                  path: 'afterDetail',
+                  name: 'afterDetail',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/AfterList/AfterDetail')
+                }
+              ]
+            },
+            {
               path: 'applyAfter',
               name: 'applyAfter',
               component: () =>
@@ -191,12 +210,12 @@ export default new Router({
                   component: () =>
                     import('@/pages/index/BeePersion/MyOrder/ApplyAfter/Refund')
                 },
-                // {
-                //   path: 'exchange',
-                //   name: 'exchange',
-                //   component: () =>
-                //     import('@/pages/index/BeePersion/MyOrder/ApplyAfter/Exchange')
-                // },
+                {
+                  path: 'exchange',
+                  name: 'exchange',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/ApplyAfter/Exchange')
+                },
                 {
                   path: 'fill',
                   name: 'fill',
