@@ -5,6 +5,8 @@ import Home from '@/pages/index/BeeHome'
 Vue.use(Router)
 
 export default new Router({
+  // NOTE 返回后再次进入定位到最顶部
+  scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
       path: '/',
@@ -190,6 +192,18 @@ export default new Router({
                   name: 'afterDetail',
                   component: () =>
                     import('@/pages/index/BeePersion/MyOrder/AfterList/AfterDetail')
+                },
+                {
+                  path: 'afterProgress',
+                  name: 'AfterProgress',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/AfterList/AfterProgress')
+                },
+                {
+                  path: 'communicationRecord',
+                  name: 'CommunicationRecord',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/AfterList/CommunicationRecord')
                 }
               ]
             },

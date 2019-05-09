@@ -132,7 +132,7 @@ export default {
 
 <style scoped lang="less">
 .user-assessment {
-  margin-top: 46px;
+
   .assessment-header {
     padding: 0.4rem 0.3rem;
     background-color: #fff;

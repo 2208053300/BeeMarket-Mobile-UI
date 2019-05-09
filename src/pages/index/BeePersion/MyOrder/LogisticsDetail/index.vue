@@ -80,7 +80,7 @@ export default {
 
 <style scoped lang="less">
 .logistics-detail {
-  margin-top: 46px;
+
   .logistics-status {
     background-color: @Yellow1;
     padding: 0.24rem 0.3rem;

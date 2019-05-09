@@ -84,7 +84,7 @@ export default {
 
 <style scoped lang="less">
 .after-list {
-  margin-top: 46px;
+
   .list-content {
     margin: 0 0.16rem;
     padding-top: 0.3rem;
@@ -124,6 +124,7 @@ export default {
           .name-unit {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             .name {
               font-size: 0.22rem;
               margin-right: 0.5rem;

@@ -127,7 +127,7 @@ export default {
 
 <style scoped lang="less">
 .order-detail {
-  margin-top: 46px;
+
   padding-bottom: 1rem;
   .order-status {
     height: 1.8rem;

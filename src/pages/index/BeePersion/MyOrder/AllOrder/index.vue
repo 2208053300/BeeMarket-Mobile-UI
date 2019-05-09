@@ -79,6 +79,6 @@ export default {
 
 <style scoped lang="less">
 .all-order {
-  margin-top: 46px;
+
 }
 </style>

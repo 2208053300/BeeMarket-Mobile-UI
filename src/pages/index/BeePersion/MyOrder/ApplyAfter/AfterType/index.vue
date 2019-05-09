@@ -113,7 +113,7 @@ export default {
 
 <style scoped lang="less">
 .apply-after {
-  margin-top: 46px;
+
   .after-content {
     padding-top: 0.3rem;
     .commodity-card {

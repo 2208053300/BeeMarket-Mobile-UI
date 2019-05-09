@@ -138,7 +138,7 @@ export default {
 
 <style scoped lang="less">
 .comment {
-  margin-top: 46px;
+
   .comment-content {
     background-color: #fff;
     box-sizing: border-box;

@@ -38,6 +38,6 @@ export default {
 
 <style scoped lang="less">
 .article-content {
-  margin-top: 46px;
+
 }
 </style>

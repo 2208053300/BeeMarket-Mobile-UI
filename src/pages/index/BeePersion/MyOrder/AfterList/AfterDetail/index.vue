@@ -52,11 +52,13 @@
             title="进度详情"
             value="查看详情"
             is-link
+            to="/persion/order/afterList/afterProgress"
           />
           <van-cell
             title="沟通记录"
             value="查看详情"
             is-link
+            to="/persion/order/afterList/communicationRecord"
           />
         </van-cell-group>
       </div>
@@ -109,7 +111,7 @@ export default {
 
 <style scoped lang="less">
 .after-detail {
-  margin-top: 46px;
+
   padding-bottom: 1rem;
   .after-title {
     height: 1.8rem;
@@ -139,13 +141,13 @@ export default {
   .logistics-text {
     padding: 0.3rem 0.16rem;
     margin-bottom: 0.2rem;
-    .van-cell{
+    .van-cell {
       align-items: center;
       padding: 0.2rem 0 0;
-      .van-cell__left-icon{
+      .van-cell__left-icon {
         margin-right: 0.3rem;
       }
-      .van-cell__title{
+      .van-cell__title {
         font-size: 0.24rem;
         color: @BeeDefault;
       }

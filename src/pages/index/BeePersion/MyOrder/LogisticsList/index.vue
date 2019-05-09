@@ -57,7 +57,7 @@ export default {
 
 <style scoped lang="less">
 .logistics-list {
-  margin-top: 46px;
+
   padding-top: 0.3rem;
   .logisticsList-content {
     margin: 0 0.2rem;
