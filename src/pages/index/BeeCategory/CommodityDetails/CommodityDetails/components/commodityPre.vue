@@ -59,6 +59,12 @@
         </div>
       </div>
     </van-swipe>
+    <div class="limit-time">
+      <span>限量疯抢中</span>
+      <div class="limit-nowNum">
+        仅剩<span class="num">  80  </span>件
+      </div>
+    </div>
   </div>
 </template>
 
@@ -147,6 +153,20 @@ export default {
       background-color: rgba(255, 255, 255, 0.5);
       display: flex;
       border-radius: 1rem;
+    }
+  }
+  .limit-time{
+    height: 0.6rem;
+    line-height: 0.6rem;
+    background-color: @BeeDefault;
+    font-size: 0.24rem;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    color: #ffffff;
+    .num{
+      font-size: 0.34rem;
     }
   }
 }

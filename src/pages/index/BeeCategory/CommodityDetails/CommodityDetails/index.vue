@@ -56,6 +56,7 @@ export default {
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = true
+    this.$store.state.app.beeFooter.show = false
     this.getCommodityDetails()
   },
   methods: {
@@ -63,7 +64,6 @@ export default {
       const res = await getCommodityDetails()
       this.commodityData = res.data.commodityData
       // NOTE 先放这里
-      this.$store.state.app.beeFooter.show = false
     }
   }
 }

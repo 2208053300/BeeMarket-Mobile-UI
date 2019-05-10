@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/pages/index/BeeHome'
+import Home from '@/pages/index/BeeHome/HomePage'
 
 Vue.use(Router)
 
@@ -9,13 +9,30 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
-      path: '/',
+      path: '',
       name: 'BeeHome',
-      component: Home,
+      component: () => import('@/pages/index/BeeHome'),
       meta: {
         // NOTE 需要被缓存
         keepAlive: true
-      }
+      },
+      children: [
+        {
+          path: '',
+          name: 'BeeHome',
+          component: Home
+        },
+        {
+          path: 'beeLimit',
+          name: 'beeLimit',
+          component: () => import('@/pages/index/BeeHome/BeeLimit')
+        },
+        {
+          path: 'beeNotice',
+          name: 'beeNotice',
+          component: () => import('@/pages/index/BeeHome/BeeNotice')
+        }
+      ]
     },
     {
       path: '/404',
