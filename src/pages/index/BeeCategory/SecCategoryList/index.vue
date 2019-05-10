@@ -1,7 +1,7 @@
 <template>
   <div class="sec-category">
     <div class="container position-ab-top-46">
-      <van-search placeholder="请输入搜索关键词" style="position:relative; z-index:9999;" @click="goSearchPage" />
+      <van-search placeholder="请输入搜索关键词" style="position:relative; z-index:9998;" @click="goSearchPage" />
       <van-tabs v-model="nowThirdIndex" swipeable @click="getCateId">
         <!-- 展示全部分类图片开关 -->
         <div class="show-all-cate" @click="showAll">
@@ -87,6 +87,7 @@ export default {
 
   },
   mounted() {
+    this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.$nextTick(() => {
       this.getThird(this.nowIndex)

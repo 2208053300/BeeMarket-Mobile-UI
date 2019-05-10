@@ -1,6 +1,9 @@
 <template>
   <div class="pay-for-another">
-    <div class="waiting-pay">
+    <div
+      class="waiting-pay"
+      :style="{backgroundImage:'url('+beeIcon.confirmorder_wait_pay_pic_time+')'}"
+    >
       <span class="waiting-title">
         等待好友代付中
       </span>
@@ -80,7 +83,10 @@ export default {
       payStatus: 1,
       askExit: false,
       toPath: '',
-      isConfirm: false
+      isConfirm: false,
+      beeIcon: {
+        confirmorder_wait_pay_pic_time: require('@/assets/icon/order/confirmorder_wait_pay_pic_time@2x.png')
+      }
     }
   },
   computed: {},
@@ -111,12 +117,11 @@ export default {
 
 <style scoped lang="less">
 .pay-for-another {
-  padding-top: 46px;
   .waiting-pay {
-    background-color: @BeeDefault;
     padding: 0.5rem 0.3rem 0.2rem;
     box-sizing: border-box;
     color: #ffffff;
+    background-size: contain;
     .waiting-title {
       font-size: 0.32rem;
     }

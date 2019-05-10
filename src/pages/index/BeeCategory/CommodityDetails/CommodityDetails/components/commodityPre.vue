@@ -6,6 +6,7 @@
       @change="onChange"
     >
       <van-swipe-item>
+         <!-- TODO swiper中放置视频必须设置高度 -->
         <video
           ref="videoPlayer"
           class="video-js commodity-video vjs-default-skin vjs-big-play-centered vjs-16-9 "
@@ -30,6 +31,32 @@
         class="custom-indicator"
       >
         {{ current + 1 }}/5
+        <div class="video-img-swipe">
+          <div class="video-img">
+            <img
+              v-if="showPicture"
+              :src="beeIcon.product_detail_btn_video_normat"
+              alt=""
+            >
+            <img
+              v-else
+              :src="beeIcon.product_detail_btn_video_selected"
+              alt=""
+            >
+          </div>
+          <div class="img-img">
+            <img
+              v-if="!showPicture"
+              :src="beeIcon.product_detail_btn_pic_normat"
+              alt=""
+            >
+            <img
+              v-else
+              :src="beeIcon.product_detail_btn_pic_selected"
+              alt=""
+            >
+          </div>
+        </div>
       </div>
     </van-swipe>
   </div>
@@ -55,7 +82,14 @@ export default {
       options: {
         // autoplay: true
         controls: true
-      }
+      },
+      beeIcon: {
+        product_detail_btn_pic_normat: require('@/assets/icon/product/product_detail_btn_pic_normat@2x.png'),
+        product_detail_btn_video_normat: require('@/assets/icon/product/product_detail_btn_video_normat@2x.png'),
+        product_detail_btn_pic_selected: require('@/assets/icon/product/product_detail_btn_pic_selected@2x.png'),
+        product_detail_btn_video_selected: require('@/assets/icon/product/product_detail_btn_video_selected@2x.png')
+      },
+      showPicture: false
     }
   },
   computed: {},
@@ -104,7 +138,15 @@ export default {
       right: 0.3rem;
       bottom: 0.3rem;
     }
-    .commodity-video {
+    .video-img-swipe {
+      position: absolute;
+      left: -3.8rem;
+      bottom: 0;
+      height: 0.55rem;
+      width: 2rem;
+      background-color: rgba(255, 255, 255, 0.5);
+      display: flex;
+      border-radius: 1rem;
     }
   }
 }

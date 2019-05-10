@@ -5,34 +5,54 @@
       :active-color="BeeDefault"
     >
       <van-tabbar-item
-        icon="home-o"
         to="/"
       >
         首页
+        <img
+          slot="icon"
+          slot-scope="props"
+          :src="props.active ? tabIcon.home_s : tabIcon.home_n"
+        >
       </van-tabbar-item>
       <van-tabbar-item
-        icon="apps-o"
         to="/category"
       >
         分类
+        <img
+          slot="icon"
+          slot-scope="props"
+          :src="props.active ? tabIcon.cat_s : tabIcon.cat_n"
+        >
       </van-tabbar-item>
       <van-tabbar-item
-        icon="browsing-history-o"
         to="/discover"
       >
         发现
+        <img
+          slot="icon"
+          slot-scope="props"
+          :src="props.active ? tabIcon.find_s : tabIcon.find_n"
+        >
       </van-tabbar-item>
       <van-tabbar-item
-        icon="cart-o"
         to="/cart"
       >
         购物车
+        <img
+          slot="icon"
+          slot-scope="props"
+          :src="props.active ? tabIcon.shop_s : tabIcon.shop_n"
+        >
       </van-tabbar-item>
       <van-tabbar-item
-        icon="user-o"
         to="/persion"
       >
         我的
+        <img
+          slot="icon"
+          slot-scope="props"
+          :src="props.active ? tabIcon.my_s : tabIcon.my_n"
+        >
       </van-tabbar-item>
     </van-tabbar>
   </div>
@@ -45,7 +65,19 @@ export default {
   props: {},
   data() {
     return {
-      BeeDefault: BeeDefault
+      BeeDefault: BeeDefault,
+      tabIcon: {
+        home_n: require('@/assets/icon/footer/tab_icon_home_n@2x.png'),
+        home_s: require('@/assets/icon/footer/tab_icon_home_s@2x.png'),
+        cat_n: require('@/assets/icon/footer/tab_icon_cat_n@2x.png'),
+        cat_s: require('@/assets/icon/footer/tab_icon_cat_s@2x.png'),
+        find_n: require('@/assets/icon/footer/tab_icon_find_n@2x.png'),
+        find_s: require('@/assets/icon/footer/tab_icon_find_s@2x.png'),
+        shop_n: require('@/assets/icon/footer/tab_icon_shop_n@2x.png'),
+        shop_s: require('@/assets/icon/footer/tab_icon_shop_s@2x.png'),
+        my_n: require('@/assets/icon/footer/tab_icon_my_n@2x.png'),
+        my_s: require('@/assets/icon/footer/tab_icon_my_s@2x.png')
+      }
     }
   },
   computed: {
@@ -98,4 +130,7 @@ export default {
 </script>
 
 <style scoped lang="less">
+.van-tabbar-item__icon img {
+  width: 18px;
+}
 </style>

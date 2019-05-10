@@ -22,7 +22,7 @@
     <div class="action-help">
       <div class="help-content">
         <div class="help-icon">
-          <van-icon name="share" />
+          <van-icon :name="beeIcon.initiate" />
         </div>
         <div class="help-text">
           已发起助力
@@ -36,7 +36,7 @@
       </div>
       <div class="help-content">
         <div class="help-icon">
-          <van-icon name="friends-o" />
+          <van-icon :name="beeIcon.participate" />
         </div>
         <div class="help-text">
           已参与助力
@@ -50,7 +50,7 @@
       </div>
       <div class="help-content">
         <div class="help-icon">
-          <van-icon name="like" />
+          <van-icon :name="beeIcon.aim" />
         </div>
         <div class="help-text">
           目标参与需
@@ -85,7 +85,12 @@ export default {
   data() {
     return {
       showPercent: false,
-      BeeDefault
+      BeeDefault,
+      beeIcon: {
+        initiate: require('@/assets/icon/discover/publicwelfare_icon_initiate@2x.png'),
+        participate: require('@/assets/icon/discover/publicwelfare_icon_participate@2x.png'),
+        aim: require('@/assets/icon/discover/publicwelfare_icon_aim@2x.png')
+      }
     }
   },
   computed: {},

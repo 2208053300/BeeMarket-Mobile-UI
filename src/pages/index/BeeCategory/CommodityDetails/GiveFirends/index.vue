@@ -1,9 +1,9 @@
 <template>
   <div class="give-firends">
     <van-notice-bar
-      left-icon="volume-o"
-      mode="closeable"
+      :left-icon="beeIcon.confirmorder_send_icon_presentation"
       background="transparent"
+      mode="closeable"
     >
       请分享给好友等待对方接受或转赠
     </van-notice-bar>
@@ -16,32 +16,44 @@
           <div class="step-content">
             <div class="step-img">
               <img
-                src=""
+                :src="beeIcon.confirmorder_send_icon_buy"
                 alt=""
               >
             </div>
             <span class="step-text1">选购商品</span>
             <span class="step-text2">选择待送的商品</span>
+            <div class="arrow-img">
+              <img
+                :src="beeIcon.confirmorder_send_icon_arrow_normat"
+                alt=""
+              >
+            </div>
           </div>
           <div class="step-content">
             <div class="step-img">
               <img
-                src=""
+                :src="beeIcon.confirmorder_send_icon_send_normat"
                 alt=""
               >
             </div>
             <span class="step-text1">赠送好友</span>
             <span class="step-text2">线上分享好友</span>
+            <div class="arrow-img">
+              <img
+                :src="beeIcon.confirmorder_send_icon_arrow_disabled"
+                alt=""
+              >
+            </div>
           </div>
           <div class="step-content">
             <div class="step-img">
               <img
-                src=""
+                :src="beeIcon.confirmorder_send_icon_receive_disabled"
                 alt=""
               >
             </div>
-            <span class="step-text1">好友接收</span>
-            <span class="step-text2">好友接收即可发货</span>
+            <span class="step-text1 step-text3">好友接收</span>
+            <span class="step-text2 step-text3">好友接收即可发货</span>
           </div>
         </div>
         <div class="arrow-icon">
@@ -116,7 +128,15 @@ export default {
   props: {},
   data() {
     return {
-      giftStatus: 0
+      giftStatus: 0,
+      beeIcon: {
+        confirmorder_send_icon_presentation: require('@/assets/icon/order/confirmorder_send_icon_presentation@2x.png'),
+        confirmorder_send_icon_buy: require('@/assets/icon/order/confirmorder_send_icon_buy@2x.png'),
+        confirmorder_send_icon_send_normat: require('@/assets/icon/order/confirmorder_send_icon_send_normat@2x.png'),
+        confirmorder_send_icon_receive_disabled: require('@/assets/icon/order/confirmorder_send_icon_receive_disabled@2x.png'),
+        confirmorder_send_icon_arrow_normat: require('@/assets/icon/order/confirmorder_send_icon_arrow_normat@2x.png'),
+        confirmorder_send_icon_arrow_disabled: require('@/assets/icon/order/confirmorder_send_icon_arrow_disabled@2x.png')
+      }
     }
   },
   computed: {},
@@ -135,26 +155,40 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 .give-firends {
-  padding-top: 46px;
+  .van-notice-bar {
+    font-size: 0.22rem;
+    color: @Grey2;
+    align-items: center;
+    .van-notice-bar__wrap {
+      margin-left: 0.2rem;
+    }
+  }
   .order-gift {
     .bg-content {
       background-color: rgba(255, 191, 109, 0.9);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0 0.2rem;
       .gift-step {
         height: 2rem;
         flex: 1;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 2rem;
+        padding-bottom: 0.2rem;
+        align-items: center;
         .step-content {
           color: #ffffff;
           text-align: center;
+          position: relative;
           .step-img {
             height: 0.9rem;
             width: 0.9rem;
+            margin: auto;
+
           }
           .step-text1 {
             font-size: 0.24rem;
@@ -162,6 +196,16 @@ export default {
           }
           .step-text2 {
             font-size: 0.2rem;
+          }
+          .step-text3 {
+            color: rgba(255, 255, 255, 0.3);
+          }
+          .arrow-img {
+            position: absolute;
+            top: 20%;
+            right: 0;
+            width: 0.44rem;
+            height: 0.22rem;
           }
         }
       }

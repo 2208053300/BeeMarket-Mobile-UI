@@ -21,6 +21,12 @@
       />
     </div>
     <div class="footer-action">
+      <div
+        v-if="helped"
+        class="helped-text"
+      >
+        您已参与了该项目的助力，分享给更多好友，一起助力吧!
+      </div>
       <div class="action-button not-help">
         <van-button class="share-help">
           发起助力
@@ -46,7 +52,10 @@
         <div class="success-text2">
           恭喜你获得以下奖励
         </div>
-        <div class="success-value">
+        <div
+          class="success-value"
+          :style="{backgroundImage:'url('+beeIcon.pop_ups_pic_value+')'}"
+        >
           <div class="get-benefit">
             <span class="benefit-num">10</span>公益值
           </div>
@@ -55,9 +64,14 @@
           分享给更多好友，一起来为项目助力吧！
         </div>
         <van-button class="success-share">
-          恭喜你获得以下奖励
+          发起助力
         </van-button>
       </div>
+      <van-icon
+        :name="beeIcon.pop_ups_icon_delete"
+        class="closePop"
+        @click="helpSuccess=false"
+      />
     </van-popup>
   </div>
 </template>
@@ -85,7 +99,11 @@ export default {
       actionDetails: {},
       BeeDefault,
       helpSuccess: false,
-      helped: false
+      helped: false,
+      beeIcon: {
+        pop_ups_pic_value: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_pic_value@2x.png'),
+        pop_ups_icon_delete: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_icon_delete@2x.png')
+      }
     }
   },
   computed: {},
@@ -161,9 +179,18 @@ export default {
         background-color: @Red2;
       }
     }
+    .helped-text {
+      height: 0.52rem;
+      text-align: center;
+      color: @Red1;
+      font-size: 0.22rem;
+      background-color: @Red3;
+      line-height: 0.52rem;
+    }
   }
   .success-content {
     border-radius: 0.2rem;
+    overflow: initial;
     .help-success {
       width: 5.68rem;
       height: 6.72rem;
@@ -179,15 +206,21 @@ export default {
         font-size: 0.32rem;
         color: @Grey2;
       }
-      .success-value{
-        height: 3rem;
-        .get-benefit{
+      .success-value {
+        height: 3.2rem;
+        background-size: 100%;
+        background-position: center;
+        position: relative;
+        .get-benefit {
           font-size: 0.28rem;
           color: @BeeDefault;
           border-bottom: 0.02rem solid @BeeDefault;
           width: 1.72rem;
           text-align: center;
-          .benefit-num{
+          position: absolute;
+          right: 1.3rem;
+          bottom: 1rem;
+          .benefit-num {
             font-size: 0.7rem;
           }
         }
@@ -197,6 +230,7 @@ export default {
         color: @Grey2;
       }
       .success-share {
+        font-size: 0.32rem;
         border: none;
         border-radius: 0.4rem;
         height: 0.88rem;
@@ -205,6 +239,11 @@ export default {
         color: #ffffff;
         margin-top: 0.2rem;
       }
+    }
+    .closePop {
+      position: absolute;
+      left: 49%;
+      bottom: -0.5rem;
     }
   }
 }

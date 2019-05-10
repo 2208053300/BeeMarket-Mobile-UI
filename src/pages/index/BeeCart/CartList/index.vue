@@ -10,15 +10,13 @@
       >
         <div v-if="!showEdit">
           <van-icon
-            :color="Grey2"
-            name="edit"
+            :name="beeIcon.nav_icon_edit"
             size="20px"
             style="margin-right:21px"
             @click="editCart"
           />
           <van-icon
-            :color="Grey2"
-            name="share"
+            :name="beeIcon.nav_icon_share"
             size="20px"
             @click="goSharePage"
           />
@@ -39,7 +37,10 @@
           v-if="cart.cartInfo.length===0"
           class="null-cart"
         >
-          <div class="null-img" />
+          <div
+            class="null-img"
+            :style="{backgroundImage:'url('+beeIcon.shopping_cart_pic_no+')'}"
+          />
           <span class="null-text">购物车空空如也</span>
           <van-button
             type="default"
@@ -107,7 +108,7 @@
 <script>
 import CartList from './components/CartList'
 import BeeGuess from '@/components/index/BeeGuess'
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import { getCartList } from '@/api/cart'
 import { BeeDefault, Grey2 } from '@/styles/index/variables.less'
 
@@ -124,7 +125,12 @@ export default {
       allSelectedBox: false,
       allSelectedData: [],
       totalPrices: 0,
-      showEdit: false
+      showEdit: false,
+      beeIcon: {
+        nav_icon_edit: require('@/assets/icon/cart/nav_icon_edit@2x.png'),
+        nav_icon_share: require('@/assets/icon/cart/nav_icon_share@2x.png'),
+        shopping_cart_pic_no: require('@/assets/icon/cart/shopping_cart_pic_no@2x.png')
+      }
     }
   },
   computed: {
@@ -141,17 +147,9 @@ export default {
       deep: true
     }
   },
-  created() {
-    this.ChangeBeeFooter({
-      show: false,
-      avtive: 3
-    })
-  },
+  created() {},
   mounted() {
-    this.$store.commit('SET_BEEFOOTER', {
-      show: true,
-      avtive: 3
-    })
+    // TODO 如果本地缓存直接读取，如果无缓存从后台获取
     getCartList()
       .then(res => {
         this.cart.cartInfo = res.data.cartData
@@ -165,10 +163,8 @@ export default {
       .catch(() => {})
   },
   methods: {
-    ...mapActions(['ChangeBeeFooter']),
     // 跳转到购物车分享页面
     goSharePage() {
-      this.$store.state.app.beeFooter.show = false
       this.$router.push({
         path: '/CartShare'
       })
@@ -197,7 +193,6 @@ export default {
 </script>
 
 <style lang="less">
-
 .done-edit {
   color: @Grey2;
 }
@@ -209,11 +204,12 @@ export default {
   .bee-above {
     .null-cart {
       text-align: center;
+      padding-top: 0.82rem;
       .null-img {
-        width: 50%;
-        height: 4rem;
-        margin: 0.82rem auto 0.3rem;
-        background-color: #fff;
+        width: 4rem;
+        height: 3.6rem;
+        margin: 0 auto 0.3rem;
+        background-size: 100% 100%;
       }
       .null-text {
         font-size: 0.28rem;

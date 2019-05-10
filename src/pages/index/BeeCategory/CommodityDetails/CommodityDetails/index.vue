@@ -1,11 +1,5 @@
 <template>
   <div class="commodity-details">
-    <van-nav-bar
-      right-text="按钮"
-      left-arrow
-      fixed
-      class="commodity-nav"
-    />
     <commodity-pre :commodity-data="commodityData" />
     <div class="commodity-container">
       <commodity-overview :commodity-data="commodityData" />
@@ -78,12 +72,7 @@ export default {
 <style scoped lang="less">
 .commodity-details {
   height: 100%;
-  padding-top: 46px;
   box-sizing: border-box;
-  .commodity-nav {
-    background-color: transparent;
-    top: 46px;
-  }
   .commodity-container {
     padding-bottom: 50px;
     .advertisement {

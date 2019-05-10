@@ -5,7 +5,7 @@
         <span>
           搜索历史
         </span>
-        <van-icon name="delete" />
+        <van-icon :name="beeIcon.cat_icon_delete" />
       </div>
       <div class="history-tag">
         <div
@@ -42,7 +42,10 @@ export default {
   data() {
     return {
       searchHistory: [],
-      recommendData: []
+      recommendData: [],
+      beeIcon: {
+        cat_icon_delete: require('@/assets/icon/category/cat_icon_delete@2x.png')
+      }
     }
   },
   computed: {},

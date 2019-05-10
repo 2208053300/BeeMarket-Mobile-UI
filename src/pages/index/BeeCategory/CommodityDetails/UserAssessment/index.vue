@@ -4,7 +4,12 @@
       <div class="assessment-status">
         <div class="status-left">
           <span class="rate-text">评分</span>
-          <van-rate v-model="assessmentData.assessmentRate" />
+          <van-rate
+            v-model="assessmentData.assessmentRate"
+            :icon="beeIcon.product_detail_evaluation_icon_flower_pressed"
+            :void-icon="beeIcon.product_detail_evaluation_icon_flower_normat"
+            readonly
+          />
         </div>
         <div class="status-right">
           <span class="persent">{{ assessmentData.assessmentGood }}%</span>
@@ -45,7 +50,13 @@
             <div class="user-name">
               <div class="head-img">
                 <img
+                  v-if="item.head_img"
                   :src="item.head_img"
+                  alt=""
+                >
+                <img
+                  v-else
+                  :src="beeIcon.product_detail_icon_avatar"
                   alt=""
                 >
               </div>
@@ -57,7 +68,12 @@
               {{ item.date }}
             </div>
           </div>
-          <van-rate v-model="item.rate" />
+          <van-rate
+            v-model="item.rate"
+            :icon="beeIcon.product_detail_icon_flower_pressed"
+            :void-icon="beeIcon.product_detail_icon_flower_normat"
+            readonly
+          />
           <div class="assessment">
             {{ item.desc }}
           </div>
@@ -93,7 +109,14 @@ export default {
       assessmentType: '全部',
       loading: false,
       finished: false,
-      assessmentList: []
+      assessmentList: [],
+      beeIcon: {
+        product_detail_icon_flower_pressed: require('@/assets/icon/product/product_detail_icon_flower_pressed@2x.png'),
+        product_detail_icon_flower_normat: require('@/assets/icon/product/product_detail_icon_flower_normat@2x.png'),
+        product_detail_evaluation_icon_flower_pressed: require('@/assets/icon/product/product_detail_evaluation_icon_flower_pressed@2x.png'),
+        product_detail_evaluation_icon_flower_normat: require('@/assets/icon/product/product_detail_evaluation_icon_flower_normat@2x.png'),
+        product_detail_icon_avatar: require('@/assets/icon/product/product_detail_icon_avatar@2x.png')
+      }
     }
   },
   computed: {},
@@ -112,7 +135,7 @@ export default {
       this.$store.state.app.beeFooter.show = false
     },
     onLoad() {
-      setTimeout(async() => {
+      setTimeout(async () => {
         const res = await getAssessment()
         this.assessmentList.push(...res.data.assessmentData)
         console.log(this.assessmentList)
@@ -132,7 +155,6 @@ export default {
 
 <style scoped lang="less">
 .user-assessment {
-
   .assessment-header {
     padding: 0.4rem 0.3rem;
     background-color: #fff;
@@ -221,15 +243,15 @@ export default {
         -webkit-box-orient: vertical;
       }
       .assessment-img {
-          display: grid;
-          grid-gap: 0.06rem;
-          grid-template-columns: repeat(3, 1fr);
-          .assessment-img-container {
-            display: inline-block;
-            border-radius: 0.1rem;
-            overflow: hidden;
-          }
+        display: grid;
+        grid-gap: 0.06rem;
+        grid-template-columns: repeat(3, 1fr);
+        .assessment-img-container {
+          display: inline-block;
+          border-radius: 0.1rem;
+          overflow: hidden;
         }
+      }
     }
   }
 }

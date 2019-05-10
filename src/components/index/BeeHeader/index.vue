@@ -3,17 +3,15 @@
     <van-nav-bar fixed class="fixed-header">
       <van-icon
         slot="left"
-        name="wap-home"
+        :name="beeIcon.tab_icon_home_s"
         size="0.5rem"
-        :color="BeeDefault"
         @click="goHome"
       />
       <span slot="title">蜂集市</span>
       <van-icon
         slot="right"
-        name="cart-o"
+        :name="beeIcon.tab_icon_shop_s"
         size="0.5rem"
-        :color="BeeDefault"
         @click="goCart"
       />
     </van-nav-bar>
@@ -21,7 +19,6 @@
 </template>
 
 <script>
-import { BeeDefault } from '@/styles/index/variables.less'
 export default {
   components: {},
   props: {
@@ -29,7 +26,11 @@ export default {
   },
   data() {
     return {
-      BeeDefault
+      beeIcon: {
+        tab_icon_home_s: require('@/assets/icon/footer/tab_icon_home_s@2x.png'),
+        tab_icon_shop_s: require('@/assets/icon/footer/tab_icon_shop_s@2x.png'),
+
+      }
     }
   },
   computed: {},

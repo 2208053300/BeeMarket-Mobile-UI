@@ -20,21 +20,24 @@
         <van-tab>
           <div slot="title">
             价格
+            <van-icon :name="beeIcon.low_white" />
           </div>
         </van-tab>
       </van-tabs>
-      <van-icon
-        v-if="gridList"
-        name="apps-o"
-        class="change-list"
-        @click="gridList=false"
-      />
-      <van-icon
-        v-else
-        name="bars"
-        class="change-list"
-        @click="gridList=true"
-      />
+      <div class="icon-content">
+        <van-icon
+          v-if="gridList"
+          :name="beeIcon.vertical_horizontal"
+          class="change-list"
+          @click="gridList=false"
+        />
+        <van-icon
+          v-else
+          :name="beeIcon.vertical_white"
+          class="change-list"
+          @click="gridList=true"
+        />
+      </div>
     </div>
     <div
       v-if="gridList"
@@ -144,19 +147,22 @@ export default {
       gridList: true,
       loading: false,
       finished: false,
-      commodityList: []
+      commodityList: [],
+      beeIcon: {
+        vertical_horizontal: require('@/assets/icon/store/shop_icon_vertical_horizontal@2x.png'),
+        vertical_white: require('@/assets/icon/store/shop_icon_vertical_white@2x.png'),
+        low_white: require('@/assets/icon/store/shop_icon_price_low_white@2x.png')
+      }
     }
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {
-  },
+  mounted() {},
   methods: {
-
     onLoad() {
       // 异步更新数据
-      setTimeout(async() => {
+      setTimeout(async () => {
         const res = await getStoreDetails()
         this.commodityList.push(...res.data.storeDetails.commodity)
         // 加载状态结束
@@ -182,9 +188,11 @@ export default {
     .van-tabs {
       flex: 3;
     }
-    .change-list {
+    .icon-content {
       flex: 2;
-      text-align: end;
+      text-align: right;
+    }
+    .change-list {
       font-size: 0.5rem;
     }
     .van-hairline--top-bottom::after {

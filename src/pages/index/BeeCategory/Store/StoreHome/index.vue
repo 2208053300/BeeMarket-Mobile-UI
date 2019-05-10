@@ -13,7 +13,8 @@
         </div>
         <div class="store-name">
           {{ storeDetails.name }}
-        </div>>
+        </div>
+        <van-icon name="arrow" />
       </div>
       <div class="header-right">
         <van-button
@@ -34,7 +35,7 @@
             class="cell-title"
             @click="$router.push('/category/store/license')"
           >
-            <van-icon name="flower-o" /> 经营许可
+            <van-icon :name="beeIcon.license" /> 经营许可
           </div>
         </van-cell>
         <van-cell>
@@ -65,7 +66,10 @@ export default {
   data() {
     return {
       storeDetails: {},
-      showLicense: false
+      showLicense: false,
+      beeIcon: {
+        license: require('@/assets/icon/store/shop_icon_license@2x.png')
+      }
     }
   },
   computed: {},
@@ -88,7 +92,7 @@ export default {
 
 <style scoped lang="less">
 .store-home {
-  padding: 46px 0 60px;
+  padding-bottom: 60px;
   .store-header {
     padding: 0.3rem 0.3rem 0.4rem;
     box-sizing: border-box;
@@ -103,6 +107,8 @@ export default {
         width: 0.96rem;
         margin-right: 0.16rem;
         img {
+          width: 100%;
+          height: 100%;
           border-radius: 0.06rem;
           overflow: hidden;
         }
@@ -115,6 +121,9 @@ export default {
         white-space: nowrap;
         vertical-align: middle;
         font-size: 0.32rem;
+      }
+      .van-icon {
+        vertical-align: text-top;
       }
     }
     .header-right {

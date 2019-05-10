@@ -1,26 +1,20 @@
 <template>
   <div class="persion-center">
-    <div class="person-header">
-      <van-nav-bar>
-        <div
-          slot="right"
-          class="nav-right"
-        >
-          <div>
-            <van-icon
-              color="#ffffff"
-              name="chat-o"
-              size="20px"
-              style="margin-right:0.5rem;"
-            />
-            <van-icon
-              color="#ffffff"
-              name="qr"
-              size="20px"
-            />
-          </div>
-        </div>
-      </van-nav-bar>
+    <div
+      class="person-header"
+      :style="{backgroundImage:'url('+beeIcon.mine_img_avatar_bg+')'}"
+    >
+      <div class="nav-right">
+        <van-icon
+          :name="beeIcon.mine_icon_message"
+          size="20px"
+          style="margin-right:0.5rem;"
+        />
+        <van-icon
+          :name="beeIcon.mine_icon_qrcode"
+          size="20px"
+        />
+      </div>
       <van-row
         class="head-user"
         type="flex"
@@ -70,28 +64,19 @@
         <van-row>
           <van-col span="8">
             <div @click="$router.push('/persion/myCollected')">
-              <van-icon
-                name="like-o"
-                :color="BeeDefault"
-              />
+              <van-icon :name="beeIcon.mine_icon_favorite" />
               <span>我的收藏</span>
             </div>
           </van-col>
           <van-col span="8">
             <div @click="$router.push('/persion/addressSetting')">
-              <van-icon
-                name="location-o"
-                :color="BeeDefault"
-              />
+              <van-icon :name="beeIcon.mine_icon_address" />
               <span>地址管理</span>
             </div>
           </van-col>
           <van-col span="8">
             <div @click="$router.push('/persion/history')">
-              <van-icon
-                name="browsing-history-o"
-                :color="BeeDefault"
-              />
+              <van-icon :name="beeIcon.mine_icon_pug" />
               <span>历史足迹</span>
             </div>
           </van-col>
@@ -99,28 +84,19 @@
         <van-row style="margin-top:0.5rem;">
           <van-col span="8">
             <div @click="$router.push('/persion/ServiceHelper')">
-              <van-icon
-                name="service-o"
-                :color="BeeDefault"
-              />
+              <van-icon :name="beeIcon.mine_icon_customer" />
               <span>客服帮助</span>
             </div>
           </van-col>
           <van-col span="8">
             <div>
-              <van-icon
-                name="question-o"
-                :color="BeeDefault"
-              />
+              <van-icon :name="beeIcon.mine_icon_favorite" />
               <span>关于集市</span>
             </div>
           </van-col>
           <van-col span="8">
             <div @click="$router.push('/persion/BeeSetting')">
-              <van-icon
-                name="setting-o"
-                :color="BeeDefault"
-              />
+              <van-icon :name="beeIcon.mine_icon_set" />
               <span>功能设置</span>
             </div>
           </van-col>
@@ -140,7 +116,17 @@ export default {
   props: {},
   data() {
     return {
-      BeeDefault
+      BeeDefault,
+      beeIcon: {
+        mine_img_avatar_bg: require('@/assets/icon/personalCenter/mine_img_avatar_bg@2x.png'),
+        mine_icon_qrcode: require('@/assets/icon/personalCenter/mine_icon_qrcode@2x.png'),
+        mine_icon_message: require('@/assets/icon/personalCenter/mine_icon_message@2x.png'),
+        mine_icon_favorite: require('@/assets/icon/personalCenter/mine_icon_favorite@2x.png'),
+        mine_icon_address: require('@/assets/icon/personalCenter/mine_icon_address@2x.png'),
+        mine_icon_pug: require('@/assets/icon/personalCenter/mine_icon_pug@2x.png'),
+        mine_icon_customer: require('@/assets/icon/personalCenter/mine_icon_customer@2x.png'),
+        mine_icon_set: require('@/assets/icon/personalCenter/mine_icon_set@2x.png')
+      }
     }
   },
   computed: {},
@@ -154,17 +140,14 @@ export default {
 <style scoped lang="less">
 .persion-center {
   .person-header {
-    .van-nav-bar {
-      background-color: transparent;
+    padding: 0.8rem 0.32rem 0.32rem;
+    min-height: 3.8rem;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    .nav-right {
+      text-align: right;
     }
-    .van-hairline--bottom::after {
-      border: none;
-    }
-    background-color: @BeeDefault;
-    padding: 0 0.32rem;
-    min-height: 3.5rem;
-    border-bottom-right-radius: 0.2rem;
-    border-bottom-left-radius: 0.2rem;
     .head-user {
       height: 1.58rem;
       background-color: transparent;
@@ -199,7 +182,7 @@ export default {
     width: auto;
     margin: 0 0.16rem 50px;
     position: relative;
-    top: -0.7rem;
+    top: -1rem;
     .van-row {
       margin: 0.1rem 0;
       border-radius: 0.2rem;
@@ -221,7 +204,7 @@ export default {
       .van-icon {
         display: block;
         font-size: 0.5rem;
-        margin-bottom: 0.2rem;
+        margin: 0 auto 0.2rem;
       }
       .van-row {
         position: relative;
