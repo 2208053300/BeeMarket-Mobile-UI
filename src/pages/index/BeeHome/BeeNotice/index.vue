@@ -3,6 +3,7 @@
     <van-cell
       is-link
       class="notice-cell"
+      @click="$router.push('/beeAction')"
     >
       <div
         slot="title"
@@ -32,6 +33,7 @@
     <van-cell
       is-link
       class="notice-cell"
+      @click="$router.push('/beeAction')"
     >
       <div
         slot="title"
@@ -56,6 +58,7 @@
     <van-cell
       is-link
       class="notice-cell"
+      @click="$router.push('/beeAction')"
     >
       <div
         slot="title"

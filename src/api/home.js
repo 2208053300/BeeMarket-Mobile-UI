@@ -9,3 +9,11 @@ export function getBeeLimitList(data) {
     params: data
   })
 }
+// NOTE 获取蜂集市活动
+export function getBeeAction(data) {
+  return request({
+    url: '/home/getBeeAction',
+    method: 'get',
+    params: data
+  })
+}
