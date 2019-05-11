@@ -41,6 +41,11 @@ export default new Router({
           path: 'beeAction',
           name: 'beeAction',
           component: () => import('@/pages/index/BeeHome/BeeAction')
+        },
+        {
+          path: 'beefarm',
+          name: 'beefarm',
+          component: () => import('@/pages/index/BeeHome/BeeFarm')
         }
       ]
     },
