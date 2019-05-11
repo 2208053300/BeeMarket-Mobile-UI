@@ -9,7 +9,17 @@
         v-for="item in category1"
         :key="item.name"
         :title="item.name"
+        @click="changeBorder"
       />
+      <div
+        class="border-img"
+        :style="{top:borderPosition}"
+      >
+        <img
+          :src="beeIcon.cat_pic_select"
+          alt=""
+        >
+      </div>
     </van-badge-group>
     <div class="category2-container">
       <div class="advertisement">
@@ -28,6 +38,7 @@
             v-for="item2 in item.category3"
             :key="item2.name"
             class="category3-card"
+            @click="$router.push('/category/SecCategoryList')"
           >
             <div class="category3-img">
               <img
@@ -54,7 +65,11 @@ export default {
     return {
       activeKey: 0,
       category1: [],
-      category2: []
+      category2: [],
+      beeIcon: {
+        cat_pic_select: require('@/assets/icon/category/cat_pic_select@2x.png')
+      },
+      borderPosition: ''
     }
   },
   computed: {},
@@ -76,6 +91,10 @@ export default {
     async getCategory2() {
       const res = await getCategory2()
       this.category2 = res.data.categoryDate
+    },
+    // NOTE 定位border图片的位置
+    changeBorder(index) {
+      this.borderPosition = Number(index) * 58 + 14 + 'px'
     }
   }
 }
@@ -85,7 +104,7 @@ export default {
 .category-list {
   height: 100%;
   display: flex;
-      background-color: #fff;
+  background-color: #fff;
   .select-category {
     width: 21%;
     min-width: 1.6rem;
@@ -98,12 +117,17 @@ export default {
       white-space: nowrap;
       background-color: @GreyBg;
       &::after {
-
       }
     }
     .van-badge--select {
       background-color: #ffffff;
-      border-color: @BeeDefault;
+      border-color: #ffffff;
+    }
+    .border-img {
+      position: absolute;
+      top: 14px;
+      width: 5px;
+      height: 30px;
     }
   }
   .category2-container {

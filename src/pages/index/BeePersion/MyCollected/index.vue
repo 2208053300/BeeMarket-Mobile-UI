@@ -11,7 +11,10 @@
               v-if="productList.length===0"
               class="null-collected"
             >
-              <div class="null-img" />
+              <div
+                class="null-img"
+                :style="{backgroundImage:'url('+beeIcon.mine_collection_img_default+')'}"
+              />
               <span class="null-text">还没有添加收藏的商品呦</span>
               <van-button
                 type="default"
@@ -45,6 +48,7 @@
               <div
                 class="null-img"
                 style="margin-top:2.8rem;"
+                :style="{backgroundImage:'url('+beeIcon.mine_address_img_default+')'}"
               />
               <span class="null-text">还没有添加关注的店铺哟</span>
             </div>
@@ -82,7 +86,12 @@ export default {
       activeTab: 0,
       storeList: [],
       productList: [],
-      activeClassify: '全部类目'
+      activeClassify: '全部类目',
+      beeIcon: {
+        mine_collection_img_default: require('@/assets/icon/personalCenter/func/mine_collection_img_default@2x.png'),
+        mine_address_img_default: require('@/assets/icon/personalCenter/func/mine_address_img_default@2x.png')
+
+      }
     }
   },
   computed: {},
@@ -122,12 +131,6 @@ export default {
 [class*="van-hairline"]::after {
   content: none;
 }
-.nav-right {
-  color: @Grey1;
-  .van-icon {
-    color: @Grey1;
-  }
-}
 .collected-container {
   margin: 0 0 60px;
   .van-tabs {
@@ -154,10 +157,10 @@ export default {
     .null-collected {
       text-align: center;
       .null-img {
-        width: 50%;
-        height: 4rem;
+        width: 4rem;
+        height: 3.6rem;
         margin: 0.82rem auto 0.3rem;
-        background-color: #fff;
+        background-size: 100% 100%;
       }
       .null-text {
         font-size: 0.28rem;

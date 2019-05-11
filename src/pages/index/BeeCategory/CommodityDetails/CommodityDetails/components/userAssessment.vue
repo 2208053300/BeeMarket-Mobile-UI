@@ -1,7 +1,10 @@
 <template>
   <div class="user-assessment">
     <div class="has-assessment">
-      <div class="assessment-title" @click="goAssessment()">
+      <div
+        class="assessment-title"
+        @click="goAssessment()"
+      >
         <div>用户评价（）</div>
         <div class="good-rate">
           <span><span class="percent">99%</span> 好评率</span>
@@ -18,7 +21,13 @@
             <div class="user">
               <div class="head-img">
                 <img
+                  v-if="item.head_img"
                   :src="item.head_img"
+                  alt=""
+                >
+                <img
+                  v-else
+                  :src="beeIcon.product_detail_icon_avatar"
                   alt=""
                 >
               </div>
@@ -28,6 +37,8 @@
             </div>
             <van-rate
               v-model="item.rate"
+              :icon="beeIcon.product_detail_icon_flower_pressed"
+              :void-icon="beeIcon.product_detail_icon_flower_normat"
               readonly
             />
           </div>
@@ -82,7 +93,13 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      beeIcon: {
+        product_detail_icon_flower_pressed: require('@/assets/icon/product/product_detail_icon_flower_pressed@2x.png'),
+        product_detail_icon_flower_normat: require('@/assets/icon/product/product_detail_icon_flower_normat@2x.png'),
+        product_detail_icon_avatar: require('@/assets/icon/product/product_detail_icon_avatar@2x.png')
+      }
+    }
   },
   computed: {},
   watch: {},
@@ -101,7 +118,7 @@ export default {
   margin-top: 0.2rem;
   padding: 0.32rem;
   background-color: #fff;
-  .no-assessment{
+  .no-assessment {
     font-size: 0.28rem;
   }
   .assessment-title {

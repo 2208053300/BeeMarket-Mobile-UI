@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div class="confirmOrder-address">
     <van-tabs
       v-model="buyFor"
       :color="BeeDefault"
       :title-active-color="BeeDefault"
       :line-width="30"
+      class="buyFor-tabs"
     >
       <van-tab>
         <div slot="title">
@@ -19,7 +20,7 @@
             class="default-address"
           >
             <van-icon
-              name="location-o"
+              :name="beeIcon.confirmorder_icon_address"
               size="0.40rem"
             />
             <div class="address-details">
@@ -53,7 +54,7 @@
           >
             <div class="no-left">
               <van-icon
-                name="location-o"
+                :name="beeIcon.confirmorder_icon_address"
                 size="0.40rem"
               />
               <span class="no-text">请选择收货地址</span>
@@ -80,32 +81,44 @@
               <div class="step-content">
                 <div class="step-img">
                   <img
-                    src=""
+                    :src="beeIcon.confirmorder_send_icon_buy"
                     alt=""
                   >
                 </div>
                 <span class="step-text1">选购商品</span>
                 <span class="step-text2">选择待送的商品</span>
+                <div class="arrow-img">
+                  <img
+                    :src="beeIcon.confirmorder_send_icon_arrow_normat"
+                    alt=""
+                  >
+                </div>
               </div>
               <div class="step-content">
                 <div class="step-img">
                   <img
-                    src=""
+                    :src="beeIcon.confirmorder_send_icon_send_disabled"
                     alt=""
                   >
                 </div>
-                <span class="step-text1">赠送好友</span>
-                <span class="step-text2">线上分享好友</span>
+                <span class="step-text1 step-text3">赠送好友</span>
+                <span class="step-text2 step-text3">线上分享好友</span>
+                <div class="arrow-img">
+                  <img
+                    :src="beeIcon.confirmorder_send_icon_arrow_disabled"
+                    alt=""
+                  >
+                </div>
               </div>
               <div class="step-content">
                 <div class="step-img">
                   <img
-                    src=""
+                    :src="beeIcon.confirmorder_send_icon_receive_disabled"
                     alt=""
                   >
                 </div>
-                <span class="step-text1">好友接收</span>
-                <span class="step-text2">好友接收即可发货</span>
+                <span class="step-text1 step-text3">好友接收</span>
+                <span class="step-text2 step-text3">好友接收即可发货</span>
               </div>
             </div>
             <div class="arrow-icon">
@@ -138,7 +151,15 @@ export default {
     return {
       BeeDefault,
       detaultAddress: {},
-      buyFor: 0
+      buyFor: 0,
+      beeIcon: {
+        confirmorder_icon_address: require('@/assets/icon/order/confirmorder_icon_address@2x.png'),
+        confirmorder_send_icon_buy: require('@/assets/icon/order/confirmorder_send_icon_buy@2x.png'),
+        confirmorder_send_icon_send_disabled: require('@/assets/icon/order/confirmorder_send_icon_send_disabled@2x.png'),
+        confirmorder_send_icon_receive_disabled: require('@/assets/icon/order/confirmorder_send_icon_receive_disabled@2x.png'),
+        confirmorder_send_icon_arrow_normat: require('@/assets/icon/order/confirmorder_send_icon_arrow_normat@2x.png'),
+        confirmorder_send_icon_arrow_disabled: require('@/assets/icon/order/confirmorder_send_icon_arrow_disabled@2x.png')
+      }
     }
   },
   computed: {},
@@ -163,103 +184,125 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-.order-address {
-  padding-top: 0.24rem;
-  background-color: #fff;
-  .no-default-address {
-    height: 1.08rem;
-    background-color: rgba(255, 191, 109, 0.9);
-    padding: 0.36rem 0.3rem 0.6rem;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .no-left {
-      color: #ffffff;
-      .van-icon {
-        vertical-align: middle;
-        margin-right: 0.16rem;
-      }
-      .no-text {
-        font-size: 0.28rem;
-      }
+<style lang="less">
+.confirmOrder-address {
+  .buyFor-tabs {
+    .van-hairline--top-bottom::after {
+      border: none;
     }
   }
-  .default-address {
-    background-color: rgba(255, 191, 109, 0.9);
-    padding: 0.36rem 0.3rem 0.56rem;
-    box-sizing: border-box;
-    display: flex;
-    height: 1.48rem;
-    align-items: center;
-    color: #ffffff;
-    .address-details {
-      margin-left: 0.3rem;
-      .user-details {
-        font-size: 0.28rem;
-        .name {
-          margin-right: 0.2rem;
-        }
-      }
-      .address {
-        margin-top: 0.2rem;
-        display: flex;
-        align-items: center;
-        .address-tag {
-          width: 0.56rem;
-          height: 0.28rem;
-          line-height: 0.28rem;
-          text-align: center;
-          margin-right: 0.1rem;
-          display: inline-block;
-          font-size: 0.2rem;
-          box-sizing: border-box;
-          border-radius: 0.1rem;
-          border: 0.02rem solid #ffffff;
-        }
-        .default-tag {
-          color: @BeeDefault;
-          background-color: #ffffff;
-          border-color: #ffffff;
-        }
-        .address-details {
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          margin-left: 0;
-          max-width: 4.5rem;
-        }
-      }
-    }
-  }
-}
-.order-gift {
-  padding-top: 0.24rem;
-  background-color: #fff;
-  .bg-content {
-    background-color: rgba(255, 191, 109, 0.9);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .gift-step {
-      height: 2rem;
-      flex: 1;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      .step-content {
+  .order-address {
+    padding-top: 0.24rem;
+    background-color: #fff;
+    .no-default-address {
+      height: 1.08rem;
+      background-color: rgba(255, 191, 109, 0.9);
+      padding: 0.36rem 0.3rem 0.6rem;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .no-left {
         color: #ffffff;
-        text-align: center;
-        .step-img {
-          height: 0.9rem;
-          width: 0.9rem;
+        .van-icon {
+          vertical-align: middle;
+          margin-right: 0.16rem;
         }
-        .step-text1 {
-          font-size: 0.24rem;
-          display: block;
+        .no-text {
+          font-size: 0.28rem;
         }
-        .step-text2 {
-          font-size: 0.2rem;
+      }
+    }
+    .default-address {
+      background-color: rgba(255, 191, 109, 0.9);
+      padding: 0.36rem 0.3rem 0.56rem;
+      box-sizing: border-box;
+      display: flex;
+      height: 1.48rem;
+      align-items: center;
+      color: #ffffff;
+      .address-details {
+        margin-left: 0.3rem;
+        .user-details {
+          font-size: 0.28rem;
+          .name {
+            margin-right: 0.2rem;
+          }
+        }
+        .address {
+          margin-top: 0.2rem;
+          display: flex;
+          align-items: center;
+          .address-tag {
+            width: 0.56rem;
+            height: 0.28rem;
+            line-height: 0.28rem;
+            text-align: center;
+            margin-right: 0.1rem;
+            display: inline-block;
+            font-size: 0.2rem;
+            box-sizing: border-box;
+            border-radius: 0.1rem;
+            border: 0.02rem solid #ffffff;
+          }
+          .default-tag {
+            color: @BeeDefault;
+            background-color: #ffffff;
+            border-color: #ffffff;
+          }
+          .address-details {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin-left: 0;
+            max-width: 4.5rem;
+          }
+        }
+      }
+    }
+  }
+  .order-gift {
+    padding-top: 0.24rem;
+    background-color: #fff;
+    .bg-content {
+      background-color: rgba(255, 191, 109, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0.2rem;
+      .gift-step {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 2rem;
+        padding-bottom: 0.2rem;
+        align-items: center;
+        .step-content {
+          color: #ffffff;
+          text-align: center;
+          position: relative;
+          .step-img {
+            height: 0.9rem;
+            width: 0.9rem;
+            margin: auto;
+          }
+          .step-text1 {
+            font-size: 0.24rem;
+            display: block;
+          }
+          .step-text2 {
+            font-size: 0.2rem;
+          }
+          .step-text3 {
+            color: rgba(255, 255, 255, 0.3);
+          }
+          .arrow-img {
+            position: absolute;
+            top: 20%;
+            right: 0;
+            width: 0.44rem;
+            height: 0.22rem;
+          }
         }
       }
     }

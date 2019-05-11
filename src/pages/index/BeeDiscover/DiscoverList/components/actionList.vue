@@ -42,10 +42,10 @@
           </div>
           <div class="action-status">
             <div class="action-help">
-              <van-icon name="like" />已有<span class="bee-text">{{ item.help }}</span>人参与助力
+              <van-icon :name="beeIcon.heart_solid" />已有<span class="bee-text">{{ item.help }}</span>人参与助力
             </div>
             <div class="action-need">
-              <van-icon name="like-o" />需要<span class="bee-text">{{ item.need }}</span>人参与项目
+              <van-icon :name="beeIcon.heart_hollow" />需要<span class="bee-text">{{ item.need }}</span>人参与项目
             </div>
           </div>
         </div>
@@ -72,7 +72,11 @@ export default {
       actionList: [],
       showPercent: false,
       loading: false,
-      finished: false
+      finished: false,
+      beeIcon: {
+        heart_solid: require('@/assets/icon/discover/publicwelfare_icon_heart_solid@2x.png'),
+        heart_hollow: require('@/assets/icon/discover/publicwelfare_icon_heart_hollow@2x.png')
+      }
     }
   },
   computed: {},
@@ -90,7 +94,7 @@ export default {
     },
     onLoad() {
       // 异步更新数据
-      setTimeout(async() => {
+      setTimeout(async () => {
         const res = await getActionList()
         this.actionList.push(...res.data.actionData)
         // 数据全部加载完成

@@ -5,43 +5,32 @@
         title="我的订单"
         is-link
         value="查看全部订单"
-        to="index"
+        to="/persion/order"
       />
+      <!-- TODO 跳转时带上订单状态，安装后直接切换标签栏 -->
       <div class="order-op">
         <div class="op-type">
           <div class="op-text">
-            <van-icon
-              name="paid"
-              :color="BeeDefault"
-            />
+            <van-icon :name="beeIcon.mine_icon_unpaid" />
             待付款
           </div>
           <div class="op-text">
-            <van-icon
-              name="logistics"
-              :color="BeeDefault"
-            />
+            <van-icon :name="beeIcon.mine_icon_undelivered" />
             待发货
           </div>
           <div class="op-text">
-            <van-icon
-              name="completed"
-              :color="BeeDefault"
-            />
+            <van-icon :name="beeIcon.mine_icon_not_signed" />
             待收货
           </div>
           <div class="op-text">
-            <van-icon
-              name="chat-o"
-              :color="BeeDefault"
-            />
+            <van-icon :name="beeIcon.mine_icon_not_commented" />
             待评价
           </div>
-          <div class="op-text">
-            <van-icon
-              name="after-sale"
-              :color="BeeDefault"
-            />
+          <div
+            class="op-text"
+            @click="$router.push('/persion/order/afterList')"
+          >
+            <van-icon :name="beeIcon.mine_icon_customer_service" />
             退换/售后
           </div>
         </div>
@@ -59,7 +48,6 @@
               <div class="status-time">
                 2019.04.01 17:00:00
               </div>
-              <div class="status-dot" />
               <div class="status-details">
                 【重庆市】快件已到达重庆
               </div>
@@ -70,6 +58,12 @@
                 运输中
               </div>
             </van-col>
+            <div class="line-img">
+              <img
+                :src="beeIcon.mine_img_line"
+                alt=""
+              >
+            </div>
           </van-row>
         </div>
       </div>
@@ -84,7 +78,15 @@ export default {
   props: {},
   data() {
     return {
-      BeeDefault
+      BeeDefault,
+      beeIcon: {
+        mine_icon_unpaid: require('@/assets/icon/personalCenter/mine_icon_unpaid@2x.png'),
+        mine_icon_undelivered: require('@/assets/icon/personalCenter/mine_icon_undelivered@2x.png'),
+        mine_icon_not_signed: require('@/assets/icon/personalCenter/mine_icon_not_signed@2x.png'),
+        mine_icon_not_commented: require('@/assets/icon/personalCenter/mine_icon_not_commented@2x.png'),
+        mine_icon_customer_service: require('@/assets/icon/personalCenter/mine_icon_customer_service@2x.png'),
+        mine_img_line: require('@/assets/icon/personalCenter/mine_img_line@2x.png')
+      }
     }
   },
   computed: {},
@@ -127,7 +129,7 @@ export default {
         .van-icon {
           display: block;
           font-size: 0.5rem;
-          margin-bottom: 0.1rem;
+          margin: 0 auto 0.1rem;
         }
       }
     }
@@ -137,6 +139,7 @@ export default {
     margin-top: 0.3rem;
     border-radius: 0.1rem;
     padding: 0.3rem;
+    position: relative;
     .order-img {
       width: 1rem;
       height: 1rem;
@@ -147,34 +150,30 @@ export default {
     .status-time {
       height: 0.4rem;
       line-height: 0.4rem;
-      border-left: 0.01rem solid @Grey2;
       font-size: 0.22rem;
       color: @Grey2;
       padding-left: 0.3rem;
-    }
-    .status-dot {
-      height: 0.1rem;
-      width: 0.1rem;
-      border-radius: 50%;
-      background-color: @Grey2;
-      margin: 0.05rem 0;
-      position: relative;
-      left: -0.04rem;
     }
     .status-details {
       height: 0.4rem;
       line-height: 0.4rem;
-      border-left: 0.01rem solid @Grey2;
       font-size: 0.22rem;
       color: @Grey2;
       padding-left: 0.3rem;
       white-space: nowrap;
+      margin-top: 0.2rem;
     }
     .status-text {
       height: 1rem;
       line-height: 1rem;
       text-align: right;
       font-size: 0.28rem;
+    }
+    .line-img{
+      position: absolute;
+      width: 0.1rem;
+      height: 1rem;
+      left: 1.8rem;
     }
   }
 }

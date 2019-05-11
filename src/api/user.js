@@ -50,3 +50,43 @@ export function getStoreCollected(data) {
     params: data
   })
 }
+// NOTE 获取用户订单列表
+export function getOrderList(data) {
+  return request({
+    url: '/persion/getOrderList',
+    method: 'get',
+    params: data
+  })
+}
+// NOTE 获取用户订单详情
+export function getOrderDetail(data) {
+  return request({
+    url: '/persion/getOrderDetail',
+    method: 'get',
+    params: data
+  })
+}
+// NOTE 获取售后商品详情
+export function getCommodityDetail(data) {
+  return request({
+    url: '/persion/getCommodityDetail',
+    method: 'get',
+    params: data
+  })
+}
+// NOTE 获取售后订单列表
+export function getAfterList(data) {
+  return request({
+    url: '/persion/getAfterList',
+    method: 'get',
+    params: data
+  })
+}
+// NOTE 获取售后单订单列表
+export function getAfterDetail(data) {
+  return request({
+    url: '/persion/getAfterDetail',
+    method: 'get',
+    params: data
+  })
+}

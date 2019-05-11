@@ -21,7 +21,7 @@
             v-if="address.default"
             class="default1"
           >
-            <van-icon name="circle" />
+            <van-icon :name="beeIcon.mine_address_checkbox_square_s" />
             <span>默认地址</span>
           </div>
           <div
@@ -29,18 +29,18 @@
             class="default2"
             @click="setDefault(index)"
           >
-            <van-icon name="circle" />
+            <van-icon :name="beeIcon.mine_address_checkbox_square_n" />
             <span>设为默认</span>
           </div>
         </div>
         <div class="address-op1">
           <van-icon
-            name="edit"
+            :name="beeIcon.mine_address_icon_edit"
             style="margin-right:0.7rem;"
             @click="editAddress(index)"
           />
           <van-icon
-            name="delete"
+            :name="beeIcon.mine_address_icon_del"
             @click="delAddress(index)"
           />
         </div>
@@ -68,7 +68,15 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      beeIcon: {
+        mine_address_icon_del: require('@/assets/icon/personalCenter/func/mine_address_icon_del@2x.png'),
+        mine_address_icon_edit: require('@/assets/icon/personalCenter/func/mine_address_icon_edit@2x.png'),
+        mine_address_checkbox_square_s: require('@/assets/icon/personalCenter/func/mine_address_checkbox_square_s@2x.png'),
+        mine_address_checkbox_square_n: require('@/assets/icon/personalCenter/func/mine_address_checkbox_square_n@2x.png')
+
+      }
+    }
   },
   computed: {},
   watch: {},
@@ -89,7 +97,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-
 .address-list {
   margin: 0 0.2rem;
   margin-bottom: 2rem;

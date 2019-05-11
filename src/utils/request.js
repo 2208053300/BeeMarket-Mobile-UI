@@ -1,7 +1,5 @@
 import axios from 'axios'
-import {
-  Toast
-} from 'vant'
+import { Toast } from 'vant'
 
 // 创建axios实例
 const service = axios.create({
@@ -18,8 +16,7 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    // Do something with request error
-    console.log(error) // for debug
+    console.log(error)
     Promise.reject(error)
   }
 )
@@ -27,18 +24,16 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
-    /**
-     * code为非20000是抛错 可结合自己业务进行修改
-     */
     const res = response.data
     if (res.code !== 20000) {
-      Toast.fail('20000')
+      Toast.fail(res.message || 'error')
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         Toast.fail('50000')
       }
-      return Promise.reject('error')
+      return Promise.reject(res.message || 'error')
     } else {
-      return response.data
+      console.log(res)
+      return res
     }
   },
   error => {

@@ -1,0 +1,119 @@
+<template>
+  <div class="bee-action">
+    <div
+      v-for="item in actionList"
+      :key="item.title"
+      class="action-content"
+    >
+      <div class="action-time">
+        <div class="time-text">
+          {{ item.time }}
+        </div>
+      </div>
+      <div class="action-detail">
+        <div
+          v-if="item.previewImg"
+          class="action-img"
+        >
+          <img
+            :src="item.previewImg"
+            alt=""
+          >
+        </div>
+        <div class="action-text">
+          <div class="left-text">
+            <div class="action-title">
+              {{ item.title }}
+            </div>
+            <div class="action-desc">
+              {{ item.desc }}
+            </div>
+          </div>
+          <van-icon name="arrow" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { getBeeAction } from '@/api/home'
+export default {
+  metaInfo: {
+    title: '蜂集市活动'
+  },
+  components: {},
+  props: {},
+  data() {
+    return {
+      actionList: []
+    }
+  },
+  computed: {},
+  watch: {},
+  created() {},
+  mounted() {
+    this.$store.state.app.beeHeader = true
+    this.$store.state.app.beeFooter.show = false
+    this.getBeeActionData()
+  },
+  methods: {
+    async getBeeActionData() {
+      const res = await getBeeAction()
+      this.actionList = res.data.actionList
+    }
+  }
+}
+</script>
+
+<style scoped lang="less">
+.bee-action {
+  margin: 0.2rem 0.3rem;
+  .action-content {
+    margin-bottom: 0.4rem;
+    .action-time {
+      margin: 0 auto 0.2rem;
+      height: 0.28rem;
+      line-height: 0.28rem;
+      font-size: 0.2rem;
+      color: @Grey1;
+      box-sizing: border-box;
+      text-align: center;
+      .time-text {
+        padding: 0.04rem 0.08rem;
+        display: inline-block;
+        background-color: rgba(153, 153, 153, 0.2);
+        border-radius: 0.08rem;
+      }
+    }
+    .action-detail {
+      padding: 0.2rem 0.2rem 0.4rem;
+      background-color: #fff;
+      border-radius: 0.16rem;
+      .action-img {
+        height: 2.78rem;
+        border-radius: 0.08rem;
+        overflow: hidden;
+      }
+      .action-text {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .left-text {
+          flex: 1;
+          margin-right: 0.4rem;
+        }
+        .action-title {
+          font-size: 0.32rem;
+          margin-top: 0.2rem;
+        }
+        .action-desc {
+          font-size: 0.26rem;
+          color: @Grey1;
+          margin-top: 0.2rem;
+        }
+      }
+    }
+  }
+}
+</style>

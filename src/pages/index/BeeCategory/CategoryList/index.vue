@@ -6,6 +6,7 @@
         v-model="searchKey"
         :input-align="searchAlign"
         :show-action="searchStatus"
+        :class="{searchIcon:searchStatus&&searchKey===''}"
         shape="round"
         placeholder="蜂集市，让生活丰富起来"
         @focus="changeLeft"
@@ -13,7 +14,7 @@
       >
         <van-icon
           slot="left-icon"
-          name="search"
+          :name="beeIcon.nav_icon_search"
           :color="Grey1"
         />
         <van-button
@@ -54,7 +55,10 @@ export default {
       Grey1,
       searchAlign: 'center',
       searchStatus: false,
-      searchKey: ''
+      searchKey: '',
+      beeIcon: {
+        nav_icon_search: require('@/assets/icon/category/nav_icon_search@2x.png')
+      }
     }
   },
   computed: {},
@@ -105,6 +109,21 @@ export default {
       padding: 0;
       margin: 0;
       height: 0.16rem;
+    }
+    .van-cell {
+      align-items: center;
+      // NOTE 图标使用了vant里的搜索框，所以只能相对定位
+      .van-field__left-icon {
+        position: relative;
+        left: 1.2rem;
+      }
+    }
+  }
+  .searchIcon {
+    .van-cell {
+      .van-field__left-icon {
+        left: 0;
+      }
     }
   }
   .category-container {

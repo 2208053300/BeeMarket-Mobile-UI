@@ -13,8 +13,9 @@
         </p>
       </van-col>
       <van-col>
+        <!-- TODO 已收藏变换颜色 -->
         <div class="followed">
-          <van-icon name="star-o" />
+          <van-icon :name="beeIcon.product_detail_icon_attention_normat" />
           <span class="followed-text1">收藏</span>
         </div>
       </van-col>
@@ -40,7 +41,11 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      beeIcon: {
+        product_detail_icon_attention_normat: require('@/assets/icon/product/product_detail_icon_attention_normat@2x.png')
+      }
+    }
   },
   computed: {},
   watch: {},

@@ -15,6 +15,7 @@
           :key="item.title"
           :class="{articleContent2:index%2==0}"
           class="article-content"
+          @click="$router.push('/discover/article')"
         >
           <div class="article-img">
             <img
@@ -85,14 +86,14 @@ export default {
       overflow: hidden;
       margin-bottom: 0.2rem;
     }
-    .article-title{
+    .article-title {
       font-size: 0.32rem;
     }
   }
   .articleContent2 {
     display: flex;
     align-items: center;
-    .article-img{
+    .article-img {
       width: 2.4rem;
       height: 1.9rem;
       margin-right: 0.24rem;

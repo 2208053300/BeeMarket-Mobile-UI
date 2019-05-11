@@ -118,7 +118,7 @@ export default {
 <style scoped lang="less">
 
 .confirm-order {
-  margin-top: 46px;
+
   padding-bottom: 60px;
   .other-info1 {
     border-top-right-radius: 0.2rem;

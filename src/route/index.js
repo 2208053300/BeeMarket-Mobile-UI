@@ -1,19 +1,53 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/pages/index/BeeHome'
+import Home from '@/pages/index/BeeHome/HomePage'
 
 Vue.use(Router)
 
 export default new Router({
+  // NOTE 返回后再次进入定位到最顶部
+  scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
-      path: '/',
+      path: '',
       name: 'BeeHome',
-      component: Home,
+      component: () => import('@/pages/index/BeeHome'),
       meta: {
         // NOTE 需要被缓存
         keepAlive: true
-      }
+      },
+      children: [
+        {
+          path: '',
+          name: 'BeeHome',
+          component: Home
+        },
+        {
+          path: 'beeLimit',
+          name: 'beeLimit',
+          component: () => import('@/pages/index/BeeHome/BeeLimit')
+        },
+        {
+          path: 'beeNotice',
+          name: 'beeNotice',
+          component: () => import('@/pages/index/BeeHome/BeeNotice')
+        },
+        {
+          path: 'beeNotice',
+          name: 'beeNotice',
+          component: () => import('@/pages/index/BeeHome/BeeNotice')
+        },
+        {
+          path: 'beeAction',
+          name: 'beeAction',
+          component: () => import('@/pages/index/BeeHome/BeeAction')
+        },
+        {
+          path: 'beefarm',
+          name: 'beefarm',
+          component: () => import('@/pages/index/BeeHome/BeeFarm')
+        }
+      ]
     },
     {
       path: '/404',
@@ -61,7 +95,8 @@ export default new Router({
               name: 'giveFirends',
               component: () =>
                 import('@/pages/index/BeeCategory/CommodityDetails/GiveFirends')
-            }, {
+            },
+            {
               path: 'payForAnother',
               name: 'payForAnother',
               component: () =>
@@ -97,11 +132,13 @@ export default new Router({
           path: '',
           name: 'DiscoverList',
           component: () => import('@/pages/index/BeeDiscover/DiscoverList')
-        }, {
+        },
+        {
           path: 'action',
           name: 'ActionDetail',
           component: () => import('@/pages/index/BeeDiscover/ActionDetail')
-        }, {
+        },
+        {
           path: 'article',
           name: 'ArticleDetail',
           component: () => import('@/pages/index/BeeDiscover/ArticleDetail')
@@ -139,14 +176,108 @@ export default new Router({
         {
           path: 'order',
           name: 'MyOrder',
-          component: () => import('@/pages/index/BeePersion/MyOrder')
+          component: () => import('@/pages/index/BeePersion/MyOrder'),
+          children: [
+            {
+              path: '',
+              name: 'AllOrder',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/AllOrder')
+            },
+            {
+              path: 'comment',
+              name: 'Comment',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/Comment')
+            },
+            {
+              path: 'logistics',
+              name: 'LogisticsList',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/LogisticsList')
+            },
+            {
+              path: 'logisticsDetail',
+              name: 'LogisticsDetail',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/LogisticsDetail')
+            },
+            {
+              path: 'orderDetail',
+              name: 'orderDetail',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/OrderDetail')
+            },
+            {
+              path: 'afterList',
+              name: 'afterList',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/AfterList'),
+              children: [
+                {
+                  path: '',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/AfterList/AfterList')
+                },
+                {
+                  path: 'afterDetail',
+                  name: 'afterDetail',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/AfterList/AfterDetail')
+                },
+                {
+                  path: 'afterProgress',
+                  name: 'AfterProgress',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/AfterList/AfterProgress')
+                },
+                {
+                  path: 'communicationRecord',
+                  name: 'CommunicationRecord',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/AfterList/CommunicationRecord')
+                }
+              ]
+            },
+            {
+              path: 'applyAfter',
+              name: 'applyAfter',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/ApplyAfter'),
+              children: [
+                {
+                  path: '',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/ApplyAfter/AfterType')
+                },
+                {
+                  path: 'refund',
+                  name: 'refund',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/ApplyAfter/Refund')
+                },
+                {
+                  path: 'exchange',
+                  name: 'exchange',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/ApplyAfter/Exchange')
+                },
+                {
+                  path: 'fill',
+                  name: 'fill',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/ApplyAfter/Fill')
+                }
+              ]
+            }
+          ]
         },
         {
           path: 'BeeSetting',
           component: () => import('@/pages/index/BeePersion/BeeSetting'),
           children: [
             {
-              path: '/',
+              path: '',
               name: 'functionSetting',
               component: () =>
                 import('@/pages/index/BeePersion/BeeSetting/FunctionSetting')

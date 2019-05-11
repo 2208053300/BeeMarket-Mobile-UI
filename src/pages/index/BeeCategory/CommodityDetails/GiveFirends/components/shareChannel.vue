@@ -2,6 +2,7 @@
   <div class="share-channel">
     <div class="gift-way">
       <span class="way-title">请点击赠送</span>
+      <!-- TODO 待定，微信端无分享能力 -->
       <div class="way-gird">
         <div class="way-content">
           <div class="way-img">
