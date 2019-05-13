@@ -46,6 +46,11 @@ export default new Router({
           path: 'beefarm',
           name: 'beefarm',
           component: () => import('@/pages/index/BeeHome/BeeFarm')
+        },
+        {
+          path: 'beeTask',
+          name: 'beeTask',
+          component: () => import('@/pages/index/BeeHome/BeeTask')
         }
       ]
     },

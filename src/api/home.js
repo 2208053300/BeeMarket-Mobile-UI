@@ -17,3 +17,11 @@ export function getBeeAction(data) {
     params: data
   })
 }
+// NOTE 获取蜂集市任务
+export function getBeeTask(data) {
+  return request({
+    url: '/home/getBeeTask',
+    method: 'get',
+    params: data
+  })
+}

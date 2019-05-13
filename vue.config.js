@@ -29,7 +29,7 @@ module.exports = {
       config.plugin('define').tap(definitions => {
         Object.assign(definitions[0]['process.env'], {
           BASE_API:
-            '"http://192.168.0.237:7300/mock/5c9af05716daf1002030e891/BeeMarket-Web"'
+            '"http://192.168.0.196:7300/mock/5c9af05716daf1002030e891/BeeMarket-Web"'
         })
         return definitions
       })
