@@ -114,9 +114,9 @@ export default {
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = true
-    this.$store.state.app.beeFooter.show =
-      // TODO 如果已经成功，则不执行渲染，否则报错
-      this.initPie()
+    this.$store.state.app.beeFooter.show = true
+    // TODO 如果已经成功，则不执行渲染，否则报错
+    this.initPie()
   },
   methods: {
     initPie() {

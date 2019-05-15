@@ -50,18 +50,18 @@ export default new Router({
         {
           path: 'beeTask',
           name: 'beeTask',
-          component: () => import('@/pages/index/BeeHome/BeeTask'),
+          component: () => import('@/pages/BeeTask'),
           children: [
             {
               path: '',
               name: 'beeTask',
-              component: () => import('@/pages/index/BeeHome/BeeTask/TaskList')
+              component: () => import('@/pages/BeeTask/TaskList')
             },
             {
               path: 'taskDetail',
               name: 'beeTask',
               component: () =>
-                import('@/pages/index/BeeHome/BeeTask/TaskDetail')
+                import('@/pages/BeeTask/TaskDetail')
             }
           ]
         }
