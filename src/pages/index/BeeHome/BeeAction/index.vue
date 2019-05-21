@@ -19,6 +19,15 @@
             :src="item.previewImg"
             alt=""
           >
+          <div
+            v-if="item.status"
+            class="end-action"
+          >
+            <img
+              :src="beeIcon.message_activity_pic_over"
+              alt=""
+            >
+          </div>
         </div>
         <div class="action-text">
           <div class="left-text">
@@ -46,7 +55,10 @@ export default {
   props: {},
   data() {
     return {
-      actionList: []
+      actionList: [],
+      beeIcon: {
+        message_activity_pic_over: require('@/assets/icon/home/message_activity_pic_over@2x.png')
+      }
     }
   },
   computed: {},
@@ -94,6 +106,14 @@ export default {
         height: 2.78rem;
         border-radius: 0.08rem;
         overflow: hidden;
+        position: relative;
+        .end-action {
+          width: 1.72rem;
+          height: 1.36rem;
+          position: absolute;
+          top: 0.72rem;
+          right: 2.4rem;
+        }
       }
       .action-text {
         display: flex;

@@ -26,6 +26,7 @@
     <p class="commodity-desc">
       {{ commodityData.desc }}
     </p>
+    <!-- TODO 农副产品，商品来自西南地区 -->
   </div>
 </template>
 
