@@ -148,7 +148,8 @@ export default {
         padding: 0.2rem 0;
       }
       .category3-container {
-        box-shadow: 0 0 0.3rem @Grey6;
+        box-shadow: 0.01rem 0 0.05rem @Grey6;
+        border-radius: 0.2rem;
         background-color: #fff;
         padding: 0.34rem;
         display: grid;

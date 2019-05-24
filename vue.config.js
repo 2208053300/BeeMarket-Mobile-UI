@@ -24,6 +24,9 @@ module.exports = {
     // active: 'src/pages/active/main.js'
     beeTask: {
       entry: 'src/pages/BeeTask/main.js'
+    },
+    beeGift: {
+      entry: 'src/pages/BeeGift/main.js'
     }
   },
   // FIXME 注入全局环境变量BASE_API
