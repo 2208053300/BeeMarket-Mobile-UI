@@ -94,7 +94,7 @@ export default {
     },
     onLoad() {
       // 异步更新数据
-      setTimeout(async () => {
+      setTimeout(async() => {
         const res = await getActionList()
         this.actionList.push(...res.data.actionData)
         // 数据全部加载完成

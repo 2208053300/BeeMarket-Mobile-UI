@@ -28,8 +28,7 @@ export default {
     return {
       beeIcon: {
         tab_icon_home_s: require('@/assets/icon/footer/tab_icon_home_s@2x.png'),
-        tab_icon_shop_s: require('@/assets/icon/footer/tab_icon_shop_s@2x.png'),
-
+        tab_icon_shop_s: require('@/assets/icon/footer/tab_icon_shop_s@2x.png')
       }
     }
   },

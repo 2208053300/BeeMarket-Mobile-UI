@@ -162,7 +162,7 @@ export default {
   methods: {
     onLoad() {
       // 异步更新数据
-      setTimeout(async () => {
+      setTimeout(async() => {
         const res = await getStoreDetails()
         this.commodityList.push(...res.data.storeDetails.commodity)
         // 加载状态结束

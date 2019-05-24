@@ -6,7 +6,7 @@
       @change="onChange"
     >
       <van-swipe-item>
-         <!-- TODO swiper中放置视频必须设置高度 -->
+        <!-- TODO swiper中放置视频必须设置高度 -->
         <video
           ref="videoPlayer"
           class="video-js commodity-video vjs-default-skin vjs-big-play-centered vjs-16-9 "
