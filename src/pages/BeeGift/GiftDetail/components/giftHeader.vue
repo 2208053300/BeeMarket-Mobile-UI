@@ -1,7 +1,7 @@
 <template>
-  <div class="gift-header">
+  <div class="gift-header" :class="{header2:giftDetail.status===3}">
     <div
-      v-if="giftDetail.status===0"
+      v-if="giftDetail.status===0||giftDetail.status===3"
       class="header-text1 text-type1"
     >
       <span>您的好友在蜂集市上给您买了礼物当您领取并确认收货地址后，</span>
@@ -41,7 +41,7 @@
       class="header-text1"
     >
       <span>您来晚了</span>
-      <span>该赠送订单<span class="bee-text text2">暂未领取礼物</span></span>
+      <span class="text2">该赠送订单<span class="bee-text ">已失效</span></span>
     </div>
   </div>
 </template>
@@ -87,7 +87,7 @@ export default {
   }
   .header-text1 {
     font-size: 0.3rem;
-    margin: auto;
+    margin: 0.3rem auto 0;
     .text2 {
       display: block;
     }
@@ -113,6 +113,12 @@ export default {
     margin-top: 0.2rem;
     font-size: 0.22rem;
     color: @Grey2;
+  }
+}
+.header2{
+  height: 4.3rem;
+  .text-type1{
+    margin-top: 0;
   }
 }
 </style>

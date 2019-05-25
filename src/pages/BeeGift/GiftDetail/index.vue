@@ -51,6 +51,9 @@ import giftList from './components/giftList'
 import { getBeeGiftList } from '@/api/other'
 import { Grey1 } from '@/styles/index/variables.less'
 export default {
+  metaInfo: {
+    title: '朋友赠送'
+  },
   components: {
     giftHeader,
     giftFooter,
@@ -82,8 +85,6 @@ export default {
 .gift-detail {
   padding-top: 46px;
   margin-bottom: 120px;
-  .van-notice-bar {
-  }
   .bee-tips {
     font-size: 0.24rem;
     margin-top: 0.3rem;

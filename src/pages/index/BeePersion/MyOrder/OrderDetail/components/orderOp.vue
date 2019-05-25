@@ -1,5 +1,10 @@
 <template>
   <div class="order-op">
+    <div class="left-button">
+      <van-button class="back-list">
+        返回订单列表
+      </van-button>
+    </div>
     <van-button
       v-if="[0,12,13,14].indexOf(orderDetail.status)!==-1"
       round
@@ -167,6 +172,15 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  .left-button {
+    flex: 1;
+    text-align: left;
+    .back-list {
+      border: none;
+      color: @Grey2;
+      font-size: 0.26rem;
+    }
+  }
   .van-button {
     width: 1.6rem;
     height: 0.6rem;

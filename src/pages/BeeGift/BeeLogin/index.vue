@@ -32,6 +32,7 @@
         <van-button
           round
           class="loginBtn"
+          @click="$router.push('/addressManage')"
         >
           登录
         </van-button>
@@ -66,6 +67,8 @@ export default {
 
 <style scoped lang="less">
 .login-page {
+  padding-top: 46px;
+  height: 100%;
   .login-content {
     margin-top: 0.2rem;
     height: 100%;
@@ -94,10 +97,10 @@ export default {
       padding: 0;
       padding-left: 0.18rem;
     }
-    .login-button{
+    .login-button {
       margin-top: 0.8rem;
       text-align: center;
-      .loginBtn{
+      .loginBtn {
         width: 5.1rem;
         height: 0.85rem;
         line-height: 0.85rem;

@@ -21,6 +21,7 @@
     <van-button
       v-if="giftDetail.status===2"
       class="default footer-button"
+      @click="$router.push('/login')"
     >
       领取
     </van-button>

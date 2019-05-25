@@ -15,12 +15,52 @@ export default new Router({
         {
           path: '',
           component: () => import('@/pages/BeeGift/GiftDetail')
+        },
+        {
+          path: 'login',
+          name: 'BeeLogin',
+          component: () => import('@/pages/BeeGift/BeeLogin')
+        },
+        {
+          path: 'addressManage',
+          name: 'AddressSetting',
+          component: () => import('@/pages/BeeGift/AddressSetting'),
+          children: [
+            {
+              path: '',
+              component: () =>
+                import('@/pages/BeeGift/AddressSetting/AddressManage')
+            },
+            {
+              path: 'addAddress',
+              name: 'addAddress',
+              component: () =>
+                import('@/pages/BeeGift/AddressSetting/AddAddress')
+            }
+          ]
+        },
+        {
+          path: 'GetResult',
+          name: 'GetResult',
+          component: () => import('@/pages/BeeGift/GetResult'),
+          children: [
+            {
+              path: 'GetSuccess',
+              name: 'GetSkuccess',
+              component: () => import('@/pages/BeeGift/GetResult/GetSuccess')
+            },
+            {
+              path: 'GetFreight',
+              name: 'GetFreight',
+              component: () => import('@/pages/BeeGift/GetResult/GetFreight')
+            },
+            {
+              path: 'GetFailed',
+              name: 'GetFailed',
+              component: () => import('@/pages/BeeGift/GetResult/GetFailed')
+            }
+          ]
         }
-        // {
-        //   path: 'taskDetail',
-        //   name: 'beeTask',
-        //   component: () => import('@/pages/beeGift/TaskDetail')
-        // }
       ]
     }
   ]
