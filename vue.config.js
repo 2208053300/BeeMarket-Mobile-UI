@@ -2,6 +2,7 @@ const path = require('path')
 module.exports = {
   lintOnSave: undefined,
   pages: {
+    // 主页
     index: {
       // page 的入口
       entry: 'src/pages/index/main.js'
@@ -22,11 +23,17 @@ module.exports = {
     // 输出文件名会被推导为 `subpage.html`。
     // NOTE 新增活动页
     // active: 'src/pages/active/main.js'
+    // 蜂任务
     beeTask: {
       entry: 'src/pages/BeeTask/main.js'
     },
+    // 赠送好友
     beeGift: {
       entry: 'src/pages/BeeGift/main.js'
+    },
+    // 峰公益值
+    beeCommonweal: {
+      entry: 'src/pages/BeeCommonweal/main.js'
     }
   },
   // FIXME 注入全局环境变量BASE_API
