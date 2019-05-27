@@ -242,8 +242,9 @@ export default {
     }
     .closePop {
       position: absolute;
-      left: 49%;
-      bottom: -0.5rem;
+      left: 48%;
+      font-size: 0.5rem;
+      bottom: -1rem;
     }
   }
 }

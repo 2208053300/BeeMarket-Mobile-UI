@@ -31,9 +31,13 @@ module.exports = {
     beeGift: {
       entry: 'src/pages/BeeGift/main.js'
     },
-    // 峰公益值
+    // 蜂公益值
     beeCommonweal: {
       entry: 'src/pages/BeeCommonweal/main.js'
+    },
+    // 蜂公益行动详情
+    beePublic: {
+      entry: 'src/pages/BeePublic/main.js'
     }
   },
   // FIXME 注入全局环境变量BASE_API
