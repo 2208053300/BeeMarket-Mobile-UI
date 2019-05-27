@@ -14,7 +14,10 @@
           </div>
           <span class="name">{{ comVal.name }}</span>
         </div>
-        <div class="header-rule">
+        <div
+          class="header-rule"
+          @click="showRule=true"
+        >
           <van-icon :name="beeIcon.mine_public_icon_rule" />
           规则
         </div>
@@ -25,7 +28,10 @@
           <p class="com-val">
             {{ comVal.comVal }}
           </p>
-          <span class="time">本期分值2019.01-2019.12 ></span>
+          <span
+            class="time"
+            @click="$router.push('/detail')"
+          >本期分值2019.01-2019.12 ></span>
           <p class="rank">
             在好友排名第2名
           </p>
@@ -37,6 +43,7 @@
       </div>
     </div>
     <below-content />
+    <rule-card :show-rule.sync="showRule" />
   </div>
 </template>
 
@@ -44,10 +51,12 @@
 import { getBeeComVal } from '@/api/common'
 import helpChart from './components/helpChart'
 import belowContent from './components/belowContent'
+import ruleCard from './components/ruleCard'
 export default {
   components: {
     helpChart,
-    belowContent
+    belowContent,
+    ruleCard
   },
   props: {},
   data() {
@@ -59,7 +68,8 @@ export default {
         mine_public_icon_initiate: require('@/assets/icon/common/commonweal/mine_public_icon_initiate.png'),
         mine_public_icon_shop: require('@/assets/icon/common/commonweal/mine_public_icon_shop.png')
       },
-      comVal: {}
+      comVal: {},
+      showRule: false
     }
   },
   computed: {},
