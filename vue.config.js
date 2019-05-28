@@ -1,6 +1,6 @@
 const path = require('path')
 module.exports = {
-  lintOnSave: undefined,
+  lintOnSave: true,
   pages: {
     // 主页
     index: {
@@ -46,7 +46,8 @@ module.exports = {
       config.plugin('define').tap(definitions => {
         Object.assign(definitions[0]['process.env'], {
           BASE_API:
-            '"http://192.168.0.248:7300/mock/5c9af05716daf1002030e891/BeeMarket-Web"'
+            // '"http://192.168.0.248:7300/mock/5c9af05716daf1002030e891/BeeMarket-Web"'
+            '"https://api2.fengjishi.com.cn"'
         })
         return definitions
       })
@@ -57,20 +58,10 @@ module.exports = {
     types.forEach(type =>
       addStyleResource(config.module.rule('less').oneOf(type))
     )
+  },
+  devServer: {
+    disableHostCheck: true
   }
-  // css: {
-  //   loaderOptions: {
-  //     less: {
-  //       data: `@/styles/index/variables.less`
-  //     }
-  //   }
-  // }
-  // pluginOptions: {
-  //   'style-resources-loader': {
-  //     preProcessor: 'less',
-  //     patterns: [path.resolve(__dirname, './src/styles/index/variables.less')]
-  //   }
-  // }
 }
 function addStyleResource(rule) {
   rule

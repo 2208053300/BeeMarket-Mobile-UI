@@ -12,17 +12,17 @@
           class="video-js commodity-video vjs-default-skin vjs-big-play-centered vjs-16-9 "
         >
           <source
-            src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+            :src="commodityData.video_url"
             type="video/mp4"
           >
         </video>
       </van-swipe-item>
       <van-swipe-item
-        v-for="item in commodityData.img"
+        v-for="item in commodityData.album"
         :key="item"
       >
         <img
-          :src="item"
+          :src="item.tUrl"
           alt=""
         >
       </van-swipe-item>
@@ -30,7 +30,7 @@
         slot="indicator"
         class="custom-indicator"
       >
-        {{ current + 1 }}/5
+        {{ current + 1 }}/{{ commodityData.album.length }}
         <div class="video-img-swipe">
           <div class="video-img">
             <img
@@ -62,7 +62,7 @@
     <div class="limit-time">
       <span>限量疯抢中</span>
       <div class="limit-nowNum">
-        仅剩<span class="num">  80  </span>件
+        仅剩<span class="num"> 80 </span>件
       </div>
     </div>
   </div>
@@ -101,15 +101,7 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {
-    this.player = videojs(
-      this.$refs.videoPlayer,
-      this.options,
-      function onPlayerReady() {
-        console.log('onPlayerReady', this)
-      }
-    )
-  },
+  mounted() {},
   beforeDestroy() {
     if (this.player) {
       this.player.dispose()
@@ -118,6 +110,16 @@ export default {
   methods: {
     onChange(index) {
       this.current = index
+    },
+    // FIXME 需要渲染视频组件
+    initPlayer() {
+      this.player = videojs(
+        this.$refs.videoPlayer,
+        this.options,
+        function onPlayerReady() {
+          console.log('onPlayerReady', this)
+        }
+      )
     }
   }
 }
@@ -155,7 +157,7 @@ export default {
       border-radius: 1rem;
     }
   }
-  .limit-time{
+  .limit-time {
     height: 0.6rem;
     line-height: 0.6rem;
     background-color: @BeeDefault;
@@ -165,7 +167,7 @@ export default {
     display: flex;
     justify-content: space-between;
     color: #ffffff;
-    .num{
+    .num {
       font-size: 0.34rem;
     }
   }

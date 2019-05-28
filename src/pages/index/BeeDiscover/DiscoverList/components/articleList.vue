@@ -11,15 +11,15 @@
         @load="onLoad"
       >
         <div
-          v-for="(item,index) in articleList"
+          v-for="(item) in articleList"
           :key="item.title"
-          :class="{articleContent2:index%2==0}"
+          :class="{articleContent2:item.is_article}"
           class="article-content"
           @click="$router.push('/discover/article')"
         >
           <div class="article-img">
             <img
-              :src="item.img"
+              :src="item.show_img"
               alt=""
             >
           </div>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { getArticleList } from '@/api/discover'
+import { getArticleList } from '@/api/BeeApi/action'
 export default {
   components: {},
   props: {},
@@ -53,14 +53,14 @@ export default {
   methods: {
     async getArticleListData() {
       const res = await getArticleList()
-      this.articleList = res.data.articleData
+      this.articleList = res.data
       this.loading = false
     },
     onLoad() {
       // 异步更新数据
       setTimeout(async() => {
         const res = await getArticleList()
-        this.articleList.push(...res.data.articleData)
+        this.articleList.push(...res.data)
         // 数据全部加载完成
         if (this.articleList.length >= 40) {
           this.finished = true

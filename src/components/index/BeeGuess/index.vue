@@ -10,13 +10,13 @@
         class="guess-card"
       >
         <img
-          :src="item.previewImg"
-          :alt="item.name"
+          :src="item.tUrl"
+          :alt="item.pname"
           class="preview-img"
         >
         <div class="guess-details">
           <div class="product-name">
-            {{ item.name }}
+            {{ item.pname }}
           </div>
           <div class="product-tag">
             <div
@@ -29,10 +29,10 @@
             </div>
           </div>
           <div class="product-currentPrice">
-            <span style="font-size:0.24rem">￥</span><span>{{ item.currentPrice }}</span>
+            <span style="font-size:0.24rem">￥</span><span>{{ item.price }}</span>
           </div>
           <div class="product-originalPrice">
-            ￥{{ item.originalPrice }}
+            ￥{{ item.line_price }}
           </div>
         </div>
       </div>
@@ -41,25 +41,32 @@
 </template>
 
 <script>
-import { getGuess } from '@/api/cart'
+// import { getGuess } from '@/api/cart'
 
 export default {
   components: {},
-  props: {},
+  props: {
+    guessData: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
+  },
   data() {
     return {
-      guessData: []
+      // guessData: []
     }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {
-    getGuess()
-      .then(res => {
-        this.guessData = res.data.guessData
-      })
-      .catch(() => {})
+    // getGuess()
+    //   .then(res => {
+    //     this.guessData = res.data.guessData
+    //   })
+    //   .catch(() => {})
   },
   methods: {}
 }
@@ -112,7 +119,7 @@ export default {
               margin-right: 0.12rem;
             }
           }
-          .hotTag{
+          .hotTag {
             border-color: #ffffff;
             color: #ffffff;
             background: linear-gradient(to right, @BeeDefault, #ff7116);

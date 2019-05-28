@@ -2,8 +2,8 @@
   <div class="action-list">
     <div
       v-for="action in homeDate.actionList"
-      class="action-card"
       :key="action.name"
+      class="action-card"
     >
       <div class="action-img">
         <img

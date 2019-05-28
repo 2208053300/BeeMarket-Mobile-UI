@@ -51,7 +51,7 @@ import farmProduct from './components/farmProduct'
 import projectSelection from './components/projectSelection'
 import actionList from './components/actionList'
 import BeeGuess from '@/components/index/BeeGuess'
-
+// import wxapi from '@/utils/wxapi'
 export default {
   components: {
     headerBanner,
@@ -84,11 +84,17 @@ export default {
   created() {},
   mounted() {
     this.getHomeData()
+    // wxapi.wxRegister(this.wxRegCallback)
   },
   methods: {
     async getHomeData() {
       const res = await getHome()
       this.homeDate = res.data.home
+    },
+    wxRegCallback() {
+      // 用于微信JS-SDK回调
+      // this.wxShareTimeline()
+      // this.wxShareAppMessage()
     }
   }
 }
