@@ -4,7 +4,7 @@
       <span class="title">
         农副产品
       </span>
-      <div class="more">
+      <div class="more" @click="$router.push('/beefarm')">
         更多
         <van-icon name="arrow" />
       </div>

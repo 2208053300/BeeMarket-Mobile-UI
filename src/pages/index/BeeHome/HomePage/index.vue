@@ -22,6 +22,7 @@
         <van-icon
           :name="beeIcon.home_icon_message"
           class="message-icon"
+          @click="$router.push('/beeNotice')"
         />
       </div>
       <header-banner />

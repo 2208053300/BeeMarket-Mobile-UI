@@ -33,11 +33,6 @@ export default new Router({
           component: () => import('@/pages/index/BeeHome/BeeNotice')
         },
         {
-          path: 'beeNotice',
-          name: 'beeNotice',
-          component: () => import('@/pages/index/BeeHome/BeeNotice')
-        },
-        {
           path: 'beeAction',
           name: 'beeAction',
           component: () => import('@/pages/index/BeeHome/BeeAction')

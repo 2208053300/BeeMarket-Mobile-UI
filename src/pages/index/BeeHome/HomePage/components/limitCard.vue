@@ -4,7 +4,7 @@
       <span class="title">
         限量蜂抢
       </span>
-      <div class="more">
+      <div class="more" @click="$router.push('/beeLimit')">
         更多
         <van-icon name="arrow" />
       </div>

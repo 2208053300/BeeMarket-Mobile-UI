@@ -6,7 +6,10 @@
     >
     <div class="overlay">
       <!-- TODO 点击跳转蒙版 -->
-      <div class="bee-task" />
+      <div
+        class="bee-task"
+        @click="$router.push('/beeTask')"
+      />
       <div class="bee-factory" />
     </div>
   </div>
