@@ -187,6 +187,11 @@ export default new Router({
           component: () => import('@/pages/index/BeePersion/PersionalCenter')
         },
         {
+          path: 'myQrcode',
+          name: 'myQrcode',
+          component: () => import('@/pages/index/BeePersion/MyQrcode')
+        },
+        {
           path: 'order',
           name: 'MyOrder',
           component: () => import('@/pages/index/BeePersion/MyOrder'),

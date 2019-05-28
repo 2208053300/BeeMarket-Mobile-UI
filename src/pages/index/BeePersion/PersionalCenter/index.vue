@@ -9,10 +9,12 @@
           :name="beeIcon.mine_icon_message"
           size="20px"
           style="margin-right:0.5rem;"
+          @click="$router.push('/beeNotice')"
         />
         <van-icon
           :name="beeIcon.mine_icon_qrcode"
           size="20px"
+          @click="$router.push('/persion/myQrcode')"
         />
       </div>
       <van-row
@@ -152,6 +154,7 @@ export default {
 
 <style scoped lang="less">
 .persion-center {
+  margin-bottom: 0.6rem;
   .person-header {
     padding: 0.8rem 0.32rem 0.32rem;
     min-height: 3.8rem;
