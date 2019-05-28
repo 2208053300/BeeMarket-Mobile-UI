@@ -84,6 +84,8 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = true
     this.getHomeData()
     // wxapi.wxRegister(this.wxRegCallback)
   },

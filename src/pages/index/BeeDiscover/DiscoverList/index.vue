@@ -42,7 +42,10 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = true
+  },
   methods: {}
 }
 </script>

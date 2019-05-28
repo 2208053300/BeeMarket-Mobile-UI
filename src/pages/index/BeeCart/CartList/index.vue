@@ -150,6 +150,8 @@ export default {
   },
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = true
     // TODO 如果本地缓存直接读取，如果无缓存从后台获取
     this.getShopcartListData()
   },

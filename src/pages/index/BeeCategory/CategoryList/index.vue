@@ -70,7 +70,10 @@ export default {
     }
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = true
+  },
   methods: {
     // NOTE 当点击搜索栏时，更改样式
     changeLeft() {
