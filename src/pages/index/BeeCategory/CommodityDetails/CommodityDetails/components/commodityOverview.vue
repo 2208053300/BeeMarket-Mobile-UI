@@ -14,7 +14,19 @@
       </van-col>
       <van-col>
         <!-- TODO 已收藏变换颜色 -->
-        <div class="followed">
+        <div
+          v-if="commodityData.favor"
+          class="followed unfollowed"
+          @click="handleUnFollow"
+        >
+          <van-icon :name="beeIcon.product_detail_icon_attention_pressed" />
+          <span class="followed-text1">已收藏</span>
+        </div>
+        <div
+          v-else
+          class="followed "
+          @click="handleFollow"
+        >
           <van-icon :name="beeIcon.product_detail_icon_attention_normat" />
           <span class="followed-text1">收藏</span>
         </div>
@@ -32,6 +44,7 @@
 </template>
 
 <script>
+import { collectProduct, cancelCollect } from '@/api/BeeApi/product'
 export default {
   components: {},
   props: {
@@ -45,7 +58,8 @@ export default {
   data() {
     return {
       beeIcon: {
-        product_detail_icon_attention_normat: require('@/assets/icon/product/product_detail_icon_attention_normat@2x.png')
+        product_detail_icon_attention_normat: require('@/assets/icon/product/product_detail_icon_attention_normat@2x.png'),
+        product_detail_icon_attention_pressed: require('@/assets/icon/product/product_detail_icon_attention_pressed@2x.png')
       }
     }
   },
@@ -53,7 +67,24 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    async handleFollow() {
+      const res = await collectProduct({
+        contentId: this.commodityData.pid,
+        type: 1
+      })
+      this.commodityData.favor = 1
+      this.$toast(res.message)
+    },
+    async handleUnFollow() {
+      const res = await cancelCollect({
+        content_ids: this.commodityData.pid,
+        type: 1
+      })
+      this.commodityData.favor = 0
+      this.$toast(res.message)
+    }
+  }
 }
 </script>
 
@@ -98,6 +129,12 @@ export default {
     .followed-text1 {
       font-size: 0.24rem;
       color: @Grey1;
+    }
+  }
+  .unfollowed {
+    background: linear-gradient(to right, #fec108, #fe9907);
+    .followed-text1 {
+      color: #fff;
     }
   }
   .commodity-name {

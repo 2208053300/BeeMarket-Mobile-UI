@@ -24,3 +24,19 @@ export function getProductDetail(data) {
     data
   })
 }
+// 加入收藏
+export function collectProduct(data) {
+  return request({
+    url: '/product/collect',
+    method: 'post',
+    data
+  })
+}
+// 取消收藏
+export function cancelCollect(data) {
+  return request({
+    url: '/product/cancelCollect',
+    method: 'post',
+    data
+  })
+}

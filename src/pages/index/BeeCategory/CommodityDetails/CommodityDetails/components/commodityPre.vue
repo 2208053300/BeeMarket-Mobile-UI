@@ -2,24 +2,16 @@
   <div class="commodity-pre">
     <!-- TODO 视频图片开关 -->
     <van-swipe
+      ref="preSwipe"
       class="swipe-img"
       @change="onChange"
     >
-      <van-swipe-item>
-        <!-- TODO swiper中放置视频必须设置高度 -->
-        <video
-          ref="videoPlayer"
-          class="video-js commodity-video vjs-default-skin vjs-big-play-centered vjs-16-9 "
-        >
-          <source
-            :src="commodityData.video_url"
-            type="video/mp4"
-          >
-        </video>
+      <van-swipe-item v-if="commodityData.video_url">
+        <video-player :video-url="commodityData.video_url" />
       </van-swipe-item>
       <van-swipe-item
         v-for="item in commodityData.album"
-        :key="item"
+        :key="item.tUrl"
       >
         <img
           :src="item.tUrl"
@@ -27,21 +19,27 @@
         >
       </van-swipe-item>
       <div
+        v-if="commodityData.album"
         slot="indicator"
         class="custom-indicator"
       >
         {{ current + 1 }}/{{ commodityData.album.length }}
-        <div class="video-img-swipe">
+        <div
+          v-if="commodityData.video_url"
+          class="video-img-swipe"
+        >
           <div class="video-img">
             <img
               v-if="showPicture"
               :src="beeIcon.product_detail_btn_video_normat"
               alt=""
+              @click="changePic"
             >
             <img
               v-else
               :src="beeIcon.product_detail_btn_video_selected"
               alt=""
+              @click="changePic"
             >
           </div>
           <div class="img-img">
@@ -49,11 +47,13 @@
               v-if="!showPicture"
               :src="beeIcon.product_detail_btn_pic_normat"
               alt=""
+              @click="changeVid"
             >
             <img
               v-else
               :src="beeIcon.product_detail_btn_pic_selected"
               alt=""
+              @click="changeVid"
             >
           </div>
         </div>
@@ -69,10 +69,11 @@
 </template>
 
 <script>
-import videojs from 'video.js'
-import 'video.js/dist/video-js.css'
+import videoPlayer from './videoPlayer'
 export default {
-  components: {},
+  components: {
+    videoPlayer
+  },
   props: {
     commodityData: {
       type: Object,
@@ -84,11 +85,6 @@ export default {
   data() {
     return {
       current: 0,
-      player: null,
-      options: {
-        // autoplay: true
-        controls: true
-      },
       beeIcon: {
         product_detail_btn_pic_normat: require('@/assets/icon/product/product_detail_btn_pic_normat@2x.png'),
         product_detail_btn_video_normat: require('@/assets/icon/product/product_detail_btn_video_normat@2x.png'),
@@ -102,24 +98,21 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  beforeDestroy() {
-    if (this.player) {
-      this.player.dispose()
-    }
-  },
+
   methods: {
     onChange(index) {
       this.current = index
+      if (index) {
+        this.showPicture = true
+      } else {
+        this.showPicture = false
+      }
     },
-    // FIXME 需要渲染视频组件
-    initPlayer() {
-      this.player = videojs(
-        this.$refs.videoPlayer,
-        this.options,
-        function onPlayerReady() {
-          console.log('onPlayerReady', this)
-        }
-      )
+    changePic() {
+      this.$refs.preSwipe.swipeTo(0)
+    },
+    changeVid() {
+      this.$refs.preSwipe.swipeTo(1)
     }
   }
 }
@@ -135,6 +128,7 @@ export default {
   }
   .swipe-img {
     position: relative;
+    background-color: #000000;
     .custom-indicator {
       width: 0.76rem;
       height: 0.4rem;
@@ -150,7 +144,7 @@ export default {
       position: absolute;
       left: -3.8rem;
       bottom: 0;
-      height: 0.55rem;
+      height: 0.5rem;
       width: 2rem;
       background-color: rgba(255, 255, 255, 0.5);
       display: flex;

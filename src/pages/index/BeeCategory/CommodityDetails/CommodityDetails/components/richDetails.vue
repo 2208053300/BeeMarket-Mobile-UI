@@ -1,6 +1,6 @@
 <template>
+  <!-- v-lazy-container="{ selector: 'img' }" -->
   <div
-    v-lazy-container="{ selector: 'img' }"
     class="rich-details"
   >
     <!-- TODO 没有商品详情富文本时显示 -->
