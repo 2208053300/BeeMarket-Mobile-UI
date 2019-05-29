@@ -1,19 +1,19 @@
 <template>
   <div class="card1">
     <div class="action-title">
-      {{ actionDetails.title }}
+      {{ actionDetails.main_title }}
     </div>
     <div class="action-subhead">
-      {{ actionDetails.title2 }}
+      {{ actionDetails.subtitle }}
     </div>
     <div class="action-progress">
       <div class="percent">
-        {{ actionDetails.help/actionDetails.need|getPercent }}%
+        {{ actionDetails.schedule }}%
       </div>
       <div class="progress-bar">
         <van-progress
           v-if="actionDetails.help"
-          :percentage="actionDetails.help/actionDetails.need|getPercent"
+          :percentage="actionDetails.schedule"
           :show-pivot="showPercent"
           :color="BeeDefault"
         />
@@ -29,7 +29,7 @@
         </div>
         <div class="help-time">
           <span class="bee-text">
-            {{ actionDetails.help }}
+            {{ actionDetails.share_number }}
           </span>次
         </div>
         <div class="right-line" />
@@ -43,7 +43,7 @@
         </div>
         <div class="help-time">
           <span class="bee-text">
-            {{ actionDetails.help }}
+            {{ actionDetails.participate_num }}
           </span>次
         </div>
         <div class="right-line" />
@@ -57,7 +57,7 @@
         </div>
         <div class="help-time">
           <span class="bee-text">
-            {{ actionDetails.need }}
+            {{ actionDetails.initiate_people_num }}
           </span>次
         </div>
       </div>

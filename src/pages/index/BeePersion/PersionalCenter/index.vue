@@ -9,10 +9,12 @@
           :name="beeIcon.mine_icon_message"
           size="20px"
           style="margin-right:0.5rem;"
+          @click="$router.push('/beeNotice')"
         />
         <van-icon
           :name="beeIcon.mine_icon_qrcode"
           size="20px"
+          @click="$router.push('/persion/myQrcode')"
         />
       </div>
       <van-row
@@ -23,7 +25,7 @@
         <van-col span="4">
           <div class="head-img">
             <img
-              src="@/assets/logo.png"
+              :src="userInfo.head_image"
               alt="头像"
             >
           </div>
@@ -33,7 +35,7 @@
           offset="2"
         >
           <span class="head-name">
-            哈哈哈哈哈哈哈哈哈哈哈哈
+            {{ userInfo.nickname }}
           </span>
           <div class="head-type">
             <van-icon name="vip-card-o" />
@@ -109,6 +111,7 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 import BeeOrder from './components/BeeOrder'
+import { baseinfo } from '@/api/BeeApi/user'
 export default {
   components: {
     BeeOrder
@@ -126,19 +129,32 @@ export default {
         mine_icon_pug: require('@/assets/icon/personalCenter/mine_icon_pug@2x.png'),
         mine_icon_customer: require('@/assets/icon/personalCenter/mine_icon_customer@2x.png'),
         mine_icon_set: require('@/assets/icon/personalCenter/mine_icon_set@2x.png')
-      }
+      },
+      userInfo: {}
     }
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
-  methods: {}
+  mounted() {
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = true
+    this.baseinfoData()
+  },
+  methods: {
+    async baseinfoData() {
+      const res = await baseinfo()
+      this.userInfo = res.data
+      // 同时保存到缓存
+      this.$store.state.user.userInfo = res.data
+    }
+  }
 }
 </script>
 
 <style scoped lang="less">
 .persion-center {
+  margin-bottom: 0.6rem;
   .person-header {
     padding: 0.8rem 0.32rem 0.32rem;
     min-height: 3.8rem;

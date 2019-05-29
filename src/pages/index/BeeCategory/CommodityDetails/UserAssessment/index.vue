@@ -135,7 +135,7 @@ export default {
       this.$store.state.app.beeFooter.show = false
     },
     onLoad() {
-      setTimeout(async () => {
+      setTimeout(async() => {
         const res = await getAssessment()
         this.assessmentList.push(...res.data.assessmentData)
         console.log(this.assessmentList)

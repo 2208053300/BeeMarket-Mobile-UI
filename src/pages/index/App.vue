@@ -40,5 +40,6 @@ export default {
 <style lang="less">
 .showHeader {
   padding-top: 46px;
+  box-sizing: border-box;
 }
 </style>

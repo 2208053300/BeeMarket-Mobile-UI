@@ -1,7 +1,8 @@
 const path = require('path')
 module.exports = {
-  lintOnSave: undefined,
+  lintOnSave: true,
   pages: {
+    // 主页
     index: {
       // page 的入口
       entry: 'src/pages/index/main.js'
@@ -22,8 +23,21 @@ module.exports = {
     // 输出文件名会被推导为 `subpage.html`。
     // NOTE 新增活动页
     // active: 'src/pages/active/main.js'
+    // 蜂任务
     beeTask: {
       entry: 'src/pages/BeeTask/main.js'
+    },
+    // 赠送好友
+    beeGift: {
+      entry: 'src/pages/BeeGift/main.js'
+    },
+    // 蜂公益值
+    beeCommonweal: {
+      entry: 'src/pages/BeeCommonweal/main.js'
+    },
+    // 蜂公益行动详情
+    beePublic: {
+      entry: 'src/pages/BeePublic/main.js'
     }
   },
   // FIXME 注入全局环境变量BASE_API
@@ -32,7 +46,8 @@ module.exports = {
       config.plugin('define').tap(definitions => {
         Object.assign(definitions[0]['process.env'], {
           BASE_API:
-            '"http://192.168.0.196:7300/mock/5c9af05716daf1002030e891/BeeMarket-Web"'
+            // '"http://192.168.0.248:7300/mock/5c9af05716daf1002030e891/BeeMarket-Web"'
+            '"https://api2.fengjishi.com.cn"'
         })
         return definitions
       })
@@ -43,20 +58,10 @@ module.exports = {
     types.forEach(type =>
       addStyleResource(config.module.rule('less').oneOf(type))
     )
+  },
+  devServer: {
+    disableHostCheck: true
   }
-  // css: {
-  //   loaderOptions: {
-  //     less: {
-  //       data: `@/styles/index/variables.less`
-  //     }
-  //   }
-  // }
-  // pluginOptions: {
-  //   'style-resources-loader': {
-  //     preProcessor: 'less',
-  //     patterns: [path.resolve(__dirname, './src/styles/index/variables.less')]
-  //   }
-  // }
 }
 function addStyleResource(rule) {
   rule

@@ -65,7 +65,6 @@
           v-if="card.toFriend===0&&(card.orderStatus===0||card.orderStatus===4||card.orderStatus===6||card.order_status===-1)"
           round
           class="order-button"
-          @click=""
         >
           删除订单
         </van-button>
@@ -81,7 +80,6 @@
           v-if="card.toFriend===0&&(card.orderStatus===6||card.orderStatus===4||card.order_status===-1)"
           round
           class="order-button"
-          @click=""
         >
           再次购买
         </van-button>
@@ -97,7 +95,6 @@
           v-if="card.toFriend===0&&(card.orderStatus===2||card.orderStatus===3)"
           round
           class="order-button"
-          @click=""
         >
           确认收货
         </van-button>
@@ -105,7 +102,6 @@
           v-if="card.toFriend===0&&(card.orderStatus===1||card.orderStatus===2)"
           round
           class="order-button"
-          @click=""
         >
           提醒发货
         </van-button>
@@ -113,7 +109,6 @@
           v-if="card.orderStatus===0"
           round
           class="order-button"
-          @click=""
         >
           付款<span>23:59</span>
         </van-button>

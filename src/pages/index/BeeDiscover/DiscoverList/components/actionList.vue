@@ -12,29 +12,29 @@
       >
         <div
           v-for="item in actionList"
-          :key="item.title"
+          :key="item.id"
           class="action-content"
           @click="$router.push('/discover/action')"
         >
           <div class="action-img">
             <img
-              :src="item.img"
+              :src="item.background_image_url"
               alt=""
             >
           </div>
           <div class="action-title">
-            {{ item.title }}
+            {{ item.main_title }}
           </div>
           <div class="action-subhead">
-            {{ item.title2 }}
+            {{ item.subtitle }}
           </div>
           <div class="action-progress">
             <div class="percent">
-              {{ item.help/item.need|getPercent }}%
+              {{ item.schedule }}%
             </div>
             <div class="progress-bar">
               <van-progress
-                :percentage="item.help/item.need|getPercent"
+                :percentage="item.schedule"
                 :show-pivot="showPercent"
                 :color="BeeDefault"
               />
@@ -42,10 +42,10 @@
           </div>
           <div class="action-status">
             <div class="action-help">
-              <van-icon :name="beeIcon.heart_solid" />已有<span class="bee-text">{{ item.help }}</span>人参与助力
+              <van-icon :name="beeIcon.heart_solid" />已有<span class="bee-text">{{ item.participate_num }}</span>人参与助力
             </div>
             <div class="action-need">
-              <van-icon :name="beeIcon.heart_hollow" />需要<span class="bee-text">{{ item.need }}</span>人参与项目
+              <van-icon :name="beeIcon.heart_hollow" />需要<span class="bee-text">{{ item.initiate_people_num }}</span>人参与项目
             </div>
           </div>
         </div>
@@ -56,7 +56,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
-import { getActionList } from '@/api/discover'
+import { getActionList } from '@/api/BeeApi/action'
 
 export default {
   components: {},
@@ -88,15 +88,15 @@ export default {
   methods: {
     async getActionListData() {
       const res = await getActionList()
-      this.actionList = res.data.actionData
+      this.actionList = res.data
       // 加载状态结束
       this.loading = false
     },
     onLoad() {
       // 异步更新数据
-      setTimeout(async () => {
+      setTimeout(async() => {
         const res = await getActionList()
-        this.actionList.push(...res.data.actionData)
+        this.actionList.push(...res.data)
         // 数据全部加载完成
         if (this.actionList.length >= 40) {
           this.finished = true

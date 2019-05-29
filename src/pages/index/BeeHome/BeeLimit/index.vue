@@ -6,38 +6,38 @@
       </div>
       <div class="limit-list">
         <div
-          v-for="item in commodityList"
-          :key="item.name"
+          v-for="item in commodityList.product_list"
+          :key="item.pid"
           class="commodity-content"
         >
           <div class="commodity-details">
             <div class="commodity-img">
               <img
-                :src="item.product.previewImg"
+                :src="item.thumb_url"
                 alt=""
               >
             </div>
             <div class="commodity-info">
               <div class="name">
-                {{ item.product.name }}
+                {{ item.pname }}
               </div>
               <div class="desc">
-                {{ item.product.name }}
+                {{ item.pname }}
               </div>
               <div class="price">
                 <div class="now-price">
-                  ￥{{ item.product.price }}
+                  ￥{{ item.price }}
                 </div>
                 <span class="old-price">
-                  ￥{{ item.product.price2 }}
+                  ￥{{ item.marketing_price }}
                 </span>
               </div>
               <div class="info-footer">
                 <div class="limit-num">
-                  仅剩{{ item.product.nowNum }}件
+                  仅剩{{ item.remain_qty }}件
                   <div class="progress-content">
                     <div
-                      :style="{width:getProgress(item.product.nowNum,item.product.limitNum)}"
+                      :style="{width:getProgress(item.remain_qty,item.remain_qty)}"
                       class="limit-progress"
                     />
                   </div>
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { getBeeLimitList } from '@/api/home'
+import { getBeeLimitList } from '@/api/BeeApi/home'
 export default {
   metaInfo: {
     title: '限量蜂抢'
@@ -84,7 +84,7 @@ export default {
   methods: {
     async getBeeLimitListData() {
       const res = await getBeeLimitList()
-      this.commodityList = res.data.limitList
+      this.commodityList = res.data
     },
     getProgress(val1, val2) {
       return (val1 / val2) * 100 + '%'
@@ -95,6 +95,7 @@ export default {
 
 <style scoped lang="less">
 .bee-limit {
+  height: 100%;
   background-color: #fff;
   .limit-content {
     padding: 0.2rem 0.3rem;

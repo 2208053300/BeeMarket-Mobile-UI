@@ -6,10 +6,10 @@
     >
       <van-col>
         <p class="new_price">
-          <span class="rmb">￥</span>{{ commodityData.new_price }}
+          <span class="rmb">￥</span>{{ commodityData.section_price }}
         </p>
         <p class="old_price">
-          原价<span class="rmb">￥{{ commodityData.old_price }}</span>
+          原价<span class="rmb">￥{{ commodityData.line_price }}</span>
         </p>
       </van-col>
       <van-col>
@@ -21,10 +21,11 @@
       </van-col>
     </van-row>
     <p class="commodity-name">
-      {{ commodityData.name }}
+      {{ commodityData.pname }}
     </p>
+    <p>{{ commodityData.tags }}</p>
     <p class="commodity-desc">
-      {{ commodityData.desc }}
+      {{ commodityData.intro }}
     </p>
     <!-- TODO 农副产品，商品来自西南地区 -->
   </div>

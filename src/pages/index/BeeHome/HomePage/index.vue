@@ -1,114 +1,145 @@
 <template>
-  <div>
-    <div class="container">
-      <van-pull-refresh
-        v-model="isLoading"
-        @refresh="onRefresh"
-      >
-        <!-- 轮播 -->
-        <Carousel class="carousel" />
-
-        <!-- 农产品推荐 -->
-        <FarmRecom />
-
-        <!-- 广告位 -->
-        <div class="ad-place margin-t-b-20">
-          <img src="http://temp.im/640x260">
+  <div class="home-page">
+    <div
+      class="header-content"
+      :style="{backgroundImage:'url('+beeIcon.home_img_top_bg+')'}"
+    >
+      <div class="home-header">
+        <div class="logo-content">
+          <img
+            :src="beeIcon.home_img_logo"
+            alt=""
+          >
         </div>
-
-        <!-- 公益项目 -->
-        <PublicBinefit />
-
-        <!-- 限量蜂抢 -->
-        <LimitSale />
-
-        <!-- 新品首发 -->
-        <NewGoods />
-
-        <!-- 专题精选 -->
-        <ProjectSelection />
-
-        <!-- 专题列表 -->
-        <ProjectList />
-
-        <!-- 猜你喜欢 -->
-        <GuessList />
-      </van-pull-refresh>
+        <div class="search-input">
+          <van-icon
+            slot="left-icon"
+            :name="beeIcon.nav_icon_search"
+            :color="Grey1"
+          />
+          <span>蜂集市，让生活丰富起来</span>
+        </div>
+        <van-icon
+          :name="beeIcon.home_icon_message"
+          class="message-icon"
+          @click="$router.push('/beeNotice')"
+        />
+      </div>
+      <header-banner />
     </div>
+    <farm-card :home-date="homeDate" />
+    <new-product :home-date="homeDate" />
+    <action-card />
+    <limit-card :home-date="homeDate" />
+    <public-action />
+    <farm-product :home-date="homeDate" />
+    <project-selection :home-date="homeDate" />
+    <action-list :home-date="homeDate" />
+    <bee-guess />
   </div>
 </template>
 
 <script>
-import Carousel from './components/Carousel'
-import FarmRecom from './components/FarmRecom'
-import PublicBinefit from './components/PublicBinefit'
-import LimitSale from './components/LimitSale'
-import NewGoods from './components/NewGoods'
-import ProjectSelection from './components/ProjectSelection'
-import ProjectList from './components/ProjectList'
-import GuessList from './components/GuessList'
+import { Grey1 } from '@/styles/index/variables.less'
+import { getHome } from '@/api/home'
+import headerBanner from './components/headerBanner'
+import farmCard from './components/farmCard'
+import newProduct from './components/newProduct'
+import actionCard from './components/actionCard'
+import limitCard from './components/limitCard'
+import publicAction from './components/publicAction'
+import farmProduct from './components/farmProduct'
+import projectSelection from './components/projectSelection'
+import actionList from './components/actionList'
+import BeeGuess from '@/components/index/BeeGuess'
+// import wxapi from '@/utils/wxapi'
 export default {
   components: {
-    Carousel,
-    FarmRecom,
-    PublicBinefit,
-    LimitSale,
-    NewGoods,
-    ProjectSelection,
-    ProjectList,
-    GuessList
+    headerBanner,
+    farmCard,
+    newProduct,
+    actionCard,
+    limitCard,
+    publicAction,
+    farmProduct,
+    projectSelection,
+    actionList,
+    BeeGuess
   },
   props: {},
   data() {
     return {
-      // 是否在下拉刷新中
-      isLoading: false
+      Grey1,
+      beeIcon: {
+        nav_icon_search: require('@/assets/icon/category/nav_icon_search@2x.png'),
+        home_img_logo: require('@/assets/icon/home/index/home_img_logo@2x.png'),
+        home_img_top_bg: require('@/assets/icon/home/index/home_img_top_bg@2x.png'),
+        home_icon_message: require('@/assets/icon/home/index/home_icon_message@2x.png'),
+        home_icon_message_prompt: require('@/assets/icon/home/index/home_icon_message_prompt@2x.png')
+      },
+      homeDate: {}
     }
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = true
+    this.getHomeData()
+    // wxapi.wxRegister(this.wxRegCallback)
+  },
   methods: {
-    // 下拉刷新
-    onRefresh() {
-      setTimeout(() => {
-        this.$toast('刷新成功')
-        this.isLoading = false
-        this.count++
-      }, 500)
+    async getHomeData() {
+      const res = await getHome()
+      this.homeDate = res.data.home
+    },
+    wxRegCallback() {
+      // 用于微信JS-SDK回调
+      // this.wxShareTimeline()
+      // this.wxShareAppMessage()
     }
   }
 }
 </script>
 
 <style scoped lang="less">
-.container {
-  margin-bottom: 50px;
-}
-.banner {
-  background: #ddd;
-  height: 200px;
-}
-.farm-recom {
-  .banner {
-    height: 150px;
+.home-page {
+  margin-bottom: 60px;
+  .header-content {
+    background-size: contain;
+    height: 4rem;
+    .home-header {
+      height: 0.64rem;
+      padding: 0.24rem;
+      display: flex;
+      align-items: center;
+      .logo-content {
+        height: 0.4rem;
+        width: 1.16rem;
+      }
+      .search-input {
+        background-color: #fff;
+        flex: 1;
+        height: 0.64rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        margin: 0 0.16rem;
+        display: flex;
+        align-items: center;
+        color: @Grey9;
+        font-size: 0.28rem;
+
+        .van-icon {
+          margin: 0 0.24rem 0 0.3rem;
+        }
+      }
+      .message-icon {
+        font-size: 0.6rem;
+        margin-left: 0.16rem;
+        vertical-align: middle;
+      }
+    }
   }
-}
-.farm-list {
-  width: 100%;
-  overflow-x: scroll;
-  display: -webkit-box;
-  li {
-    width: 33%;
-    padding: 0 10px;
-  }
-  .item-box {
-    width: 100%;
-    background: #f3f3f3;
-  }
-}
-.carousel {
-  height: 2rem;
 }
 </style>

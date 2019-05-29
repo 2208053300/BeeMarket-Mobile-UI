@@ -52,7 +52,7 @@
         <cart-list v-else />
       </div>
       <div class="bee-below">
-        <bee-guess />
+        <bee-guess :guess-data="guessData" />
       </div>
       <van-submit-bar
         v-if="cart.cartSelected.length!==0&&!showEdit"
@@ -106,10 +106,10 @@
 </template>
 
 <script>
+import { getShopcartList, delShopcartProduct } from '@/api/BeeApi/user'
 import CartList from './components/CartList'
 import BeeGuess from '@/components/index/BeeGuess'
 import { mapState } from 'vuex'
-import { getCartList } from '@/api/cart'
 import { BeeDefault, Grey2 } from '@/styles/index/variables.less'
 
 export default {
@@ -130,7 +130,8 @@ export default {
         nav_icon_edit: require('@/assets/icon/cart/nav_icon_edit@2x.png'),
         nav_icon_share: require('@/assets/icon/cart/nav_icon_share@2x.png'),
         shopping_cart_pic_no: require('@/assets/icon/cart/shopping_cart_pic_no@2x.png')
-      }
+      },
+      guessData: []
     }
   },
   computed: {
@@ -149,20 +150,23 @@ export default {
   },
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = true
     // TODO 如果本地缓存直接读取，如果无缓存从后台获取
-    getCartList()
-      .then(res => {
-        this.cart.cartInfo = res.data.cartData
-        // this.allSelectedData = res.data.cartData
-        res.data.cartData.map((item, index) => {
-          item.product.map((item2, index2) => {
-            this.allSelectedData.push(item2)
-          })
-        })
-      })
-      .catch(() => {})
+    this.getShopcartListData()
   },
   methods: {
+    async getShopcartListData() {
+      const res = await getShopcartList()
+      this.cart.cartInfo = res.data.shopcart
+      // 猜你喜欢
+      this.guessData = res.data.guess
+      res.data.shopcart.map((item, index) => {
+        item.products.map((item2, index2) => {
+          this.allSelectedData.push(item2)
+        })
+      })
+    },
     // 跳转到购物车分享页面
     goSharePage() {
       this.$router.push({
@@ -185,7 +189,10 @@ export default {
       console.log(this.cart.cartSelected)
     },
     // TODO 删除选中
-    delSelected() {
+    async delSelected() {
+      const res = await delShopcartProduct()
+      console.log(res)
+
       console.log(this.cart.cartSelected)
     }
   }

@@ -33,11 +33,6 @@ export default new Router({
           component: () => import('@/pages/index/BeeHome/BeeNotice')
         },
         {
-          path: 'beeNotice',
-          name: 'beeNotice',
-          component: () => import('@/pages/index/BeeHome/BeeNotice')
-        },
-        {
           path: 'beeAction',
           name: 'beeAction',
           component: () => import('@/pages/index/BeeHome/BeeAction')
@@ -190,6 +185,11 @@ export default new Router({
           path: '',
           name: 'PersionalCenter',
           component: () => import('@/pages/index/BeePersion/PersionalCenter')
+        },
+        {
+          path: 'myQrcode',
+          name: 'myQrcode',
+          component: () => import('@/pages/index/BeePersion/MyQrcode')
         },
         {
           path: 'order',

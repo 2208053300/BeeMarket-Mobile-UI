@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getCommodityDetails } from '@/api/category'
+import { getProductDetail } from '@/api/BeeApi/product'
 import commodityPre from './components/commodityPre'
 import goodsAction from './components/goodsAction'
 import commodityOverview from './components/commodityOverview'
@@ -57,12 +57,12 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getCommodityDetails()
+    this.getProductDetailData()
   },
   methods: {
-    async getCommodityDetails() {
-      const res = await getCommodityDetails()
-      this.commodityData = res.data.commodityData
+    async getProductDetailData() {
+      const res = await getProductDetail({ pid: 1 })
+      this.commodityData = res.data
       // NOTE 先放这里
     }
   }

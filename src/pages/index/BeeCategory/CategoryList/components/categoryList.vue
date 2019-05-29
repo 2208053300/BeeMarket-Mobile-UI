@@ -6,10 +6,10 @@
       @change="onChange"
     >
       <van-badge
-        v-for="item in category1"
-        :key="item.name"
-        :title="item.name"
-        @click="changeBorder"
+        v-for="(item,index) in category1"
+        :key="item.cid"
+        :title="item.cname"
+        @click="getCategory2Data(item.cid,index)"
       />
       <div
         class="border-img"
@@ -21,43 +21,77 @@
         >
       </div>
     </van-badge-group>
-    <div class="category2-container">
-      <div class="advertisement">
-        广告位
-      </div>
+    <div
+      v-if="category2.groups"
+      class="category2-container"
+    >
       <div
-        v-for="item in category2"
-        :key="item.name"
-        class="category2-card"
+        v-if="category2.top"
+        class="advertisement"
       >
-        <div class="category2-title">
-          {{ item.name }}
+        <div class="top-img">
+          <img
+            :src="category2.top.top_ad_image"
+            alt="广告图"
+          >
+          act_id
         </div>
-        <div class="category3-container">
+      </div>
+      <template v-if="category2.groups[0].gid">
+        <div
+          v-for="item in category2.groups"
+          :key="item.gid"
+          class="category2-card"
+        >
+          <div class="category2-title">
+            {{ item.group_name }}
+          </div>
+          <div class="category3-container">
+            <div
+              v-for="item2 in item"
+              :key="item2.cid"
+              class="category3-card"
+              @click="$router.push('/category/SecCategoryList')"
+            >
+              <div class="category3-img">
+                <img
+                  :src="item2.cat_image"
+                  alt=""
+                >
+              </div>
+              <div class="category3-title">
+                {{ item2.cname }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <div class="category2-card2">
           <div
-            v-for="item2 in item.category3"
-            :key="item2.name"
+            v-for="item in category2.groups"
+            :key="item.gid"
             class="category3-card"
             @click="$router.push('/category/SecCategoryList')"
           >
             <div class="category3-img">
               <img
-                :src="item2.img"
+                :src="item.cat_image"
                 alt=""
               >
             </div>
             <div class="category3-title">
-              {{ item2.name }}
+              {{ item.cname }}
             </div>
           </div>
         </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
-import { getCategory1, getCategory2 } from '@/api/category'
+import { getCategory1, getCategory2 } from '@/api/BeeApi/product'
 export default {
   components: {},
   props: {},
@@ -76,25 +110,23 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    this.getCategory1()
-    this.getCategory2()
+    this.getCategory1Data()
   },
   methods: {
     onChange(key) {
       this.activeKey = key
     },
     // TODO 点击一级分类，更新二级分类
-    async getCategory1() {
+    async getCategory1Data() {
       const res = await getCategory1()
-      this.category1 = res.data.categoryDate
+      this.category1 = res.data
+      this.getCategory2Data({ cid: this.category1[0].cid })
     },
-    async getCategory2() {
-      const res = await getCategory2()
-      this.category2 = res.data.categoryDate
-    },
-    // NOTE 定位border图片的位置
-    changeBorder(index) {
+    async getCategory2Data(cid, index) {
+      // NOTE 定位border图片的位置
       this.borderPosition = Number(index) * 58 + 14 + 'px'
+      const res = await getCategory2({ cid: cid })
+      this.category2 = res.data
     }
   }
 }
@@ -116,8 +148,6 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
       background-color: @GreyBg;
-      &::after {
-      }
     }
     .van-badge--select {
       background-color: #ffffff;
@@ -148,7 +178,8 @@ export default {
         padding: 0.2rem 0;
       }
       .category3-container {
-        box-shadow: 0 0 0.3rem @Grey6;
+        box-shadow: 0.01rem 0 0.05rem @Grey6;
+        border-radius: 0.2rem;
         background-color: #fff;
         padding: 0.34rem;
         display: grid;
@@ -175,6 +206,30 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
           }
+        }
+      }
+    }
+    .category2-card2 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 0.18rem;
+      .category3-card {
+        .category3-img {
+          height: 1.68rem;
+          width: 1.68rem;
+          overflow: hidden;
+          border-radius: 0.04rem;
+          border: 0.02rem solid @Grey7;
+        }
+        .category3-title {
+          max-width: 1.4rem;
+          text-align: center;
+          font-size: 0.22rem;
+          color: @Grey2;
+          margin-top: 0.18rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
     }

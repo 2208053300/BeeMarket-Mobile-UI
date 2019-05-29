@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getAddressList } from '@/api/user'
+import { getAddressList } from '@/api/BeeApi/user'
 import AddressList from './components/AddressList'
 export default {
   metaInfo: {
@@ -48,14 +48,14 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    this.getAddressList()
+    this.getAddressListData()
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
   },
   methods: {
-    async getAddressList() {
+    async getAddressListData() {
       const res = await getAddressList()
-      this.addressList = res.data.addressData
+      this.addressList = res.data
     }
   }
 }

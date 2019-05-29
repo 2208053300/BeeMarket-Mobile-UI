@@ -2,23 +2,26 @@
   <div class="address-list">
     <div
       v-for="(address,index) in addressList"
-      :key="address.username"
+      :key="index"
       class="address-content"
     >
       <div class="address-name">
-        <span>{{ address.username }}</span>
-        <span>{{ address.phone | toTel }}</span>
+        <span>{{ address.name }}</span>
+        <span>{{ address.mobileNum | toTel }}</span>
       </div>
       <div class="address-details">
-        <div class="address-tag">
+        <div
+          v-if="address.tag!==null"
+          class="address-tag"
+        >
           {{ address.tag }}
         </div>
-        <span>{{ address.details }}</span>
+        <span>{{ address.address }}</span>
       </div>
       <div class="address-op">
         <div class="address-default">
           <div
-            v-if="address.default"
+            v-if="address.def"
             class="default1"
           >
             <van-icon :name="beeIcon.mine_address_checkbox_square_s" />
@@ -27,7 +30,7 @@
           <div
             v-else
             class="default2"
-            @click="setDefault(index)"
+            @click="setDefault(address.addr_id)"
           >
             <van-icon :name="beeIcon.mine_address_checkbox_square_n" />
             <span>设为默认</span>
@@ -37,11 +40,11 @@
           <van-icon
             :name="beeIcon.mine_address_icon_edit"
             style="margin-right:0.7rem;"
-            @click="editAddress(index)"
+            @click="editAddress(address.addr_id)"
           />
           <van-icon
             :name="beeIcon.mine_address_icon_del"
-            @click="delAddress(index)"
+            @click="delAddress(address.addr_id)"
           />
         </div>
       </div>
@@ -50,6 +53,7 @@
 </template>
 
 <script>
+import { delAddress } from '@/api/BeeApi/user'
 export default {
   components: {},
   filters: {
@@ -74,7 +78,6 @@ export default {
         mine_address_icon_edit: require('@/assets/icon/personalCenter/func/mine_address_icon_edit@2x.png'),
         mine_address_checkbox_square_s: require('@/assets/icon/personalCenter/func/mine_address_checkbox_square_s@2x.png'),
         mine_address_checkbox_square_n: require('@/assets/icon/personalCenter/func/mine_address_checkbox_square_n@2x.png')
-
       }
     }
   },
@@ -86,12 +89,25 @@ export default {
     // TODO 设置默认地址
     setDefault() {},
     // TODO 编辑地址
-    editAddress(index) {
-      this.$store.commit('SET_ADDRESSDATE', this.addressList[index])
-      this.$router.push('/persion/addressSetting/addAddress')
+    editAddress(id) {
+      this.$router.push({
+        path: '/persion/addressSetting/addAddress',
+        query: {
+          addr_id: id
+        }
+      })
     },
     // TODO 删除地址
-    delAddress(index) {}
+    async delAddress(id) {
+      try {
+        const res = await delAddress({ addr_id: id })
+        if (res.status_code === 200) {
+          this.$toast(res.message)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
 }
 </script>

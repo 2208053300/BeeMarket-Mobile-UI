@@ -15,20 +15,20 @@
           name="shop-o"
           style="vertical-align: text-top;"
         />
-        {{ store.storeName }}
+        {{ store.store_name }}
       </van-checkbox>
       <van-checkbox-group v-model="cart.cartSelected">
         <van-checkbox
-          v-for="item in store.product"
+          v-for="item in store.products"
           :key="item.id"
           :name="item"
           :checked-color="BeeDefault"
-          @click="changeAll(index,store.product,allSelectedBox[index])"
+          @click="changeAll(index,store.products,allSelectedBox[index])"
         >
           <van-card @click.stop="">
             <img
               slot="thumb"
-              :src="item.previewImg"
+              :src="item.tUrl"
               alt="商品预览图"
               @click.stop="showDetails(item.id)"
             >
@@ -36,7 +36,7 @@
               slot="title"
               class="card-title"
               @click.stop="showDetails(item.id)"
-            >{{ item.name }}</span>
+            >{{ item.pname }}</span>
             <div
               slot="desc"
               class="card-sku"
@@ -49,12 +49,12 @@
               slot="price"
               class="card-price"
             >
-              ￥{{ item.currentPrice }}
+              ￥{{ item.sell_price }}
             </span>
             <van-stepper
               slot="num"
-              v-model="item.num"
-              @click.stop="changeNum"
+              v-model="item.number"
+              @click.stop="changeNum(item.number)"
             />
           </van-card>
         </van-checkbox>
@@ -68,6 +68,7 @@
 import { mapState } from 'vuex'
 // import BeeSku from '../../../../components/BeeSku'
 import { BeeDefault } from '@/styles/index/variables.less'
+import { updateShopcartProductNum, checkShopcartProduct } from '@/api/BeeApi/user'
 
 export default {
   components: {
@@ -111,7 +112,7 @@ export default {
       }
     },
     // FIXME 有点小问题，选中子类全选可能出错
-    changeAll(index, val, isAll) {
+    async changeAll(index, val, isAll) {
       if (isAll) {
         this.allSelectedBox[index] = false
         return
@@ -122,6 +123,8 @@ export default {
       if (addVal.length === 0) {
         this.allSelectedBox[index] = true
       }
+      const res = await checkShopcartProduct()
+      console.log(res)
     },
     // TODO 跳转详情
     showDetails(id) {
@@ -134,8 +137,10 @@ export default {
     showSku(id) {
       this.beeskuShow = true
     },
-    changeNum() {
-      console.log(123)
+    // TODO 更改数量
+    async changeNum() {
+      const res = await updateShopcartProductNum()
+      console.log(res)
     }
   }
 }

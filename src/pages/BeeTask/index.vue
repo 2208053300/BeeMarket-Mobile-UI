@@ -1,5 +1,15 @@
 <template>
   <div id="app">
-    <router-view />
+    <bee-header />
+    <router-view style="height:100%;" />
   </div>
 </template>
+
+<script>
+import BeeHeader from '@/components/index/BeeHeader'
+export default {
+  components: {
+    BeeHeader
+  }
+}
+</script>

@@ -3,13 +3,13 @@
     <div class="add-address">
       <van-cell-group>
         <van-field
-          v-model="beeForm.username"
+          v-model="beeForm.name"
           label="姓名"
           placeholder="请输入收货人姓名"
         />
 
         <van-field
-          v-model="beeForm.phone"
+          v-model="beeForm.mobileNum"
           type="phone"
           label="手机号码"
           placeholder="请填写收货人电话"
@@ -27,7 +27,7 @@
         />
         <!-- TODO 添加街道选择 -->
         <van-field
-          v-model="beeForm.details"
+          v-model="beeForm.detailed"
           type="textarea"
           placeholder="填写详细信息，如街道，楼盘等"
           rows="3"
@@ -64,7 +64,7 @@
       </van-cell-group>
       <van-cell-group style="margin-top:0.3rem;">
         <van-switch-cell
-          v-model="beeForm.default"
+          v-model="beeForm.def"
           title="设为默认"
           :active-color="BeeDefault"
         />
@@ -83,6 +83,14 @@
     </div>
     <div class="save-address">
       <van-button
+        v-if="this.$route.query.addr_id"
+        class="save-button"
+        @click="editAddress"
+      >
+        保存
+      </van-button>
+      <van-button
+        v-else
         class="save-button"
         @click="saveAddress"
       >
@@ -95,21 +103,20 @@
 <script>
 import areaList from '@/assets/area'
 import { BeeDefault } from '@/styles/index/variables.less'
+import { getAddressDetail, addAddress, updateAddress } from '@/api/BeeApi/user'
 export default {
-  metaInfo: {
-    title: '新增地址'
+  metaInfo() {
+    if (this.$route.query.addr_id) {
+      return { title: '编辑地址' }
+    } else {
+      return { title: '新增地址' }
+    }
   },
   components: {},
   props: {},
   data() {
     return {
-      beeForm: {
-        username: '',
-        phone: '',
-        details: '',
-        tag: '',
-        default: false
-      },
+      beeForm: {},
       BeeDefault,
       areaList,
       showArea: false
@@ -122,20 +129,39 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     // NOTE 如果是编辑地址
-    if (this.$store.state.user.addressData) {
-      this.beeForm = this.$store.state.user.addressData
+    if (this.$route.query.addr_id) {
+      this.getAddressDetailData()
     }
   },
   beforeDestroy() {
     this.$store.state.user.addressData = {}
   },
   methods: {
-    back() {
-      this.$router.go(-1)
+    async getAddressDetailData() {
+      const res = await getAddressDetail({ addr_id: this.$route.query.addr_id })
+      this.beeForm = res.data
     },
-    saveAddress() {
+    async saveAddress() {
       // TODO 上传表单，并且返回上一级列表
-      this.$router.go(-1)
+      try {
+        const res = await addAddress(this.beeForm)
+        if (res.status_code === 200) {
+          this.$router.go(-1)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async editAddress() {
+      this.beeForm.addr_id = this.$route.query.addr_id
+      try {
+        const res = await updateAddress(this.beeForm)
+        if (res.status_code === 200) {
+          this.$router.go(-1)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

@@ -78,7 +78,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
-import { getActionDetails } from '@/api/discover'
+import { getActionDetail } from '@/api/BeeApi/action'
 import detailCard1 from './components/detailCard1'
 import detailCard2 from './components/detailCard2'
 import detailCard3 from './components/detailCard3'
@@ -116,8 +116,8 @@ export default {
   },
   methods: {
     async getActionDetailsData() {
-      const res = await getActionDetails()
-      this.actionDetails = res.data.actionData
+      const res = await getActionDetail({ id: 1 })
+      this.actionDetails = res.data
     },
     async goHelp() {
       this.helpSuccess = true
@@ -242,8 +242,9 @@ export default {
     }
     .closePop {
       position: absolute;
-      left: 49%;
-      bottom: -0.5rem;
+      left: 48%;
+      font-size: 0.5rem;
+      bottom: -1rem;
     }
   }
 }
