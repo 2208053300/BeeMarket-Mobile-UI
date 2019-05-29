@@ -43,7 +43,10 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.$store.state.app.beeHeader = true
+    this.$store.state.app.beeFooter.show = false
+  },
   methods: {}
 }
 </script>
@@ -60,12 +63,12 @@ export default {
         font-size: 0.28rem;
         color: @Grey1;
       }
-      .van-cell__value{
+      .van-cell__value {
         display: flex;
         align-items: center;
         justify-content: flex-end;
       }
-      .comVal{
+      .comVal {
         font-size: 0.36rem;
         color: @ProductName;
       }

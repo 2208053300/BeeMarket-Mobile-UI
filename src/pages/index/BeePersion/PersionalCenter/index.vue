@@ -49,7 +49,14 @@
         class="persion-op"
         type="flex"
         align="center"
-      />
+      >
+        <van-button
+          type="default"
+          @click="$router.push('/persion/BeeCommonweal')"
+        >
+          蜂公益
+        </van-button>
+      </van-row>
       <bee-order />
       <van-row
         class="persion-op"
@@ -111,7 +118,7 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 import BeeOrder from './components/BeeOrder'
-import { baseinfo } from '@/api/BeeApi/user'
+import { getPersionalCenter } from '@/api/BeeApi/user'
 export default {
   components: {
     BeeOrder
@@ -139,11 +146,11 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
-    this.baseinfoData()
+    this.getPersionalCenterData()
   },
   methods: {
-    async baseinfoData() {
-      const res = await baseinfo()
+    async getPersionalCenterData() {
+      const res = await getPersionalCenter()
       this.userInfo = res.data
       // 同时保存到缓存
       this.$store.state.user.userInfo = res.data

@@ -192,6 +192,22 @@ export default new Router({
           component: () => import('@/pages/index/BeePersion/MyQrcode')
         },
         {
+          path: 'BeeCommonweal',
+          name: 'BeeCommonweal',
+          component: () => import('@/pages/BeeCommonweal'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/BeeCommonweal/ComVal')
+            },
+            {
+              path: 'detail',
+              name: 'CommonwealDetail',
+              component: () => import('@/pages/BeeCommonweal/CommonwealDetail')
+            }
+          ]
+        },
+        {
           path: 'order',
           name: 'MyOrder',
           component: () => import('@/pages/index/BeePersion/MyOrder'),

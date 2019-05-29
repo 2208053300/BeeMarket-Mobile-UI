@@ -30,7 +30,7 @@
           </p>
           <span
             class="time"
-            @click="$router.push('/detail')"
+            @click="$router.push({name:'CommonwealDetail'})"
           >本期分值2019.01-2019.12 ></span>
           <p class="rank">
             在好友排名第2名

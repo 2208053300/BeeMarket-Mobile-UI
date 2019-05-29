@@ -8,6 +8,14 @@ export function baseinfo(data) {
     data
   })
 }
+// 用户基本信息获取
+export function getPersionalCenter(data) {
+  return request({
+    url: '/user/info',
+    method: 'post',
+    data
+  })
+}
 // 用户基本信息修改、更新
 export function updateBaseinfo(data) {
   return request({
