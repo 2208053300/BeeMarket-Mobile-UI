@@ -7,7 +7,10 @@
       @change="onChange"
     >
       <van-swipe-item v-if="commodityData.video_url">
-        <video-player :video-url="commodityData.video_url" />
+        <video-player
+          :video-url="commodityData.video_url"
+          :video-img="commodityData.video_img"
+        />
       </van-swipe-item>
       <van-swipe-item
         v-for="item in commodityData.album"
@@ -59,12 +62,13 @@
         </div>
       </div>
     </van-swipe>
-    <div class="limit-time">
-      <span>限量疯抢中</span>
+    <!-- 如果是蜂抢商品 -->
+    <!-- <div class="limit-time">
+      <span>限量蜂抢中</span>
       <div class="limit-nowNum">
         仅剩<span class="num"> 80 </span>件
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

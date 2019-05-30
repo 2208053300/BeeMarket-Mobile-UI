@@ -10,7 +10,6 @@ export default new Router({
   routes: [
     {
       path: '',
-      name: 'BeeHome',
       component: () => import('@/pages/index/BeeHome'),
       meta: {
         // NOTE 需要被缓存
@@ -44,7 +43,6 @@ export default new Router({
         },
         {
           path: 'beeTask',
-          name: 'beeTask',
           component: () => import('@/pages/BeeTask'),
           children: [
             {
@@ -54,9 +52,8 @@ export default new Router({
             },
             {
               path: 'taskDetail',
-              name: 'beeTask',
-              component: () =>
-                import('@/pages/BeeTask/TaskDetail')
+              name: 'taskDetail',
+              component: () => import('@/pages/BeeTask/TaskDetail')
             }
           ]
         }
@@ -89,19 +86,25 @@ export default new Router({
             {
               path: '',
               component: () =>
-                import('@/pages/index/BeeCategory/CommodityDetails/CommodityDetails')
+                import(
+                  '@/pages/index/BeeCategory/CommodityDetails/CommodityDetails'
+                )
             },
             {
               path: 'userAssessment',
               name: 'userAssessment',
               component: () =>
-                import('@/pages/index/BeeCategory/CommodityDetails/UserAssessment')
+                import(
+                  '@/pages/index/BeeCategory/CommodityDetails/UserAssessment'
+                )
             },
             {
               path: 'confirmOrder',
               name: 'confirmOrder',
               component: () =>
-                import('@/pages/index/BeeCategory/CommodityDetails/ConfirmOrder')
+                import(
+                  '@/pages/index/BeeCategory/CommodityDetails/ConfirmOrder'
+                )
             },
             {
               path: 'giveFirends',
@@ -113,7 +116,9 @@ export default new Router({
               path: 'payForAnother',
               name: 'payForAnother',
               component: () =>
-                import('@/pages/index/BeeCategory/CommodityDetails/PayForAnother')
+                import(
+                  '@/pages/index/BeeCategory/CommodityDetails/PayForAnother'
+                )
             }
           ]
         },
@@ -251,25 +256,33 @@ export default new Router({
                 {
                   path: '',
                   component: () =>
-                    import('@/pages/index/BeePersion/MyOrder/AfterList/AfterList')
+                    import(
+                      '@/pages/index/BeePersion/MyOrder/AfterList/AfterList'
+                    )
                 },
                 {
                   path: 'afterDetail',
                   name: 'afterDetail',
                   component: () =>
-                    import('@/pages/index/BeePersion/MyOrder/AfterList/AfterDetail')
+                    import(
+                      '@/pages/index/BeePersion/MyOrder/AfterList/AfterDetail'
+                    )
                 },
                 {
                   path: 'afterProgress',
                   name: 'AfterProgress',
                   component: () =>
-                    import('@/pages/index/BeePersion/MyOrder/AfterList/AfterProgress')
+                    import(
+                      '@/pages/index/BeePersion/MyOrder/AfterList/AfterProgress'
+                    )
                 },
                 {
                   path: 'communicationRecord',
                   name: 'CommunicationRecord',
                   component: () =>
-                    import('@/pages/index/BeePersion/MyOrder/AfterList/CommunicationRecord')
+                    import(
+                      '@/pages/index/BeePersion/MyOrder/AfterList/CommunicationRecord'
+                    )
                 }
               ]
             },
@@ -282,7 +295,9 @@ export default new Router({
                 {
                   path: '',
                   component: () =>
-                    import('@/pages/index/BeePersion/MyOrder/ApplyAfter/AfterType')
+                    import(
+                      '@/pages/index/BeePersion/MyOrder/ApplyAfter/AfterType'
+                    )
                 },
                 {
                   path: 'refund',
@@ -294,7 +309,9 @@ export default new Router({
                   path: 'exchange',
                   name: 'exchange',
                   component: () =>
-                    import('@/pages/index/BeePersion/MyOrder/ApplyAfter/Exchange')
+                    import(
+                      '@/pages/index/BeePersion/MyOrder/ApplyAfter/Exchange'
+                    )
                 },
                 {
                   path: 'fill',
@@ -332,7 +349,9 @@ export default new Router({
               path: '',
               name: 'ServiceHelperIndex',
               component: () =>
-                import('@/pages/index/BeePersion/ServiceHelper/ServiceHelperIndex')
+                import(
+                  '@/pages/index/BeePersion/ServiceHelper/ServiceHelperIndex'
+                )
             },
             {
               path: 'QustionList',
@@ -403,7 +422,9 @@ export default new Router({
               path: 'userAgreement',
               name: 'userAgreement',
               component: () =>
-                import('@/pages/index/BeePersion/BeeSetting/About/UserAgreement')
+                import(
+                  '@/pages/index/BeePersion/BeeSetting/About/UserAgreement'
+                )
             }
           ]
         }
@@ -412,7 +433,7 @@ export default new Router({
     {
       path: '/login',
       name: 'BeeLogin',
-      component: () => import('@/pages/index/BeeLogin')
+      component: () => import('@/pages/BeeLogin')
     },
     {
       path: '*',
@@ -420,3 +441,21 @@ export default new Router({
     }
   ]
 })
+// TODO 此处需要加个守卫，当用户跳转到需要用户信息的操作界面，如果未登录，跳转登录界面
+// const beforeEach = (to, from, next) => {
+//   // 判断路由是否在白名单内
+//   if (whiteList.includes(to.path)) {
+//     next()
+//     return
+//   }
+//   // 判断是否登录
+//   if (store.getters.token) {
+//     if (store.getters.isAddRouters) {
+//       next()
+//     } else {
+//       addRouters(to, next)
+//     }
+//   } else {
+//     next('/login')
+//   }
+// }
