@@ -100,10 +100,10 @@ export default {
       }
     },
     async sendSmsData() {
-      const res = await sendSms({ mobileNum: this.phone, type: 'login' })
-      if (res.status_code === 200) {
-        this.changeCountDoen()
-      }
+      // const res = await sendSms({ mobileNum: this.phone, type: 'login' })
+      // if (res.status_code === 200) {
+      //   }
+      this.changeCountDoen()
     },
     async userLoginData() {
       const res = await userLogin({

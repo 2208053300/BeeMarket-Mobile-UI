@@ -16,6 +16,15 @@ export function getCategory2(data) {
     data
   })
 }
+// 商品列表顶部分类信息
+export function getSecondCategory(data) {
+  return request({
+    url: '/product/category/second',
+    method: 'post',
+    data
+  })
+}
+
 // 获取商品基本信息
 export function getProductDetail(data) {
   return request({
@@ -52,6 +61,7 @@ export function getProductProps(data) {
 export function getProductSku(data) {
   return request({
     url: '/product/sku',
-    method: 'post', data
+    method: 'post',
+    data
   })
 }

@@ -29,7 +29,7 @@
       </div>
     </van-nav-bar>
     <div
-      class="container"
+      class="cart-container"
       :class="{hasSubmit:cart.cartSelected.length!==0}"
     >
       <div class="bee-above">
@@ -203,7 +203,7 @@ export default {
 .done-edit {
   color: @Grey2;
 }
-.container {
+.cart-container {
   margin: 50px 0 60px;
   .bee-below {
     width: 100%;

@@ -159,7 +159,8 @@ export default {
       showPromise: false,
       showSku: false,
       skuName: [],
-      propsId: []
+      propsId: [],
+      sku_id: 0
     }
   },
   computed: {},
@@ -168,7 +169,9 @@ export default {
   mounted() {},
   methods: {
     getSkuId(id) {
-      console.log(id)
+      this.sku_id = id
+      this.$store.state.cart.skuId = id
+      console.log(this.$store.state.cart.skuId)
     },
     getSkuName(skuName) {
       this.skuName = skuName
