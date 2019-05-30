@@ -40,11 +40,18 @@ export function cancelCollect(data) {
     data
   })
 }
+// 获取商品props信息
+export function getProductProps(data) {
+  return request({
+    url: '/product/props',
+    method: 'post',
+    data
+  })
+}
 // 获取商品SKU信息
 export function getProductSku(data) {
   return request({
     url: '/product/sku',
-    method: 'post',
-    data
+    method: 'post', data
   })
 }

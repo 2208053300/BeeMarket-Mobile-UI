@@ -2,6 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 import { Toast } from 'vant'
 import { getToken, setToken } from '@/utils/auth'
+import { isJSON } from '@/utils'
 
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
@@ -14,10 +15,17 @@ service.interceptors.request.use(
     config.headers['BM-App-Token'] = getToken()
     // config.headers['BM-App-Token'] =
     //   'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTkwOTQzMjAsImV4cCI6MTU2MTc3MjcyMCwianRpIjoiY2MyZGJlZmUyNTNkMzJmNTgyOTJlNWM3NTQ4NGFmMzMiLCJzZWMiOiJmN2JiNWIwZjg4YjkyZTZjZmJhMTRjMzU2ZDE3YjE0NyIsInNpZyI6IjNkMDc5NGJiZWJmYjAyMzgzZGRkMzA1ZDhiMWQ3MWE1YjlmMzdhZDQ4ZjhhNGI5YTRjZjAwNGMyZjQ4NzFiZGIifQ.nOwOmjGHm8qWiEE0_wsocO8wXG-muEzvRy8ZzcKMAoQ'
+
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
+    // 此处如果有JSON数据，需要加上请求头
+    if (isJSON(config.data)) {
+      config.headers['Content-Type'] = 'application/json'
+      return config
+    }
     // 去除options预请求方法
     if (config.method === 'post') {
       config.data = qs.stringify(config.data)
+      console.log(config.data)
     }
     return config
   },
@@ -40,6 +48,7 @@ service.interceptors.response.use(
     // } else {
     //   console.log(res)
     // }
+    console.log(res)
     return res
   },
   error => {
