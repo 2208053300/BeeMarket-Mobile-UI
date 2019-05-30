@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import { Toast } from 'vant'
-import { getToken } from '@/utils/auth'
+import { getToken, setToken } from '@/utils/auth'
 
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
@@ -30,9 +30,8 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   response => {
-    console.log(response)
     if (response.headers['bm-app-token']) {
-      localStorage.setItem('BM-App-Token', response.headers['bm-app-token'])
+      setToken(response.headers['bm-app-token'])
     }
     const res = response.data
     // if (res.status_code !== 200 || res.status_code !== 201) {

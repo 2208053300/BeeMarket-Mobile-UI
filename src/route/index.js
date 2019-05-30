@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/index/BeeHome/HomePage'
+import { getToken } from '@/utils/auth'
 
 Vue.use(Router)
-
-export default new Router({
+const router = new Router({
   // NOTE 返回后再次进入定位到最顶部
   scrollBehavior: () => ({ y: 0 }),
+
   routes: [
     {
       path: '',
@@ -80,11 +81,11 @@ export default new Router({
         },
         {
           path: 'details',
-          name: 'CommodityDetails',
           component: () => import('@/pages/index/BeeCategory/CommodityDetails'),
           children: [
             {
               path: '',
+              name: 'CommodityDetails',
               component: () =>
                 import(
                   '@/pages/index/BeeCategory/CommodityDetails/CommodityDetails'
@@ -124,11 +125,11 @@ export default new Router({
         },
         {
           path: 'store',
-          name: 'store',
           component: () => import('@/pages/index/BeeCategory/Store'),
           children: [
             {
               path: '',
+              name: 'store',
               component: () =>
                 import('@/pages/index/BeeCategory/Store/StoreHome')
             },
@@ -198,11 +199,11 @@ export default new Router({
         },
         {
           path: 'BeeCommonweal',
-          name: 'BeeCommonweal',
           component: () => import('@/pages/BeeCommonweal'),
           children: [
             {
               path: '',
+              name: 'BeeCommonweal',
               component: () => import('@/pages/BeeCommonweal/ComVal')
             },
             {
@@ -214,7 +215,6 @@ export default new Router({
         },
         {
           path: 'order',
-          name: 'MyOrder',
           component: () => import('@/pages/index/BeePersion/MyOrder'),
           children: [
             {
@@ -249,12 +249,12 @@ export default new Router({
             },
             {
               path: 'afterList',
-              name: 'afterList',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/AfterList'),
               children: [
                 {
                   path: '',
+                  name: 'afterList',
                   component: () =>
                     import(
                       '@/pages/index/BeePersion/MyOrder/AfterList/AfterList'
@@ -288,12 +288,12 @@ export default new Router({
             },
             {
               path: 'applyAfter',
-              name: 'applyAfter',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/ApplyAfter'),
               children: [
                 {
                   path: '',
+                  name: 'applyAfter',
                   component: () =>
                     import(
                       '@/pages/index/BeePersion/MyOrder/ApplyAfter/AfterType'
@@ -442,20 +442,18 @@ export default new Router({
   ]
 })
 // TODO 此处需要加个守卫，当用户跳转到需要用户信息的操作界面，如果未登录，跳转登录界面
-// const beforeEach = (to, from, next) => {
-//   // 判断路由是否在白名单内
-//   if (whiteList.includes(to.path)) {
-//     next()
-//     return
-//   }
-//   // 判断是否登录
-//   if (store.getters.token) {
-//     if (store.getters.isAddRouters) {
-//       next()
-//     } else {
-//       addRouters(to, next)
-//     }
-//   } else {
-//     next('/login')
-//   }
-// }
+router.beforeEach((to, from, next) => {
+  // 判断路由是否在白名单内
+  if (['/login'].includes(to.path)) {
+    next()
+    return
+  }
+  // 判断是否登录
+  if (getToken()) {
+    console.log(getToken())
+    next()
+  } else {
+    next('/login')
+  }
+})
+export default router

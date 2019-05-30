@@ -40,3 +40,11 @@ export function cancelCollect(data) {
     data
   })
 }
+// 获取商品SKU信息
+export function getProductSku(data) {
+  return request({
+    url: '/product/sku',
+    method: 'post',
+    data
+  })
+}

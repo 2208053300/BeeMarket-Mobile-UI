@@ -12,7 +12,7 @@
         >
       </div>
       <user-assessment :commodity-data="commodityData" />
-      <!-- <store-details :commodity-data="commodityData" /> -->
+      <store-details :commodity-data="commodityData" />
       <rich-details :commodity-data="commodityData" />
       <bee-guess />
     </div>

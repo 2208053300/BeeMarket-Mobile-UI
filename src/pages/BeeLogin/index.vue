@@ -113,6 +113,7 @@ export default {
         smsCode: this.verificationCode
       })
       if (res.status_code === 200) {
+        this.$store.state.user.userInfo = res.data
         this.$router.push({ path: this.redirect || '/' })
       }
     },
