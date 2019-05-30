@@ -8,16 +8,27 @@ export function auditWechat(data) {
     params: data
   })
 }
-// NOTE 用户登录
-export function wechatLogin() {
-  const data = {
-    type: 3,
-    source: 'H5',
-    open_id: 'oAJ-A1pZKvOcwefsAlZScoy73fQI'
-  }
+// NOTE 用户登录,检查是否已注册
+export function checkPhone(data) {
+  return request({
+    url: '/auth/register/first',
+    method: 'post',
+    data
+  })
+}
+// NOTE 用户登录,发送验证码
+export function sendSms(data) {
+  return request({
+    url: '/auth/sendSms',
+    method: 'post',
+    data
+  })
+}
+// NOTE 用户登录,验证验证码
+export function userLogin(data) {
   return request({
     url: '/auth/login',
-    method: 'get',
+    method: 'post',
     data
   })
 }

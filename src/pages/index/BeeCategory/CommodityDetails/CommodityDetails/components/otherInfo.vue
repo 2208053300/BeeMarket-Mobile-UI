@@ -4,14 +4,21 @@
       <van-cell
         is-link
         class="other1 sku-select"
-        @click="selectCommodity"
+        @click="showSku=true"
       >
         <p
           slot="title"
           class="cell-title"
         >
-          <span class="title-text">已选</span>
-          <span class="cell-content">木头色 大号</span>
+          <span
+            v-if="skuName===''"
+            class="title-text"
+          >请选择规格及参数</span>
+          <span
+            v-else
+            class="title-text"
+          >已选</span>
+          <span class="cell-content">{{ skuName }}</span>
         </p>
         <p class="cell-value">
           选择
@@ -123,12 +130,19 @@
         </div>
       </div>
     </van-actionsheet>
+    <bee-sku
+      :show-sku.sync="showSku"
+      :pid="commodityData.pid"
+    />
   </div>
 </template>
 
 <script>
+import BeeSku from '@/components/index/BeeSku'
 export default {
-  components: {},
+  components: {
+    BeeSku
+  },
   props: {
     commodityData: {
       type: Object,
@@ -139,7 +153,9 @@ export default {
   },
   data() {
     return {
-      showPromise: false
+      showPromise: false,
+      showSku: false,
+      skuName: ''
     }
   },
   computed: {},
@@ -147,7 +163,7 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    selectCommodity() {}
+    selectSku() {}
   }
 }
 </script>
@@ -203,10 +219,10 @@ export default {
           }
         }
       }
-      .promise-button{
+      .promise-button {
         position: absolute;
         bottom: 0.16rem;
-        .van-button{
+        .van-button {
           width: 6.92rem;
           height: 0.88rem;
           line-height: 0.88rem;

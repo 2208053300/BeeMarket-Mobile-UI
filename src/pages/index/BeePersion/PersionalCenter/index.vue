@@ -25,7 +25,7 @@
         <van-col span="4">
           <div class="head-img">
             <img
-              :src="userInfo.head_image"
+              :src="userInfo.personal_info.head_img"
               alt="头像"
             >
           </div>
@@ -35,7 +35,7 @@
           offset="2"
         >
           <span class="head-name">
-            {{ userInfo.nickname }}
+            {{ userInfo.personal_info.nickname }}
           </span>
           <div class="head-type">
             <van-icon name="vip-card-o" />
@@ -49,7 +49,14 @@
         class="persion-op"
         type="flex"
         align="center"
-      />
+      >
+        <van-button
+          type="default"
+          @click="$router.push('/persion/BeeCommonweal')"
+        >
+          蜂公益
+        </van-button>
+      </van-row>
       <bee-order />
       <van-row
         class="persion-op"
@@ -111,7 +118,7 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 import BeeOrder from './components/BeeOrder'
-import { baseinfo } from '@/api/BeeApi/user'
+import { getPersionalCenter } from '@/api/BeeApi/user'
 export default {
   components: {
     BeeOrder
@@ -139,14 +146,15 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
-    this.baseinfoData()
+    this.getPersionalCenterData()
   },
   methods: {
-    async baseinfoData() {
-      const res = await baseinfo()
+    async getPersionalCenterData() {
+      const res = await getPersionalCenter()
       this.userInfo = res.data
       // 同时保存到缓存
-      this.$store.state.user.userInfo = res.data
+      // 接口不同
+      // this.$store.state.user.userInfo = res.data
     }
   }
 }

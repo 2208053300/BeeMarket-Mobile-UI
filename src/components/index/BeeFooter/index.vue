@@ -99,25 +99,13 @@ export default {
     // NOTE 如果动态更改route,图标高亮
     $route(to, from) {
       if (to.path.indexOf('category') !== -1) {
-        this.$store.commit('SET_BEEFOOTER', {
-          show: true,
-          active: 1
-        })
+        this.active = 1
       } else if (to.path.indexOf('discover') !== -1) {
-        this.$store.commit('SET_BEEFOOTER', {
-          show: true,
-          active: 2
-        })
+        this.active = 2
       } else if (to.path.indexOf('cart') !== -1) {
-        this.$store.commit('SET_BEEFOOTER', {
-          show: true,
-          active: 3
-        })
+        this.active = 3
       } else if (to.path.indexOf('persion') !== -1) {
-        this.$store.commit('SET_BEEFOOTER', {
-          show: true,
-          active: 4
-        })
+        this.active = 4
       } else {
         this.active = 0
       }
