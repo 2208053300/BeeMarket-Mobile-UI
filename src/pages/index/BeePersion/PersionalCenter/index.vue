@@ -146,14 +146,18 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
-    this.getPersionalCenterData()
+    if (!this.$store.state.user.userInfo.hasOwnProperty('personal_info')) {
+      this.getPersionalCenterData()
+    } else {
+      this.userInfo = this.$store.state.user.userInfo
+    }
   },
   methods: {
     async getPersionalCenterData() {
       const res = await getPersionalCenter()
       this.userInfo = res.data
       // 同时保存到缓存
-      this.$store.state.user.userInfo = res.data
+      this.$store.commit('SET_USER_INFO', this.userInfo)
     }
   }
 }

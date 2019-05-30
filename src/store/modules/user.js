@@ -4,7 +4,7 @@ const user = {
     addressData: {}
   },
   mutations: {
-    SET_USERINFO: (state, userInfo) => {
+    SET_USER_INFO: (state, userInfo) => {
       state.userInfo = userInfo
     },
     SET_ADDRESSDATE: (state, addressData) => {
@@ -14,7 +14,7 @@ const user = {
   actions: {
     GetUserInfo(commit, uid) {
       return new Promise(resolve => {
-        commit('SET_USERINFO')
+        commit('SET_USER_INFO')
         resolve()
       })
     }
