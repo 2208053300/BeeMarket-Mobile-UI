@@ -25,7 +25,7 @@
         <van-col span="4">
           <div class="head-img">
             <img
-              :src="userInfo.head_image"
+              :src="userInfo.personal_info.head_img"
               alt="头像"
             >
           </div>
@@ -35,7 +35,7 @@
           offset="2"
         >
           <span class="head-name">
-            {{ userInfo.nickname }}
+            {{ userInfo.personal_info.nickname }}
           </span>
           <div class="head-type">
             <van-icon name="vip-card-o" />
@@ -158,6 +158,8 @@ export default {
       this.userInfo = res.data
       // 同时保存到缓存
       this.$store.commit('SET_USER_INFO', this.userInfo)
+      // 接口不同
+      // this.$store.state.user.userInfo = res.data
     }
   }
 }
