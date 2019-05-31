@@ -38,6 +38,9 @@ module.exports = {
     // 蜂公益行动详情
     beePublic: {
       entry: 'src/pages/BeePublic/main.js'
+    },
+    beeArticle: {
+      entry: 'src/pages/BeeArticle/main.js'
     }
   },
   // FIXME 注入全局环境变量BASE_API
