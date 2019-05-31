@@ -2,6 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 import { Toast } from 'vant'
 import { getToken, setToken } from '@/utils/auth'
+import { isJSON } from '@/utils'
 
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
@@ -11,13 +12,19 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // 暂时加上TOKEN
-    config.headers['BM-App-Token'] = getToken()
-    // config.headers['BM-App-Token'] =
-    //   'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTkwOTQzMjAsImV4cCI6MTU2MTc3MjcyMCwianRpIjoiY2MyZGJlZmUyNTNkMzJmNTgyOTJlNWM3NTQ4NGFmMzMiLCJzZWMiOiJmN2JiNWIwZjg4YjkyZTZjZmJhMTRjMzU2ZDE3YjE0NyIsInNpZyI6IjNkMDc5NGJiZWJmYjAyMzgzZGRkMzA1ZDhiMWQ3MWE1YjlmMzdhZDQ4ZjhhNGI5YTRjZjAwNGMyZjQ4NzFiZGIifQ.nOwOmjGHm8qWiEE0_wsocO8wXG-muEzvRy8ZzcKMAoQ'
+    // config.headers['BM-App-Token'] = getToken()
+    config.headers['BM-App-Token'] = 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTkyMTk0MjQsImV4cCI6MTU2MTg5NzgyNCwianRpIjoiZGQ0OTA4NjRhZmU0M2I5OTk5ZTIyMzIxMDIxZjNjOGMiLCJzZWMiOiI1Y2Q1YTcyMmI2ZTk5YTViMjJhZDBjODhhMGUzMzcxYiIsInNpZyI6ImZiMWE3ZDY3OWZmOTBhMTNkZTI3NzNlNGYxZGMyZDQ3NTk5ZDljNmM1N2M1YjA1MDM4ZDRkM2FkOWVlYjJmZDUifQ.JnLfMFDk0fUpyi94KCeIXwMmbsd-ijtcFw7muYzdftE'
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
+    // 此处如果有JSON数据，需要加上请求头
+    if (isJSON(config.data)) {
+      config.headers['Content-Type'] = 'application/json'
+      console.log(config.data)
+      return config
+    }
     // 去除options预请求方法
     if (config.method === 'post') {
       config.data = qs.stringify(config.data)
+      console.log(config.data)
     }
     return config
   },
@@ -34,17 +41,17 @@ service.interceptors.response.use(
       setToken(response.headers['bm-app-token'])
     }
     const res = response.data
-    // if (res.status_code !== 200 || res.status_code !== 201) {
-    //   Toast.fail(res.message || 'error')
-    //   return Promise.reject(res.message || 'error')
-    // } else {
-    //   console.log(res)
-    // }
+    if (res.status_code !== 200) {
+      Toast.fail(res.message || 'error')
+      return Promise.reject(res.message || 'error')
+    } else {
+      Toast.success(res.message)
+    }
+    console.log(res)
     return res
   },
   error => {
-    console.log('err' + error) // for debug
-    Toast.fail(error + '网断了')
+    Toast.fail(error)
     return Promise.reject(error)
   }
 )

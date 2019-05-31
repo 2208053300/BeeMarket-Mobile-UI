@@ -17,6 +17,7 @@
       <van-goods-action-big-btn
         text="加入购物车"
         class="add-cart"
+        @click="addShopcartProductData"
       />
       <van-goods-action-big-btn
         primary
@@ -29,6 +30,7 @@
 </template>
 
 <script>
+import { addShopcartProduct } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {},
@@ -45,7 +47,17 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    async addShopcartProductData() {
+      console.log(this.$store.state.cart.skuId)
+
+      const res = await addShopcartProduct({
+        sid: this.$store.state.cart.skuId,
+        number: 1
+      })
+      this.$toast(res.message)
+    }
+  }
 }
 </script>
 
@@ -64,13 +76,13 @@ export default {
   .add-cart {
     border-top-left-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
-    background: linear-gradient(to right,#FFBD2F,#FFA42F);
+    background: linear-gradient(to right, #ffbd2f, #ffa42f);
   }
   .buy-now {
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
     margin-right: 0.08rem;
-    background: linear-gradient(to right,#FF8C2F,#F15B26);
+    background: linear-gradient(to right, #ff8c2f, #f15b26);
   }
 }
 </style>

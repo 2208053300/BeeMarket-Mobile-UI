@@ -158,7 +158,7 @@ const router = new Router({
           component: () => import('@/pages/index/BeeDiscover/ActionDetail')
         },
         {
-          path: 'article',
+          path: 'article/:id',
           name: 'ArticleDetail',
           component: () => import('@/pages/index/BeeDiscover/ArticleDetail')
         }
@@ -442,18 +442,17 @@ const router = new Router({
   ]
 })
 // TODO 此处需要加个守卫，当用户跳转到需要用户信息的操作界面，如果未登录，跳转登录界面
-router.beforeEach((to, from, next) => {
-  // 判断路由是否在白名单内
-  if (['/login'].includes(to.path)) {
-    next()
-    return
-  }
-  // 判断是否登录
-  if (getToken()) {
-    console.log(getToken())
-    next()
-  } else {
-    next('/login')
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   // 判断路由是否在白名单内
+//   if (['/login'].includes(to.path)) {
+//     next()
+//     return
+//   }
+//   // 判断是否登录
+//   if (getToken()) {
+//     next()
+//   } else {
+//     next('/login')
+//   }
+// })
 export default router

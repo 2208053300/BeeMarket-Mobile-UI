@@ -11,14 +11,14 @@
           class="cell-title"
         >
           <span
-            v-if="skuName===''"
+            v-if="skuName.length===0"
             class="title-text"
           >请选择规格及参数</span>
           <span
             v-else
             class="title-text"
           >已选</span>
-          <span class="cell-content">{{ skuName }}</span>
+          <span class="cell-content">{{ skuName.join(' ') }}</span>
         </p>
         <p class="cell-value">
           选择
@@ -133,6 +133,9 @@
     <bee-sku
       :show-sku.sync="showSku"
       :pid="commodityData.pid"
+      :props-id.sync="propsId"
+      @get-sku-name="getSkuName"
+      @get-sku-id="getSkuId"
     />
   </div>
 </template>
@@ -155,7 +158,9 @@ export default {
     return {
       showPromise: false,
       showSku: false,
-      skuName: ''
+      skuName: [],
+      propsId: [],
+      sku_id: 0
     }
   },
   computed: {},
@@ -163,7 +168,14 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    selectSku() {}
+    getSkuId(id) {
+      this.sku_id = id
+      this.$store.state.cart.skuId = id
+      console.log(this.$store.state.cart.skuId)
+    },
+    getSkuName(skuName) {
+      this.skuName = skuName
+    }
   }
 }
 </script>

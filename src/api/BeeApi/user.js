@@ -120,3 +120,11 @@ export function updateShopcartProductSku(data) {
     data
   })
 }
+// 添加商品至购物车
+export function addShopcartProduct(data) {
+  return request({
+    url: '/user/shopcart/add',
+    method: 'post',
+    data
+  })
+}

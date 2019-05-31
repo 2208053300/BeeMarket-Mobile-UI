@@ -15,7 +15,7 @@
           :key="item.title"
           :class="{articleContent2:item.is_article}"
           class="article-content"
-          @click="$router.push('/discover/article')"
+          @click="$router.push(`/discover/article/${item.id}`)"
         >
           <div class="article-img">
             <img
