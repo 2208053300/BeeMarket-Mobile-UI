@@ -24,7 +24,14 @@ export function getSecondCategory(data) {
     data
   })
 }
-
+// 商品列表（通用）
+export function getProductList(data) {
+  return request({
+    url: '/product/list',
+    method: 'post',
+    data
+  })
+}
 // 获取商品基本信息
 export function getProductDetail(data) {
   return request({

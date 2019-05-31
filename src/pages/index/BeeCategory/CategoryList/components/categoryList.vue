@@ -51,7 +51,7 @@
               v-for="item2 in item"
               :key="item2.cid"
               class="category3-card"
-              @click="$router.push('/category/SecCategoryList')"
+              @click="$router.push({path:'/category/SecCategoryList',query:{cid:item2.cid}})"
             >
               <div class="category3-img">
                 <img
@@ -72,7 +72,7 @@
             v-for="item in category2.groups"
             :key="item.gid"
             class="category3-card"
-            @click="$router.push('/category/SecCategoryList')"
+            @click="$router.push({path:'/category/SecCategoryList',query:{cid:item.cid}})"
           >
             <div class="category3-img">
               <img
@@ -120,7 +120,7 @@ export default {
     async getCategory1Data() {
       const res = await getCategory1()
       this.category1 = res.data
-      this.getCategory2Data({ cid: this.category1[0].cid })
+      this.getCategory2Data(this.category1[0].cid)
     },
     async getCategory2Data(cid, index) {
       // NOTE 定位border图片的位置
