@@ -103,7 +103,9 @@ export default {
       beeIcon: {
         cat_pic_select: require('@/assets/icon/category/cat_pic_select@2x.png')
       },
-      borderPosition: ''
+      borderPosition: '',
+      // 当前选中的一级分类 id
+      nowFirCategoryId: ''
     }
   },
   computed: {},
@@ -123,11 +125,27 @@ export default {
       this.getCategory2Data(this.category1[0].cid)
     },
     async getCategory2Data(cid, index) {
+      this.nowFirCategoryId = cid
       // NOTE 定位border图片的位置
       this.borderPosition = Number(index) * 58 + 14 + 'px'
       const res = await getCategory2({ cid: cid })
+      console.log('二级分类列表：', res)
+
       this.category2 = res.data
+    },
+
+    // 跳转到二级分类商品列表
+    goCommodityList() {
+      console.log(this.nowFirCategoryId)
+
+      this.$router.push({
+        path: '/category/SecCategoryList',
+        query: {
+          cid: this.nowFirCategoryId
+        }
+      })
     }
+
   }
 }
 </script>
