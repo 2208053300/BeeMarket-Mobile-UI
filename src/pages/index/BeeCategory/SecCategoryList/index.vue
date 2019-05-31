@@ -133,7 +133,9 @@ export default {
   methods: {
     // 获取三级分类列表
     async getSecondCategoryData() {
-      const res = await getSecondCategory({ cid: 97 })
+      const res = await getSecondCategory({ cid: this.$route.query.cid })
+      console.log('二级分类：', res)
+
       this.categoryThirdList = res.data.cats
     },
     // 获取商品列表
