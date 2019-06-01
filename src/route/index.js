@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/index/BeeHome/HomePage'
-import { getToken } from '@/utils/auth'
 
 Vue.use(Router)
 const router = new Router({

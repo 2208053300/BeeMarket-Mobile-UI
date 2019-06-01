@@ -97,7 +97,10 @@ export default {
     goProduct(pid) {
       // 判断是否来自webApp
       if (this.$route.query.origin !== '') {
-
+        this.$router.push({
+          path: '/category/details ',
+          query: { pid }
+        })
       }
     }
   }
