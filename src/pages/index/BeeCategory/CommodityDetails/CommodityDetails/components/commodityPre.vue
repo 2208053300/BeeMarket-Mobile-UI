@@ -8,8 +8,10 @@
     >
       <van-swipe-item v-if="commodityData.video_url">
         <video-player
+          ref="productVideo"
           :video-url="commodityData.video_url"
           :video-img="commodityData.video_img"
+          :play-status.sync="playStatus"
         />
       </van-swipe-item>
       <van-swipe-item
@@ -22,11 +24,14 @@
         >
       </van-swipe-item>
       <div
-        v-if="commodityData.album"
+        v-if="commodityData.album&&!playStatus"
         slot="indicator"
         class="custom-indicator"
+        :class="{showBg:showPicture}"
       >
-        {{ current + 1 }}/{{ commodityData.album.length }}
+        <template v-if="showPicture">
+          {{ current + 1 }}/{{ commodityData.album.length }}
+        </template>
         <div
           v-if="commodityData.video_url"
           class="video-img-swipe"
@@ -95,7 +100,8 @@ export default {
         product_detail_btn_pic_selected: require('@/assets/icon/product/product_detail_btn_pic_selected@2x.png'),
         product_detail_btn_video_selected: require('@/assets/icon/product/product_detail_btn_video_selected@2x.png')
       },
-      showPicture: false
+      showPicture: false,
+      playStatus: false
     }
   },
   computed: {},
@@ -127,7 +133,7 @@ export default {
   min-height: 3.5rem;
   .van-swipe {
     .van-swipe-item {
-      height: 7.5rem;
+      height: 7.5rem!important;
     }
   }
   .swipe-img {
@@ -137,12 +143,14 @@ export default {
       width: 0.76rem;
       height: 0.4rem;
       line-height: 0.4rem;
-      background-color: rgba(0, 0, 0, 0.3);
       border-radius: 0.2rem;
       text-align: center;
       position: absolute;
       right: 0.3rem;
       bottom: 0.3rem;
+    }
+    .showBg {
+      background-color: rgba(0, 0, 0, 0.3);
     }
     .video-img-swipe {
       position: absolute;

@@ -77,12 +77,14 @@ export default {
     border-top-left-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
     background: linear-gradient(to right, #ffbd2f, #ffa42f);
+    border-color: #ffa42f;
   }
   .buy-now {
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
     margin-right: 0.08rem;
     background: linear-gradient(to right, #ff8c2f, #f15b26);
+    border-color: #ff8c2f;
   }
 }
 </style>
