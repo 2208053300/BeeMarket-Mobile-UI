@@ -87,10 +87,9 @@
           <div class="promise-item">
             <div class="promise-img">
               <img
-                src=""
-                alt=""
+                :src="beeIcon.product_detail_icon_authentic"
+                alt="正"
               >
-              正
             </div>
             <div class="promise-right">
               <div class="promise-title">
@@ -104,14 +103,61 @@
           <div class="promise-item">
             <div class="promise-img">
               <img
-                src=""
-                alt=""
+                :src="beeIcon.product_detail_icon_rapidly"
+                alt="速"
               >
-              速
             </div>
             <div class="promise-right">
               <div class="promise-title">
                 极速发货
+              </div>
+              <div class="promise-desc">
+                订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
+              </div>
+            </div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-img">
+              <img
+                :src="beeIcon.product_detail_icon_change"
+                alt="换"
+              >
+            </div>
+            <div class="promise-right">
+              <div class="promise-title">
+                瑕疵包换
+              </div>
+              <div class="promise-desc">
+                订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
+              </div>
+            </div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-img">
+              <img
+                :src="beeIcon.product_detail_icon_review"
+                alt="审"
+              >
+            </div>
+            <div class="promise-right">
+              <div class="promise-title">
+                极速审核
+              </div>
+              <div class="promise-desc">
+                订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
+              </div>
+            </div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-img">
+              <img
+                :src="beeIcon.product_detail_icon_welfare"
+                alt="公"
+              >
+            </div>
+            <div class="promise-right">
+              <div class="promise-title">
+                公益宝贝
               </div>
               <div class="promise-desc">
                 订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
@@ -160,7 +206,14 @@ export default {
       showSku: false,
       skuName: [],
       propsId: [],
-      sku_id: 0
+      sku_id: 0,
+      beeIcon: {
+        product_detail_icon_authentic: require('@/assets/icon/product/product_detail_icon_authentic@2x.png'),
+        product_detail_icon_change: require('@/assets/icon/product/product_detail_icon_change@2x.png'),
+        product_detail_icon_rapidly: require('@/assets/icon/product/product_detail_icon_rapidly@2x.png'),
+        product_detail_icon_review: require('@/assets/icon/product/product_detail_icon_review@2x.png'),
+        product_detail_icon_welfare: require('@/assets/icon/product/product_detail_icon_welfare@2x.png')
+      }
     }
   },
   computed: {},
@@ -216,10 +269,12 @@ export default {
         .promise-item {
           display: flex;
           .promise-img {
-            width: 0.3rem;
+            width: 0.43rem;
+            height: 0.5rem;
             margin-right: 0.24rem;
           }
           .promise-right {
+            flex: 1;
             .promise-title {
               font-size: 0.3rem;
             }

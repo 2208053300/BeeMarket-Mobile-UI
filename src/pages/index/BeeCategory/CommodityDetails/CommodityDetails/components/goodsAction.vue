@@ -54,7 +54,7 @@ export default {
       const res = await addShopcartProduct({
         sid: this.$store.state.cart.skuId,
         number: 1,
-        source: 'general'
+        product_source: 'general'
       })
       this.$toast(res.message)
     }
