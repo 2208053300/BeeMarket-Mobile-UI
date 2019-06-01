@@ -28,13 +28,13 @@
       <div class="icon-content">
         <van-icon
           v-if="gridList"
-          :name="beeIcon.vertical_horizontal"
+          :name="beeIcon.list_icon_horizontal"
           class="change-list"
           @click="gridList=false"
         />
         <van-icon
           v-else
-          :name="beeIcon.vertical_white"
+          :name="beeIcon.list_icon_vertical"
           class="change-list"
           @click="gridList=true"
         />
@@ -59,36 +59,43 @@
         <div class="grid-row">
           <div
             v-for="item in commodityList"
-            :key="item.name"
+            :key="item.pid"
             class="commodity-card"
+            @click="$router.push({path:'/category/details',query:{pid:item.pid}})"
           >
             <img
-              :src="item.previewImg"
-              :alt="item.name"
+              :src="item.tUrl"
+              :alt="item.pname"
               class="preview-img"
             >
             <div class="commodity-details">
               <div class="commodity-name">
-                {{ item.name }}
+                {{ item.pname }}
               </div>
               <div class="commodity-tag">
                 <div class="from-area">
                   商品来自：西南地区
                 </div>
-                <div
+                <!-- <div
                   v-for="item2 in item.tags"
                   :key="item2"
                   class="bee-tag"
                   :class="{hotTag:item2==='热销'}"
                 >
                   {{ item2 }}
+                </div> -->
+                <div
+                  v-if="item.is_hot"
+                  class="bee-tag hotTag"
+                >
+                  热销
                 </div>
               </div>
               <div class="commodity-currentPrice">
-                <span style="font-size:0.24rem">￥</span><span>{{ item.currentPrice }}</span>
+                <span style="font-size:0.24rem">￥</span><span>{{ item.sell_price }}</span>
               </div>
               <div class="commodity-originalPrice">
-                ￥{{ item.originalPrice }}
+                ￥{{ item.line_price }}
               </div>
             </div>
           </div>
@@ -107,19 +114,20 @@
       >
         <div
           v-for="item in commodityList"
-          :key="item.name"
+          :key="item.pid"
           class="commodity-card"
+          @click="$router.push({path:'/category/details',query:{pid:item.pid}})"
         >
           <div class="commodity-img">
             <img
-              :src="item.previewImg"
-              :alt="item.name"
+              :src="item.tUrl"
+              :alt="item.pname"
               class="preview-img"
             >
           </div>
           <div class="commodity-details">
             <div class="commodity-name">
-              {{ item.name }}
+              {{ item.pname }}
             </div>
             <div class="commodity-tag">
               <!-- // TODO 根据字段渲染 -->
@@ -134,12 +142,18 @@
               >
                 {{ item2 }}
               </div> -->
+              <div
+                v-if="item.is_hot"
+                class="bee-tag hotTag"
+              >
+                热销
+              </div>
             </div>
             <div class="commodity-currentPrice">
-              <span style="font-size:0.24rem">￥</span><span>{{ item.currentPrice }}</span>
+              <span style="font-size:0.24rem">￥</span><span>{{ item.sell_price }}</span>
             </div>
             <div class="commodity-originalPrice">
-              ￥{{ item.originalPrice }}
+              ￥{{ item.line_price }}
             </div>
           </div>
         </div>
@@ -168,18 +182,11 @@
 </template>
 
 <script>
-import { getStoreDetails } from '@/api/category'
+import { getProductList } from '@/api/BeeApi/product'
 import { BeeDefault } from '@/styles/index/variables.less'
 export default {
   components: {},
-  props: {
-    actionList: {
-      type: Array,
-      default: () => {
-        return []
-      }
-    }
-  },
+  props: {},
   data() {
     return {
       BeeDefault,
@@ -190,10 +197,11 @@ export default {
       commodityList: [],
       showArea: false,
       beeIcon: {
-        vertical_horizontal: require('@/assets/icon/store/shop_icon_vertical_horizontal@2x.png'),
-        vertical_white: require('@/assets/icon/store/shop_icon_vertical_white@2x.png'),
+        list_icon_horizontal: require('@/assets/icon/category/list_icon_horizontal@2x.png'),
+        list_icon_vertical: require('@/assets/icon/category/list_icon_vertical@2x.png'),
         low_white: require('@/assets/icon/store/shop_icon_price_low_white@2x.png')
-      }
+      },
+      formData: {}
     }
   },
   computed: {},
@@ -201,11 +209,15 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    async getProductListData() {
+      const res = await getProductList(this.formData)
+      this.commodityList = res.data.products
+    },
     onLoad() {
       // 异步更新数据
       setTimeout(async() => {
-        const res = await getStoreDetails()
-        this.commodityList.push(...res.data.storeDetails.commodity)
+        const res = await getProductList(this.formData)
+        this.commodityList.push(...res.data.products)
         // 加载状态结束
         this.loading = false
 
@@ -261,9 +273,9 @@ export default {
         display: inline-block;
         box-sizing: border-box;
         background-color: #fff;
-        &:nth-child(2n-1) {
-          margin-right: 0.14rem;
-        }
+        // &:nth-child(2n-1) {
+        //   margin-right: 0.14rem;
+        // }
         .preview-img {
           width: 100%;
           height: 3.28rem;

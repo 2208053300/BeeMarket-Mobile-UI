@@ -16,6 +16,22 @@ export function getCategory2(data) {
     data
   })
 }
+// 商品列表顶部分类信息
+export function getSecondCategory(data) {
+  return request({
+    url: '/product/category/second',
+    method: 'post',
+    data
+  })
+}
+// 商品列表（通用）
+export function getProductList(data) {
+  return request({
+    url: '/product/list',
+    method: 'post',
+    data
+  })
+}
 // 获取商品基本信息
 export function getProductDetail(data) {
   return request({
@@ -36,6 +52,14 @@ export function collectProduct(data) {
 export function cancelCollect(data) {
   return request({
     url: '/product/cancelCollect',
+    method: 'post',
+    data
+  })
+}
+// 获取商品props信息
+export function getProductProps(data) {
+  return request({
+    url: '/product/props',
     method: 'post',
     data
   })
