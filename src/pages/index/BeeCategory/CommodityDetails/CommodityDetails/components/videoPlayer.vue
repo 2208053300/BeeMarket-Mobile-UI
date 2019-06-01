@@ -10,25 +10,30 @@
         type="video/mp4"
       >
     </video>
+    <div
+      v-if="playStatus"
+      class="control-overlay"
+      @click="changeControl"
+    />
     <transition name="van-slide-up">
       <div
-        v-if="playStatus"
+        v-show="playStatus&&showControlBar"
         class="control-bar"
       >
         <div
           v-if="isPlay"
           class="play-btn"
-          @click="videoPause"
+          @click.stop="videoPause"
         >
           <img
-            :src="beeIcon.product_detail_icon_pause"
+            :src="beeIcon.product_detail_icon_broadcast1"
             alt="暂停"
           >
         </div>
         <div
           v-else
           class="play-btn"
-          @click="videoPlay"
+          @click.stop="videoPlay"
         >
           <img
             :src="beeIcon.product_detail_icon_pause"
@@ -65,7 +70,7 @@
           <!-- v-if="isFull" -->
           <div
             class="img-content"
-            @click="enterFullScreen"
+            @click.stop="enterFullScreen"
           >
             <img
               :src="beeIcon.product_detail_icon_fullscreen"
@@ -75,7 +80,7 @@
           <!-- <div
             v-else
             class="img-content"
-            @click="enterFullScreen"
+            @click.stop="enterFullScreen"
           >
             <img
               :src="beeIcon.product_detail_icon_halfscreen"
@@ -86,7 +91,7 @@
         <div
           v-if="isSound"
           class="vol-btn"
-          @click="soundOff"
+          @click.stop="soundOff"
         >
           <img
             :src="beeIcon.product_detail_icon_sound_open"
@@ -96,7 +101,7 @@
         <div
           v-else
           class="vol-btn"
-          @click="soundOpen"
+          @click.stop="soundOpen"
         >
           <img
             :src="beeIcon.product_detail_icon_sound_off"
@@ -105,11 +110,24 @@
         </div>
       </div>
     </transition>
-    <div class="bottom-progress">
+    <div
+      v-show="!showControlBar"
+      class="bottom-progress"
+    >
       <div
         class="progress-bar"
         :style="{width:videoPro+'%'}"
       />
+    </div>
+    <div
+      v-if="!playStatus"
+      class="play-button"
+      @click="firstPlay"
+    >
+      <img
+        :src="beeIcon.product_detail_icon_broadcast"
+        alt=""
+      >
     </div>
   </div>
 </template>
@@ -138,6 +156,7 @@ export default {
       player: null,
       beeIcon: {
         product_detail_icon_broadcast: require('@/assets/icon/product/product_detail_icon_broadcast@2x.png'),
+        product_detail_icon_broadcast1: require('@/assets/icon/product/product_detail_icon_broadcast1@2x.png'),
         product_detail_icon_pause: require('@/assets/icon/product/product_detail_icon_pause@2x.png'),
         product_detail_icon_sound_open: require('@/assets/icon/product/product_detail_icon_sound_open@2x.png'),
         product_detail_icon_sound_off: require('@/assets/icon/product/product_detail_icon_sound_off@2x.png'),
@@ -150,7 +169,8 @@ export default {
       isFull: false,
       videoPro: 0,
       time1: null,
-      time2: null
+      time2: null,
+      showControlBar: true
     }
   },
   computed: {},
@@ -167,23 +187,6 @@ export default {
   methods: {
     // FIXME 需要渲染视频组件
     initPlayer() {
-      // 定义大播放按钮
-      var Component = videojs.getComponent('Component')
-      var PlayButton = videojs.extend(Component, {
-        createEl: () => {
-          return videojs.createEl('img', {
-            className: 'play-button',
-            src: this.beeIcon.product_detail_icon_broadcast
-          })
-        }
-      })
-      // 初始大播放按钮
-      var playButton1 = new PlayButton()
-      playButton1.on('click', () => {
-        this.videoPlay()
-        playButton1.hide()
-        this.$emit('update:playStatus', true)
-      })
       this.player = videojs(
         this.$refs.videoPlayer,
         {
@@ -194,7 +197,6 @@ export default {
         },
         function onPlayerReady() {
           this.controls(false)
-          this.addChild(playButton1)
         }
       )
       // 全屏时显示控制条
@@ -283,6 +285,13 @@ export default {
       this.time2 = this.s_to_hs(
         this.player.duration().toFixed() - this.player.currentTime().toFixed()
       )
+    },
+    changeControl() {
+      this.showControlBar = !this.showControlBar
+    },
+    firstPlay() {
+      this.$emit('update:playStatus', true)
+      this.videoPlay()
     }
   }
 }
@@ -294,6 +303,13 @@ export default {
   display: flex;
   align-items: center;
   position: relative;
+  .control-overlay {
+    position: absolute;
+    width: 100%;
+    height: 80%;
+    left: 0;
+    top: 0;
+  }
   .play-button {
     position: absolute;
     top: 36%;

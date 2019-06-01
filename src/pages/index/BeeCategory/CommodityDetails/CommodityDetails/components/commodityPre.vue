@@ -113,6 +113,10 @@ export default {
     onChange(index) {
       this.current = index
       if (index) {
+        // FIXME 此处PC无法更改状态
+        // this.$refs.productVideo.initPlayer()
+        this.$refs.productVideo.videoPause()
+        this.playStatus = false
         this.showPicture = true
       } else {
         this.showPicture = false
@@ -133,7 +137,7 @@ export default {
   min-height: 3.5rem;
   .van-swipe {
     .van-swipe-item {
-      height: 7.5rem!important;
+      height: 7.5rem !important;
     }
   }
   .swipe-img {
