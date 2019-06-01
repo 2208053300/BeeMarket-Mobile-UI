@@ -96,9 +96,12 @@ export default {
     },
     goProduct(pid) {
       // 判断是否来自webApp
-      if (this.$route.query.origin !== '') {
+      if (this.$route.query.origin) {
+        window.location.href = `/#/category/details?pid=${pid}`
+      } else {
+        console.log('本地应用')
         this.$router.push({
-          path: '/category/details ',
+          path: '/category/details',
           query: { pid }
         })
       }
