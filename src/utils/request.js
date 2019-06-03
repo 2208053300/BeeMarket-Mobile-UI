@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import { Toast } from 'vant'
-import { getToken, setToken } from '@/utils/auth'
+import { setToken } from '@/utils/auth'
 import { isJSON } from '@/utils'
 
 const service = axios.create({
