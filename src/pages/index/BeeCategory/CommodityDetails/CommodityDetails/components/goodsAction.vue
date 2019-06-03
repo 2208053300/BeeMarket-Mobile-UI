@@ -49,7 +49,13 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    // 加入购物车
     async addShopcartProductData() {
+      // TODO 如果未选择，如果初始带着商品属性跳转到商品详情页
+      if (!this.$store.state.cart.skuId) {
+        this.$toast('请先选择商品规格')
+        return false
+      }
       const res = await addShopcartProduct({
         sid: this.$store.state.cart.skuId,
         number: this.$store.state.cart.pNumber,
@@ -57,8 +63,12 @@ export default {
       })
       this.$toast(res.message)
     },
+    // 立即购买
     async confirmOrderData() {
-      console.log(this.$store.state.cart.skuId)
+      if (!this.$store.state.cart.skuId) {
+        this.$toast('请先选择商品规格')
+        return false
+      }
       const res = await confirmOrder(
         JSON.stringify({
           product: {

@@ -11,9 +11,17 @@ const service = axios.create({
 
 service.interceptors.request.use(
   config => {
+    // 加载蒙层
+    Toast.loading({
+      mask: true,
+      message: 'loading...',
+      forbidClick: true,
+      duration: 0
+    })
     // 暂时加上TOKEN
     // config.headers['BM-App-Token'] = getToken()
-    config.headers['BM-App-Token'] = 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk1NTA1MTcsImV4cCI6MTU2MjE0MjUxNywianRpIjoiNGY2YTNlOWUxNjdlM2RjMGE5OWVjOTY5ZDFlZTJlZjkiLCJzZWMiOiI1Y2Q1YTcyMmI2ZTk5YTViMjJhZDBjODhhMGUzMzcxYiIsInNpZyI6IjYzNzQ4Yzc1NDRmMzA0MGVlMTgyNjgyNDUzMjY5NDRiZWE2ZThhNGM4NTM0MzhhYThmMmE0NDFjYjQzOTIzNzEifQ.hYjc_WYuidWWFyVRWjQPHwHheCw77OedyK5QkE_6h-A'
+    config.headers['BM-App-Token'] =
+      'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk1NTA1MTcsImV4cCI6MTU2MjE0MjUxNywianRpIjoiNGY2YTNlOWUxNjdlM2RjMGE5OWVjOTY5ZDFlZTJlZjkiLCJzZWMiOiI1Y2Q1YTcyMmI2ZTk5YTViMjJhZDBjODhhMGUzMzcxYiIsInNpZyI6IjYzNzQ4Yzc1NDRmMzA0MGVlMTgyNjgyNDUzMjY5NDRiZWE2ZThhNGM4NTM0MzhhYThmMmE0NDFjYjQzOTIzNzEifQ.hYjc_WYuidWWFyVRWjQPHwHheCw77OedyK5QkE_6h-A'
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
@@ -29,6 +37,7 @@ service.interceptors.request.use(
     return config
   },
   error => {
+    Toast.clear()
     // FIXME 如果请求是用户为登录请求失败，跳转到登录界面
     console.log(error)
     Promise.reject(error)
@@ -37,6 +46,7 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   response => {
+    Toast.clear()
     if (response.headers['bm-app-token']) {
       setToken(response.headers['bm-app-token'])
     }
@@ -51,6 +61,7 @@ service.interceptors.response.use(
     return res
   },
   error => {
+    Toast.clear()
     Toast.fail(error)
     return Promise.reject(error)
   }

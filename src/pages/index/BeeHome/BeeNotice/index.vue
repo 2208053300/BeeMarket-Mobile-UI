@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import { getNewestNews } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '消息中心'
@@ -99,7 +100,8 @@ export default {
         message_icon_announcement_p: require('@/assets/icon/home/message_icon_announcement_p@2x.png'),
         message_icon_notice_n: require('@/assets/icon/home/message_icon_notice_n@2x.png'),
         message_icon_notice_p: require('@/assets/icon/home/message_icon_notice_p@2x.png')
-      }
+      },
+      newsList: []
     }
   },
   computed: {},
@@ -108,8 +110,14 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    this.getNewestNewsData()
   },
-  methods: {}
+  methods: {
+    async getNewestNewsData() {
+      const res = await getNewestNews()
+      this.newsList = res.data
+    }
+  }
 }
 </script>
 

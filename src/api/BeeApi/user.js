@@ -128,3 +128,11 @@ export function addShopcartProduct(data) {
     data
   })
 }
+// 消息中心-首页
+export function getNewestNews(data) {
+  return request({
+    url: '/user/news/newestNews',
+    method: 'post',
+    data
+  })
+}
