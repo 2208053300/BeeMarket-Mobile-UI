@@ -4,7 +4,8 @@ const app = {
     beeFooter: {
       show: true,
       active: 0
-    }
+    },
+    pushName: ''
   },
   mutations: {
     SET_BEEFOOTER: (state, beeFooter) => {

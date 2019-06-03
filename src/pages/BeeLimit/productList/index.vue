@@ -9,6 +9,7 @@
           v-for="item in commodityList.product_list"
           :key="item.pid"
           class="commodity-content"
+          @click="test11"
         >
           <div class="commodity-details">
             <div class="commodity-img">
@@ -54,7 +55,7 @@
         </div>
       </div>
       <div class="waiting-more">
-        <span>- 更多优品持续筹备中 - {{ test }}</span>
+        <span>- 更多优品持续筹备中 -</span>
       </div>
     </div>
   </div>
@@ -66,16 +67,14 @@ import { getOs } from '@/utils'
 export default {
   metaInfo() {
     return {
-      title: this.thisTitle
+      title: '限量蜂抢'
     }
   },
   components: {},
   props: {},
   data() {
     return {
-      commodityList: [],
-      test: '',
-      thisTitle: '限量蜂抢'
+      commodityList: []
     }
   },
   computed: {},
@@ -90,7 +89,6 @@ export default {
     async getBeeLimitListData() {
       const res = await getBeeLimitList()
       this.commodityList = res.data
-      this.thisTitle = '限量蜂抢'
     },
     getProgress(val1, val2) {
       return (val1 / val2) * 100 + '%'
@@ -110,8 +108,6 @@ export default {
           'pid': pid,
           'target': target
         })
-        // window.webkit.messageHandlers.ToProductDetail.postMessage(pid, target)
-        this.test = 'iphone'
       } else if (osObj.isAndroid) {
         window.beeMarket.ToProductDetail(pid, target)
       } else {
@@ -122,6 +118,9 @@ export default {
           }
         })
       }
+    },
+    test11() {
+      window.open('https://www.baidu.com')
     }
   }
 }

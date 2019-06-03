@@ -16,12 +16,24 @@
         :address-list="addressList"
       />
       <div class="new-address">
-        <van-button
+        <!-- <van-button
           class="new-button"
           @click="$router.push('/persion/addressSetting/addAddress')"
         >
           <van-icon name="plus" />
           新增收货地址
+        </van-button> -->
+        <van-button
+          class="done-button"
+          @click="doneAddress"
+        >
+          确认
+        </van-button>
+        <van-button
+          class="add-new"
+          @click="$router.push('/persion/addressSetting/addAddress')"
+        >
+          <van-icon name="plus" />新增收货地址
         </van-button>
       </div>
     </div>
@@ -56,6 +68,13 @@ export default {
     async getAddressListData() {
       const res = await getAddressList()
       this.addressList = res.data
+    },
+    doneAddress() {
+      // TODO 此处做判断，跳转回之前的页面，带上选好的地址数据
+      this.$store.state.order.addrDetail = this.addressList.filter(item => {
+        return item.def
+      })
+      this.$router.push({ name: this.$store.state.app.pushName })
     }
   }
 }
@@ -70,18 +89,26 @@ export default {
     font-size: 0.28rem;
   }
   .new-address {
-    position: fixed;
     width: 100%;
-    bottom: 0.3rem;
     text-align: center;
-    .new-button {
-      width: 80%;
+    margin-top: 2.4rem;
+    .done-button {
+      width: 5.86rem;
+      height: 0.9rem;
+      line-height: 0.9rem;
       border-radius: 0.1rem;
       font-size: 0.32rem;
       color: #ffffff;
       background-color: @BeeDefault;
+    }
+    .add-new {
+      background-color: transparent;
+      color: @BeeDefault;
+      font-size: 0.3rem;
+      border: none;
       .van-icon {
         vertical-align: text-top;
+        margin-right: 0.1rem;
       }
     }
   }

@@ -20,10 +20,9 @@
         @click="addShopcartProductData"
       />
       <van-goods-action-big-btn
-        primary
         text="立即购买"
         class="buy-now"
-        to="/category/details/confirmOrder"
+        @click="confirmOrderData"
       />
     </van-goods-action>
   </div>
@@ -31,6 +30,8 @@
 
 <script>
 import { addShopcartProduct } from '@/api/BeeApi/user'
+import { confirmOrder } from '@/api/BeeApi/order'
+
 export default {
   components: {},
   props: {},
@@ -49,14 +50,27 @@ export default {
   mounted() {},
   methods: {
     async addShopcartProductData() {
-      console.log(this.$store.state.cart.skuId)
-
       const res = await addShopcartProduct({
         sid: this.$store.state.cart.skuId,
-        number: 1,
+        number: this.$store.state.cart.pNumber,
         product_source: 'general'
       })
       this.$toast(res.message)
+    },
+    async confirmOrderData() {
+      console.log(this.$store.state.cart.skuId)
+      const res = await confirmOrder(
+        JSON.stringify({
+          product: {
+            sid: this.$store.state.cart.skuId,
+            number: this.$store.state.cart.pNumber
+          }
+        })
+      )
+      if (res.status_code === 200) {
+        this.$store.state.order.orderDetail = res.data
+        this.$router.push('/category/details/confirmOrder')
+      }
     }
   }
 }

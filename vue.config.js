@@ -23,6 +23,7 @@ module.exports = {
       addStyleResource(config.module.rule('less').oneOf(type))
     )
   },
+  // 内网穿透
   devServer: {
     disableHostCheck: true
   }

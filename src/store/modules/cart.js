@@ -2,7 +2,8 @@ const cart = {
   state: {
     cartInfo: [],
     cartSelected: [],
-    skuId: 0
+    skuId: 0,
+    pNumber: 1
   },
   mutations: {
     SET_CartINFO: (state, cartInfo) => {
