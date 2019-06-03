@@ -1,6 +1,12 @@
 <template>
   <div class="error-response">
-    404
+    <div class="logo-content">
+      <img
+        :src="beeIcon.login_logo"
+        alt=""
+      >
+    </div>
+    <span class="error-text">404</span>
   </div>
 </template>
 
@@ -9,7 +15,11 @@ export default {
   components: {},
   props: {},
   data() {
-    return {}
+    return {
+      beeIcon: {
+        login_logo: require('@/assets/icon/home/login_logo@2x.png')
+      }
+    }
   },
   computed: {},
   watch: {},
@@ -20,8 +30,16 @@ export default {
 </script>
 
 <style scoped lang="less">
-.error-response{
-  font-size: 3rem;
+.error-response {
   text-align: center;
+  .logo-content {
+    width: 2rem;
+    height: 2rem;
+    margin: auto;
+  }
+  .error-text {
+    font-size: 1rem;
+    color: @BeeDefault;
+  }
 }
 </style>

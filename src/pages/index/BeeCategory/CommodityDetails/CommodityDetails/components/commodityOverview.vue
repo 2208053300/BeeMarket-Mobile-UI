@@ -79,7 +79,7 @@ export default {
   methods: {
     async handleFollow() {
       const res = await collectProduct({
-        contentId: this.commodityData.pid,
+        contentId: [this.commodityData.pid],
         type: 1
       })
       this.commodityData.favor = 1
