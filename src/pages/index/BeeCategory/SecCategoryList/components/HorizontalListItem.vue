@@ -1,21 +1,19 @@
 <template>
   <div>
-    <div class="item flex flex-column">
+    <div class="item flex flex-column" @click="$router.push({path:'/category/details',query:{pid:item.pid}})">
       <div class="img">
-        <img :src="item.img">
+        <img :src="item.tUrl">
       </div>
       <div class="info flex flex-column flex-between">
         <p class="name no-wrap">
-          {{ item.name }}
+          {{ item.pname }}
         </p>
         <div class="tags-price">
           <div class="tags">
-            <van-button
-              v-for="(tag, index) in item.tags"
-              :key="index"
-              round
-              size="mini"
-            >
+            <van-button v-if="item.is_hot" round size="mini">
+              热销
+            </van-button>
+            <van-button v-for="(tag, index) in item.tags" :key="index" round size="mini">
               {{ tag }}
             </van-button>
             <!-- <van-button round size="mini">
@@ -28,10 +26,10 @@
           <div class="price flex flex-between align-center">
             <span
               class="now-price"
-            >￥<span>{{ item.nowPrice }}</span></span>
+            >￥<span>{{ item.sell_price }}</span></span>
             <span
               class="del-price"
-            >￥<span>{{ item.delPrice }}</span></span>
+            >￥<span>{{ item.line_price }}</span></span>
           </div>
         </div>
       </div>

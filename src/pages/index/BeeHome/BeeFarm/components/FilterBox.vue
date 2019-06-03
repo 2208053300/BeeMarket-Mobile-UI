@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div class="filter-box flex flex-between">
-      <ul class="condition-list flex">
+    <div class="filter-box flex flex-between bg-white">
+      <ul class="condition-list flex align-center">
         <li
           class="item"
           :class="{ active: nowIndex === 0 }"
           @click="getList(0)"
         >
-          <span class="name">综合</span>
+          <span class="name">默认</span>
         </li>
         <li
           class="item"
           :class="{ active: nowIndex === 1 }"
           @click="getList(1)"
         >
-          <span class="name">销量</span>
+          <span class="name">新品</span>
         </li>
         <li
           class="item flex align-center"
@@ -23,30 +23,31 @@
         >
           <span class="name">价格</span>
           <img
-            v-show="order==='asc'"
+            v-show="order === 'asc'"
             class="price-icon"
             src="@/assets/category/list_icon_price_low.png"
             alt=""
           >
           <img
-            v-show="order==='desc'"
+            v-show="order === 'desc'"
             class="price-icon"
             src="@/assets/category/list_icon_price_high.png"
             alt=""
           >
         </li>
       </ul>
-      <div class="change-show" @click="showListWay">
-        <img
-          v-show="isVertical"
-          src="@/assets/category/list_icon_vertical.png"
-          alt=""
-        >
-        <img
-          v-show="!isVertical"
-          src="@/assets/category/list_icon_horizontal.png"
-          alt=""
-        >
+      <div class="change-show flex align-center">
+        <div class="change-show" @click="showListWay">
+          <img
+            v-show="!isVertical"
+            src="@/assets/category/list_icon_vertical.png"
+          >
+          <img
+            v-show="isVertical"
+            src="@/assets/category/list_icon_horizontal.png"
+          >
+        </div>
+        <span class="sel-area" @click="selectArea">地区</span>
       </div>
     </div>
   </div>
@@ -54,33 +55,21 @@
 
 <script>
 export default {
-  components: {
-
-  },
-  props: {
-
-  },
+  components: {},
+  props: {},
   data() {
     return {
       nowIndex: 0, // 筛选条件
       order: 'asc', // 价格升降序 asc 顺序  desc 倒序
-      isVertical: true,
+      isVertical: false,
       // 点击价格次数
       count: 0
     }
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
-  created() {
-
-  },
-  mounted() {
-
-  },
+  computed: {},
+  watch: {},
+  created() {},
+  mounted() {},
   methods: {
     getList(type) {
       this.nowIndex = type
@@ -100,8 +89,9 @@ export default {
         this.count++
         // console.log(type, this.nowIndex, this.count)
         this.$emit('getFilter', type)
-        if (this.count > 1) { // this.count == 1 是选中价格，>1 时筛选按价格升序还是降序
-          this.count % 2 === 0 ? this.order = 'desc' : this.order = 'asc'
+        if (this.count > 1) {
+          // this.count == 1 是选中价格，>1 时筛选按价格升序还是降序
+          this.count % 2 === 0 ? (this.order = 'desc') : (this.order = 'asc')
           this.$emit('getFilter', { type, order: this.order })
         }
       }
@@ -109,14 +99,18 @@ export default {
     showListWay() {
       this.isVertical = !this.isVertical
       this.$emit('showWay', this.isVertical)
+    },
+    selectArea() {
+      // console.log('changeArea')
+      // this.$parent.showArea = true
+      this.$emit('changeArea', true)
     }
   }
-
 }
 </script>
 
 <style scoped lang="less">
-.filter-box{padding: 0.3rem 0.5rem;}
+.filter-box{padding:0.3rem 0.3rem 0; border-radius: 0.2rem 0.2rem 0 0;}
 .item{margin-right: 0.8rem;
   font-size: 0.28rem ;
   color: #666;
@@ -126,4 +120,9 @@ export default {
 .change-show{
   img{width: 0.25rem; height:0.25rem ;}
 }
+.sel-area {
+  margin-left: 0.1rem;
+        font-size: 0.28rem;
+        color: @Grey2;
+      }
 </style>

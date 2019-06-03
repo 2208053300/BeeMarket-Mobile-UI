@@ -18,13 +18,13 @@ service.interceptors.request.use(
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
       config.headers['Content-Type'] = 'application/json'
-      console.log(config.data)
+      // console.log(config.data)
       return config
     }
     // 去除options预请求方法
     if (config.method === 'post') {
       config.data = qs.stringify(config.data)
-      console.log(config.data)
+      console.log('请求参数：', config.data)
     }
     return config
   },
@@ -47,7 +47,7 @@ service.interceptors.response.use(
     } else {
       Toast.success(res.message)
     }
-    console.log(res)
+    // console.log(res)
     return res
   },
   error => {

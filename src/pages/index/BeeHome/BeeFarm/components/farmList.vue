@@ -1,6 +1,7 @@
 <template>
   <div class="farm-list">
-    <div class="content-filter">
+    <!-- 筛选 -->
+    <!-- <div class="content-filter">
       <van-tabs
         v-model="activeTab"
         background="transparent"
@@ -45,16 +46,14 @@
           地区
         </div>
       </div>
-    </div>
-    <div
-      v-if="gridList"
-      class="grid-list"
-    >
+    </div> -->
+
+    <div v-if="gridList" class="grid-list">
       <van-list
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
-        @load="onLoad"
+        @load="getProductListData(nowCondition)"
       >
         <div class="grid-row">
           <div
@@ -110,7 +109,7 @@
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
-        @load="onLoad"
+        @load="getProductListData(nowCondition)"
       >
         <div
           v-for="item in commodityList"
@@ -184,9 +183,14 @@
 <script>
 import { getProductList } from '@/api/BeeApi/product'
 import { BeeDefault } from '@/styles/index/variables.less'
+
 export default {
-  components: {},
-  props: {},
+  components: {
+
+  },
+  props: {
+    condition: { type: Object, default: () => ({}) }
+  },
   data() {
     return {
       BeeDefault,
@@ -201,42 +205,90 @@ export default {
         list_icon_vertical: require('@/assets/icon/category/list_icon_vertical@2x.png'),
         low_white: require('@/assets/icon/store/shop_icon_price_low_white@2x.png')
       },
-      formData: {}
+      formData: {},
+      // 请求数据筛选条件
+      nowCondition: {}
     }
   },
   computed: {},
-  watch: {},
-  created() {},
+  watch: {
+    condition: {
+      handler(newCondition, old) {
+        console.log('条件改变了', newCondition)
+        this.nowCondition = newCondition
+        this.getProductListData(newCondition)
+      },
+      deep: true
+    }
+  },
+  created() {
+    this.nowCondition = this.condition
+  },
   mounted() {},
   methods: {
-    async getProductListData() {
-      const res = await getProductList(this.formData)
-      this.commodityList = res.data.products
-    },
-    onLoad() {
-      // 异步更新数据
+    // 获取二级分类下商品列表
+    async getProductListData(data) {
+      data = this.filterParams(data)
       setTimeout(async() => {
-        const res = await getProductList(this.formData)
+        const res = await getProductList(data)
+
         this.commodityList.push(...res.data.products)
-        // 加载状态结束
+        this.page++
         this.loading = false
 
-        // 数据全部加载完成
-        if (this.commodityList.length >= 40) {
+        if (res.data.products.length === 0) {
           this.finished = true
         }
       }, 500)
+    },
+    // 对象属性过滤函数，去掉属性值为空的属性
+    filterParams(obj) {
+      // 获取对象属性的个数
+      // const length = Object.getOwnPropertyNames(obj).length
+      const _newPar = {}
+      for (const key in obj) {
+        // 如果对象属性的值不为空，就保存该属性（这里我做了限制，如果属性的值为0，保存该属性。如果属性的值全部是空格，属于为空。）
+        if (
+          (obj[key] === 0 || obj[key]) &&
+          obj[key].toString().replace(/(^\s*)|(\s*$)/g, '') !== ''
+        ) {
+          // 记录属性
+          _newPar[key] = obj[key]
+        }
+      }
+      // 返回对象
+      return _newPar
     }
+
+    // async getProductListData(data) {
+    //   const res = await getProductList(data)
+    //   this.commodityList = res.data.products
+    // },
+    // onLoad() {
+    //   // 异步更新数据
+    //   setTimeout(async() => {
+    //     const res = await getProductList(this.nowCondition)
+    //     this.commodityList.push(...res.data.products)
+    //     // 加载状态结束
+    //     this.loading = false
+
+    //     // 数据全部加载完成
+    //     if (res.data.products.length === 0) {
+    //       this.finished = true
+    //     }
+    //   }, 500)
+    // }
+
   }
 }
 </script>
 
 <style scoped lang="less">
 .farm-list {
-  margin-top: 0.2rem;
+  // margin-top: 0.2rem;
   padding: 0.3rem;
   background-color: #fff;
-  border-radius: 0.2rem;
+  // border-radius: 0.2rem;
   box-sizing: border-box;
   .content-filter {
     display: flex;
