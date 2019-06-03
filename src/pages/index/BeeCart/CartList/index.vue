@@ -116,6 +116,11 @@ import { mapState } from 'vuex'
 import { BeeDefault, Grey2 } from '@/styles/index/variables.less'
 
 export default {
+  metaInfo() {
+    return {
+      title: '限量蜂抢'
+    }
+  },
   components: {
     CartList,
     BeeGuess
