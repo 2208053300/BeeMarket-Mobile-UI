@@ -24,7 +24,7 @@ service.interceptors.request.use(
     // 去除options预请求方法
     if (config.method === 'post') {
       config.data = qs.stringify(config.data)
-      console.log(config.data)
+      console.log('qs:', config.data)
     }
     return config
   },

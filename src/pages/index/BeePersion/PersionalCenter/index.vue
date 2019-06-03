@@ -137,7 +137,9 @@ export default {
         mine_icon_customer: require('@/assets/icon/personalCenter/mine_icon_customer@2x.png'),
         mine_icon_set: require('@/assets/icon/personalCenter/mine_icon_set@2x.png')
       },
-      userInfo: {}
+      userInfo: {
+        personal_info: {}
+      }
     }
   },
   computed: {},
