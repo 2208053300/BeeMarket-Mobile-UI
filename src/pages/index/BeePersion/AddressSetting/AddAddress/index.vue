@@ -74,11 +74,7 @@
         position="bottom"
         @click-overlay="showArea=false"
       >
-        <van-area
-          :area-list="areaList"
-          @confirm="showArea=false"
-          @cancel="showArea=false"
-        />
+        <bee-area />
       </van-popup>
     </div>
     <div class="save-address">
@@ -101,8 +97,8 @@
 </template>
 
 <script>
-import areaList from '@/assets/area'
 import { BeeDefault } from '@/styles/index/variables.less'
+import BeeArea from '@/components/index/BeeArea'
 import { getAddressDetail, addAddress, updateAddress } from '@/api/BeeApi/user'
 export default {
   metaInfo() {
@@ -112,13 +108,12 @@ export default {
       return { title: '新增地址' }
     }
   },
-  components: {},
+  components: { BeeArea },
   props: {},
   data() {
     return {
       beeForm: {},
       BeeDefault,
-      areaList,
       showArea: false
     }
   },
