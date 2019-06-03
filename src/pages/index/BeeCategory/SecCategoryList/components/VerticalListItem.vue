@@ -1,28 +1,25 @@
 <template>
   <div>
-    <div class="item flex">
+    <div class="item flex" @click="$router.push({path:'/category/details',query:{pid:item.pid}})">
       <div class="img">
-        <img :src="item.img">
+        <img :src="item.tUrl">
       </div>
       <div class="info flex flex-column flex-between">
         <p class="name">
-          {{ item.name }}
+          {{ item.pname }}
         </p>
         <div class="tags-price">
           <div class="tags">
+            <van-button v-if="item.is_hot" round size="mini">
+              热销
+            </van-button>
             <van-button v-for="(tag, index) in item.tags" :key="index" round size="mini">
               {{ tag }}
             </van-button>
-            <!-- <van-button round size="mini">
-              活动
-            </van-button>
-            <van-button round size="mini">
-              自己添加
-            </van-button> -->
           </div>
           <div class="price">
-            <span class="now-price">￥<span>{{ item.nowPrice }}</span></span>
-            <span class="del-price">￥<span>{{ item.delPrice }}</span></span>
+            <span class="now-price">￥<span>{{ item.sell_price }}</span></span>
+            <span class="del-price">￥<span>{{ item.line_price }}</span></span>
           </div>
         </div>
       </div>

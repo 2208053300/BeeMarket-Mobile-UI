@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     async getProductDetailData() {
-      const res = await getProductDetail({ pid: 1 })
+      const res = await getProductDetail({ pid: this.$route.query.pid })
       this.commodityData = res.data
       // NOTE 先放这里
     }

@@ -1,16 +1,14 @@
 <template>
   <div class="sec-category">
     <div class="container position-ab-top-46">
+      <!-- 搜索栏 -->
       <van-search
         placeholder="请输入搜索关键词"
         style="position:relative; z-index:9998;"
         @click="goSearchPage"
       />
-      <van-tabs
-        v-model="nowThirdIndex"
-        swipeable
-        @click="getCateId"
-      >
+      <!-- 二级导航 -->
+      <van-tabs v-model="nowThirdIndex" swipeable @click="getCateId">
         <!-- 展示全部分类图片开关 -->
         <div
           class="show-all-cate"
@@ -42,9 +40,9 @@
             >
               <button
                 class="cate-btn"
-                :class="{active: index==condition.nowThirdId}"
+                :class="{active: index==condition.cid}"
                 type="button"
-                @click="getCateIdFromAll(index,item.name)"
+                @click="getCateIdFromAll(index,item.cname)"
               >
                 {{ item.cname }}
               </button>
@@ -59,23 +57,11 @@
         >
           <!-- 筛选条件 -->
           <FilterBox
-            :type="condition.nowType"
             @getFilter="getFilter"
             @showWay="showWay"
           />
           <!-- 商品列表 -->
-          <!-- 垂直一栏布局 -->
-          <VerticalList
-            v-show="isVertical"
-            ref="VerticalList"
-            :condition="condition"
-          />
-          <!-- 两栏布局 -->
-          <HorizontalList
-            v-show="!isVertical"
-            ref="HorizontalList"
-            :condition="condition"
-          />
+          <ProductsList :condition="condition" :is-vertical="isVertical" />
         </van-tab>
       </van-tabs>
     </div>
@@ -87,20 +73,19 @@
 <script>
 import { getSecondCategory } from '@/api/BeeApi/product'
 import FilterBox from './components/FilterBox'
-import VerticalList from './components/VerticalList'
-import HorizontalList from './components/HorizontalList'
+import ProductsList from './components/ProductsList'
+
 export default {
   components: {
     FilterBox,
-    VerticalList,
-    HorizontalList
+    ProductsList
   },
   props: {},
   data() {
     return {
       // 页面名称
       title: '二级分类',
-      // 三级分类数据
+      // 二级分类数据
       categoryThirdList: [],
       // 是否垂直布局
       isVertical: true,
@@ -113,9 +98,13 @@ export default {
       // 请求数据条件
       condition: {
         // 当前选中分类id
-        nowThirdId: 0,
-        // 当前筛选类型
-        nowType: 0
+        cid: 0,
+        // 筛选条件  sell_price 售价，sold 销量
+        sort: '',
+        // asc 顺序 还是 desc 倒序
+        order: ''
+        // 页码
+        // page: 1
       }
     }
   },
@@ -131,32 +120,40 @@ export default {
     this.getSecondCategoryData()
   },
   methods: {
-    // 获取三级分类列表
+    // 获取二级分类列表
     async getSecondCategoryData() {
       const res = await getSecondCategory({ cid: this.$route.query.cid })
       console.log('二级分类：', res)
-
       this.categoryThirdList = res.data.cats
+      this.condition.cid = this.categoryThirdList[0].cid
     },
     // 获取商品列表
     getCateId(index, title) {
       console.log(index, title)
       this.categoryThirdList.map(item => {
-        if (item.name === title) {
-          this.condition.nowThirdId = item.id
-          console.log(this.condition.nowThirdId)
+        if (item.cname === title) {
+          this.condition.cid = item.cid
+          console.log(this.condition.cid)
         }
       })
       this.nowThirdIndex = index
     },
-    // 筛选条件
+    // 筛选条件 // 0按综合获取 1销量 2价格
     getFilter(type) {
-      if (typeof type === 'number') {
-        this.condition.nowType = type
+      if (type === 0) {
+        this.condition.sort = ''
+        this.condition.order = ''
+      } else if (type === 1) {
+        this.condition.sort = 'sold'
+        this.condition.order = ''
+      } else if (type === 2) {
+        this.condition.sort = 'price'
       } else if (typeof type === 'object') {
-        this.condition.nowType = type.type
-        this.condition.priceFlag = type.priceFlag
+        this.condition.sort = 'price'
+        this.condition.order = type.order
       }
+      console.log('返回的筛选条件：', type)
+      console.log('返回后的condition：', this.condition)
     },
     // 布局方式
     showWay(isVertical) {

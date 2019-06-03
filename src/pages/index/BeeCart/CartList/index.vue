@@ -49,7 +49,10 @@
             去添加
           </van-button>
         </div>
-        <cart-list v-else />
+        <cart-list
+          v-else
+          ref="cartList"
+        />
       </div>
       <div class="bee-below">
         <bee-guess :guess-data="guessData" />
@@ -122,8 +125,7 @@ export default {
     return {
       BeeDefault,
       Grey2,
-      allSelectedBox: false,
-      allSelectedData: [],
+      allSelectedBox: true,
       totalPrices: 0,
       showEdit: false,
       beeIcon: {
@@ -137,17 +139,7 @@ export default {
   computed: {
     ...mapState(['cart', 'app'])
   },
-  watch: {
-    'cart.cartSelected': {
-      handler(val) {
-        // NOTE 计算总价
-        this.totalPrices = val.reduce((accumulator, currentValue) => {
-          return accumulator + currentValue.currentPrice * 100
-        }, 0)
-      },
-      deep: true
-    }
-  },
+  watch: {},
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = false
@@ -161,10 +153,20 @@ export default {
       this.cart.cartInfo = res.data.shopcart
       // 猜你喜欢
       this.guessData = res.data.guess
-      res.data.shopcart.map((item, index) => {
-        item.products.map((item2, index2) => {
-          this.allSelectedData.push(item2)
+      // 获取全选状态
+      this.cart.cartInfo.map(item => {
+        if (!item.checked) {
+          this.allSelectedBox = false
+        }
+        // 获取已选商品对象
+        this.cart.cartSelected = item.products.filter(item2 => {
+          return item2.checked
         })
+      })
+      // 总价
+      this.totalPrices = 0
+      this.cart.cartSelected.map(item => {
+        this.totalPrices += item.sell_price * item.number * 100
       })
     },
     // 跳转到购物车分享页面
@@ -175,10 +177,19 @@ export default {
     },
     // NOTE 全选
     allSelected() {
+      // 如果已经全选
       if (this.allSelectedBox) {
-        this.cart.cartSelected = this.allSelectedData
+        this.$refs.cartList.checkProduct(
+          this.cart.cartInfo[0].products[0].cart_id,
+          'all',
+          1
+        )
       } else {
-        this.cart.cartSelected = []
+        this.$refs.cartList.checkProduct(
+          this.cart.cartInfo[0].products[0].cart_id,
+          'all',
+          0
+        )
       }
     },
     editCart() {
@@ -190,10 +201,13 @@ export default {
     },
     // TODO 删除选中
     async delSelected() {
-      const res = await delShopcartProduct()
-      console.log(res)
-
-      console.log(this.cart.cartSelected)
+      const ctids = this.cart.cartSelected.map(item => {
+        return item.cart_id
+      })
+      const res = await delShopcartProduct(JSON.stringify({ ctids: ctids }))
+      if (res.status_code === 200) {
+        this.getShopcartListData()
+      }
     }
   }
 }

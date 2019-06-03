@@ -107,7 +107,7 @@ export function checkShopcartProduct(data) {
 // 购物车商品删除
 export function delShopcartProduct(data) {
   return request({
-    url: '/user/shopcart/check',
+    url: '/user/shopcart/del',
     method: 'post',
     data
   })

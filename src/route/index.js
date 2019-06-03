@@ -170,10 +170,10 @@ const router = new Router({
         {
           path: '',
           name: 'CartList',
-          component: () => import('@/pages/index/BeeCart/CartList'),
-          meta: {
-            keepAlive: true
-          }
+          component: () => import('@/pages/index/BeeCart/CartList')
+          // meta: {
+          //   keepAlive: true
+          // }
         },
         {
           path: 'CartShare',

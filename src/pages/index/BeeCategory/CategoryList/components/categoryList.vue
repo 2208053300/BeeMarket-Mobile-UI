@@ -132,18 +132,6 @@ export default {
       console.log('二级分类列表：', res)
 
       this.category2 = res.data
-    },
-
-    // 跳转到二级分类商品列表
-    goCommodityList() {
-      console.log(this.nowFirCategoryId)
-
-      this.$router.push({
-        path: '/category/SecCategoryList',
-        query: {
-          cid: this.nowFirCategoryId
-        }
-      })
     }
 
   }
