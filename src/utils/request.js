@@ -13,7 +13,7 @@ service.interceptors.request.use(
   config => {
     // 暂时加上TOKEN
     // config.headers['BM-App-Token'] = getToken()
-    config.headers['BM-App-Token'] = 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTkyMTk0MjQsImV4cCI6MTU2MTg5NzgyNCwianRpIjoiZGQ0OTA4NjRhZmU0M2I5OTk5ZTIyMzIxMDIxZjNjOGMiLCJzZWMiOiI1Y2Q1YTcyMmI2ZTk5YTViMjJhZDBjODhhMGUzMzcxYiIsInNpZyI6ImZiMWE3ZDY3OWZmOTBhMTNkZTI3NzNlNGYxZGMyZDQ3NTk5ZDljNmM1N2M1YjA1MDM4ZDRkM2FkOWVlYjJmZDUifQ.JnLfMFDk0fUpyi94KCeIXwMmbsd-ijtcFw7muYzdftE'
+    config.headers['BM-App-Token'] = 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk1NDYyOTgsImV4cCI6MTU2MjEzODI5OCwianRpIjoiYzFhYzhkMjQ2MjQyMzkyNGJmYWMxMDRmYTMwOTEzZDEiLCJzZWMiOiI1Y2Q1YTcyMmI2ZTk5YTViMjJhZDBjODhhMGUzMzcxYiIsInNpZyI6IjQxMmJjODE5NmYyZGVjOThlNjI1MThiMjk3ZjlmYWYyODEzZGY3ZDlhZGI5MmRjYzMwZTYwZGJkZDY3ZjNiZDcifQ.3U64GCNrUOw9IRBV6nK6WHieNO7NxtrCc6tHCTlDJ0E'
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
@@ -41,7 +41,7 @@ service.interceptors.response.use(
       setToken(response.headers['bm-app-token'])
     }
     const res = response.data
-    if (res.status_code !== 200) {
+    if (res.code !== 1) {
       Toast.fail(res.message || 'error')
       return Promise.reject(res.message || 'error')
     } else {

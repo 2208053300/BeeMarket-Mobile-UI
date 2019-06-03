@@ -2,6 +2,7 @@
   <div>
     <van-row class="persion-order">
       <van-cell
+        style="border-top-left-radius: 0.2rem;border-top-right-radius: 0.2rem"
         title="我的订单"
         is-link
         value="查看全部订单"
@@ -34,28 +35,28 @@
             退换/售后
           </div>
         </div>
-        <div class="order-status">
+        <div v-if="expressInfo" class="order-status">
           <van-row>
             <van-col span="6">
               <div class="order-img">
                 <img
-                  src=""
-                  alt=""
+                  :src="expressInfo.thumb_url"
+                  alt="商品缩略图"
                 >
               </div>
             </van-col>
             <van-col span="12">
               <div class="status-time">
-                2019.04.01 17:00:00
+                {{ expressInfo.time }}
               </div>
               <div class="status-details">
-                【重庆市】快件已到达重庆
+                {{ expressInfo.context }}
               </div>
             </van-col>
             <van-col span="6">
               <!-- TODO 动态变更颜色 -->
               <div class="status-text">
-                运输中
+                {{ expressInfo.status_name }}
               </div>
             </van-col>
             <div class="line-img">
@@ -75,7 +76,12 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 export default {
   components: {},
-  props: {},
+  props: {
+    expressInfo: {
+      type: Object,
+      default: () => undefined
+    }
+  },
   data() {
     return {
       BeeDefault,
@@ -100,7 +106,7 @@ export default {
 <style scoped lang="less">
 .persion-order {
   background-color: #fff;
-
+  border-radius: 0.2rem;
   .van-cell:not(:last-child)::after {
     left: 0;
   }
@@ -162,12 +168,15 @@ export default {
       padding-left: 0.3rem;
       white-space: nowrap;
       margin-top: 0.2rem;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
     .status-text {
       height: 1rem;
       line-height: 1rem;
       text-align: right;
       font-size: 0.28rem;
+      color: #ffa42f;
     }
     .line-img{
       position: absolute;

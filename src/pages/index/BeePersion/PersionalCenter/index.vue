@@ -34,10 +34,10 @@
           span="16"
           offset="2"
         >
-          <span class="head-name">
+          <div class="head-name">
             {{ userInfo.personal_info.nickname }}
-          </span>
-          <div class="head-type">
+          </div>
+          <div v-if="userInfo.personal_info.is_partner" class="head-type">
             <van-icon name="vip-card-o" />
             <span>合伙人</span>
           </div>
@@ -57,7 +57,7 @@
           蜂公益
         </van-button>
       </van-row>
-      <bee-order />
+      <bee-order :express-info="userInfo.express_info" />
       <van-row
         class="persion-op"
         type="flex"
@@ -137,7 +137,9 @@ export default {
         mine_icon_customer: require('@/assets/icon/personalCenter/mine_icon_customer@2x.png'),
         mine_icon_set: require('@/assets/icon/personalCenter/mine_icon_set@2x.png')
       },
-      userInfo: {}
+      userInfo: {
+        personal_info: {}
+      }
     }
   },
   computed: {},
@@ -184,6 +186,7 @@ export default {
         margin-left: 0.16rem;
       }
       .head-name {
+        font-weight: bold;
         font-size: 0.36rem;
         color: #ffffff;
       }

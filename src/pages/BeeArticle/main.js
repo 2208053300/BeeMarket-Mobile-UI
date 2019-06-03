@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './index.vue'
 import router from '@/route/beeArticle'
 import store from '@/store'
 import Meta from 'vue-meta'
