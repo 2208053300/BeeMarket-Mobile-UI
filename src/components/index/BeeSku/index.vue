@@ -88,13 +88,17 @@ export default {
       default: () => {
         return {}
       }
+    },
+    pNumber: {
+      type: Number,
+      default: 1
     }
   },
   data() {
     return {
       propsData: {},
       skuData: {},
-      productNum: 0,
+      productNum: 1,
       skuName: [],
       selProps: []
     }
@@ -110,7 +114,7 @@ export default {
       if (this.propsId) {
         const res = await getProductSku(
           JSON.stringify({
-            pid: 227,
+            pid: this.pid,
             props: this.propsId
           })
         )
@@ -120,12 +124,13 @@ export default {
       } else {
         const res = await getProductSku(
           JSON.stringify({
-            // pid: this.pid
-            pid: 227
+            pid: this.pid
           })
         )
         this.propsData = res.data
       }
+      // sku数量
+      this.productNum = this.pNumber ? this.pNumber : 1
     },
     async getProductSkuData(prop, values) {
       this.skuName = []
@@ -150,7 +155,7 @@ export default {
       })
       const res = await getProductSku(
         JSON.stringify({
-          pid: 227,
+          pid: this.pid,
           props: this.selProps
         })
       )
@@ -170,10 +175,12 @@ export default {
       this.$emit('update:showSku', false)
     },
     handleDone() {
-      this.$emit('get-sku-id', this.propsData.sku_id)
-      this.$emit('get-sku-name', this.skuName)
       this.$emit('update:propsId', this.selProps)
       this.$emit('update:showSku', false)
+      this.$emit('update:pNumber', this.productNum)
+      // FIXME 此处注意方法顺序
+      this.$emit('get-sku-name', this.skuName)
+      this.$emit('get-sku-id', this.propsData.sku_id)
       // return this.propsData.sku_id
     }
   }

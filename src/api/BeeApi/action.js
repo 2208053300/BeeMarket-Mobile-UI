@@ -28,7 +28,7 @@ export function getArticleList(data) {
 export function getArticleDetail(data) {
   return request({
     url: '/market/articleDetails',
-    method: 'get',
+    method: 'post',
     params: data
   })
 }

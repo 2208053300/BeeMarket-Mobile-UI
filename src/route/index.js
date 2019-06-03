@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/index/BeeHome/HomePage'
-import { getToken } from '@/utils/auth'
 
 Vue.use(Router)
 const router = new Router({
@@ -171,10 +170,10 @@ const router = new Router({
         {
           path: '',
           name: 'CartList',
-          component: () => import('@/pages/index/BeeCart/CartList'),
-          meta: {
-            keepAlive: true
-          }
+          component: () => import('@/pages/index/BeeCart/CartList')
+          // meta: {
+          //   keepAlive: true
+          // }
         },
         {
           path: 'CartShare',

@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { checkPhone, sendSms, userLogin } from '@/api/BeeApi/auth'
+import { checkPhone, userLogin } from '@/api/BeeApi/auth'
 
 export default {
   components: {},

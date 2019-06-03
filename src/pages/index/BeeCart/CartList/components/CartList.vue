@@ -6,10 +6,10 @@
       class="bee-store"
     >
       <van-checkbox
-        v-model="allSelectedBox[index]"
+        v-model="store.checked"
         :checked-color="BeeDefault"
         style="margin-top:0"
-        @click="allSelected(index,store.product,allSelectedBox[index])"
+        @click="checkProduct(store.products[0].cart_id,'group',store.checked)"
       >
         <van-icon
           name="shop-o"
@@ -17,69 +17,83 @@
         />
         {{ store.store_name }}
       </van-checkbox>
-      <van-checkbox-group v-model="cart.cartSelected">
-        <van-checkbox
-          v-for="item in store.products"
-          :key="item.id"
-          :name="item"
-          :checked-color="BeeDefault"
-          @click="changeAll(index,store.products,allSelectedBox[index])"
-        >
-          <van-card @click.stop="">
-            <img
-              slot="thumb"
-              :src="item.tUrl"
-              alt="商品预览图"
-              @click.stop="showDetails(item.id)"
-            >
-            <span
-              slot="title"
-              class="card-title"
-              @click.stop="showDetails(item.id)"
-            >{{ item.pname }}</span>
-            <div
-              slot="desc"
-              class="card-sku"
-              @click.stop="showSku(item.id)"
-            >
-              {{ item.sku }}
-              <van-icon name="arrow-down" />
-            </div>
-            <span
-              slot="price"
-              class="card-price"
-            >
-              ￥{{ item.sell_price }}
-            </span>
-            <van-stepper
-              slot="num"
-              v-model="item.number"
-              @click.stop="changeNum(item.number)"
-            />
-          </van-card>
-        </van-checkbox>
-      </van-checkbox-group>
+      <van-checkbox
+        v-for="item in store.products"
+        :key="item.id"
+        v-model="item.checked"
+        :name="item"
+        :checked-color="BeeDefault"
+        @click="checkProduct(item.cart_id,'one',item.checked)"
+      >
+        <van-card @click.stop="">
+          <img
+            slot="thumb"
+            :src="item.tUrl"
+            alt="商品预览图"
+            @click.stop="showDetails(item.pid)"
+          >
+          <span
+            slot="title"
+            class="card-title"
+            @click.stop="showDetails(item.pid)"
+          >{{ item.pname }}</span>
+          <div
+            slot="desc"
+            class="card-sku"
+            @click.stop="showSku(item.pid,item.props,item.number,item.cart_id)"
+          >
+            {{ item.props_name }}
+            <van-icon name="arrow-down" />
+          </div>
+          <span
+            slot="price"
+            class="card-price"
+          >
+            ￥{{ item.sell_price }}
+          </span>
+          <van-stepper
+            slot="num"
+            v-model="item.number"
+            :integer="true"
+            @change="changeNum(item.number,item.cart_id)"
+          />
+        </van-card>
+      </van-checkbox>
     </div>
-    <!-- <bee-sku :show-base="beeskuShow" /> -->
+    <bee-sku
+      ref="beeSku"
+      :pid="editPid"
+      :show-sku.sync="skuShow"
+      :props-id.sync="propsId"
+      :p-number.sync="pNumber"
+      @get-sku-id="getSkuId"
+    />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-// import BeeSku from '../../../../components/BeeSku'
+import BeeSku from '@/components/index/BeeSku'
 import { BeeDefault } from '@/styles/index/variables.less'
-import { updateShopcartProductNum, checkShopcartProduct } from '@/api/BeeApi/user'
+import {
+  updateShopcartProductNum,
+  checkShopcartProduct,
+  updateShopcartProductSku
+} from '@/api/BeeApi/user'
 
 export default {
   components: {
-    // BeeSku
+    BeeSku
   },
   props: {},
   data() {
     return {
       BeeDefault,
-      allSelectedBox: [],
-      beeskuShow: false
+      skuShow: false,
+      propsId: [],
+      pNumber: 1,
+      editCtid: 0,
+      editPid: 0
     }
   },
   computed: {
@@ -87,60 +101,57 @@ export default {
   },
   watch: {},
   created() {},
-  mounted() {
-    for (let index = 0; index < this.cart.cartInfo.length; index++) {
-      this.$set(this.allSelectedBox, index, false)
-    }
-  },
+  mounted() {},
   methods: {
-    // NOTE 全选
-    allSelected(index, val, isAll) {
-      const addVal = val.filter(item => {
-        return this.cart.cartSelected.indexOf(item) === -1
+    // 更改选中状态
+    async checkProduct(ctid, act, checked) {
+      const res = await checkShopcartProduct({
+        ctid: ctid,
+        act: act,
+        checked: checked ? 0 : 1
       })
-      if (isAll) {
-        this.cart.cartSelected.push(...addVal)
-      } else if (addVal.length === 0) {
-        // NOTE 如果已经全选
-        val.map(item1 => {
-          this.cart.cartSelected.map((item2, index) => {
-            if (item2 === item1) {
-              this.cart.cartSelected.splice(index, 1)
-            }
-          })
-        })
+      if (res.status_code === 200) {
+        this.$parent.getShopcartListData()
       }
-    },
-    // FIXME 有点小问题，选中子类全选可能出错
-    async changeAll(index, val, isAll) {
-      if (isAll) {
-        this.allSelectedBox[index] = false
-        return
-      }
-      const addVal = val.filter(item => {
-        return this.cart.cartSelected.indexOf(item) === -1
-      })
-      if (addVal.length === 0) {
-        this.allSelectedBox[index] = true
-      }
-      const res = await checkShopcartProduct()
-      console.log(res)
     },
     // TODO 跳转详情
     showDetails(id) {
       console.log(id)
       this.$router.push({
-        path: '/category/details'
+        path: '/category/details',
+        query: {
+          pid: id
+        }
       })
     },
     // TODO 显示SKU选择器
-    showSku(id) {
-      this.beeskuShow = true
+    showSku(pid, propsId, number, ctid) {
+      this.skuShow = true
+      this.editPid = pid
+      this.propsId = propsId
+      this.pNumber = number
+      this.editCtid = ctid
+    },
+    // 变更SKU
+    async getSkuId(sid) {
+      const res = await updateShopcartProductSku({
+        ctid: this.editCtid,
+        sid: sid,
+        number: this.pNumber
+      })
+      if (res.status_code === 200) {
+        this.$parent.getShopcartListData()
+      }
     },
     // TODO 更改数量
-    async changeNum() {
-      const res = await updateShopcartProductNum()
-      console.log(res)
+    async changeNum(num, ctid) {
+      const res = await updateShopcartProductNum({
+        ctid: ctid,
+        number: num
+      })
+      if (res.status_code === 200) {
+        this.$parent.getShopcartListData()
+      }
     }
   }
 }
