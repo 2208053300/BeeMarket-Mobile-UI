@@ -13,7 +13,7 @@ service.interceptors.request.use(
   config => {
     // 暂时加上TOKEN
     // config.headers['BM-App-Token'] = getToken()
-    config.headers['BM-App-Token'] = 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk1NDYwOTQsImV4cCI6MTU2MjEzODA5NCwianRpIjoiZTAzMmI0MjhkZjBkMzNjOTlkMjllZTIxMTcyNDA0NWUiLCJzZWMiOiJlNWQ2YTFmZmU4ODE0NjYwYjI3ZGE2Mjk3OGUwMzk3MyIsInNpZyI6ImIzMTYyZTk0YjAzOGY1OGQ0ZWY5ZGRlMjRhNzhkZmZmMTg1MGQ5ZDZjMmJjMDgwMmFhZjg5NzU3OTQ4NjY4OTkifQ.nSUzjPtbhJ6Gsf6rSSyyZlWCpCGGLA8KZ4RPZfclBkY'
+    config.headers['BM-App-Token'] = 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk1NDYyOTgsImV4cCI6MTU2MjEzODI5OCwianRpIjoiYzFhYzhkMjQ2MjQyMzkyNGJmYWMxMDRmYTMwOTEzZDEiLCJzZWMiOiI1Y2Q1YTcyMmI2ZTk5YTViMjJhZDBjODhhMGUzMzcxYiIsInNpZyI6IjQxMmJjODE5NmYyZGVjOThlNjI1MThiMjk3ZjlmYWYyODEzZGY3ZDlhZGI5MmRjYzMwZTYwZGJkZDY3ZjNiZDcifQ.3U64GCNrUOw9IRBV6nK6WHieNO7NxtrCc6tHCTlDJ0E'
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
