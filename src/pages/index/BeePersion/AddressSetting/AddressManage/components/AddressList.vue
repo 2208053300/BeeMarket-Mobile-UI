@@ -14,7 +14,7 @@
           v-if="address.tag!==null"
           class="address-tag"
         >
-          {{ address.tag }}
+          {{ tags[address.tag] }}
         </div>
         <span>{{ address.address }}</span>
       </div>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { delAddress } from '@/api/BeeApi/user'
+import { delAddress, defaultAddress } from '@/api/BeeApi/user'
 export default {
   components: {},
   filters: {
@@ -78,6 +78,11 @@ export default {
         mine_address_icon_edit: require('@/assets/icon/personalCenter/func/mine_address_icon_edit@2x.png'),
         mine_address_checkbox_square_s: require('@/assets/icon/personalCenter/func/mine_address_checkbox_square_s@2x.png'),
         mine_address_checkbox_square_n: require('@/assets/icon/personalCenter/func/mine_address_checkbox_square_n@2x.png')
+      },
+      tags: {
+        school: '学校',
+        work: '公司',
+        home: '家'
       }
     }
   },
@@ -87,8 +92,20 @@ export default {
   mounted() {},
   methods: {
     // TODO 设置默认地址
-    setDefault() {},
-    // TODO 编辑地址
+    async setDefault(addr_id) {
+      this.$toast.loading({
+        mask: true,
+        message: '加载中'
+      })
+      try {
+        await defaultAddress({ addr_id })
+        this.$emit('change')
+        this.$toast.clear()
+      } catch (e) {
+        this.$toast.clear()
+        this.$toast.fail(e)
+      }
+    },
     editAddress(id) {
       this.$router.push({
         path: '/persion/addressSetting/addAddress',
@@ -97,15 +114,15 @@ export default {
         }
       })
     },
-    // TODO 删除地址
     async delAddress(id) {
       try {
         const res = await delAddress({ addr_id: id })
         if (res.status_code === 200) {
           this.$toast(res.message)
+          this.$emit('change')
         }
       } catch (error) {
-        console.log(error)
+        this.$toast(error)
       }
     }
   }
@@ -144,6 +161,7 @@ export default {
         text-align: center;
         display: inline-block;
         margin-right: 0.15rem;
+        padding: 0.05rem;
       }
       &::after {
         content: " ";

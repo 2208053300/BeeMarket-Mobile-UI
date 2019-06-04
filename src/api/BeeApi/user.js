@@ -80,6 +80,14 @@ export function delAddress(data) {
     data
   })
 }
+// 用户收货地址设置为默认地址
+export function defaultAddress(data) {
+  return request({
+    url: '/user/addr/default',
+    method: 'post',
+    data
+  })
+}
 // 购物车商品列表
 export function getShopcartList(data) {
   return request({
