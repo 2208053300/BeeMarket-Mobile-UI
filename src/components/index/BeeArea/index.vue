@@ -39,9 +39,6 @@
 <script>
 import { getArea } from '@/api/BeeApi/user'
 export default {
-  metaInfo: {
-    title: ''
-  },
   components: {},
   props: {},
   data() {
