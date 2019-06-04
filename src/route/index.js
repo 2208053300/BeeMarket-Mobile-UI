@@ -80,6 +80,11 @@ const router = new Router({
           component: () => import('@/pages/index/BeeCategory/CategoryList')
         },
         {
+          path: 'SearchCommodity',
+          name: 'SearchCommodity',
+          component: () => import('@/pages/index/BeeCategory/SearchCommodity')
+        },
+        {
           path: 'SecCategoryList',
           name: 'SecCategoryList',
           component: () => import('@/pages/index/BeeCategory/SecCategoryList')

@@ -6,7 +6,7 @@ import { isJSON } from '@/utils'
 
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
-  timeout: 5000 // 请求超时时间
+  timeout: 50000 // 请求超时时间(现在是50秒)
 })
 
 service.interceptors.request.use(

@@ -14,6 +14,7 @@
       <address-list
         v-else
         :address-list="addressList"
+        @change="getAddressListData"
       />
       <div class="new-address">
         <!-- <van-button

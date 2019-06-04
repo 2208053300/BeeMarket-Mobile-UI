@@ -110,7 +110,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.filter-box{padding:0.3rem 0.3rem 0; border-radius: 0.2rem 0.2rem 0 0;}
+.filter-box{padding:0 0.3rem 0.3rem; border-radius: 0.2rem 0.2rem 0 0;}
 .item{margin-right: 0.8rem;
   font-size: 0.28rem ;
   color: #666;

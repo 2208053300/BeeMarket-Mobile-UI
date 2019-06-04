@@ -35,39 +35,55 @@
             退换/售后
           </div>
         </div>
-        <div v-if="expressInfo" class="order-status">
-          <van-row>
-            <van-col span="6">
-              <div class="order-img">
-                <img
-                  :src="expressInfo.thumb_url"
-                  alt="商品缩略图"
-                  :onerror="$store.state.app.defaultImg"
-                >
+        <van-swipe
+          v-if="expressInfo"
+          :autoplay="3000"
+          :show-indicators="false"
+          style="height: 1.9rem"
+          vertical
+        >
+          <van-swipe-item
+            v-for="(item, index) in expressInfo"
+            :key="index"
+          >
+            <div>
+              <div class="order-status">
+                <van-row>
+                  <van-col span="6">
+                    <div class="order-img">
+                      <img
+                        :src="item.thumb_url"
+                        alt="商品缩略图"
+                        :onerror="$store.state.app.defaultImg"
+                      >
+                    </div>
+                  </van-col>
+                  <van-col span="12">
+                    <div class="status-time">
+                      {{ item.time }}
+                    </div>
+                    <div class="status-details">
+                      {{ item.context }}
+                    </div>
+                  </van-col>
+                  <van-col span="6">
+                    <!-- TODO 动态变更颜色 -->
+                    <div class="status-text">
+                      {{ item.status_name }}
+                    </div>
+                  </van-col>
+                  <div class="line-img">
+                    <img
+                      :src="beeIcon.mine_img_line"
+                      alt=""
+                      :onerror="$store.state.app.defaultImg"
+                    >
+                  </div>
+                </van-row>
               </div>
-            </van-col>
-            <van-col span="12">
-              <div class="status-time">
-                {{ expressInfo.time }}
-              </div>
-              <div class="status-details">
-                {{ expressInfo.context }}
-              </div>
-            </van-col>
-            <van-col span="6">
-              <!-- TODO 动态变更颜色 -->
-              <div class="status-text">
-                {{ expressInfo.status_name }}
-              </div>
-            </van-col>
-            <div class="line-img">
-              <img
-                :src="beeIcon.mine_img_line"
-                alt=""
-              >
             </div>
-          </van-row>
-        </div>
+          </van-swipe-item>
+        </van-swipe>
       </div>
     </van-row>
   </div>
@@ -79,7 +95,7 @@ export default {
   components: {},
   props: {
     expressInfo: {
-      type: Object,
+      type: Array,
       default: () => undefined
     }
   },
@@ -146,7 +162,6 @@ export default {
     margin-top: 0.3rem;
     border-radius: 0.1rem;
     padding: 0.3rem;
-    position: relative;
     .order-img {
       width: 1rem;
       height: 1rem;

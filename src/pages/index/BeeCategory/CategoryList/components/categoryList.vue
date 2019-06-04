@@ -143,6 +143,11 @@ export default {
   height: 100%;
   display: flex;
   background-color: #fff;
+  .top-img{
+    width: 100%;
+    height: 1.7rem;
+    margin-bottom: 0.2rem;
+  }
   .select-category {
     width: 21%;
     min-width: 1.6rem;

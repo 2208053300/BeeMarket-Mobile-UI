@@ -47,18 +47,19 @@
         </div>
       </div>
     </div> -->
-
+    <!-- 筛选排序 -->
+    <FilterBox @getFilter="getFilter" @showWay="showWay" @changeArea="changeArea" />
     <div v-if="gridList" class="grid-list">
       <van-list
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
-        @load="getProductListData(nowCondition)"
+        @load="getProductListData(condition)"
       >
         <div class="grid-row">
           <div
-            v-for="item in commodityList"
-            :key="item.pid"
+            v-for="(item,index) in commodityList"
+            :key="index"
             class="commodity-card"
             @click="$router.push({path:'/category/details',query:{pid:item.pid}})"
           >
@@ -109,11 +110,11 @@
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
-        @load="getProductListData(nowCondition)"
+        @load="getProductListData(condition)"
       >
         <div
-          v-for="item in commodityList"
-          :key="item.pid"
+          v-for="(item,index) in commodityList"
+          :key="index"
           class="commodity-card"
           @click="$router.push({path:'/category/details',query:{pid:item.pid}})"
         >
@@ -181,15 +182,16 @@
 </template>
 
 <script>
+import FilterBox from './FilterBox'
 import { getProductList } from '@/api/BeeApi/product'
 import { BeeDefault } from '@/styles/index/variables.less'
 
 export default {
   components: {
-
+    FilterBox
   },
   props: {
-    condition: { type: Object, default: () => ({}) }
+    // condition: { type: Object, default: () => ({}) }
   },
   data() {
     return {
@@ -206,29 +208,31 @@ export default {
         low_white: require('@/assets/icon/store/shop_icon_price_low_white@2x.png')
       },
       formData: {},
-      // 请求数据筛选条件
-      nowCondition: {}
+      // 请求数据条件
+      condition: {
+        // 当前选中分类id
+        cid: 0,
+        // 筛选条件  sell_price 售价，sold 销量
+        sort: '',
+        // asc 顺序 还是 desc 倒序
+        order: '',
+        // 页码
+        page: 1
+      }
     }
   },
   computed: {},
   watch: {
-    condition: {
-      handler(newCondition, old) {
-        console.log('条件改变了', newCondition)
-        this.nowCondition = newCondition
-        this.getProductListData(newCondition)
-      },
-      deep: true
-    }
+
   },
   created() {
-    this.nowCondition = this.condition
+
   },
   mounted() {},
   methods: {
     // 获取二级分类下商品列表
-    async getProductListData(data) {
-      data = this.filterParams(data)
+    async getProductListData() {
+      const data = this.filterParams(this.condition)
       setTimeout(async() => {
         const res = await getProductList(data)
 
@@ -240,6 +244,35 @@ export default {
           this.finished = true
         }
       }, 500)
+    },
+    // 单排展示还是双排展示
+    showWay(val) {
+      this.gridList = val
+    },
+    // 选择地区
+    changeArea(val) {
+      this.showArea = val
+    },
+    // 筛选条件 // 0按综合获取 1销量 2价格
+    getFilter(type) {
+      if (type === 0) {
+        this.condition.sort = ''
+        this.condition.order = ''
+      } else if (type === 1) {
+        this.condition.sort = 'sold'
+        this.condition.order = ''
+      } else if (type === 2) {
+        this.condition.sort = 'price'
+      } else if (typeof type === 'object') {
+        this.condition.sort = 'price'
+        this.condition.order = type.order
+      }
+
+      // console.log('返回后的condition：', this.condition)
+      // 清空已有数据，重置页码，获取新的数据
+      this.goodsList = []
+      this.condition.page = 1
+      this.getProductListData(this.condition)
     },
     // 对象属性过滤函数，去掉属性值为空的属性
     filterParams(obj) {

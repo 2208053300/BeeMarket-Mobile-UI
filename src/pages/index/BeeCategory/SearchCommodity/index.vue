@@ -1,0 +1,195 @@
+<template>
+  <div class="bee-category">
+    <van-nav-bar fixed>
+      <van-search
+        slot="title"
+        v-model="searchKey"
+        :input-align="searchAlign"
+        :show-action="searchStatus"
+        :class="{ searchIcon: searchStatus && searchKey === '' }"
+        shape="round"
+        placeholder="蜂集市，让生活丰富起来"
+        @focus="changeLeft"
+        @blur="changeCenter"
+      >
+        <van-icon
+          slot="left-icon"
+          :name="beeIcon.nav_icon_search"
+          :color="Grey1"
+        />
+        <van-button slot="action" type="default" class="cancel-search" @click="cancelSearch">
+          取消
+        </van-button>
+      </van-search>
+    </van-nav-bar>
+    <div class="category-container">
+      <!-- 搜索历史 为您推荐 -->
+      <search-keyword v-show="searchStatus && searchKey === ''" />
+      <!-- 搜索建议 -->
+      <search-guess
+        v-show="isShowGuess && isShowGuess1 && searchKey !== ''"
+        ref="searchGuess"
+        :guess-data="guessData"
+        @getConfirmWold="getConfirmWold"
+      />
+      <!-- 搜索的商品列表 -->
+      <ProductsList v-show="isShowProductList && searchKey !== ''" ref="ProductsList" class="bg-white" />
+    </div>
+  </div>
+</template>
+
+<script>
+import { Grey1 } from '@/styles/index/variables.less'
+import { searchSuggust } from '@/api/BeeApi/product'
+import searchKeyword from './components/searchKeyword'
+import searchGuess from './components/searchGuess'
+import ProductsList from './components/ProductsList'
+export default {
+  components: {
+    searchKeyword,
+    searchGuess,
+    ProductsList
+  },
+  props: {},
+  data() {
+    return {
+      Grey1,
+      searchAlign: 'center',
+      searchStatus: true,
+
+      beeIcon: {
+        nav_icon_search: require('@/assets/icon/category/nav_icon_search@2x.png')
+      },
+      // 输入框搜索关键词
+      searchKey: '',
+      // 是否显示搜索建议
+      isShowGuess: false,
+      isShowGuess1: true,
+      // 搜索建议数据
+      guessData: [
+        {
+          id: 1,
+          name: '男装'
+        },
+        {
+          id: 2,
+          name: '女'
+        },
+        {
+          id: 3,
+          name: '童装'
+        }
+      ],
+      // 是否显示商品列表
+      isShowProductList: false
+    }
+  },
+  computed: {},
+  watch: {
+    searchKey: {
+      handler(val) {
+        this.getGuess()
+      }
+    }
+  },
+  created() {},
+  mounted() {
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = false
+  },
+  methods: {
+    // NOTE 当点击搜索栏时，更改样式
+    changeLeft() {
+      // this.searchStatus = true
+      this.searchAlign = 'left'
+    },
+    changeCenter() {
+      // this.searchStatus = false
+      this.searchAlign = 'center'
+    },
+    async getGuess() {
+      this.isShowGuess = true
+      const res = await searchSuggust({ search: this.searchKey })
+      console.log('搜索建议：', res)
+    },
+    // 确认搜索关键词
+    getConfirmWold(val) {
+      console.log('搜索关键词：', val)
+      this.searchKey = val
+
+      // this.isShowGuess = false
+
+      this.isShowProductList = true
+      this.$refs.ProductsList.condition.search = val
+      this.$refs.ProductsList.getGoodsList()
+    },
+    // 取消搜索，回到分类页面
+    cancelSearch() {
+      this.$router.push({
+        path: '/category'
+      })
+    },
+    // 防抖
+    debounce(func, wait) {
+      let timeout = ''
+      return v => {
+        if (timeout) {
+          clearTimeout(timeout)
+        }
+        timeout = setTimeout(() => {
+          func(v)
+        }, wait)
+      }
+    }
+
+  }
+}
+</script>
+
+<style  lang="less">
+.bee-category {
+  height: 100%;
+  .van-nav-bar__title {
+    max-width: 6.24rem;
+  }
+  .van-search {
+    padding: 0.08rem 0 0;
+    .van-search__content--round {
+      border: 0.02rem solid @Grey6;
+      background-color: @Grey5;
+    }
+    ::-webkit-input-placeholder {
+      color: @Grey1;
+      font-size: 0.28rem;
+    }
+    .cancel-search {
+      color: @Grey1;
+      font-size: 0.28rem;
+      border: none;
+      padding: 0;
+      margin: 0;
+      height: 0.16rem;
+    }
+    .van-cell {
+      align-items: center;
+      // NOTE 图标使用了vant里的搜索框，所以只能相对定位
+      .van-field__left-icon {
+        // position: relative;
+        // left: 1.2rem;
+      }
+    }
+  }
+  .searchIcon {
+    .van-cell {
+      .van-field__left-icon {
+        left: 0;
+      }
+    }
+  }
+  .category-container {
+    padding: 46px 0 50px;
+    height: 100%;
+    box-sizing: border-box;
+  }
+}
+</style>
