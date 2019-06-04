@@ -5,24 +5,24 @@
         class="assessment-title"
         @click="goAssessment()"
       >
-        <div>用户评价（）</div>
+        <div>用户评价（{{ commodityData.comments_count }}）</div>
         <div class="good-rate">
-          <span><span class="percent">99%</span> 好评率</span>
+          <span><span class="percent">{{ commodityData.good_rate }}</span> 好评率</span>
           <van-icon name="arrow" />
         </div>
       </div>
       <div class="assessment-pre">
         <div
-          v-for="item in commodityData.assessmentData"
-          :key="item.name"
+          v-for="item in commodityData.latest_comments"
+          :key="item.nickname"
           class="assessment-container"
         >
           <div class="assessment-header">
             <div class="user">
               <div class="head-img">
                 <img
-                  v-if="item.head_img"
-                  :src="item.head_img"
+                  v-if="item.head_image"
+                  :src="item.head_image"
                   alt=""
                 >
                 <img
@@ -32,21 +32,21 @@
                 >
               </div>
               <span class="user-name">
-                {{ item.name|hide_name }}
+                {{ item.nickname|hide_name }}
               </span>
             </div>
             <van-rate
-              v-model="item.rate"
+              v-model="item.score"
               :icon="beeIcon.product_detail_icon_flower_pressed"
               :void-icon="beeIcon.product_detail_icon_flower_normat"
               readonly
             />
           </div>
           <div class="assessment-details">
-            <span class="assessment">{{ item.desc }}</span>
+            <span class="assessment">{{ item.content }}</span>
             <div class="assessment-img">
               <div
-                v-for="item2 in item.assessmentImg"
+                v-for="item2 in item.images"
                 :key="item2"
                 class="assessment-img-container"
               >

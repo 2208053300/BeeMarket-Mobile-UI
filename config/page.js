@@ -44,5 +44,10 @@ module.exports = {
   beeLimit: {
     entry: 'src/pages/BeeLimit/main.js',
     title: '限量蜂抢'
+  },
+  // 蜂友圈
+  beeFriends: {
+    entry: 'src/pages/BeeFriends/main.js',
+    title: '蜂友圈'
   }
 }

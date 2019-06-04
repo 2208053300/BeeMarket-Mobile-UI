@@ -31,7 +31,10 @@
         :class="{showBg:showPicture||!commodityData.video_url}"
       >
         <template v-if="showPicture||!commodityData.video_url">
-          <span class="nowNum">{{ current + 1 }}/</span><span class="allPic">{{ commodityData.album.length }}</span>
+          <span class="nowNum">{{ current + 1 }}/</span><span
+            v-if="commodityData.album"
+            class="allPic"
+          >{{ commodityData.album.length }}</span>
         </template>
         <div
           v-if="commodityData.video_url"
