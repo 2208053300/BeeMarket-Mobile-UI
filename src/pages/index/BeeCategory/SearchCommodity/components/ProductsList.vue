@@ -64,7 +64,9 @@ export default {
         // asc 顺序 还是 desc 倒序
         order: '',
         // 页码
-        page: 1
+        page: 1,
+        // 搜索关键词
+        search: ''
       },
       // 三级分类下的商品列表
       goodsList: [],
