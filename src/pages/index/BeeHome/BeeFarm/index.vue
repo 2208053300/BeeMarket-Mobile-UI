@@ -6,7 +6,9 @@
         background="transparent"
         :color="BeeDefault"
         :line-width="30"
-        @change="changeList"
+        swipeable
+        @click="getCateId"
+        @change="getCateId"
       >
         <van-tab
           v-for="item in farmCategory"
@@ -20,10 +22,9 @@
         @click="showAllCate=true"
       />
     </div>
-    <!-- 筛选排序 -->
-    <FilterBox @getFilter="getFilter" @showWay="showWay" @changeArea="changeArea" />
+
     <!-- 农副产品列表 -->
-    <farm-list ref="farmList" :condition="condition" :show-area="showArea" />
+    <farm-list ref="farmList" :show-area="showArea" />
     <!-- 遮罩 -->
     <van-popup v-model="showAllCate" />
     <!-- 全部分类列表 -->
@@ -42,9 +43,10 @@
           v-for="(item,index) in farmCategory"
           :key="index"
         >
+          <!-- :class="{active: index==condition.cid}" -->
           <button
             class="cate-btn"
-            :class="{active: index==condition.cid}"
+            :class="{active: index==active}"
             type="button"
             @click="getCateIdFromAll(index,item.cname)"
           >
@@ -59,7 +61,7 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 import farmList from './components/farmList'
-import FilterBox from './components/FilterBox'
+
 import { getSecondCategory } from '@/api/BeeApi/product'
 
 export default {
@@ -67,8 +69,7 @@ export default {
     title: '农副产品'
   },
   components: {
-    farmList,
-    FilterBox
+    farmList
   },
   props: {},
   data() {
@@ -79,17 +80,7 @@ export default {
       farmCategory: [],
       // 是否显示全部分类
       showAllCate: false,
-      // 请求数据条件
-      condition: {
-        // 当前选中分类id
-        cid: 0,
-        // 筛选条件  sell_price 售价，sold 销量
-        sort: '',
-        // asc 顺序 还是 desc 倒序
-        order: '',
-        // 页码
-        page: 1
-      },
+
       // 地区筛选遮罩
       showArea: false
 
@@ -108,13 +99,9 @@ export default {
     async getSecondCategoryData() {
       const res = await getSecondCategory({ cid: 1, t: 'produce' })
       this.farmCategory = res.data.cats
-      this.condition.cid = this.farmCategory[0].cid
-    },
-    // 获取当前二级分类下的商品列表
-    changeList(index) {
-      this.condition.cid = this.farmCategory[index].cid
-      // this.$refs.farmList.formData.cid = cid
-      // this.$refs.farmList.getProductListData(this.condition)
+      // this.condition.cid = this.farmCategory[0].cid
+      this.$refs.farmList.condition.cid = this.farmCategory[0].cid
+      this.$refs.farmList.getProductListData()
     },
     // 从全部分类点击分类获取分类 id
     getCateIdFromAll(index, title) {
@@ -126,37 +113,15 @@ export default {
       console.log(index, title)
       this.farmCategory.map(item => {
         if (item.cname === title) {
-          this.condition.cid = item.cid
-          console.log(this.condition.cid)
+          this.$refs.farmList.commodityList = []
+          this.$refs.farmList.condition.cid = item.cid
+          this.$refs.farmList.condition.sort = ''
+          this.$refs.farmList.condition.order = ''
+          this.$refs.farmList.condition.page = 1
+          this.$refs.farmList.getProductListData()
         }
       })
       this.active = index
-    },
-    // 单排展示还是双排展示
-    showWay(val) {
-      this.$refs.farmList.gridList = val
-    },
-    // 选择地区
-    changeArea(val) {
-      this.$refs.farmList.showArea = val
-    },
-    // 筛选条件 // 0按综合获取 1销量 2价格
-    getFilter(type) {
-      if (type === 0) {
-        this.condition.sort = ''
-        this.condition.order = ''
-      } else if (type === 1) {
-        this.condition.sort = 'sold'
-        this.condition.order = ''
-      } else if (type === 2) {
-        this.condition.sort = 'price'
-      } else if (typeof type === 'object') {
-        this.condition.sort = 'price'
-        this.condition.order = type.order
-      }
-      // console.log('返回的筛选条件：', type)
-      // console.log('返回后的condition：', this.condition)
-      this.$refs.farmList.condition = this.condition
     }
 
   }

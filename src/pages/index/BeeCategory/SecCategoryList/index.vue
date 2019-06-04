@@ -8,7 +8,7 @@
         @click="goSearchPage"
       />
       <!-- 二级导航 -->
-      <van-tabs v-model="nowThirdIndex" swipeable @click="getCateId">
+      <van-tabs v-model="nowThirdIndex" swipeable @click="getCateId" @change="getCateId">
         <!-- 展示全部分类图片开关 -->
         <div
           class="show-all-cate"
@@ -38,9 +38,10 @@
               v-for="(item,index) in categoryThirdList"
               :key="index"
             >
+              <!-- :class="{active: index==condition.cid}" -->
               <button
                 class="cate-btn"
-                :class="{active: index==condition.cid}"
+                :class="{active: index==nowThirdIndex}"
                 type="button"
                 @click="getCateIdFromAll(index,item.cname)"
               >
@@ -56,13 +57,13 @@
           :title="item.cname"
         >
           <!-- 筛选条件 -->
-          <FilterBox
+          <!-- <FilterBox
             @getFilter="getFilter"
             @showWay="showWay"
-          />
-          <!-- 商品列表 -->
-          <ProductsList :condition="condition" :is-vertical="isVertical" />
+          /> -->
         </van-tab>
+        <!-- 商品列表 -->
+        <ProductsList ref="ProductsList" />
       </van-tabs>
     </div>
     <!-- 遮罩 -->
@@ -72,12 +73,11 @@
 
 <script>
 import { getSecondCategory } from '@/api/BeeApi/product'
-import FilterBox from './components/FilterBox'
+
 import ProductsList from './components/ProductsList'
 
 export default {
   components: {
-    FilterBox,
     ProductsList
   },
   props: {},
@@ -87,25 +87,13 @@ export default {
       title: '二级分类',
       // 二级分类数据
       categoryThirdList: [],
-      // 是否垂直布局
-      isVertical: true,
       // 是否显示全部分类
       showAllCate: false,
       // 是否显示遮罩
       overlay: false,
       // 当前选中分类index
-      nowThirdIndex: 0,
-      // 请求数据条件
-      condition: {
-        // 当前选中分类id
-        cid: 0,
-        // 筛选条件  sell_price 售价，sold 销量
-        sort: '',
-        // asc 顺序 还是 desc 倒序
-        order: ''
-        // 页码
-        // page: 1
-      }
+      nowThirdIndex: 0
+
     }
   },
   computed: {},
@@ -125,41 +113,27 @@ export default {
       const res = await getSecondCategory({ cid: this.$route.query.cid })
       console.log('二级分类：', res)
       this.categoryThirdList = res.data.cats
-      this.condition.cid = this.categoryThirdList[0].cid
+      // this.condition.cid = this.categoryThirdList[0].cid
+
+      this.$refs.ProductsList.condition.cid = this.categoryThirdList[0].cid
+      this.$refs.ProductsList.getGoodsList()
     },
     // 获取商品列表
     getCateId(index, title) {
       console.log(index, title)
       this.categoryThirdList.map(item => {
         if (item.cname === title) {
-          this.condition.cid = item.cid
-          console.log(this.condition.cid)
+          this.$refs.ProductsList.goodsList = []
+          this.$refs.ProductsList.condition.cid = item.cid
+          this.$refs.ProductsList.condition.sort = ''
+          this.$refs.ProductsList.condition.order = ''
+          this.$refs.ProductsList.condition.page = 1
+          this.$refs.ProductsList.getGoodsList()
         }
       })
       this.nowThirdIndex = index
     },
-    // 筛选条件 // 0按综合获取 1销量 2价格
-    getFilter(type) {
-      if (type === 0) {
-        this.condition.sort = ''
-        this.condition.order = ''
-      } else if (type === 1) {
-        this.condition.sort = 'sold'
-        this.condition.order = ''
-      } else if (type === 2) {
-        this.condition.sort = 'price'
-      } else if (typeof type === 'object') {
-        this.condition.sort = 'price'
-        this.condition.order = type.order
-      }
-      console.log('返回的筛选条件：', type)
-      console.log('返回后的condition：', this.condition)
-    },
-    // 布局方式
-    showWay(isVertical) {
-      this.isVertical = isVertical
-      console.log(isVertical)
-    },
+
     // 从全部分类点击分类获取分类 id
     getCateIdFromAll(index, title) {
       this.getCateId(index, title)

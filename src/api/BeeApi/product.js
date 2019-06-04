@@ -24,6 +24,14 @@ export function getSecondCategory(data) {
     data
   })
 }
+// 搜索内容建议
+export function searchSuggust(data) {
+  return request({
+    url: '/product/suggest',
+    method: 'post',
+    data
+  })
+}
 // 商品列表（通用）
 export function getProductList(data) {
   return request({

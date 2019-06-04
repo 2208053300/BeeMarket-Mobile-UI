@@ -9,9 +9,10 @@
         :class="{searchIcon:searchStatus&&searchKey===''}"
         shape="round"
         placeholder="蜂集市，让生活丰富起来"
-        @focus="changeLeft"
-        @blur="changeCenter"
+        @click="goSearchPage"
       >
+        <!-- @focus="changeLeft"
+        @blur="changeCenter" -->
         <van-icon
           slot="left-icon"
           :name="beeIcon.nav_icon_search"
@@ -27,27 +28,27 @@
       </van-search>
     </van-nav-bar>
     <div class="category-container">
-      <search-keyword v-show="searchStatus&&searchKey===''" />
+      <!-- <search-keyword v-show="searchStatus&&searchKey===''" /> -->
       <category-list v-show="!searchStatus&&searchKey===''" />
-      <search-guess
+      <!-- <search-guess
         v-if="searchKey!==''"
         ref="searchGuess"
         :search-key="searchKey"
-      />
+      /> -->
     </div>
   </div>
 </template>
 
 <script>
 import { Grey1 } from '@/styles/index/variables.less'
-import searchKeyword from './components/searchKeyword'
+// import searchKeyword from './components/searchKeyword'
 import categoryList from './components/categoryList'
-import searchGuess from './components/searchGuess'
+// import searchGuess from './components/searchGuess'
 export default {
   components: {
-    searchKeyword,
-    categoryList,
-    searchGuess
+    // searchKeyword,
+    categoryList
+    // searchGuess
   },
   props: {},
   data() {
@@ -75,6 +76,12 @@ export default {
     this.$store.state.app.beeFooter.show = true
   },
   methods: {
+    // 跳转到搜索页
+    goSearchPage() {
+      this.$router.push({
+        path: '/category/SearchCommodity'
+      })
+    },
     // NOTE 当点击搜索栏时，更改样式
     changeLeft() {
       this.searchStatus = true
