@@ -1,27 +1,81 @@
 <template>
-  <div class="comb-list">
-    123
+  <div
+    ref="combList"
+    class="comb-list"
+    :style="{transform:'scale('+testData+')'}"
+  >
+    {{ testData }}
+
+    <div
+      v-for="(item,index) in FriendList"
+      :key="index"
+      class="line"
+    >
+      <div
+        v-for="item2 in item"
+        :key="item2.id"
+        class="comb-card hexagon"
+        :class="{showitem:showList.indexOf(item2.id)!==-1&&item2.name}"
+        :style="{background:'url('+beeIcon.hexagon_empty+') no-repeat 100% 100%'}"
+      >
+        <!-- {{ item2.name }} -->
+        <!-- <img
+          :src="item2.head_img"
+          alt=""
+        > -->
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import Hammer from 'hammerjs'
+import { setInterval, clearInterval } from 'timers'
 export default {
   components: {},
   props: {},
   data() {
     return {
-      combData: [{ name: 'a', id: '1' }],
+      combData: [],
       config: {},
       max_row_count: 0,
       min_row_count: 0,
-      method: 'id'
+      FriendList: [],
+      beeIcon: {
+        hexagon_empty: require('@/assets/icon/beeFriends/hexagon_empty.svg')
+      },
+      showTime: 0,
+      showList: [],
+      afItem: null,
+      testData: 2
     }
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.getBeeFriendsData()
+    const combList = this.$refs.combList
+    console.log(this.$refs)
+
+    const hammerEl = new Hammer(combList)
+    var pinch = new Hammer.Pinch()
+    hammerEl.add(pinch)
+    hammerEl.on('pinch', (evt) => {
+      this.testData = evt.scale
+    })
+  },
   methods: {
+    async getBeeFriendsData() {
+      const res = await axios(
+        'https://www.easy-mock.com/mock/5c74955332eba876f9c7b0cf/BeeMarket-Admin/beeFriends'
+      )
+      this.combData = res.data.data
+      console.log(res.data.data)
+      this.handleAction(this.combData.length)
+      this.animateList()
+    },
     // 初始化
     init(data) {
       this.handleAction(data.length)
@@ -29,7 +83,7 @@ export default {
     },
     // 计算总圈数
     getCircleCount(num) {
-      var circle_num = Math.ceil(Math.sqrt((num - 1) / 3 + 0.25) - 0.5)
+      const circle_num = Math.ceil(Math.sqrt((num - 1) / 3 + 0.25) - 0.5)
       this.max_row_count = circle_num * 2 + 1
       this.min_row_count = circle_num + 1
       return this.max_row_count - this.min_row_count
@@ -37,14 +91,14 @@ export default {
     handleAction(num) {
       // 总圈数配置给config
       this.config['total_circle'] = this.getCircleCount(num)
-      var row_count = {}
-      for (var i = 0; i <= this.config['total_circle']; i++) {
+      const row_count = {}
+      for (let i = 0; i <= this.config['total_circle']; i++) {
         row_count[i] = this.max_row_count - i
       }
       this.config['row_count'] = row_count
 
       // 中心点
-      var center_point = {}
+      const center_point = {}
       center_point['x'] = Math.ceil(row_count[0] / 2)
       center_point['y'] = this.config['total_circle'] + 1
       center_point['id'] = 'c' + center_point['x'] + center_point['y']
@@ -53,26 +107,26 @@ export default {
       this.config['center_point'] = center_point
 
       this.config['circle_list'] = []
-      for (i = 0; i <= this.config['total_circle']; i++) {
-        if (i == 0) {
+      for (let i = 0; i <= this.config['total_circle']; i++) {
+        if (i === 0) {
           // 第一圈 即是 最中心点
-          var d = []
+          const d = []
           d[0] = center_point
           this.config['circle_list'][i] = d
         } else {
           this.config['circle_list'][i] = this.getPoint(i)
         }
       }
-
-      this.createEmptyHtml()
-      this.animation()
+      this.getListData()
+      console.log(this.config)
     },
+    // 获取每个数据的XY轴值
     getPoint(preCircle) {
       // 1 6 12 24
-      var pre_circle = preCircle + 1
-      var dd = []
-      var j = 0
-      var k = 0
+      const pre_circle = preCircle + 1
+      const dd = []
+      let j = 0
+      let k = 0
       // 边1
       dd[j] = {}
       dd[j]['x'] = this.config['center_point']['x'] - preCircle
@@ -81,7 +135,7 @@ export default {
       dd[j]['class'] = 'c' + preCircle
 
       j++
-      for (var i = 1; i < pre_circle; i++) {
+      for (let i = 1; i < pre_circle; i++) {
         k = j - 1
         dd[j] = {}
         dd[j]['x'] = dd[k]['x']
@@ -92,7 +146,7 @@ export default {
       }
 
       // 边2
-      for (i = 1; i < pre_circle; i++) {
+      for (let i = 1; i < pre_circle; i++) {
         k = j - 1
         dd[j] = {}
         dd[j]['x'] = dd[k]['x'] + 1
@@ -102,7 +156,7 @@ export default {
         j++
       }
       // 边3
-      for (i = 1; i < pre_circle; i++) {
+      for (let i = 1; i < pre_circle; i++) {
         k = j - 1
         dd[j] = {}
         dd[j]['x'] = dd[k]['x'] + 1
@@ -112,7 +166,7 @@ export default {
         j++
       }
       // 边四
-      for (i = 1; i < pre_circle; i++) {
+      for (let i = 1; i < pre_circle; i++) {
         k = j - 1
         dd[j] = {}
         dd[j]['x'] = dd[k]['x'] - 1
@@ -122,7 +176,7 @@ export default {
         j++
       }
       // 边五
-      for (i = 1; i < pre_circle; i++) {
+      for (let i = 1; i < pre_circle; i++) {
         k = j - 1
         dd[j] = {}
         dd[j]['x'] = dd[k]['x'] - 1
@@ -132,7 +186,7 @@ export default {
         j++
       }
       // 边六
-      for (i = 1; i < pre_circle - 1; i++) {
+      for (let i = 1; i < pre_circle - 1; i++) {
         k = j - 1
         dd[j] = {}
         dd[j]['x'] = dd[k]['x'] - 1
@@ -144,42 +198,51 @@ export default {
 
       return dd
     },
-    // 空的Html
-    createEmptyHtml: function() {
-      var row = {}
-      var ww = []
-      var k = 0
-      for (var i = 0; i < this.config['circle_list'].length; i++) {
-        for (j = 0; j < this.config['circle_list'][i].length; j++) {
+    getListData() {
+      const row = {}
+      const ww = []
+      let k = 0
+      for (let i = 0; i < this.config['circle_list'].length; i++) {
+        for (let j = 0; j < this.config['circle_list'][i].length; j++) {
           if (!row[this.config['circle_list'][i][j]['y']]) {
             row[this.config['circle_list'][i][j]['y']] = {}
             row[this.config['circle_list'][i][j]['y']][k] = {}
+            // 每行数据
           }
           row[this.config['circle_list'][i][j]['y']][k] = this.config[
             'circle_list'
           ][i][j]
+          row[this.config['circle_list'][i][j]['y']][k] = {
+            ...this.combData[k],
+            ...row[this.config['circle_list'][i][j]['y']][k]
+          }
+          // 动画顺序
           ww[k] = this.config['circle_list'][i][j]['id']
           k++
         }
       }
-      var new_row = []
-      var jj = 0
-      for (i in row) {
+      // 调整顺序
+      const new_row = []
+      let jj = 0
+      for (const i in row) {
         if (!new_row[jj]) {
           new_row[jj] = []
         }
         k = 0
-        for (j in row[i]) {
+        for (const j in row[i]) {
           new_row[jj][k] = []
           new_row[jj][k] = row[i][j]
           k++
         }
         jj++
       }
-      var temp
-      for (i = 0; i < new_row.length; i++) {
-        for (j = 0; j < new_row[i].length; j++) {
-          for (jj = 0; jj < new_row[i].length - 1 - j; jj++) {
+      // 获取真正的，每行填充数据
+      console.log(new_row)
+
+      let temp
+      for (let i = 0; i < new_row.length; i++) {
+        for (let j = 0; j < new_row[i].length; j++) {
+          for (let jj = 0; jj < new_row[i].length - 1 - j; jj++) {
             if (new_row[i][jj]['x'] > new_row[i][jj + 1]['x']) {
               temp = new_row[i][jj + 1] // 元素交换
               new_row[i][jj + 1] = new_row[i][jj]
@@ -189,47 +252,22 @@ export default {
         }
       }
       this.config['rowId'] = ww
-      var html = ''
-      for (i = 0; i < new_row.length; i++) {
-        html += "<div class='line'>"
-        for (j = 0; j < new_row[i].length; j++) {
-          html +=
-            "<div class='hexagon " +
-            new_row[i][j]['id'] +
-            ' ' +
-            new_row[i][j]['class'] +
-            "' data-id='456'><div class='word'><p class='word-title'></p><a class='more' href='#'></a></div></div>"
-        }
-        html += '</div>'
-      }
-      $('#main').html(html)
+      this.FriendList = new_row
+      console.log(row)
     },
-    animation() {
-      var i = 0
-      var len = 0
-      if (this.method == 'class') {
-        len = this.config['total_circle'] + 1
-      } else if (this.method == 'id') {
-        len = this.config['rowId'].length
-      } else {
-      }
-      // class 动画
-      t = 500
-      var that = this
-      var Timid = setInterval(function(args) {
-        if (that.method == 'class') {
-          $('.c' + i).css('background-image', 'url(hexagon_gray.svg)')
-        } else if (that.method == 'id') {
-          id = that.config['rowId'][i]
-          $('.' + id).css('background-image', 'url(hexagon_gray.svg)')
-          $('.' + id).attr({ 'data-userId': data[i].id })
+    // 新增到显示的列表中
+    animateList(row) {
+      const timer1 = setInterval(() => {
+        if (this.showTime > this.config.rowId.length) {
+          clearInterval(timer1)
+          return
         }
-        len--
-        i++
-        if (i == this.data.length) {
-          clearInterval(Timid)
-        }
-      }, t)
+        this.showList.push(this.config.rowId[this.showTime])
+        this.showTime++
+      }, 100)
+    },
+    onPinch() {
+      this.testData = 123
     }
   }
 }
@@ -237,38 +275,27 @@ export default {
 
 <style scoped lang="less">
 .comb-list {
-  display: flex;
   width: 100%;
-  overflow-x: scroll;
   margin-top: 50px;
-  #main {
-    margin: auto;
-    display: block;
-  }
 
   .line {
     display: flex;
     justify-content: center;
-    margin-top: -10px;
-  }
-
-  .hexagon {
-    // background: url(hexagon_empty.svg) no-repeat;
-    background-size: 100%;
-    height: 80px;
-    width: 80px;
-    transform: rotate(90deg);
-  }
-
-  img {
-    width: 30px;
-    height: 30px;
-  }
-
-  .img {
-    width: 30px;
-    height: 30px;
-    display: inline-block;
+    margin-top: -5px;
+    .hexagon {
+      opacity: 0;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      height: 40px;
+      width: 40px;
+      min-width: 40px;
+      min-height: 40px;
+      position: relative;
+      transition: opacity 1s;
+    }
+    .showitem {
+      opacity: 1;
+    }
   }
 }
 </style>

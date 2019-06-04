@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="waiting-more">
-        <span>- 更多优品持续筹备中 -</span>
+        <span>- 更多优品持续筹备中 -{{ test1 }}</span>
       </div>
     </div>
   </div>
@@ -64,6 +64,7 @@
 <script>
 import { getBeeLimitList } from '@/api/BeeApi/home'
 import { getOs } from '@/utils'
+import Cookies from 'js-cookie'
 export default {
   metaInfo() {
     return {
@@ -74,7 +75,8 @@ export default {
   props: {},
   data() {
     return {
-      commodityList: []
+      commodityList: [],
+      test1: ''
     }
   },
   computed: {},
@@ -84,6 +86,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getBeeLimitListData()
+    this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
   },
   methods: {
     async getBeeLimitListData() {
@@ -105,8 +108,8 @@ export default {
         })
       } else if (osObj.isIphone) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({
-          'pid': pid,
-          'target': target
+          pid: pid,
+          target: target
         })
       } else if (osObj.isAndroid) {
         window.beeMarket.ToProductDetail(pid, target)
