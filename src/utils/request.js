@@ -6,14 +6,14 @@ import { isJSON } from '@/utils'
 
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
-  timeout: 5000 // 请求超时时间
+  timeout: 50000 // 请求超时时间(现在是50秒)
 })
 
 service.interceptors.request.use(
   config => {
     // 暂时加上TOKEN
     // config.headers['BM-App-Token'] = getToken()
-    config.headers['BM-App-Token'] = 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk1NjYxNjksImV4cCI6MTU2MjE1ODE2OSwianRpIjoiN2MzNWZhNjZjYjIwMzE1MGFjNDRmOGNmMjdiNGZmOWMiLCJzZWMiOiI1Y2Q1YTcyMmI2ZTk5YTViMjJhZDBjODhhMGUzMzcxYiIsInNpZyI6ImUyYjczZGRhMWY0YmRmYmQzYWZmYzYxNDMxZWNlNTQ4NGQxZTVmMWE2NzY5NGM4OTAxNzdhOGQ5MzM3MWQwODcifQ.J-KJUqlpYr6TlyqyfmrlMsJ5NhNZpo933j6rPmxchBw'
+    config.headers['BM-App-Token'] = 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk1NDYzMzIsImV4cCI6MTU2MjEzODMzMiwianRpIjoiNTE0NGYzMzI4NWY4MzI2MDgxODEwMjNmZWMyNDI5ZmQiLCJzZWMiOiIxM2ViY2FjN2U4YjIwMjIyNjZhODk5MGQ5MjY2OGE1MyIsInNpZyI6IjExZWE0Zjc2ODA0NGM5ZmZkNDkxN2MxMDA4M2RlZTdjMWIyOGJkOWU2ZjAxYWI5YTI4MzQ2NjBmNTJlMjUyMTUifQ.LKEKkrXLCD57xlVMb_8NQtJggXrCgyd4iGXZb36x7b0'
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
