@@ -137,7 +137,9 @@ export default {
       if (index) {
         // FIXME 此处PC无法更改状态
         // this.$refs.productVideo.initPlayer()
-        this.$refs.productVideo.videoPause()
+        if (this.$refs.productVideo) {
+          this.$refs.productVideo.videoPause()
+        }
         this.playStatus = false
         this.showPicture = true
       } else {

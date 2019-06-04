@@ -2,7 +2,8 @@ const order = {
   state: {
     orderDetail: {},
     source: 'shopcart',
-    addrDetail: {}
+    addrDetail: {},
+    payInfo: {}
   },
   mutations: {},
   actions: {}

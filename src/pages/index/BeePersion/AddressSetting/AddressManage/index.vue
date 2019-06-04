@@ -74,7 +74,8 @@ export default {
       // TODO 此处做判断，跳转回之前的页面，带上选好的地址数据
       this.$store.state.order.addrDetail = this.addressList.filter(item => {
         return item.def
-      })
+      })[0]
+
       this.$router.push({ name: this.$store.state.app.pushName })
     }
   }

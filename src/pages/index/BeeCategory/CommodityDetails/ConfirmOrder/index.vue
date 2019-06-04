@@ -21,7 +21,10 @@
         >
           运费
         </div>
-        <div class="cell-val">
+        <div
+          v-if="order.orderDetail.freight_amount"
+          class="cell-val"
+        >
           ￥{{ order.orderDetail.freight_amount }}
         </div>
       </van-cell>
@@ -35,7 +38,7 @@
             您共有{{ order.orderDetail.charity_amount }}公益值，可抵扣{{ order.orderDetail.charity_deduction }}元
           </div>
         </div>
-        <van-switch />
+        <van-switch v-model="charity_used" />
       </van-cell>
     </van-cell-group>
     <van-cell-group class="other-info2">
@@ -66,7 +69,7 @@
         >
           匿名购买
         </div>
-        <van-checkbox />
+        <van-checkbox v-model="anonymous" />
       </van-cell>
     </van-cell-group>
     <div class="submit-order">
@@ -116,6 +119,8 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    console.log(this.order)
+
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
   },
@@ -123,10 +128,13 @@ export default {
     async createOrderData() {
       const storeData = []
       // 获取商品数据
-      this.order.orderDetail.map((item, index) => {
+      this.order.orderDetail.stores.map((item, index) => {
+        storeData[index] = {}
         storeData[index].mid = item.mid
         storeData[index].note = item.note
-        item.map((item2, index2) => {
+        storeData[index].products = []
+        item.products.map((item2, index2) => {
+          storeData[index].products[index2] = {}
           storeData[index].products[index2].sid = item2.sid
           storeData[index].products[index2].number = item2.number
         })
@@ -143,6 +151,7 @@ export default {
       )
       if (res.status_code === 200) {
         console.log(res)
+        this.order.payInfo = res.data
       }
     }
   }

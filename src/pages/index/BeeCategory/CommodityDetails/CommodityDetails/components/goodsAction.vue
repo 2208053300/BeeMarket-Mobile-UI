@@ -79,6 +79,7 @@ export default {
       )
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
+        this.$store.state.order.addrDetail = res.data.addr
         this.$router.push('/category/details/confirmOrder')
       }
     }
