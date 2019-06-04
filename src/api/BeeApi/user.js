@@ -144,3 +144,19 @@ export function getNewestNews(data) {
     data
   })
 }
+// 我的公益值
+export function mineCharityValue(data) {
+  return request({
+    url: '/user/mineCharityValue',
+    method: 'post',
+    data
+  })
+}
+// 公益值明细
+export function mineCharityValueDetail(data) {
+  return request({
+    url: '/user/mineCharityValue/detail',
+    method: 'post',
+    data
+  })
+}

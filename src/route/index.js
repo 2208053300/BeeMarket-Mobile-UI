@@ -208,7 +208,7 @@ const router = new Router({
           component: () => import('@/pages/index/BeePersion/MyQrcode')
         },
         {
-          path: 'BeeCommonweal',
+          path: 'beeCommonweal',
           component: () => import('@/pages/BeeCommonweal'),
           children: [
             {
