@@ -42,6 +42,7 @@
                 <img
                   :src="expressInfo.thumb_url"
                   alt="商品缩略图"
+                  :onerror="$store.state.app.defaultImg"
                 >
               </div>
             </van-col>

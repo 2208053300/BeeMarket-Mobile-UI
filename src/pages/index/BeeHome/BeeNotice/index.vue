@@ -1,81 +1,67 @@
 <template>
   <div class="notice-center">
     <van-cell
+      v-for="item in newsList"
+      :key="item.title"
       is-link
       class="notice-cell"
-      @click="$router.push('/beeAction')"
+      @click="goPage(item.type)"
     >
       <div
         slot="title"
         class="notice-title"
       >
-        <div class="notice-img">
+        <div
+          v-if="item.type===1"
+          class="notice-img"
+        >
           <img
+            v-if="item.is_read"
+            :src="beeIcon.message_icon_activity_p"
+            alt=""
+          >
+          <img
+            v-else
             :src="beeIcon.message_icon_activity_n"
             alt=""
           >
-          <!-- TODO 如果有消息，变为红点图片 -->
-          <!-- <img
-            :src="beeIcon.message_icon_activity_n"
-            alt=""
-          > -->
         </div>
-        <div class="notice-pre">
-          <div class="title1">
-            蜂集市活动
-          </div>
-          <div class="notice-pre2">
-            呵呵呵呵呵呵呵呵呵
-          </div>
-        </div>
-      </div>
-    </van-cell>
-    <van-cell
-      is-link
-      class="notice-cell"
-      @click="$router.push('/beeAction')"
-    >
-      <div
-        slot="title"
-        class="notice-title"
-      >
-        <div class="notice-img">
+        <div
+          v-if="item.type===2"
+          class="notice-img"
+        >
           <img
+            v-if="item.is_read"
+            :src="beeIcon.message_icon_announcement_p"
+            alt=""
+          >
+          <img
+            v-else
             :src="beeIcon.message_icon_announcement_n"
             alt=""
           >
         </div>
-        <div class="notice-pre">
-          <div class="title1">
-            平台公告
-          </div>
-          <div class="notice-pre2">
-            呵呵呵呵呵呵呵呵呵
-          </div>
-        </div>
-      </div>
-    </van-cell>
-    <van-cell
-      is-link
-      class="notice-cell"
-      @click="$router.push('/beeAction')"
-    >
-      <div
-        slot="title"
-        class="notice-title"
-      >
-        <div class="notice-img">
+        <div
+          v-if="item.type===3"
+          class="notice-img"
+        >
           <img
+            v-if="item.is_read"
+            :src="beeIcon.message_icon_notice_p"
+            alt=""
+          >
+          <img
+            v-else
             :src="beeIcon.message_icon_notice_n"
             alt=""
           >
         </div>
         <div class="notice-pre">
           <div class="title1">
-            通知消息
+            {{ item.title }}
           </div>
           <div class="notice-pre2">
-            呵呵呵呵呵呵呵呵呵
+            {{ item.content }}
           </div>
         </div>
       </div>
@@ -116,6 +102,15 @@ export default {
     async getNewestNewsData() {
       const res = await getNewestNews()
       this.newsList = res.data
+    },
+    goPage(type) {
+      if (type === 1) {
+        this.$router.push('/beeAction')
+      } else if (type === 2) {
+        this.$router.push('/beeAction')
+      } else if (type === 3) {
+        this.$router.push('/beeAction')
+      }
     }
   }
 }
