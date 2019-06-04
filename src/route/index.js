@@ -24,7 +24,13 @@ const router = new Router({
         {
           path: 'beeLimit',
           name: 'beeLimit',
-          component: () => import('@/pages/index/BeeHome/BeeLimit')
+          component: () => import('@/pages/BeeLimit'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/BeeLimit/productList')
+            }
+          ]
         },
         {
           path: 'beeNotice',
@@ -164,7 +170,7 @@ const router = new Router({
         {
           path: 'article/:id',
           name: 'ArticleDetail',
-          component: () => import('@/pages/index/BeeDiscover/ArticleDetail')
+          component: () => import('@/pages/BeeArticle/ArticleDetail')
         }
       ]
     },

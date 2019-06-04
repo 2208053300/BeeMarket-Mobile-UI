@@ -15,8 +15,9 @@
         />
       </van-swipe-item>
       <van-swipe-item
-        v-for="item in commodityData.album"
+        v-for="(item,index) in commodityData.album"
         :key="item.tUrl"
+        @click="showPre(index)"
       >
         <img
           :src="item.tUrl"
@@ -24,13 +25,13 @@
         >
       </van-swipe-item>
       <div
-        v-if="commodityData.album&&!playStatus"
+        v-if="(commodityData.album&&!playStatus)||!commodityData.video_url"
         slot="indicator"
         class="custom-indicator"
-        :class="{showBg:showPicture}"
+        :class="{showBg:showPicture||!commodityData.video_url}"
       >
-        <template v-if="showPicture">
-          {{ current + 1 }}/{{ commodityData.album.length }}
+        <template v-if="showPicture||!commodityData.video_url">
+          <span class="nowNum">{{ current + 1 }}/</span><span class="allPic">{{ commodityData.album.length }}</span>
         </template>
         <div
           v-if="commodityData.video_url"
@@ -67,6 +68,21 @@
         </div>
       </div>
     </van-swipe>
+    <!-- 图片预览 -->
+    <van-image-preview
+      v-model="showImgPre"
+      :images="imgList"
+      :start-position="preIndex"
+      :show-indicators="true"
+      :loop="true"
+      class="previewImg"
+      @close="closePre"
+      @change.stop="onChange2"
+    >
+      <template slot="index">
+        {{ preIndex +1 }}/{{ imgList.length }}
+      </template>
+    </van-image-preview>
     <!-- 如果是蜂抢商品 -->
     <!-- <div class="limit-time">
       <span>限量蜂抢中</span>
@@ -101,7 +117,10 @@ export default {
         product_detail_btn_video_selected: require('@/assets/icon/product/product_detail_btn_video_selected@2x.png')
       },
       showPicture: false,
-      playStatus: false
+      playStatus: false,
+      showImgPre: false,
+      imgList: [],
+      preIndex: 0
     }
   },
   computed: {},
@@ -127,6 +146,21 @@ export default {
     },
     changeVid() {
       this.$refs.preSwipe.swipeTo(1)
+    },
+    // 预览图片
+    showPre(index) {
+      this.preIndex = index
+      this.imgList = this.commodityData.album.map(item => {
+        return item.qUrl
+      })
+      this.showImgPre = true
+      this.$store.state.app.beeHeader = false
+    },
+    closePre() {
+      this.$store.state.app.beeHeader = true
+    },
+    onChange2(index) {
+      this.preIndex = index
     }
   }
 }
@@ -135,14 +169,12 @@ export default {
 <style scoped lang="less">
 .commodity-pre {
   min-height: 3.5rem;
-  .van-swipe {
-    .van-swipe-item {
-      height: 7.5rem !important;
-    }
-  }
   .swipe-img {
     position: relative;
     background-color: #000000;
+    .van-swipe-item {
+      height: 7.5rem !important;
+    }
     .custom-indicator {
       width: 0.76rem;
       height: 0.4rem;
@@ -152,6 +184,14 @@ export default {
       position: absolute;
       right: 0.3rem;
       bottom: 0.3rem;
+      .nowNum {
+        font-size: 0.28rem;
+        color: #ffffff;
+      }
+      .allPic {
+        font-size: 0.2rem;
+        color: #ffffff;
+      }
     }
     .showBg {
       background-color: rgba(0, 0, 0, 0.3);

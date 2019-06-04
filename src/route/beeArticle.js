@@ -10,7 +10,7 @@ export default new Router({
     {
       path: '/article/:id',
       name: 'ArticleDetail',
-      component: () => import('@/pages/index/BeeDiscover/ArticleDetail')
+      component: () => import('@/pages/BeeArticle/ArticleDetail')
     }
   ]
 })

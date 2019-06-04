@@ -17,13 +17,8 @@
         <van-cell
           title="所在地区"
           is-link
-          value="请选择"
+          :value="areaStr"
           @click="showArea=true"
-        />
-        <van-cell
-          title="街道"
-          is-link
-          value="请选择"
         />
         <!-- TODO 添加街道选择 -->
         <van-field
@@ -73,12 +68,9 @@
         v-model="showArea"
         position="bottom"
         @click-overlay="showArea=false"
+        @closed="$refs.beeArea.handleClose()"
       >
-        <van-area
-          :area-list="areaList"
-          @confirm="showArea=false"
-          @cancel="showArea=false"
-        />
+        <bee-area ref="beeArea" @select-end="areaSelected" />
       </van-popup>
     </div>
     <div class="save-address">
@@ -101,8 +93,8 @@
 </template>
 
 <script>
-import areaList from '@/assets/area'
 import { BeeDefault } from '@/styles/index/variables.less'
+import BeeArea from '@/components/index/BeeArea'
 import { getAddressDetail, addAddress, updateAddress } from '@/api/BeeApi/user'
 export default {
   metaInfo() {
@@ -112,17 +104,25 @@ export default {
       return { title: '新增地址' }
     }
   },
-  components: {},
+  components: { BeeArea },
   props: {},
   data() {
     return {
       beeForm: {},
       BeeDefault,
-      areaList,
-      showArea: false
+      showArea: false,
+      area: [] // 已选择的区域
     }
   },
-  computed: {},
+  computed: {
+    areaStr() {
+      if (this.area.length === 0) {
+        return '请选择'
+      } else {
+        return this.area.map(item => item.name).join(' ')
+      }
+    }
+  },
   watch: {},
   created() {},
   mounted() {
@@ -162,6 +162,10 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    areaSelected(selected) {
+      this.showArea = false
+      this.area = selected
     }
   }
 }

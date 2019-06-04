@@ -44,7 +44,7 @@
                 </div>
                 <van-button
                   class="go-buy"
-                  @click="$router.push('/category/details')"
+                  @click="goDetail(item.pid,item.target)"
                 >
                   马上抢
                 </van-button>
@@ -54,7 +54,7 @@
         </div>
       </div>
       <div class="waiting-more">
-        <span>- 更多优品持续筹备中 -</span>
+        <span>- 更多优品持续筹备中 - {{ test }}</span>
       </div>
     </div>
   </div>
@@ -62,15 +62,20 @@
 
 <script>
 import { getBeeLimitList } from '@/api/BeeApi/home'
+import { getOs } from '@/utils'
 export default {
-  metaInfo: {
-    title: '限量蜂抢'
+  metaInfo() {
+    return {
+      title: this.thisTitle
+    }
   },
   components: {},
   props: {},
   data() {
     return {
-      commodityList: []
+      commodityList: [],
+      test: '',
+      thisTitle: '限量蜂抢'
     }
   },
   computed: {},
@@ -85,9 +90,38 @@ export default {
     async getBeeLimitListData() {
       const res = await getBeeLimitList()
       this.commodityList = res.data
+      this.thisTitle = '限量蜂抢'
     },
     getProgress(val1, val2) {
       return (val1 / val2) * 100 + '%'
+    },
+    // 此处判断浏览器环境，做出跳转
+    goDetail(pid, target) {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        this.$router.push({
+          path: '/category/details',
+          query: {
+            pid: pid
+          }
+        })
+      } else if (osObj.isIphone) {
+        window.webkit.messageHandlers.ToProductDetail.postMessage({
+          'pid': pid,
+          'target': target
+        })
+        // window.webkit.messageHandlers.ToProductDetail.postMessage(pid, target)
+        this.test = 'iphone'
+      } else if (osObj.isAndroid) {
+        window.beeMarket.ToProductDetail(pid, target)
+      } else {
+        this.$router.push({
+          path: '/category/details',
+          query: {
+            pid: pid
+          }
+        })
+      }
     }
   }
 }
