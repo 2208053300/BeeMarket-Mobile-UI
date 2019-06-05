@@ -2,25 +2,26 @@
   <div class="bee-action">
     <div
       v-for="item in actionList"
-      :key="item.title"
+      :key="item.id"
       class="action-content"
+      @click="goAction(item)"
     >
       <div class="action-time">
         <div class="time-text">
-          {{ item.time }}
+          {{ item.created_at }}
         </div>
       </div>
       <div class="action-detail">
         <div
-          v-if="item.previewImg"
+          v-if="item.background_img"
           class="action-img"
         >
           <img
-            :src="item.previewImg"
+            :src="item.background_img"
             alt=""
           >
           <div
-            v-if="item.status"
+            v-if="item.is_end"
             class="end-action"
           >
             <img
@@ -35,7 +36,7 @@
               {{ item.title }}
             </div>
             <div class="action-desc">
-              {{ item.desc }}
+              {{ item.content }}
             </div>
           </div>
           <van-icon name="arrow" />
@@ -46,10 +47,23 @@
 </template>
 
 <script>
-import { getBeeAction } from '@/api/home'
+import { getNewestNewsList } from '@/api/BeeApi/user'
 export default {
-  metaInfo: {
-    title: '蜂集市活动'
+  metaInfo() {
+    const type = this.$route.query.type
+    if (type === 1) {
+      return {
+        title: '蜂集市活动'
+      }
+    } else if (type === 2) {
+      return {
+        title: '蜂集市公告'
+      }
+    } else if (type === 3) {
+      return {
+        title: '蜂集市通知'
+      }
+    }
   },
   components: {},
   props: {},
@@ -67,12 +81,12 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getBeeActionData()
+    this.getNewestNewsListData()
   },
   methods: {
-    async getBeeActionData() {
-      const res = await getBeeAction()
-      this.actionList = res.data.actionList
+    async getNewestNewsListData() {
+      const res = await getNewestNewsList({ type: this.$route.query.type })
+      this.actionList = res.data
     }
   }
 }

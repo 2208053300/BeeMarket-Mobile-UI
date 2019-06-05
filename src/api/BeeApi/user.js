@@ -144,6 +144,14 @@ export function getNewestNews(data) {
     data
   })
 }
+// 消息中心-列表
+export function getNewestNewsList(data) {
+  return request({
+    url: '/user/news/list',
+    method: 'post',
+    data
+  })
+}
 // 我的公益值
 export function mineCharityValue(data) {
   return request({

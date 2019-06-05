@@ -105,11 +105,26 @@ export default {
     },
     goPage(type) {
       if (type === 1) {
-        this.$router.push('/beeAction')
+        this.$router.push({
+          path: '/beeAction',
+          query: {
+            type: 1
+          }
+        })
       } else if (type === 2) {
-        this.$router.push('/beeAction')
+        this.$router.push({
+          path: '/beeAction',
+          query: {
+            type: 2
+          }
+        })
       } else if (type === 3) {
-        this.$router.push('/beeAction')
+        this.$router.push({
+          path: '/beeAction',
+          query: {
+            type: 3
+          }
+        })
       }
     }
   }
