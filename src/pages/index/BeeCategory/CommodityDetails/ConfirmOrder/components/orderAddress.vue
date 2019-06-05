@@ -174,7 +174,6 @@ export default {
   created() {},
   mounted() {
     console.log(this.order)
-
   },
   methods: {
     selectAddress() {
