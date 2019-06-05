@@ -8,7 +8,7 @@ import order from './modules/order'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules: {
     app,
     user,
@@ -17,3 +17,4 @@ export default new Vuex.Store({
     order
   }
 })
+export default store

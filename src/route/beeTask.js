@@ -18,8 +18,13 @@ export default new Router({
         },
         {
           path: 'taskDetail',
-          name: 'beeTask',
+          name: 'taskDetail',
           component: () => import('@/pages/BeeTask/TaskDetail')
+        },
+        {
+          path: 'taskPerfectData',
+          name: 'taskPerfectData',
+          component: () => import('@/pages/BeeTask/TaskPerfectData')
         }
       ]
     }

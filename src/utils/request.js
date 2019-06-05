@@ -1,9 +1,9 @@
 import axios from 'axios'
 import qs from 'qs'
 import { Toast } from 'vant'
-import { setToken } from '@/utils/auth'
+import { setToken, getToken, removeToken, isLogin } from '@/utils/auth'
 import { isJSON } from '@/utils'
-
+import store from '@/store'
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
   timeout: 50000 // 请求超时时间(现在是50秒)
@@ -18,10 +18,10 @@ service.interceptors.request.use(
       forbidClick: true,
       duration: 0
     })
-    // 暂时加上TOKEN
-    // config.headers['BM-App-Token'] = getToken()
-    config.headers['BM-App-Token'] =
-      'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk3MTU2MzYsImV4cCI6MTU2MjMwNzYzNiwianRpIjoiMTFlYWIxNzkzNzA1M2Y2N2FlZDcxOWJhNmJiOTQ5ZTgiLCJzZWMiOiI1Y2Q1YTcyMmI2ZTk5YTViMjJhZDBjODhhMGUzMzcxYiIsInNpZyI6IjI4OWZjNzczYjVlYmQ0MjAzMDJhMmFhYzU4ODc0YTk1MGIyZDUyZTMwODIyMWU4ZmMyNTUyZWUyYTU4ZDMyMTEifQ.KR8xyfTQ5vXnyOxq3PzFZ6IE8KOClMZxD1PCtabgsi4'
+    // 强制设置 token 在 getToken 函数中设置
+    if (isLogin()) {
+      config.headers['BM-App-Token'] = getToken()
+    }
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
@@ -52,6 +52,14 @@ service.interceptors.response.use(
     }
     const res = response.data
     if (res.code !== 1) {
+      if (res.status_code === 403) {
+        // 清理登录信息并跳转到登录页面
+        removeToken()
+        store.commit('CLEAR_USER_INFO')
+        import('@/route/index').then(module => {
+          module.default.push('/login')
+        })
+      }
       Toast.fail(res.message || 'error')
       return Promise.reject(res.message || 'error')
     } else {
