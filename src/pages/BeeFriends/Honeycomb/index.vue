@@ -25,6 +25,14 @@
         > -->
       </div>
     </div>
+
+    <transition name="fade1">
+      <div
+        v-if="showTest3"
+        class="test1"
+        @click="showTest3=false"
+      />
+    </transition>
   </div>
 </template>
 
@@ -48,7 +56,8 @@ export default {
       showTime: 0,
       showList: [],
       afItem: null,
-      testData: 2
+      testData: 1,
+      showTest3: true
     }
   },
   computed: {},
@@ -62,7 +71,7 @@ export default {
     const hammerEl = new Hammer(combList)
     var pinch = new Hammer.Pinch()
     hammerEl.add(pinch)
-    hammerEl.on('pinch', (evt) => {
+    hammerEl.on('pinch', evt => {
       this.testData = evt.scale
     })
   },
@@ -296,6 +305,34 @@ export default {
     .showitem {
       opacity: 1;
     }
+  }
+  .test1 {
+    width: 100px;
+    height: 100px;
+    background-color: #000;
+    animation: test2 2s infinite;
+    position: relative;
+    top: 10px;
+    @keyframes test2 {
+      0% {
+        top: 0;
+      }
+      50% {
+        top: -10px;
+      }
+      100% {
+        top: 0;
+      }
+    }
+  }
+  .fade1-enter-active,
+  .fade1-leave-active {
+    animation-play-state:paused;
+    transition: all 3s;
+  }
+  .fade1-enter, .fade1-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    transform: translateY(-30px);
+    opacity: 0;
   }
 }
 </style>

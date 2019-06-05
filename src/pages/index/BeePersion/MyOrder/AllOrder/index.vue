@@ -82,7 +82,11 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.changeOrder()
+    if (this.$route.query.s_status) {
+      this.changeTab(this.$route.query.s_status)
+    } else {
+      this.changeOrder()
+    }
   },
   methods: {
     async changeOrder(index) {
@@ -91,6 +95,16 @@ export default {
       }
       const res = await getOrderList(this.formData)
       this.orderList = res.data
+    },
+    // 如果是带着状态参数进入页面
+    changeTab(s_status) {
+      if ([0, 1, 2, 3].indexOf(s_status) !== -1) {
+        this.changeOrder(s_status)
+        // 更改活动标签栏
+        this.active = s_status + 1
+      } else {
+        this.changeOrder()
+      }
     }
   }
 }

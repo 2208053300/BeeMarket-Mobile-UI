@@ -176,3 +176,11 @@ export function getOrderList(data) {
     data
   })
 }
+// 邀请二维码
+export function getQrcode(data) {
+  return request({
+    url: '/user/invite/qrcode',
+    method: 'post',
+    data
+  })
+}

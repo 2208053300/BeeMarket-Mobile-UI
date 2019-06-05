@@ -14,8 +14,9 @@
         <div class="qrcode-text">
           <div class="qrcode">
             <img
-              src=""
-              alt=""
+              :src="qrcode"
+              alt="二维码"
+              :onerror="$store.state.app.defaultImg"
             >
           </div>
           <div class="text-content">
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+import { getQrcode } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '我的二维码'
@@ -38,7 +40,8 @@ export default {
     return {
       beeIcon: {
         mine_qrcode_img_card: require('@/assets/icon/personalCenter/mine_qrcode_img_card@2x.png')
-      }
+      },
+      qrcode: ''
     }
   },
   computed: {},
@@ -47,8 +50,14 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    this.getQrcodeData()
   },
-  methods: {}
+  methods: {
+    async getQrcodeData() {
+      const res = await getQrcode()
+      this.qrcode = 'data:image/jpeg;base64,' + res.data
+    }
+  }
 }
 </script>
 
@@ -84,10 +93,10 @@ export default {
           margin-bottom: 0.2rem;
           background-color: #000000;
         }
-        .text-content{
+        .text-content {
           font-size: 0.22rem;
           color: @Grey1;
-          .bee-text{
+          .bee-text {
             color: @BeeDefault;
             font-weight: bold;
           }
