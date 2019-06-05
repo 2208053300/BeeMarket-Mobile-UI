@@ -152,6 +152,7 @@ export default {
       if (res.status_code === 200) {
         console.log(res)
         this.order.payInfo = res.data
+        this.$router.push('/category/details/payOrder')
       }
     }
   }

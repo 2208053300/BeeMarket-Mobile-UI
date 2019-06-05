@@ -118,6 +118,21 @@ const router = new Router({
                 )
             },
             {
+              path: 'payOrder',
+              component: () =>
+                import('@/pages/index/BeeCategory/CommodityDetails/PayOrder'),
+              children: [
+                {
+                  path: '',
+                  name: 'payOrder',
+                  component: () =>
+                    import(
+                      '@/pages/index/BeeCategory/CommodityDetails/PayOrder/PaySelf'
+                    )
+                }
+              ]
+            },
+            {
               path: 'giveFirends',
               name: 'giveFirends',
               component: () =>

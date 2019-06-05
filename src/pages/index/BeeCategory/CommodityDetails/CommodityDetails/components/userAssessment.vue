@@ -107,7 +107,10 @@ export default {
   mounted() {},
   methods: {
     goAssessment() {
-      this.$router.push('/category/details/userAssessment')
+      this.$router.push({
+        path: '/category/details/userAssessment',
+        query: { pid: this.$route.query.pid }
+      })
     }
   }
 }

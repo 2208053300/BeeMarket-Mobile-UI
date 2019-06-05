@@ -5,14 +5,14 @@
         <div class="status-left">
           <span class="rate-text">评分</span>
           <van-rate
-            v-model="assessmentData.assessmentRate"
+            v-model="assessmentData.avg_score"
             :icon="beeIcon.product_detail_evaluation_icon_flower_pressed"
             :void-icon="beeIcon.product_detail_evaluation_icon_flower_normat"
             readonly
           />
         </div>
         <div class="status-right">
-          <span class="persent">{{ assessmentData.assessmentGood }}%</span>
+          <span class="persent">{{ assessmentData.good_rate }}</span>
           <span>好评率</span>
         </div>
       </div>
@@ -20,16 +20,16 @@
         <div
           class="type-tag"
           :class="{thisTag:assessmentType==='全部'}"
-          @click="assessmentType='全部'"
+          @click="getOrderData('')"
         >
-          全部
+          全部({{ assessmentData.comments_count }})
         </div>
         <div
           class="type-tag"
           :class="{thisTag:assessmentType==='有图'}"
-          @click="assessmentType='有图'"
+          @click="getOrderData('image')"
         >
-          有图
+          有图({{ assessmentData.image_count }})
         </div>
       </div>
     </div>
@@ -50,8 +50,8 @@
             <div class="user-name">
               <div class="head-img">
                 <img
-                  v-if="item.head_img"
-                  :src="item.head_img"
+                  v-if="item.head_image"
+                  :src="item.head_image"
                   alt=""
                 >
                 <img
@@ -61,7 +61,7 @@
                 >
               </div>
               <span class="name">
-                {{ item.name }}
+                {{ item.nickname }}
               </span>
             </div>
             <div class="assessment-time">
@@ -69,17 +69,17 @@
             </div>
           </div>
           <van-rate
-            v-model="item.rate"
+            v-model="item.score"
             :icon="beeIcon.product_detail_icon_flower_pressed"
             :void-icon="beeIcon.product_detail_icon_flower_normat"
             readonly
           />
           <div class="assessment">
-            {{ item.desc }}
+            {{ item.content }}
           </div>
           <div class="assessment-img">
             <div
-              v-for="item2 in item.assessmentImg"
+              v-for="item2 in item.images"
               :key="item2"
               class="assessment-img-container"
             >
@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { getAssessment } from '@/api/category'
+import { getAssessment } from '@/api/BeeApi/product'
 export default {
   metaInfo: {
     title: '用户评价'
@@ -116,7 +116,8 @@ export default {
         product_detail_evaluation_icon_flower_pressed: require('@/assets/icon/product/product_detail_evaluation_icon_flower_pressed@2x.png'),
         product_detail_evaluation_icon_flower_normat: require('@/assets/icon/product/product_detail_evaluation_icon_flower_normat@2x.png'),
         product_detail_icon_avatar: require('@/assets/icon/product/product_detail_icon_avatar@2x.png')
-      }
+      },
+      formData: {}
     }
   },
   computed: {},
@@ -125,29 +126,38 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getAssessment()
+    this.formData.pid = this.$route.query.pid
   },
   methods: {
-    async getAssessment() {
-      const res = await getAssessment()
+    async getAssessmentData() {
+      const res = await getAssessment(this.formData)
       this.assessmentData = res.data
-      this.assessmentList.push(...res.data.assessmentData)
-      this.$store.state.app.beeFooter.show = false
+      this.assessmentList.push(...res.data.comments)
     },
     onLoad() {
       setTimeout(async() => {
-        const res = await getAssessment()
-        this.assessmentList.push(...res.data.assessmentData)
-        console.log(this.assessmentList)
-
+        await this.getAssessmentData()
         // 加载状态结束
         this.loading = false
 
         // 数据全部加载完成
-        if (this.assessmentList.length >= 40) {
+        if (this.assessmentList.length === this.assessmentData.comments_count) {
           this.finished = true
         }
       }, 500)
+    },
+    getOrderData(filter) {
+      if (filter === 'image') {
+        this.formData.filter = 'image'
+        this.assessmentList = []
+        this.getAssessmentData()
+        this.assessmentType = '有图'
+      } else {
+        delete this.formData.filter
+        this.assessmentList = []
+        this.getAssessmentData()
+        this.assessmentType = '全部'
+      }
     }
   }
 }
