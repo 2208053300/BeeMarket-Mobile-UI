@@ -24,7 +24,7 @@
           round
           type="default"
           class="stroll"
-          @click="$router.push('/category/store')"
+          @click="goStore(commodityData.mid)"
         >
           进店逛逛
         </van-button>
@@ -76,7 +76,16 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goStore(mid) {
+      this.$router.push({
+        path: '/category/store',
+        query: {
+          mid: mid
+        }
+      })
+    }
+  }
 }
 </script>
 
@@ -163,7 +172,6 @@ export default {
         .commodity-price {
           font-size: 0.24rem;
           color: @BeeDefault;
-
         }
       }
     }

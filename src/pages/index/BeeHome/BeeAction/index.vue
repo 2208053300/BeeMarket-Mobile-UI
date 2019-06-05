@@ -87,6 +87,9 @@ export default {
     async getNewestNewsListData() {
       const res = await getNewestNewsList({ type: this.$route.query.type })
       this.actionList = res.data
+    },
+    goAction() {
+      // TODO 跳转到指定活动页
     }
   }
 }
