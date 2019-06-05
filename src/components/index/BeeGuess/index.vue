@@ -78,7 +78,7 @@ export default {
     guessData: {
       type: Array,
       default: () => {
-        return [{}]
+        return []
       }
     }
   },

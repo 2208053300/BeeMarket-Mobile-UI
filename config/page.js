@@ -49,5 +49,10 @@ module.exports = {
   beeFriends: {
     entry: 'src/pages/BeeFriends/main.js',
     title: '蜂友圈'
+  },
+  // 好友代付
+  beeReplace: {
+    entry: 'src/pages/BeeReplace/main.js',
+    title: '好友代付'
   }
 }
