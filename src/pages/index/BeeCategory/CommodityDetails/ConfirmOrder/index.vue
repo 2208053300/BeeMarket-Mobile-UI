@@ -11,7 +11,7 @@
           商品总额
         </div>
         <div class="cell-val">
-          ￥600
+          ￥{{ order.orderDetail.product_amount }}
         </div>
       </van-cell>
       <van-cell>
@@ -21,8 +21,11 @@
         >
           运费
         </div>
-        <div class="cell-val">
-          ￥0
+        <div
+          v-if="order.orderDetail.freight_amount"
+          class="cell-val"
+        >
+          ￥{{ order.orderDetail.freight_amount }}
         </div>
       </van-cell>
       <van-cell class="deduction-content">
@@ -32,10 +35,10 @@
         >
           抵扣
           <div class="deduction-num">
-            您共有500公益值，可抵扣50元
+            您共有{{ order.orderDetail.charity_amount }}公益值，可抵扣{{ order.orderDetail.charity_deduction }}元
           </div>
         </div>
-        <van-switch />
+        <van-switch v-model="charity_used" />
       </van-cell>
     </van-cell-group>
     <van-cell-group class="other-info2">
@@ -66,19 +69,20 @@
         >
           匿名购买
         </div>
-        <van-checkbox />
+        <van-checkbox v-model="anonymous" />
       </van-cell>
     </van-cell-group>
     <div class="submit-order">
       <div class="total-price">
         <span>合计：</span>
         <div class="price-num">
-          ￥3000
+          ￥{{ order.orderDetail.order_amount }}
         </div>
       </div>
       <van-button
         type="default"
         class="submit-button"
+        @click="createOrderData"
       >
         提交订单
       </van-button>
@@ -90,6 +94,8 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 import orderAddress from './components/orderAddress'
 import commodityList from './components/commodityList'
+import { mapState } from 'vuex'
+import { createOrder } from '@/api/BeeApi/order'
 export default {
   metaInfo: {
     title: '确认订单'
@@ -101,24 +107,60 @@ export default {
   props: {},
   data() {
     return {
-      BeeDefault
+      BeeDefault,
+      orderType: false,
+      anonymous: false,
+      charity_used: false
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['order'])
+  },
   watch: {},
   created() {},
   mounted() {
+    console.log(this.order)
+
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
   },
-  methods: {}
+  methods: {
+    async createOrderData() {
+      const storeData = []
+      // 获取商品数据
+      this.order.orderDetail.stores.map((item, index) => {
+        storeData[index] = {}
+        storeData[index].mid = item.mid
+        storeData[index].note = item.note
+        storeData[index].products = []
+        item.products.map((item2, index2) => {
+          storeData[index].products[index2] = {}
+          storeData[index].products[index2].sid = item2.sid
+          storeData[index].products[index2].number = item2.number
+        })
+      })
+      const res = await createOrder(
+        JSON.stringify({
+          addr_id: this.order.addrDetail.addr_id,
+          stores: storeData,
+          charity_used: this.charity_used,
+          anonymous: this.anonymous,
+          ot: this.orderType ? 'please' : 'general',
+          os: this.order.source
+        })
+      )
+      if (res.status_code === 200) {
+        console.log(res)
+        this.order.payInfo = res.data
+        this.$router.push('/category/details/payOrder')
+      }
+    }
+  }
 }
 </script>
 
 <style scoped lang="less">
-
 .confirm-order {
-
   padding-bottom: 60px;
   .other-info1 {
     border-top-right-radius: 0.2rem;

@@ -136,3 +136,43 @@ export function addShopcartProduct(data) {
     data
   })
 }
+// 消息中心-首页
+export function getNewestNews(data) {
+  return request({
+    url: '/user/news/newestNews',
+    method: 'post',
+    data
+  })
+}
+// 消息中心-列表
+export function getNewestNewsList(data) {
+  return request({
+    url: '/user/news/list',
+    method: 'post',
+    data
+  })
+}
+// 我的公益值
+export function mineCharityValue(data) {
+  return request({
+    url: '/user/mineCharityValue',
+    method: 'post',
+    data
+  })
+}
+// 公益值明细
+export function mineCharityValueDetail(data) {
+  return request({
+    url: '/user/mineCharityValue/detail',
+    method: 'post',
+    data
+  })
+}
+// 我的订单
+export function getOrderList(data) {
+  return request({
+    url: '/user/order',
+    method: 'post',
+    data
+  })
+}

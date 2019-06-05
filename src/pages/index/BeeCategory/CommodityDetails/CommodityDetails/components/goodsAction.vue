@@ -20,10 +20,9 @@
         @click="addShopcartProductData"
       />
       <van-goods-action-big-btn
-        primary
         text="立即购买"
         class="buy-now"
-        to="/category/details/confirmOrder"
+        @click="confirmOrderData"
       />
     </van-goods-action>
   </div>
@@ -31,6 +30,8 @@
 
 <script>
 import { addShopcartProduct } from '@/api/BeeApi/user'
+import { confirmOrder } from '@/api/BeeApi/order'
+
 export default {
   components: {},
   props: {},
@@ -48,15 +49,39 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    // 加入购物车
     async addShopcartProductData() {
-      console.log(this.$store.state.cart.skuId)
-
+      // TODO 如果未选择，如果初始带着商品属性跳转到商品详情页
+      if (!this.$store.state.cart.skuId) {
+        this.$toast('请先选择商品规格')
+        return false
+      }
       const res = await addShopcartProduct({
         sid: this.$store.state.cart.skuId,
-        number: 1,
+        number: this.$store.state.cart.pNumber,
         product_source: 'general'
       })
       this.$toast(res.message)
+    },
+    // 立即购买
+    async confirmOrderData() {
+      if (!this.$store.state.cart.skuId) {
+        this.$toast('请先选择商品规格')
+        return false
+      }
+      const res = await confirmOrder(
+        JSON.stringify({
+          product: {
+            sid: this.$store.state.cart.skuId,
+            number: this.$store.state.cart.pNumber
+          }
+        })
+      )
+      if (res.status_code === 200) {
+        this.$store.state.order.orderDetail = res.data
+        this.$store.state.order.addrDetail = res.data.addr
+        this.$router.push('/category/details/confirmOrder')
+      }
     }
   }
 }

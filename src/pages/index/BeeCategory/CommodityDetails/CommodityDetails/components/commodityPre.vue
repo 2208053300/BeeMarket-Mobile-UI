@@ -31,7 +31,10 @@
         :class="{showBg:showPicture||!commodityData.video_url}"
       >
         <template v-if="showPicture||!commodityData.video_url">
-          <span class="nowNum">{{ current + 1 }}/</span><span class="allPic">{{ commodityData.album.length }}</span>
+          <span class="nowNum">{{ current + 1 }}/</span><span
+            v-if="commodityData.album"
+            class="allPic"
+          >{{ commodityData.album.length }}</span>
         </template>
         <div
           v-if="commodityData.video_url"
@@ -134,7 +137,9 @@ export default {
       if (index) {
         // FIXME 此处PC无法更改状态
         // this.$refs.productVideo.initPlayer()
-        this.$refs.productVideo.videoPause()
+        if (this.$refs.productVideo) {
+          this.$refs.productVideo.videoPause()
+        }
         this.playStatus = false
         this.showPicture = true
       } else {

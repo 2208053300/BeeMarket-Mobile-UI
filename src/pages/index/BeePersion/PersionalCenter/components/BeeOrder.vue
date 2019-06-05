@@ -54,6 +54,7 @@
                       <img
                         :src="item.thumb_url"
                         alt="商品缩略图"
+                        :onerror="$store.state.app.defaultImg"
                       >
                     </div>
                   </van-col>
@@ -75,6 +76,7 @@
                     <img
                       :src="beeIcon.mine_img_line"
                       alt=""
+                      :onerror="$store.state.app.defaultImg"
                     >
                   </div>
                 </van-row>

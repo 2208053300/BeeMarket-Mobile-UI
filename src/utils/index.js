@@ -32,3 +32,7 @@ export function getOs() {
     // isMac: /mac os/.test(UserAgent)
   }
 }
+// 默认图片
+export function getDefaultImg() {
+  return 'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg'
+}

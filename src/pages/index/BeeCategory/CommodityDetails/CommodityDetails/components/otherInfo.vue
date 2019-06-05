@@ -180,6 +180,7 @@
       :show-sku.sync="showSku"
       :pid="commodityData.pid"
       :props-id.sync="propsId"
+      :p-number.sync="pNumber"
       @get-sku-name="getSkuName"
       @get-sku-id="getSkuId"
     />
@@ -207,6 +208,7 @@ export default {
       skuName: [],
       propsId: [],
       sku_id: 0,
+      pNumber: 1,
       beeIcon: {
         product_detail_icon_authentic: require('@/assets/icon/product/product_detail_icon_authentic@2x.png'),
         product_detail_icon_change: require('@/assets/icon/product/product_detail_icon_change@2x.png'),
@@ -224,7 +226,7 @@ export default {
     getSkuId(id) {
       this.sku_id = id
       this.$store.state.cart.skuId = id
-      console.log(this.$store.state.cart.skuId)
+      this.$store.state.cart.pNumber = this.pNumber
     },
     getSkuName(skuName) {
       this.skuName = skuName

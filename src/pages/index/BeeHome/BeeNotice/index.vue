@@ -1,81 +1,67 @@
 <template>
   <div class="notice-center">
     <van-cell
+      v-for="item in newsList"
+      :key="item.title"
       is-link
       class="notice-cell"
-      @click="$router.push('/beeAction')"
+      @click="goPage(item.type)"
     >
       <div
         slot="title"
         class="notice-title"
       >
-        <div class="notice-img">
+        <div
+          v-if="item.type===1"
+          class="notice-img"
+        >
           <img
+            v-if="item.is_read"
+            :src="beeIcon.message_icon_activity_p"
+            alt=""
+          >
+          <img
+            v-else
             :src="beeIcon.message_icon_activity_n"
             alt=""
           >
-          <!-- TODO 如果有消息，变为红点图片 -->
-          <!-- <img
-            :src="beeIcon.message_icon_activity_n"
-            alt=""
-          > -->
         </div>
-        <div class="notice-pre">
-          <div class="title1">
-            蜂集市活动
-          </div>
-          <div class="notice-pre2">
-            呵呵呵呵呵呵呵呵呵
-          </div>
-        </div>
-      </div>
-    </van-cell>
-    <van-cell
-      is-link
-      class="notice-cell"
-      @click="$router.push('/beeAction')"
-    >
-      <div
-        slot="title"
-        class="notice-title"
-      >
-        <div class="notice-img">
+        <div
+          v-if="item.type===2"
+          class="notice-img"
+        >
           <img
+            v-if="item.is_read"
+            :src="beeIcon.message_icon_announcement_p"
+            alt=""
+          >
+          <img
+            v-else
             :src="beeIcon.message_icon_announcement_n"
             alt=""
           >
         </div>
-        <div class="notice-pre">
-          <div class="title1">
-            平台公告
-          </div>
-          <div class="notice-pre2">
-            呵呵呵呵呵呵呵呵呵
-          </div>
-        </div>
-      </div>
-    </van-cell>
-    <van-cell
-      is-link
-      class="notice-cell"
-      @click="$router.push('/beeAction')"
-    >
-      <div
-        slot="title"
-        class="notice-title"
-      >
-        <div class="notice-img">
+        <div
+          v-if="item.type===3"
+          class="notice-img"
+        >
           <img
+            v-if="item.is_read"
+            :src="beeIcon.message_icon_notice_p"
+            alt=""
+          >
+          <img
+            v-else
             :src="beeIcon.message_icon_notice_n"
             alt=""
           >
         </div>
         <div class="notice-pre">
           <div class="title1">
-            通知消息
+            {{ item.title }}
           </div>
           <div class="notice-pre2">
-            呵呵呵呵呵呵呵呵呵
+            {{ item.content }}
           </div>
         </div>
       </div>
@@ -84,6 +70,7 @@
 </template>
 
 <script>
+import { getNewestNews } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '消息中心'
@@ -99,7 +86,8 @@ export default {
         message_icon_announcement_p: require('@/assets/icon/home/message_icon_announcement_p@2x.png'),
         message_icon_notice_n: require('@/assets/icon/home/message_icon_notice_n@2x.png'),
         message_icon_notice_p: require('@/assets/icon/home/message_icon_notice_p@2x.png')
-      }
+      },
+      newsList: []
     }
   },
   computed: {},
@@ -108,8 +96,38 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    this.getNewestNewsData()
   },
-  methods: {}
+  methods: {
+    async getNewestNewsData() {
+      const res = await getNewestNews()
+      this.newsList = res.data
+    },
+    goPage(type) {
+      if (type === 1) {
+        this.$router.push({
+          path: '/beeAction',
+          query: {
+            type: 1
+          }
+        })
+      } else if (type === 2) {
+        this.$router.push({
+          path: '/beeAction',
+          query: {
+            type: 2
+          }
+        })
+      } else if (type === 3) {
+        this.$router.push({
+          path: '/beeAction',
+          query: {
+            type: 3
+          }
+        })
+      }
+    }
+  }
 }
 </script>
 

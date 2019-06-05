@@ -85,6 +85,7 @@ export default {
   .new-address {
     width: 100%;
     text-align: center;
+    margin-top: 2.4rem;
     .done-button {
       width: 5.86rem;
       height: 0.9rem;

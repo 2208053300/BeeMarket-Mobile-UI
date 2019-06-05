@@ -24,6 +24,15 @@
             <div class="sku-value">
               已选择：{{ skuName.join(',') }}
             </div>
+            <div
+              class="cancel-sku"
+              @click="handleClose()"
+            >
+              <img
+                :src="beeIcon.shopping_cart_icon_cancel"
+                alt=""
+              >
+            </div>
           </div>
         </div>
         <div class="sku-detail">
@@ -100,7 +109,10 @@ export default {
       skuData: {},
       productNum: 1,
       skuName: [],
-      selProps: []
+      selProps: [],
+      beeIcon: {
+        shopping_cart_icon_cancel: require('@/assets/icon/cart/shopping_cart_icon_cancel@2x.png')
+      }
     }
   },
   computed: {},
@@ -207,6 +219,7 @@ export default {
           flex: 1;
           border-bottom: 0.02rem solid @Grey6;
           padding: 0.52rem 0;
+          position: relative;
           .product-price {
             font-size: 0.32rem;
             color: @BeeDefault;
@@ -215,6 +228,13 @@ export default {
             font-size: 0.28rem;
             color: @Grey2;
             margin-top: 0.16rem;
+          }
+          .cancel-sku {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 0.3rem;
+            width: 0.3rem;
           }
         }
       }

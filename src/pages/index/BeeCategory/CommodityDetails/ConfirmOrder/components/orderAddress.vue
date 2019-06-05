@@ -16,7 +16,7 @@
           @click="selectAddress()"
         >
           <div
-            v-if="detaultAddress"
+            v-if="order.addrDetail"
             class="default-address"
           >
             <van-icon
@@ -25,21 +25,27 @@
             />
             <div class="address-details">
               <div class="user-details">
-                <span class="name">{{ detaultAddress.username }}</span>
+                <span class="name">{{ order.addrDetail.name }}</span>
                 <span
-                  v-if="detaultAddress.phone"
+                  v-if="order.addrDetail.mobileNum"
                   class="phone"
-                >{{ detaultAddress.phone|toTel }}</span>
+                >{{ order.addrDetail.mobileNum }}</span>
               </div>
               <div class="address">
-                <div class="address-tag default-tag">
+                <div
+                  v-if="order.addrDetail.def"
+                  class="address-tag default-tag"
+                >
                   默认
                 </div>
-                <div class="address-tag">
-                  {{ detaultAddress.tag }}
+                <div
+                  v-if="order.addrDetail.tag"
+                  class="address-tag"
+                >
+                  {{ order.addrDetail.tag }}
                 </div>
                 <div class="address-details">
-                  {{ detaultAddress.details }}
+                  {{ order.addrDetail.address }}
                 </div>
               </div>
             </div>
@@ -136,7 +142,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
-import { getDefaultAddress } from '@/api/category'
+import { mapState } from 'vuex'
 export default {
   components: {},
   filters: {
@@ -150,7 +156,6 @@ export default {
   data() {
     return {
       BeeDefault,
-      detaultAddress: {},
       buyFor: 0,
       beeIcon: {
         confirmorder_icon_address: require('@/assets/icon/order/confirmorder_icon_address@2x.png'),
@@ -162,18 +167,18 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['order'])
+  },
   watch: {},
   created() {},
   mounted() {
-    this.getDefaultAddress()
+    console.log(this.order)
+
   },
   methods: {
-    async getDefaultAddress() {
-      const res = await getDefaultAddress()
-      this.detaultAddress = res.data.addressData
-    },
     selectAddress() {
+      this.$store.state.app.pushName = 'confirmOrder'
       // TODO 重新选择送货地址
       this.$router.push('/persion/addressSetting')
     },

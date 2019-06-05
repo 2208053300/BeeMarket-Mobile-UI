@@ -4,12 +4,12 @@
       <div class="header-left">
         <div class="store-img">
           <img
-            :src="commodityData.storeData.img"
+            :src="commodityData.store_logo"
             alt=""
           >
         </div>
         <span class="store-name">
-          {{ commodityData.storeData.name }}
+          {{ commodityData.store_name }}
         </span>
       </div>
       <div class="header-right">
@@ -24,7 +24,7 @@
           round
           type="default"
           class="stroll"
-          @click="$router.push('/category/store')"
+          @click="goStore(commodityData.mid)"
         >
           进店逛逛
         </van-button>
@@ -36,21 +36,21 @@
       </div>
       <div class="recommend-content">
         <div
-          v-for="item in commodityData.storeData.recommend"
-          :key="item.name"
+          v-for="item in commodityData.recommend_products"
+          :key="item.pid"
           class="recommend-commodity"
         >
           <div class="commodity-img">
             <img
-              :src="item.img"
+              :src="item.tUrl"
               alt=""
             >
           </div>
           <div class="commodity-name">
-            {{ item.name }}
+            {{ item.pname }}
           </div>
           <div class="commodity-price">
-            ￥{{ item.price }}
+            ￥{{ item.sell_price }}
           </div>
         </div>
       </div>
@@ -76,7 +76,16 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goStore(mid) {
+      this.$router.push({
+        path: '/category/store',
+        query: {
+          mid: mid
+        }
+      })
+    }
+  }
 }
 </script>
 
@@ -163,7 +172,6 @@ export default {
         .commodity-price {
           font-size: 0.24rem;
           color: @BeeDefault;
-
         }
       }
     }
