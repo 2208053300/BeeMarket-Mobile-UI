@@ -7,7 +7,7 @@ import history from './modules/history'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules: {
     app,
     user,
@@ -15,3 +15,4 @@ export default new Vuex.Store({
     history
   }
 })
+export default store
