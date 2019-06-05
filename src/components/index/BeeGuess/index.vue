@@ -130,7 +130,7 @@ export default {
         height: 4rem;
       }
       .guess-details {
-        height: 0.8;
+        height: 0.8rem;
         margin: 0.2rem;
         position: relative;
         .product-tag {

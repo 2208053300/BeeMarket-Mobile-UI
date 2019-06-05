@@ -5,10 +5,10 @@
         v-model="activeTab"
         @click="changeTab"
       >
-        <van-tab title="商品">
+        <van-tab :title="produce_title">
           <div class="bee-above">
             <div
-              v-if="productList.length===0"
+              v-if="productNum === 0"
               class="null-collected"
             >
               <div
@@ -27,16 +27,15 @@
               v-else
               class="collected-list"
             >
-              <collected-classify />
-
               <product-collected
                 ref="ProductCollected"
+                :loading="productLoading"
+                :finished="productFinished"
                 :product-list="productList"
+                @load="getProductCollected"
+                @change="reGetProduct"
               />
             </div>
-          </div>
-          <div class="bee-below">
-            <bee-guess />
           </div>
         </van-tab>
         <van-tab title="店铺">
@@ -64,20 +63,16 @@
 </template>
 
 <script>
-import BeeGuess from '@/components/index/BeeGuess'
 import StoreCollected from './components/StoreCollected'
-import CollectedClassify from './components/CollectedClassify'
 import ProductCollected from './components/ProductCollected'
-import { getStoreCollected, getProductCollected } from '@/api/user'
+import { getCollected } from '@/api/BeeApi/user'
 
 export default {
   metaInfo: {
     title: '我的收藏'
   },
   components: {
-    BeeGuess,
     StoreCollected,
-    CollectedClassify,
     ProductCollected
   },
   props: {},
@@ -86,21 +81,40 @@ export default {
       activeTab: 0,
       storeList: [],
       productList: [],
-      activeClassify: '全部类目',
       beeIcon: {
         mine_collection_img_default: require('@/assets/icon/personalCenter/func/mine_collection_img_default@2x.png'),
         mine_address_img_default: require('@/assets/icon/personalCenter/func/mine_address_img_default@2x.png')
-
+      },
+      productLoading: false,
+      productFinished: false,
+      productNum: 0,
+      productPage: 1,
+      storeNum: 0,
+      storePage: 1,
+      pageSize: 10
+    }
+  },
+  computed: {
+    produce_title() {
+      if (this.productNum) {
+        return `商品(${this.productNum})`
+      } else {
+        return '商品'
       }
     }
   },
-  computed: {},
   watch: {},
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getProductCollected()
+    document.querySelector('.van-tabs__wrap').style.position = 'fixed'
+    document.querySelector('.van-tabs__wrap').style.top = `46px`
+  },
+  beforeDestroy() {
+    document.querySelector('.van-tabs__wrap').style.position = ''
+    document.querySelector('.van-tabs__wrap').style.top = ``
   },
   methods: {
     changeTab(index, title) {
@@ -108,16 +122,46 @@ export default {
       if (index) {
         this.getStoreCollected()
       } else {
-        this.getProductCollected()
+        this.reGetProduct()
       }
     },
     async getStoreCollected() {
-      const res = await getStoreCollected()
+      const res = await getCollected()
       this.storeList = res.data.storeList
     },
+    reGetProduct() {
+      this.productPage = 1
+      this.productNum = 0
+      this.getProductCollected()
+    },
     async getProductCollected() {
-      const res = await getProductCollected()
-      this.productList = res.data.productList
+      const res = await getCollected({
+        page: this.productPage,
+        page_size: this.pageSize,
+        type: 1
+      })
+      this.productNum = res.data.product_num
+      if (this.productPage > 1) {
+        // 追加数据
+        res.data.product_list.forEach(item => {
+          this.productList.push(item)
+        })
+      } else {
+        this.productList = res.data.product_list
+        this.productList.forEach(item => {
+          item.zone = '商品来自：西南地区'
+          item.is_hot = true
+          item.tag_name = ['新品', '爆款']
+        })
+      }
+      // 判断是否还有下一页
+      if ((this.productNum - (this.productPage * this.pageSize)) > 0) {
+        this.productFinished = false
+        this.productPage += 1
+      } else {
+        this.productFinished = true
+      }
+      this.productLoading = false
     }
   }
 }

@@ -12,9 +12,17 @@ export function getAddressList(data) {
 // NOTE 获取用户已收藏商品
 export function getProductCollected(data) {
   return request({
-    url: '/persion/getProductCollected',
-    method: 'get',
-    params: data
+    url: '/user/favorite/list',
+    method: 'post',
+    data
+  })
+}
+// NOTE 取消用户已收藏商品
+export function cancelCollect(data) {
+  return request({
+    url: '/product/cancelCollect',
+    method: 'post',
+    data
   })
 }
 // history 历史足迹
