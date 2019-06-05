@@ -6,6 +6,7 @@
       :title-active-color="BeeDefault"
       :line-width="30"
       class="buyFor-tabs"
+      @change="changeOt"
     >
       <van-tab>
         <div slot="title">
@@ -172,9 +173,7 @@ export default {
   },
   watch: {},
   created() {},
-  mounted() {
-    console.log(this.order)
-  },
+  mounted() {},
   methods: {
     selectAddress() {
       this.$store.state.app.pushName = 'confirmOrder'
@@ -183,6 +182,14 @@ export default {
     },
     sendToFirend() {
       this.$router.push('/category/details/giveFirends')
+    },
+    changeOt(index) {
+      if (index === 1) {
+        this.$parent.orderType = false
+        this.$parent.orderTypeText = 'present'
+      } else {
+        this.$parent.orderTypeText = 'general'
+      }
     }
   }
 }

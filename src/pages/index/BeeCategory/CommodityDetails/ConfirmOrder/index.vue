@@ -38,7 +38,10 @@
             您共有{{ order.orderDetail.charity_amount }}公益值，可抵扣{{ order.orderDetail.charity_deduction }}元
           </div>
         </div>
-        <van-switch v-model="charity_used" />
+        <van-switch
+          v-model="charity_used"
+          :active-color="BeeDefault"
+        />
       </van-cell>
     </van-cell-group>
     <van-cell-group class="other-info2">
@@ -50,17 +53,24 @@
           峰公益
         </div>
         <span class="benefit-text">将我的消费计入公益值</span>
-        <van-checkbox />
+        <van-checkbox
+          v-model="joinBee"
+          :checked-color="BeeDefault"
+        />
       </van-cell>
       <!-- TODO赠送好友取消该选项 -->
-      <van-cell>
+      <van-cell v-if="orderTypeText!=='present'">
         <div
           slot="title"
           class="cell-title"
         >
           朋友代付
         </div>
-        <van-checkbox />
+        <van-checkbox
+          v-model="orderType"
+          :checked-color="BeeDefault"
+          @change="changeOt"
+        />
       </van-cell>
       <van-cell class="deduction-content">
         <div
@@ -69,7 +79,10 @@
         >
           匿名购买
         </div>
-        <van-checkbox v-model="anonymous" />
+        <van-checkbox
+          v-model="anonymous"
+          :checked-color="BeeDefault"
+        />
       </van-cell>
     </van-cell-group>
     <div class="submit-order">
@@ -110,7 +123,9 @@ export default {
       BeeDefault,
       orderType: false,
       anonymous: false,
-      charity_used: false
+      charity_used: false,
+      orderTypeText: 'general',
+      joinBee: true
     }
   },
   computed: {
@@ -139,13 +154,14 @@ export default {
           storeData[index].products[index2].number = item2.number
         })
       })
+      // TODO 缺少农副产品和限量蜂抢字段获取
       const res = await createOrder(
         JSON.stringify({
           addr_id: this.order.addrDetail.addr_id,
           stores: storeData,
           charity_used: this.charity_used,
           anonymous: this.anonymous,
-          ot: this.orderType ? 'please' : 'general',
+          ot: this.orderTypeText,
           os: this.order.source
         })
       )
@@ -153,6 +169,13 @@ export default {
         console.log(res)
         this.order.payInfo = res.data
         this.$router.push('/category/details/payOrder')
+      }
+    },
+    changeOt(val) {
+      if (val) {
+        this.orderTypeText = 'please'
+      } else {
+        this.orderTypeText = 'general'
       }
     }
   }
@@ -205,6 +228,7 @@ export default {
     }
   }
   .submit-order {
+    z-index: 2;
     position: fixed;
     bottom: 0;
     width: 100%;

@@ -1,5 +1,11 @@
 <template>
   <div class="com-detail">
+    <van-notice-bar
+      v-if="recordList.scroll_message"
+      :text="recordList.scroll_message"
+      left-icon="volume-o"
+      background="transparent"
+    />
     <div class="detail-card">
       <van-cell-group>
         <van-cell
@@ -54,7 +60,7 @@ export default {
 <style scoped lang="less">
 .com-detail {
   .detail-card {
-    .van-cell-group{
+    .van-cell-group {
       background-color: transparent;
     }
     .van-cell {

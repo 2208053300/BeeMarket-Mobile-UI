@@ -1,5 +1,11 @@
 <template>
   <div class="com-val">
+    <van-notice-bar
+      v-if="comVal.scroll_message"
+      :text="comVal.scroll_message"
+      left-icon="volume-o"
+      background="transparent"
+    />
     <div
       class="com-content"
       :style="{backgroundImage:'url('+beeIcon.mine_public_img_bg+')'}"

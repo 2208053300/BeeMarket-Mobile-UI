@@ -18,9 +18,7 @@ service.interceptors.request.use(
       forbidClick: true,
       duration: 0
     })
-    // 暂时加上TOKEN
     // 强制设置 token 在 getToken 函数中设置
-    // config.headers['BM-App-Token'] = 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk1NDYzMzIsImV4cCI6MTU2MjEzODMzMiwianRpIjoiNTE0NGYzMzI4NWY4MzI2MDgxODEwMjNmZWMyNDI5ZmQiLCJzZWMiOiIxM2ViY2FjN2U4YjIwMjIyNjZhODk5MGQ5MjY2OGE1MyIsInNpZyI6IjExZWE0Zjc2ODA0NGM5ZmZkNDkxN2MxMDA4M2RlZTdjMWIyOGJkOWU2ZjAxYWI5YTI4MzQ2NjBmNTJlMjUyMTUifQ.LKEKkrXLCD57xlVMb_8NQtJggXrCgyd4iGXZb36x7b0'
     if (isLogin()) {
       config.headers['BM-App-Token'] = getToken()
     }

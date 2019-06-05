@@ -62,6 +62,7 @@
         :price="totalPrices"
         button-text="结算"
         style="bottom:50px"
+        @submit="confirmOrderData"
       >
         <van-checkbox
           v-model="allSelectedBox"
@@ -110,6 +111,7 @@
 
 <script>
 import { getShopcartList, delShopcartProduct } from '@/api/BeeApi/user'
+import { confirmOrder } from '@/api/BeeApi/order'
 import CartList from './components/CartList'
 import BeeGuess from '@/components/index/BeeGuess'
 import { mapState } from 'vuex'
@@ -173,6 +175,22 @@ export default {
       this.cart.cartSelected.map(item => {
         this.totalPrices += item.sell_price * item.number * 100
       })
+    },
+    // 结算购物车已选商品
+    async confirmOrderData() {
+      const ctids = this.cart.cartSelected.map(item => {
+        return item.cart_id
+      })
+      const res = await confirmOrder(
+        JSON.stringify({
+          ctids: ctids
+        })
+      )
+      if (res.status_code === 200) {
+        this.$store.state.order.orderDetail = res.data
+        this.$store.state.order.addrDetail = res.data.addr
+        this.$router.push('/category/details/confirmOrder')
+      }
     },
     // 跳转到购物车分享页面
     goSharePage() {

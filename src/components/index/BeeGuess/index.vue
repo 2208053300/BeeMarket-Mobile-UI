@@ -1,14 +1,16 @@
 <template>
   <div class="bee-guess">
-    <div
-      v-if="guessData[0].area"
-      class="farm-title"
-    >
-      <span class="title-text">农副产品</span>
-      <div class="show-more">
-        更多
+    <template v-if="guessData.length">
+      <div
+        v-if="guessData[0].area"
+        class="farm-title"
+      >
+        <span class="title-text">农副产品</span>
+        <div class="show-more">
+          更多
+        </div>
       </div>
-    </div>
+    </template>
     <div
       v-else
       class="guess-title"
@@ -76,7 +78,7 @@ export default {
     guessData: {
       type: Array,
       default: () => {
-        return [{}]
+        return []
       }
     }
   },
@@ -127,7 +129,7 @@ export default {
       overflow: hidden;
       .preview-img {
         width: 100%;
-        height: 4rem;
+        height: 3.3rem;
       }
       .guess-details {
         height: 0.8rem;
