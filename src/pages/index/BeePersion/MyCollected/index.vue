@@ -8,7 +8,7 @@
         <van-tab :title="produce_title">
           <div class="bee-above">
             <div
-              v-if="productNum === 0"
+              v-if="productList.length === 0"
               class="null-collected"
             >
               <div
@@ -28,8 +28,7 @@
               class="collected-list"
             >
               <product-collected
-                ref="ProductCollected"
-                :loading="productLoading"
+                ref="productList"
                 :finished="productFinished"
                 :product-list="productList"
                 @load="getProductCollected"
@@ -38,7 +37,7 @@
             </div>
           </div>
         </van-tab>
-        <van-tab title="店铺">
+        <van-tab :title="store_title">
           <div class="bee-above">
             <div
               v-if="storeList.length===0"
@@ -53,7 +52,11 @@
             </div>
             <store-collected
               v-else
+              ref="storeList"
+              :finished="storeFinished"
               :store-list="storeList"
+              @load="getStoreCollected"
+              @change="reGetStore"
             />
           </div>
         </van-tab>
@@ -85,8 +88,8 @@ export default {
         mine_collection_img_default: require('@/assets/icon/personalCenter/func/mine_collection_img_default@2x.png'),
         mine_address_img_default: require('@/assets/icon/personalCenter/func/mine_address_img_default@2x.png')
       },
-      productLoading: false,
       productFinished: false,
+      storeFinished: false,
       productNum: 0,
       productPage: 1,
       storeNum: 0,
@@ -100,6 +103,13 @@ export default {
         return `商品(${this.productNum})`
       } else {
         return '商品'
+      }
+    },
+    store_title() {
+      if (this.storeNum) {
+        return `店铺(${this.storeNum})`
+      } else {
+        return '店铺'
       }
     }
   },
@@ -120,19 +130,86 @@ export default {
     changeTab(index, title) {
       // NOTE 如果切换到店铺列表
       if (index) {
-        this.getStoreCollected()
+        this.reGetStore()
       } else {
         this.reGetProduct()
       }
     },
+    getTempData() {
+      return [
+        {
+          store_id: 1,
+          store_name: '刊菲服饰',
+          store_logo: 'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
+          is_upper: true,
+          new_upper: 36
+        },
+        {
+          store_id: 2,
+          store_name: '完美世界',
+          store_logo: 'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
+          is_upper: false,
+          new_upper: 10
+        },
+        {
+          store_id: 3,
+          store_name: '蒸汽动力',
+          store_logo: 'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
+          is_upper: true,
+          new_upper: 12
+        },
+        {
+          store_id: 4,
+          store_name: '这家店铺名字有点长',
+          store_logo: 'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
+          is_upper: true,
+          new_upper: 32
+        },
+        {
+          store_id: 5,
+          store_name: '蒸汽动力',
+          store_logo: 'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
+          is_upper: true,
+          new_upper: 92
+        }
+      ]
+    },
     async getStoreCollected() {
-      const res = await getCollected()
-      this.storeList = res.data.storeList
+      const res = await getCollected({
+        page: this.storePage,
+        page_size: this.pageSize,
+        type: 2
+      })
+      this.storeNum = res.data.store_num
+      if (this.storePage > 1) {
+        // 追加数据
+        res.data.store_list.forEach(item => {
+          this.storeList.push(item)
+        })
+      } else {
+        this.storeList = res.data.store_list
+      }
+
+      // 判断是否还有下一页
+      if ((this.storeNum - (this.storePage * this.pageSize)) > 0) {
+        this.storeFinished = false
+        this.storePage += 1
+      } else {
+        this.storeFinished = true
+      }
+      if (this.$refs.storeList) {
+        this.$refs.storeList.loading = false
+      }
     },
     reGetProduct() {
       this.productPage = 1
       this.productNum = 0
       this.getProductCollected()
+    },
+    reGetStore() {
+      this.storePage = 1
+      this.storeNum = 0
+      this.getStoreCollected()
     },
     async getProductCollected() {
       const res = await getCollected({
@@ -141,6 +218,7 @@ export default {
         type: 1
       })
       this.productNum = res.data.product_num
+      this.storeNum = res.data.store_num
       if (this.productPage > 1) {
         // 追加数据
         res.data.product_list.forEach(item => {
@@ -148,11 +226,6 @@ export default {
         })
       } else {
         this.productList = res.data.product_list
-        this.productList.forEach(item => {
-          item.zone = '商品来自：西南地区'
-          item.is_hot = true
-          item.tag_name = ['新品', '爆款']
-        })
       }
       // 判断是否还有下一页
       if ((this.productNum - (this.productPage * this.pageSize)) > 0) {
@@ -161,7 +234,9 @@ export default {
       } else {
         this.productFinished = true
       }
-      this.productLoading = false
+      if (this.$refs.productList) {
+        this.$refs.productList.loading = false
+      }
     }
   }
 }
