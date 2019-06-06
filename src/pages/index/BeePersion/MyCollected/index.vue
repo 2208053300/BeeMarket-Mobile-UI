@@ -183,9 +183,7 @@ export default {
       this.storeNum = res.data.store_num
       if (this.storePage > 1) {
         // 追加数据
-        res.data.store_list.forEach(item => {
-          this.storeList.push(item)
-        })
+        this.storeList.push(...res.data.store_list)
       } else {
         this.storeList = res.data.store_list
       }
@@ -221,9 +219,7 @@ export default {
       this.storeNum = res.data.store_num
       if (this.productPage > 1) {
         // 追加数据
-        res.data.product_list.forEach(item => {
-          this.productList.push(item)
-        })
+        this.productList.push(...res.data.product_list)
       } else {
         this.productList = res.data.product_list
       }
