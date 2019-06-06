@@ -21,7 +21,7 @@
           v-for="item in article.product_data"
           :key="item.pid"
           class="commodity-card"
-          @click="goProduct(item.pid)"
+          @click="goProduct(item.pid,item.target)"
         >
           <img
             :src="item.thumb_url"
@@ -59,7 +59,7 @@
 
 <script>
 import { getArticleDetail } from '@/api/BeeApi/action'
-
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '文章详情'
@@ -94,16 +94,32 @@ export default {
       this.article = res.data
       this.$store.state.app.beeFooter.show = false
     },
-    goProduct(pid) {
-      // 判断是否来自webApp
-      if (this.$route.query.origin) {
-        window.location.href = `/#/category/details?pid=${pid}`
-      } else {
-        console.log('本地应用')
+    // 网页跳转
+    webPush(pid) {
+      if (window.location.pathname === '/') {
         this.$router.push({
           path: '/category/details',
-          query: { pid }
+          query: {
+            pid: pid
+          }
         })
+      } else {
+        window.location.href = `/#/category/details?pid=${pid}`
+      }
+    },
+    goProduct(pid, target) {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        this.webPush(pid)
+      } else if (osObj.isIphone) {
+        window.webkit.messageHandlers.ToProductDetail.postMessage({
+          pid: pid,
+          target: target
+        })
+      } else if (osObj.isAndroid) {
+        window.beeMarket.ToProductDetail(pid, target)
+      } else {
+        this.webPush(pid)
       }
     }
   }
