@@ -2,10 +2,10 @@
   <div class="bee-task">
     <div class="card head">
       <div class="head-icon">
-        <img :src="beeIcon.data_icon_smile" style="width: 1rem">
+        <img :src="beeIcon.data_icon_smile" style="width: 1rem;height: 1rem">
       </div>
       <div class="head-text">
-        <span class="unusual">关注蜂集市</span>公众号,即可<span class="unusual">获得公益值10个</span>,同时也可享受蜂集市更多权益
+        <span class="unusual">关注“蜂集市”</span>公众号,即可<span class="unusual">获得公益值10个</span>,同时也可享受蜂集市更多权益
       </div>
     </div>
     <div class="card body">
