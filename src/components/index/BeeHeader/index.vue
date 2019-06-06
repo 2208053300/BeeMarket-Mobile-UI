@@ -38,6 +38,7 @@ export default {
   mounted() {},
   methods: {
     goHome() {
+      // FIXME 多页中，路由不同，需要设置为域名路径？
       this.$store.state.app.beeHeader = false
       this.$store.state.app.beeFooter = {
         show: true,

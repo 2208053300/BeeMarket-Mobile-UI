@@ -32,7 +32,7 @@
           class="cell-title"
         >
           <span class="title-text">配送</span>
-          <span class="cell-content">木头色 大号</span>
+          <span class="cell-content">至 重庆 重庆市渝北区</span>
         </p>
       </van-cell>
       <van-cell>
@@ -41,7 +41,7 @@
           class="cell-title"
         >
           <span class="title-text">活动</span>
-          <span class="cell-content">木头色 大号</span>
+          <span class="cell-content">购买且确认收货后至多可获得+++</span>
         </p>
       </van-cell>
       <van-cell>
@@ -50,7 +50,7 @@
           class="cell-title"
         >
           <span class="title-text">运费</span>
-          <span class="cell-content">木头色 大号</span>
+          <span class="cell-content">免运费</span>
         </p>
       </van-cell>
       <van-cell>
@@ -59,23 +59,21 @@
           class="cell-title"
         >
           <span class="title-text">备注</span>
-          <span class="cell-content">木头色 大号</span>
+          <span class="cell-content">这是备注</span>
         </p>
       </van-cell>
     </van-cell-group>
     <van-cell-group>
       <van-cell
-        is-link
-        class="other1"
+        class="service-cell"
         @click="showPromise=true"
       >
-        <p
-          slot="title"
-          class="cell-title"
-        >
-          <span class="title-text">服务</span>
-          <span class="cell-content">木头色 大号</span>
-        </p>
+        <div class="service-content">
+          <img
+            :src="beeIcon.product_detail_pic_hook"
+            alt="服务"
+          >
+        </div>
       </van-cell>
     </van-cell-group>
     <van-actionsheet v-model="showPromise">
@@ -214,7 +212,8 @@ export default {
         product_detail_icon_change: require('@/assets/icon/product/product_detail_icon_change@2x.png'),
         product_detail_icon_rapidly: require('@/assets/icon/product/product_detail_icon_rapidly@2x.png'),
         product_detail_icon_review: require('@/assets/icon/product/product_detail_icon_review@2x.png'),
-        product_detail_icon_welfare: require('@/assets/icon/product/product_detail_icon_welfare@2x.png')
+        product_detail_icon_welfare: require('@/assets/icon/product/product_detail_icon_welfare@2x.png'),
+        product_detail_pic_hook: require('@/assets/icon/product/product_detail_pic_hook@2x.png')
       }
     }
   },
@@ -239,6 +238,9 @@ export default {
 .other-info {
   .other1 {
     margin-top: 0.2rem;
+  }
+  .service-cell{
+    padding: 0;
   }
   .van-cell {
     .cell-title {

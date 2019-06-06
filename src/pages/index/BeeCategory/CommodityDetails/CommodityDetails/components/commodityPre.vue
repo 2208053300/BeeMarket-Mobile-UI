@@ -86,13 +86,6 @@
         {{ preIndex +1 }}/{{ imgList.length }}
       </template>
     </van-image-preview>
-    <!-- 如果是蜂抢商品 -->
-    <!-- <div class="limit-time">
-      <span>限量蜂抢中</span>
-      <div class="limit-nowNum">
-        仅剩<span class="num"> 80 </span>件
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -188,7 +181,7 @@ export default {
       text-align: center;
       position: absolute;
       right: 0.3rem;
-      bottom: 0.3rem;
+      bottom: 0.5rem;
       .nowNum {
         font-size: 0.28rem;
         color: #ffffff;

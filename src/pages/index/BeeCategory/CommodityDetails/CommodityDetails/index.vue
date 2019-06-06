@@ -1,7 +1,10 @@
 <template>
   <div class="commodity-details">
     <commodity-pre :commodity-data="commodityData" />
-    <div class="commodity-container">
+    <div
+      class="commodity-container"
+      :class="{limitProduct:1}"
+    >
       <commodity-overview :commodity-data="commodityData" />
       <other-info :commodity-data="commodityData" />
       <div class="advertisement">
@@ -16,7 +19,7 @@
       <rich-details :commodity-data="commodityData" />
       <bee-guess />
     </div>
-    <goods-action />
+    <goods-action :commodity-data="commodityData" />
   </div>
 </template>
 
@@ -24,7 +27,7 @@
 import { getProductDetail } from '@/api/BeeApi/product'
 import commodityPre from './components/commodityPre'
 import goodsAction from './components/goodsAction'
-import commodityOverview from './components/commodityOverview'
+import commodityOverview from './components/commodityOverview2'
 import otherInfo from './components/otherInfo'
 import userAssessment from './components/userAssessment'
 import storeDetails from './components/storeDetails'
@@ -75,12 +78,17 @@ export default {
   box-sizing: border-box;
   .commodity-container {
     padding-bottom: 50px;
+    position: relative;
+    top: -0.24rem;
     .advertisement {
       margin-top: 0.2rem;
       background-color: #fff;
       height: 1.6rem;
       width: 100%;
     }
+  }
+  .limitProduct {
+    padding-bottom: 1.5rem;
   }
 }
 </style>
