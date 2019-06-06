@@ -59,7 +59,7 @@ export default {
   mounted() {},
   methods: {
     bindPhone() {
-      // TODO 跳转到手机号绑定
+      window.location.href = '/#/login'
     }
   }
 }
