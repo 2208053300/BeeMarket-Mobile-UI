@@ -53,7 +53,24 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 > 此处根据webpack多页面打包，区分出了需要独立出来的html页面，主页面为index目录。
 > 每个需要单独打包的目录下都需要放置main.js和入口app
 
-* BeeArticle —— 相关活动文章详情 
+* BeeArticle —— 相关活动文章详情
+* BeeCommonweal —— 公益值页面
+* BeeError —— 统一错误页面
+* BeeFriends —— 蜂友圈
+* BeeGift —— 赠送好友商品，微信打开
+* BeeHelper —— 帮助中心
+* BeeLogin —— 统一登录界面
+* BeePublic —— 蜂公益行动详情
+* BeeReplace —— 好友代付
+* BeeTask —— 蜂任务
+* index —— 蜂集市主页
+
+> * BeeCart —— 购物车列表、 购物车分享  
+> * BeeCategory —— 分类列表、二级分类列表、商品详情、立即购买下单、搜索商品、店铺详情
+> 赠送好友、好友支付等待、支付订单、用户评价列表
+> * BeeDiscover —— 发现活动列表、详情、发现文章列表、详情
+> * BeeHome —— 蜂集市首页、蜂集市活动、农副产品、消息中心
+> * BeePersion —— 收货地址列表、编辑收货地址、设置、浏览足迹、我的收藏、我的订单、我的 > 分享二维码、个人中心、服务中心
 
 ### **dist**：项目编译输出目录
 
