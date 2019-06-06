@@ -184,3 +184,20 @@ export function getQrcode(data) {
     data
   })
 }
+
+// NOTE 获取用户已收藏商品/店铺
+export function getCollected(data) {
+  return request({
+    url: '/user/favorite/list',
+    method: 'post',
+    data
+  })
+}
+// NOTE 取消用户已收藏商品/店铺
+export function cancelCollect(data) {
+  return request({
+    url: '/product/cancelCollect',
+    method: 'post',
+    data
+  })
+}
