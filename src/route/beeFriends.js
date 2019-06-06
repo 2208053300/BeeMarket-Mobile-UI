@@ -9,12 +9,17 @@ export default new Router({
   routes: [
     {
       path: '',
-      name: 'beeFriends',
       component: () => import('@/pages/BeeFriends'),
       children: [
         {
           path: '',
-          component: () => import('@/pages/BeeFriends/Honeycomb')
+          name: 'beeFriends',
+          component: () => import('@/pages/BeeFriends/MyBeeFriends')
+        },
+        {
+          path: 'myEarn',
+          name: 'myEarn',
+          component: () => import('@/pages/BeeFriends/MyEarn')
         }
       ]
     }

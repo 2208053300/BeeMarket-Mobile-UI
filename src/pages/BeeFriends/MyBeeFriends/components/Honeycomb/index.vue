@@ -14,9 +14,10 @@
       <div
         v-for="item2 in item"
         :key="item2.id"
-        class="comb-card hexagon"
         :class="{showitem:showList.indexOf(item2.id)!==-1&&item2.name}"
         :style="{background:'url('+beeIcon.hexagon_empty+') no-repeat 100% 100%'}"
+        class="comb-card hexagon"
+        @click="showDetail(item2.id)"
       >
         <!-- {{ item2.name }} -->
         <!-- <img
@@ -42,7 +43,12 @@ import Hammer from 'hammerjs'
 import { setInterval, clearInterval } from 'timers'
 export default {
   components: {},
-  props: {},
+  props: {
+    detailCard: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       combData: [],
@@ -277,6 +283,9 @@ export default {
     },
     onPinch() {
       this.testData = 123
+    },
+    showDetail() {
+      this.$emit('update:detailCard', true)
     }
   }
 }
@@ -285,8 +294,11 @@ export default {
 <style scoped lang="less">
 .comb-list {
   width: 100%;
-  margin-top: 50px;
-
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   .line {
     display: flex;
     justify-content: center;
@@ -307,6 +319,7 @@ export default {
     }
   }
   .test1 {
+    position: absolute;
     width: 100px;
     height: 100px;
     background-color: #000;
@@ -327,7 +340,7 @@ export default {
   }
   .fade1-enter-active,
   .fade1-leave-active {
-    animation-play-state:paused;
+    animation-play-state: paused;
     transition: all 3s;
   }
   .fade1-enter, .fade1-leave-to /* .fade-leave-active below version 2.1.8 */ {
