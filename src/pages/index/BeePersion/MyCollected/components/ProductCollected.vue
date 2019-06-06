@@ -7,74 +7,74 @@
       <van-checkbox-group v-model="editData">
         <van-pull-refresh v-model="loading" @refresh="$emit('change')">
           <van-list
-          v-model="loading"
-          :finished="finished"
-          finished-text="没有更多了"
-          @load="$emit('load')"
-        >
-          <div
-            v-for="product in productList"
-            :key="product.product_id"
-            class="bee-product"
-            :class="{productEdit:editStatus}"
+            v-model="loading"
+            :finished="finished"
+            finished-text="没有更多了"
+            @load="$emit('load')"
           >
             <div
-              slot="left"
-              class="left-checkbox"
+              v-for="product in productList"
+              :key="product.product_id"
+              class="bee-product"
+              :class="{productEdit:editStatus}"
             >
-              <van-checkbox
-                :name="product"
-                :checked-color="BeeDefault"
-              />
-            </div>
-            <van-card>
               <div
-                slot="thumb"
-                class="card-img"
+                slot="left"
+                class="left-checkbox"
               >
-                <img
-                  :src="product.thumb_url"
-                  alt="商品预览图"
-                >
-                <div
-                  v-if="!product.is_upper||!product.is_stock"
-                  class="product-masking"
-                >
-                  <span v-if="!product.is_upper">下架</span>
-                  <span v-if="!product.is_stock">售罄</span>
-                </div>
+                <van-checkbox
+                  :name="product"
+                  :checked-color="BeeDefault"
+                />
               </div>
-              <span
-                slot="price"
-                class="card-price"
-              >
-                ￥{{ product.selling_price }}
-              </span>
-              <div slot="desc" class="tags">
-                <div v-if="product.zone" class="from-area">
-                  {{ product.zone }}
-                </div>
+              <van-card>
                 <div
-                  v-if="product.is_hot"
-                  class="bee-tag hotTag"
+                  slot="thumb"
+                  class="card-img"
                 >
-                  热销
+                  <img
+                    :src="product.thumb_url"
+                    alt="商品预览图"
+                  >
+                  <div
+                    v-if="!product.is_upper||!product.is_stock"
+                    class="product-masking"
+                  >
+                    <span v-if="!product.is_upper">下架</span>
+                    <span v-if="!product.is_stock">售罄</span>
+                  </div>
                 </div>
-                <div
-                  v-for="(tag, index) in product.tag_name"
-                  :key="index"
-                  class="bee-tag"
+                <span
+                  slot="price"
+                  class="card-price"
                 >
-                  {{ tag }}
+                  ￥{{ product.selling_price }}
+                </span>
+                <div slot="desc" class="tags">
+                  <div v-if="product.zone" class="from-area">
+                    {{ product.zone }}
+                  </div>
+                  <div
+                    v-if="product.is_hot"
+                    class="bee-tag hotTag"
+                  >
+                    热销
+                  </div>
+                  <div
+                    v-for="(tag, index) in product.tag_name"
+                    :key="index"
+                    class="bee-tag"
+                  >
+                    {{ tag }}
+                  </div>
                 </div>
-              </div>
-              <span
-                slot="title"
-                class="card-title"
-              >{{ product.product_name }}</span>
-            </van-card>
-          </div>
-        </van-list>
+                <span
+                  slot="title"
+                  class="card-title"
+                >{{ product.product_name }}</span>
+              </van-card>
+            </div>
+          </van-list>
         </van-pull-refresh>
       </van-checkbox-group>
     </div>

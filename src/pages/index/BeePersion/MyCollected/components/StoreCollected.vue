@@ -7,54 +7,54 @@
       <van-checkbox-group v-model="editData">
         <van-pull-refresh v-model="loading" @refresh="$emit('change')">
           <van-list
-          v-model="loading"
-          :finished="finished"
-          finished-text="没有更多了"
-          @load="$emit('load')"
-        >
-          <div
-            v-for="store in storeList"
-            :key="store.store_id"
-            class="bee-store"
-            :class="{storeEdit:editStatus}"
+            v-model="loading"
+            :finished="finished"
+            finished-text="没有更多了"
+            @load="$emit('load')"
           >
             <div
-              slot="left"
-              class="left-checkbox"
+              v-for="store in storeList"
+              :key="store.store_id"
+              class="bee-store"
+              :class="{storeEdit:editStatus}"
             >
-              <van-checkbox
-                :name="store"
-                :checked-color="BeeDefault"
-              />
-            </div>
-            <div>
-              <van-cell style="border-radius: 0.2rem">
-                <div
-                  slot="title"
-                  class="left-title"
-                >
-                  <div class="store-img">
-                    <img
-                      :src="store.store_logo"
-                      alt="store.storeName"
-                    >
-                  </div>
-                  <span>{{ store.store_name }}</span>
-                </div>
-                <div class="news">
-                  <span class="new-num">{{ store.new_upper }}</span>
-                  <span>上新</span>
-                </div>
-              </van-cell>
               <div
-                v-if="!store.is_upper"
-                class="store-maintaining"
+                slot="left"
+                class="left-checkbox"
               >
-                <span>商家维护中</span>
+                <van-checkbox
+                  :name="store"
+                  :checked-color="BeeDefault"
+                />
+              </div>
+              <div>
+                <van-cell style="border-radius: 0.2rem">
+                  <div
+                    slot="title"
+                    class="left-title"
+                  >
+                    <div class="store-img">
+                      <img
+                        :src="store.store_logo"
+                        alt="store.storeName"
+                      >
+                    </div>
+                    <span>{{ store.store_name }}</span>
+                  </div>
+                  <div class="news">
+                    <span class="new-num">{{ store.new_upper }}</span>
+                    <span>上新</span>
+                  </div>
+                </van-cell>
+                <div
+                  v-if="!store.is_upper"
+                  class="store-maintaining"
+                >
+                  <span>商家维护中</span>
+                </div>
               </div>
             </div>
-          </div>
-        </van-list>
+          </van-list>
         </van-pull-refresh>
       </van-checkbox-group>
     </div>
