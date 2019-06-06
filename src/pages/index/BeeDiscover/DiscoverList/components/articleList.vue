@@ -65,8 +65,9 @@ export default {
       }
       this.loading = false
     },
-    async reLoad() {
+    reLoad() {
       // 刷新数据
+      this.articleList = []
       this.page = 1
       this.getArticleListData()
     }
