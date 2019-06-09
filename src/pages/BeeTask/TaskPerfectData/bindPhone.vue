@@ -56,7 +56,9 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.$store.state.app.beeHeader = true
+  },
   methods: {
     bindPhone() {
       window.location.href = '/#/login'

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <bee-header />
+    <bee-header v-show="$store.state.app.beeHeader" />
     <router-view
       style="height:100%"
-      class="showHeader"
+      :class="{ showHeader: $store.state.app.beeHeader }"
     />
   </div>
 </template>

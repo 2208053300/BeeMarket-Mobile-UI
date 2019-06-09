@@ -57,7 +57,9 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.$store.state.app.beeHeader = false
+  },
   methods: {
     bindWeChat() {
       const osObj = getOs()
