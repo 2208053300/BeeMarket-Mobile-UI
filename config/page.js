@@ -22,7 +22,8 @@ module.exports = {
   },
   // 蜂任务
   beeTask: {
-    entry: 'src/pages/BeeTask/main.js'
+    entry: 'src/pages/BeeTask/main.js',
+    title: '蜂任务'
   },
   // 赠送好友
   beeGift: {
@@ -38,7 +39,8 @@ module.exports = {
   },
   // 文章详情
   beeArticle: {
-    entry: 'src/pages/BeeArticle/main.js'
+    entry: 'src/pages/BeeArticle/main.js',
+    title: '文章详情'
   },
   // 限量蜂抢
   beeLimit: {
