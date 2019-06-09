@@ -22,9 +22,14 @@ export default new Router({
           component: () => import('@/pages/BeeTask/TaskDetail')
         },
         {
-          path: 'taskPerfectData',
-          name: 'taskPerfectData',
-          component: () => import('@/pages/BeeTask/TaskPerfectData')
+          path: 'taskPerfectData/phone',
+          name: 'taskPerfectDataWithPhone',
+          component: () => import('@/pages/BeeTask/TaskPerfectData/bindPhone')
+        },
+        {
+          path: 'taskPerfectData/wechat',
+          name: 'taskPerfectDataWithWechat',
+          component: () => import('@/pages/BeeTask/TaskPerfectData/bindWechat')
         }
       ]
     }
