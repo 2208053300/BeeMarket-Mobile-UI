@@ -66,7 +66,7 @@ export default {
           target: ''
         })
       } else if (osObj.isAndroid) {
-        window.beeMarket.messageHandlers()
+        window.beeMarket.ToBindWeChat()
       } else {
         this.$toast.fail('请使用手机打开')
       }
