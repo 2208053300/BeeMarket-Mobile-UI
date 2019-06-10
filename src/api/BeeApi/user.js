@@ -128,3 +128,124 @@ export function addShopcartProduct(data) {
     data
   })
 }
+// 我的售后单
+export function getAfterList(data) {
+  return request({
+    url: '/user/customer',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单详情
+export function getAfterDetail(data) {
+  return request({
+    url: '/user/customer/detail',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单物流详情
+export function getAfterLogDetail(data) {
+  return request({
+    url: '/user/customer/express',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单进度详情
+export function getAfterProgressDetail(data) {
+  return request({
+    url: '/user/customer/schedule',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单沟通详情
+export function getAftercommunicationDetail(data) {
+  return request({
+    url: '/user/customer/interflow',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单删除售后单
+export function delAfterOrder(data) {
+  return request({
+    url: '/user/customer/delete',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单撤销售后单
+export function cancelAfterOrder(data) {
+  return request({
+    url: '/user/customer/cancel',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单确认完成售后单
+export function confirmAfterOrder(data) {
+  return request({
+    url: '/user/customer/confirm',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单 填写物流信息
+export function fillLogisticsInfo(data) {
+  return request({
+    url: '/user/customer/write',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单 获取物流公司列表数据
+export function getExpressData(data) {
+  return request({
+    url: '/user/customer/getExpress',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单 选择售后类型
+export function selectAfterType(data) {
+  return request({
+    url: '/user/customer/select',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单 申请页数据
+export function applyPageData(data) {
+  return request({
+    url: '/user/customer/applyPage',
+    method: 'post',
+    data
+  })
+}
+// 我的售后单 申请页数据
+export function submitApplyData(data) {
+  return request({
+    url: '/user/customer/submit',
+    method: 'post',
+    data
+  })
+}
+
+// 个人中心 获取历史足迹数据
+export function getHistoryList(data) {
+  return request({
+    url: '/user/history',
+    method: 'post',
+    data
+  })
+}
+// 个人中心 删除历史
+export function delHistoryItem(data) {
+  return request({
+    url: '/user/history/delete',
+    method: 'post',
+    data
+  })
+}

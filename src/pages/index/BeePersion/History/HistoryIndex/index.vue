@@ -3,42 +3,53 @@
     <!-- 内容 -->
     <div class="wrapper container bg-gray hitory-index">
       <span @click="$router.push('/persion/history/historyEdit')">编辑</span>
-      <van-row
-        v-for="(item, index) in history.historyInfo"
-        :key="index"
-        class="history-list margin-b-20  bg-white "
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        :offset="offset"
+        :immediate-check="immediate"
+        class="vertical-list"
+        @load="getList"
       >
-        <p class="date">
-          {{ item.date }}
-        </p>
-        <van-col
-          v-for="(pro, index1) in item.dayData"
-          :key="index1"
-          span="8"
-          class="shop-box margin-b-20"
+        <van-row
+          v-for="(item, index) in history.historyInfo"
+          :key="index"
+          class="history-list margin-b-20  bg-white "
         >
-          <div class="goodsItem">
-            <img
-              :src="pro.img"
-              alt=""
-              class="img"
-            >
-            <p class="title no-wrap">
-              {{ pro.title }}
-            </p>
-            <div class="flex flex-between">
-              <p class="price">
-                ￥{{ pro.price }}
+          <p class="date">
+            {{ item.date }}
+          </p>
+          <van-col
+            v-for="(pro, index1) in item.product_list"
+            :key="index1"
+            span="8"
+            class="shop-box margin-b-20"
+          >
+            <!--pro.fid 足迹id pro.pid 商品id -->
+            <!-- pro.is_stock 是否有库存 true false -->
+            <!-- pro.is_obtained 是否已下架 true false -->
+            <!-- pro.is_collect 是否已收藏 true false -->
+            <!-- pro.target 目标 general|limited -->
+            <div class="goodsItem">
+              <img :src="pro.thumb_url" alt="" class="img" @click="goProductDetail(pro.pid,pro.target)">
+              <p class="title no-wrap" @click="goProductDetail(pro.pid,pro.target)">
+                {{ pro.product_name }}
               </p>
-              <van-icon
-                name="ellipsis"
-                color="#dcdcdc"
-                @click="action(pro.id)"
-              />
+              <div class="flex flex-between">
+                <p class="price">
+                  ￥{{ pro.price }}
+                </p>
+                <van-icon
+                  name="ellipsis"
+                  color="#dcdcdc"
+                  @click="action(pro.pid,pro.fid,pro.is_collect)"
+                />
+              </div>
             </div>
-          </div>
-        </van-col>
-      </van-row>
+          </van-col>
+        </van-row>
+      </van-list>
     </div>
 
     <!-- popup -->
@@ -48,22 +59,13 @@
       :overlay="true"
       class="text-center"
     >
-      <p
-        class="collect"
-        @click="collect()"
-      >
+      <p class="collect" @click="collect()">
         加入收藏
       </p>
-      <p
-        class="del"
-        @click="del()"
-      >
+      <p class="del" @click="del()">
         删除
       </p>
-      <p
-        class="cancel"
-        @click="cancel()"
-      >
+      <p class="cancel" @click="cancel()">
         取消
       </p>
     </van-popup>
@@ -71,7 +73,9 @@
 </template>
 
 <script>
-import { getHistoryList, collectProduct, delHistoryItem } from '@/api/user'
+// 加入收藏
+import { collectProduct } from '@/api/BeeApi/product'
+import { getHistoryList, delHistoryItem } from '@/api/BeeApi/user'
 import { mapState, mapActions } from 'vuex'
 import { BeeDefault } from '@/styles/index/variables.less'
 
@@ -85,8 +89,20 @@ export default {
     return {
       BeeDefault,
       showPopup: false,
-      // 当前选中的商品 id
-      nowId: ''
+      // 当前选中的商品 id,足迹 id,是否已收藏
+      nowPid: [],
+      nowFid: [],
+      nowIsCollect: false,
+      // 加载状态，true 正在加载
+      loading: false,
+      // 是否全部加载完毕
+      finished: false,
+      // page: 1,
+      pageSize: 2,
+      immediate: false,
+      offset: 300,
+      // 历史足迹数据
+      historyList: []
     }
   },
   computed: {
@@ -110,38 +126,64 @@ export default {
       this.$store.state.app.beeFooter.show = false
     },
     // 获取历史足迹数据
-    getList() {
-      getHistoryList().then(res => {
-        // this.history.historyInfo = res.data.historyList
-        this.GetHistoryInfo(res.data.historyList)
+    async getList() {
+      setTimeout(async() => {
+        const res = getHistoryList({ page: this.page, pageSize: this.pageSize })
+        // this.GetHistoryInfo(res.data)
+        this.historyList.push(...res.data)
+        this.GetHistoryInfo(this.historyList)
+        this.page++
+        this.loading = false
+
+        if (res.data.length === 0) {
+          this.finished = true
+        }
+      }, 500)
+    },
+    // 查看商品详情 pid 商品id target 目标 general limited
+    goProductDetail(pid, target) {
+      this.$router.push({
+        path: '',
+        query: {
+          pid,
+          target
+        }
       })
     },
     // 上拉菜单
-    action(id) {
+    action(pid, fid, is_collect) {
       this.showPopup = true
-      this.nowId = id
-      console.log(this.nowId)
+      this.nowPid = Array.of(pid)
+      this.nowFid = Array.of(fid)
+      this.nowIsCollect = is_collect
+      console.log(this.nowPid, this.nowFid)
     },
-    // 收藏
+    // 收藏 "contentId" [] 商品id或店铺id  "type":1//类型,1 商品,2 店铺
     collect() {
-      collectProduct(this.nowId).then(res => {
+      if (this.nowIsCollect) {
+        this.$toast('此商品已加入收藏！')
+        return
+      }
+      collectProduct({ contentId: this.nowPid, type: 1 }).then(res => {
         this.showPopup = false
-        this.$notify({
-          message: res.data.message,
-          duration: 1000,
-          background: '#1989fa'
-        })
+        this.$toast.success(res.message)
+        // this.$notify({
+        //   message: res.message,
+        //   duration: 1000,
+        //   background: '#1989fa'
+        // })
       })
     },
-    // 删除
+    // 删除 "fids":[ 1,3,4]
     del() {
-      delHistoryItem(this.nowId).then(res => {
+      delHistoryItem({ fids: this.nowFid }).then(res => {
         this.showPopup = false
-        this.$notify({
-          message: res.data.message,
-          duration: 1000,
-          background: '#1989fa'
-        })
+        this.$toast.success(res.message)
+        // this.$notify({
+        //   message: res.data.message,
+        //   duration: 1000,
+        //   background: '#1989fa'
+        // })
       })
       this.getList()
     },

@@ -5,14 +5,14 @@
         <div class="commodity-detail">
           <div class="commodity-img">
             <img
-              :src="commodity.previewImg"
+              :src="commodity.thumb_url"
               alt=""
             >
           </div>
           <div class="commodity-info">
             <div class="name-unit">
               <div class="name">
-                {{ commodity.name }}
+                {{ commodity.product_name }}
               </div>
               <div class="price-num">
                 ￥{{ commodity.price }}
@@ -20,10 +20,10 @@
             </div>
             <div class="sku-price">
               <div class="sku-text">
-                {{ commodity.sku }}
+                {{ commodity.props_name }}
               </div>
               <div class="num">
-                x{{ commodity.num }}
+                x{{ commodity.number }}
               </div>
             </div>
           </div>
@@ -32,42 +32,48 @@
           <div class="select-num">
             <span>申请数量</span>
           </div>
-          <van-stepper v-model="selectNum" />
+          <van-stepper v-model="selectNum" :max="commodity.number" />
         </div>
       </div>
       <div class="after-type">
         <van-cell-group>
           <van-cell
-            icon="shop-o"
             is-link
-            :to="{path:'/persion/order/applyAfter/refund',query:{selectNum:selectNum}}"
+            @click="goApply(1)"
           >
             <template slot="title">
-              <span>退货</span>
+              <div class="flex align-center">
+                <img :src="icon.return" class="type-img">
+                <span>退货</span>
+              </div>
             </template>
             <div class="type-value">
               已收到货，需要退回商品
             </div>
           </van-cell>
           <van-cell
-            icon="shop-o"
             is-link
-            :to="{path:'/persion/order/applyAfter/exchange',query:{selectNum:selectNum}}"
+            @click="goApply(2)"
           >
             <template slot="title">
-              <span>换货</span>
+              <div class="flex align-center">
+                <img :src="icon.exchange" class="type-img">
+                <span>换货</span>
+              </div>
             </template>
             <div class="type-value">
               已收到货，需要更换商品
             </div>
           </van-cell>
           <van-cell
-            icon="shop-o"
             is-link
-            :to="{path:'/persion/order/applyAfter/fill',query:{selectNum:selectNum}}"
+            @click="goApply(3)"
           >
             <template slot="title">
-              <span>补寄</span>
+              <div class="flex align-center">
+                <img :src="icon.makeup" class="type-img">
+                <span>补寄</span>
+              </div>
             </template>
             <div class="type-value">
               商家发的商品有遗漏商品
@@ -80,7 +86,7 @@
 </template>
 
 <script>
-import { getCommodityDetail } from '@/api/user'
+import { selectAfterType } from '@/api/BeeApi/user'
 export default {
   // NOTE 根据选择条件更改title
   metaInfo: {
@@ -91,7 +97,18 @@ export default {
   data() {
     return {
       commodity: {},
-      selectNum: 1
+      // 选择的数量
+      selectNum: 1,
+      // 首次申请传商品id, 修改申请传 申请单 aid
+      order_product_id: this.$route.query.order_product_id,
+      // 修改申请传 申请单 aid
+      aid: this.$route.query.aid,
+      // 售后类型图标
+      icon: {
+        return: require('@/assets/icon/personalCenter/afterApply/mine_order_types_icon_return@2x.png'),
+        exchange: require('@/assets/icon/personalCenter/afterApply/mine_order_types_icon_exchange@2x.png'),
+        makeup: require('@/assets/icon/personalCenter/afterApply/mine_order_types_icon_makeup@2x.png')
+      }
     }
   },
   computed: {},
@@ -100,20 +117,51 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getCommodityDetailData()
+    if (this.order_product_id) {
+      this.getCommodityDetailData({ order_product_id: this.order_product_id })
+    }
+    if (this.aid) {
+      this.getCommodityDetailData({ aid: this.aid })
+    }
   },
   methods: {
-    async getCommodityDetailData() {
-      const res = await getCommodityDetail()
-      this.commodity = res.data.commodity
+    // 获取申请售后的订单商品信息
+    async getCommodityDetailData(data) {
+      const res = await selectAfterType(data)
+      this.commodity = res.data
+    },
+    // 跳转到申请数据页面，1退 2换 3补  使用同一个页面
+    goApply(type) {
+      if (this.order_product_id) {
+        this.$router.push({
+          path: '/persion/order/applyAfter/refund',
+          query: {
+            apply_number: this.selectNum,
+            type_code: type,
+            order_product_id: this.order_product_id
+          }
+        })
+      }
+      if (this.aid) {
+        this.$router.push({
+          path: '/persion/order/applyAfter/refund',
+          query: {
+            apply_number: this.selectNum,
+            type_code: type,
+            aid: this.aid
+          }
+        })
+      }
     }
+
   }
 }
 </script>
 
 <style scoped lang="less">
 .apply-after {
-
+  .type-img{width:0.3rem ;height: 0.27rem; margin-right: 0.1rem}
+  .type-value{font-size: 0.22rem; color: #999;}
   .after-content {
     padding-top: 0.3rem;
     .commodity-card {

@@ -17,7 +17,6 @@
       >
         <img
           :src="beeIcon.cat_pic_select"
-          alt=""
         >
       </div>
     </van-badge-group>
@@ -54,10 +53,8 @@
               @click="$router.push({path:'/category/SecCategoryList',query:{cid:item2.cid}})"
             >
               <div class="category3-img">
-                <img
-                  :src="item2.cat_image"
-                  alt=""
-                >
+                <img :src="item2.cat_image">
+                <!-- <img v-lazy="item2.cat_image"> -->
               </div>
               <div class="category3-title">
                 {{ item2.cname }}
@@ -75,10 +72,8 @@
             @click="$router.push({path:'/category/SecCategoryList',query:{cid:item.cid}})"
           >
             <div class="category3-img">
-              <img
-                :src="item.cat_image"
-                alt=""
-              >
+              <img :src="item.cat_image">
+              <!-- <img v-lazy="item.cat_image"> -->
             </div>
             <div class="category3-title">
               {{ item.cname }}

@@ -1,43 +1,60 @@
 <template>
   <div class="after-op">
+    <!-- 已关闭的时候可以删除售后单 -->
     <van-button
-      v-if="[0].indexOf(afterDetail.status)!==-1"
+      v-if="[5].indexOf(afterDetail.status_code) !== -1"
       round
-      @click="cancelPop=true"
+      type="default"
+      @click="delAfterOrder"
     >
       删除售后单
     </van-button>
+    <!-- 审核 和 已拒绝 可修改申请 -->
     <van-button
-      v-if="[1].indexOf(afterDetail.status)!==-1"
+      v-if="[-1, 0].indexOf(afterDetail.status_code) !== -1"
       round
-      @click="cancelPop=true"
+      type="default"
+      @click="changeApply"
     >
       修改申请
     </van-button>
+    <!-- 待买家发货 可填写物流单号 -->
     <van-button
-      v-if="[2].indexOf(afterDetail.status)!==-1"
+      v-if="[1].indexOf(afterDetail.status_code) !== -1"
       round
-      @click="cancelPop=true"
+      type="default"
+      @click="fillLogisticsNumber"
     >
       填写物流单号
     </van-button>
+    <!-- 审核 待买家发货 已拒绝 可撤销 -->
     <van-button
-      v-if="[1].indexOf(afterDetail.status)!==-1"
+      v-if="[-1, 0, 1].indexOf(afterDetail.status_code) !== -1"
       round
-      @click="cancelPop=true"
+      type="default"
+      @click="cancelApply"
     >
       撤销申请
     </van-button>
-    <van-button
-      round
-      @click="cancelPop=true"
-    >
+    <!-- 无论哪个状态都可 联系客服 -->
+    <van-button round type="default" @click="contactServer">
       联系客服
+    </van-button>
+    <!-- 换货且待买家收货时 可确认收货 -->
+    <van-button
+      v-if="afterDetail.type_code === 3 && afterDetail.status_code === 3"
+      type="default"
+      round
+      class="btn-complete"
+      @click="complete"
+    >
+      确认完成
     </van-button>
   </div>
 </template>
 
 <script>
+import { delAfterOrder, cancelAfterOrder } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {
@@ -49,13 +66,93 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      aid: this.$route.query.aid
+    }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    // 删除售后单
+    async delAfterOrder() {
+      this.$dialog
+        .confirm({
+          title: '提示',
+          message: '确定删除该售后单？'
+        })
+        .then(async() => {
+          // on confirm
+          const res = await delAfterOrder({ aid: this.aid })
+          this.$toast.success(res.message)
+        })
+        .catch(() => {
+          this.$toast('已取消')
+        })
+    },
+
+    // 修改申请
+    changeApply() {
+      this.$router.push({
+        path: '/persion/order/applyAfter',
+        query: {
+          aid: this.aid
+        }
+      })
+    },
+
+    // 填写物流单号
+    fillLogisticsNumber() {
+      this.$router.push({
+        path: '/persion/order/applyAfter',
+        query: {
+          aid: this.aid
+        }
+      })
+    },
+
+    // 撤销申请
+    cancelApply() {
+      this.$dialog
+        .confirm({
+          title: '提示',
+          message: '确定撤销该售后单？'
+        })
+        .then(async() => {
+          // on confirm
+          const res = await cancelAfterOrder({ aid: this.aid })
+          this.$toast.success(res.message)
+        })
+        .catch(() => {
+          this.$toast('已取消')
+        })
+    },
+
+    // 联系客服
+    contactServer() {
+      this.$router.push({
+        path: '/persion/ServiceHelper'
+      })
+    },
+
+    // 确认完成
+    complete() {
+      this.$dialog
+        .confirm({
+          title: '提示',
+          message: '确定完成？'
+        })
+        .then(async() => {
+          // on confirm
+          const res = await cancelAfterOrder({ aid: this.aid })
+          this.$toast.success(res.message)
+        })
+        .catch(() => {
+          this.$toast('已取消')
+        })
+    }
+  }
 }
 </script>
 
@@ -82,6 +179,10 @@ export default {
     font-size: 0.26rem;
     color: @Grey2;
     border-color: @Grey2;
+  }
+  .btn-complete {
+    border-color: #f49822;
+    color: #f49822;
   }
 }
 </style>

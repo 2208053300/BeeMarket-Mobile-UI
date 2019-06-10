@@ -1,28 +1,36 @@
 <template>
   <div class="after-detail">
+    <!-- 状态内容 -->
     <div class="after-title">
-      <div class="after-text">
-        <span v-if="afterDetail.status===0">已关闭</span>
-        <span v-if="afterDetail.status===1">审核中</span>
-        <span v-if="afterDetail.status===2">处理中（待买家发货）</span>
-        <span v-if="afterDetail.status===3">处理中（待商家收货）</span>
-        <span v-if="afterDetail.status===4">已完成</span>
+      <div class="flex align-center flex-between">
+        <div>
+          <div class="after-text">
+            <!-- <span v-if="afterDetail.status_code===0">已关闭</span>
+          <span v-if="afterDetail.status_code===1">审核中</span>
+          <span v-if="afterDetail.status_code===2">处理中（待买家发货）</span>
+          <span v-if="afterDetail.status_code===3">处理中（待商家收货）</span>
+          <span v-if="afterDetail.status_code===4">已完成</span> -->
+            <span>{{ afterDetail.status_content.status_name }}</span>
+          </div>
+          <!-- <span
+          v-if="[1,2,3].indexOf(afterDetail.status_code)!==-1"
+          class="status-text2"
+        > -->
+          <span v-if="afterDetail.status_content.remain_time" class="status-text2">
+            <!-- TODO 这里是时分秒倒计时？ -->
+            剩余时间: {{ remain_time_sec }}
+          </span>
+        </div>
+        <img :src="refundImg" alt="" class="refund-img">
       </div>
-      <span
-        v-if="[1,2,3].indexOf(afterDetail.status)!==-1"
-        class="status-text2"
-      >
-        <!-- TODO 这里是时分秒倒计时？ -->
-        剩余时间: {{ afterDetail.payTime }}
-      </span>
     </div>
     <div class="detail-content">
-      <after-status
-        :after-detail="afterDetail"
-        class="details-card"
-      />
+      <!-- 状态描述 -->
+      <after-status :after-detail="afterDetail" class="details-card" />
+
+      <!-- 待商家收货2、已完成4 有物流信息 -->
       <div
-        v-if="[3,4].indexOf(afterDetail.status)!==-1"
+        v-if="[2, 4].indexOf(afterDetail.status) !== -1"
         class="logistics-text details-card"
       >
         <span class="logistics-title">
@@ -32,14 +40,21 @@
           <van-cell
             icon="shop-o"
             is-link
+            @click="
+              router.push({
+                path: '/persion/order/logisticsDetail',
+                query: { aid: afterDetail.aid }
+              })
+            "
           >
+            <!-- to="/persion/order/logisticsDetail" -->
             <template slot="title">
               <div class="logistics-detail2">
                 <div class="logistics-address">
-                  到达目的地网点
+                  {{ afterDetail.express_info.context }}
                 </div>
                 <div class="logistics-time">
-                  2019-5-9
+                  {{ afterDetail.express_info.time }}
                 </div>
               </div>
             </template>
@@ -49,30 +64,49 @@
       <div class="go-details details-card">
         <van-cell-group>
           <van-cell
+            v-if="afterDetail.type_code === 3"
+            title="物流信息"
+            value="查看详情"
+            is-link
+            @click="
+              router.push({
+                path: '/persion/order/logisticsDetail',
+                query: { aid: afterDetail.aid }
+              })
+            "
+          />
+          <van-cell
             title="进度详情"
             value="查看详情"
             is-link
-            to="/persion/order/afterList/afterProgress"
+            @click="
+              $router.push({
+                path: '/persion/order/afterList/afterProgress',
+                query: { aid: afterDetail.aid }
+              })
+            "
           />
           <van-cell
             title="沟通记录"
             value="查看详情"
             is-link
-            to="/persion/order/afterList/communicationRecord"
+            @click="
+              $router.push({
+                path: '/persion/order/afterList/communicationRecord',
+                query: { aid: afterDetail.aid }
+              })
+            "
           />
         </van-cell-group>
       </div>
-      <order-detail
-        :after-detail="afterDetail"
-        class="details-card"
-      />
+      <order-detail :after-detail="afterDetail" class="details-card" />
     </div>
     <after-op :after-detail="afterDetail" />
   </div>
 </template>
 
 <script>
-import { getAfterDetail } from '@/api/user'
+import { getAfterDetail } from '@/api/BeeApi/user'
 import afterStatus from './components/afterStatus'
 import orderDetail from './components/orderDetail'
 import afterOp from './components/afterOp'
@@ -89,7 +123,14 @@ export default {
   props: {},
   data() {
     return {
-      afterDetail: {}
+      // 售后单id
+      aid: this.$route.query.aid,
+      // 售后单详情
+      afterDetail: {},
+      // 剩余处理时间
+      remain_time_sec: 0,
+      // 顶部状态栏右边图片
+      refundImg: require('@/assets/icon/personalCenter/refund/mine_order_img_top_customerapply@2x.png')
     }
   },
   computed: {},
@@ -101,23 +142,61 @@ export default {
     this.getAfterDetailData()
   },
   methods: {
+    // 获取售后单详情数据
     async getAfterDetailData() {
-      const res = await getAfterDetail()
-      this.afterDetail = res.data.orderData
+      const res = await getAfterDetail({ aid: this.aid })
+      this.afterDetail = res.data
+      // this.remain_time_sec = this.afterDetail.status_content.remain_time
+      setInterval(() => {
+        this.afterDetail.status_content.remain_time--
+        // this.remain_time_sec--
+        this.remain_time_sec = this.formatSeconds(this.afterDetail.status_content.remain_time)
+      }, 1000)
+    },
+    // 剩余处理时间 秒转时分
+    // 将秒数转换为时分秒格式
+    formatSeconds(value) {
+      let theTime = parseInt(value) // 秒
+      let middle = 0 // 分
+      let hour = 0 // 小时
+      let day = 0 // 天
+      if (theTime > 60) {
+        middle = parseInt(theTime / 60)
+        theTime = parseInt(theTime % 60)
+        if (middle > 60) {
+          hour = parseInt(middle / 60)
+          middle = parseInt(middle % 60)
+          if (hour > 24) {
+            day = parseInt(hour / 24)
+            hour = parseInt(hour % 24)
+          }
+        }
+      }
+      let result = '' + parseInt(theTime) + '秒'
+      if (middle > 0) {
+        result = '' + parseInt(middle) + '分' + result
+      }
+      if (hour > 0) {
+        result = '' + parseInt(hour) + '小时' + result
+      }
+      if (day > 0) {
+        result = '' + parseInt(day) + '天' + result
+      }
+      return result
     }
+
   }
 }
 </script>
 
 <style scoped lang="less">
 .after-detail {
-
   padding-bottom: 1rem;
   .after-title {
     height: 1.8rem;
     color: #ffffff;
     background-color: @BeeDefault;
-    padding: 0.5rem 0.32rem 0.66rem;
+    padding: 0.3rem 0.32rem 0.66rem;
     box-sizing: border-box;
     .after-text {
       margin-bottom: 0.2rem;
@@ -169,5 +248,10 @@ export default {
       }
     }
   }
+  .refund-img{
+    width: 1.51rem;
+    height: 1.21rem;
+  }
+
 }
 </style>

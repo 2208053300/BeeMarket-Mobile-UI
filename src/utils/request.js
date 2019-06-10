@@ -13,17 +13,26 @@ service.interceptors.request.use(
   config => {
     // 暂时加上TOKEN
     // config.headers['BM-App-Token'] = getToken()
-    config.headers['BM-App-Token'] = 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk1NjYxNjksImV4cCI6MTU2MjE1ODE2OSwianRpIjoiN2MzNWZhNjZjYjIwMzE1MGFjNDRmOGNmMjdiNGZmOWMiLCJzZWMiOiI1Y2Q1YTcyMmI2ZTk5YTViMjJhZDBjODhhMGUzMzcxYiIsInNpZyI6ImUyYjczZGRhMWY0YmRmYmQzYWZmYzYxNDMxZWNlNTQ4NGQxZTVmMWE2NzY5NGM4OTAxNzdhOGQ5MzM3MWQwODcifQ.J-KJUqlpYr6TlyqyfmrlMsJ5NhNZpo933j6rPmxchBw'
+    config.headers['BM-App-Token'] = 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTk4MDM5NjksImV4cCI6MTU2MjM5NTk2OSwianRpIjoiMGY4NTNjNjNhNmE4M2Q4ZjhkZjFmNjhlYzgzOWE4ZGYiLCJzZWMiOiIzMTY5YTA3YTcwYmJkZGNiY2M1YjMwYzM2MWJmNTZlOCIsInNpZyI6ImU0ZmUxNjcwNWQ3NTQxODkwODNlMzk3ODM0YjQ5NDE2OTg3ZWM0YWU4OTVjMDNmYmYyM2M5OTA0MjM3NWVjMGYifQ.AmN2XqqG-M-sTER5DphtarnJRHiQqxn-GUHBd8jpht0'
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
       config.headers['Content-Type'] = 'application/json'
+      // config.headers['Content-Type'] = 'application/*'
       // console.log(config.data)
       return config
     }
     // 去除options预请求方法
     if (config.method === 'post') {
-      config.data = qs.stringify(config.data)
+      console.log(config.data, typeof config.data)
+      if (config.data) {
+        const keys = Object.keys(config.data)
+        if (keys.length > 0) {
+          config.data = qs.stringify(config.data)
+        }
+      }
+
+      // config.data = qs.stringify(config.data)
       console.log('请求参数：', config.data)
     }
     return config
