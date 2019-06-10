@@ -27,15 +27,18 @@ module.exports = {
   },
   // 赠送好友
   beeGift: {
-    entry: 'src/pages/BeeGift/main.js'
+    entry: 'src/pages/BeeGift/main.js',
+    title: '赠送好友'
   },
   // 蜂公益值
   beeCommonweal: {
-    entry: 'src/pages/BeeCommonweal/main.js'
+    entry: 'src/pages/BeeCommonweal/main.js',
+    title: '蜂公益值'
   },
   // 蜂公益行动详情
   beePublic: {
-    entry: 'src/pages/BeePublic/main.js'
+    entry: 'src/pages/BeePublic/main.js',
+    title: '行动详情'
   },
   // 文章详情
   beeArticle: {

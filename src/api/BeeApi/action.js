@@ -32,3 +32,11 @@ export function getArticleDetail(data) {
     params: data
   })
 }
+// 公益行动 - 分享详情
+export function getShareDetail(data) {
+  return request({
+    url: '/action/shareDetail',
+    method: 'post',
+    params: data
+  })
+}

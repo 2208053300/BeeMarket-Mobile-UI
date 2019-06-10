@@ -16,15 +16,8 @@
           <div
             class="card-content2 cardDesc"
             :class="{cardDesc2:showAll}"
-          >
-            哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-            哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-            哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-            哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-            哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-            哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-            哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-          </div>
+            v-html="actionData.project_desc"
+          />
           <div
             v-if="!showAll"
             class="show-all"
@@ -41,45 +34,21 @@
             项目进度
           </div>
           <div class="card-content2">
-            <div class="time-content">
+            <div
+              v-for="(item,index) in actionData.project_progress"
+              :key="index"
+              class="time-content"
+            >
               <div class="time">
                 <div class="torus" />
-                2019-5-27 11:11:11
+                {{ item.created_at }}
               </div>
               <div class="title-content2">
                 <div class="time-title">
-                  助力人数已达一半
+                  {{ item.schedule_main_title }}
                 </div>
                 <div class="time-subhead">
-                  副标题副标题副标题副标题副标题副标题
-                </div>
-              </div>
-            </div>
-            <div class="time-content">
-              <div class="time">
-                <div class="torus" />
-                2019-5-27 11:11:11
-              </div>
-              <div class="title-content2">
-                <div class="time-title">
-                  助力人数已达一半
-                </div>
-                <div class="time-subhead">
-                  副标题副标题副标题副标题副标题副标题
-                </div>
-              </div>
-            </div>
-            <div class="time-content">
-              <div class="time">
-                <div class="torus" />
-                2019-5-27 11:11:11
-              </div>
-              <div class="title-content2">
-                <div class="time-title">
-                  助力人数已达一半
-                </div>
-                <div class="time-subhead">
-                  副标题副标题副标题副标题副标题副标题
+                  {{ item.schedule_subtitle }}
                 </div>
               </div>
             </div>
@@ -94,7 +63,12 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 export default {
   components: {},
-  props: {},
+  props: {
+    actionData: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     return {
       BeeDefault,
@@ -138,8 +112,8 @@ export default {
         font-size: 0.22rem;
         color: @Grey2;
         &:not(:last-child) .title-content2 {
-            border-left: 0.02rem solid @Grey4;
-          }
+          border-left: 0.02rem solid @Grey4;
+        }
         .torus {
           border-radius: 50%;
           height: 0.2rem;

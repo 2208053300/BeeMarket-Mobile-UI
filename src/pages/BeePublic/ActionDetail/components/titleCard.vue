@@ -9,15 +9,15 @@
       </div>
       <div class="title-content2">
         <div class="title1">
-          标题标题标题标题标题
+          {{ actionData.main_title }}
         </div>
         <div class="subhead1">
-          副标题标题标题标题标题
+          {{ actionData.caption }}
         </div>
-        <div class="address-content">
+        <!-- <div class="address-content">
           <van-icon :name="beeIcon.confirmorder_icon_address_gray" />
           青海 玉树州
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="people-content">
@@ -31,7 +31,7 @@
         <div class="text-content">
           <span>已参与助力</span>
           <p class="person-num">
-            <span class="bee-text">5000</span>人
+            <span class="bee-text">{{ actionData.participate_num }}</span>人
           </p>
         </div>
       </div>
@@ -45,7 +45,7 @@
         <div class="text-content">
           <span>目标参与需</span>
           <p class="person-num">
-            <span class="bee-text">5000</span>人
+            <span class="bee-text">{{ actionData.initiate_people_num }}</span>人
           </p>
         </div>
       </div>
@@ -56,7 +56,12 @@
 <script>
 export default {
   components: {},
-  props: {},
+  props: {
+    actionData: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     return {
       beeIcon: {
@@ -88,7 +93,6 @@ export default {
       width: 0.92rem;
     }
     .title-content2 {
-      margin-top: 0.2rem;
       .title1 {
         font-size: 0.32rem;
       }
@@ -127,7 +131,7 @@ export default {
       }
       .text-content {
         font-size: 0.26rem;
-        .person-num{
+        .person-num {
           padding: 0;
           margin: 0;
           margin-top: 0.08rem;

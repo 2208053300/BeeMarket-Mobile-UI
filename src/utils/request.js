@@ -18,6 +18,7 @@ service.interceptors.request.use(
       forbidClick: true,
       duration: 0
     })
+    console.log('请求参数：', config.data)
     // 强制设置 token 在 getToken 函数中设置
     if (isLogin()) {
       config.headers['BM-App-Token'] = getToken()
@@ -32,7 +33,6 @@ service.interceptors.request.use(
     // 去除options预请求方法
     if (config.method === 'post') {
       config.data = qs.stringify(config.data)
-      console.log('请求参数：', config.data)
     }
     return config
   },
@@ -65,7 +65,7 @@ service.interceptors.response.use(
     } else {
       Toast.success(res.message)
     }
-    // console.log(res)
+    console.log(res)
     return res
   },
   error => {

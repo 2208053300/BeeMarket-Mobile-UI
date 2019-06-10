@@ -11,14 +11,15 @@
       </div>
     </van-notice-bar>
     <div class="detail-content">
-      <header-card />
+      <header-card :action-data="actionData" />
       <div class="between-text">
         — 蜂集市 & 中瀚集团在行动，携手发起公益项目 —
       </div>
-      <title-card />
-      <detail-card />
+      <title-card :action-data="actionData" />
+      <detail-card :action-data="actionData" />
+      <caring-enterprise :action-data="actionData" />
     </div>
-    <footer-op />
+    <footer-op :action-data="actionData" />
   </div>
 </template>
 
@@ -26,12 +27,16 @@
 import headerCard from './components/headerCard'
 import titleCard from './components/titleCard'
 import detailCard from './components/detailCard'
+import caringEnterprise from './components/caringEnterprise'
 import footerOp from './components/footerOp'
+import { getShareDetail } from '@/api/BeeApi/action'
+
 export default {
   components: {
     headerCard,
     titleCard,
     detailCard,
+    caringEnterprise,
     footerOp
   },
   props: {},
@@ -39,14 +44,22 @@ export default {
     return {
       beeIcon: {
         confirmorder_send_icon_presentation: require('@/assets/icon/order/confirmorder_send_icon_presentation@2x.png')
-      }
+      },
+      actionData: {}
     }
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
-  methods: {}
+  mounted() {
+    this.getShareDetailData()
+  },
+  methods: {
+    async getShareDetailData() {
+      const res = await getShareDetail({ user_id: 1, id: 2 })
+      this.actionData = res.data
+    }
+  }
 }
 </script>
 

@@ -1,32 +1,46 @@
 <template>
-  <div class="header-card">
+  <div
+    class="header-card"
+    :style="{backgroundImage:'url('+actionData.background_image_url+')'}"
+  >
     <div class="action-img">
       <img
-        src=""
+        :src="beeIcon.confirmorder_pic_word_top"
         alt=""
       >
     </div>
-    <div class="header-text1">
-      <span class="text1">只要人人献出一点爱，世界将变成美好的人间</span>
+    <div class="header-card2">
+      <div class="header-img">
+        <img
+          :src="actionData.head_img"
+          alt=""
+        >
+      </div>
+      <span class="user-name">
+        {{ actionData.nickname }}
+      </span>
+      <p class="header-text2">
+        ”{{ actionData.top_desc }}“
+      </p>
     </div>
-    <div class="header-img">
-      <img src="" alt="">
-    </div>
-    <span class="user-name">
-      @呵呵呵呵
-    </span>
-    <p class="header-text2">
-      “来和我一起<span class="bee-text">为公益助力</span>吧！”
-    </p>
   </div>
 </template>
 
 <script>
 export default {
   components: {},
-  props: {},
+  props: {
+    actionData: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
-    return {}
+    return {
+      beeIcon: {
+        confirmorder_pic_word_top: require('@/assets/icon/discover/confirmorder_pic_word_top@2x.png')
+      }
+    }
   },
   computed: {},
   watch: {},
@@ -39,44 +53,49 @@ export default {
 <style scoped lang="less">
 .header-card {
   border-radius: 0.08rem;
-  background-color: @Yellow3;
-  padding: 0.2rem 0.2rem 0.4rem;
+  padding: 0.4rem 0.16rem 0.16rem;
   text-align: center;
   box-shadow: 0 0 0.2rem @Grey6;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
   .action-img {
-    height: 2.8rem;
-    background-color: @Grey2;
+    height: 0.98rem;
+    width: 3.58rem;
     border-radius: 0.08rem;
+    margin: auto;
   }
-  .header-text1 {
-    margin-top: 0.44rem;
-    font-size: 0.3rem;
-    text-align: center;
-    .text1 {
-      background-image: -webkit-linear-gradient(top, #e62330, #ffae00);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+  .header-card2 {
+    margin-top: 1rem;
+    width: 6.6rem;
+    height: 2.2rem;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 0.08rem;
+    position: relative;
+    .header-img {
+      width: 1.1rem;
+      height: 1.1rem;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 0.04rem solid rgba(255, 255, 255, 0.3);
+      margin: auto;
+      position: relative;
+      top: -0.55rem;
     }
-  }
-  .header-img{
-    margin: 0.48rem auto 0.16rem;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: @Grey2;
-  }
-  .user-name{
-    font-size: 0.3rem;
-  }
-  .header-text2{
-    font-size: 0.3rem;
-    margin: 0;
-    padding: 0;
-    margin-top: 0.2rem;
-    .bee-text{
-      color: @BeeDefault;
+    .user-name {
+      font-size: 0.4rem;
+      font-weight: bold;
+      margin-top: 0.2rem;
+      position: relative;
+      top: -0.45rem;
+    }
+    .header-text2 {
+      font-size: 0.32rem;
+      margin: 0;
+      padding: 0;
+      margin-top: 0.2rem;
+      position: relative;
+      top: -0.45rem;
     }
   }
 }
