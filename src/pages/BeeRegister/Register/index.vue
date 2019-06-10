@@ -20,43 +20,73 @@
       </div>
       <div class="register">
         <img src="../../../assets/icon/register/logo@2x.png" alt="">
-        <label>
-          <input id="phoneNum" type="text" placeholder="输入手机号码" class="phoneNum" data-checked="false">
+        <!-- <label>
+          <input id="phoneNum" v-model.trim="phone" type="text" placeholder="输入手机号码" class="phoneNum" data-checked="false" @input="inputPhone">
           <img src="../../../assets/icon/register/icon_phone@2x.png" style="width:0.29rem;height:0.46rem;">
         </label>
-        <p class="PN">
+        <p v-if="isPhone" class="PN">
           请输入正确的手机号码!
-        </p>
-        <label class="flex ">
-          <input id="check" type="text" placeholder="输入验证码" class="check" data-checked="">
-          <input id="getCaptcha" type="button" value="获取验证码">
-        </label>
-        <p class="CH">
-          验证码错误!
-        </p>
-        <label class="phoneImg">
-          <input id="password" type="password" placeholder="设置密码（6-16位数字，英文及特殊字符）" data-checked="">
-          <img src="../../../assets/icon/register/icon_bukejian@2x.png" style="width:0.36rem; height:0.18rem;">
-        </label>
-        <p class="PW">
-          密码格式错误!
-        </p>
+        </p> -->
+        <div class="form-group">
+          <div class="form-control">
+            <div class="input-box">
+              <input v-model.trim="phone" type="text" name="name" placeholder="输入手机号码" @input="inputPhone">
+              <img src="../../../assets/icon/register/icon_phone@2x.png">
+            </div>
+            <p v-if="isPhone" class="help-text">
+              请正确输入手机号码！
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-control">
+            <div class="flex flex-between">
+              <div class="input-box">
+                <input v-model.trim="validNum" type="text" name="validNum" placeholder="输入验证码" @input="inputValidNum">
+              </div>
+              <van-button v-show="isShowBtn" round class="valid-btn" :class="{active: canGetValid ===true}" @click="getValidNum">
+                获取验证码
+              </van-button>
+              <van-button v-show="!isShowBtn" round class="valid-btn" :class="{active: canGetValid ===true}">
+                <span>{{ downTime }}</span>s
+              </van-button>
+            </div>
+            <p v-if="isValidNum" class="help-text">
+              请正确输入验证码！
+            </p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-control">
+            <div class="input-box">
+              <input v-model.trim="pw" :type="[isShowPw===true?'text':'password']" name="pw" placeholder="设置密码（6-16位数字，英文及特殊字符）" @input="inputPw">
+              <img v-show="!isShowPw" src="../../../assets/icon/register/icon_bukejian@2x.png" class="eye" @click="isShowPw = true">
+              <img v-show="isShowPw" src="../../../assets/icon/register/icon_kejian.png" class="eye" @click="isShowPw = false">
+            </div>
+
+            <p v-if="isPw" class="help-text">
+              请正确输入密码！
+            </p>
+          </div>
+        </div>
+
         <div>
           <p class="flex flex-center align-center">
-            <img src="../../../assets/icon/register/checked.svg" class="checked">
-            <!-- <img src="../../../assets/icon/register/unchecked.svg" class="unchecked"> -->
+            <img v-show="isAgree===true" src="../../../assets/icon/register/checked.svg" class="checked" @click="isAgree=false">
+            <img v-show="isAgree===false" src="../../../assets/icon/register/unchecked.svg" class="checked" @click="isAgree=true">
             <span>
               阅读并同意蜂集市<a @click="goAgreenment">用户注册协议</a>
             </span>
           </p>
         </div>
-        <p class="agm">
+        <p v-show="isAgree===false" class="agm">
           阅读并同意蜂集市用户注册协议
         </p><p class="dowl">
           <a @click="goDownloadPage">已注册用户可点击这里重新下载</a>
         </p>
       </div>
-      <div class="registerClick">
+      <div class="registerClick" @click="submit">
         <img src="../../../assets/icon/register/anniu@2x.png" alt="">
       </div>
     </div>
@@ -74,7 +104,21 @@ export default {
   props: {},
   data() {
     return {
-
+      phone: '',
+      isPhone: false,
+      validNum: '',
+      isValidNum: false,
+      pw: '',
+      isPw: false,
+      // 手机号码格式正确可点击按钮获取验证码
+      canGetValid: false,
+      // 密码是否可见
+      isShowPw: false,
+      // 是否同意协议
+      isAgree: true,
+      // 验证码间隔时间
+      downTime: 10,
+      isShowBtn: true
     }
   },
   computed: {},
@@ -94,6 +138,7 @@ export default {
     // this.getArticleDetailData()
   },
   methods: {
+
     // 跳转到下载页面
     goDownloadPage() {
       this.$router.push({
@@ -108,6 +153,48 @@ export default {
       })
     },
 
+    // 提交注册
+    submit() {
+      console.log('123456s')
+    },
+
+    // 获取验证码
+    getValidNum() {
+      this.isShowBtn = false
+      this.downTime = 10
+      setInterval(() => {
+        this.downTime--
+        if (this.downTime < 0) {
+          this.downTime = 0
+          this.isShowBtn = true
+        }
+      }, 1000)
+    },
+    // 验证手机号码
+    inputPhone() {
+      if (!/^1[3456789]\d{9}$/.test(this.phone)) {
+        this.isPhone = true
+        this.canGetValid = false
+      } else {
+        this.isPhone = false
+        this.canGetValid = true
+      }
+    },
+    inputValidNum() {
+      if (this.validNum.length < 4) {
+        this.isValidNum = true
+      } else {
+        this.isValidNum = false
+      }
+    },
+    inputPw() {
+      if (this.pw.length < 6) {
+        this.isPw = true
+      } else {
+        this.isPw = false
+      }
+    },
+    // 示例
     goProduct(pid) {
       // 判断是否来自webApp
       if (this.$route.query.origin) {
@@ -164,10 +251,11 @@ export default {
 }
 
 .register > p {
+  margin-top: 0.1rem;
     margin-left: 5px;
     color: red;
     font-size: 12px;
-    display: none;
+    // display: none;
 }
 
 .register .agm {
@@ -190,11 +278,11 @@ export default {
 
 .register > div {
     font-size: 12px;
-    text-align: center;
+    // text-align: center;
     overflow: hidden;
     float: left;
     width: 100%;
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
 }
 
 .modal .register > img {
@@ -222,12 +310,12 @@ export default {
     right: 10px;
 }
 
-.register div p {
-    text-align: center;
-    margin-top: 20px;
-    width: 100%;
-    padding-bottom: 5px;
-}
+// .register div p {
+//     text-align: center;
+//     margin-top: 20px;
+//     width: 100%;
+//     padding-bottom: 5px;
+// }
 
 .register p img {
     width: 20px;
@@ -259,7 +347,7 @@ export default {
 }
 
 .register input {
-    margin-top: 20px;
+    // margin-top: 20px;
     border: 0;
     padding: 10px;
     border-radius: 20px;
@@ -312,4 +400,77 @@ label .check {
     width: 200px;
 }
 
+.form-group {
+  margin-top: 0.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // margin-bottom: 0.3rem;
+    label {
+      font-size: 0.3rem;
+      color: #333;
+      font-weight: 800;
+      width: 2rem;
+      text-align: right;
+      span {
+        color: #ff4918;
+      }
+    }
+    .form-control{width:100%;}
+    .input-box{position: relative;
+      img{
+        position: absolute;
+        top:  0.15rem;
+        right: 0.5rem;
+        width:0.29rem;
+        height:0.46rem;
+      }
+      .eye{
+        width:0.36rem;
+        height:0.18rem;
+        top: 0.3rem;
+      }
+    }
+    input,
+    select {
+      width: 100%;
+      height: 0.74rem;
+      line-height: 0.74rem;
+      background: #eee;
+      border: none;
+      font-size: 0.28rem;
+      color: #333;
+      padding: 0 0.2rem;
+    }
+    textarea {
+      width: 4.2rem;
+      background: #eee;
+      border: none;
+      font-size: 0.28rem;
+      color: #333;
+      padding: 0.2rem;
+    }
+  }
+  .help-text {
+    font-size: 0.24rem;
+    color: red;
+    margin-top: 0.1rem;
+    margin-bottom: 0;
+    // display: none;
+  }
+  .valid-btn{
+    height: 0.74rem;
+    line-height: 0.74rem;
+    font-size: 0.28rem;
+    color: #333;
+    padding: 0 0.2rem;
+    background: #f4f4f4;
+    border: none;
+    pointer-events: none;
+  }
+  .valid-btn.active{
+     background: #FEB300;
+     color: #fff;
+     pointer-events: auto;
+  }
 </style>
