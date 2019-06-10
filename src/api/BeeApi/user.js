@@ -80,6 +80,14 @@ export function delAddress(data) {
     data
   })
 }
+// 用户收货地址设置为默认地址
+export function defaultAddress(data) {
+  return request({
+    url: '/user/addr/default',
+    method: 'post',
+    data
+  })
+}
 // 购物车商品列表
 export function getShopcartList(data) {
   return request({
@@ -136,10 +144,26 @@ export function getAfterList(data) {
     data
   })
 }
+// 消息中心-首页
+export function getNewestNews(data) {
+  return request({
+    url: '/user/news/newestNews',
+    method: 'post',
+    data
+  })
+}
 // 我的售后单详情
 export function getAfterDetail(data) {
   return request({
     url: '/user/customer/detail',
+    method: 'post',
+    data
+  })
+}
+// 消息中心-列表
+export function getNewestNewsList(data) {
+  return request({
+    url: '/user/news/list',
     method: 'post',
     data
   })
@@ -152,6 +176,14 @@ export function getAfterLogDetail(data) {
     data
   })
 }
+// 我的公益值
+export function mineCharityValue(data) {
+  return request({
+    url: '/user/mineCharityValue',
+    method: 'post',
+    data
+  })
+}
 // 我的售后单进度详情
 export function getAfterProgressDetail(data) {
   return request({
@@ -160,10 +192,26 @@ export function getAfterProgressDetail(data) {
     data
   })
 }
+// 公益值明细
+export function mineCharityValueDetail(data) {
+  return request({
+    url: '/user/mineCharityValue/detail',
+    method: 'post',
+    data
+  })
+}
 // 我的售后单沟通详情
 export function getAftercommunicationDetail(data) {
   return request({
     url: '/user/customer/interflow',
+    method: 'post',
+    data
+  })
+}
+// 我的订单
+export function getOrderList(data) {
+  return request({
+    url: '/user/order',
     method: 'post',
     data
   })
@@ -232,6 +280,14 @@ export function submitApplyData(data) {
     data
   })
 }
+// 邀请二维码
+export function getQrcode(data) {
+  return request({
+    url: '/user/invite/qrcode',
+    method: 'post',
+    data
+  })
+}
 
 // 个人中心 获取历史足迹数据
 export function getHistoryList(data) {
@@ -241,10 +297,26 @@ export function getHistoryList(data) {
     data
   })
 }
+// NOTE 获取用户已收藏商品/店铺
+export function getCollected(data) {
+  return request({
+    url: '/user/favorite/list',
+    method: 'post',
+    data
+  })
+}
 // 个人中心 删除历史
 export function delHistoryItem(data) {
   return request({
     url: '/user/history/delete',
+    method: 'post',
+    data
+  })
+}
+// NOTE 取消用户已收藏商品/店铺
+export function cancelCollect(data) {
+  return request({
+    url: '/product/cancelCollect',
     method: 'post',
     data
   })

@@ -122,7 +122,7 @@ export default {
     async getCategory2Data(cid, index) {
       this.nowFirCategoryId = cid
       // NOTE 定位border图片的位置
-      this.borderPosition = Number(index) * 58 + 14 + 'px'
+      this.borderPosition = Number(index) * 56 + 14 + 'px'
       const res = await getCategory2({ cid: cid })
       console.log('二级分类列表：', res)
 
