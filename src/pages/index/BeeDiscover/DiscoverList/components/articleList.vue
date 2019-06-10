@@ -2,17 +2,17 @@
   <div class="article-list">
     <van-pull-refresh
       v-model="loading"
-      @refresh="getArticleListData"
+      @refresh="reLoad"
     >
       <van-list
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
-        @load="onLoad"
+        @load="getArticleListData"
       >
         <div
-          v-for="(item) in articleList"
-          :key="item.title"
+          v-for="(item, index) in articleList"
+          :key="index"
           :class="{articleContent2:item.is_article}"
           class="article-content"
           @click="$router.push(`/discover/article/${item.id}`)"
@@ -41,31 +41,35 @@ export default {
     return {
       articleList: [],
       loading: false,
-      finished: false
+      finished: false,
+      page: 1,
+      pageSize: 10
     }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {
-    this.getArticleListData()
+    // this.getArticleListData()
   },
   methods: {
     async getArticleListData() {
-      const res = await getArticleList()
-      this.articleList = res.data
+      const res = await getArticleList({ page: this.page, pageSize: this.pageSize })
+      this.articleList.push(...res.data)
+      // 判断是否还有下一页
+      if (res.data.length >= this.pageSize) {
+        this.finished = false
+        this.page += 1
+      } else {
+        this.finished = true
+      }
       this.loading = false
     },
-    onLoad() {
-      // 异步更新数据
-      setTimeout(async() => {
-        const res = await getArticleList()
-        this.articleList.push(...res.data)
-        // 数据全部加载完成
-        if (this.articleList.length >= 40) {
-          this.finished = true
-        }
-      }, 500)
+    reLoad() {
+      // 刷新数据
+      this.articleList = []
+      this.page = 1
+      this.getArticleListData()
     }
   }
 }
@@ -94,10 +98,15 @@ export default {
     display: flex;
     align-items: center;
     .article-img {
+      flex-shrink: 0;
       width: 2.4rem;
       height: 1.9rem;
       margin-right: 0.24rem;
       margin-bottom: 0;
+      overflow: hidden;
+      img {
+        object-fit: cover;
+      }
     }
   }
 }
