@@ -2,38 +2,34 @@
   <div
     ref="combList"
     class="comb-list"
-    :style="{transform:'scale('+testData+')'}"
+    :style="{transform:'scale('+listScale+') translate('+listX+'px,'+listY+'px)'}"
   >
-    {{ testData }}
-
     <div
       v-for="(item,index) in FriendList"
       :key="index"
       class="line"
     >
       <div
-        v-for="item2 in item"
-        :key="item2.id"
-        :class="{showitem:showList.indexOf(item2.id)!==-1&&item2.name}"
-        :style="{background:'url('+beeIcon.hexagon_empty+') no-repeat 100% 100%'}"
+        v-for="(item2,index2) in item"
+        :key="index2"
+        :ref="'hexagon'+item2.id"
+        :class="[{showitem:showList.indexOf(item2.id)!==-1&&item2.name&&checkOverflow('hexagon'+item2.id)},{firstItem:item2.id===config.center_point.id}]"
         class="comb-card hexagon"
+        :test="index2"
         @click="showDetail(item2.id)"
       >
-        <!-- {{ item2.name }} -->
-        <!-- <img
-          :src="item2.head_img"
-          alt=""
-        > -->
+        <div class="box1" />
+        <div class="box2">
+          <div class="img-content">
+            <img
+              :src="item2.head_img"
+              alt=""
+            >
+          </div>
+        </div>
+        <div class="box3" />
       </div>
     </div>
-
-    <transition name="fade1">
-      <div
-        v-if="showTest3"
-        class="test1"
-        @click="showTest3=false"
-      />
-    </transition>
   </div>
 </template>
 
@@ -56,14 +52,14 @@ export default {
       max_row_count: 0,
       min_row_count: 0,
       FriendList: [],
-      beeIcon: {
-        hexagon_empty: require('@/assets/icon/beeFriends/hexagon_empty.svg')
-      },
       showTime: 0,
       showList: [],
       afItem: null,
-      testData: 1,
-      showTest3: true
+      listScale: 1,
+      listX: 0,
+      listY: 0,
+      lastX: 0,
+      lastY: 0
     }
   },
   computed: {},
@@ -71,14 +67,27 @@ export default {
   created() {},
   mounted() {
     this.getBeeFriendsData()
+    // 获取操作的DOM
     const combList = this.$refs.combList
-    console.log(this.$refs)
-
     const hammerEl = new Hammer(combList)
     var pinch = new Hammer.Pinch()
+    // 添加缩放事件
     hammerEl.add(pinch)
     hammerEl.on('pinch', evt => {
-      this.testData = evt.scale
+      if (evt.scale < 1.7) {
+        // 设置缩放
+        this.listScale = evt.scale
+      }
+    })
+    // 添加拖动事件
+    hammerEl.on('panmove', evt => {
+      this.listX = evt.deltaX + this.lastX
+      this.listY = evt.deltaY + this.lastY
+    })
+    // 记录拖动结束的位置，下次拖动起点
+    hammerEl.on('panend', evt => {
+      this.lastX = this.listX
+      this.lastY = this.listY
     })
   },
   methods: {
@@ -281,11 +290,21 @@ export default {
         this.showTime++
       }, 100)
     },
-    onPinch() {
-      this.testData = 123
-    },
     showDetail() {
       this.$emit('update:detailCard', true)
+    },
+    // REVIEW 判断是否超出屏幕
+    checkOverflow(val) {
+      const hrect = this.$refs[val][0].getBoundingClientRect()
+      const hTop = hrect.y
+      const hLeft = hrect.x
+      if (hTop > window.innerHeight - 50 || hTop < 50) {
+        return false
+      } else if (hLeft > window.innerWidth - 50 || hLeft < 50) {
+        return false
+      } else {
+        return true
+      }
     }
   }
 }
@@ -293,59 +312,90 @@ export default {
 
 <style scoped lang="less">
 .comb-list {
-  width: 100%;
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   .line {
     display: flex;
     justify-content: center;
     margin-top: -5px;
     .hexagon {
       opacity: 0;
-      background-repeat: no-repeat;
-      background-size: 100%;
-      height: 40px;
-      width: 40px;
-      min-width: 40px;
-      min-height: 40px;
+      width: 1.1rem;
+      height: 1.3rem;
       position: relative;
       transition: opacity 1s;
+      margin: 0 0.1rem;
+      margin-top: -5px;
+      .box1 {
+        width: 0;
+        border-left: 0.55rem solid transparent;
+        border-right: 0.55rem solid transparent;
+        border-bottom: 0.3rem solid #fff;
+      }
+      .box2 {
+        width: 1.1rem;
+        height: 0.65rem;
+        background-color: #fff;
+        .img-content {
+          position: absolute;
+          top: 0.24rem;
+          left: 0.16rem;
+          overflow: hidden;
+          width: 0.8rem;
+          height: 0.8rem;
+          box-sizing: border-box;
+          border-radius: 50%;
+          border: 0.04rem solid @BeeDefault;
+        }
+      }
+      .box3 {
+        width: 0;
+        border-top: 0.3rem solid #fff;
+        border-left: 0.55rem solid transparent;
+        border-right: 0.55rem solid transparent;
+      }
+    }
+    .firstItem {
+      position: relative;
+      left: -0.05rem;
+      top: -0.08rem;
+      .box1 {
+        width: 0;
+        border-left: 0.6rem solid transparent;
+        border-right: 0.6rem solid transparent;
+        border-bottom: 0.35rem solid #fff;
+      }
+      .box2 {
+        width: 1.2rem;
+        height: 0.75rem;
+        background-color: #fff;
+        .img-content {
+          position: absolute;
+          top: 0.24rem;
+          left: 0.1rem;
+          overflow: hidden;
+          width: 1rem;
+          height: 1rem;
+          box-sizing: border-box;
+          border-radius: 50%;
+          border: 0.04rem solid @BeeDefault;
+        }
+      }
+      .box3 {
+        width: 0;
+        border-top: 0.35rem solid #fff;
+        border-left: 0.6rem solid transparent;
+        border-right: 0.6rem solid transparent;
+      }
     }
     .showitem {
       opacity: 1;
     }
-  }
-  .test1 {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background-color: #000;
-    animation: test2 2s infinite;
-    position: relative;
-    top: 10px;
-    @keyframes test2 {
-      0% {
-        top: 0;
-      }
-      50% {
-        top: -10px;
-      }
-      100% {
-        top: 0;
-      }
-    }
-  }
-  .fade1-enter-active,
-  .fade1-leave-active {
-    animation-play-state: paused;
-    transition: all 3s;
-  }
-  .fade1-enter, .fade1-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    transform: translateY(-30px);
-    opacity: 0;
   }
 }
 </style>

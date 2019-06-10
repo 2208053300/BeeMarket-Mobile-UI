@@ -7,17 +7,21 @@
       @close="handleClose"
       @click-overlay="handleClose"
     >
-      <div class="card-content">
+      <div
+        class="card-content"
+        :style="{backgroundImage:'url('+beeIcon.bee_firends_basic_img_bg+')'}"
+      >
         <div class="card-header">
           <div class="title-content">
-            个人信息
+            <!-- <span>个人信息</span> -->
+            <span>厂家信息</span>
           </div>
           <div
             class="close-img"
             @click="handleClose"
           >
             <img
-              :src="beeIcon.confirmorder_send_icon_delete"
+              :src="beeIcon.bee_firends_basic_icon_off"
               alt=""
             >
           </div>
@@ -36,30 +40,51 @@
           <div class="user-name">
             用户名用户名
           </div>
-          <div class="user-grade">
-            <van-icon name="star-o" />
+          <!-- <div class="user-grade">
+            <van-icon :name="beeIcon.bee_firends_basic_icon_star" />
             <span class="name">合伙人</span>
+          </div> -->
+          <div class="store-name">
+            店铺名
           </div>
         </div>
-        <!-- <div class="partner-content">
-          <div class="partner">
+        <div class="partner-content">
+          <div
+            class="partner"
+            :style="{backgroundImage:'url('+beeIcon.bee_firends_img_bg_prompt+')'}"
+          >
             蜂集市合伙商家
           </div>
-        </div> -->
-        <div class="friends-content">
+        </div>
+        <!-- <div class="friends-content">
           <div class="friends-part">
-            <van-icon name="friends-o" />
+            <van-icon
+              :name="beeIcon.bee_firends_basic_icon_vendor"
+              class="firends-image"
+            />
+            <div class="friends-num">
+              厂商:<span class="num">43</span>个
+            </div>
+          </div>
+          <div class="friends-part">
+            <van-icon
+              :name="beeIcon.bee_firends_basic_icon_firend"
+              class="firends-image"
+            />
             <div class="friends-num">
               蜂友:<span class="num">43</span>个
             </div>
           </div>
           <div class="friends-part">
-            <van-icon name="friends-o" />
+            <van-icon
+              :name="beeIcon.bee_firends_basic_icon_association"
+              class="firends-image"
+            />
             <div class="friends-num">
               关联蜂友:<span class="num">43</span>个
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </van-popup>
   </div>
@@ -77,7 +102,13 @@ export default {
   data() {
     return {
       beeIcon: {
-        confirmorder_send_icon_delete: require('@/assets/icon/order/confirmorder_send_icon_delete@2x.png')
+        bee_firends_basic_icon_star: require('@/assets/icon/beeFriends/info/bee_firends_basic_icon_star.png'),
+        bee_firends_basic_icon_off: require('@/assets/icon/beeFriends/info/bee_firends_basic_icon_off.png'),
+        bee_firends_basic_img_bg: require('@/assets/icon/beeFriends/info/bee_firends_basic_img_bg.png'),
+        bee_firends_basic_icon_firend: require('@/assets/icon/beeFriends/info/bee_firends_basic_icon_firend.png'),
+        bee_firends_basic_icon_association: require('@/assets/icon/beeFriends/info/bee_firends_basic_icon_association.png'),
+        bee_firends_basic_icon_vendor: require('@/assets/icon/beeFriends/info/bee_firends_basic_icon_vendor.png'),
+        bee_firends_img_bg_prompt: require('@/assets/icon/beeFriends/rank/bee_firends_img_bg_prompt.png')
       }
     }
   },
@@ -101,6 +132,7 @@ export default {
       min-height: 6rem;
       width: 5.78rem;
       background-color: #ffc619;
+      background-size: contain;
       .card-header {
         padding-top: 0.22rem;
         display: flex;
@@ -154,6 +186,9 @@ export default {
           color: @Black1;
           margin: 0.2rem auto 0.16rem;
         }
+        .store-name{
+          font-size: 0.3rem;
+        }
         .user-grade {
           margin: auto;
           height: 0.32rem;
@@ -170,6 +205,7 @@ export default {
           }
           .name {
             margin-left: 0.08rem;
+            vertical-align: middle;
           }
         }
       }
@@ -191,6 +227,10 @@ export default {
           &:first-child {
             border-right: 0.02rem solid @Grey6;
           }
+          .firends-image {
+            font-size: 0.5rem;
+            margin: auto;
+          }
           .friends-num {
             font-size: 0.26rem;
             margin-top: 0.16rem;
@@ -209,6 +249,8 @@ export default {
           text-align: center;
           margin: auto;
           font-size: 0.24rem;
+          background-size: contain;
+          background-repeat: no-repeat;
         }
       }
     }
