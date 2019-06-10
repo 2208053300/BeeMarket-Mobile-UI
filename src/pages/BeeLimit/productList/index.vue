@@ -9,6 +9,7 @@
           v-for="item in commodityList.product_list"
           :key="item.pid"
           class="commodity-content"
+          @click="test11"
         >
           <div class="commodity-details">
             <div class="commodity-img">
@@ -54,7 +55,7 @@
         </div>
       </div>
       <div class="waiting-more">
-        <span>- 更多优品持续筹备中 - {{ test }}</span>
+        <span>- 更多优品持续筹备中 -{{ test1 }}</span>
       </div>
     </div>
   </div>
@@ -63,10 +64,11 @@
 <script>
 import { getBeeLimitList } from '@/api/BeeApi/home'
 import { getOs } from '@/utils'
+import Cookies from 'js-cookie'
 export default {
   metaInfo() {
     return {
-      title: this.thisTitle
+      title: '限量蜂抢'
     }
   },
   components: {},
@@ -74,8 +76,7 @@ export default {
   data() {
     return {
       commodityList: [],
-      test: '',
-      thisTitle: '限量蜂抢'
+      test1: ''
     }
   },
   computed: {},
@@ -85,12 +86,12 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getBeeLimitListData()
+    this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
   },
   methods: {
     async getBeeLimitListData() {
       const res = await getBeeLimitList()
       this.commodityList = res.data
-      this.thisTitle = '限量蜂抢'
     },
     getProgress(val1, val2) {
       return (val1 / val2) * 100 + '%'
@@ -107,11 +108,9 @@ export default {
         })
       } else if (osObj.isIphone) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({
-          'pid': pid,
-          'target': target
+          pid: pid,
+          target: target
         })
-        // window.webkit.messageHandlers.ToProductDetail.postMessage(pid, target)
-        this.test = 'iphone'
       } else if (osObj.isAndroid) {
         window.beeMarket.ToProductDetail(pid, target)
       } else {
@@ -122,6 +121,9 @@ export default {
           }
         })
       }
+    },
+    test11() {
+      window.open('https://www.baidu.com')
     }
   }
 }

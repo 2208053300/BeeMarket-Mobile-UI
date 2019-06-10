@@ -1,50 +1,44 @@
 <template>
   <div class="order-content">
     <div
-      v-for="card in orderList"
-      :key="card.storeName"
+      v-for="(card,index) in orderList"
+      :key="index"
       class="order-card"
     >
       <div class="card-title">
         <div class="store-name">
-          {{ card.storeName }}
+          {{ card.store_name }}
           <van-icon name="arrow" />
         </div>
         <div class="order-status">
           <!-- TODO 状态之后根据接口再V-IF -->
-          <span v-if="card.orderStatus===0">待支付</span>
-          <span v-if="card.orderStatus===1">待发货</span>
-          <span v-if="card.orderStatus===2">部分发货</span>
-          <span v-if="card.orderStatus===3">待收货</span>
-          <span v-if="card.orderStatus===4">待评价</span>
-          <span v-if="card.orderStatus===5">已评价</span>
-          <span v-if="card.orderStatus===6">交易关闭</span>
+          <span>{{ card.status_name }}</span>
         </div>
       </div>
       <div class="card-content">
         <div
-          v-for="product in card.product"
-          :key="product.id"
+          v-for="(product,index2) in card.product_list"
+          :key="index2"
           class="product-content"
         >
           <div class="product-img">
             <img
-              :src="product.previewImg"
+              :src="product.thumb_url"
               alt=""
             >
           </div>
           <div class="product-details">
             <div class="name-price">
               <div class="product-name">
-                {{ product.name }}
+                {{ product.product_name }}
               </div>
               <span class="product-price">￥{{ product.price }}</span>
             </div>
             <div class="sku-num">
               <div class="product-sku">
-                {{ product.sku }}
+                {{ product.props_name }}
               </div>
-              <span class="product-num">x{{ product.num }}</span>
+              <span class="product-num">x{{ product.number }}</span>
             </div>
           </div>
         </div>
@@ -53,23 +47,23 @@
         <span v-if="card.toFriend===1">赠送朋友订单</span>
         <div class="total-details">
           <div class="total-num">
-            共<span>{{ card.product.length }}</span>件商品
+            共<span>{{ card.total_number }}</span>件商品
           </div>
           <div class="total-price">
-            合计￥<span class="price-num">{{ card.totalPrice }}</span>
+            合计￥<span class="price-num">{{ card.order_amount }}</span>
           </div>
         </div>
       </div>
       <div class="order-op">
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===0||card.orderStatus===4||card.orderStatus===6||card.order_status===-1)"
+          v-if="[-1,4].indexOf(card.s_order)!==-1||card.s_pay===-1"
           round
           class="order-button"
         >
           删除订单
         </van-button>
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===4)"
+          v-if="card.s_order===4"
           round
           class="order-button"
           @click="$router.push('/persion/order/comment')"
@@ -77,14 +71,14 @@
           评价晒单
         </van-button>
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===6||card.orderStatus===4||card.order_status===-1)"
+          v-if="[-1,4].indexOf(card.s_order)!==-1"
           round
           class="order-button"
         >
           再次购买
         </van-button>
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===2||card.orderStatus===3)"
+          v-if="[1,2,3].indexOf(card.s_order)!==-1"
           round
           class="order-button"
           @click="$router.push('/persion/order/logistics')"
@@ -92,28 +86,29 @@
           物流追踪
         </van-button>
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===2||card.orderStatus===3)"
+          v-if="[1,2,3].indexOf(card.s_order)!==-1"
           round
           class="order-button"
         >
           确认收货
         </van-button>
         <van-button
-          v-if="card.toFriend===0&&(card.orderStatus===1||card.orderStatus===2)"
+          v-if="card.s_order===1"
           round
           class="order-button"
         >
           提醒发货
         </van-button>
         <van-button
-          v-if="card.orderStatus===0"
+          v-if="card.s_pay===0"
           round
           class="order-button"
         >
+          <!-- TODO 接口缺少时间 -->
           付款<span>23:59</span>
         </van-button>
-        <!-- v-if="card.toFriend===1&&(card.orderStatus===2||card.orderStatus===3)" -->
         <van-button
+          v-if="card.s_order===4"
           round
           class="order-button"
           @click="$router.push('/persion/order/orderDetail')"
@@ -219,7 +214,7 @@ export default {
     }
     .order-total {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: flex-end;
       font-size: 0.24rem;
       margin-bottom: 0.4rem;

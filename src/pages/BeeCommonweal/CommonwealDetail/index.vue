@@ -1,31 +1,28 @@
 <template>
   <div class="com-detail">
+    <van-notice-bar
+      v-if="recordList.scroll_message"
+      :text="recordList.scroll_message"
+      left-icon="volume-o"
+      background="transparent"
+    />
     <div class="detail-card">
       <van-cell-group>
-        <van-cell>
+        <van-cell
+          v-for="(item,index) in recordList.details"
+          :key="index"
+        >
           <template slot="title">
             <div class="desc">
-              购买宝贝获得公益值
+              {{ item.desc }}
             </div>
             <div class="time">
-              2017-12-17 18:03
+              {{ item.created_at }}
             </div>
           </template>
           <div class="comVal">
-            +100
-          </div>
-        </van-cell>
-        <van-cell>
-          <template slot="title">
-            <div class="desc">
-              购买宝贝抵扣公益值
-            </div>
-            <div class="time">
-              2017-12-17 18:03
-            </div>
-          </template>
-          <div class="comVal">
-            -100
+            <span v-if="item.type===2">+{{ item.number }}</span>
+            <span v-else>-{{ item.number }}</span>
           </div>
         </van-cell>
       </van-cell-group>
@@ -34,11 +31,14 @@
 </template>
 
 <script>
+import { mineCharityValueDetail } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {},
   data() {
-    return {}
+    return {
+      recordList: {}
+    }
   },
   computed: {},
   watch: {},
@@ -46,14 +46,23 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    this.mineCharityValueDetailData()
   },
-  methods: {}
+  methods: {
+    async mineCharityValueDetailData() {
+      const res = await mineCharityValueDetail()
+      this.recordList = res.data
+    }
+  }
 }
 </script>
 
 <style scoped lang="less">
 .com-detail {
   .detail-card {
+    .van-cell-group {
+      background-color: transparent;
+    }
     .van-cell {
       background-color: transparent;
       .desc {

@@ -11,20 +11,32 @@
       <!-- TODO 跳转时带上订单状态，安装后直接切换标签栏 -->
       <div class="order-op">
         <div class="op-type">
-          <div class="op-text">
+          <div
+            class="op-text"
+            @click="$router.push({path:'/persion/order',query:{s_status:0}})"
+          >
             <van-icon :name="beeIcon.mine_icon_unpaid" />
             待付款
           </div>
           <div class="op-text">
-            <van-icon :name="beeIcon.mine_icon_undelivered" />
+            <van-icon
+              :name="beeIcon.mine_icon_undelivered"
+              @click="$router.push({path:'/persion/order',query:{s_status:1}})"
+            />
             待发货
           </div>
           <div class="op-text">
-            <van-icon :name="beeIcon.mine_icon_not_signed" />
+            <van-icon
+              :name="beeIcon.mine_icon_not_signed"
+              @click="$router.push({path:'/persion/order',query:{s_status:2}})"
+            />
             待收货
           </div>
           <div class="op-text">
-            <van-icon :name="beeIcon.mine_icon_not_commented" />
+            <van-icon
+              :name="beeIcon.mine_icon_not_commented"
+              @click="$router.push({path:'/persion/order',query:{s_status:3}})"
+            />
             待评价
           </div>
           <div
@@ -39,45 +51,48 @@
           v-if="expressInfo"
           :autoplay="3000"
           :show-indicators="false"
+          style="height: 1.9rem"
           vertical
         >
-          <van-swipe-item>
-            23
-            <div
-              v-for="(item, index) in expressInfo"
-              :key="index"
-              class="order-status"
-            >
-              <van-row>
-                <van-col span="6">
-                  <div class="order-img">
+          <van-swipe-item
+            v-for="(item, index) in expressInfo"
+            :key="index"
+          >
+            <div>
+              <div class="order-status">
+                <van-row>
+                  <van-col span="6">
+                    <div class="order-img">
+                      <img
+                        :src="item.thumb_url"
+                        alt="商品缩略图"
+                        :onerror="$store.state.app.defaultImg"
+                      >
+                    </div>
+                  </van-col>
+                  <van-col span="12">
+                    <div class="status-time">
+                      {{ item.time }}
+                    </div>
+                    <div class="status-details">
+                      {{ item.context }}
+                    </div>
+                  </van-col>
+                  <van-col span="6">
+                    <!-- TODO 动态变更颜色 -->
+                    <div class="status-text">
+                      {{ item.status_name }}
+                    </div>
+                  </van-col>
+                  <div class="line-img">
                     <img
-                      :src="item.thumb_url"
-                      alt="商品缩略图"
+                      :src="beeIcon.mine_img_line"
+                      alt=""
+                      :onerror="$store.state.app.defaultImg"
                     >
                   </div>
-                </van-col>
-                <van-col span="12">
-                  <div class="status-time">
-                    {{ item.time }}
-                  </div>
-                  <div class="status-details">
-                    {{ item.context }}
-                  </div>
-                </van-col>
-                <van-col span="6">
-                  <!-- TODO 动态变更颜色 -->
-                  <div class="status-text">
-                    {{ item.status_name }}
-                  </div>
-                </van-col>
-                <div class="line-img">
-                  <img
-                    :src="beeIcon.mine_img_line"
-                    alt=""
-                  >
-                </div>
-              </van-row>
+                </van-row>
+              </div>
             </div>
           </van-swipe-item>
         </van-swipe>
@@ -159,7 +174,6 @@ export default {
     margin-top: 0.3rem;
     border-radius: 0.1rem;
     padding: 0.3rem;
-    position: relative;
     .order-img {
       width: 1rem;
       height: 1rem;
@@ -182,8 +196,8 @@ export default {
       padding-left: 0.3rem;
       white-space: nowrap;
       margin-top: 0.2rem;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .status-text {
       height: 1rem;
@@ -192,7 +206,7 @@ export default {
       font-size: 0.28rem;
       color: #ffa42f;
     }
-    .line-img{
+    .line-img {
       position: absolute;
       width: 0.1rem;
       height: 1rem;

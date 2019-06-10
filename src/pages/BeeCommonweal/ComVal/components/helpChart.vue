@@ -18,34 +18,34 @@
         <div class="pro-content">
           <div
             class="pro1"
-            :style="{height:comVal.helpVal.val1+'%'}"
+            :style="{height:comVal.novice_data.mine_novice+'%'}"
           />
         </div>
         <div class="pro-content">
           <div
             class="pro2"
-            :style="{height:comVal.helpVal.val2+'%'}"
+            :style="{height:comVal.novice_data.novice_avg+'%'}"
           />
         </div>
         <div class="text-content">
           <div class="help-text1">
             <van-icon :name="beeIcon.mine_public_icon_boost" />
-            公益助力
+            新手专享
           </div>
-          <span class="beyond">高于均值{{ comVal.helpVal.beyond }}%</span>
+          <span class="beyond">{{ comVal.novice_data.novice_proportion|getAbsolute }}</span>
         </div>
       </div>
       <div class="chart-part">
         <div class="pro-content">
           <div
             class="pro1"
-            :style="{height:comVal.helpVal2.val1+'%'}"
+            :style="{height:comVal.initiate_data.mine_initiate+'%'}"
           />
         </div>
         <div class="pro-content">
           <div
             class="pro2"
-            :style="{height:comVal.helpVal2.val2+'%'}"
+            :style="{height:comVal.initiate_data.initiate_avg+'%'}"
           />
         </div>
         <div class="text-content">
@@ -53,20 +53,20 @@
             <van-icon :name="beeIcon.mine_public_icon_initiate" />
             发起助力
           </div>
-          <span class="beyond">高于均值{{ comVal.helpVal2.beyond }}%</span>
+          <span class="beyond">{{ comVal.initiate_data.initiate_proportion|getAbsolute }}</span>
         </div>
       </div>
       <div class="chart-part">
         <div class="pro-content">
           <div
             class="pro1"
-            :style="{height:comVal.helpVal3.val1+'%'}"
+            :style="{height:comVal.buy_data.mine_buy+'%'}"
           />
         </div>
         <div class="pro-content">
           <div
             class="pro2"
-            :style="{height:comVal.helpVal3.val2+'%'}"
+            :style="{height:comVal.buy_data.buy_avg+'%'}"
           />
         </div>
         <div class="text-content">
@@ -74,7 +74,7 @@
             <van-icon :name="beeIcon.mine_public_icon_shop" />
             购买宝贝
           </div>
-          <span class="beyond">高于均值{{ comVal.helpVal3.beyond }}%</span>
+          <span class="beyond">{{ comVal.buy_data.buy_proportion|getAbsolute }}</span>
         </div>
       </div>
     </div>
@@ -84,6 +84,17 @@
 <script>
 export default {
   components: {},
+  filters: {
+    // 获取百分值
+    getAbsolute(value) {
+      value = value || 0
+      if (value > 0) {
+        return '高于均值' + Math.abs(value) + '%'
+      } else {
+        return '低于均值' + Math.abs(value) + '%'
+      }
+    }
+  },
   props: {
     comVal: {
       type: Object,

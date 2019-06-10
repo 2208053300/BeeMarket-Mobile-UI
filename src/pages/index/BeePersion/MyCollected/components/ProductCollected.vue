@@ -1,77 +1,86 @@
 <template>
   <div class="product-collected">
-    <div>
-      <van-icon
-        name="search"
-        size="20px"
-        style="margin-right:0.3rem;"
-      />
-      <span @click="editProduct">编辑</span>
+    <div style="background: #fafafa;padding:0.2rem 0.3rem;text-align: right">
+      <span @click="editProduct">{{ editStatus ? '完成' : '编辑' }}</span>
     </div>
     <div class="product-container">
       <van-checkbox-group v-model="editData">
-        <div
-          v-for="product in productList"
-          :key="product.productName"
-          class="bee-product"
-          :class="{productEdit:editStatus}"
-        >
-          <div
-            slot="left"
-            class="left-checkbox"
+        <van-pull-refresh v-model="loading" @refresh="$emit('change')">
+          <van-list
+            v-model="loading"
+            :finished="finished"
+            finished-text="没有更多了"
+            @load="$emit('load')"
           >
-            <van-checkbox
-              :name="product"
-              :checked-color="BeeDefault"
-            />
-          </div>
-          <van-card>
             <div
-              slot="thumb"
-              class="card-img"
+              v-for="product in productList"
+              :key="product.product_id"
+              class="bee-product"
+              :class="{productEdit:editStatus}"
             >
-              <img
-                :src="product.productImg"
-                alt="商品预览图"
-              >
               <div
-                v-if="product.status===1||product.status===2"
-                class="product-masking"
+                slot="left"
+                class="left-checkbox"
               >
-                <span v-if="product.status===1">下架</span>
-                <span v-else>售罄</span>
+                <van-checkbox
+                  :name="product"
+                  :checked-color="BeeDefault"
+                />
               </div>
+              <van-card>
+                <div
+                  slot="thumb"
+                  class="card-img"
+                >
+                  <img
+                    :src="product.thumb_url"
+                    alt="商品预览图"
+                  >
+                  <div
+                    v-if="!product.is_upper||!product.is_stock"
+                    class="product-masking"
+                  >
+                    <span v-if="!product.is_upper">下架</span>
+                    <span v-if="!product.is_stock">售罄</span>
+                  </div>
+                </div>
+                <span
+                  slot="price"
+                  class="card-price"
+                >
+                  ￥{{ product.selling_price }}
+                </span>
+                <div slot="desc" class="tags">
+                  <div v-if="product.zone" class="from-area">
+                    {{ product.zone }}
+                  </div>
+                  <div
+                    v-if="product.is_hot"
+                    class="bee-tag hotTag"
+                  >
+                    热销
+                  </div>
+                  <div
+                    v-for="(tag, index) in product.tag_name"
+                    :key="index"
+                    class="bee-tag"
+                  >
+                    {{ tag }}
+                  </div>
+                </div>
+                <span
+                  slot="title"
+                  class="card-title"
+                >{{ product.product_name }}</span>
+              </van-card>
             </div>
-            <span
-              slot="price"
-              class="card-price"
-            >
-              ￥{{ product.price }}
-            </span>
-            <div
-              v-show="product.type"
-              slot="desc"
-              class="card-sku"
-            >
-              限量商品
-            </div>
-            <span
-              slot="title"
-              class="card-title"
-            >{{ product.productName }}</span>
-            <van-button
-              slot="num"
-              class="card-num"
-            >
-              找相似
-            </van-button>
-          </van-card>
-        </div>
+          </van-list>
+        </van-pull-refresh>
       </van-checkbox-group>
     </div>
     <div
-      v-if="editStatus"
       class="bee-edit-bar"
+      :class="{'show-bar': editStatus}"
     >
       <van-checkbox
         v-model="allSelectedBox"
@@ -95,23 +104,20 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
+import { cancelCollect } from '@/api/BeeApi/user'
 export default {
   components: {},
-  filters: {
-    // isLimit(value) {
-    //   if (value) {
-    //     return '限量商品'
-    //   } else {
-    //     return
-    //   }
-    // }
-  },
+  filters: {},
   props: {
     productList: {
       type: Array,
       default: () => {
         return
       }
+    },
+    finished: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
@@ -119,7 +125,8 @@ export default {
       BeeDefault,
       editData: [],
       editStatus: false,
-      allSelectedBox: false
+      allSelectedBox: false,
+      loading: false
     }
   },
   computed: {},
@@ -129,17 +136,28 @@ export default {
   methods: {
     allSelected() {
       if (this.allSelectedBox) {
-        this.editData = this.productList
-      } else {
         this.editData = []
+      } else {
+        this.editData = this.productList
       }
     },
-    cancelCollected() {
-      // TODO 取消收藏
-      console.log(this.editData)
+    async cancelCollected() {
+      const ids = this.editData.map(data => {
+        return data.product_id
+      })
+      if (ids.length === 0) {
+        this.$toast.fail('请至少选择一个商品')
+        return
+      }
+      const res = await cancelCollect({
+        content_ids: JSON.stringify(ids),
+        type: 1
+      })
+      if (res.code) {
+        this.$emit('change')
+      }
     },
     editProduct() {
-      // TODO 判断是店铺还是商品收藏编辑
       this.editStatus = !this.editStatus
     }
   }
@@ -147,16 +165,15 @@ export default {
 </script>
 
 <style lang="less">
-
 .product-collected {
-  padding-top: 0.66rem;
   overflow: hidden;
   .product-container {
     margin: 0 0.15rem 0.3rem;
     .productEdit {
-      left: 0.8rem;
+      transform: translateX(0.8rem);
     }
     .bee-product {
+      transition: all 200ms linear;
       margin-top: 0.2rem;
       position: relative;
       .left-checkbox {
@@ -203,15 +220,33 @@ export default {
             }
           }
         }
-        .card-sku {
-          max-width: 50%;
-          border-radius: 0.05rem;
-          background-color: #ff3f3f;
-          font-size: 0.24rem;
-          color: #ffffff;
-          align-self: flex-start;
-          padding: 0.03rem;
+        .tags {
           margin-top: 0.3rem;
+          display: flex;
+          .from-area {
+            font-size: 0.2rem;
+            color: @Red1;
+            border-radius: 0.04rem;
+            border: 0.02rem solid @Red1;
+            padding: 0.05rem 0.04rem;
+            margin-right: 0.12rem;
+          }
+          .bee-tag {
+            display: inline-block;
+            font-size: 0.2rem;
+            color: @BeeDefault;
+            border: 0.02rem solid @BeeDefault;
+            border-radius: 0.2rem;
+            padding: 0.05rem 0.1rem;
+            &:not(:last-child) {
+              margin-right: 0.12rem;
+            }
+          }
+          .hotTag {
+            border-color: #ffffff;
+            color: #ffffff;
+            background: linear-gradient(to right, @BeeDefault, #ff7116);
+          }
         }
         .card-num {
           width: 1.4rem;
@@ -231,10 +266,11 @@ export default {
     background-color: #fff;
     position: fixed;
     left: 0;
-    bottom: 0;
+    bottom: -1rem;
     z-index: 100;
     display: flex;
     align-items: center;
+    transition: all 200ms linear;
     .van-checkbox {
       flex: 1;
       .van-checkbox__label {
@@ -255,6 +291,9 @@ export default {
         font-size: 0.3rem;
       }
     }
+  }
+  .show-bar {
+    transform: translateY(-1rem);
   }
 }
 </style>

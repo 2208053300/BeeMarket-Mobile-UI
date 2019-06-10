@@ -7,30 +7,44 @@
       :color="BeeDefault"
       :title-active-color="BeeDefault"
       :swipe-threshold="swipeNum"
-      @click="changeOrder"
     >
       <van-tab>
-        <div slot="title">
+        <div
+          slot="title"
+          @click="changeOrder(-1)"
+        >
           全部
         </div>
       </van-tab>
       <van-tab>
-        <div slot="title">
+        <div
+          slot="title"
+          @click="changeOrder(0)"
+        >
           待付款
         </div>
       </van-tab>
       <van-tab>
-        <div slot="title">
+        <div
+          slot="title"
+          @click="changeOrder(1)"
+        >
           待发货
         </div>
       </van-tab>
       <van-tab>
-        <div slot="title">
+        <div
+          slot="title"
+          @click="changeOrder(2)"
+        >
           待收货
         </div>
       </van-tab>
       <van-tab>
-        <div slot="title">
+        <div
+          slot="title"
+          @click="changeOrder(3)"
+        >
           待评价
         </div>
       </van-tab>
@@ -42,7 +56,7 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 import orderCard from './components/orderCard'
-import { getOrderList } from '@/api/user'
+import { getOrderList } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '全部订单'
@@ -56,7 +70,10 @@ export default {
       BeeDefault,
       active: 0,
       swipeNum: 5,
-      orderList: []
+      orderList: [],
+      formData: {
+        s_status: -1
+      }
     }
   },
   computed: {},
@@ -65,13 +82,29 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.changeOrder()
+    if (this.$route.query.s_status) {
+      this.changeTab(this.$route.query.s_status)
+    } else {
+      this.changeOrder()
+    }
   },
   methods: {
     async changeOrder(index) {
-      const res = await getOrderList({ status: index })
-      console.log(res)
-      this.orderList = res.data.orderData
+      if ([-1, 0, 1, 2, 3].indexOf(index) !== -1) {
+        this.formData.s_status = index
+      }
+      const res = await getOrderList(this.formData)
+      this.orderList = res.data
+    },
+    // 如果是带着状态参数进入页面
+    changeTab(s_status) {
+      if ([0, 1, 2, 3].indexOf(s_status) !== -1) {
+        this.changeOrder(s_status)
+        // 更改活动标签栏
+        this.active = s_status + 1
+      } else {
+        this.changeOrder()
+      }
     }
   }
 }
@@ -79,6 +112,5 @@ export default {
 
 <style scoped lang="less">
 .all-order {
-
 }
 </style>

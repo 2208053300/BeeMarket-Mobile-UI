@@ -17,32 +17,34 @@
           @click="$router.push('/persion/myQrcode')"
         />
       </div>
-      <van-row
-        class="head-user"
-        type="flex"
-        align="center"
-      >
-        <van-col span="4">
-          <div class="head-img">
-            <img
-              :src="userInfo.personal_info.head_img"
-              alt="头像"
-            >
-          </div>
-        </van-col>
-        <van-col
-          span="16"
-          offset="2"
+      <div @click="clickHead">
+        <van-row
+          class="head-user"
+          type="flex"
+          align="center"
         >
-          <div class="head-name">
-            {{ userInfo.personal_info.nickname }}
-          </div>
-          <div v-if="userInfo.personal_info.is_partner" class="head-type">
-            <van-icon name="vip-card-o" />
-            <span>合伙人</span>
-          </div>
-        </van-col>
-      </van-row>
+          <van-col span="4">
+            <div class="head-img">
+              <img
+                :src="$store.state.user.userInfo.head_image || beeIcon.head_default"
+                alt="头像"
+              >
+            </div>
+          </van-col>
+          <van-col
+            span="16"
+            offset="2"
+          >
+            <div class="head-name">
+              {{ isLogin ? $store.state.user.userInfo.nickname : '未登录' }}
+            </div>
+            <div v-if="userInfo.personal_info.is_partner" class="head-type">
+              <van-icon name="vip-card-o" />
+              <span>合伙人</span>
+            </div>
+          </van-col>
+        </van-row>
+      </div>
     </div>
     <div class="container">
       <van-row
@@ -119,6 +121,8 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 import BeeOrder from './components/BeeOrder'
 import { getPersionalCenter } from '@/api/BeeApi/user'
+import { isLogin } from '@/utils/auth'
+
 export default {
   components: {
     BeeOrder
@@ -135,11 +139,16 @@ export default {
         mine_icon_address: require('@/assets/icon/personalCenter/mine_icon_address@2x.png'),
         mine_icon_pug: require('@/assets/icon/personalCenter/mine_icon_pug@2x.png'),
         mine_icon_customer: require('@/assets/icon/personalCenter/mine_icon_customer@2x.png'),
-        mine_icon_set: require('@/assets/icon/personalCenter/mine_icon_set@2x.png')
+        mine_icon_set: require('@/assets/icon/personalCenter/mine_icon_set@2x.png'),
+        head_default: require('@/assets/icon/personalCenter/head_default.png')
       },
       userInfo: {
-        personal_info: {}
-      }
+        personal_info: {
+          head_img: this.$store.state.user.userInfo.head_image,
+          nickname: this.$store.state.user.userInfo.nickname
+        }
+      },
+      isLogin: isLogin()
     }
   },
   computed: {},
@@ -154,9 +163,30 @@ export default {
     async getPersionalCenterData() {
       const res = await getPersionalCenter()
       this.userInfo = res.data
-      // 同时保存到缓存
-      // 接口不同
-      // this.$store.state.user.userInfo = res.data
+      // 如果个人信息发生了改变,则更新vuex中的用户信息
+      if (isLogin()) {
+        const info = this.userInfo.personal_info
+        const userState = this.$store.state.user.userInfo
+        let changed = false
+        if (info.head_img !== userState.head_image) {
+          userState.head_image = info.head_img
+          changed = true
+        }
+        if (info.nickname !== userState.nickname) {
+          userState.nickname = info.nickname
+          changed = true
+        }
+        if (changed) {
+          this.$store.commit('SET_USER_INFO', userState)
+        }
+      }
+    },
+    // 点击用户信息区域
+    clickHead() {
+      // TODO 跳转到个人信息页面
+      if (!isLogin()) {
+        this.$router.push('/login')
+      }
     }
   }
 }

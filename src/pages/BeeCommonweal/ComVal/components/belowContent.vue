@@ -28,7 +28,7 @@
         <span class="part-text3">获得公益值</span>
       </div>
     </div>
-    <bee-guess />
+    <bee-guess :guess-data="comVal.charity_products" />
   </div>
 </template>
 
@@ -39,7 +39,14 @@ export default {
   components: {
     BeeGuess
   },
-  props: {},
+  props: {
+    comVal: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data() {
     return {
       beeIcon: {
@@ -69,11 +76,11 @@ export default {
     display: grid;
     box-sizing: border-box;
     padding: 0.5rem 0 0.25rem;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     .part1 {
       text-align: center;
       height: 1.6rem;
-      &:first-child{
+      &:first-child {
         border-right: 0.02rem solid @Grey6;
       }
       .cart-img {
@@ -89,7 +96,6 @@ export default {
       .part-text2 {
         font-size: 0.24rem;
         color: @Grey1;
-
       }
       .part-text3 {
         font-size: 0.24rem;

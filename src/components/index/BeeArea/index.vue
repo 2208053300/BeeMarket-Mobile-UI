@@ -1,22 +1,24 @@
 <template>
   <div class="area-select">
     <!-- 已选择 -->
-    <van-row class="area-selected-names" type="flex">
-      <van-col
-        v-for="(item, index) in selectedNames"
-        :key="index"
-        span="6"
-      >
-        <div
-          class="selected-name"
+    <div class="area-selected-names">
+      <van-row type="flex">
+        <van-col
+          v-for="(item, index) in selectedNames"
+          :key="index"
           :class="{ active: index === progressIndex }"
-          @click="switchProgress(index)"
+          span="6"
         >
-          {{ item }}
-        </div>
-      </van-col>
-    </van-row>
-    <div style="width: 100%;height: 0.01rem;background: #ebebeb" />
+          <div
+            class="selected-name"
+            @click="switchProgress(index)"
+          >
+            {{ item }}
+          </div>
+        </van-col>
+      </van-row>
+    </div>
+    <div class="divider" />
     <ul class="area-list">
       <li
         v-for="(item, index) in currentList"
@@ -37,9 +39,6 @@
 <script>
 import { getArea } from '@/api/BeeApi/user'
 export default {
-  metaInfo: {
-    title: ''
-  },
   components: {},
   props: {},
   data() {
@@ -135,6 +134,7 @@ export default {
   display: flex;
   flex-direction: column;
   .area-selected-names {
+    flex-shrink: 0;
     .selected-name {
       text-align: center;
       padding: 0.3rem 0.3rem;
@@ -144,6 +144,12 @@ export default {
       color: #ffa42f;
       border-bottom: #ffa42f 0.03rem solid;
     }
+  }
+  .divider {
+    flex-shrink: 0;
+    width: 100%;
+    height: 0.01rem;
+    background: #ebebeb
   }
   .area-list {
     overflow: hidden;

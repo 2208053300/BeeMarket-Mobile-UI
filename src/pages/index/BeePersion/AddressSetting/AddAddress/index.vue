@@ -20,7 +20,6 @@
           :value="areaStr"
           @click="showArea=true"
         />
-        <!-- TODO 添加街道选择 -->
         <van-field
           v-model="beeForm.detailed"
           type="textarea"
@@ -35,22 +34,22 @@
           <div class="tags">
             <div
               class="tag"
-              :class="{tagSelected: beeForm.tag==='家'}"
-              @click="beeForm.tag=1"
+              :class="{tagSelected: beeForm.tag==='home'}"
+              @click="beeForm.tag='home'"
             >
               家
             </div>
             <div
               class="tag"
-              :class="{tagSelected: beeForm.tag==='公司'}"
-              @click="beeForm.tag=2"
+              :class="{tagSelected: beeForm.tag==='work'}"
+              @click="beeForm.tag='work'"
             >
               公司
             </div>
             <div
               class="tag"
-              :class="{tagSelected: beeForm.tag==='学校'}"
-              @click="beeForm.tag=3"
+              :class="{tagSelected: beeForm.tag==='school'}"
+              @click="beeForm.tag='school'"
             >
               学校
             </div>
@@ -62,6 +61,8 @@
           v-model="beeForm.def"
           title="设为默认"
           :active-color="BeeDefault"
+          :active-value="1"
+          :inactive-value="0"
         />
       </van-cell-group>
       <van-popup
@@ -108,7 +109,10 @@ export default {
   props: {},
   data() {
     return {
-      beeForm: {},
+      beeForm: {
+        tag: 'home',
+        last_id: ''
+      },
       BeeDefault,
       showArea: false,
       area: [] // 已选择的区域
@@ -116,6 +120,9 @@ export default {
   },
   computed: {
     areaStr() {
+      if (this.beeForm.base_addr) {
+        return this.beeForm.base_addr
+      }
       if (this.area.length === 0) {
         return '请选择'
       } else {
@@ -166,6 +173,7 @@ export default {
     areaSelected(selected) {
       this.showArea = false
       this.area = selected
+      this.beeForm.last_id = selected[selected.length - 1].id
     }
   }
 }

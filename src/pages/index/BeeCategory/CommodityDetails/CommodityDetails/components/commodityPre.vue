@@ -31,7 +31,10 @@
         :class="{showBg:showPicture||!commodityData.video_url}"
       >
         <template v-if="showPicture||!commodityData.video_url">
-          <span class="nowNum">{{ current + 1 }}/</span><span class="allPic">{{ commodityData.album.length }}</span>
+          <span class="nowNum">{{ current + 1 }}/</span><span
+            v-if="commodityData.album"
+            class="allPic"
+          >{{ commodityData.album.length }}</span>
         </template>
         <div
           v-if="commodityData.video_url"
@@ -83,13 +86,6 @@
         {{ preIndex +1 }}/{{ imgList.length }}
       </template>
     </van-image-preview>
-    <!-- 如果是蜂抢商品 -->
-    <!-- <div class="limit-time">
-      <span>限量蜂抢中</span>
-      <div class="limit-nowNum">
-        仅剩<span class="num"> 80 </span>件
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -134,7 +130,9 @@ export default {
       if (index) {
         // FIXME 此处PC无法更改状态
         // this.$refs.productVideo.initPlayer()
-        this.$refs.productVideo.videoPause()
+        if (this.$refs.productVideo) {
+          this.$refs.productVideo.videoPause()
+        }
         this.playStatus = false
         this.showPicture = true
       } else {
@@ -183,7 +181,7 @@ export default {
       text-align: center;
       position: absolute;
       right: 0.3rem;
-      bottom: 0.3rem;
+      bottom: 0.5rem;
       .nowNum {
         font-size: 0.28rem;
         color: #ffffff;

@@ -1,53 +1,55 @@
 <template>
   <div class="commodity-list">
     <div
-      v-for="item in orderCommodity"
-      :key="item.storeName"
+      v-for="item in order.orderDetail.stores"
+      :key="item.mid"
       class="commodity-card"
     >
       <div class="store-name">
         <van-icon name="shop-o" />
-        <span class="name">{{ item.storeName }}</span>
+        <span class="name">{{ item.store_name }}</span>
       </div>
       <div class="commodity-content">
         <div
-          v-for="item2 in item.product"
-          :key="item2.id"
+          v-for="item2 in item.products"
+          :key="item2.sid"
           class="commodity-details"
         >
-          <div class="commodity-img">
-            <img
-              :src="item2.previewImg"
-              alt=""
-            >
-          </div>
-          <div class="commodity-info">
-            <div class="name-unit">
-              <div class="name">
-                {{ item2.name }}
-              </div>
-              <span class="num">
-                x{{ item2.num }}
-              </span>
+          <div class="commodity-card2">
+            <div class="commodity-img">
+              <img
+                :src="item2.tUrl"
+                alt=""
+              >
             </div>
-            <div class="sku-price">
-              <div class="sku-text">
-                {{ item2.sku }}
+            <div class="commodity-info">
+              <div class="name-unit">
+                <div class="name">
+                  {{ item2.pname }}
+                </div>
+                <span class="num">
+                  x1
+                </span>
               </div>
-              <span class="price-num">
-                {{ item2.currentPrice }}
-              </span>
+              <div class="sku-price">
+                <div class="sku-text">
+                  {{ item2.props_name }}
+                </div>
+                <span class="price-num">
+                  ￥{{ item2.sell_price }}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="buy-num">
-          <span class="buy-text">购买数量</span>
-          <van-stepper v-model="buyNum" />
+          <div class="buy-num">
+            <span class="buy-text">购买数量</span>
+            <van-stepper v-model="item2.number" />
+          </div>
         </div>
         <div class="commodity-message">
           <span class="message-text">留言：</span>
           <van-field
-            v-model="commodityMessage"
+            v-model="item.note"
             placeholder="选填您的要求"
           />
         </div>
@@ -57,7 +59,8 @@
 </template>
 
 <script>
-import { getOrderCommodity } from '@/api/category'
+// import { getOrderCommodity } from '@/api/category'
+import { mapState } from 'vuex'
 export default {
   components: {},
   props: {},
@@ -68,17 +71,19 @@ export default {
       commodityMessage: ''
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['order'])
+  },
   watch: {},
   created() {},
   mounted() {
-    this.getOrderCommodity()
+    // this.getOrderCommodity()
   },
   methods: {
-    async getOrderCommodity() {
-      const res = await getOrderCommodity()
-      this.orderCommodity = res.data.orderCommodity
-    }
+    // async getOrderCommodity() {
+    //   const res = await getOrderCommodity()
+    //   this.orderCommodity = res.data.orderCommodity
+    // }
   }
 }
 </script>
@@ -106,53 +111,63 @@ export default {
     .commodity-content {
       .commodity-details {
         margin-top: 0.28rem;
-        display: flex;
-        align-items: center;
-        .commodity-img {
-          width: 1.46rem;
-          height: 1.46rem;
-          border-radius: 0.04rem;
-          overflow: hidden;
-          margin-right: 0.2rem;
-        }
-        .commodity-info {
-          flex: 1;
-          .name-unit {
-            display: flex;
-            justify-content: space-between;
-            .name {
-              font-size: 0.28rem;
-              max-width: 3.5rem;
+        .commodity-card2 {
+          display: flex;
+          align-items: center;
+          .commodity-img {
+            width: 1.46rem;
+            height: 1.46rem;
+            border-radius: 0.04rem;
+            overflow: hidden;
+            margin-right: 0.2rem;
+          }
+          .commodity-info {
+            flex: 1;
+            .name-unit {
+              display: flex;
+              justify-content: space-between;
+              .name {
+                font-size: 0.28rem;
+                max-width: 3.5rem;
+              }
+              .num {
+                font-size: 0.3rem;
+                color: @Grey1;
+              }
             }
-            .num {
-              font-size: 0.3rem;
-              color: @Grey1;
+            .sku-price {
+              display: flex;
+              justify-content: space-between;
+              margin-top: 0.2rem;
+              .sku-text{
+                font-size: 0.24rem;
+                color: @Grey1;
+              }
+              .price-num{
+                font-size: 0.28rem;
+                color:  @BeeDefault;
+              }
             }
           }
-          .sku-price {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 0.2rem;
-          }
         }
-      }
-      .buy-num {
-        margin: 0.4rem 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        .buy-text {
-          font-size: 0.28rem;
+        .buy-num {
+          margin: 0.4rem 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .buy-text {
+            font-size: 0.28rem;
+          }
         }
       }
       .commodity-message {
         display: flex;
         align-items: center;
-        .message-text{
+        .message-text {
           white-space: nowrap;
           font-size: 0.28rem;
         }
-        .van-field{
+        .van-field {
           font-size: 0.28rem;
           color: @Grey1;
         }

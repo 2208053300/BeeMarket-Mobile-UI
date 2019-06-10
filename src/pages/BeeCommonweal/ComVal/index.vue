@@ -1,5 +1,11 @@
 <template>
   <div class="com-val">
+    <van-notice-bar
+      v-if="comVal.scroll_message"
+      :text="comVal.scroll_message"
+      left-icon="volume-o"
+      background="transparent"
+    />
     <div
       class="com-content"
       :style="{backgroundImage:'url('+beeIcon.mine_public_img_bg+')'}"
@@ -8,11 +14,11 @@
         <div class="header-left">
           <div class="header-img">
             <img
-              :src="comVal.headImg"
+              :src="comVal.head_img"
               alt=""
             >
           </div>
-          <span class="name">{{ comVal.name }}</span>
+          <span class="name">{{ comVal.nickname }}</span>
         </div>
         <div
           class="header-rule"
@@ -26,29 +32,29 @@
         <div class="com-detail1">
           <span class="com-text1">累计公益值</span>
           <p class="com-val">
-            {{ comVal.comVal }}
+            {{ comVal.total_charity_value }}
           </p>
           <span
             class="time"
             @click="$router.push({name:'CommonwealDetail'})"
-          >本期分值2019.01-2019.12 ></span>
+          >本期分值 {{ comVal.begin_time }} - {{ comVal.end_time }} ></span>
           <p class="rank">
             在好友排名第2名
           </p>
         </div>
         <help-chart
-          v-if="comVal.helpVal"
+          v-if="comVal.novice_data"
           :com-val="comVal"
         />
       </div>
     </div>
-    <below-content />
+    <below-content :com-val="comVal" />
     <rule-card :show-rule.sync="showRule" />
   </div>
 </template>
 
 <script>
-import { getBeeComVal } from '@/api/common'
+import { mineCharityValue } from '@/api/BeeApi/user'
 import helpChart from './components/helpChart'
 import belowContent from './components/belowContent'
 import ruleCard from './components/ruleCard'
@@ -78,12 +84,12 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getBeeComValData()
+    this.mineCharityValueData()
   },
   methods: {
-    async getBeeComValData() {
-      const res = await getBeeComVal()
-      this.comVal = res.data.com
+    async mineCharityValueData() {
+      const res = await mineCharityValue()
+      this.comVal = res.data
     }
   }
 }

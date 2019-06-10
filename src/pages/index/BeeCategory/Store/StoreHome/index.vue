@@ -1,5 +1,7 @@
 <template>
   <div class="store-home">
+    <!--FIXME如果有背景图 -->
+    <div class="store-bg" />
     <div
       class="store-header"
       @click="showLicense=true"
@@ -7,12 +9,12 @@
       <div class="header-left">
         <div class="store-img">
           <img
-            :src="storeDetails.img"
+            :src="storeDetails.store_logo"
             alt=""
           >
         </div>
         <div class="store-name">
-          {{ storeDetails.name }}
+          {{ storeDetails.store_name }}
         </div>
         <van-icon name="arrow" />
       </div>
@@ -21,12 +23,15 @@
           type="default"
           round
         >
-          <span v-if="storeDetails.fowllowed===0">关注店铺</span>
-          <span v-else>已关注</span>
+          <span v-if="storeDetails.mfavor">已关注</span>
+          <span v-else>关注店铺</span>
         </van-button>
       </div>
     </div>
-    <store-content />
+    <store-content
+      :store-details="storeDetails"
+      :form-data.sync="formData"
+    />
     <van-actionsheet v-model="showLicense">
       <van-cell-group>
         <van-cell>
@@ -54,7 +59,7 @@
 
 <script>
 import storeContent from './components/storeContent'
-import { getStoreDetails } from '@/api/category'
+import { getStoreDetail } from '@/api/BeeApi/store'
 export default {
   metaInfo: {
     title: '店铺首页'
@@ -69,7 +74,8 @@ export default {
       showLicense: false,
       beeIcon: {
         license: require('@/assets/icon/store/shop_icon_license@2x.png')
-      }
+      },
+      formData: {}
     }
   },
   computed: {},
@@ -78,13 +84,12 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getStoreDetails()
+    this.formData.mid = this.$route.query.mid
   },
   methods: {
-    async getStoreDetails() {
-      const res = await getStoreDetails()
-      this.storeDetails = res.data.storeDetails
-      this.commodityList = res.data.storeDetails.commodity
+    async getStoreDetailData() {
+      const res = await getStoreDetail(this.formData)
+      this.storeDetails = res.data
     }
   }
 }
@@ -93,6 +98,20 @@ export default {
 <style scoped lang="less">
 .store-home {
   padding-bottom: 60px;
+  position: relative;
+  .store-bg {
+    position: absolute;
+    z-index: -1;
+    height: 4.6rem;
+    width: 100%;
+    top: 0;
+    left: 0;
+    filter: blur(0.1rem);
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #3f627b;
+  }
   .store-header {
     padding: 0.3rem 0.3rem 0.4rem;
     box-sizing: border-box;

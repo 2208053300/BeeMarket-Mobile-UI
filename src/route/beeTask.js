@@ -18,8 +18,18 @@ export default new Router({
         },
         {
           path: 'taskDetail',
-          name: 'beeTask',
+          name: 'taskDetail',
           component: () => import('@/pages/BeeTask/TaskDetail')
+        },
+        {
+          path: 'taskPerfectData/phone',
+          name: 'taskPerfectDataWithPhone',
+          component: () => import('@/pages/BeeTask/TaskPerfectData/bindPhone')
+        },
+        {
+          path: 'taskPerfectData/wechat',
+          name: 'taskPerfectDataWithWechat',
+          component: () => import('@/pages/BeeTask/TaskPerfectData/bindWechat')
         }
       ]
     }

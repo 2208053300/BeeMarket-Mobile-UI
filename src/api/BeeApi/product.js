@@ -80,3 +80,11 @@ export function getProductSku(data) {
     data
   })
 }
+// 评价列表
+export function getAssessment(data) {
+  return request({
+    url: '/product/comments',
+    method: 'post',
+    data
+  })
+}
