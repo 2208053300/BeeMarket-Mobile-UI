@@ -1,10 +1,8 @@
 <template>
-  <div class="public-action">
-    <div
-      class="action-header"
-      :style="{backgroundImage:'url('+homeData.charity_action.show_image+')'}"
-    />
-  </div>
+  <div
+    class="bee-product"
+    :style="{backgroundImage:'url('+homeData.plan.show_image+')'}"
+  />
 </template>
 
 <script>
@@ -15,8 +13,8 @@ export default {
       type: Object,
       default: () => {
         return {
-          charity_action: {
-            action: {}
+          plan: {
+            show_image: ''
           }
         }
       }
@@ -34,13 +32,13 @@ export default {
 </script>
 
 <style scoped lang="less">
-.public-action {
-  margin: 0.2rem 0.16rem 0;
+.bee-product {
+  margin: 0.2rem 0.16rem;
+  height: 2.2rem;
+  background-color: #fff;
   border-radius: 0.2rem;
   box-shadow: 0 0 0.2rem @Grey6;
-  .action-header{
-    height: 2.24rem;
-    background-size: cover;
-  }
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 </style>

@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       beeIcon: {
-        home_btn_two: require('@/assets/icon/home/index/home_btn_two@2x.png')
+        // home_btn_two: require('@/assets/icon/home/index/home_btn_two@2x.png')
       }
     }
   },

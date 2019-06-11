@@ -1,9 +1,6 @@
 <template>
   <div class="home-page">
-    <div
-      class="header-content"
-      :style="{backgroundImage:'url('+beeIcon.home_img_top_bg+')'}"
-    >
+    <div class="header-content">
       <div class="home-header">
         <div class="logo-content">
           <img
@@ -25,28 +22,28 @@
           @click="$router.push('/beeNotice')"
         />
       </div>
-      <header-banner />
+      <header-banner :home-data="homeData" />
     </div>
-    <farm-card :home-date="homeDate" />
-    <new-product :home-date="homeDate" />
-    <action-card />
-    <limit-card :home-date="homeDate" />
-    <public-action />
-    <farm-product :home-date="homeDate" />
-    <project-selection :home-date="homeDate" />
-    <action-list :home-date="homeDate" />
+    <operation-card />
+    <bee-product :home-data="homeData" />
+    <everyday-product :home-data="homeData" />
+    <new-product :home-data="homeData" />
+    <public-action :home-data="homeData" />
+    <farm-product :home-data="homeData" />
+    <project-selection :home-data="homeData" />
+    <action-list :home-data="homeData" />
     <bee-guess />
   </div>
 </template>
 
 <script>
 import { Grey1 } from '@/styles/index/variables.less'
-import { getHome } from '@/api/home'
+import { getHome } from '@/api/BeeApi/home'
 import headerBanner from './components/headerBanner'
-import farmCard from './components/farmCard'
+import operationCard from './components/operationCard'
+import everydayProduct from './components/everydayProduct'
+import beeProduct from './components/beeProduct'
 import newProduct from './components/newProduct'
-import actionCard from './components/actionCard'
-import limitCard from './components/limitCard'
 import publicAction from './components/publicAction'
 import farmProduct from './components/farmProduct'
 import projectSelection from './components/projectSelection'
@@ -56,10 +53,10 @@ import BeeGuess from '@/components/index/BeeGuess'
 export default {
   components: {
     headerBanner,
-    farmCard,
+    operationCard,
+    beeProduct,
+    everydayProduct,
     newProduct,
-    actionCard,
-    limitCard,
     publicAction,
     farmProduct,
     projectSelection,
@@ -73,11 +70,31 @@ export default {
       beeIcon: {
         nav_icon_search: require('@/assets/icon/category/nav_icon_search@2x.png'),
         home_img_logo: require('@/assets/icon/home/index/home_img_logo@2x.png'),
-        home_img_top_bg: require('@/assets/icon/home/index/home_img_top_bg@2x.png'),
-        home_icon_message: require('@/assets/icon/home/index/home_icon_message@2x.png'),
+        home_icon_message: require('@/assets/icon/home/index/home_icon_message_n@2x.png'),
         home_icon_message_prompt: require('@/assets/icon/home/index/home_icon_message_prompt@2x.png')
       },
-      homeDate: {}
+      homeData: {
+        banner: [],
+        daily_product: {
+          products: [],
+          slogan: '集市每天都会为你推荐好货1'
+        },
+        limited_plan: {
+          left: {
+            show_image: ''
+          },
+          right: {
+            show_image: ''
+          }
+        },
+        plan: {
+          show_image: ''
+        },
+        charity_action: {
+          action: {}
+        }
+      },
+      pageForm: {}
     }
   },
   computed: {},
@@ -92,7 +109,7 @@ export default {
   methods: {
     async getHomeData() {
       const res = await getHome()
-      this.homeDate = res.data.home
+      this.homeData = res.data
     },
     wxRegCallback() {
       // 用于微信JS-SDK回调
@@ -108,18 +125,18 @@ export default {
   margin-bottom: 60px;
   .header-content {
     background-size: contain;
-    height: 4rem;
     .home-header {
       height: 0.64rem;
-      padding: 0.24rem;
+      padding: 0.18rem 0.24rem;
       display: flex;
       align-items: center;
+      background-color: #fff;
       .logo-content {
         height: 0.4rem;
         width: 1.16rem;
       }
       .search-input {
-        background-color: #fff;
+        background-color: @Grey7;
         flex: 1;
         height: 0.64rem;
         border-radius: 0.4rem;
