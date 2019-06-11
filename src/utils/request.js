@@ -70,7 +70,7 @@ service.interceptors.response.use(
       Toast.fail(res.message || 'error')
       return Promise.reject(res.message || 'error')
     } else {
-      Toast.success(res.message)
+      // Toast.success(res.message)
     }
     console.log(res)
     return res
