@@ -1,59 +1,63 @@
 <template>
   <div class="after-list">
-    <div class="list-content">
+    <!-- 有售后单 -->
+    <div v-if="afterList.length>0" class="list-content">
       <div
         v-for="item in afterList"
         :key="item.storeName"
         class="order-card"
-        @click="$router.push('/persion/order/afterList/afterDetail')"
+        @click="$router.push({path:'/persion/order/afterList/afterDetail',query:{aid:item.aid}})"
       >
         <div class="order-title">
           <div class="store-name">
-            {{ item.storeName }}
+            {{ item.store_name }}
             <van-icon name="arrow" />
           </div>
-          <span class="aftre-type">{{ item.orderStatus }}</span>
+          <span class="aftre-type">{{ item.type }}</span>
         </div>
         <div class="commodity-details">
           <div class="commodity-img">
             <img
-              :src="item.product.previewImg"
-              alt=""
+              :src="item.thumb_url"
             >
           </div>
           <div class="commodity-info">
             <div class="name-unit">
               <div class="name">
-                {{ item.product.name }}
+                {{ item.product_name }}
               </div>
 
               <div class="price-cnum">
                 <div class="price-num">
-                  ￥{{ item.product.price }}
+                  ￥{{ item.price }}
                 </div>
                 <!-- FIXME 这里不知道有无数量 -->
-                <span class="num">
-                  x{{ item.product.num }}
-                </span>
+                <!-- <span class="num">
+                  x{{ item.number }}
+                </span> -->
               </div>
             </div>
             <div class="sku-price">
               <div class="sku-text">
-                申请数量：{{ item.product.sku }}
+                申请数量：{{ item.number }}
               </div>
             </div>
           </div>
         </div>
         <div class="after-status">
-          审核中
+          {{ item.apply_status }}
         </div>
       </div>
+    </div>
+    <!-- 无售后单 -->
+    <div v-else class="no-order text-center">
+      <img :src="noOrderImg" alt="">
     </div>
   </div>
 </template>
 
 <script>
-import { getAfterList } from '@/api/user'
+import { getAfterList } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '我的售后单'
@@ -62,6 +66,9 @@ export default {
   props: {},
   data() {
     return {
+      // 无订单缺省图
+      noOrderImg: require('@/assets/icon/cart/shopping_cart_pic_no@2x.png'),
+      // 售后单列表
       afterList: []
     }
   },
@@ -76,7 +83,7 @@ export default {
   methods: {
     async getAfterListData() {
       const res = await getAfterList()
-      this.afterList = res.data.orderData
+      this.afterList = res.data
     }
   }
 }
@@ -159,6 +166,11 @@ export default {
         font-size: 0.24rem;
       }
     }
+  }
+
+  .no-order{
+    padding-top: 3rem;
+    img{width:2.88rem;height: 2.68rem;}
   }
 }
 </style>

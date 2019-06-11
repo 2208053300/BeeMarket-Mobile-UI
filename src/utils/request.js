@@ -27,12 +27,19 @@ service.interceptors.request.use(
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
       config.headers['Content-Type'] = 'application/json'
+      // config.headers['Content-Type'] = 'application/*'
       // console.log(config.data)
       return config
     }
     // 去除options预请求方法
     if (config.method === 'post') {
-      config.data = qs.stringify(config.data)
+      // config.data = qs.stringify(config.data)
+      if (config.data) {
+        const keys = Object.keys(config.data)
+        if (keys.length > 0) {
+          config.data = qs.stringify(config.data)
+        }
+      }
     }
     return config
   },

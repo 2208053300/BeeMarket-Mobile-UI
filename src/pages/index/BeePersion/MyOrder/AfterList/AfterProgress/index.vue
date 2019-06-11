@@ -1,6 +1,18 @@
 <template>
   <div class="after-progress">
-    <div class="status-content">
+    <div v-for="(item, index) in afterProgressInfo" :key="index" class="status-content">
+      <div class="bee-cir" />
+      <div class="bee-line" />
+      <div class="status-text">
+        <div class="status-text1">
+          {{ item.content }}
+        </div>
+        <div class="status-time">
+          {{ item.time }}
+        </div>
+      </div>
+    </div>
+    <!-- <div class="status-content">
       <div class="bee-cir" />
       <div class="bee-line" />
       <div class="status-text">
@@ -11,23 +23,12 @@
           2018.03-20 18:33:00
         </div>
       </div>
-    </div>
-    <div class="status-content">
-      <div class="bee-cir" />
-      <div class="bee-line" />
-      <div class="status-text">
-        <div class="status-text1">
-          您的订单正由平台积极处理中，请耐心等待您的订单正由平台积极处理中，请耐心等待
-        </div>
-        <div class="status-time">
-          2018.03-20 18:33:00
-        </div>
-      </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
+import { getAfterProgressDetail } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '进度详情'
@@ -35,7 +36,9 @@ export default {
   components: {},
   props: {},
   data() {
-    return {}
+    return {
+      afterProgressInfo: []
+    }
   },
   computed: {},
   watch: {},
@@ -43,8 +46,16 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    this.getAfterProgressDetail()
   },
-  methods: {}
+  methods: {
+    // 获取进度详情
+    async getAfterProgressDetail() {
+      const res = await getAfterProgressDetail({ aid: this.$route.query.aid })
+      console.log('物流详情：', res)
+      this.afterProgressInfo = res.data
+    }
+  }
 }
 </script>
 

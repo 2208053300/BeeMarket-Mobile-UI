@@ -3,7 +3,7 @@
     <div class="logistics-status">
       <div class="logistics-img">
         <img
-          src=""
+          :src="logisticsInfo.product_img"
           alt=""
         >
       </div>
@@ -20,16 +20,16 @@
       </div> -->
       <div class="text-content2">
         <div class="logistics-text">
-          运输中
+          {{ logisticsInfo.express_status }}
         </div>
         <div class="logistics-text1">
-          快递方式：<span class="bee-text">正在更新中</span>
+          快递方式：<span class="bee-text">{{ logisticsInfo.express_mode }}</span>
         </div>
         <div class="logistics-text1">
-          物流编号：<span class="bee-text">正在更新中</span>
+          物流编号：<span class="bee-text">{{ logisticsInfo.express_no }}</span>
         </div>
         <div class="logistics-text1">
-          官方电话：<span class="bee-text">正在更新中</span>
+          官方电话：<span class="bee-text">{{ logisticsInfo.express_tel }}</span>
         </div>
       </div>
     </div>
@@ -39,15 +39,15 @@
         <span>您的订单正由平台积极处理中，请耐心等待</span>
       </div> -->
       <!-- TODO 最后一个不加线 -->
-      <div class="status-content">
+      <div v-for="(item, index) in logisticsInfo.express_details" class="status-content" :key="index">
         <div class="bee-cir" />
         <div class="bee-line" />
         <div class="status-text">
           <div class="status-text1">
-            您的订单正由平台积极处理中，请耐心等待您的订单正由平台积极处理中，请耐心等待
+            {{ item.context }}
           </div>
           <div class="status-time">
-            2018.03-20 18:33:00
+            {{ item.time }}
           </div>
         </div>
       </div>
@@ -58,6 +58,7 @@
 
 <script>
 import BeeGuess from '@/components/index/BeeGuess'
+import { getAfterLogDetail } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '物流详情'
@@ -65,7 +66,9 @@ export default {
   components: { BeeGuess },
   props: {},
   data() {
-    return {}
+    return {
+      logisticsInfo: {}
+    }
   },
   computed: {},
   watch: {},
@@ -73,8 +76,16 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    this.getLogisticsDetail()
   },
-  methods: {}
+  methods: {
+    // 获取物流详情
+    async getLogisticsDetail() {
+      const res = await getAfterLogDetail({ aid: this.$route.query.aid })
+      console.log('物流详情：', res)
+      this.logisticsInfo = res.data
+    }
+  }
 }
 </script>
 
