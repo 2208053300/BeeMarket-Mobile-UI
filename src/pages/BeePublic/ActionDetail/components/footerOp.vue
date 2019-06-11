@@ -4,6 +4,7 @@
       <van-button
         round
         class="join-help"
+        :disabled="actionData.is_join"
         @click="showSuccess=true"
       >
         参与助力
@@ -52,7 +53,12 @@
 <script>
 export default {
   components: {},
-  props: {},
+  props: {
+    actionData: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     return {
       showSuccess: false,

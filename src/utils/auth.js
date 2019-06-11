@@ -4,6 +4,7 @@ export function getToken() {
   // return localStorage.getItem('BM-App-Token')
 }
 // 设置Token
+// REVIEW sessionStorage才会在关闭浏览器的时候被清除
 export function setToken(Token) {
   return localStorage.setItem('BM-App-Token', Token)
 }
