@@ -50,7 +50,7 @@
           slot="title"
           class="cell-title"
         >
-          峰公益
+          蜂公益
         </div>
         <span class="benefit-text">将我的消费计入公益值</span>
         <van-checkbox

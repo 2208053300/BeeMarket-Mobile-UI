@@ -36,7 +36,7 @@
           </p>
           <span
             class="time"
-            @click="$router.push({name:'CommonwealDetail'})"
+            @click="goDetail"
           >本期分值 {{ comVal.begin_time }} - {{ comVal.end_time }} ></span>
           <p class="rank">
             在好友排名第2名
@@ -58,6 +58,8 @@ import { mineCharityValue } from '@/api/BeeApi/user'
 import helpChart from './components/helpChart'
 import belowContent from './components/belowContent'
 import ruleCard from './components/ruleCard'
+import { getOs } from '@/utils'
+
 export default {
   components: {
     helpChart,
@@ -90,6 +92,18 @@ export default {
     async mineCharityValueData() {
       const res = await mineCharityValue()
       this.comVal = res.data
+    },
+    goDetail() {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        this.$router.push({ name: 'CommonwealDetail' })
+      } else if (osObj.isIphone) {
+        window.webkit.messageHandlers.ToPWVDetail.postMessage('')
+      } else if (osObj.isAndroid) {
+        window.beeMarket.ToPWVDetail()
+      } else {
+        this.$router.push({ name: 'CommonwealDetail' })
+      }
     }
   }
 }

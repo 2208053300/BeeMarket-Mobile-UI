@@ -6,7 +6,10 @@
         class="farm-title"
       >
         <span class="title-text">农副产品</span>
-        <div class="show-more">
+        <div
+          class="show-more"
+          @click="showList"
+        >
           更多
         </div>
       </div>
@@ -20,8 +23,9 @@
     <div class="guess-container">
       <div
         v-for="item in guessData"
-        :key="item.id"
+        :key="item.pid"
         class="guess-card"
+        @click="showDetail(item.pid,item.target)"
       >
         <img
           :src="item.tUrl"
@@ -72,6 +76,7 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
 export default {
   components: {},
   props: {
@@ -89,7 +94,57 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    showList() {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        // FIXME 跳转到农副产品页
+        this.$router.push({
+          path: '/category/details',
+          query: {
+            pid: pid
+          }
+        })
+      } else if (osObj.isIphone) {
+        window.webkit.messageHandlers.ToAgriculturalProducts.postMessage('')
+      } else if (osObj.isAndroid) {
+        window.beeMarket.ToAgriculturalProducts()
+      } else {
+        this.$router.push({
+          path: '/category/details',
+          query: {
+            pid: pid
+          }
+        })
+      }
+    },
+    showDetail(pid, target) {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        // FIXME 跳转到农副产品页
+        this.$router.push({
+          path: '/category/details',
+          query: {
+            pid: pid
+          }
+        })
+      } else if (osObj.isIphone) {
+        window.webkit.messageHandlers.ToProductDetail.postMessage({
+          pid: pid,
+          target: target
+        })
+      } else if (osObj.isAndroid) {
+        window.beeMarket.ToProductDetail(pid, target)
+      } else {
+        this.$router.push({
+          path: '/category/details',
+          query: {
+            pid: pid
+          }
+        })
+      }
+    }
+  }
 }
 </script>
 
@@ -139,8 +194,8 @@ export default {
           display: flex;
           align-items: flex-end;
           .area-tag {
-            height: 0.3rem;
             width: 2.2rem;
+            height: 0.3rem;
             line-height: 0.3rem;
             box-sizing: border-box;
             font-size: 0.2rem;
@@ -148,6 +203,7 @@ export default {
             color: @Red1;
             border: 0.02rem solid @Red1;
             margin-right: 0.12rem;
+            border-radius: 0.04rem;
           }
           .bee-tag {
             display: inline-block;
