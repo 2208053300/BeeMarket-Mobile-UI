@@ -55,7 +55,7 @@ export default {
     left: 0.15rem;
     width: 0.8rem;
     height: 0.3rem;
-    background-color: @Brown;
+    background-color: @Brown1;
     border-radius: 0.15rem;
     text-align: center;
     line-height: 0.3rem;

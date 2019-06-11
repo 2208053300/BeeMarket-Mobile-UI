@@ -104,8 +104,8 @@ export default {
     return {
       beeIcon: {
         confirmorder_send_icon_presentation: require('@/assets/icon/order/confirmorder_send_icon_presentation@2x.png'),
-        task_icon_sigh: require('@/assets/icon/home/task_icon_sigh@2x.png'),
-        task_icon_smile_white: require('@/assets/icon/home/task_icon_smile_white@2x.png')
+        task_icon_sigh: require('@/assets/icon/task/task_icon_sigh@2x.png'),
+        task_icon_smile_white: require('@/assets/icon/task/task_icon_smile_white@2x.png')
       }
     }
   },
