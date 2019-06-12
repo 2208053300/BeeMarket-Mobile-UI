@@ -1,5 +1,10 @@
-// NOTE 多页应用打包
-
+/* REVIEW 新增多页打包页面：例（BeeLimit）
+  1.page目录下新建目录
+  2.复制一份main.js
+  3.复制一份index.vue(内含router-view)
+  4.在route目录下新增路由文件
+  5.在此处新增打包后的HTML配置
+*/
 module.exports = {
   // 主页
   index: {

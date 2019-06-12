@@ -38,7 +38,10 @@
             <div class="head-name">
               {{ isLogin ? $store.state.user.userInfo.nickname : '未登录' }}
             </div>
-            <div v-if="userInfo.personal_info.is_partner" class="head-type">
+            <div
+              v-if="userInfo.personal_info.is_partner"
+              class="head-type"
+            >
               <van-icon name="vip-card-o" />
               <span>合伙人</span>
             </div>
@@ -52,12 +55,12 @@
         type="flex"
         align="center"
       >
-        <van-button
-          type="default"
+        <div
+          v-if="userInfo.bee_charity"
+          class="cherity-img"
+          :style="{backgroundImage:'url('+userInfo.bee_charity.image_url+')'}"
           @click="$router.push('/persion/BeeCommonweal')"
-        >
-          蜂公益
-        </van-button>
+        />
       </van-row>
       <bee-order :express-info="userInfo.express_info" />
       <van-row
@@ -240,6 +243,11 @@ export default {
     margin: 0 0.16rem 50px;
     position: relative;
     top: -1rem;
+    .cherity-img{
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+    }
     .van-row {
       margin: 0.1rem 0;
       border-radius: 0.2rem;
