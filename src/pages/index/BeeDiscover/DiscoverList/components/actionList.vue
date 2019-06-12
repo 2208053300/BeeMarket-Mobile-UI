@@ -11,10 +11,10 @@
         @load="onLoad"
       >
         <div
-          v-for="item in actionList"
-          :key="item.id"
+          v-for="(item,index) in actionList"
+          :key="index"
           class="action-content"
-          @click="$router.push('/discover/action')"
+          @click="$router.push({path:'/discover/action',query:{id:item.id}})"
         >
           <div class="action-img">
             <img
