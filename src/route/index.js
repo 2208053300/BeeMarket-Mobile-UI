@@ -55,6 +55,26 @@ const router = new Router({
           ]
         },
         {
+          path: 'beeHelper',
+          component: () => import('@/pages/BeeHelper'),
+          children: [
+            {
+              path: '',
+              name: 'ServiceHelperIndex',
+              component: () =>
+                import(
+                  '@/pages/BeeHelper/ServiceHelperIndex'
+                )
+            },
+            {
+              path: 'QustionList',
+              name: 'QustionList',
+              component: () =>
+                import('@/pages/BeeHelper/QustionList')
+            }
+          ]
+        },
+        {
           path: 'beeFactory',
           name: 'beeFactory',
           component: () => import('@/pages/BeeFactory'),
@@ -476,21 +496,21 @@ const router = new Router({
         },
         {
           path: 'ServiceHelper',
-          component: () => import('@/pages/index/BeePersion/ServiceHelper'),
+          component: () => import('@/pages/BeeHelper'),
           children: [
             {
               path: '',
               name: 'ServiceHelperIndex',
               component: () =>
                 import(
-                  '@/pages/index/BeePersion/ServiceHelper/ServiceHelperIndex'
+                  '@/pages/BeeHelper/ServiceHelperIndex'
                 )
             },
             {
               path: 'QustionList',
               name: 'QustionList',
               component: () =>
-                import('@/pages/index/BeePersion/ServiceHelper/QustionList')
+                import('@/pages/BeeHelper/QustionList')
             }
           ]
         },
