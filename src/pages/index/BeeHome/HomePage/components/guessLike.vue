@@ -1,14 +1,16 @@
 <template>
   <div class="bee-guess">
     <div class="guess-title">
-      <span>- 猜你喜欢 -</span>
+      <span>猜你喜欢</span>
     </div>
-    <div class="guess-container">
-      <van-list
-        v-model="loading"
-        finished-text="没有更多了"
-        @load="onLoad"
-      />
+    <van-list
+      v-model="loading"
+      finished-text="没有更多了"
+      class="guess-container"
+      :finished="finished"
+      :immediate-check="false"
+      @load="onLoad"
+    >
       <div
         v-for="(item,index) in guessData"
         :key="index"
@@ -32,7 +34,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </van-list>
   </div>
 </template>
 
@@ -52,6 +54,7 @@ export default {
   data() {
     return {
       loading: false,
+      finished: false,
       page: 1
     }
   },
@@ -60,14 +63,17 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    // FIXME 此处有加载两次的问题
     onLoad() {
       // 异步更新数据
       setTimeout(async() => {
-        this.loading = true
-        const res = await getHome()
+        const res = await getHome({ page: this.page })
         this.guessData.push(...res.data.random_product)
         this.page++
         this.loading = false
+        if (res.data.random_product.length === 0) {
+          this.finished = true
+        }
       }, 500)
     }
   }
@@ -81,11 +87,9 @@ export default {
   background-color: #ffffff;
   border-top-left-radius: 0.2rem;
   border-top-right-radius: 0.2rem;
-  min-height: 5rem;
   .guess-title {
-    text-align: center;
     padding: 0.4rem 0;
-    font-size: 0.28rem;
+    font-size: 0.36rem;
   }
   .guess-container {
     display: grid;
