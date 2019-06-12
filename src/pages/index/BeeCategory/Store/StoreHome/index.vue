@@ -31,6 +31,7 @@
     <store-content
       :store-details="storeDetails"
       :form-data.sync="formData"
+      :commodity-list="commodityList"
     />
     <van-actionsheet v-model="showLicense">
       <van-cell-group>
@@ -75,7 +76,10 @@ export default {
       beeIcon: {
         license: require('@/assets/icon/store/shop_icon_license@2x.png')
       },
-      formData: {}
+      formData: {
+        page: 1
+      },
+      commodityList: []
     }
   },
   computed: {},
@@ -85,11 +89,14 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.formData.mid = this.$route.query.mid
+    this.getStoreDetailData()
   },
   methods: {
     async getStoreDetailData() {
       const res = await getStoreDetail(this.formData)
       this.storeDetails = res.data
+      this.commodityList.push(...res.data.products)
+      this.formData.page++
     }
   }
 }

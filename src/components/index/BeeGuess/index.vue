@@ -1,5 +1,8 @@
 <template>
-  <div class="bee-guess">
+  <div
+    v-if="guessData.length"
+    class="bee-guess"
+  >
     <template v-if="guessData.length">
       <div
         v-if="guessData[0].area"
@@ -100,10 +103,7 @@ export default {
       if (osObj.isWx) {
         // FIXME 跳转到农副产品页
         this.$router.push({
-          path: '/category/details',
-          query: {
-            pid: pid
-          }
+          path: '/beeFarm'
         })
       } else if (osObj.isIphone) {
         window.webkit.messageHandlers.ToAgriculturalProducts.postMessage('')
@@ -111,10 +111,7 @@ export default {
         window.beeMarket.ToAgriculturalProducts()
       } else {
         this.$router.push({
-          path: '/category/details',
-          query: {
-            pid: pid
-          }
+          path: '/beeFarm'
         })
       }
     },
