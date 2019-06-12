@@ -321,3 +321,11 @@ export function cancelCollect(data) {
     data
   })
 }
+// NOTE 获取客服帮助首页数据
+export function getServiceIndex(data) {
+  return request({
+    url: '/user/customerService/list',
+    method: 'post',
+    data
+  })
+}

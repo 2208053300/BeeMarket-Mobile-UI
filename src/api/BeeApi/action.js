@@ -56,3 +56,12 @@ export function getShareDetail(data) {
     params: data
   })
 }
+
+// 活动详情
+export function activityDetail(data) {
+  return request({
+    url: '/market/planDetails',
+    method: 'post',
+    data
+  })
+}
