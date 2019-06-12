@@ -16,3 +16,11 @@ export function getTaskAward(data) {
     data
   })
 }
+// 蜂任务 - 任务详情
+export function getTaskDetail(data) {
+  return request({
+    url: '/task/details',
+    method: 'post',
+    data
+  })
+}

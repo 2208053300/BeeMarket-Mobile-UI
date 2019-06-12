@@ -5,24 +5,25 @@
     </div>
     <div class="product-list">
       <div
-        v-for="product in homeDate.newProduct"
-        :key="product.name"
+        v-for="product in homeData.new_product"
+        :key="product.product_name"
         class="product-detail"
+        @click="$router.push({path:'/category/details',query:{pid:product.product_id}})"
       >
         <div class="product-img">
           <img
-            :src="product.previewImg"
+            :src="product.thumb_url"
             alt=""
           >
         </div>
         <div class="product-text">
           <div class="product-name">
-            {{ product.name }}
+            {{ product.product_name }}
           </div>
           <div class="product-price1">
-            ￥{{ product.currentPrice }}
+            ￥{{ product.selling_price }}
             <span class="product-price2">
-              ￥{{ product.oldPrice }}
+              ￥{{ product.marketing_price }}
             </span>
           </div>
         </div>
@@ -35,10 +36,10 @@
 export default {
   components: {},
   props: {
-    homeDate: {
+    homeData: {
       type: Object,
       default: () => {
-        return {}
+        return { new_product: [] }
       }
     }
   },
