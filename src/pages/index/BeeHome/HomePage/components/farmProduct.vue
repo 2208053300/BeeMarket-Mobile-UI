@@ -1,6 +1,6 @@
 <template>
-  <div class="farm-product">
-    <div class="product-title">
+  <div class="farm-card">
+    <div class="card-title">
       <span class="title">
         农副产品
       </span>
@@ -11,24 +11,24 @@
     </div>
     <div class="product-list">
       <div
-        v-for="product in homeDate.limitProduct"
-        :key="product.name"
+        v-for="product in homeData.produce"
+        :key="product.product_id"
         class="product-detail"
       >
         <div class="product-img">
           <img
-            :src="product.previewImg"
+            :src="product.thumb_url"
             alt=""
           >
         </div>
         <div class="product-text">
           <div class="product-name">
-            {{ product.name }}
+            {{ product.product_name }}
           </div>
           <div class="product-price1">
-            ￥{{ product.currentPrice }}
+            ￥{{ product.selling_price }}
             <span class="product-price2">
-              ￥{{ product.oldPrice }}
+              ￥{{ product.marketing_price }}
             </span>
           </div>
         </div>
@@ -41,7 +41,7 @@
 export default {
   components: {},
   props: {
-    homeDate: {
+    homeData: {
       type: Object,
       default: () => {
         return {}
@@ -60,14 +60,13 @@ export default {
 </script>
 
 <style scoped lang="less">
-.farm-product {
+.farm-card {
   margin: 0.2rem 0.16rem 0;
   padding: 0.32rem 0.16rem;
   background-color: #fff;
   border-radius: 0.2rem;
   box-shadow: 0 0 0.2rem @Grey6;
-  height: 9.4rem;
-  .product-title {
+  .card-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -77,7 +76,7 @@ export default {
     .more {
       font-size: 0.26rem;
       color: @Grey1;
-      .van-icon {
+      .van-icon{
         vertical-align: middle;
       }
     }

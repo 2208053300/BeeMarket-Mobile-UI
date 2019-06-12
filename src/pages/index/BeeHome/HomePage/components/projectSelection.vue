@@ -5,18 +5,18 @@
     </div>
     <div class="project-list">
       <div
-        v-for="project in homeDate.selectionProject"
-        :key="project.name"
+        v-for="project in homeData.feature.top"
+        :key="project.mixed_id"
         class="project-detail"
       >
         <div class="project-img">
           <img
-            :src="project.previewImg"
+            :src="project.show_image"
             alt=""
           >
         </div>
         <div class="project-name">
-          {{ project.name }}
+          {{ project.mixed_name }}
         </div>
       </div>
     </div>
@@ -27,10 +27,26 @@
 export default {
   components: {},
   props: {
-    homeDate: {
+    homeData: {
       type: Object,
       default: () => {
-        return {}
+        return {
+          feature: {
+            top: [
+              {
+                share_data: []
+              }
+            ],
+            other: [
+              {
+                products: []
+              },
+              {
+                share_data: []
+              }
+            ]
+          }
+        }
       }
     }
   },
@@ -57,7 +73,7 @@ export default {
     display: flex;
     overflow-y: scroll;
     margin-top: 0.3rem;
-    .project-detail{
+    .project-detail {
       margin-right: 0.2rem;
       .project-img {
         width: 4rem;
@@ -65,7 +81,7 @@ export default {
         border-radius: 0.08rem;
         overflow: hidden;
       }
-      .project-name{
+      .project-name {
         font-size: 0.3rem;
         margin-top: 0.2rem;
       }

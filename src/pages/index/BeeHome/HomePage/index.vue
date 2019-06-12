@@ -32,7 +32,7 @@
     <farm-product :home-data="homeData" />
     <project-selection :home-data="homeData" />
     <action-list :home-data="homeData" />
-    <bee-guess />
+    <guess-like :guess-data="homeData.random_product" />
   </div>
 </template>
 
@@ -48,7 +48,7 @@ import publicAction from './components/publicAction'
 import farmProduct from './components/farmProduct'
 import projectSelection from './components/projectSelection'
 import actionList from './components/actionList'
-import BeeGuess from '@/components/index/BeeGuess'
+import guessLike from './components/guessLike'
 // import wxapi from '@/utils/wxapi'
 export default {
   components: {
@@ -61,7 +61,7 @@ export default {
     farmProduct,
     projectSelection,
     actionList,
-    BeeGuess
+    guessLike
   },
   props: {},
   data() {
@@ -92,9 +92,23 @@ export default {
         },
         charity_action: {
           action: {}
+        },
+        feature: {
+          top: [
+            {
+              share_data: []
+            }
+          ],
+          other: [
+            {
+              products: []
+            },
+            {
+              share_data: []
+            }
+          ]
         }
-      },
-      pageForm: {}
+      }
     }
   },
   computed: {},
