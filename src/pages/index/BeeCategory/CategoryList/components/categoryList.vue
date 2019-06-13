@@ -1,12 +1,12 @@
 <template>
   <div class="category-list">
-    <van-badge-group
+    <van-sidebar
       ref="badgeList"
       class="select-category"
       :active-key="activeKey"
       @change="onChange"
     >
-      <van-badge
+      <van-sidebar-item
         v-for="(item,index) in category1"
         :key="item.cid"
         :title="item.cname"
@@ -18,7 +18,7 @@
       >
         <img :src="beeIcon.cat_pic_select">
       </div>
-    </van-badge-group>
+    </van-sidebar>
     <div
       v-if="category2.groups"
       class="category2-container"
@@ -126,7 +126,7 @@ export default {
       this.category2 = res.data
     },
     changeBorder(index) {
-      const badge = document.querySelector('.van-badge')
+      const badge = document.querySelector('.van-sidebar-item')
       // 无关痛痒的报错
       this.borderPosition = Number(index) * badge.offsetHeight + 14 + 'px'
       console.log(badge.offsetHeight, index)
@@ -156,14 +156,14 @@ export default {
     min-width: 1.6rem;
     height: 100%;
     overflow-y: scroll;
-    .van-badge {
+    .van-sidebar-item {
       font-size: 0.24rem;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       background-color: @GreyBg;
     }
-    .van-badge--select {
+    .van-sidebar-item--select {
       background-color: #ffffff;
       border-color: #ffffff;
     }
