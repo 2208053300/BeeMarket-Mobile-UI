@@ -345,3 +345,19 @@ export function getAnswer(data) {
     data
   })
 }
+// NOTE 客服帮助 问题有用
+export function solved(data) {
+  return request({
+    url: '/user/customerService/solved',
+    method: 'post',
+    data
+  })
+}
+// NOTE 客服帮助 问题没用
+export function unsolved(data) {
+  return request({
+    url: '/user/customerService/unsolved',
+    method: 'post',
+    data
+  })
+}
