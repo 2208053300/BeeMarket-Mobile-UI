@@ -133,7 +133,7 @@
 </template>
 
 <script>
-import videojs from 'video.js'
+import videojs from 'video.js/dist/video.min.js'
 import 'video.js/dist/video-js.css'
 export default {
   components: {},

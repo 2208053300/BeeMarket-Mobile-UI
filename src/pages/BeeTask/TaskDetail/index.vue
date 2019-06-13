@@ -11,7 +11,10 @@
       </div>
     </van-notice-bar>
     <div class="task-content">
-      <div class="task-header">
+      <div
+        class="task-header"
+        :class="{headerPadding:taskData.proportion===100}"
+      >
         <div class="header-part1">
           <div class="header-left">
             <div class="left-text1">
@@ -90,7 +93,17 @@
         </div>
         <div class="get-gift">
           剩余数量：<span class="num">{{ taskData.remain_qty }}</span>
-          <van-button class="get-button">
+          <van-button
+            v-if="taskData.proportion===100"
+            class="get-button"
+            @click="getGift"
+          >
+            免费领取
+          </van-button>
+          <van-button
+            v-else
+            class="get-button getButton2"
+          >
             免费领取
           </van-button>
         </div>
@@ -106,9 +119,9 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+import echarts from 'echarts/lib/echarts'
 import { getTaskDetail } from '@/api/BeeApi/task'
-
+require('echarts/lib/chart/pie')
 export default {
   metaInfo: {
     title: '任务详情'
@@ -172,7 +185,8 @@ export default {
       const res = await getTaskDetail({ tid: this.$route.query.tid })
       this.taskData = res.data
       this.initPie()
-    }
+    },
+    geiGift() {}
   }
 }
 </script>
@@ -190,6 +204,9 @@ export default {
   .task-content {
     background-color: #fff;
     padding: 0.32rem 0.3rem;
+    .headerPadding {
+      padding-bottom: 0.4rem;
+    }
     .task-header {
       background: linear-gradient(to right, #ffab38, #f9a247);
       border-radius: 0.16rem;
@@ -354,8 +371,11 @@ export default {
           padding: 0;
           border: none;
         }
+        .getButton2 {
+          background-color: rgba(255, 164, 47, 0.2);
+        }
       }
-      .product-detailImg{
+      .product-detailImg {
         margin-top: 0.4rem;
         border-radius: 0.08rem;
         overflow: hidden;

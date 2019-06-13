@@ -6,6 +6,30 @@
       left-icon="volume-o"
       background="transparent"
     />
+    <van-tabs
+      v-model="active"
+      :color="BeeDefault"
+      :title-active-color="BeeDefault"
+      :line-width="60"
+      background="transparent"
+      @change="getList"
+    >
+      <van-tab>
+        <div slot="title">
+          全部
+        </div>
+      </van-tab>
+      <van-tab>
+        <div slot="title">
+          已到账
+        </div>
+      </van-tab>
+      <van-tab>
+        <div slot="title">
+          在路上
+        </div>
+      </van-tab>
+    </van-tabs>
     <div class="detail-card">
       <van-cell-group>
         <van-cell
@@ -32,12 +56,15 @@
 
 <script>
 import { mineCharityValueDetail } from '@/api/BeeApi/user'
+import { BeeDefault } from '@/styles/index/variables.less'
 export default {
   components: {},
   props: {},
   data() {
     return {
-      recordList: {}
+      recordList: {},
+      BeeDefault,
+      active: 0
     }
   },
   computed: {},
@@ -52,6 +79,9 @@ export default {
     async mineCharityValueDetailData() {
       const res = await mineCharityValueDetail()
       this.recordList = res.data
+    },
+    getList(index) {
+      // TODO 等接口，状态
     }
   }
 }
