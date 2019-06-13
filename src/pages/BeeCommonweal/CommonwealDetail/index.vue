@@ -58,6 +58,11 @@
 import { mineCharityValueDetail } from '@/api/BeeApi/user'
 import { BeeDefault } from '@/styles/index/variables.less'
 export default {
+  metaInfo() {
+    return {
+      title: '公益值明细'
+    }
+  },
   components: {},
   props: {},
   data() {

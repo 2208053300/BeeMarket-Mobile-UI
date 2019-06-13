@@ -68,9 +68,9 @@ export default {
     if (osObj.isWx) {
       this.isShowCoustomer = false
     } else if (osObj.isIphone) {
-      window.webkit.messageHandlers.OpenService.postMessage('')
+      // window.webkit.messageHandlers.OpenService.postMessage('')
     } else if (osObj.isAndroid) {
-      window.beeMarket.OpenService()
+      // window.beeMarket.OpenService()
     } else {
       this.isShowCoustomer = false
     }
