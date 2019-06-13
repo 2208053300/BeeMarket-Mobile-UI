@@ -12,10 +12,15 @@
       <div class="video">
         <video
           :src="video_url"
-          :poster="beeIcon.line_bee_circle_banner"
-          style="width: 6.42rem;height: 3.3rem;border-radius: 0.16rem"
-          controls="controls"
+          :poster="beeIcon.first_screen"
+          class="video-body"
+          :controls="showControls"
         />
+        <div style="position: relative">
+          <div class="control">
+            <img :src="beeIcon.title_icon_stop" style="width: 1.28rem;height: 1.28rem">
+          </div>
+        </div>
       </div>
       <div style="margin-top: 0.6rem">
         <img :src="beeIcon.stop_pic_line">
@@ -80,11 +85,13 @@ export default {
         talent_bg_title3: require('@/assets/icon/task/talent/talent_bg_title3@3x.png'),
         title_icon_stop: require('@/assets/icon/task/talent/title_icon_stop@2x.png'),
         stop_pic_line: require('@/assets/icon/task/talent/stop_pic_line@2x.png'),
-        line_bee_circle_banner: require('@/assets/icon/task/talent/line_bee_circle_banner@2x.png')
+        line_bee_circle_banner: require('@/assets/icon/task/talent/line_bee_circle_banner@2x.png'),
+        first_screen: require('@/assets/icon/task/talent/first_screen@3x.png')
       },
       playStatus: false,
       video_url: 'https://img.fengjishi.com.cn/product/video/mi9.mp4',
-      hasFirstConsume: 0
+      hasFirstConsume: 0,
+      showControls: false
     }
   },
   computed: {},
@@ -131,9 +138,23 @@ p {
 }
 .video {
   border-radius: 0.16rem;
-  background-color: black;
   margin-top: 0.24rem;
-  height: 3.3rem;
+  .video-body {
+    background-color: black;
+    width: 6.42rem;
+    height: 3.3rem;
+    border-radius: 0.16rem
+  }
+  .control {
+    width: 6.42rem;
+    height: 3.3rem;
+    top: -3.21rem;
+    left: 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .has-first-consume {
   p {
