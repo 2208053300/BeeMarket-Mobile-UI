@@ -11,14 +11,19 @@
       />
       <div class="video">
         <video
+          ref="video"
           :src="video_url"
           :poster="beeIcon.first_screen"
           class="video-body"
           :controls="showControls"
         />
-        <div style="position: relative">
+        <div v-if="!showControls" style="position: relative">
           <div class="control">
-            <img :src="beeIcon.title_icon_stop" style="width: 1.28rem;height: 1.28rem">
+            <img
+              :src="beeIcon.title_icon_stop"
+              style="width: 1.28rem;height: 1.28rem"
+              @click="play"
+            >
           </div>
         </div>
       </div>
@@ -118,6 +123,10 @@ export default {
     async getHasConsume() {
       const res = await isConsume()
       this.hasFirstConsume = res.data.is_consume ? 1 : 0
+    },
+    play() {
+      this.$refs.video.play()
+      this.showControls = true
     }
   }
 }
@@ -148,9 +157,9 @@ p {
   .control {
     width: 6.42rem;
     height: 3.3rem;
-    top: -3.21rem;
+    top: -3.3rem;
     left: 0;
-    position: relative;
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
