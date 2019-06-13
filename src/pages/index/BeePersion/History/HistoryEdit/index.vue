@@ -17,12 +17,12 @@
           class="flex flex-wrap"
         >
           <van-checkbox
-            v-for="(pro,index) in item.product_list"
-            :key="index"
+            v-for="(pro,index2) in item.product_list"
+            :key="index2"
             :name="pro"
             :checked-color="BeeDefault"
             class="checkbox"
-            @click="changeAll(index,item.product_list,allSelectedBox[index])"
+            @click="changeAll(index2,item.product_list,allSelectedBox[index2])"
           >
             <div class="goodsItem">
               <img

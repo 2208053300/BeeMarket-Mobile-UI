@@ -13,6 +13,7 @@
           <div class="card-title">
             项目简介
           </div>
+          <!--eslint-disable-->
           <div
             class="card-content2 cardDesc"
             :class="{cardDesc2:showAll}"

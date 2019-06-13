@@ -39,7 +39,7 @@
         <span>您的订单正由平台积极处理中，请耐心等待</span>
       </div> -->
       <!-- TODO 最后一个不加线 -->
-      <div v-for="(item, index) in logisticsInfo.express_details" class="status-content" :key="index">
+      <div v-for="(item, index) in logisticsInfo.express_details" :key="index" class="status-content">
         <div class="bee-cir" />
         <div class="bee-line" />
         <div class="status-text">

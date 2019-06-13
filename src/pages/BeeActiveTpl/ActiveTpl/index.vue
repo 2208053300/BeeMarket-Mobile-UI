@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
+import Cookies from 'js-cookie'
 import { activityDetail } from '@/api/BeeApi/action'
 
 export default {
@@ -61,6 +63,8 @@ export default {
   props: {},
   data() {
     return {
+      // 获取app cookies中的 token
+      test1: '',
       // 活动标题
       activity: {
         id: '',
@@ -76,33 +80,7 @@ export default {
       },
       finished: false,
       // 导航选中选
-      active: 0,
-      navList: [
-        {
-          id: 1,
-          name: '导航名称'
-        },
-        {
-          id: 3,
-          name: '导航名称3'
-        },
-        {
-          id: 2,
-          name: '导航名称2'
-        },
-        {
-          id: 1,
-          name: '导航名称'
-        },
-        {
-          id: 3,
-          name: '导航名称3'
-        },
-        {
-          id: 2,
-          name: '导航名称2'
-        }
-      ]
+      active: 0
 
     }
   },
@@ -121,6 +99,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getActivityDetailData()
+    this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
   },
   methods: {
     // 获取活动数据
@@ -138,7 +117,7 @@ export default {
           navContents.forEach(item => {
             heightArr.push(item.offsetTop)
           })
-          console.log(heightArr)
+          console.log(navContents, heightArr)
 
           var top = document.documentElement.scrollTop || document.body.scrollTop// 设置变量top,表示当前滚动条到顶部的值
           var tt = document.getElementsByClassName('nav-content')[0].clientHeight // 设置变量tt,表示当前滚动窗口高度的值
@@ -152,10 +131,14 @@ export default {
           for (var n = 0; n < heightArr.length; n++) {
             // 在此处通过判断滚动条到顶部的值和当前窗口高度的关系
             // （当前窗口的n倍 <= top <= 当前窗口的n+1倍）来取得和导航索引值的对应关系
-            if (top >= heightArr[n] && top <= heightArr[n + 1]) {
+            if (top >= heightArr[n] && top < heightArr[n + 1]) {
               num = n
+              console.log('判断序号：', n)
+            } else if (top >= heightArr[heightArr.length - 1]) {
+              num = heightArr.length - 1
             }
             self.active = num
+            console.log('当前序号：', self.active)
           }
           // for (var n = 0; n < self.navList.length; n++) {
           //   // 在此处通过判断滚动条到顶部的值和当前窗口高度的关系
@@ -165,26 +148,37 @@ export default {
           //   }
           //   self.active = num
           // }
-        }, 100)
+        }, 200)
         $scrollBox.addEventListener('scroll', scrollCallback)
       }
     },
 
     // 跳转到商品详情页
+    // 此处判断浏览器环境，做出跳转
     goDetail(pid, target) {
-      console.log(pid, target)
-    },
-
-    // 判断环境示例
-    goProduct(pid) {
-      // 判断是否来自webApp
-      if (this.$route.query.origin) {
-        window.location.href = `/#/category/details?pid=${pid}`
-      } else {
-        console.log('本地应用')
+      const osObj = getOs()
+      if (osObj.isWx) {
         this.$router.push({
           path: '/category/details',
-          query: { pid }
+          query: {
+            pid,
+            target
+          }
+        })
+      } else if (osObj.isIphone) {
+        window.webkit.messageHandlers.ToProductDetail.postMessage({
+          pid: pid,
+          target: target
+        })
+      } else if (osObj.isAndroid) {
+        window.beeMarket.ToProductDetail(pid, target)
+      } else {
+        this.$router.push({
+          path: '/category/details',
+          query: {
+            pid,
+            target
+          }
         })
       }
     },
@@ -257,7 +251,7 @@ export default {
           distance += step
           document.body.scrollTop = distance
           document.documentElement.scrollTop = distance
-          setTimeout(smoothDown, 10)
+          setTimeout(smoothDown, 0)
         } else {
           document.body.scrollTop = total
           document.documentElement.scrollTop = total
@@ -268,7 +262,7 @@ export default {
           distance -= step
           document.body.scrollTop = distance
           document.documentElement.scrollTop = distance
-          setTimeout(smoothUp, 10)
+          setTimeout(smoothUp, 0)
         } else {
           document.body.scrollTop = total
           document.documentElement.scrollTop = total

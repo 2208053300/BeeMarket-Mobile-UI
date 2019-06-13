@@ -120,6 +120,10 @@ const router = new Router({
             {
               path: 'download',
               component: () => import('@/pages/BeeRegister/Download')
+            },
+            {
+              path: 'agreement',
+              component: () => import('@/pages/BeeRegister/UserAgreement')
             }
           ]
         },
@@ -127,6 +131,17 @@ const router = new Router({
           path: 'beeNotice',
           name: 'beeNotice',
           component: () => import('@/pages/index/BeeHome/BeeNotice')
+        },
+        {
+          path: 'beeAnnouncement',
+          name: 'beeAnnouncement',
+          component: () => import('@/pages/BeeAnnouncement'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/BeeAnnouncement/Announcement')
+            }
+          ]
         },
         {
           path: 'beeAction',
@@ -151,6 +166,11 @@ const router = new Router({
               path: 'taskDetail',
               name: 'taskDetail',
               component: () => import('@/pages/BeeTask/TaskDetail')
+            },
+            {
+              path: 'talent',
+              name: 'becomeTalent',
+              component: () => import('@/pages/BeeTask/TaskTalent')
             }
           ]
         }

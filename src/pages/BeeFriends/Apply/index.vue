@@ -306,8 +306,7 @@ export default {
           // 验证通过
           if (this.isAgree) {
             this.$toast('可以提交！')
-            // eslint-disable-next-line
-            const data1 = {
+            const data = {
               personalName: this.personalName,
               card_no: this.card_no,
               number: this.number,
@@ -512,6 +511,7 @@ export default {
 <style  lang="less">
 .factory-body {
   background: #fed559;
+  height: auto !important;
   .van-cell:not(:last-child)::after {
     content: " ";
     position: absolute;
