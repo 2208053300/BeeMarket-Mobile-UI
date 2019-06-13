@@ -6,12 +6,12 @@
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
-        @load="onLoad"
+        @load="getData"
       >
         <van-cell
           v-for="(item,index) in list"
           :key="item.id"
-          :title="(index+1)+'、'+item.title"
+          :title="(index+1)+'、'+item.question"
           @click="showAnswer(item.id)"
         />
       </van-list>
@@ -29,14 +29,14 @@
 
 <script>
 // 引入帮助客服api
-import { getSortList } from '@/api/serviceHelp'
+import { getSortList } from '@/api/BeeApi/user'
 import ContactCustomer from '../components/ContactCustomer'
 import AnswerPop from '../components/AnswerPop'
 export default {
   // NOTE 动态表头数据需要函数方法
   metaInfo() {
     return {
-      title: this.sortName
+      title: '客服帮助'
     }
   },
   components: {
@@ -61,21 +61,24 @@ export default {
     // this.getData()
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    console.log(this)
   },
   methods: {
     // 获取数据
     getData() {
-      getSortList(this.$route.query.id, this.page).then(res => {
-        this.sortName = res.data.sortName
-        if (res.data.listData.length > 0) {
-          this.list.push(...res.data.listData)
-          console.log(this.list, this.page)
-          this.loading = false
-        } else {
+      setTimeout(async() => {
+        const res = await getSortList({ type_id: this.$route.query.id })
+        // this.sortName = res.data.sortName
+        this.list.push(...res.data)
+        console.log(this.list, this.page)
+        this.page++
+        this.loading = false
+        if (this.page > 1) {
           this.finished = true
         }
-      })
+        // if (res.data.length === 0) {
+        //   this.finished = true
+        // }
+      }, 500)
     },
     // 根据id获取答案
     showAnswer(id) {
@@ -86,11 +89,6 @@ export default {
     // 接收答案弹框返回的 isShow 值
     getShow(v) {
       this.isShow = v
-    },
-    onLoad() {
-      this.getData()
-      this.page += 1
-      console.log(this.page)
     }
   }
 }

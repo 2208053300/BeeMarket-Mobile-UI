@@ -59,5 +59,35 @@ module.exports = {
   beeReplace: {
     entry: 'src/pages/BeeReplace/main.js',
     title: '好友代付'
+  },
+  // 客服帮助
+  beeHelper: {
+    entry: 'src/pages/BeeHelper/main.js',
+    title: '客服帮助'
+  },
+  // 活动模板
+  beeActiveTpl: {
+    entry: 'src/pages/BeeActiveTpl/main.js',
+    title: '活动'
+  },
+  // 完善资料
+  beeCompleteInfo: {
+    entry: 'src/pages/BeeCompleteInfo/main.js',
+    title: '完善资料'
+  },
+  // 蜂工厂
+  beeFactory: {
+    entry: 'src/pages/BeeFactory/main.js',
+    title: '蜂工厂'
+  },
+  // 关于我们 二维码注册
+  beeRegister: {
+    entry: 'src/pages/BeeRegister/main.js',
+    title: '蜂工厂'
+  },
+  // 公告
+  beeAnnouncement: {
+    entry: 'src/pages/BeeAnnouncement/main.js',
+    title: '公告'
   }
 }
