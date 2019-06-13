@@ -1,0 +1,247 @@
+<template>
+  <div class="cart-list">
+    <div
+      v-for="(store, index) in cart.cartInfo"
+      :key="index"
+      class="bee-store"
+    >
+      <van-checkbox
+        v-model="store.checked"
+        :checked-color="BeeDefault"
+        style="margin-top:0"
+        @click="checkProduct(store.products[0].cart_id,'group',store.checked)"
+      >
+        <van-icon
+          name="shop-o"
+          style="vertical-align: text-top;"
+        />
+        {{ store.store_name }}
+      </van-checkbox>
+      <van-checkbox
+        v-for="item in store.products"
+        :key="item.id"
+        v-model="item.checked"
+        :name="item"
+        :checked-color="BeeDefault"
+        @click="checkProduct(item.cart_id,'one',item.checked)"
+      >
+        <van-card @click.stop="">
+          <img
+            slot="thumb"
+            :src="item.tUrl"
+            alt="商品预览图"
+            @click.stop="showDetails(item.pid)"
+          >
+          <span
+            slot="title"
+            class="card-title"
+            @click.stop="showDetails(item.pid)"
+          >{{ item.pname }}</span>
+          <div
+            slot="desc"
+            class="card-sku"
+            @click.stop="showSku(item.pid,item.props,item.number,item.cart_id)"
+          >
+            {{ item.props_name }}
+            <van-icon name="arrow-down" />
+          </div>
+          <span
+            slot="price"
+            class="card-price"
+          >
+            ￥{{ item.sell_price }}
+          </span>
+          <van-stepper
+            slot="num"
+            v-model="item.number"
+            :integer="true"
+            @change="changeNum(item.number,item.cart_id)"
+          />
+        </van-card>
+      </van-checkbox>
+    </div>
+    <bee-sku
+      ref="beeSku"
+      :pid="editPid"
+      :show-sku.sync="skuShow"
+      :props-id.sync="propsId"
+      :p-number.sync="pNumber"
+      @get-sku-id="getSkuId"
+    />
+  </div>
+</template>
+
+<script>
+import { mapState } from 'vuex'
+import BeeSku from '@/components/index/BeeSku'
+import { BeeDefault } from '@/styles/index/variables.less'
+import {
+  updateShopcartProductNum,
+  checkShopcartProduct,
+  updateShopcartProductSku
+} from '@/api/BeeApi/user'
+
+export default {
+  components: {
+    BeeSku
+  },
+  props: {},
+  data() {
+    return {
+      BeeDefault,
+      skuShow: false,
+      propsId: [],
+      pNumber: 1,
+      editCtid: 0,
+      editPid: 0
+    }
+  },
+  computed: {
+    ...mapState(['cart'])
+  },
+  watch: {},
+  created() {},
+  mounted() {},
+  methods: {
+    // 更改选中状态
+    async checkProduct(ctid, act, checked) {
+      const res = await checkShopcartProduct({
+        ctid: ctid,
+        act: act,
+        checked: checked ? 0 : 1
+      })
+      if (res.status_code === 200) {
+        this.$parent.getShopcartListData()
+      }
+    },
+    // TODO 跳转详情
+    showDetails(id) {
+      console.log(id)
+      this.$router.push({
+        path: '/category/details',
+        query: {
+          pid: id
+        }
+      })
+    },
+    // TODO 显示SKU选择器
+    showSku(pid, propsId, number, ctid) {
+      this.skuShow = true
+      this.editPid = pid
+      this.propsId = propsId
+      this.pNumber = number
+      this.editCtid = ctid
+    },
+    // 变更SKU
+    async getSkuId(sid) {
+      const res = await updateShopcartProductSku({
+        ctid: this.editCtid,
+        sid: sid,
+        number: this.pNumber
+      })
+      if (res.status_code === 200) {
+        this.$parent.getShopcartListData()
+      }
+    },
+    // TODO 更改数量
+    async changeNum(num, ctid) {
+      const res = await updateShopcartProductNum({
+        ctid: ctid,
+        number: num
+      })
+      if (res.status_code === 200) {
+        this.$parent.getShopcartListData()
+      }
+    }
+  }
+}
+</script>
+
+<style lang="less">
+.cart-list {
+  margin: 0.2rem 0.3rem 0;
+  .bee-store {
+    border-radius: 0.2rem;
+    margin-bottom: 0.2rem;
+    background-color: #fff;
+    padding: 0.3rem 0.2rem;
+    .van-card {
+      background-color: #ffffff;
+      padding: 0;
+    }
+    .van-checkbox {
+      margin-top: 0.4rem;
+      .van-checkbox__label {
+        width: 90%;
+      }
+      .van-card__bottom {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+    }
+    .card-price {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      font-size: 0.28rem;
+      color: @Grey2;
+      font-weight: normal;
+    }
+    .card-title {
+      width: 100%;
+      font-size: 0.28rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .card-sku {
+      max-width: 50%;
+      border-radius: 0.05rem;
+      background-color: @GreyBg;
+      font-size: 0.24rem;
+      color: @Grey2;
+      align-self: flex-start;
+      padding: 0.03rem;
+      .van-icon {
+        vertical-align: text-top;
+      }
+    }
+    .van-card__num {
+      .van-stepper {
+        // NOTE 覆盖步进器样式
+        .van-stepper__minus {
+          height: 0.4rem;
+          background-color: #fff;
+          margin: 0;
+          padding: 0.22rem;
+          border: 0.01rem solid rgb(226, 226, 226);
+          border-right: none;
+          border-top-left-radius: 45%;
+          border-bottom-left-radius: 45%;
+          color: #c5c5c5;
+        }
+        .van-stepper__input {
+          height: 0.4rem;
+          background-color: #fff;
+          margin: 0;
+          border: 0.01rem solid rgb(156, 156, 156);
+          font-size: 0.2rem;
+          color: @Grey2;
+        }
+        .van-stepper__plus {
+          height: 0.4rem;
+          background-color: #fff;
+          margin: 0;
+          padding: 0.22rem;
+          border: 0.01rem solid rgb(156, 156, 156);
+          border-left: none;
+          border-top-right-radius: 45%;
+          border-bottom-right-radius: 45%;
+          color: @Grey2;
+        }
+      }
+    }
+  }
+}
+</style>

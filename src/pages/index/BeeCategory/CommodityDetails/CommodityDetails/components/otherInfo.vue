@@ -1,0 +1,309 @@
+<template>
+  <div class="other-info">
+    <van-cell-group>
+      <van-cell
+        is-link
+        class="other1 sku-select"
+        @click="showSku=true"
+      >
+        <p
+          slot="title"
+          class="cell-title"
+        >
+          <span
+            v-if="skuName.length===0"
+            class="title-text"
+          >请选择规格及参数</span>
+          <span
+            v-else
+            class="title-text"
+          >已选</span>
+          <span class="cell-content">{{ skuName.join(' ') }}</span>
+        </p>
+        <p class="cell-value">
+          选择
+        </p>
+      </van-cell>
+    </van-cell-group>
+    <van-cell-group>
+      <van-cell class="other1">
+        <p
+          slot="title"
+          class="cell-title"
+        >
+          <span class="title-text">配送</span>
+          <span class="cell-content">至 重庆 重庆市渝北区</span>
+        </p>
+      </van-cell>
+      <van-cell>
+        <p
+          slot="title"
+          class="cell-title"
+        >
+          <span class="title-text">活动</span>
+          <span class="cell-content">购买且确认收货后至多可获得+++</span>
+        </p>
+      </van-cell>
+      <van-cell>
+        <p
+          slot="title"
+          class="cell-title"
+        >
+          <span class="title-text">运费</span>
+          <span class="cell-content">免运费</span>
+        </p>
+      </van-cell>
+      <van-cell>
+        <p
+          slot="title"
+          class="cell-title"
+        >
+          <span class="title-text">备注</span>
+          <span class="cell-content">这是备注</span>
+        </p>
+      </van-cell>
+    </van-cell-group>
+    <van-cell-group>
+      <van-cell
+        class="service-cell"
+        @click="showPromise=true"
+      >
+        <div class="service-content">
+          <img
+            :src="beeIcon.product_detail_pic_hook"
+            alt="服务"
+          >
+        </div>
+      </van-cell>
+    </van-cell-group>
+    <van-actionsheet v-model="showPromise">
+      <div class="service-promise">
+        <div class="service-title">
+          服务承诺
+        </div>
+        <div class="promise-content">
+          <div class="promise-item">
+            <div class="promise-img">
+              <img
+                :src="beeIcon.product_detail_icon_authentic"
+                alt="正"
+              >
+            </div>
+            <div class="promise-right">
+              <div class="promise-title">
+                正品保证
+              </div>
+              <div class="promise-desc">
+                商家在售商品均持续加入保险承保范围予以正品保证
+              </div>
+            </div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-img">
+              <img
+                :src="beeIcon.product_detail_icon_rapidly"
+                alt="速"
+              >
+            </div>
+            <div class="promise-right">
+              <div class="promise-title">
+                极速发货
+              </div>
+              <div class="promise-desc">
+                订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
+              </div>
+            </div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-img">
+              <img
+                :src="beeIcon.product_detail_icon_change"
+                alt="换"
+              >
+            </div>
+            <div class="promise-right">
+              <div class="promise-title">
+                瑕疵包换
+              </div>
+              <div class="promise-desc">
+                订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
+              </div>
+            </div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-img">
+              <img
+                :src="beeIcon.product_detail_icon_review"
+                alt="审"
+              >
+            </div>
+            <div class="promise-right">
+              <div class="promise-title">
+                极速审核
+              </div>
+              <div class="promise-desc">
+                订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
+              </div>
+            </div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-img">
+              <img
+                :src="beeIcon.product_detail_icon_welfare"
+                alt="公"
+              >
+            </div>
+            <div class="promise-right">
+              <div class="promise-title">
+                公益宝贝
+              </div>
+              <div class="promise-desc">
+                订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="promise-button">
+          <van-button
+            type="default"
+            round
+            @click="showPromise=false"
+          >
+            确定
+          </van-button>
+        </div>
+      </div>
+    </van-actionsheet>
+    <bee-sku
+      :show-sku.sync="showSku"
+      :pid="commodityData.pid"
+      :props-id.sync="propsId"
+      :p-number.sync="pNumber"
+      @get-sku-name="getSkuName"
+      @get-sku-id="getSkuId"
+    />
+  </div>
+</template>
+
+<script>
+import BeeSku from '@/components/index/BeeSku'
+export default {
+  components: {
+    BeeSku
+  },
+  props: {
+    commodityData: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
+  data() {
+    return {
+      showPromise: false,
+      showSku: false,
+      skuName: [],
+      propsId: [],
+      sku_id: 0,
+      pNumber: 1,
+      beeIcon: {
+        product_detail_icon_authentic: require('@/assets/icon/product/product_detail_icon_authentic@2x.png'),
+        product_detail_icon_change: require('@/assets/icon/product/product_detail_icon_change@2x.png'),
+        product_detail_icon_rapidly: require('@/assets/icon/product/product_detail_icon_rapidly@2x.png'),
+        product_detail_icon_review: require('@/assets/icon/product/product_detail_icon_review@2x.png'),
+        product_detail_icon_welfare: require('@/assets/icon/product/product_detail_icon_welfare@2x.png'),
+        product_detail_pic_hook: require('@/assets/icon/product/product_detail_pic_hook@2x.png')
+      }
+    }
+  },
+  computed: {},
+  watch: {},
+  created() {},
+  mounted() {},
+  methods: {
+    getSkuId(id) {
+      this.sku_id = id
+      this.$store.state.cart.skuId = id
+      this.$store.state.cart.pNumber = this.pNumber
+    },
+    getSkuName(skuName) {
+      this.skuName = skuName
+    }
+  }
+}
+</script>
+
+<style scoped lang="less">
+.other-info {
+  .other1 {
+    margin-top: 0.2rem;
+  }
+  .service-cell{
+    padding: 0;
+  }
+  .van-cell {
+    .cell-title {
+      margin: 0;
+      .title-text {
+        font-size: 0.24rem;
+        color: @Grey1;
+        margin-right: 0.36rem;
+      }
+    }
+    .cell-value {
+      margin: 0;
+    }
+  }
+  .van-actionsheet {
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+    .service-promise {
+      min-height: 10.28rem;
+      overflow: hidden;
+      padding: 0 0.56rem 0.16rem 0.3rem;
+      position: relative;
+      .service-title {
+        text-align: center;
+        font-size: 0.32rem;
+        color: @BeeDefault;
+        padding: 0.4rem 0;
+      }
+      .promise-content {
+        .promise-item {
+          display: flex;
+          .promise-img {
+            width: 0.43rem;
+            height: 0.5rem;
+            margin-right: 0.24rem;
+          }
+          .promise-right {
+            flex: 1;
+            .promise-title {
+              font-size: 0.3rem;
+            }
+            .promise-desc {
+              font-size: 0.24rem;
+              color: @Grey2;
+              margin: 0.24rem 0 0.28rem;
+            }
+          }
+        }
+      }
+      .promise-button {
+        position: absolute;
+        bottom: 0.16rem;
+        .van-button {
+          width: 6.92rem;
+          height: 0.88rem;
+          line-height: 0.88rem;
+          font-size: 0.3rem;
+          color: #ffffff;
+          background-color: @BeeDefault;
+          border-color: #ffffff;
+        }
+      }
+    }
+  }
+}
+</style>
