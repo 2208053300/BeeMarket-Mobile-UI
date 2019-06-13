@@ -20,7 +20,7 @@
           <div class="img-item">
             <div class="img-content">
               <img
-                src=""
+                :src="beeIcon.bee_commonweal_icon_participate"
                 alt="参与助力"
               >
             </div>
@@ -29,7 +29,7 @@
           <div class="img-item">
             <div class="img-content">
               <img
-                src=""
+                :src="beeIcon.bee_commonweal_icon_complete_material"
                 alt="完善资料"
               >
             </div>
@@ -38,7 +38,7 @@
           <div class="img-item">
             <div class="img-content">
               <img
-                src=""
+                :src="beeIcon.bee_commonweal_icon_talent"
                 alt="成为达人"
               >
             </div>
@@ -47,7 +47,7 @@
           <div class="img-item">
             <div class="img-content">
               <img
-                src=""
+                :src="beeIcon.bee_commonweal_icon_evaluation"
                 alt="评价商品"
               >
             </div>
@@ -56,7 +56,7 @@
           <div class="img-item">
             <div class="img-content">
               <img
-                src=""
+                :src="beeIcon.bee_commonweal_icon_initiate"
                 alt="发起助力"
               >
             </div>
@@ -65,7 +65,7 @@
           <div class="img-item">
             <div class="img-content">
               <img
-                src=""
+                :src="beeIcon.bee_commonweal_icon_liqueur"
                 alt="免费领酒"
               >
             </div>
@@ -92,6 +92,11 @@ import BeeGuess from '@/components/index/BeeGuess'
 import { getOs } from '@/utils'
 
 export default {
+  metaInfo() {
+    return {
+      title: '我的公益值'
+    }
+  },
   components: {
     BeeGuess
   },
@@ -106,8 +111,12 @@ export default {
   data() {
     return {
       beeIcon: {
-        mine_public_icon_publicwelfare: require('@/assets/icon/common/commonweal/mine_public_icon_publicwelfare.png'),
-        mine_public_icon_task: require('@/assets/icon/common/commonweal/mine_public_icon_task.png')
+        bee_commonweal_icon_participate: require('@/assets/icon/common/commonweal/bee_commonweal_icon_participate.png'),
+        bee_commonweal_icon_complete_material: require('@/assets/icon/common/commonweal/bee_commonweal_icon_complete_material.png'),
+        bee_commonweal_icon_talent: require('@/assets/icon/common/commonweal/bee_commonweal_icon_talent.png'),
+        bee_commonweal_icon_evaluation: require('@/assets/icon/common/commonweal/bee_commonweal_icon_evaluation.png'),
+        bee_commonweal_icon_initiate: require('@/assets/icon/common/commonweal/bee_commonweal_icon_initiate.png'),
+        bee_commonweal_icon_liqueur: require('@/assets/icon/common/commonweal/bee_commonweal_icon_liqueur.png')
       }
     }
   },
@@ -140,7 +149,7 @@ export default {
 <style scoped lang="less">
 .below-content {
   position: relative;
-  top: -2rem;
+  top: -0.8rem;
   .rookie-enjoy {
     height: 4.46rem;
     background-color: #fff;
@@ -195,6 +204,7 @@ export default {
         margin: auto;
         width: 4.57rem;
         height: 0.71rem;
+        line-height: 0.71rem;
         color: #fff;
         font-size: 0.3rem;
         padding: 0;

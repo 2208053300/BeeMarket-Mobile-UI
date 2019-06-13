@@ -38,7 +38,7 @@ module.exports = {
   // 蜂公益值
   beeCommonweal: {
     entry: 'src/pages/BeeCommonweal/main.js',
-    title: '蜂公益值'
+    title: '我的公益值'
   },
   // 蜂公益行动详情
   beePublic: {
