@@ -64,7 +64,9 @@
         :icon="beeIcon.talent_bg_title3"
       />
       <div style="padding-top: 0.4rem">
-        <img :src="beeIcon.line_bee_circle_banner">
+        <a href="/beeFriends">
+          <img :src="beeIcon.line_bee_circle_banner">
+        </a>
       </div>
     </div>
   </div>
@@ -104,6 +106,7 @@ export default {
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = getOs().isWx
+    this.$store.state.app.beeFooter.show = false
     this.getHasConsume()
   },
   methods: {
@@ -113,7 +116,7 @@ export default {
       }
       const os = getOs()
       if (os.isWx) {
-        this.$router.push('/category')
+        window.location.href = '/#/category'
       } else if (os.isIphone) {
         window.webkit.messageHandlers.ToCatList.postMessage('')
       } else if (os.isAndroid) {
@@ -122,6 +125,7 @@ export default {
     },
     async getHasConsume() {
       const res = await isConsume()
+      this.$store.state.app.beeFooter.show = false
       this.hasFirstConsume = res.data.is_consume ? 1 : 0
     },
     play() {
