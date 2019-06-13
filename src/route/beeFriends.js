@@ -35,6 +35,11 @@ export default new Router({
           path: 'waitAudit',
           name: 'waitAudit',
           component: () => import('@/pages/BeeFriends/WaitAudit')
+        },
+        {
+          path: 'freeze',
+          name: 'freeze',
+          component: () => import('@/pages/BeeFriends/Freeze')
         }
       ]
     }
