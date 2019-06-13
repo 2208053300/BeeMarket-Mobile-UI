@@ -72,7 +72,10 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力，发起助力
-import { getActionDetail, joinAction } from '@/api/BeeApi/action'
+import {
+  getActionDetail
+  // joinAction
+} from '@/api/BeeApi/action'
 import detailCard0 from './components/detailCard0'
 import detailCard1 from './components/detailCard1'
 import detailCard2 from './components/detailCard2'
