@@ -11,10 +11,10 @@
         @load="onLoad"
       >
         <div
-          v-for="item in actionList"
-          :key="item.id"
+          v-for="(item,index) in actionList"
+          :key="index"
           class="action-content"
-          @click="$router.push('/discover/action')"
+          @click="$router.push({path:'/discover/action',query:{id:item.id}})"
         >
           <div class="action-img">
             <img
@@ -76,29 +76,31 @@ export default {
       beeIcon: {
         heart_solid: require('@/assets/icon/discover/publicwelfare_icon_heart_solid@2x.png'),
         heart_hollow: require('@/assets/icon/discover/publicwelfare_icon_heart_hollow@2x.png')
-      }
+      },
+      page: 1
     }
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {
-    this.getActionListData()
-  },
+  mounted() {},
   methods: {
     async getActionListData() {
       const res = await getActionList()
       this.actionList = res.data
+      this.page = 1
       // 加载状态结束
       this.loading = false
     },
     onLoad() {
       // 异步更新数据
       setTimeout(async() => {
-        const res = await getActionList()
+        const res = await getActionList({ page: this.page })
         this.actionList.push(...res.data)
+        this.page++
+        this.loading = false
         // 数据全部加载完成
-        if (this.actionList.length >= 40) {
+        if (res.data.length === 0) {
           this.finished = true
         }
       }, 500)

@@ -1,65 +1,65 @@
 <template>
   <div class="order-detail">
     <div
-      v-if="afterDetail.product"
+      v-if="afterDetail.product_info"
       class="order-card"
     >
       <div class="order-title">
         <div class="store-name">
-          {{ afterDetail.storeName }}
+          {{ afterDetail.product_info.store_name }}
           <van-icon name="arrow" />
         </div>
-        <span class="aftre-type">{{ afterDetail.orderStatus }}</span>
+        <span class="aftre-type">{{ afterDetail.product_info.type_name }}</span>
       </div>
       <div class="commodity-details">
         <div class="commodity-img">
           <img
-            :src="afterDetail.product.previewImg"
+            :src=" afterDetail.product_info.thumb_url"
             alt=""
           >
         </div>
         <div class="commodity-info">
           <div class="name-unit">
             <div class="name">
-              {{ afterDetail.product.name }}
+              {{ afterDetail.product_info.pname }}
             </div>
 
             <div class="price-cnum">
               <div class="price-num">
-                ￥{{ afterDetail.product.price }}
+                ￥{{ afterDetail.product_info.price }}
               </div>
               <!-- FIXME 这里不知道有无数量 -->
-              <span class="num">
-                x{{ afterDetail.product.num }}
-              </span>
+              <!-- <span class="num">
+                x{{ afterDetail.product_info.apply_number }}
+              </span> -->
             </div>
           </div>
           <div class="sku-price">
             <div class="sku-text">
-              {{ afterDetail.product.sku }}
+              {{ afterDetail.product_info.props_name }}
             </div>
           </div>
           <div class="apply-num">
-            申请数量：{{ afterDetail.product.num }}
+            申请数量：{{ afterDetail.product_info.apply_number }}
           </div>
         </div>
       </div>
     </div>
     <div class="detail-text">
       <div class="detail-text2">
-        售后编号： <span class="text3">1234567890</span>
+        售后编号： <span class="text3">{{ afterDetail.product_info.apply_no }}</span>
       </div>
       <div class="detail-text2">
-        售后类型： <span class="text3">1234567890</span>
+        售后类型： <span class="text3">{{ afterDetail.product_info.type_name }}</span>
       </div>
-      <div class="detail-text2">
-        申请理由： <span class="text3">1234567890</span>
+      <div v-if="[1,2].includes(afterDetail.type_code)" class="detail-text2">
+        申请理由： <span class="text3">{{ afterDetail.product_info.apply_reason }}</span>
       </div>
-      <div class="detail-text2">
-        申请金额： <span class="text3">1234567890</span>
+      <div v-if="[1].includes(afterDetail.type_code)" class="detail-text2">
+        申请金额： <span class="text3">{{ afterDetail.product_info.apply_cash }}</span>
       </div>
-      <div class="detail-text2">
-        申请公益值： <span class="text3">1234567890</span>
+      <div v-if="[1].includes(afterDetail.type_code)" class="detail-text2">
+        申请公益值： <span class="text3">{{ afterDetail.product_info.apply_pwv }}</span>
       </div>
     </div>
   </div>

@@ -33,6 +33,97 @@ const router = new Router({
           ]
         },
         {
+          path: 'beeCompleteInfo',
+          name: 'beeCompleteInfo',
+          component: () => import('@/pages/BeeCompleteInfo'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo')
+            }
+          ]
+        },
+        {
+          path: 'beeActiveTpl',
+          name: 'beeActiveTpl',
+          component: () => import('@/pages/BeeActiveTpl'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/BeeActiveTpl/ActiveTpl')
+            }
+          ]
+        },
+        {
+          path: 'beeHelper',
+          component: () => import('@/pages/BeeHelper'),
+          children: [
+            {
+              path: '',
+              name: 'ServiceHelperIndex',
+              component: () =>
+                import(
+                  '@/pages/BeeHelper/ServiceHelperIndex'
+                )
+            },
+            {
+              path: 'QustionList',
+              name: 'QustionList',
+              component: () =>
+                import('@/pages/BeeHelper/QustionList')
+            }
+          ]
+        },
+        {
+          path: 'beeFactory',
+          name: 'beeFactory',
+          component: () => import('@/pages/BeeFactory'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/BeeFactory/Factory')
+            },
+            {
+              path: 'enterPolicty',
+              component: () => import('@/pages/BeeFactory/EnterPolicty')
+            }
+          ]
+        },
+        {
+          path: 'beeJoinFriendCicle',
+          name: 'beeJoinFriendCicle',
+          component: () => import('@/pages/BeeJoinFriendCicle'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/BeeJoinFriendCicle/Introduction')
+            },
+            {
+              path: 'apply',
+              component: () => import('@/pages/BeeJoinFriendCicle/Apply')
+            },
+            {
+              path: 'waitAudit',
+              component: () => import('@/pages/BeeJoinFriendCicle/WaitAudit')
+            }
+          ]
+        },
+        {
+          path: 'beeRegister',
+          name: 'beeRegister',
+          component: () => import('@/pages/BeeRegister'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/BeeRegister/Register')
+            },
+            {
+              path: 'download',
+              component: () => import('@/pages/BeeRegister/Download')
+            }
+          ]
+        },
+        {
           path: 'beeNotice',
           name: 'beeNotice',
           component: () => import('@/pages/index/BeeHome/BeeNotice')
@@ -188,6 +279,11 @@ const router = new Router({
           component: () => import('@/pages/index/BeeDiscover/ActionDetail')
         },
         {
+          path: 'completeDetail',
+          name: 'completeDetail',
+          component: () => import('@/pages/index/BeeDiscover/CompleteDetail')
+        },
+        {
           path: 'article/:id',
           name: 'ArticleDetail',
           component: () => import('@/pages/BeeArticle/ArticleDetail')
@@ -276,6 +372,12 @@ const router = new Router({
               name: 'orderDetail',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/OrderDetail')
+            },
+            {
+              path: 'fillLogisticsInfo',
+              name: '填写物流信息',
+              component: () =>
+                import('@/pages/index/BeePersion/MyOrder/FillLogisticsInfo')
             },
             {
               path: 'afterList',
@@ -368,26 +470,52 @@ const router = new Router({
               name: 'functionFeedBack',
               component: () =>
                 import('@/pages/index/BeePersion/BeeSetting/FunctionFeedBack')
+            },
+            {
+              path: 'about',
+              component: () => import('@/pages/index/BeePersion/BeeSetting/About'),
+              children: [
+                {
+                  path: '',
+                  name: 'aboutIndex',
+                  component: () =>
+                    import('@/pages/index/BeePersion/BeeSetting/About/AboutIndex')
+                },
+                {
+                  path: 'useHelp',
+                  name: 'useHelp',
+                  component: () =>
+                    import('@/pages/index/BeePersion/BeeSetting/About/UseHelp')
+                },
+                {
+                  path: 'userAgreement',
+                  name: 'userAgreement',
+                  component: () =>
+                    import(
+                      '@/pages/index/BeePersion/BeeSetting/About/UserAgreement'
+                    )
+                }
+              ]
             }
           ]
         },
         {
           path: 'ServiceHelper',
-          component: () => import('@/pages/index/BeePersion/ServiceHelper'),
+          component: () => import('@/pages/BeeHelper'),
           children: [
             {
               path: '',
               name: 'ServiceHelperIndex',
               component: () =>
                 import(
-                  '@/pages/index/BeePersion/ServiceHelper/ServiceHelperIndex'
+                  '@/pages/BeeHelper/ServiceHelperIndex'
                 )
             },
             {
               path: 'QustionList',
               name: 'QustionList',
               component: () =>
-                import('@/pages/index/BeePersion/ServiceHelper/QustionList')
+                import('@/pages/BeeHelper/QustionList')
             }
           ]
         },
@@ -431,33 +559,8 @@ const router = new Router({
           path: 'myCollected',
           name: 'myCollected',
           component: () => import('@/pages/index/BeePersion/MyCollected')
-        },
-        {
-          path: 'about',
-          component: () => import('@/pages/index/BeePersion/BeeSetting/About'),
-          children: [
-            {
-              path: '',
-              name: 'aboutIndex',
-              component: () =>
-                import('@/pages/index/BeePersion/BeeSetting/About/AboutIndex')
-            },
-            {
-              path: 'useHelp',
-              name: 'useHelp',
-              component: () =>
-                import('@/pages/index/BeePersion/BeeSetting/About/UseHelp')
-            },
-            {
-              path: 'userAgreement',
-              name: 'userAgreement',
-              component: () =>
-                import(
-                  '@/pages/index/BeePersion/BeeSetting/About/UserAgreement'
-                )
-            }
-          ]
         }
+
       ]
     },
     {

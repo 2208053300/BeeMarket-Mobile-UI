@@ -1,6 +1,7 @@
 <template>
   <div class="category-list">
     <van-badge-group
+      ref="badgeList"
       class="select-category"
       :active-key="activeKey"
       @change="onChange"
@@ -15,10 +16,7 @@
         class="border-img"
         :style="{top:borderPosition}"
       >
-        <img
-          :src="beeIcon.cat_pic_select"
-          alt=""
-        >
+        <img :src="beeIcon.cat_pic_select">
       </div>
     </van-badge-group>
     <div
@@ -37,10 +35,10 @@
           act_id
         </div>
       </div>
-      <template v-if="category2.groups[0].gid">
+      <template v-if="checkGroup(category2.groups)">
         <div
-          v-for="item in category2.groups"
-          :key="item.gid"
+          v-for="(item,index) in category2.groups"
+          :key="index"
           class="category2-card"
         >
           <div class="category2-title">
@@ -54,10 +52,8 @@
               @click="$router.push({path:'/category/SecCategoryList',query:{cid:item2.cid}})"
             >
               <div class="category3-img">
-                <img
-                  :src="item2.cat_image"
-                  alt=""
-                >
+                <img :src="item2.cat_image">
+                <!-- <img v-lazy="item2.cat_image"> -->
               </div>
               <div class="category3-title">
                 {{ item2.cname }}
@@ -69,16 +65,14 @@
       <template v-else>
         <div class="category2-card2">
           <div
-            v-for="item in category2.groups"
-            :key="item.gid"
+            v-for="(item,index) in category2.groups"
+            :key="index"
             class="category3-card"
             @click="$router.push({path:'/category/SecCategoryList',query:{cid:item.cid}})"
           >
             <div class="category3-img">
-              <img
-                :src="item.cat_image"
-                alt=""
-              >
+              <img :src="item.cat_image">
+              <!-- <img v-lazy="item.cat_image"> -->
             </div>
             <div class="category3-title">
               {{ item.cname }}
@@ -127,13 +121,22 @@ export default {
     async getCategory2Data(cid, index) {
       this.nowFirCategoryId = cid
       // NOTE 定位border图片的位置
-      this.borderPosition = Number(index) * 56 + 14 + 'px'
+      this.changeBorder(index)
       const res = await getCategory2({ cid: cid })
-      console.log('二级分类列表：', res)
-
       this.category2 = res.data
+    },
+    changeBorder(index) {
+      const badge = document.querySelector('.van-badge')
+      // 无关痛痒的报错
+      this.borderPosition = Number(index) * badge.offsetHeight + 14 + 'px'
+      console.log(badge.offsetHeight, index)
+    },
+    // FIXME 避免报错数组不渲染
+    checkGroup(groups) {
+      if (groups.length !== 0) {
+        return 'gid' in groups[0]
+      }
     }
-
   }
 }
 </script>
@@ -143,7 +146,7 @@ export default {
   height: 100%;
   display: flex;
   background-color: #fff;
-  .top-img{
+  .top-img {
     width: 100%;
     height: 1.7rem;
     margin-bottom: 0.2rem;

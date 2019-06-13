@@ -18,25 +18,31 @@
               我的累计消费<span class="unit">(元)</span>
             </div>
             <div class="left-text2">
-              900
+              {{ taskData.mine_consume_amount }}
             </div>
             <div class="left-text3">
-              <van-icon :name="beeIcon.task_icon_sigh" />需完成累计消费3600元
+              <van-icon :name="beeIcon.task_icon_sigh" />需完成累计消费{{ taskData.condition_amount }}元
             </div>
           </div>
           <div class="header-right">
             <div class="right-chart">
-              <div class="pie-bg">
+              <div
+                v-if="taskData.proportion!==100"
+                class="pie-bg"
+              >
                 <div
                   ref="pieChart"
                   class="pieChart"
                 />
               </div>
-              <!-- <div class="success-pie">
+              <div
+                v-else
+                class="success-pie"
+              >
                 <div class="pie-success">
                   100%
                 </div>
-              </div> -->
+              </div>
             </div>
             <div class="right-scale">
               <div class="scale-content">
@@ -50,7 +56,10 @@
             </div>
           </div>
         </div>
-        <div class="header-part2">
+        <div
+          v-if="taskData.proportion!==100"
+          class="header-part2"
+        >
           <div class="part2-content">
             <span>您暂未完成累计消费，再去看看商品吧!</span>
             <van-button class="go-shopping">
@@ -63,30 +72,34 @@
         <div class="goods-card">
           <div class="goods-img">
             <img
-              src=""
+              :src="taskData.thumb_url"
               alt=""
             >
           </div>
           <div class="goods-detail">
             <div class="goods-name">
-              贵宾茅台陈酿 [VIP 15] 酱香型白酒
+              {{ taskData.product_name }}
             </div>
             <div class="goods-desc">
-              商品描述
+              {{ taskData.desc }}
             </div>
             <div class="goods-price">
-              ￥200
+              ￥{{ taskData.price }}
             </div>
           </div>
         </div>
         <div class="get-gift">
-          剩余箱数：<span class="num">999箱</span>
+          剩余数量：<span class="num">{{ taskData.remain_qty }}</span>
           <van-button class="get-button">
             免费领取
           </van-button>
         </div>
-        <!-- TODO 商品详情 -->
-        贵宾陈酿，点击就送
+        <div class="product-detailImg">
+          <img
+            :src="taskData.details_url"
+            alt=""
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -94,6 +107,8 @@
 
 <script>
 import echarts from 'echarts'
+import { getTaskDetail } from '@/api/BeeApi/task'
+
 export default {
   metaInfo: {
     title: '任务详情'
@@ -104,9 +119,10 @@ export default {
     return {
       beeIcon: {
         confirmorder_send_icon_presentation: require('@/assets/icon/order/confirmorder_send_icon_presentation@2x.png'),
-        task_icon_sigh: require('@/assets/icon/home/task_icon_sigh@2x.png'),
-        task_icon_smile_white: require('@/assets/icon/home/task_icon_smile_white@2x.png')
-      }
+        task_icon_sigh: require('@/assets/icon/task/task_icon_sigh@2x.png'),
+        task_icon_smile_white: require('@/assets/icon/task/task_icon_smile_white@2x.png')
+      },
+      taskData: {}
     }
   },
   computed: {},
@@ -116,7 +132,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = true
     // TODO 如果已经成功，则不执行渲染，否则报错
-    this.initPie()
+    this.getTaskDetailData()
   },
   methods: {
     initPie() {
@@ -128,7 +144,10 @@ export default {
             type: 'pie',
             radius: '100%',
             center: ['50%', '50%'],
-            data: [1600, 3600],
+            data: [
+              this.taskData.mine_consume_amount,
+              this.taskData.condition_amount - this.taskData.mine_consume_amount
+            ],
             hoverAnimation: false,
             label: {
               normal: {
@@ -148,6 +167,11 @@ export default {
         color: ['#fff', 'rgba(255,255,255,0.1)']
       }
       pie1.setOption(option)
+    },
+    async getTaskDetailData() {
+      const res = await getTaskDetail({ tid: this.$route.query.tid })
+      this.taskData = res.data
+      this.initPie()
     }
   }
 }
@@ -296,6 +320,7 @@ export default {
         }
         .goods-detail {
           margin-top: 0.16rem;
+          flex: 1;
           .goods-name {
             font-size: 0.28rem;
           }
@@ -329,6 +354,11 @@ export default {
           padding: 0;
           border: none;
         }
+      }
+      .product-detailImg{
+        margin-top: 0.4rem;
+        border-radius: 0.08rem;
+        overflow: hidden;
       }
     }
   }

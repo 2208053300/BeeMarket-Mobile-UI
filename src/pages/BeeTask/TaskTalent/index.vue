@@ -10,10 +10,11 @@
         :icon="beeIcon.talent_bg_title"
       />
       <div class="video">
-        <video-player
-          :video-url="video_url"
-          :video-img="beeIcon.title_icon_stop"
-          :play-status.sync="playStatus"
+        <video
+          :src="video_url"
+          :poster="beeIcon.line_bee_circle_banner"
+          style="width: 6.42rem;height: 3.3rem;border-radius: 0.16rem"
+          controls="controls"
         />
       </div>
       <div style="margin-top: 0.6rem">
@@ -61,13 +62,14 @@
 
 <script>
 import { getOs } from '@/utils'
-import videoPlayer from '@/components/videoPlayer'
 import bmHeader from './components/header'
+import { isConsume } from '@/api/BeeApi/task'
+
 export default {
   metaInfo: {
     title: '成为达人'
   },
-  components: { videoPlayer, bmHeader },
+  components: { bmHeader },
   props: {},
   data() {
     return {
@@ -90,10 +92,11 @@ export default {
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = getOs().isWx
+    this.getHasConsume()
   },
   methods: {
     goShopping() {
-      if (this.hasFirstConsume === 1) {
+      if (this.hasFirstConsume === 2) {
         return
       }
       const os = getOs()
@@ -106,7 +109,8 @@ export default {
       }
     },
     async getHasConsume() {
-
+      const res = await isConsume()
+      this.hasFirstConsume = res.data.is_consume ? 1 : 0
     }
   }
 }
@@ -119,7 +123,6 @@ export default {
 .body {
   background: white;
   margin: 0 0.3rem 0.2rem 0.3rem;
-  border-radius: 0.16rem;
   padding: 0 0.24rem 0.6rem 0.24rem;
   text-align: center;
 }
@@ -127,6 +130,8 @@ p {
   margin: 0;
 }
 .video {
+  border-radius: 0.16rem;
+  background-color: black;
   margin-top: 0.24rem;
   height: 3.3rem;
 }

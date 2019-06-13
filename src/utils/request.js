@@ -1,7 +1,13 @@
 import axios from 'axios'
 import qs from 'qs'
 import { Toast } from 'vant'
-import { setToken, getToken, removeToken, isLogin } from '@/utils/auth'
+import {
+  setToken,
+  getToken,
+  removeToken,
+  isLogin,
+  checkToken
+} from '@/utils/auth'
 import { isJSON } from '@/utils'
 import store from '@/store'
 const service = axios.create({
@@ -18,6 +24,7 @@ service.interceptors.request.use(
       forbidClick: true,
       duration: 0
     })
+    console.log('请求参数：', config.data)
     // 强制设置 token 在 getToken 函数中设置
     if (isLogin()) {
       config.headers['BM-App-Token'] = getToken()
@@ -26,13 +33,19 @@ service.interceptors.request.use(
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
       config.headers['Content-Type'] = 'application/json'
+      // config.headers['Content-Type'] = 'application/*'
       // console.log(config.data)
       return config
     }
     // 去除options预请求方法
     if (config.method === 'post') {
-      config.data = qs.stringify(config.data)
-      console.log('请求参数：', config.data)
+      // config.data = qs.stringify(config.data)
+      if (config.data) {
+        const keys = Object.keys(config.data)
+        if (keys.length > 0) {
+          config.data = qs.stringify(config.data)
+        }
+      }
     }
     return config
   },
@@ -53,19 +66,18 @@ service.interceptors.response.use(
     const res = response.data
     if (res.code !== 1) {
       if (res.status_code === 403) {
+        Toast('登录信息失效')
         // 清理登录信息并跳转到登录页面
         removeToken()
         store.commit('CLEAR_USER_INFO')
-        import('@/route/index').then(module => {
-          module.default.push('/login')
-        })
+        checkToken()
       }
       Toast.fail(res.message || 'error')
       return Promise.reject(res.message || 'error')
     } else {
-      Toast.success(res.message)
+      // Toast.success(res.message)
     }
-    // console.log(res)
+    console.log(res)
     return res
   },
   error => {

@@ -5,10 +5,15 @@
       :height="170"
       indicator-color="white"
     >
-      <van-swipe-item>1</van-swipe-item>
-      <van-swipe-item>2</van-swipe-item>
-      <van-swipe-item>3</van-swipe-item>
-      <van-swipe-item>4</van-swipe-item>
+      <van-swipe-item
+        v-for="(item, index) in homeData.banner"
+        :key="index"
+      >
+        <img
+          :src="item.show_img"
+          :alt="item.url"
+        >
+      </van-swipe-item>
     </van-swipe>
   </div>
 </template>
@@ -16,7 +21,16 @@
 <script>
 export default {
   components: {},
-  props: {},
+  props: {
+    homeData: {
+      type: Object,
+      default: () => {
+        return {
+          banner: []
+        }
+      }
+    }
+  },
   data() {
     return {}
   },
@@ -30,12 +44,12 @@ export default {
 
 <style lang="less">
 .header-banner {
-  margin: 0 0.3rem;
+  margin: 0.2rem 0.3rem;
   border-radius: 0.2rem;
   overflow: hidden;
   height: 3.1rem;
   .van-swipe {
-    .van-swipe-item{
+    .van-swipe-item {
       background-color: @Grey2;
     }
     .van-swipe__indicators {

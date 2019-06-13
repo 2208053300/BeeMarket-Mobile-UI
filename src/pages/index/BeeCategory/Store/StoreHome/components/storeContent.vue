@@ -65,12 +65,13 @@
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
+        :immediate-check="false"
         @load="onLoad"
       >
         <div class="grid-row">
           <div
-            v-for="item in storeDetails.products"
-            :key="item.pid"
+            v-for="(item,index) in commodityList"
+            :key="index"
             class="commodity-card"
             @click="$router.push({path: '/category/details',query: {pid: item.pid}})"
           >
@@ -117,23 +118,25 @@
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
+        :immediate-check="false"
         @load="onLoad"
       >
         <div
-          v-for="item in commodityList"
-          :key="item.name"
+          v-for="(item,index) in commodityList"
+          :key="index"
           class="commodity-card"
+          @click="$router.push({path: '/category/details',query: {pid: item.pid}})"
         >
           <div class="commodity-img">
             <img
-              :src="item.previewImg"
-              :alt="item.name"
+              :src="item.tUrl"
+              :alt="item.pname"
               class="preview-img"
             >
           </div>
           <div class="commodity-details">
             <div class="commodity-name">
-              {{ item.name }}
+              {{ item.pname }}
             </div>
             <div class="commodity-tag">
               <div
@@ -146,10 +149,10 @@
               </div>
             </div>
             <div class="commodity-currentPrice">
-              <span style="font-size:0.24rem">￥</span><span>{{ item.currentPrice }}</span>
+              <span style="font-size:0.24rem">￥</span><span>{{ item.sell_price }}</span>
             </div>
             <div class="commodity-originalPrice">
-              ￥{{ item.originalPrice }}
+              ￥{{ item.line_price }}
             </div>
           </div>
         </div>
@@ -160,6 +163,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
+import { getStoreDetail } from '@/api/BeeApi/store'
 export default {
   components: {},
   props: {
@@ -174,6 +178,10 @@ export default {
       default: () => {
         return {}
       }
+    },
+    commodityList: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -183,7 +191,6 @@ export default {
       gridList: true,
       loading: false,
       finished: false,
-      commodityList: [],
       beeIcon: {
         vertical_horizontal: require('@/assets/icon/store/shop_icon_vertical_horizontal@2x.png'),
         vertical_white: require('@/assets/icon/store/shop_icon_vertical_white@2x.png'),
@@ -201,12 +208,13 @@ export default {
     onLoad() {
       // 异步更新数据
       setTimeout(async() => {
-        await this.$parent.getStoreDetailData()
-        this.commodityList.push(...this.storeDetails.products)
+        const res = await getStoreDetail(this.formData)
+        this.commodityList.push(...res.data.products)
+        this.formData.page++
         // 加载状态结束
         this.loading = false
         // 数据全部加载完成
-        if (this.commodityList.length >= 40) {
+        if (res.data.products.length === 0) {
           this.finished = true
         }
       }, 500)

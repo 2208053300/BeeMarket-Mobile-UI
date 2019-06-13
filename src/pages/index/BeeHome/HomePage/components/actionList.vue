@@ -1,36 +1,36 @@
 <template>
   <div class="action-list">
     <div
-      v-for="action in homeDate.actionList"
-      :key="action.name"
+      v-for="action in homeData.feature.other"
+      :key="action.mixed_id"
       class="action-card"
     >
       <div class="action-img">
         <img
-          :src="action.actionImg"
+          :src="action.show_img"
           alt=""
         >
       </div>
       <div class="product-list">
         <div
-          v-for="product in homeDate.limitProduct"
-          :key="product.name"
+          v-for="product in action.products"
+          :key="product.product_id"
           class="product-detail"
         >
           <div class="product-img">
             <img
-              :src="product.previewImg"
+              :src="product.thumb_url"
               alt=""
             >
           </div>
           <div class="product-text">
             <div class="product-name">
-              {{ product.name }}
+              {{ product.product_name }}
             </div>
             <div class="product-price1">
-              ￥{{ product.currentPrice }}
+              ￥{{ product.selling_price }}
               <span class="product-price2">
-                ￥{{ product.oldPrice }}
+                ￥{{ product.marketing_price }}
               </span>
             </div>
           </div>
@@ -44,10 +44,26 @@
 export default {
   components: {},
   props: {
-    homeDate: {
+    homeData: {
       type: Object,
       default: () => {
-        return {}
+        return {
+          feature: {
+            top: [
+              {
+                share_data: []
+              }
+            ],
+            other: [
+              {
+                products: []
+              },
+              {
+                share_data: []
+              }
+            ]
+          }
+        }
       }
     }
   },

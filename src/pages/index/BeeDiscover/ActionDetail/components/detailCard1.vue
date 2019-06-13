@@ -1,64 +1,63 @@
 <template>
-  <div class="card1">
-    <div class="action-title">
-      {{ actionDetails.main_title }}
+  <div class="card1 bg-white">
+    <!-- 标题 -->
+    <div class="action-title flex">
+      <div class="img">
+        <img :src="beeIcon.titleImg" class="icon">
+      </div>
+      <div class="title">
+        <p class="main-title no-wrap">
+          {{ actionDetails.main_title }}
+        </p>
+        <p class="sub-title  no-wrap">
+          {{ actionDetails.subtitle }}
+        </p>
+      </div>
     </div>
-    <div class="action-subhead">
-      {{ actionDetails.subtitle }}
-    </div>
+    <!-- 进度 webapp 显示 ，分享打开不显示 -->
     <div class="action-progress">
       <div class="percent">
         {{ actionDetails.schedule }}%
       </div>
       <div class="progress-bar">
         <van-progress
-          v-if="actionDetails.help"
           :percentage="actionDetails.schedule"
           :show-pivot="showPercent"
           :color="BeeDefault"
         />
       </div>
     </div>
-    <div class="action-help">
-      <div class="help-content">
+    <!-- 参与人数 -->
+    <div class="action-help flex flex-around">
+      <div class="help-content flex align-center flex-center">
         <div class="help-icon">
-          <van-icon :name="beeIcon.initiate" />
+          <img :src="beeIcon.participate" class="icon">
         </div>
-        <div class="help-text">
-          已发起助力
+        <div>
+          <div class="help-text">
+            已参与助力
+          </div>
+          <div class="help-time">
+            <span class="bee-text">
+              {{ actionDetails.participate_num }}
+            </span>人
+          </div>
         </div>
-        <div class="help-time">
-          <span class="bee-text">
-            {{ actionDetails.share_number }}
-          </span>次
-        </div>
-        <div class="right-line" />
       </div>
-      <div class="help-content">
+      <!-- <div class="right-line" /> -->
+      <div class="help-content flex align-center flex-center">
         <div class="help-icon">
-          <van-icon :name="beeIcon.participate" />
+          <img :src="beeIcon.aim" class="icon">
         </div>
-        <div class="help-text">
-          已参与助力
-        </div>
-        <div class="help-time">
-          <span class="bee-text">
-            {{ actionDetails.participate_num }}
-          </span>次
-        </div>
-        <div class="right-line" />
-      </div>
-      <div class="help-content">
-        <div class="help-icon">
-          <van-icon :name="beeIcon.aim" />
-        </div>
-        <div class="help-text">
-          目标参与需
-        </div>
-        <div class="help-time">
-          <span class="bee-text">
-            {{ actionDetails.initiate_people_num }}
-          </span>次
+        <div>
+          <div class="help-text">
+            目标参与需
+          </div>
+          <div class="help-time">
+            <span class="bee-text">
+              {{ actionDetails.initiate_people_num }}
+            </span>人
+          </div>
         </div>
       </div>
     </div>
@@ -87,6 +86,7 @@ export default {
       showPercent: false,
       BeeDefault,
       beeIcon: {
+        titleImg: require('@/assets/icon/discover/publicwelfare_share_icon_activity@2x.png'),
         initiate: require('@/assets/icon/discover/publicwelfare_icon_initiate@2x.png'),
         participate: require('@/assets/icon/discover/publicwelfare_icon_participate@2x.png'),
         aim: require('@/assets/icon/discover/publicwelfare_icon_aim@2x.png')
@@ -107,6 +107,11 @@ export default {
   .action-title {
     font-size: 0.32rem;
     padding: 0 0.32rem;
+    .img{background: #f4f4f4; margin-right: 0.1rem; display: flex;
+      .icon{width:0.78rem; height: 0.78rem; margin: auto;}
+    }
+    .main-title{font-size:0.32rem;margin-bottom:0.2rem;margin-top:0; font-weight: 600;}
+    .sub-title{font-size: 0.26rem;color: #666; margin-bottom:0; margin-top: 0;}
   }
   .action-subhead {
     margin-top: 0.16rem;
@@ -128,20 +133,27 @@ export default {
   }
   .action-help {
     margin-top: 0.32rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    align-items: center;
+    // display: grid;
+    // grid-template-columns: repeat(3, 1fr);
+    // align-items: center;
     padding: 0 0.3rem;
     box-sizing: border-box;
     .help-content {
       text-align: center;
       position: relative;
+      width:50%;
+      border-right:1px solid #ddd;
       &:last-child {
         border: none;
       }
       .help-icon {
-        font-size: 0.6rem;
+        width: 0.8rem;
+        height: 0.8rem;
+        background-color:#f4f4f4;
         color: @BeeDefault;
+        display: flex;
+        margin-right:0.1rem;
+        .icon{width:0.78rem; height: 0.78rem; margin: auto;}
       }
       .help-text {
         font-size: 0.26rem;
@@ -151,15 +163,13 @@ export default {
           color: @BeeDefault;
         }
       }
-      .right-line {
-        position: absolute;
-        right: 0;
-        top: 0.2rem;
+
+    }
+    .right-line {
         width: 0.02rem;
         height: 1rem;
         background-color: @Grey7;
       }
-    }
   }
 }
 </style>

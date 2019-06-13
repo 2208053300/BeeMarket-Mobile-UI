@@ -17,21 +17,21 @@
           class="flex flex-wrap"
         >
           <van-checkbox
-            v-for="pro in item.dayData"
-            :key="pro.id"
+            v-for="(pro,index2) in item.product_list"
+            :key="index2"
             :name="pro"
             :checked-color="BeeDefault"
             class="checkbox"
-            @click="changeAll(index,item.dayData,allSelectedBox[index])"
+            @click="changeAll(index2,item.product_list,allSelectedBox[index2])"
           >
             <div class="goodsItem">
               <img
-                :src="pro.img"
+                :src="pro.thumb_url"
                 alt=""
                 class="img"
               >
               <p class="title no-wrap">
-                {{ pro.title }}
+                {{ pro.product_name }}
               </p>
               <div class="flex flex-between">
                 <p class="price">
@@ -64,7 +64,9 @@
 </template>
 
 <script>
-import { getHistoryList, delHistoryItem } from '@/api/user'
+// 加入收藏
+// import { collectProduct } from '@/api/BeeApi/product'
+import { getHistoryList, delHistoryItem } from '@/api/BeeApi/user'
 import { mapState } from 'vuex'
 import { BeeDefault } from '@/styles/index/variables.less'
 
@@ -103,14 +105,14 @@ export default {
   methods: {
     getList() {
       getHistoryList().then(res => {
-        this.historyInfo = res.data.historyList
+        this.historyInfo = res.data
         const tempData = []
         const tempDataId = []
         for (let index = 0; index < this.historyInfo.length; index++) {
           this.$set(this.allSelectedBox, index, false)
-          for (let i = 0; i < this.historyInfo[index].dayData.length; i++) {
-            tempDataId.push(this.historyInfo[index].dayData[i].id)
-            tempData.push(this.historyInfo[index].dayData[i])
+          for (let i = 0; i < this.historyInfo[index].product_list.length; i++) {
+            tempDataId.push(this.historyInfo[index].product_list[i].fid)
+            tempData.push(this.historyInfo[index].product_list[i])
           }
         }
         this.allSelectedDataIds = tempDataId
@@ -150,12 +152,13 @@ export default {
 
     // 提交删除
     onSubmitDel() {
-      delHistoryItem(this.allSelectedDataIds).then(res => {
-        this.$notify({
-          message: res.data.message,
-          duration: 1000,
-          background: '#1989fa'
-        })
+      delHistoryItem({ fid: this.allSelectedDataIds }).then(res => {
+        this.$toast(res.message)
+        // this.$notify({
+        //   message: res.message,
+        //   duration: 1000,
+        //   background: '#1989fa'
+        // })
         this.getList()
         // 删除本地对应数据
         // for (let index = 0; index < this.historyInfo.length; index++) {

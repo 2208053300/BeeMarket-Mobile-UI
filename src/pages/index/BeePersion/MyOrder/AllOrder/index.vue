@@ -49,7 +49,10 @@
         </div>
       </van-tab>
     </van-tabs>
-    <order-card :order-list="orderList" />
+    <order-card
+      :order-list="orderList"
+      :form-data="formData"
+    />
   </div>
 </template>
 
@@ -72,7 +75,8 @@ export default {
       swipeNum: 5,
       orderList: [],
       formData: {
-        s_status: -1
+        s_status: -1,
+        page: 1
       }
     }
   },
@@ -94,6 +98,7 @@ export default {
         this.formData.s_status = index
       }
       const res = await getOrderList(this.formData)
+      this.formData.page = 2
       this.orderList = res.data
     },
     // 如果是带着状态参数进入页面

@@ -4,59 +4,65 @@
       <div class="commodity-card">
         <div class="commodity-detail">
           <div class="commodity-img">
-            <img
-              :src="commodity.previewImg"
-              alt=""
-            >
+            <img :src="commodity.product_info.thumb_url">
+            <!-- commodity.product_info.order_product_id -->
           </div>
           <div class="commodity-info">
             <div class="name-unit">
               <div class="name">
-                {{ commodity.name }}
+                {{ commodity.product_info.product_name }}
               </div>
               <div class="price-num">
-                ￥{{ commodity.price }}
+                ￥{{ commodity.product_info.price }}
               </div>
             </div>
             <div class="sku-price">
               <div class="sku-text">
-                {{ commodity.sku }}
+                {{ commodity.product_info.props_name }}
               </div>
               <div class="num">
-                x{{ commodity.num }}
+                x{{ commodity.product_info.number }}
               </div>
             </div>
             <div class="apply-num">
-              申请数量：{{ selectNum }}
+              申请数量：{{ apply_number }}
             </div>
           </div>
         </div>
-        <div class="footer-info">
-          <div class="select-num">
-            <span>退款金额</span>
+        <div v-if="commodity.type_code === 1">
+          <div class="footer-info">
+            <div class="flex flex-between">
+              <div class="select-num">
+                <span>退款金额</span>
+              </div>
+              <span
+                class="price"
+              >￥{{ commodity.product_info.refund_cash }}</span>
+            </div>
+            <div v-if="commodity.product_info.refund_pwv" class="flex flex-between" style="margin-top: 0.1rem;">
+              <div class="select-num">
+                <span>退回公益值</span>
+              </div>
+              <span class="price">{{ commodity.product_info.refund_pwv }}</span>
+            </div>
           </div>
-          <span class="price">￥{{ commodity.price*selectNum }}</span>
         </div>
       </div>
       <div class="after-detail">
-        <div class="apply-reason">
-          <van-cell
-            icon="shop-o"
-            is-link
-            @click="showReason=true"
-          >
+        <div v-if="[1, 2].includes(commodity.type_code)" class="apply-reason">
+          <van-cell is-link @click="showReason = true">
             <template slot="title">
               <span>申请原因（必填）</span>
             </template>
             <div class="type-value">
-              <span
-                v-if="reasonText"
-                class="reason-text"
-              >{{ reasonText }}</span>
+              <span v-if="reasonText" class="reason-text">
+                {{ reasonText }}
+              </span>
               <span v-else>请选择</span>
             </div>
           </van-cell>
         </div>
+        <!-- 问题描述 -->
         <div class="question-desc">
           <div class="desc-title">
             问题描述（必填）
@@ -74,43 +80,36 @@
             <span class="bee-text">{{ questionDesc.length }}</span>/500
           </div>
         </div>
+        <!-- 图片上传 -->
         <div class="upload-evidence">
           <div class="upload-title">
             上传凭证（必填，最多上传6张）
           </div>
           <div class="comment-imgs">
             <div
-              v-for="(img,index) in commentImgs"
-              :key="img.file.lastModified"
+              v-for="(img, index) in commentImgs"
+              :key="index"
               class="comment-img"
             >
-              <img
-                :src="img.content"
-                :alt="img.file.name"
-              >
-              <div
-                class="del-img"
-                @click="delImg(index)"
-              >
+              <img :src="img.content">
+              <div class="del-img" @click="delImg(index)">
                 <van-icon name="clear" />
               </div>
             </div>
-            <div
-              v-if="commentImgs.length<6"
-              class="upload-img"
-            >
-              <van-uploader :after-read="onRead">
+            <div v-if="commentImgs.length < 6" class="upload-img">
+              <van-uploader
+                :after-read="onRead"
+                accept="image/png, image/jpeg"
+                multiple
+              >
                 <van-icon name="photograph" />
               </van-uploader>
               <div class="img-num">
                 <span
-                  v-if="commentImgs.length===0"
+                  v-if="commentImgs.length === 0"
                   class="upload-text"
                 >添加图片</span>
-                <div
-                  v-else
-                  class="upload-num"
-                >
+                <div v-else class="upload-num">
                   <span class="num">{{ commentImgs.length }}</span>/6
                 </div>
               </div>
@@ -120,15 +119,11 @@
       </div>
     </div>
     <div class="submit-button">
-      <van-button type="default">
+      <van-button :loading="loading" loading-text="正在提交" type="default" @click="submit">
         提交
       </van-button>
     </div>
-    <van-popup
-      v-model="showReason"
-      position="bottom"
-      class="reason-pop"
-    >
+    <van-popup v-model="showReason" position="bottom" class="reason-pop">
       <div class="reason-title">
         选择原因
       </div>
@@ -139,24 +134,13 @@
         <van-radio-group v-model="reasonText">
           <van-cell-group>
             <van-cell
-              title="7天无理由"
+              v-for="(item, index) in commodity.reason_data"
+              :key="index"
+              :title="item.reason"
               clickable
-              @click="reasonText = '7天无理由'"
+              @click="selectReason(item)"
             >
-              <van-radio
-                name="7天无理由"
-                :checked-color="BeeDefault"
-              />
-            </van-cell>
-            <van-cell
-              title="7天无理由"
-              clickable
-              @click="reasonText = '7天无理由'"
-            >
-              <van-radio
-                name="7天无理由"
-                :checked-color="BeeDefault"
-              />
+              <van-radio :name="item.reason" :checked-color="BeeDefault" />
             </van-cell>
           </van-cell-group>
         </van-radio-group>
@@ -166,7 +150,8 @@
 </template>
 
 <script>
-import { getCommodityDetail } from '@/api/user'
+import { zipImg } from '@/utils/imgUp'
+import { applyPageData, submitApplyData } from '@/api/BeeApi/user'
 import { BeeDefault } from '@/styles/index/variables.less'
 export default {
   // NOTE 根据选择条件更改title
@@ -177,15 +162,38 @@ export default {
   props: {},
   data() {
     return {
+      loading: false,
+      // 类型 1退 2换 3补
+      type_code: this.$route.query.type_code,
+      // 售后数量
+      apply_number: this.$route.query.type_code,
+      // id
+      order_product_id: this.$route.query.order_product_id,
+      aid: this.$route.query.aid,
+      // 主题色
       BeeDefault,
-      commodity: {},
-      selectNum: 1,
-      reason: '',
-      questionDesc: '',
+      commodity: {
+        type_code: 0,
+        product_info: {
+          order_product_id: 0,
+          product_name: '',
+          price: 0,
+          number: 0,
+          thumb_url: '',
+          props_name: '',
+          apply_number: 0,
+          refund_cash: 0,
+          refund_pwv: 0
+        },
+        reason_data: []
+      },
+      // selectNum: 1,
+      questionDesc: '', // 问题描述
       borderNone: false,
-      commentImgs: [],
+      commentImgs: [], // 图片集合
       showReason: false,
-      reasonText: ''
+      reasonText: '', // 申请理由 文字
+      reasonId: '' // 申请理由 id
     }
   },
   computed: {},
@@ -194,20 +202,100 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getCommodityDetailData()
-    this.selectNum = this.$route.query.selectNum
+    if (this.order_product_id) {
+      this.getCommodityDetailData({
+        order_product_id: this.order_product_id,
+        type_code: this.type_code,
+        apply_number: this.apply_number
+      })
+    }
+    if (this.aid) {
+      this.getCommodityDetailData({
+        aid: this.aid,
+        type_code: this.type_code,
+        apply_number: this.apply_number
+      })
+    }
   },
   methods: {
-    async getCommodityDetailData() {
-      const res = await getCommodityDetail()
-      this.commodity = res.data.commodity
+    // 提交
+    async submit() {
+      // 申请理由、描述、图片必填
+      if (!this.reasonId && +this.type_code !== 3) {
+        this.$toast('申请原因必填！')
+        return
+      }
+      if (!this.questionDesc) {
+        this.$toast('问题描述必填！')
+        return
+      }
+      if (this.commentImgs.length === 0) {
+        this.$toast('请至少上传一张图片！')
+        return
+      }
+      this.loading = true
+      const files = this.commentImgs.map(item => {
+        return item.file
+      })
+      const formData = new FormData()
+      const results = await Promise.all(
+        files.map(async file => {
+          const res = await zipImg(file)
+          formData.append('proofs[]', res)
+          return res
+        })
+      )
+      console.log('results:', results)
+      if (this.order_product_id) {
+        formData.append('order_product_id', this.order_product_id)
+        formData.append('type_code', this.type_code)
+        formData.append('apply_number', this.apply_number)
+        formData.append('desc', this.questionDesc)
+        formData.append('reason_id', this.reasonId)
+      }
+      if (this.aid) {
+        formData.append('aid', this.aid)
+        formData.append('type_code', this.type_code)
+        formData.append('apply_number', this.apply_number)
+        formData.append('desc', this.questionDesc)
+        formData.append('reason_id', this.reasonId)
+      }
+      // console.log(formData.get('order_product_id'))
+      // console.log(formData.get('aid'))
+      // console.log(formData.get('type_code'))
+      // console.log(formData.get('apply_number'))
+      // console.log(formData.get('desc'))
+      // console.log(formData.getAll('proofs[]'))
+      try {
+        const res = await submitApplyData(formData)
+        this.loading = false
+        console.log(res)
+      } catch (error) {
+        this.loading = false
+      }
     },
-    onRead(file) {
+    // 获取商品信息，售后理由
+    async getCommodityDetailData(data) {
+      const res = await applyPageData(data)
+      this.commodity = res.data
+    },
+    // 选择理由
+    selectReason(item) {
+      console.log(item)
+      this.reasonText = item.reason
+      this.reasonId = item.reason_id
+    },
+    // 上传图片
+    async onRead(file) {
       console.log(file)
-      if (this.commentImgs.length >= 6) {
-        this.$toast('评论图片最多上传6个！')
+      if (Array.isArray(file)) {
+        this.commentImgs.push(...file)
       } else {
         this.commentImgs.push(file)
+      }
+      if (this.commentImgs.length >= 6) {
+        this.commentImgs.length = 6
+        this.$toast('评论图片最多上传6个！')
       }
     },
     delImg(index) {
@@ -219,7 +307,12 @@ export default {
 
 <style scoped lang="less">
 .apply-after {
-
+  .upload-text{font-size: 0.24rem;}
+  .upload-title{font-size: 0.28rem; color: #333}
+  .reason-sel{
+    height: 4rem;
+    overflow: scroll;
+  }
   .after-content {
     padding-top: 0.3rem;
     .commodity-card {
@@ -280,9 +373,9 @@ export default {
         padding: 0.32rem 0.32rem 0.4rem;
         border-top: 0.02rem solid @Grey6;
         font-size: 0.28rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        // display: flex;
+        // justify-content: space-between;
+        // align-items: center;
         .price {
           color: @BeeDefault;
         }
@@ -314,6 +407,7 @@ export default {
         border-bottom: 0.02rem solid @Grey6;
         .desc-title {
           font-size: 0.28rem;
+          color: #333;
         }
         .van-cell {
           padding: 0.2rem 0 0;
@@ -333,7 +427,7 @@ export default {
           padding-top: 0.4rem;
           display: grid;
           grid-template-columns: repeat(3, 1.4rem);
-          grid-template-rows: 1.4rem;
+          grid-template-rows: 1.4rem 1.4rem;
           grid-gap: 0.3rem 0.4rem;
           .comment-img {
             position: relative;
@@ -348,6 +442,7 @@ export default {
           }
           .upload-img {
             height: 1.4rem;
+            padding-top: 0.3rem;
             box-sizing: border-box;
             border: 0.04rem dashed @Grey6;
             border-radius: 0.1rem;
@@ -370,6 +465,7 @@ export default {
     width: 100%;
     text-align: center;
     margin-top: 1rem;
+    margin-bottom:0.3rem;
     .van-button {
       width: 5.86rem;
       height: 0.9rem;

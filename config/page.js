@@ -1,5 +1,10 @@
-// NOTE 多页应用打包
-
+/* REVIEW 新增多页打包页面：例（BeeLimit）
+  1.page目录下新建目录
+  2.复制一份main.js
+  3.复制一份index.vue(内含router-view)
+  4.在route目录下新增路由文件
+  5.在此处新增打包后的HTML配置
+*/
 module.exports = {
   // 主页
   index: {
@@ -27,15 +32,18 @@ module.exports = {
   },
   // 赠送好友
   beeGift: {
-    entry: 'src/pages/BeeGift/main.js'
+    entry: 'src/pages/BeeGift/main.js',
+    title: '赠送好友'
   },
   // 蜂公益值
   beeCommonweal: {
-    entry: 'src/pages/BeeCommonweal/main.js'
+    entry: 'src/pages/BeeCommonweal/main.js',
+    title: '蜂公益值'
   },
   // 蜂公益行动详情
   beePublic: {
-    entry: 'src/pages/BeePublic/main.js'
+    entry: 'src/pages/BeePublic/main.js',
+    title: '行动详情'
   },
   // 文章详情
   beeArticle: {
