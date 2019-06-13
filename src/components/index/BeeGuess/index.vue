@@ -8,7 +8,12 @@
         v-if="guessData[0].area"
         class="farm-title"
       >
-        <span class="title-text">农副产品</span>
+        <div class="img-content">
+          <img
+            :src="beeIcon.bee_commonweal_text_agricultural_products"
+            alt="农副产品"
+          >
+        </div>
         <div
           class="show-more"
           @click="showList"
@@ -91,7 +96,11 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      beeIcon: {
+        bee_commonweal_text_agricultural_products: require('@/assets/icon/common/commonweal/bee_commonweal_text_agricultural_products.png')
+      }
+    }
   },
   computed: {},
   watch: {},
@@ -156,8 +165,9 @@ export default {
     padding: 0.4rem 0;
     display: flex;
     justify-content: space-between;
-    .title-text {
-      font-size: 0.3rem;
+    .img-content{
+      width: 1.63rem;
+      height: 0.28rem;
     }
     .show-more {
       font-size: 0.22rem;

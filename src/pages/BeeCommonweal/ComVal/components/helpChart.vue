@@ -1,5 +1,5 @@
 <template>
-  <div class="com-detail2">
+  <div class="com-detail3">
     <div class="chart-header">
       <div class="header-left">
         <div class="part1">
@@ -121,8 +121,8 @@ export default {
 </script>
 
 <style scoped lang="less">
-.com-detail2 {
-  margin-top: 0.3rem;
+.com-detail3 {
+  margin-top: 0.2rem;
   height: 3.2rem;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 0.16rem;
