@@ -15,8 +15,14 @@ module.exports = {
         })
         return definitions
       })
+    } else {
+      config.plugin('define').tap(definitions => {
+        Object.assign(definitions[0]['process.env'], {
+          BASE_API: '"https://api2.fengjishi.com.cn"'
+        })
+        return definitions
+      })
     }
-    // TODO 此处需增加生产环境配置
     // NOTE 引入less全局变量
     const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
     types.forEach(type =>
