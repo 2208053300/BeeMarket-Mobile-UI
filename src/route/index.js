@@ -294,6 +294,11 @@ const router = new Router({
           component: () => import('@/pages/index/BeeDiscover/CompleteDetail')
         },
         {
+          path: 'joinSuccess',
+          name: 'joinSuccess',
+          component: () => import('@/pages/index/BeeDiscover/JoinSuccess')
+        },
+        {
           path: 'article/:id',
           name: 'ArticleDetail',
           component: () => import('@/pages/BeeArticle/ArticleDetail')

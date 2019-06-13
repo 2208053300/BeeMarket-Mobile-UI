@@ -13,6 +13,7 @@
         </p>
         <van-icon name="close" size="24px" color="#ddd" @click="closeAnswer" />
       </div>
+      <!-- eslint-disable-next-line  -->
       <div class="content" v-html="answerData.answer" />
       <div class="evalue flex flex-between align-center">
         <p class="tip">

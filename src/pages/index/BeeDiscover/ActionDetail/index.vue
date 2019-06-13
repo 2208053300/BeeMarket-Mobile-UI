@@ -17,7 +17,11 @@
         <!-- <van-button class="share-help">
           发起助力
         </van-button> -->
-        <van-button class="go-help" :disabled="actionDetails.is_join" @click="goHelp">
+        <van-button
+          class="go-help"
+          :disabled="actionDetails.is_join"
+          @click="goHelp"
+        >
           <span v-if="!actionDetails.is_join">参与并发起助力</span>
           <span v-else>已参与助力</span>
         </van-button>
@@ -52,7 +56,12 @@
         @click="helpSuccess = false"
       />
     </van-popup>-->
-    <van-popup v-model="helpSuccess" position="top" class="share-modal" @closed="closed">
+    <van-popup
+      v-model="helpSuccess"
+      position="top"
+      class="share-modal"
+      @closed="closed"
+    >
       <div class="text-right" style="padding:0.2rem 0.2rem 0 0">
         <img :src="beeIcon.shareTip" class="shareTip">
       </div>
@@ -63,7 +72,7 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力，发起助力
-import { getActionDetail, joinAction, launchAction } from '@/api/BeeApi/action'
+import { getActionDetail, joinAction } from '@/api/BeeApi/action'
 import detailCard0 from './components/detailCard0'
 import detailCard1 from './components/detailCard1'
 import detailCard2 from './components/detailCard2'
@@ -144,8 +153,10 @@ export default {
       const res = await getActionDetail({ id: this.id })
       this.actionDetails = res.data
     },
+    // 参与助力 分享成功后跳转页面到助力成功页面 /joinSuccess
     async goHelp() {
-      // const res = await joinAction({ id: this.id })
+      // aid 行动id share_id 分享人 id
+      // const res = await joinAction({ aid: this.id,share_id })
       // console.log(res)
       this.$store.state.app.beeHeader = false
       this.helpSuccess = true
@@ -209,7 +220,7 @@ export default {
       }
       .go-help {
         flex: 1;
-        background-image: linear-gradient(to right,#ffbd2f,#ffa42f);
+        background-image: linear-gradient(to right, #ffbd2f, #ffa42f);
       }
     }
     .helped-text {
@@ -281,8 +292,10 @@ export default {
     }
   }
 
-  .share-modal{background: rgba(0,0,0,0);}
-  .shareTip{
+  .share-modal {
+    background: rgba(0, 0, 0, 0);
+  }
+  .shareTip {
     width: 3.3rem;
     height: 2.28rem;
   }
