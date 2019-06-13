@@ -45,7 +45,11 @@ export default {
       beeIcon: {
         confirmorder_send_icon_presentation: require('@/assets/icon/order/confirmorder_send_icon_presentation@2x.png')
       },
-      actionData: {}
+      actionData: {
+        company_info: {
+          love_company_logo: ''
+        }
+      }
     }
   },
   computed: {},
@@ -56,7 +60,7 @@ export default {
   },
   methods: {
     async getShareDetailData() {
-      const res = await getShareDetail({ user_id: 1, id: 2 })
+      const res = await getShareDetail({ user_id: 1, aid: 2 })
       this.actionData = res.data
     }
   }

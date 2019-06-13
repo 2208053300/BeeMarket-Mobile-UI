@@ -133,7 +133,7 @@
 </template>
 
 <script>
-import videojs from 'video.js/dist/video.min.js'
+import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
 export default {
   components: {},
@@ -299,7 +299,6 @@ export default {
 
 <style lang="less">
 .product-video-player {
-  height: 7.5rem;
   display: flex;
   align-items: center;
   position: relative;

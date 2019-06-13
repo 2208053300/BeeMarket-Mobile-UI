@@ -306,7 +306,8 @@ export default {
           // 验证通过
           if (this.isAgree) {
             this.$toast('可以提交！')
-            const data = {
+            // eslint-disable-next-line
+            const data1 = {
               personalName: this.personalName,
               card_no: this.card_no,
               number: this.number,

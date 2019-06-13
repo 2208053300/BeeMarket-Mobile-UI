@@ -1,20 +1,87 @@
 <template>
   <div class="below-content">
-    <div
-      class="cart1"
-      @click="goTaskList"
-    >
-      <div class="cart-img">
-        <img
-          :src="beeIcon.mine_public_icon_task"
-          alt=""
-        >
+    <div class="rookie-enjoy">
+      <div class="enjoy-title">
+        <span>新手专享 双重好礼</span>
       </div>
-      <p class="part-text1">
-        蜂任务
-      </p>
-      <span class="part-text2">完成任务</span>
-      <span class="part-text3">领取相应公益值</span>
+      <div class="enjoy-content">
+        <div class="left-content">
+          <div class="left-text1">
+            点点手指
+          </div>
+          <div class="left-text1">
+            <van-icon name="plus" />
+          </div>
+          <div class="left-text1">
+            3.6亿豪礼送
+          </div>
+        </div>
+        <div class="right-content">
+          <div class="img-item">
+            <div class="img-content">
+              <img
+                src=""
+                alt="参与助力"
+              >
+            </div>
+            <span class="img-text">参与助力</span>
+          </div>
+          <div class="img-item">
+            <div class="img-content">
+              <img
+                src=""
+                alt="完善资料"
+              >
+            </div>
+            <span class="img-text">完善资料</span>
+          </div>
+          <div class="img-item">
+            <div class="img-content">
+              <img
+                src=""
+                alt="成为达人"
+              >
+            </div>
+            <span class="img-text">成为达人</span>
+          </div>
+          <div class="img-item">
+            <div class="img-content">
+              <img
+                src=""
+                alt="评价商品"
+              >
+            </div>
+            <span class="img-text">评价商品</span>
+          </div>
+          <div class="img-item">
+            <div class="img-content">
+              <img
+                src=""
+                alt="发起助力"
+              >
+            </div>
+            <span class="img-text">发起助力</span>
+          </div>
+          <div class="img-item">
+            <div class="img-content">
+              <img
+                src=""
+                alt="免费领酒"
+              >
+            </div>
+            <span class="img-text">免费领酒</span>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-btn">
+        <van-button
+          class="goTask"
+          round
+          @click="goTaskList"
+        >
+          进入新手专享
+        </van-button>
+      </div>
     </div>
     <bee-guess :guess-data="comVal.charity_products" />
   </div>
@@ -74,33 +141,66 @@ export default {
 .below-content {
   position: relative;
   top: -2rem;
-  .cart1 {
-    margin: 0.16rem;
-    height: 2.7rem;
-    background-color: #fffefd;
+  .rookie-enjoy {
+    height: 4.46rem;
+    background-color: #fff;
     border-radius: 0.16rem;
-    overflow: hidden;
+    padding: 0.3rem 0 0.9rem 0.26rem;
     box-sizing: border-box;
-    padding: 0.5rem 0 0.25rem;
-    text-align: center;
-    .cart-img {
-      height: 0.8rem;
-      width: 0.8rem;
-      margin: auto;
+    margin: 0 0.16rem 0.6rem;
+    position: relative;
+    .enjoy-title {
+      font-size: 0.32rem;
+      text-align: center;
+      font-weight: bold;
     }
-    .part-text1 {
-      font-size: 0.28rem;
-      padding: 0;
-      margin: 0.15rem 0 0.07rem;
+    .enjoy-content {
+      margin-top: 0.45rem;
+      display: flex;
+      align-items: center;
+      .left-content {
+        width: 0.71rem;
+        font-size: 0.24rem;
+        color: @Grey2;
+        text-align: center;
+        line-height: 0.34rem;
+      }
+      .right-content {
+        flex: 1;
+        padding: 0 0.3rem;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-row-gap: 0.4rem;
+        grid-column-gap: 0.3rem;
+        .img-item {
+          text-align: center;
+          .img-content {
+            margin: auto;
+            width: 0.66rem;
+            height: 0.72rem;
+          }
+          .img-text {
+            font-size: 0.2rem;
+            color: #bda490;
+          }
+        }
+      }
     }
-    .part-text2 {
-      font-size: 0.24rem;
-      color: @Grey1;
-    }
-    .part-text3 {
-      font-size: 0.24rem;
-      color: @Grey1;
-      display: block;
+    .bottom-btn {
+      position: relative;
+      bottom: -0.3rem;
+      text-align: center;
+      margin-top: 0.2rem;
+      .goTask {
+        margin: auto;
+        width: 4.57rem;
+        height: 0.71rem;
+        color: #fff;
+        font-size: 0.3rem;
+        padding: 0;
+        border: none;
+        background-color: @BeeDefault;
+      }
     }
   }
 }

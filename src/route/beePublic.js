@@ -9,12 +9,17 @@ export default new Router({
   routes: [
     {
       path: '',
-      name: 'beePublic',
       component: () => import('@/pages/BeePublic'),
       children: [
         {
           path: '',
+          name: 'beePublic',
           component: () => import('@/pages/BeePublic/ActionDetail')
+        },
+        {
+          path: '',
+          name: 'helpSuccess',
+          component: () => import('@/pages/BeePublic/HelpSuccess')
         }
       ]
     }

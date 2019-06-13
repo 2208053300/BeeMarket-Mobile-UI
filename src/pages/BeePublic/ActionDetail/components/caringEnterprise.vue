@@ -73,7 +73,13 @@ export default {
   props: {
     actionData: {
       type: Object,
-      default: () => {}
+      default: () => {
+        return {
+          company_info: {
+            love_company_logo: ''
+          }
+        }
+      }
     }
   },
   data() {
