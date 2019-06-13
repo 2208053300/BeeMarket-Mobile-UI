@@ -11,11 +11,21 @@
       />
       <div class="video">
         <video
+          ref="video"
           :src="video_url"
-          :poster="beeIcon.line_bee_circle_banner"
-          style="width: 6.42rem;height: 3.3rem;border-radius: 0.16rem"
-          controls="controls"
+          :poster="beeIcon.first_screen"
+          class="video-body"
+          :controls="showControls"
         />
+        <div v-if="!showControls" style="position: relative">
+          <div class="control">
+            <img
+              :src="beeIcon.title_icon_stop"
+              style="width: 1.28rem;height: 1.28rem"
+              @click="play"
+            >
+          </div>
+        </div>
       </div>
       <div style="margin-top: 0.6rem">
         <img :src="beeIcon.stop_pic_line">
@@ -54,7 +64,9 @@
         :icon="beeIcon.talent_bg_title3"
       />
       <div style="padding-top: 0.4rem">
-        <img :src="beeIcon.line_bee_circle_banner">
+        <a href="/beeFriends">
+          <img :src="beeIcon.line_bee_circle_banner">
+        </a>
       </div>
     </div>
   </div>
@@ -80,11 +92,13 @@ export default {
         talent_bg_title3: require('@/assets/icon/task/talent/talent_bg_title3@3x.png'),
         title_icon_stop: require('@/assets/icon/task/talent/title_icon_stop@2x.png'),
         stop_pic_line: require('@/assets/icon/task/talent/stop_pic_line@2x.png'),
-        line_bee_circle_banner: require('@/assets/icon/task/talent/line_bee_circle_banner@2x.png')
+        line_bee_circle_banner: require('@/assets/icon/task/talent/line_bee_circle_banner@2x.png'),
+        first_screen: require('@/assets/icon/task/talent/first_screen@3x.png')
       },
       playStatus: false,
       video_url: 'https://img.fengjishi.com.cn/product/video/mi9.mp4',
-      hasFirstConsume: 0
+      hasFirstConsume: 0,
+      showControls: false
     }
   },
   computed: {},
@@ -92,6 +106,7 @@ export default {
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = getOs().isWx
+    this.$store.state.app.beeFooter.show = false
     this.getHasConsume()
   },
   methods: {
@@ -101,7 +116,7 @@ export default {
       }
       const os = getOs()
       if (os.isWx) {
-        this.$router.push('/category')
+        window.location.href = '/#/category'
       } else if (os.isIphone) {
         window.webkit.messageHandlers.ToCatList.postMessage('')
       } else if (os.isAndroid) {
@@ -110,7 +125,12 @@ export default {
     },
     async getHasConsume() {
       const res = await isConsume()
+      this.$store.state.app.beeFooter.show = false
       this.hasFirstConsume = res.data.is_consume ? 1 : 0
+    },
+    play() {
+      this.$refs.video.play()
+      this.showControls = true
     }
   }
 }
@@ -131,9 +151,23 @@ p {
 }
 .video {
   border-radius: 0.16rem;
-  background-color: black;
   margin-top: 0.24rem;
-  height: 3.3rem;
+  .video-body {
+    background-color: black;
+    width: 6.42rem;
+    height: 3.3rem;
+    border-radius: 0.16rem
+  }
+  .control {
+    width: 6.42rem;
+    height: 3.3rem;
+    top: -3.3rem;
+    left: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .has-first-consume {
   p {

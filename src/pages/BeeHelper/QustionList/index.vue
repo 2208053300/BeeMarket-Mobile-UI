@@ -17,7 +17,7 @@
       </van-list>
     </div>
     <!-- 底部联系客服按钮 -->
-    <ContactCustomer />
+    <ContactCustomer v-if="isShowCoustomer" />
     <!-- 答案遮罩弹框 -->
     <AnswerPop
       ref="AnswerPop"
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
 // 引入帮助客服api
 import { getSortList } from '@/api/BeeApi/user'
 import ContactCustomer from '../components/ContactCustomer'
@@ -51,7 +52,8 @@ export default {
       list: [],
       loading: false,
       finished: false,
-      page: 1
+      page: 1,
+      isShowCoustomer: true
     }
   },
   computed: {},
@@ -61,6 +63,17 @@ export default {
     // this.getData()
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+
+    const osObj = getOs()
+    if (osObj.isWx) {
+      this.isShowCoustomer = false
+    } else if (osObj.isIphone) {
+      // window.webkit.messageHandlers.OpenService.postMessage('')
+    } else if (osObj.isAndroid) {
+      // window.beeMarket.OpenService()
+    } else {
+      this.isShowCoustomer = false
+    }
   },
   methods: {
     // 获取数据

@@ -13,6 +13,7 @@
         </p>
         <van-icon name="close" size="24px" color="#ddd" @click="closeAnswer" />
       </div>
+      <!-- eslint-disable-next-line  -->
       <div class="content" v-html="answerData.answer" />
       <div class="evalue flex flex-between align-center">
         <p class="tip">
@@ -43,7 +44,7 @@
 
 <script>
 // 引入帮助客服api
-import { getAnswer } from '@/api/BeeApi/user'
+import { getAnswer, solved, unsolved } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {
@@ -54,6 +55,7 @@ export default {
   },
   data() {
     return {
+      id: 0,
       show: false,
       answerData: {
       },
@@ -90,30 +92,38 @@ export default {
     },
     // 获取答案
     getAnswer(id) {
+      this.id = id
       getAnswer({ id }).then(res => {
         this.answerData = res.data
       })
     },
     // 反馈答案有用没用 type 1 有用 0 没用
-    isUserful(type) {
+    async isUserful(type) {
       console.log(type)
       if (!this.isAjaxed) {
         if (type) {
-          this.used = false
           // TODO 请求接口 有用
+          await solved({ id: this.id })
+          this.used = false
+          this.$notify({
+            message: '感谢您的反馈！',
+            duration: 2000,
+            background: '#1989fa'
+          })
         } else {
-          this.unused = false
           // TODO 请求接口 没用
+          await unsolved({ id: this.id })
+          this.unused = false
+          this.$notify({
+            message: '感谢您的反馈！',
+            duration: 2000,
+            background: '#1989fa'
+          })
         }
         this.isAjaxed = true
       }
 
       // this.$emit('getShow', false)
-      this.$notify({
-        message: '感谢您的反馈！',
-        duration: 2000,
-        background: '#1989fa'
-      })
     },
     // 关闭弹框
     closed() {

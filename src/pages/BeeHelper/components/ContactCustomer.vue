@@ -39,25 +39,13 @@ export default {
     goDetail() {
       const osObj = getOs()
       if (osObj.isWx) {
-        // this.$router.push({
-        //   path: '/category/details',
-        //   query: {
-        //     pid: pid
-        //   }
-        // })
-        this.$parent.isShowCustomer = false
+        // this.$parent.isShowCustomer = false
       } else if (osObj.isIphone) {
         window.webkit.messageHandlers.OpenService.postMessage('')
       } else if (osObj.isAndroid) {
         window.beeMarket.OpenService()
       } else {
-        this.$parent.isShowCustomer = false
-        // this.$router.push({
-        //   path: '/category/details',
-        //   query: {
-        //     pid: pid
-        //   }
-        // })
+        // this.$parent.isShowCustomer = false
       }
     }
   }
