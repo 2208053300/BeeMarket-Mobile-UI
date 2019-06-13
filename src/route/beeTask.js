@@ -30,6 +30,11 @@ export default new Router({
           path: 'taskPerfectData/wechat',
           name: 'taskPerfectDataWithWechat',
           component: () => import('@/pages/BeeTask/TaskPerfectData/bindWechat')
+        },
+        {
+          path: 'talent',
+          name: 'becomeTalent',
+          component: () => import('@/pages/BeeTask/TaskTalent')
         }
       ]
     }

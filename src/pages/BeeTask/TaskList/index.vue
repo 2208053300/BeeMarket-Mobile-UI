@@ -73,6 +73,7 @@
               class="do-it"
               round
               :class="{successDo:taskData.status1}"
+              @click="becomeTalent"
             >
               <span v-if="taskData.status1">已完成</span>
               <span v-else>去完成</span>
@@ -270,6 +271,9 @@ export default {
     async getBeeTaskData() {
       const res = await getBeeTask()
       this.taskData = res.data.task
+    },
+    becomeTalent() {
+      this.$router.push({ name: 'becomeTalent' })
     }
   }
 }
