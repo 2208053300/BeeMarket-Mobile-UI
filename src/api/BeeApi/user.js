@@ -329,3 +329,19 @@ export function getServiceIndex(data) {
     data
   })
 }
+// NOTE 客服帮助 根据问题类型ID获取列表
+export function getSortList(data) {
+  return request({
+    url: '/user/customerService/problemTypeList',
+    method: 'post',
+    data
+  })
+}
+// NOTE 客服帮助 根据问题ID获取答案
+export function getAnswer(data) {
+  return request({
+    url: '/user/customerService/detail',
+    method: 'post',
+    data
+  })
+}

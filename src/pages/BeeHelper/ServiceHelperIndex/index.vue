@@ -53,7 +53,7 @@
       </van-row>
     </div>
     <!-- 底部联系客服按钮 -->
-    <ContactCustomer />
+    <ContactCustomer v-if="isShowCustomer" />
     <!-- 答案遮罩弹框 -->
     <AnswerPop
       ref="AnswerPop"
@@ -69,8 +69,10 @@ import { getServiceIndex } from '@/api/BeeApi/user'
 import ContactCustomer from '../components/ContactCustomer'
 import AnswerPop from '../components/AnswerPop'
 export default {
-  metaInfo: {
-    title: '客服帮助'
+  metaInfo() {
+    return {
+      title: '客服帮助'
+    }
   },
   components: {
     ContactCustomer,
@@ -79,6 +81,8 @@ export default {
   props: {},
   data() {
     return {
+      // 是否显示联系客服按钮 app 显示
+      isShowCustomer: true,
       isShow: false,
       user: {
         nickname: '',
@@ -120,7 +124,7 @@ export default {
     // 跳转到分类下的问题列表
     goList(id) {
       this.$router.push({
-        path: '/persion/ServiceHelper/QustionList',
+        path: '/qustionList',
         query: {
           id: id
         }

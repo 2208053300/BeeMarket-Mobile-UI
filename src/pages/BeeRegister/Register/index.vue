@@ -142,14 +142,14 @@ export default {
     // 跳转到下载页面
     goDownloadPage() {
       this.$router.push({
-        path: '/beeRegister/download'
+        path: '/download'
       })
     },
 
     // 跳转到用户协议
     goAgreenment() {
       this.$router.push({
-        path: '/persion/BeeSetting/about/userAgreement'
+        path: '/agreement'
       })
     },
 

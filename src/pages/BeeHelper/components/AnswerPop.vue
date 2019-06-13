@@ -4,30 +4,33 @@
       v-model="show"
       position="bottom"
       :overlay="true"
+      @closed="closed"
       @click-overlay="closeAnswer"
     >
       <div class="answer-top flex flex-between align-center">
         <p class="title">
-          {{ answerData.title }}
+          {{ answerData.question }}
         </p>
         <van-icon name="close" size="24px" color="#ddd" @click="closeAnswer" />
       </div>
-      <div class="content">
-        <p>{{ answerData.content }}</p>
-      </div>
+      <div class="content" v-html="answerData.answer" />
       <div class="evalue flex flex-between align-center">
         <p class="tip">
           是否对您有帮助：
         </p>
         <div class="action flex align-center">
           <div class="yes flex align-center" @click="isUserful(1)">
-            <van-icon name="passed" size="26px" />
+            <!-- <van-icon name="passed" size="26px" /> -->
+            <img v-if="used" :src="icon.useful" class="feedback-icon userful">
+            <img v-else :src="icon.usefulActive" class="feedback-icon userful-active animated tada">
             <p class="is-userful">
               有用
             </p>
           </div>
           <div class="no flex align-center" @click="isUserful(0)">
-            <van-icon name="close" size="26px" />
+            <!-- <van-icon name="close" size="26px" /> -->
+            <img v-if="unused" :src="icon.unuseful" class="feedback-icon unuserful">
+            <img v-else :src="icon.unusefulActive" class="feedback-icon unuserful-active animated tada">
             <p class="is-userful">
               没用
             </p>
@@ -40,7 +43,7 @@
 
 <script>
 // 引入帮助客服api
-import { getAnswer } from '@/api/serviceHelp'
+import { getAnswer } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {
@@ -53,9 +56,19 @@ export default {
     return {
       show: false,
       answerData: {
-        title: '',
-        content: ''
-      }
+      },
+      // 反馈图标
+      icon: {
+        useful: require('@/assets/icon/helper/help_yes.png'),
+        usefulActive: require('@/assets/icon/helper/help_yes_active.png'),
+        unuseful: require('@/assets/icon/helper/help_no.png'),
+        unusefulActive: require('@/assets/icon/helper/help_no_active.png')
+      },
+
+      isAjaxed: false,
+      used: true,
+      unused: true
+
     }
   },
   computed: {},
@@ -77,20 +90,38 @@ export default {
     },
     // 获取答案
     getAnswer(id) {
-      getAnswer(id).then(res => {
-        this.answerData = res.data.answerData
+      getAnswer({ id }).then(res => {
+        this.answerData = res.data
       })
     },
     // 反馈答案有用没用 type 1 有用 0 没用
     isUserful(type) {
       console.log(type)
+      if (!this.isAjaxed) {
+        if (type) {
+          this.used = false
+          // TODO 请求接口 有用
+        } else {
+          this.unused = false
+          // TODO 请求接口 没用
+        }
+        this.isAjaxed = true
+      }
 
-      this.$emit('getShow', false)
+      // this.$emit('getShow', false)
       this.$notify({
         message: '感谢您的反馈！',
         duration: 2000,
         background: '#1989fa'
       })
+    },
+    // 关闭弹框
+    closed() {
+      console.log('点击关闭')
+      this.isAjaxed = false
+      this.used = true
+      this.unused = true
+      console.log('点击关闭', this.isAjaxed)
     }
   }
 }
@@ -118,6 +149,10 @@ export default {
     color: #333;
   }
 }
+.feedback-icon{
+  width:0.43rem;
+  height: 0.44rem;
+}
 .evalue {
   border-top: 1px solid #ddd;
   padding: 0.3rem;
@@ -133,6 +168,72 @@ export default {
 }
 .yes {
   margin-right: 0.3rem;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes tada {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  10%, 20% {
+    -webkit-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+    transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+  }
+
+  30%, 50%, 70%, 90% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+  }
+
+  40%, 60%, 80% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+  }
+
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes tada {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  10%, 20% {
+    -webkit-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+    transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+  }
+
+ 30%, 50%, 70%, 90% {
+    -webkit-transform: scale3d(1.3, 1.3, 1.3) rotate3d(0, 0, 1, 3deg);
+    transform: scale3d(1.3, 1.3, 1.3) rotate3d(0, 0, 1, 3deg);
+  }
+
+  40%, 60%, 80% {
+    -webkit-transform: scale3d(1.3, 1.3, 1.3) rotate3d(0, 0, 1, -3deg);
+    transform: scale3d(1.3, 1.3, 1.3) rotate3d(0, 0, 1, -3deg);
+  }
+
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.tada {
+  -webkit-animation-name: tada;
+  animation-name: tada;
 }
 
 </style>

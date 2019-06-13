@@ -1,12 +1,14 @@
 <template>
   <div class="bg-white text-center bottom-btn">
-    <van-button class="contact-btn">
+    <van-button class="contact-btn" @click="goDetail">
       联系客服
     </van-button>
   </div>
 </template>
 
 <script>
+import { getOs } from '@/utils'
+import Cookies from 'js-cookie'
 export default {
   components: {
 
@@ -16,7 +18,8 @@ export default {
   },
   data() {
     return {
-
+      // 获取app cookies中的 token
+      test1: ''
     }
   },
   computed: {
@@ -29,10 +32,34 @@ export default {
 
   },
   mounted() {
-
+    this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
   },
   methods: {
-
+    // 此处判断浏览器环境，做出跳转
+    goDetail() {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        // this.$router.push({
+        //   path: '/category/details',
+        //   query: {
+        //     pid: pid
+        //   }
+        // })
+        this.$parent.isShowCustomer = false
+      } else if (osObj.isIphone) {
+        window.webkit.messageHandlers.OpenService.postMessage('')
+      } else if (osObj.isAndroid) {
+        window.beeMarket.OpenService()
+      } else {
+        this.$parent.isShowCustomer = false
+        // this.$router.push({
+        //   path: '/category/details',
+        //   query: {
+        //     pid: pid
+        //   }
+        // })
+      }
+    }
   }
 }
 </script>

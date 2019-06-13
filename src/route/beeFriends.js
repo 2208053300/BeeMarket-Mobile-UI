@@ -20,6 +20,21 @@ export default new Router({
           path: 'myEarn',
           name: 'myEarn',
           component: () => import('@/pages/BeeFriends/MyEarn')
+        },
+        {
+          path: 'introduction',
+          name: 'introduction',
+          component: () => import('@/pages/BeeFriends/Introduction')
+        },
+        {
+          path: 'apply',
+          name: 'apply',
+          component: () => import('@/pages/BeeFriends/Apply')
+        },
+        {
+          path: 'waitAudit',
+          name: 'waitAudit',
+          component: () => import('@/pages/BeeFriends/WaitAudit')
         }
       ]
     }
