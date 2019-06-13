@@ -361,3 +361,19 @@ export function unsolved(data) {
     data
   })
 }
+// 蜂友圈 - 首页API
+export function getPartner(data) {
+  return request({
+    url: '/user/partner/index',
+    method: 'post',
+    data
+  })
+}
+// 蜂友圈 - 首页API
+export function getFriends(data) {
+  return request({
+    url: '/user/partner/friends_list',
+    method: 'post',
+    data
+  })
+}

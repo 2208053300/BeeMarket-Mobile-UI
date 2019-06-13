@@ -13,7 +13,7 @@
         v-for="(item2,index2) in item"
         :key="index2"
         :ref="'hexagon'+item2.id"
-        :class="[{showitem:showList.indexOf(item2.id)!==-1&&item2.name&&checkOverflow('hexagon'+item2.id)},{firstItem:item2.id===config.center_point.id}]"
+        :class="[{showitem:showList.indexOf(item2.id)!==-1&&item2.nickname&&checkOverflow('hexagon'+item2.id)},{firstItem:item2.id===config.center_point.id}]"
         class="comb-card hexagon"
         :test="index2"
         @click="showDetail(item2.id)"
@@ -22,7 +22,7 @@
         <div class="box2">
           <div class="img-content">
             <img
-              :src="item2.head_img"
+              :src="item2.head_image_url"
               alt=""
             >
           </div>
@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Hammer from 'hammerjs'
 import { setInterval, clearInterval } from 'timers'
+
 export default {
   components: {},
   props: {
@@ -66,7 +66,6 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    this.getBeeFriendsData()
     // 获取操作的DOM
     const combList = this.$refs.combList
     const hammerEl = new Hammer(combList)
@@ -91,20 +90,20 @@ export default {
     })
   },
   methods: {
-    async getBeeFriendsData() {
-      const res = await axios(
-        'https://www.easy-mock.com/mock/5c74955332eba876f9c7b0cf/BeeMarket-Admin/beeFriends'
-      )
-      this.combData = res.data.data
-      console.log(res.data.data)
-      this.handleAction(this.combData.length)
-      this.animateList()
-    },
+    // async getBeeFriendsData() {
+    //   const res = await axios(
+    //     'https://www.easy-mock.com/mock/5c74955332eba876f9c7b0cf/BeeMarket-Admin/beeFriends'
+    //   )
+    //   this.combData = res.data.data
+    //   console.log(res.data.data)
+    //   this.handleAction(this.combData.length)
+    //   this.animateList()
+    // },
     // 初始化
-    init(data) {
-      this.handleAction(data.length)
-      this.combData = data
-    },
+    // init(data) {
+    //   this.handleAction(data.length)
+    //   this.combData = data
+    // },
     // 计算总圈数
     getCircleCount(num) {
       const circle_num = Math.ceil(Math.sqrt((num - 1) / 3 + 0.25) - 0.5)
@@ -277,7 +276,6 @@ export default {
       }
       this.config['rowId'] = ww
       this.FriendList = new_row
-      console.log(row)
     },
     // 新增到显示的列表中
     animateList(row) {
@@ -300,7 +298,7 @@ export default {
       const hLeft = hrect.x
       if (hTop > window.innerHeight - 50 || hTop < 50) {
         return false
-      } else if (hLeft > window.innerWidth - 50 || hLeft < 50) {
+      } else if (hLeft > window.innerWidth - 50 || hLeft < 0) {
         return false
       } else {
         return true

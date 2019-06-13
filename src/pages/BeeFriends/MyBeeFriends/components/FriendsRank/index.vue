@@ -5,6 +5,7 @@
       class="rank-pop"
       position="bottom"
       :close-on-click-overlay="false"
+      @open="getFriendsData"
       @close="handleClose"
       @click-overlay="handleClose"
     >
@@ -16,7 +17,7 @@
               class="tab-img"
             />
             <div class="type-num">
-              蜂友：<span class="num">20</span>个
+              蜂友：<span class="num">{{ friendsData.friends_num }} </span>个
             </div>
           </div>
           <div class="type-tab disabled-tab2">
@@ -25,7 +26,7 @@
               class="tab-img"
             />
             <div class="type-num">
-              关联蜂友：<span class="num">20</span>个
+              关联蜂友：<span class="num">{{ friendsData.relation_friends_num }} </span>个
             </div>
           </div>
           <div
@@ -45,24 +46,34 @@
           </div>
         </div>
         <div class="rank-list">
-          <div class="friends-cell">
+          <div
+            v-for="(item,index) in friendsData.friendsList"
+            :key="index"
+            class="friends-cell"
+          >
             <div class="ranking">
               <!-- 如果排名前小于三 -->
-              <div class="rank-num">
+              <div
+                v-if="index<=2"
+                class="rank-num"
+              >
                 <img
+                  v-if="index===0"
                   :src="beeIcon.bee_firends_invite_icon_goldaward"
-                  alt=""
-                >
-                <!-- <img
-                  :src="beeIcon.bee_firends_invite_icon_silveraward"
-                  alt=""
+                  alt="1"
                 >
                 <img
+                  v-if="index===1"
+                  :src="beeIcon.bee_firends_invite_icon_silveraward"
+                  alt="2"
+                >
+                <img
+                  v-if="index===2"
                   :src="beeIcon.bee_firends_invite_icon_bronzeaward"
-                  alt=""
-                > -->
+                  alt="3"
+                >
               </div>
-              <!-- <span>1</span> -->
+              <span v-else>{{ index+1 }}</span>
             </div>
             <div class="friends-detail">
               <div class="head-img">
@@ -100,6 +111,8 @@
 </template>
 
 <script>
+import { getFriends } from '@/api/BeeApi/user'
+
 export default {
   components: {},
   props: {
@@ -119,7 +132,9 @@ export default {
         bee_firends_invite_icon_off: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_off.png'),
         bee_firends_invite_icon_crown: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_crown.png'),
         bee_firends_invite_icon_firends: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_firends.png')
-      }
+      },
+      friendsType: 1,
+      friendsData: {}
     }
   },
   computed: {},
@@ -127,6 +142,10 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    async getFriendsData() {
+      const res = await getFriends({ type: this.friendsType })
+      this.friendsData = res.data
+    },
     handleClose() {
       this.$emit('update:showRank', false)
     }
@@ -172,7 +191,7 @@ export default {
           width: 0.4rem;
           height: 0.4rem;
         }
-        .rank-header{
+        .rank-header {
           position: absolute;
           width: 1.73rem;
           height: 1.76rem;

@@ -119,9 +119,11 @@
 </template>
 
 <script>
-import echarts from 'echarts/lib/echarts'
 import { getTaskDetail } from '@/api/BeeApi/task'
-require('echarts/lib/chart/pie')
+import echarts from 'echarts/dist/echarts.simple.min.js'
+
+// import echarts from 'echarts/lib/echarts'
+// require('echarts/lib/chart/pie')
 export default {
   metaInfo: {
     title: '任务详情'
