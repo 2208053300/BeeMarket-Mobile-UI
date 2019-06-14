@@ -53,7 +53,7 @@
         助力公益
       </p>
     </div>
-    <div class="op-item">
+    <div class="op-item" @click="$router.push('beeFactory')">
       <div class="img-content">
         <img
           :src="beeIcon.home_icon_settled"

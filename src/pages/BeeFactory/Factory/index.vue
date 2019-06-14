@@ -329,6 +329,7 @@ export default {
         //     return res
         //   })
         // )
+
         const fileImg = this.img.file
         const res = await zipImg(fileImg)
         formData.set('licence_img', res)
@@ -342,9 +343,9 @@ export default {
         formData.set('invite_mobile', this.factory.referrer_number)
         // 执行提交表单请求
         const res1 = await entering(formData)
-        console.log(res1)
-
-        console.log('可以提交了')
+        if (res1.code === 1 && res1.status_code === 200) {
+          this.$toast.success(res1.message)
+        }
       } else {
         console.log('表单有误')
       }

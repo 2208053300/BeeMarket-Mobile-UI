@@ -81,7 +81,7 @@ export default {
         })
       } else {
         this.$router.push({
-          path: '/discover/activeTpl',
+          path: '/activeTpl',
           query: {
             id
           }
