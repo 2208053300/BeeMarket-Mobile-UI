@@ -25,7 +25,7 @@
         :style="{backgroundImage:'url('+beeIcon.bee_firends_icon_piggybank+')'}"
         @click="showProject=true"
       >
-        {{ partnerData.bag_balance||1 }}
+        {{ partnerData.sup_balance }}
       </div>
     </div>
     <div class="rule-fixed">
@@ -34,7 +34,10 @@
         alt="规则"
       >
     </div>
-    <list-type />
+    <list-type
+      ref="listType"
+      :honey-type.sync="honeyType"
+    />
     <div
       class="bottom-fixed1"
       @click="showRank=true"
@@ -57,16 +60,16 @@
         v-if="showHoney"
         class="honey-pop"
         :style="{backgroundImage:'url('+beeIcon.bee_firend_icon_bubble+')'}"
-        @click="showHoney=false"
+        @click="harvestBalance()"
       >
         <div
-          v-if="partnerData.sup_balance"
+          v-if="can_receive_balance"
           class="get-num"
         >
-          {{ partnerData.sup_balance }}个
+          {{ can_receive_balance }}个
         </div>
         <div
-          v-if="partnerData.sup_balance"
+          v-if="partnerData.can_receive_balance"
           class="handle-tip"
         >
           <div class="tip-hand">
@@ -88,7 +91,7 @@ import UserCard from './components/UserCard'
 import FriendsRank from './components/FriendsRank'
 import JoinProject from './components/JoinProject'
 import ListType from './components/ListType'
-import { getPartner } from '@/api/BeeApi/user'
+import { getPartner, getReceiveNum } from '@/api/BeeApi/user'
 
 export default {
   components: {
@@ -117,9 +120,11 @@ export default {
       },
       showHoney: true,
       partnerType: 1,
+      honeyType: 1,
       partnerData: {
         show_users2: []
-      }
+      },
+      can_receive_balance: 0
     }
   },
   computed: {},
@@ -127,14 +132,33 @@ export default {
   created() {},
   mounted() {
     this.getPartnerData()
+    this.getReceiveNumData()
   },
   methods: {
     async getPartnerData() {
       const res = await getPartner({ type: this.partnerType })
       this.partnerData = res.data
-      this.$refs.honeycomb.combData = this.partnerData.show_users2
-      await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
+      // this.$refs.honeycomb.combData = this.partnerData.show_users2
+      const testArr = []
+      for (let index = 0; index < 20; index++) {
+        testArr.push(...this.partnerData.show_users2)
+      }
+      this.$refs.honeycomb.combData = testArr
+      console.log(testArr)
+
+      await this.$refs.honeycomb.handleAction(testArr.length)
+      // await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
       await this.$refs.honeycomb.animateList()
+    },
+    async getReceiveNumData() {
+      const res = await getReceiveNum({ type: this.listType })
+      this.can_receive_balance = res.data.can_receive_balance
+    },
+    async harvestBalance() {
+      this.showHoney = false
+      setTimeout(() => {
+        this.showHoney = true
+      }, 3000)
     }
   }
 }
@@ -279,12 +303,12 @@ export default {
       }
     }
   }
-  .fade1-enter-active,
+  // .fade1-enter-active,
   .fade1-leave-active {
     animation-play-state: paused;
     transition: all 3s;
   }
-  .fade1-enter,
+  // .fade1-enter,
   .fade1-leave-to {
     transform: translateY(-30px);
     bottom: 6rem;

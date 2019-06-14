@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 // 获取Token
 export function getToken() {
   const osObj = getOs()
-  if (osObj.isIphone || osObj.isAndroid) {
+  if (osObj.isIphone || osObj.isAndroid || osObj.isWx) {
     return Cookies.get('token')
   } else {
     return localStorage.getItem('BM-App-Token')

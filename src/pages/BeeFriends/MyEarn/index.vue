@@ -120,8 +120,8 @@ export default {
       .tab-content {
         text-align: center;
         .type-img {
-          width: 0.4rem;
-          height: 0.5rem;
+          // width: 100%;
+          height:  0.38rem;
           display: inline-block;
           margin-right: 0.15rem;
         }

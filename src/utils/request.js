@@ -25,6 +25,8 @@ service.interceptors.request.use(
       duration: 0
     })
     console.log('请求参数：', config.data)
+    console.log(getToken())
+
     // 强制设置 token 在 getToken 函数中设置
     if (isLogin()) {
       config.headers['BM-App-Token'] = getToken()
@@ -60,6 +62,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     Toast.clear()
+    console.log(response)
+
     if (response.headers['bm-app-token']) {
       setToken(response.headers['bm-app-token'])
     }

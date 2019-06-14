@@ -201,14 +201,13 @@
 </template>
 
 <script>
-// import { getArticleDetail } from '@/api/BeeApi/action'
+import { entering } from '@/api/BeeApi/store'
 import { zipImg } from '@/utils/imgUp'
 import { getCategory1 } from '@/api/BeeApi/product'
-import { submitApplyData } from '@/api/BeeApi/user'
 
 export default {
   metaInfo: {
-    title: '蜂工厂'
+    title: '商家入驻'
   },
   components: {},
   props: {},
@@ -330,22 +329,23 @@ export default {
         //     return res
         //   })
         // )
+
         const fileImg = this.img.file
         const res = await zipImg(fileImg)
-        formData.set('business_license_photo', res)
+        formData.set('licence_img', res)
 
-        formData.set('firm', this.factory.firm)
-        formData.set('contacter', this.factory.contacter)
-        formData.set('contact_phone', this.factory.contact_phone)
+        formData.set('company_name', this.factory.firm)
+        formData.set('contacts', this.factory.contacter)
+        formData.set('mobile', this.factory.contact_phone)
         formData.set('cat_id', this.factory.cat_id)
-        formData.set('jy_id', this.factory.jy_id)
-        formData.set('referrer_name', this.factory.referrer_name)
-        formData.set('referrer_number', this.factory.referrer_number)
+        formData.set('operate_experience', this.factory.jy_name)
+        formData.set('invite_name', this.factory.referrer_name)
+        formData.set('invite_mobile', this.factory.referrer_number)
         // 执行提交表单请求
-        const res1 = await submitApplyData(formData)
-        console.log(res1)
-
-        console.log('可以提交了')
+        const res1 = await entering(formData)
+        if (res1.code === 1 && res1.status_code === 200) {
+          this.$toast.success(res1.message)
+        }
       } else {
         console.log('表单有误')
       }
@@ -363,12 +363,15 @@ export default {
 
     // 运营经验选择
     onChangeJy(picker, value, index) {
+      console.log('运营经验选择:', value)
       this.factory.jy_id = value.id
       this.factory.jy_name = value.text
     },
     // 产品类型选择
     onChangeCat(picker, value, index) {
-      this.factory.cat_id = value.cid
+      console.log('产品类型:', value)
+
+      this.factory.cat_id = value.cat_id
       this.factory.cat_name = value.text
     },
 
