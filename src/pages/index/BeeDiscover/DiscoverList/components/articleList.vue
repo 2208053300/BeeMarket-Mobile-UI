@@ -15,8 +15,9 @@
           :key="index"
           :class="{articleContent2:item.is_article}"
           class="article-content"
-          @click="$router.push(`/discover/article/${item.id}`)"
+          @click="goDetail(item.is_article,item.id)"
         >
+          <!-- @click="$router.push(`/discover/article/${item.id}`)" -->
           <div class="article-img">
             <img
               :src="item.show_img"
@@ -70,6 +71,22 @@ export default {
       this.articleList = []
       this.page = 1
       this.getArticleListData()
+    },
+    // 跳转到详情
+    goDetail(is_article, id) {
+      // 是否是文章
+      if (is_article) {
+        this.$router.push({
+          path: `/discover/article/${id}`
+        })
+      } else {
+        this.$router.push({
+          path: '/discover/activeTpl',
+          query: {
+            id
+          }
+        })
+      }
     }
   }
 }

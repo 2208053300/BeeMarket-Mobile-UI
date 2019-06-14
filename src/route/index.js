@@ -43,17 +43,17 @@ const router = new Router({
             }
           ]
         },
-        {
-          path: 'beeActiveTpl',
-          name: 'beeActiveTpl',
-          component: () => import('@/pages/BeeActiveTpl'),
-          children: [
-            {
-              path: '',
-              component: () => import('@/pages/BeeActiveTpl/ActiveTpl')
-            }
-          ]
-        },
+        // {
+        //   path: 'beeActiveTpl',
+        //   name: 'beeActiveTpl',
+        //   component: () => import('@/pages/BeeActiveTpl'),
+        //   children: [
+        //     {
+        //       path: '',
+        //       component: () => import('@/pages/BeeActiveTpl/ActiveTpl')
+        //     }
+        //   ]
+        // },
         {
           path: 'beeHelper',
           component: () => import('@/pages/BeeHelper'),
@@ -307,6 +307,11 @@ const router = new Router({
           path: 'article/:id',
           name: 'ArticleDetail',
           component: () => import('@/pages/BeeArticle/ArticleDetail')
+        },
+        {
+          path: 'activeTpl',
+          name: 'activeTpl',
+          component: () => import('@/pages/BeeActiveTpl/ActiveTpl')
         }
       ]
     },

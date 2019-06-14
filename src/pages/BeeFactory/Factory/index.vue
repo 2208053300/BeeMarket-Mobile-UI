@@ -208,7 +208,7 @@ import { submitApplyData } from '@/api/BeeApi/user'
 
 export default {
   metaInfo: {
-    title: '蜂工厂'
+    title: '商家入驻'
   },
   components: {},
   props: {},
