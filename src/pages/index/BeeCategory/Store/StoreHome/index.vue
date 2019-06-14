@@ -33,7 +33,7 @@
       :form-data.sync="formData"
       :commodity-list="commodityList"
     />
-    <van-actionsheet v-model="showLicense">
+    <van-actionSheet v-model="showLicense">
       <van-cell-group>
         <van-cell>
           <div
@@ -54,7 +54,7 @@
           </div>
         </van-cell>
       </van-cell-group>
-    </van-actionsheet>
+    </van-actionSheet>
   </div>
 </template>
 
@@ -164,7 +164,7 @@ export default {
       }
     }
   }
-  .van-actionsheet {
+  .van-action-sheet {
     margin: 0 auto 0.16rem;
     box-sizing: border-box;
     width: 7.2rem;

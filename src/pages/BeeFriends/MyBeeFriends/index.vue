@@ -14,8 +14,8 @@
         <div class="header-img2">
           <div class="header-img3">
             <img
-              src=""
-              alt=""
+              :src="partnerData.user_head"
+              alt="头像"
             >
           </div>
         </div>
@@ -25,7 +25,7 @@
         :style="{backgroundImage:'url('+beeIcon.bee_firends_icon_piggybank+')'}"
         @click="showProject=true"
       >
-        12
+        {{ partnerData.bag_balance }}
       </div>
     </div>
     <div class="rule-fixed">
@@ -62,8 +62,11 @@
         <div class="circle" />
       </div>
     </div>
-    <bee-circle />
-    <honeycomb :detail-card.sync="detailCard" />
+    <honeycomb
+      ref="honeycomb"
+      :detail-card.sync="detailCard"
+      :partner-data="partnerData"
+    />
     <user-card :detail-card.sync="detailCard" />
     <friends-rank :show-rank.sync="showRank" />
     <join-project :show-project.sync="showProject" />
@@ -75,7 +78,7 @@
         @click="showHoney=false"
       >
         <div class="honey-num">
-          +<span class="num">666</span>
+          +<span class="num">{{ partnerData.sup_balance }}</span>
         </div>
       </div>
     </transition>
@@ -87,8 +90,8 @@ import Honeycomb from './components/Honeycomb'
 import UserCard from './components/UserCard'
 import FriendsRank from './components/FriendsRank'
 import JoinProject from './components/JoinProject'
-import BeeCircle from './components/BeeCircle'
 import ListType from './components/ListType'
+import { getPartner } from '@/api/BeeApi/user'
 
 export default {
   components: {
@@ -96,7 +99,6 @@ export default {
     UserCard,
     FriendsRank,
     JoinProject,
-    BeeCircle,
     ListType
   },
   props: {},
@@ -116,14 +118,28 @@ export default {
         bee_firend_icon_charge: require('@/assets/icon/beeFriends/home/bee_firend_icon_charge.png'),
         bee_firends_img_bg: require('@/assets/icon/beeFriends/home/bee_firends_img_bg.png')
       },
-      showHoney: true
+      showHoney: true,
+      partnerType: 1,
+      partnerData: {
+        show_users2: []
+      }
     }
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
-  methods: {}
+  mounted() {
+    this.getPartnerData()
+  },
+  methods: {
+    async getPartnerData() {
+      const res = await getPartner({ type: this.partnerType })
+      this.partnerData = res.data
+      this.$refs.honeycomb.combData = this.partnerData.show_users2
+      await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
+      await this.$refs.honeycomb.animateList()
+    }
+  }
 }
 </script>
 
@@ -167,6 +183,7 @@ export default {
           border-radius: 50%;
           border: 0.02rem solid #fed559;
           background-color: #fff;
+          overflow: hidden;
         }
       }
     }
@@ -204,14 +221,14 @@ export default {
   .bottom-fixed2 {
     position: fixed;
     bottom: 0.6rem;
-    left: 1.8rem;
+    right: 0.7rem;
     height: 1.15rem;
     width: 1rem;
     z-index: 100;
     .get-num {
       position: absolute;
       top: 0;
-      right: -0.3rem;
+      left: -0.3rem;
       height: 0.3rem;
       min-width: 0.7rem;
       text-align: center;

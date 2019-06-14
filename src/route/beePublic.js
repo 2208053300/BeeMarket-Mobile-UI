@@ -17,7 +17,7 @@ export default new Router({
           component: () => import('@/pages/BeePublic/ActionDetail')
         },
         {
-          path: '',
+          path: 'helpSuccess',
           name: 'helpSuccess',
           component: () => import('@/pages/BeePublic/HelpSuccess')
         }

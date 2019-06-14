@@ -76,7 +76,7 @@
         </div>
       </van-cell>
     </van-cell-group>
-    <van-actionsheet v-model="showPromise">
+    <van-actionSheet v-model="showPromise">
       <div class="service-promise">
         <div class="service-title">
           服务承诺
@@ -173,7 +173,7 @@
           </van-button>
         </div>
       </div>
-    </van-actionsheet>
+    </van-actionSheet>
     <bee-sku
       :show-sku.sync="showSku"
       :pid="commodityData.pid"
@@ -255,7 +255,7 @@ export default {
       margin: 0;
     }
   }
-  .van-actionsheet {
+  .van-action-sheet {
     border-top-left-radius: 0.2rem;
     border-top-right-radius: 0.2rem;
     .service-promise {
