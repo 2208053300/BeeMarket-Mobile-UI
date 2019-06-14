@@ -89,25 +89,25 @@ const router = new Router({
             }
           ]
         },
-        {
-          path: 'beeJoinFriendCicle',
-          name: 'beeJoinFriendCicle',
-          component: () => import('@/pages/BeeJoinFriendCicle'),
-          children: [
-            {
-              path: '',
-              component: () => import('@/pages/BeeJoinFriendCicle/Introduction')
-            },
-            {
-              path: 'apply',
-              component: () => import('@/pages/BeeJoinFriendCicle/Apply')
-            },
-            {
-              path: 'waitAudit',
-              component: () => import('@/pages/BeeJoinFriendCicle/WaitAudit')
-            }
-          ]
-        },
+        // {
+        //   path: 'beeJoinFriendCicle',
+        //   name: 'beeJoinFriendCicle',
+        //   component: () => import('@/pages/BeeJoinFriendCicle'),
+        //   children: [
+        //     {
+        //       path: '',
+        //       component: () => import('@/pages/BeeJoinFriendCicle/Introduction')
+        //     },
+        //     {
+        //       path: 'apply',
+        //       component: () => import('@/pages/BeeJoinFriendCicle/Apply')
+        //     },
+        //     {
+        //       path: 'waitAudit',
+        //       component: () => import('@/pages/BeeJoinFriendCicle/WaitAudit')
+        //     }
+        //   ]
+        // },
         {
           path: 'beeRegister',
           name: 'beeRegister',

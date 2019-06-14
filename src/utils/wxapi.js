@@ -27,13 +27,13 @@ const wxApi = {
     })
   },
   /**
-   * [ShareTimeline 微信分享到朋友圈]
+   * [ShareTimeline 微信分享到朋友圈，qq分享到空间 1.4.0版本]
    * @param {[type]} option [分享信息]
    * @param {[type]} success [成功回调]
    * @param {[type]} error   [失败回调]
    */
   ShareTimeline(option) {
-    wx.onMenuShareTimeline({
+    wx.updateTimelineShareData({
       title: option.title, // 分享标题
       link: option.link, // 分享链接
       imgUrl: option.imgUrl, // 分享图标
@@ -48,13 +48,13 @@ const wxApi = {
     })
   },
   /**
-   * [ShareAppMessage 微信分享给朋友]
+   * [ShareAppMessage qq、微信分享给朋友 1.4.0版本]
    * @param {[type]} option [分享信息]
    * @param {[type]} success [成功回调]
    * @param {[type]} error   [失败回调]
    */
   ShareAppMessage(option) {
-    wx.onMenuShareAppMessage({
+    wx.updateAppMessageShareData({
       title: option.title, // 分享标题
       desc: option.desc, // 分享描述
       link: option.link, // 分享链接
