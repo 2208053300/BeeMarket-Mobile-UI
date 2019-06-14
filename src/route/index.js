@@ -38,8 +38,12 @@ const router = new Router({
           component: () => import('@/pages/BeeCompleteInfo'),
           children: [
             {
-              path: '',
-              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo')
+              path: 'phone',
+              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo/bindPhone')
+            },
+            {
+              path: 'wechat',
+              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo/bindWechat')
             }
           ]
         },
@@ -89,25 +93,25 @@ const router = new Router({
             }
           ]
         },
-        {
-          path: 'beeJoinFriendCicle',
-          name: 'beeJoinFriendCicle',
-          component: () => import('@/pages/BeeJoinFriendCicle'),
-          children: [
-            {
-              path: '',
-              component: () => import('@/pages/BeeJoinFriendCicle/Introduction')
-            },
-            {
-              path: 'apply',
-              component: () => import('@/pages/BeeJoinFriendCicle/Apply')
-            },
-            {
-              path: 'waitAudit',
-              component: () => import('@/pages/BeeJoinFriendCicle/WaitAudit')
-            }
-          ]
-        },
+        // {
+        //   path: 'beeJoinFriendCicle',
+        //   name: 'beeJoinFriendCicle',
+        //   component: () => import('@/pages/BeeJoinFriendCicle'),
+        //   children: [
+        //     {
+        //       path: '',
+        //       component: () => import('@/pages/BeeJoinFriendCicle/Introduction')
+        //     },
+        //     {
+        //       path: 'apply',
+        //       component: () => import('@/pages/BeeJoinFriendCicle/Apply')
+        //     },
+        //     {
+        //       path: 'waitAudit',
+        //       component: () => import('@/pages/BeeJoinFriendCicle/WaitAudit')
+        //     }
+        //   ]
+        // },
         {
           path: 'beeRegister',
           name: 'beeRegister',

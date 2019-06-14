@@ -12,14 +12,14 @@
       <div class="step-1-1">
         <img :src="beeIcon.data_icon_1" style="width: 0.5rem">
         <div class="default-text">
-          点击下方按钮进入账户绑定界面绑定微信。<br>
-          （如果您已绑定微信，可直接进行第2步）
+          点击下方按钮进入绑定手机号。<br>
+          (如果您已绑定，可直接进行第2步)
         </div>
       </div>
       <div style="display: flex;justify-content: center">
-        <div class="btn" @click="bindWeChat">
-          <img :src="beeIcon.data_icon_wechat" class="phone">
-          <span>去绑定微信</span>
+        <div class="btn" @click="bindPhone">
+          <img :src="beeIcon.data_icon_phone" class="phone">
+          <span>去绑定手机号</span>
         </div>
       </div>
       <div class="step-2">
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '完善资料'
@@ -49,7 +48,7 @@ export default {
         data_icon_smile: require('@/assets/icon/task/perfectData/data_icon_smile@2x.png'),
         data_icon_1: require('@/assets/icon/task/perfectData/data_icon_1@2x.png'),
         data_icon_2: require('@/assets/icon/task/perfectData/data_icon_2@2x.png'),
-        data_icon_wechat: require('@/assets/icon/task/perfectData/data_icon_weixin@2x.png'),
+        data_icon_phone: require('@/assets/icon/task/perfectData/data_icon_phone@3x.png'),
         data_pic_description: require('@/assets/icon/task/perfectData/data_pic_description@2x.png')
       }
     }
@@ -58,20 +57,11 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeHeader = true
   },
   methods: {
-    bindWeChat() {
-      const osObj = getOs()
-      if (osObj.isIphone) {
-        window.webkit.messageHandlers.ToBindWeChat.postMessage({
-          target: ''
-        })
-      } else if (osObj.isAndroid) {
-        window.beeMarket.ToBindWeChat()
-      } else {
-        this.$toast.fail('请使用手机打开')
-      }
+    bindPhone() {
+      window.location.href = '/#/login'
     }
   }
 }
@@ -122,6 +112,7 @@ export default {
       padding-left: 0.16rem;
       line-height: 1.3;
       color: @ProductName;
+      font-size: 0.26rem;
     }
     .btn {
       display: flex;
@@ -129,15 +120,14 @@ export default {
       align-items: center;
       margin-top: 0.4rem;
       width: 4.6rem;
-      height: 0.88rem;
+      line-height: 0.88rem;
       border-radius: 4px;
       background: @BeeDefault;
-      padding: 0.12rem;
       color: white;
       font-size: 0.38rem;
       .phone {
-        width: 0.45rem;
-        height: 0.4rem;
+        width: 0.3rem;
+        height: 0.45rem;
         margin-right: 0.12rem;
       }
       &:active {

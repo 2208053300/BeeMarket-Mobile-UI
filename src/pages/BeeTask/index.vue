@@ -12,7 +12,7 @@
 import BeeHeader from '@/components/index/BeeHeader'
 export default {
   metaInfo: {
-    title: '蜂集市'
+    title: '蜂任务'
   },
   components: {
     BeeHeader

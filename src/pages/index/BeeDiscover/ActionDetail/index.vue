@@ -71,11 +71,14 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
-// 行动详情，参与助力，发起助力
+// 行动详情，参与助力api
 import {
   getActionDetail
   // joinAction
 } from '@/api/BeeApi/action'
+// 引入微信分享
+import wxapi from '@/utils/wxapi.js'
+// 引入组件
 import detailCard0 from './components/detailCard0'
 import detailCard1 from './components/detailCard1'
 import detailCard2 from './components/detailCard2'
@@ -149,7 +152,10 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    // 获取详情数据
     this.getActionDetailsData()
+    // 调用微信分享
+    wxapi.wxRegister(this.wxRegCallback)
   },
   methods: {
     async getActionDetailsData() {
@@ -168,6 +174,46 @@ export default {
     // 关闭分享弹出层
     closed() {
       this.$store.state.app.beeHeader = true
+    },
+
+    // 分享回调函数
+    wxRegCallback() {
+      // 用于微信JS-SDK回调
+      this.wxShareTimeline()
+      this.wxShareAppMessage()
+    },
+    wxShareTimeline() {
+      // 微信自定义分享到朋友圈
+      const option = {
+        title: '分享标题, 请自行替换', // 分享标题, 请自行替换
+        link: window.location.href.split('#')[0], // 分享链接，根据自身项目决定是否需要split
+        imgUrl: 'logo.png', // 分享图标, 请自行替换，需要绝对路径
+        success: () => {
+          alert('分享成功')
+        },
+        error: () => {
+          alert('已取消分享')
+        }
+      }
+      // 将配置注入通用方法
+      wxapi.ShareTimeline(option)
+    },
+    wxShareAppMessage() {
+      // 微信自定义分享给朋友
+      const option = {
+        title: '限时团购周 挑战最低价', // 分享标题, 请自行替换
+        desc: '限时团购周 挑战最低价', // 分享描述, 请自行替换
+        link: window.location.href.split('#')[0], // 分享链接，根据自身项目决定是否需要split
+        imgUrl: 'logo.png', // 分享图标, 请自行替换，需要绝对路径
+        success: () => {
+          alert('分享成功')
+        },
+        error: () => {
+          alert('已取消分享')
+        }
+      }
+      // 将配置注入通用方法
+      wxapi.ShareAppMessage(option)
     }
   }
 }
