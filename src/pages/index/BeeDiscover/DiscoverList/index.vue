@@ -1,28 +1,26 @@
 <template>
   <div class="discover-container">
-    <keep-alive>
-      <van-tabs
-        v-model="active"
-        :color="BeeDefault"
-        :title-active-color="BeeDefault"
-        :line-width="60"
-        background="transparent"
-      >
-        <van-tab>
-          <div slot="title">
-            公益行动
-          </div>
-          <action-list />
-        </van-tab>
-        <van-tab>
-          <div slot="title">
-            集市动态
-          </div>
-          <article-list />
-        </van-tab>
-      </van-tabs>
-    </keep-alive>
-  </div>
+<van-tabs
+      v-model="active"
+      :color="BeeDefault"
+      :title-active-color="BeeDefault"
+      :line-width="60"
+      background="transparent"
+    >
+      <van-tab>
+        <div slot="title">
+          公益行动
+        </div>
+        <action-list />
+      </van-tab>
+      <van-tab>
+        <div slot="title">
+          集市动态
+        </div>
+        <article-list />
+      </van-tab>
+    </van-tabs>
+</div>
 </template>
 
 <script>
