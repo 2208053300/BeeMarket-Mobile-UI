@@ -1,7 +1,10 @@
 <template>
   <div class="factory-body">
     <div class="factory to-partner">
-      <img src="../../../assets/icon/joinFactory/partner_form_top.png" class="top-img">
+      <img
+        src="../../../assets/icon/joinFactory/partner_form_top.png"
+        class="top-img"
+      >
       <div class="info">
         <p>共创共享，</p>
         <p>我们一起成就事业！</p>
@@ -10,21 +13,44 @@
         <p>蜂集市，</p>
         <p>与您携手共建理想！</p>
 
-        <img src="../../../assets/icon/joinFactory/factory_img1.png" class="info-img info-img1" alt="">
-        <img src="../../../assets/icon/joinFactory/factory_img2.png" class="info-img info-img2" alt="">
+        <img
+          src="../../../assets/icon/joinFactory/factory_img1.png"
+          class="info-img info-img1"
+          alt=""
+        >
+        <img
+          src="../../../assets/icon/joinFactory/factory_img2.png"
+          class="info-img info-img2"
+          alt=""
+        >
       </div>
 
       <div class="form-box">
-        <span class="form-title" :class="{active: isPersonal===true}" @click="isPersonal = true">个人资料填写</span>
-        <span class="form-title " :class="{active: isPersonal===false}" @click="isPersonal = false">商家资料填写</span>
+        <span
+          class="form-title"
+          :class="{ active: isPersonal === true }"
+          @click="isPersonal = true"
+        >个人资料填写</span>
 
         <div class="form-tab">
           <!-- 个人申请表单 -->
-          <form id="formP" action="" class="form personal" :class="{active: isPersonal===true}">
+          <form
+            id="formP"
+            action=""
+            class="form personal"
+            :class="{ active: isPersonal === true }"
+          >
             <div class="form-group">
               <label for="personalName"><span>*</span>本人姓名</label>
               <div class="form-control">
-                <input id="personalName" v-model.trim="personalName" type="text" name="name" placeholder="（必填）" @input="changePersonalName">
+                <input
+                  id="personalName"
+                  v-model.trim="personalName"
+                  type="text"
+                  name="name"
+                  placeholder="（必填）"
+                  @input="changePersonalName"
+                >
                 <p v-if="personalNameError" class="help-text name-tip">
                   请重新输入姓名！
                 </p>
@@ -33,7 +59,14 @@
             <div class="form-group">
               <label for="personalCard"><span>*</span>身份证号</label>
               <div class="form-control">
-                <input id="personalCard" v-model.trim="card_no" type="text" name="card_no" placeholder="（必填）" @input="changePersonalCard">
+                <input
+                  id="personalCard"
+                  v-model.trim="card_no"
+                  type="text"
+                  name="card_no"
+                  placeholder="（必填）"
+                  @input="changePersonalCard"
+                >
                 <p v-if="card_noError" class="help-text card-tip">
                   请重新输入身份证号！
                 </p>
@@ -42,7 +75,15 @@
             <div class="form-group">
               <label for="personTell"><span>*</span>联系电话</label>
               <div class="form-control">
-                <input id="personTell" v-model.trim="number" type="tel" class="form-control" name="number" placeholder="（请输入注册号码）" @input="changePersonTell">
+                <input
+                  id="personTell"
+                  v-model.trim="number"
+                  type="tel"
+                  class="form-control"
+                  name="number"
+                  placeholder="（请输入注册号码）"
+                  @input="changePersonTell"
+                >
                 <p v-if="numberError" class="help-text tel-tip">
                   请重新输入手机号码！
                 </p>
@@ -68,7 +109,15 @@
             <div class="form-group">
               <label for="brandName1"><span>*</span>联络地址</label>
               <div class="form-control">
-                <textarea id="brandName1" v-model.trim="address" type="text" class="form-control" name="address" placeholder="请填写详细地址" @input="changeAddress" />
+                <textarea
+                  id="brandName1"
+                  v-model.trim="address"
+                  type="text"
+                  class="form-control"
+                  name="address"
+                  placeholder="请填写详细地址"
+                  @input="changeAddress"
+                />
                 <p v-if="addressError" class="help-text address-tip">
                   地址不能为空!
                 </p>
@@ -77,136 +126,39 @@
             <input id="token" type="hidden" value="{$token}">
             <input type="hidden" name="type" value="1">
           </form>
-          <!-- 商家申请表单 -->
-          <form id="formF" action="" class="form business " :class="{active: isPersonal===false}">
-            <div class="form-group">
-              <label for="businessName"><span>*</span>店铺名</label>
-              <div class="form-control">
-                <input id="storeName" v-model.trim="store_name" type="text" name="store_name" placeholder="（必填）" @input="changeStoreName">
-                <p v-if="store_nameError" class="help-text store-tip">
-                  请重新输入店铺名！
-                </p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="businessName"><span>*</span>负责人</label>
-              <div class="form-control">
-                <input
-                  id="businessName"
-                  v-model.trim="businessName"
-                  type="text"
-                  name="name"
-                  placeholder="（必填）"
-                  @input="changeBusinessName"
-                >
-                <p v-if="businessNameError" class="help-text name-tip">
-                  请重新输入姓名！
-                </p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="businessCard"><span>*</span>身份证号</label>
-              <div class="form-control">
-                <input id="businessCard" v-model.trim="businessCard" type="text" name="card_no" placeholder="（必填）" @input="changeBusinessCard">
-                <p v-if="businessCardError" class="help-text card-tip">
-                  请重新输入身份证号！
-                </p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="businessTell"><span>*</span>联系电话</label>
-              <div class="form-control">
-                <input id="businessTell" v-model.trim="businessTell" type="tel" class="form-control" name="number" placeholder="（请输入注册号码）" @input="changeBusinessTell">
-                <p v-if="businessTellError" class="help-text tel-tip">
-                  请重新输入手机号码！
-                </p>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="comName"><span>*</span>微信号码</label>
-              <div class="form-control">
-                <input id="businessWxAccount" v-model.trim="businessWxAccount" type="text" name="wx_account" placeholder="（必填）" @input="changeBusinessWxAccount">
-                <p v-if="businessWxAccountError" class="help-text wx-tip">
-                  请重新输入微信号码！
-                </p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="brandName"><span>*</span>联络地址</label>
-              <div class="form-control">
-                <textarea id="businessAddress" v-model.trim="businessAddress" type="text" class="form-control" name="address" placeholder="请填写详细地址" @input="changeBusinessAddress" />
-                <p v-if="businessAddressError" class="help-text address-tip">
-                  地址不能为空!
-                </p>
-              </div>
-            </div>
-            <div class="form-pic">
-              <div class="pic-input text-center">
-                <label for=""> <span>*</span> 店铺门头</label>
-                <div class="pic-box">
-                  <!-- <div id="preview" class="preview">
-                    <img id="pic1" src="../../../assets/icon/joinFactory/add_shop_pic.png" alt="">
-                  </div>
-                  <input id="file1" type="file" name="shop_photo" accept="image/*" multiple> -->
-                  <van-uploader
-                    v-if="Object.keys(shop_photo).length===0"
-                    :after-read="onReadShopPhoto"
-                    accept="image/png, image/jpeg"
-                    multiple
-                  >
-                    <img src="../../../assets/icon/joinFactory/add_shop_pic.png" class="add-shop-pic">
-                  </van-uploader>
-                  <div v-else class="comment-img">
-                    <img :src="shop_photo.content">
-                    <div class="del-img" @click="delShopPhoto">
-                      <van-icon name="clear" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="pic-input text-center">
-                <label for=""> <span>*</span> 营业执照 </label>
-                <div class="pic-box">
-                  <!-- <div id="preview1" class="preview">
-                    <img id="pic2" src="../../../assets/icon/joinFactory/add_shop_pic.png" alt="">
-                  </div>
-                  <input id="file2" type="file" name="business_license_photo" accept="image/*" multiple> -->
-                  <van-uploader
-                    v-if="Object.keys(business_license_photo).length===0"
-                    :after-read="onReadLicense"
-                    accept="image/png, image/jpeg"
-                    multiple
-                  >
-                    <img src="../../../assets/icon/joinFactory/add_shop_pic.png" class="add-shop-pic">
-                  </van-uploader>
-                  <div v-else class="comment-img">
-                    <img :src="business_license_photo.content">
-                    <div class="del-img" @click="delLicense">
-                      <van-icon name="clear" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <input id="token" type="hidden" name="token" value="{$token}">
-            <input type="hidden" name="type" value="2">
-          </form>
         </div>
         <div class="submit">
           <div class="btn-box active">
             <div class="agreement">
               <div class="check-action">
-                <img v-show="isAgree" src="../../../assets/icon/joinFactory/checked_red.png" class="check-img js-agreement" @click="isAgree=!isAgree">
-                <img v-show="!isAgree" src="../../../assets/icon/joinFactory/unchecked_red.png" class="check-img js-agreement" @click="isAgree=!isAgree">
-                <span class="text">已阅读并同意<a href="/partner/partnerAgreement">合伙人共创协议</a></span>
+                <img
+                  v-show="isAgree"
+                  src="../../../assets/icon/joinFactory/checked_red.png"
+                  class="check-img js-agreement"
+                  @click="isAgree = !isAgree"
+                >
+                <img
+                  v-show="!isAgree"
+                  src="../../../assets/icon/joinFactory/unchecked_red.png"
+                  class="check-img js-agreement"
+                  @click="isAgree = !isAgree"
+                >
+                <span
+                  class="text"
+                >已阅读并同意<a
+                  href="/partner/partnerAgreement"
+                >合伙人共创协议</a></span>
               </div>
               <p class="help-text agreement-tip">
                 请阅读并同意蜂集市合伙人共创协议
               </p>
             </div>
-            <button id="submitP" type="button" class="btn no-select" @click="submit">
+            <button
+              id="submitP"
+              type="button"
+              class="btn no-select"
+              @click="submit"
+            >
               提交资料
             </button>
           </div>
@@ -217,7 +169,6 @@
 </template>
 
 <script>
-import { zipImg } from '@/utils/imgUp'
 
 export default {
   metaInfo: {
@@ -240,23 +191,6 @@ export default {
       wx_accountError: false,
       address: '',
       addressError: false,
-      // 商家申请字段验证
-      store_name: '',
-      store_nameError: false,
-      businessName: '',
-      businessNameError: false,
-      businessCard: '',
-      businessCardError: false,
-      businessTell: '',
-      businessTellError: false,
-      businessWxAccount: '',
-      businessWxAccountError: false,
-      businessAddress: '',
-      businessAddressError: false,
-      // 门头照
-      shop_photo: {},
-      // 营业执照
-      business_license_photo: {},
 
       // 是否同意 合伙人共创协议
       isAgree: true
@@ -281,18 +215,17 @@ export default {
   methods: {
     // 提交
     async submit() {
-      if (this.isPersonal) {
-        // 个人申请
-        console.log(
-          this.personalNameError,
-          this.card_noError,
-          this.numberError,
-          this.wx_accountError,
-          this.addressError
-        )
+      // 个人申请
+      console.log(
+        this.personalNameError,
+        this.card_noError,
+        this.numberError,
+        this.wx_accountError,
+        this.addressError
+      )
 
-        if (
-          this.personalName &&
+      if (
+        this.personalName &&
           !this.personalNameError &&
           this.card_no &&
           !this.card_noError &&
@@ -302,90 +235,27 @@ export default {
           !this.wx_accountError &&
           this.address &&
           !this.addressError
-        ) {
-          // 验证通过
-          if (this.isAgree) {
-            this.$toast('可以提交！')
-            const data = {
-              personalName: this.personalName,
-              card_no: this.card_no,
-              number: this.number,
-              wx_account: this.wx_account,
-              address: this.address
-            }
-            // 执行提交表单请求
-            // const res2 = await submitApplyData(data)
-            // console.log(res2)
-          } else {
-            this.$toast('请同意合伙人共创协议')
+      ) {
+        // 验证通过
+        if (this.isAgree) {
+          this.$toast('可以提交！')
+          const data = {
+            name: this.personalName,
+            card_no: this.card_no,
+            number: this.number,
+            wx_account: this.wx_account,
+            address: this.address
           }
+          // 执行提交表单请求
+          // const res2 = await submitApplyData(data)
+          // console.log(res2)
         } else {
-          // 验证失败
-          this.$toast('请正确填写个人资料表单！')
+          this.$toast('请同意合伙人共创协议')
         }
       } else {
-        // 商家申请
-        if (
-          this.store_name &&
-          !this.store_nameError &&
-          this.businessName &&
-          !this.businessNameError &&
-          this.businessCard &&
-          !this.businessCardError &&
-          this.businessTell &&
-          !this.businessTellError &&
-          this.businessWxAccount &&
-          !this.businessWxAccountError &&
-          this.businessAddress &&
-          !this.businessAddressError
-        ) {
-          if (!this.shop_photo.content || !this.business_license_photo.content) {
-            this.$toast('店铺门头照、营业执照必传！')
-            return
-          }
-          // 验证通过
-          if (this.isAgree) {
-            this.$toast('可以提交！')
-            const formData = new FormData()
-            const shop_photo_img = this.shop_photo.file
-            const res = await zipImg(shop_photo_img)
-            formData.set('shop_photo_img', res)
-            const shop_license_img = this.business_license_photo.file
-            const res1 = await zipImg(shop_license_img)
-            formData.set('shop_license_img', res1)
-            // 添加其他字段
-            formData.set('store_name', this.store_name)
-            formData.set('businessName', this.businessName)
-            formData.set('businessCard', this.businessCard)
-            formData.set('businessTell', this.businessTell)
-            formData.set('businessWxAccount', this.businessWxAccount)
-            formData.set('businessAddress', this.businessAddress)
-            // 执行提交表单请求
-            // const res2 = await submitApplyData(formData)
-            // console.log(res2)
-          } else {
-            this.$toast('请同意合伙人共创协议')
-          }
-        } else {
-          // 验证失败
-          this.$toast('请正确填写商家资料表单！')
-        }
+        // 验证失败
+        this.$toast('请正确填写个人资料表单！')
       }
-    },
-
-    // 上传门头照
-    onReadShopPhoto(file) {
-      this.shop_photo = file
-    },
-    delShopPhoto() {
-      this.shop_photo = {}
-    },
-    // 上传门头照
-    onReadLicense(file) {
-      this.business_license_photo = file
-    },
-    delLicense() {
-      this.business_license_photo = {}
     },
 
     // 个人资料验证
@@ -429,56 +299,7 @@ export default {
         this.addressError = false
       }
     },
-    // 商家资料验证
-    changeStoreName() {
-      if (!/^[\u4e00-\u9fa5_a-zA-Z0-9]{2,64}$/.test(this.store_name)) {
-        this.store_nameError = true
-      } else {
-        this.store_nameError = false
-      }
-    },
-    changeBusinessName() {
-      if (!/^[\u4e00-\u9fa5_a-zA-Z0-9]{2,10}$/.test(this.businessName)) {
-        this.businessNameError = true
-      } else {
-        this.businessNameError = false
-      }
-    },
-    changeBusinessCard() {
-      if (
-        !/^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/.test(
-          this.businessCard
-        )
-      ) {
-        this.businessCardError = true
-      } else {
-        this.businessCardError = false
-      }
-    },
-    changeBusinessTell() {
-      if (!/^1[3456789]\d{9}$/.test(this.businessTell)) {
-        this.businessTellError = true
-      } else {
-        this.businessTellError = false
-      }
-    },
-    changeBusinessWxAccount() {
-      var preg = /^[a-zA-Z]([-_a-zA-Z0-9]{5,19})$/
-      var preg1 = /^((13[0-9])|(14[5|7])|(15[0-3|5-9])|(166)|(17[0|1|3|5-8])|(18[0-9])|(19[0-9])|(147))\d{8}$/
-      var preg2 = /^[1-9][0-9]{4,14}$/
-      if (!preg.test(this.businessWxAccount) && !preg1.test(this.businessWxAccount) && !preg2.test(this.businessWxAccount)) {
-        this.businessWxAccountError = true
-      } else {
-        this.businessWxAccountError = false
-      }
-    },
-    changeBusinessAddress() {
-      if (!this.businessAddress) {
-        this.businessAddressError = true
-      } else {
-        this.businessAddressError = false
-      }
-    },
+
     // 防抖
     debounce(func, wait) {
       let timeout = ''
@@ -504,6 +325,7 @@ export default {
         })
       }
     }
+
   }
 }
 </script>

@@ -1,6 +1,5 @@
 const path = require('path')
 const pageList = require('./config/page')
-
 module.exports = {
   lintOnSave: true,
   pages: pageList,
