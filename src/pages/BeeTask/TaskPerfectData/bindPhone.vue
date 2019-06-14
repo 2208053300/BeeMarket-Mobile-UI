@@ -112,6 +112,7 @@ export default {
       padding-left: 0.16rem;
       line-height: 1.3;
       color: @ProductName;
+      font-size: 0.26rem;
     }
     .btn {
       display: flex;
@@ -119,10 +120,9 @@ export default {
       align-items: center;
       margin-top: 0.4rem;
       width: 4.6rem;
-      height: 0.88rem;
+      line-height: 0.88rem;
       border-radius: 4px;
       background: @BeeDefault;
-      padding: 0.12rem;
       color: white;
       font-size: 0.38rem;
       .phone {
