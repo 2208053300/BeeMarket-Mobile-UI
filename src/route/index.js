@@ -6,7 +6,7 @@ Vue.use(Router)
 const router = new Router({
   // NOTE 返回后再次进入定位到最顶部
   scrollBehavior: () => ({ y: 0 }),
-
+  // mode: 'history',
   routes: [
     {
       path: '',

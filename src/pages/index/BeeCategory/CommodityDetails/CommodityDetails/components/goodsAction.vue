@@ -97,7 +97,6 @@ export default {
         this.$toast(res.message)
       }
     },
-    async handleUnFollow() {},
     // 加入购物车
     async addShopcartProductData() {
       // TODO 如果未选择，如果初始带着商品属性跳转到商品详情页

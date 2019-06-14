@@ -32,3 +32,6 @@ export function getOs() {
     // isMac: /mac os/.test(UserAgent)
   }
 }
+export function goHome() {
+  window.location.href = 'http://app.fengjishi.com.cn'
+}

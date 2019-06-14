@@ -2,21 +2,29 @@
   <div class="action-footer">
     <div class="footer-op1">
       <van-button
+        v-if="!actionData.is_join"
         round
         class="join-help"
-        :disabled="actionData.is_join"
-        @click="showSuccess=true"
+        @click="helpActionData"
       >
         参与助力
       </van-button>
-      <!-- <van-button round class="join-help">
-      进入活动中心
-    </van-button> -->
+      <van-button
+        v-else
+        round
+        class="join-help"
+        @click="goHome()"
+      >
+        进入商城
+      </van-button>
     </div>
   </div>
 </template>
 
 <script>
+import { helpAction } from '@/api/BeeApi/action'
+import { goHome } from '@/utils'
+
 export default {
   components: {},
   props: {
@@ -37,7 +45,23 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goHome,
+    async helpActionData() {
+      const res = await helpAction({
+        aid: this.$route.query.aid,
+        share_id: this.$route.query.user_id
+      })
+      if (res.status_code === 200) {
+        this.$router.push({
+          path: '/helpSuccess',
+          query: {
+            charity_value: res.data.charity_value
+          }
+        })
+      }
+    }
+  }
 }
 </script>
 
@@ -62,6 +86,5 @@ export default {
       line-height: 0.88rem;
     }
   }
-
 }
 </style>

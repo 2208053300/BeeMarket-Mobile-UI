@@ -46,10 +46,17 @@ export function getShareDetail(data) {
   return request({
     url: '/action/shareDetail',
     method: 'post',
-    params: data
+    data
   })
 }
-
+// 公益行动分享详情 - 参与助力
+export function helpAction(data) {
+  return request({
+    url: '/action/shareJoinBoost',
+    method: 'post',
+    data
+  })
+}
 // 活动详情
 export function activityDetail(data) {
   return request({

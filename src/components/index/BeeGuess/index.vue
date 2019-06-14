@@ -201,9 +201,8 @@ export default {
           display: flex;
           align-items: flex-end;
           .area-tag {
-            width: 2.2rem;
-            height: 0.3rem;
-            line-height: 0.3rem;
+            max-width: 2.2rem;
+            padding: 0.03rem 0.08rem;
             box-sizing: border-box;
             font-size: 0.2rem;
             text-align: center;
