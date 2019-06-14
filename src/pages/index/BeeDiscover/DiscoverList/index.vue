@@ -1,6 +1,6 @@
 <template>
   <div class="discover-container">
-    <van-tabs
+<van-tabs
       v-model="active"
       :color="BeeDefault"
       :title-active-color="BeeDefault"
@@ -20,7 +20,7 @@
         <article-list />
       </van-tab>
     </van-tabs>
-  </div>
+</div>
 </template>
 
 <script>

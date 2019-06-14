@@ -8,7 +8,7 @@
 
 export default {
   metaInfo: {
-    title: '文章详情'
+    title: '入驻协议'
   },
   components: {},
   props: {},
