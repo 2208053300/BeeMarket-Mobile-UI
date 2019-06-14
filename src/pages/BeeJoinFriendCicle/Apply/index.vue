@@ -3,7 +3,7 @@
     <div class="factory to-partner">
       <img src="../../../assets/icon/joinFactory/partner_form_top.png" class="top-img">
       <div class="info">
-        <p>共创共荣，</p>
+        <p>共创共享，</p>
         <p>我们一起成就事业！</p>
         <p>普惠四方，</p>
         <p>我们一起回馈社会！</p>

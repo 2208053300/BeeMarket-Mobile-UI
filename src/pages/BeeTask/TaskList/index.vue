@@ -208,6 +208,8 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
+    this.$store.state.app.beeFooter.show = false
     this.getTaskListData()
   },
   methods: {

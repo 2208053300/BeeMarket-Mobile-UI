@@ -53,7 +53,7 @@
       </van-row>
     </div>
     <!-- 底部联系客服按钮 -->
-    <ContactCustomer v-if="isShowCustomer" />
+    <ContactCustomer v-if="isShowCoustomer" />
     <!-- 答案遮罩弹框 -->
     <AnswerPop
       ref="AnswerPop"
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
 // 引入帮助客服api
 import { getServiceIndex } from '@/api/BeeApi/user'
 import ContactCustomer from '../components/ContactCustomer'
@@ -82,7 +83,7 @@ export default {
   data() {
     return {
       // 是否显示联系客服按钮 app 显示
-      isShowCustomer: true,
+      isShowCoustomer: true,
       isShow: false,
       user: {
         nickname: '',
@@ -102,6 +103,17 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getIndexData()
+
+    const osObj = getOs()
+    if (osObj.isWx) {
+      this.isShowCoustomer = false
+    } else if (osObj.isIphone) {
+      // window.webkit.messageHandlers.OpenService.postMessage('')
+    } else if (osObj.isAndroid) {
+      // window.beeMarket.OpenService()
+    } else {
+      this.isShowCoustomer = false
+    }
   },
   methods: {
     // 获取帮助首页信息

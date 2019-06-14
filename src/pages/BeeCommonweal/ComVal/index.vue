@@ -30,7 +30,7 @@
       </div>
       <div class="com-detail">
         <div class="com-detail1">
-          <span class="com-text1">累计公益值</span>
+          <span class="com-text1">可用公益值</span>
           <p class="com-val">
             {{ comVal.total_charity_value }}
           </p>
@@ -41,6 +41,20 @@
           <p class="rank">
             在好友排名第2名
           </p>
+        </div>
+        <div class="com-detail2">
+          <div class="detail2-item">
+            <div class="detail2-title">
+              累计公益值
+            </div>
+            <span class="num">{{ comVal.total_charity_value }}</span>
+          </div>
+          <div class="detail2-item">
+            <div class="detail2-title">
+              公益值在路上
+            </div>
+            <span class="num">{{ comVal.not_arrived_charity_value }}</span>
+          </div>
         </div>
         <help-chart
           v-if="comVal.novice_data"
@@ -168,6 +182,22 @@ export default {
           padding: 0;
           margin: 0;
           margin-top: 0.18rem;
+        }
+      }
+    }
+    .com-detail2 {
+      margin-top: 0.4rem;
+      display: flex;
+      justify-content: space-around;
+      .detail2-item {
+        color: #ffffff;
+        text-align: center;
+        .detail2-title {
+          font-size: 0.24rem;
+          margin-bottom: 0.2rem;
+        }
+        .num {
+          font-size: 0.32rem;
         }
       }
     }

@@ -12,27 +12,27 @@
       </div>
     </div>
     <van-goods-action v-if="commodityData">
-      <van-goods-action-mini-btn
+      <van-goods-action-icon
         :icon="beeIcon.product_detail_icon_shop"
         text="店铺"
         @click="goStore(commodityData.mid)"
       />
-      <van-goods-action-mini-btn
+      <van-goods-action-icon
         :icon="commodityData.favor?beeIcon.product_detail_icon_attention_n:beeIcon.product_detail_icon_attention_d"
         text="收藏"
         @click="handleFollow"
       />
-      <van-goods-action-mini-btn
+      <van-goods-action-icon
         :icon="beeIcon.product_detail_icon_shopcart"
         text="购物车"
       />
       <!-- TODO 不可购买 -->
-      <van-goods-action-big-btn
+      <van-goods-action-button
         text="加入购物车"
         class="add-cart"
         @click="addShopcartProductData"
       />
-      <van-goods-action-big-btn
+      <van-goods-action-button
         text="立即购买"
         class="buy-now"
         @click="confirmOrderData"
@@ -166,7 +166,7 @@ export default {
     line-height: 44px;
     margin: 3px 0;
   }
-  .van-goods-action-mini-btn {
+  .van-goods-action-icon {
     font-size: 0.2rem;
     color: @Grey2;
   }
@@ -176,6 +176,7 @@ export default {
     border-bottom-left-radius: 0.5rem;
     background: linear-gradient(to right, #ffbd2f, #ffa42f);
     border-color: #ffa42f;
+    color: #ffffff;
   }
   .buy-now {
     border-top-right-radius: 0.5rem;
@@ -183,6 +184,7 @@ export default {
     margin-right: 0.08rem;
     background: linear-gradient(to right, #ff8c2f, #f15b26);
     border-color: #ff8c2f;
+    color: #ffffff;
   }
 }
 </style>

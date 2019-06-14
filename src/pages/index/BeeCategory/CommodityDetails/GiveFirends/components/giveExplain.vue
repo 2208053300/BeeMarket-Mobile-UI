@@ -1,6 +1,6 @@
 <template>
   <div class="show-explain">
-    <van-actionsheet v-model="showExplain">
+    <van-actionSheet v-model="showExplain">
       <div class="service-promise">
         <div class="service-title">
           赠送朋友说明
@@ -73,7 +73,7 @@
           </div>
         </div>
       </div>
-    </van-actionsheet>
+    </van-actionSheet>
   </div>
 </template>
 
@@ -103,7 +103,7 @@ export default {
 
 <style lang="less">
 .show-explain {
-  .van-actionsheet {
+  .van-action-sheet {
     border-top-left-radius: 0.2rem;
     border-top-right-radius: 0.2rem;
     .service-promise {
