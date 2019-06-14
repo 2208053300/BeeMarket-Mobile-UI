@@ -38,8 +38,12 @@ const router = new Router({
           component: () => import('@/pages/BeeCompleteInfo'),
           children: [
             {
-              path: '',
-              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo')
+              path: 'phone',
+              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo/bindPhone')
+            },
+            {
+              path: 'wechat',
+              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo/bindWechat')
             }
           ]
         },
