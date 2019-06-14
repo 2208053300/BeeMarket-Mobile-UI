@@ -22,16 +22,6 @@ export default new Router({
           component: () => import('@/pages/BeeTask/TaskDetail')
         },
         {
-          path: 'taskPerfectData/phone',
-          name: 'taskPerfectDataWithPhone',
-          component: () => import('@/pages/BeeTask/TaskPerfectData/bindPhone')
-        },
-        {
-          path: 'taskPerfectData/wechat',
-          name: 'taskPerfectDataWithWechat',
-          component: () => import('@/pages/BeeTask/TaskPerfectData/bindWechat')
-        },
-        {
           path: 'talent',
           name: 'becomeTalent',
           component: () => import('@/pages/BeeTask/TaskTalent')
