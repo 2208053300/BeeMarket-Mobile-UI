@@ -141,7 +141,6 @@ export default {
         }
       }
       this.getListData()
-      console.log(this.config)
     },
     // 获取每个数据的XY轴值
     getPoint(preCircle) {
@@ -260,8 +259,6 @@ export default {
         jj++
       }
       // 获取真正的，每行填充数据
-      console.log(new_row)
-
       let temp
       for (let i = 0; i < new_row.length; i++) {
         for (let j = 0; j < new_row[i].length; j++) {
