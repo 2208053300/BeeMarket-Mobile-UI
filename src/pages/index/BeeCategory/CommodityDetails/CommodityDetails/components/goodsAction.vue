@@ -18,7 +18,7 @@
         @click="goStore(commodityData.mid)"
       />
       <van-goods-action-icon
-        :icon="commodityData.favor?beeIcon.product_detail_icon_attention_n:beeIcon.product_detail_icon_attention_d"
+        :icon="commodityData.favor?beeIcon.product_detail_icon_attention_d:beeIcon.product_detail_icon_attention_n"
         text="收藏"
         @click="handleFollow"
       />
