@@ -25,13 +25,13 @@
         :style="{backgroundImage:'url('+beeIcon.bee_firends_icon_piggybank+')'}"
         @click="showProject=true"
       >
-        {{ partnerData.bag_balance }}
+        {{ partnerData.bag_balance||1 }}
       </div>
     </div>
     <div class="rule-fixed">
       <img
         :src="beeIcon.bee_firends_icom_rule"
-        alt=""
+        alt="规则"
       >
     </div>
     <list-type />
@@ -41,26 +41,8 @@
     >
       <img
         :src="beeIcon.bee_firends_icon_firends"
-        alt=""
+        alt="蜂友排行"
       >
-    </div>
-    <div class="bottom-fixed2">
-      <img
-        :src="beeIcon.bee_firend_icon_gold"
-        alt=""
-      >
-      <div class="get-num">
-        520个
-      </div>
-      <div class="handle-tip">
-        <div class="tip-hand">
-          <img
-            :src="beeIcon.bee_firend_icon_charge"
-            alt="一键收取"
-          >
-        </div>
-        <div class="circle" />
-      </div>
     </div>
     <honeycomb
       ref="honeycomb"
@@ -77,8 +59,23 @@
         :style="{backgroundImage:'url('+beeIcon.bee_firend_icon_bubble+')'}"
         @click="showHoney=false"
       >
-        <div class="honey-num">
-          +<span class="num">{{ partnerData.sup_balance }}</span>
+        <div
+          v-if="partnerData.sup_balance"
+          class="get-num"
+        >
+          {{ partnerData.sup_balance }}个
+        </div>
+        <div
+          v-if="partnerData.sup_balance"
+          class="handle-tip"
+        >
+          <div class="tip-hand">
+            <img
+              :src="beeIcon.bee_firend_icon_charge"
+              alt="一键收取"
+            >
+          </div>
+          <div class="circle" />
         </div>
       </div>
     </transition>
@@ -218,13 +215,26 @@ export default {
     width: 1rem;
     z-index: 100;
   }
-  .bottom-fixed2 {
-    position: fixed;
+  .honey-pop {
+    position: absolute;
+    width: 1.06rem;
+    height: 1.19rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-align: center;
+    line-height: 1.1rem;
     bottom: 0.6rem;
     right: 0.7rem;
-    height: 1.15rem;
-    width: 1rem;
     z-index: 100;
+    animation: heart 1.3s ease-in-out 2.7s infinite alternate;
+    @keyframes heart {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(10px);
+      }
+    }
     .get-num {
       position: absolute;
       top: 0;
@@ -242,21 +252,12 @@ export default {
     }
     .handle-tip {
       position: absolute;
-      bottom: -0.2rem;
-      right: -0.6rem;
+      bottom: 0;
+      right: -0.4rem;
       .tip-hand {
         width: 0.91rem;
         height: 0.72rem;
         z-index: 100;
-        animation: heart2 1.3s ease-in-out 2.7s infinite alternate;
-        @keyframes heart2 {
-          from {
-            transform: scale(1);
-          }
-          to {
-            transform: scale(1.1);
-          }
-        }
       }
       .circle {
         width: 0.3rem;
@@ -265,7 +266,7 @@ export default {
         border-radius: 50%;
         position: absolute;
         left: -0.2rem;
-        top: -0.3rem;
+        top: 0;
         animation: heart3 1.3s ease-in-out 2.7s infinite alternate;
         @keyframes heart3 {
           from {
@@ -278,33 +279,6 @@ export default {
       }
     }
   }
-  .honey-pop {
-    position: absolute;
-    width: 1.06rem;
-    height: 1.19rem;
-    background-size: contain;
-    background-repeat: no-repeat;
-    text-align: center;
-    line-height: 1.1rem;
-    bottom: 3rem;
-    left: 2rem;
-    animation: heart 1.3s ease-in-out 2.7s infinite alternate;
-    @keyframes heart {
-      from {
-        transform: translateY(0);
-      }
-      to {
-        transform: translateY(10px);
-      }
-    }
-    .honey-num {
-      font-size: 0.28rem;
-      font-weight: bold;
-      -webkit-text-stroke: 0.02rem #9d6232;
-      text-stroke: 0.02rem #9d6232;
-      color: #fff;
-    }
-  }
   .fade1-enter-active,
   .fade1-leave-active {
     animation-play-state: paused;
@@ -313,7 +287,7 @@ export default {
   .fade1-enter,
   .fade1-leave-to {
     transform: translateY(-30px);
-    // bottom: 6rem;
+    bottom: 6rem;
     opacity: 0;
   }
 }

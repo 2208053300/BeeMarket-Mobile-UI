@@ -49,7 +49,8 @@ export default {
         company_info: {
           love_company_logo: ''
         }
-      }
+      },
+      user_id: 1
     }
   },
   computed: {},
@@ -60,7 +61,10 @@ export default {
   },
   methods: {
     async getShareDetailData() {
-      const res = await getShareDetail({ user_id: 1, aid: 2 })
+      const res = await getShareDetail({
+        user_id: this.$route.query.user_id,
+        aid: this.$route.query.aid
+      })
       this.actionData = res.data
     }
   }

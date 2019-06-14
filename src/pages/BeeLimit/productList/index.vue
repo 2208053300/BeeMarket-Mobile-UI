@@ -9,7 +9,6 @@
           v-for="item in commodityList.product_list"
           :key="item.pid"
           class="commodity-content"
-          @click="test11"
         >
           <div class="commodity-details">
             <div class="commodity-img">
@@ -35,7 +34,7 @@
               </div>
               <div class="info-footer">
                 <div class="limit-num">
-                  仅剩{{ item.remain_qty }}件
+                  <span class="num">仅剩{{ item.remain_qty }}件</span>
                   <div class="progress-content">
                     <div
                       :style="{width:getProgress(item.remain_qty,item.remain_qty)}"
@@ -55,7 +54,7 @@
         </div>
       </div>
       <div class="waiting-more">
-        <span>- 更多优品持续筹备中 -{{ test1 }}</span>
+        <span>- 更多优品持续筹备中 -</span>
       </div>
     </div>
   </div>
@@ -121,9 +120,6 @@ export default {
           }
         })
       }
-    },
-    test11() {
-      window.open('https://www.baidu.com')
     }
   }
 }
@@ -210,6 +206,7 @@ export default {
             color: @BeeDefault;
             text-align: center;
             position: relative;
+            box-sizing: border-box;
             .progress-content {
               position: absolute;
               width: 100%;

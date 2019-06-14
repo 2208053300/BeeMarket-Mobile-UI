@@ -6,7 +6,7 @@ Vue.use(Router)
 const router = new Router({
   // NOTE 返回后再次进入定位到最顶部
   scrollBehavior: () => ({ y: 0 }),
-
+  // mode: 'history',
   routes: [
     {
       path: '',
@@ -64,8 +64,12 @@ const router = new Router({
           component: () => import('@/pages/BeeCompleteInfo'),
           children: [
             {
-              path: '',
-              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo')
+              path: 'phone',
+              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo/bindPhone')
+            },
+            {
+              path: 'wechat',
+              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo/bindWechat')
             }
           ]
         },

@@ -239,13 +239,13 @@ export default {
         // 验证通过
         if (this.isAgree) {
           this.$toast('可以提交！')
-          const data = {
-            name: this.personalName,
-            card_no: this.card_no,
-            number: this.number,
-            wx_account: this.wx_account,
-            address: this.address
-          }
+          // const data = {
+          //   name: this.personalName,
+          //   card_no: this.card_no,
+          //   number: this.number,
+          //   wx_account: this.wx_account,
+          //   address: this.address
+          // }
           // 执行提交表单请求
           // const res2 = await submitApplyData(data)
           // console.log(res2)

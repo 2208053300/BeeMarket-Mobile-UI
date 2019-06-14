@@ -18,7 +18,7 @@
         @click="goStore(commodityData.mid)"
       />
       <van-goods-action-icon
-        :icon="commodityData.favor?beeIcon.product_detail_icon_attention_n:beeIcon.product_detail_icon_attention_d"
+        :icon="commodityData.favor?beeIcon.product_detail_icon_attention_d:beeIcon.product_detail_icon_attention_n"
         text="收藏"
         @click="handleFollow"
       />
@@ -97,7 +97,6 @@ export default {
         this.$toast(res.message)
       }
     },
-    async handleUnFollow() {},
     // 加入购物车
     async addShopcartProductData() {
       // TODO 如果未选择，如果初始带着商品属性跳转到商品详情页

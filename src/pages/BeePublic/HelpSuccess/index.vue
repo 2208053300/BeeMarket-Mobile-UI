@@ -10,16 +10,23 @@
       <p class="success-text1">
         助力成功
       </p>
-      <p class="success-text2">
+      <p
+        v-if="charity_value"
+        class="success-text2"
+      >
         <van-icon :name="beeIcon.smile" />
         为感谢您的参与，蜂集市送您 <span class="bee-text">100</span> 公益值
       </p>
-      <p class="success-text3">
+      <p
+        v-if="charity_value"
+        class="success-text3"
+      >
         进入商城即可领取
       </p>
       <van-button
         round
         class="join-help2"
+        @click="goHome()"
       >
         进入商城
       </van-button>
@@ -28,6 +35,7 @@
 </template>
 
 <script>
+import { goHome } from '@/utils'
 export default {
   components: {},
   props: {},
@@ -36,14 +44,19 @@ export default {
       beeIcon: {
         publicwelfare_detail_pop_ups_pic_value2: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_pic_value2@2x.png'),
         smile: require('@/assets/icon/discover/smile.jpg')
-      }
+      },
+      charity_value: 0
     }
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
-  methods: {}
+  mounted() {
+    this.charity_value = this.$route.query.charity_value | 0
+  },
+  methods: {
+    goHome
+  }
 }
 </script>
 
