@@ -369,10 +369,18 @@ export function getPartner(data) {
     data
   })
 }
-// 蜂友圈 - 首页API
+// 蜂友圈 - 首页的好友列表
 export function getFriends(data) {
   return request({
     url: '/user/partner/friends_list',
+    method: 'post',
+    data
+  })
+}
+// 蜂友圈 - 返回可领取余额
+export function getReceiveNum(data) {
+  return request({
+    url: '/user/partner/can_receive',
     method: 'post',
     data
   })

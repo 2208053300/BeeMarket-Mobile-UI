@@ -83,12 +83,12 @@ module.exports = {
   // 蜂工厂
   beeFactory: {
     entry: 'src/pages/BeeFactory/main.js',
-    title: '蜂工厂'
+    title: '商家入驻'
   },
   // 关于我们 二维码注册
   beeRegister: {
     entry: 'src/pages/BeeRegister/main.js',
-    title: '蜂工厂'
+    title: '注册'
   },
   // 公告
   beeAnnouncement: {

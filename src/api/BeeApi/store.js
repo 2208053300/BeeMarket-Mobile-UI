@@ -8,3 +8,12 @@ export function getStoreDetail(data) {
     data
   })
 }
+
+// 商家入驻
+export function entering(data) {
+  return request({
+    url: '/store/merchant/entering',
+    method: 'post',
+    data
+  })
+}
