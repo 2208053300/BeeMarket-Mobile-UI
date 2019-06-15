@@ -10,9 +10,6 @@
       <!-- eslint-disable-next-line -->
       <div v-html="article.content" />
     </div>
-    <div class="article-img">
-      <img :src="article.show_img">
-    </div>
     <div
       class="grid-list"
     >
@@ -154,10 +151,6 @@ export default {
     img {
       margin-bottom: 0.16rem;
     }
-  }
-  .article-img {
-    padding: 0 0.3rem;
-    margin-bottom: 0.44rem;
   }
   .grid-list {
     margin: 0 0.28rem 0.44rem 0.28rem;
