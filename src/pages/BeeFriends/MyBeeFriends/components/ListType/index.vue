@@ -10,7 +10,10 @@
           alt="类型"
         >
       </div>
-      <div class="arrow-img">
+      <div
+        v-if="showType"
+        class="arrow-img"
+      >
         <img
           :src="beeIcon.bee_firends_icon_switch"
           alt="箭头"
@@ -19,7 +22,7 @@
     </div>
     <transition name="van-fade">
       <div
-        v-if="honeyType!==1||showType"
+        v-if="honeyType!==1&&showType"
         class="rt-item"
         @click="changeType(1)"
       >
@@ -33,7 +36,7 @@
     </transition>
     <transition name="van-fade">
       <div
-        v-if="honeyType!==2||showType"
+        v-if="honeyType!==2&&showType"
         class="rt-item"
         @click="changeType(2)"
       >
@@ -47,7 +50,7 @@
     </transition>
     <transition name="van-fade">
       <div
-        v-if="honeyType!==3||showType"
+        v-if="honeyType!==3&&showType"
         class="rt-item"
         @click="changeType(3)"
       >
@@ -91,6 +94,7 @@ export default {
       this.$emit('update:honeyType', type)
       this.$parent.getPartnerData()
       this.$parent.getReceiveNumData()
+      this.showType = !this.showType
     },
     showTypeAction() {
       this.showType = !this.showType

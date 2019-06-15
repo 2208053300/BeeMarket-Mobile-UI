@@ -4,33 +4,39 @@
       <div class="head-img">
         <div class="img-content">
           <img
-            src=""
-            alt=""
+            :src="detailData.basic.head_image_url"
+            alt="头像"
           >
         </div>
-        <span class="user-name">用户名用户名</span>
+        <span class="user-name">{{ detailData.basic.nickname }}</span>
       </div>
       <div class="earn-tab">
-        <div class="tab-content">
+        <div
+          class="tab-content"
+          @click="changeEarnType('left')"
+        >
           <div class="type-img">
             <img
               :src="beeIcon.bee_firends_income_icon_growingup"
               alt=""
             >
           </div>
-          <span class="num">111</span>
+          <span class="num">{{ detailData.basic.public_welfare_value }}</span>
           <p class="type-text">
-            成长值
+            公益值
           </p>
         </div>
-        <div class="tab-content">
+        <div
+          class="tab-content"
+          @click="changeEarnType('right')"
+        >
           <div class="type-img">
             <img
               :src="beeIcon.bee_firends_income_icon_gold"
               alt=""
             >
           </div>
-          <span class="num">111</span>
+          <span class="num">{{ detailData.basic.balance }}</span>
           <p class="type-text">
             余额数
           </p>
@@ -38,7 +44,10 @@
       </div>
     </div>
     <div class="earn-detail">
-      <div class="detail-title">
+      <div
+        v-if="earnType==='left'"
+        class="detail-title"
+      >
         <div class="title-img">
           <img
             :src="beeIcon.bee_firends_income_icon_growingup"
@@ -47,31 +56,53 @@
         </div>
         <span class="title-text">增长详情</span>
       </div>
-      <div class="detail-content">
-        <div class="detail-card">
-          <div class="info-time">
-            2019-06-09
-          </div>
-          <div class="info-text">
-            哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-          </div>
-          <div class="circle" />
+      <div
+        v-if="earnType==='right'"
+        class="detail-title"
+      >
+        <div class="title-img">
+          <img
+            :src="beeIcon.bee_firends_income_icon_gold"
+            alt=""
+          >
         </div>
-        <div class="detail-card">
-          <div class="info-time">
-            2019-06-09
+        <span class="title-text">增长详情</span>
+      </div>
+      <div
+        v-if="detailList.length!==0"
+        class="detail-content"
+      >
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          :immediate-check="false"
+          @load="onLoad"
+        >
+          <div
+            v-for="(item,index) in detailList"
+            :key="index"
+            class="detail-card"
+          >
+            <div class="info-time">
+              {{ item.time }}
+            </div>
+            <div class="info-text">
+              {{ item.desc }}
+            </div>
+            <div class="circle" />
           </div>
-          <div class="info-text">
-            哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-          </div>
-          <div class="circle" />
-        </div>
+        </van-list>
+      </div>
+      <div class="bottom-text">
+        我们只记录自然年的公益值收益
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getMyEarning } from '@/api/BeeApi/user'
+
 export default {
   components: {},
   props: {},
@@ -80,14 +111,60 @@ export default {
       beeIcon: {
         bee_firends_income_icon_growingup: require('@/assets/icon/beeFriends/info/bee_firends_income_icon_growingup.png'),
         bee_firends_income_icon_gold: require('@/assets/icon/beeFriends/info/bee_firends_income_icon_gold.png')
-      }
+      },
+      earnType: 'left',
+      page: 1,
+      detailData: {
+        basic: {},
+        record: {}
+      },
+      detailList: [],
+      loading: false,
+      finished: false
     }
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
-  methods: {}
+  mounted() {
+    this.getMyEarningData()
+  },
+  methods: {
+    async getMyEarningData() {
+      const res = await getMyEarning({
+        type: this.earnType,
+        page: this.page
+      })
+      this.detailData = res.data
+      this.detailList = res.data.record.list
+      if (this.earnType === 'left') {
+        this.finished = true
+      } else {
+        this.finished = false
+      }
+      this.page = 2
+    },
+    changeEarnType(type) {
+      this.earnType = type
+      this.getMyEarningData()
+    },
+    onLoad() {
+      // 异步更新数据
+      setTimeout(async() => {
+        const res = await getMyEarning({
+          type: this.earnType,
+          page: this.page
+        })
+        this.detailList.push(...res.data.record.list)
+        this.loading = false
+        if (this.earnType !== 'left') {
+          if (this.detailList.length >= res.data.recoed.total_num) {
+            this.finished = true
+          }
+        }
+      }, 500)
+    }
+  }
 }
 </script>
 
@@ -103,10 +180,10 @@ export default {
         margin: 0 auto 0.18rem;
         width: 1.2rem;
         height: 1.2rem;
+        overflow: hidden;
         border-radius: 50%;
         box-sizing: border-box;
         border: 0.04rem solid rgba(255, 255, 255, 0.2);
-        background-color: #000;
       }
       .user-name {
         font-size: 0.3rem;
@@ -120,8 +197,8 @@ export default {
       .tab-content {
         text-align: center;
         .type-img {
-          // width: 100%;
-          height:  0.38rem;
+          width: 0.52rem;
+          height: 0.53rem;
           display: inline-block;
           margin-right: 0.15rem;
         }
@@ -146,8 +223,8 @@ export default {
     min-height: 9rem;
     .detail-title {
       .title-img {
-        height: 0.54rem;
-        width: 0.44rem;
+        height: 0.53rem;
+        width: 0.52rem;
         display: inline-block;
         margin-right: 0.1rem;
       }
@@ -156,31 +233,31 @@ export default {
         vertical-align: middle;
       }
     }
-    .detail-content{
+    .detail-content {
       padding: 0.38rem 0 0 0.32rem;
-      margin-left: 0.2rem;
-      border-left: 0.02rem solid #EBEBEB;
-      .detail-card{
-        background-color: #FFF8EC;
+      margin-left: 0.25rem;
+      border-left: 0.02rem solid #ebebeb;
+      .detail-card {
+        background-color: #fff8ec;
         padding: 0.23rem 0.64rem 0.2rem 0.46rem;
         border-top-left-radius: 0.1rem;
         border-bottom-left-radius: 0.1rem;
         margin-bottom: 0.2rem;
         position: relative;
-        .info-time{
+        .info-time {
           font-size: 0.24rem;
           color: @Grey1;
         }
-        .info-text{
+        .info-text {
           font-size: 0.26rem;
           margin-top: 0.14rem;
           line-height: 0.36rem;
         }
-        .circle{
+        .circle {
           width: 0.22rem;
           height: 0.22rem;
           box-sizing: border-box;
-          border: 0.05rem solid #FFAA16;
+          border: 0.05rem solid #ffaa16;
           border-radius: 50%;
           background-color: #fff;
           position: absolute;
@@ -188,6 +265,13 @@ export default {
           top: 0.6rem;
         }
       }
+    }
+    .bottom-text {
+      position: absolute;
+      bottom: 0.5rem;
+      left: 2.2rem;
+      font-size: 0.22rem;
+      color: @Grey1;
     }
   }
 }

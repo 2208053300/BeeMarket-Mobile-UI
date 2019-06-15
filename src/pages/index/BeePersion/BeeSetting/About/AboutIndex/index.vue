@@ -3,7 +3,7 @@
     <div class="container">
       <div class="logo-info bg-white text-center">
         <img
-          src="http://temp.im/640x260"
+          :src="icon.logo"
           alt=""
           class="logo"
         >
@@ -21,12 +21,12 @@
         <van-cell
           title="使用帮助"
           is-link
-          to="/persion/beeSetting/about/useHelp"
+          to="/beeHelper"
         />
         <van-cell
           title="用户协议"
           is-link
-          to="/persion/beeSetting/about/userAgreement"
+          to="/beeRegister/agreement"
         />
       </van-cell-group>
     </div>
@@ -41,7 +41,11 @@ export default {
   components: {},
   props: {},
   data() {
-    return {}
+    return {
+      icon: {
+        logo: require('@/assets/icon/personalCenter/func/mine_aboutus_img_logo@2x.png')
+      }
+    }
   },
   computed: {},
   watch: {},
@@ -60,7 +64,7 @@ export default {
 
 <style scoped lang="less">
 .container {
-  margin-top: 56px;
+  // margin-top: 56px;
 }
 img {
   display: block;
@@ -69,13 +73,13 @@ img {
   padding: 0.3rem 0;
 }
 .logo {
-  width: 1.5rem;
-  height: 0.6rem;
+  width: 2.67rem;
+  height: 0.94rem;
   margin: 0 auto;
 }
 .qr-code {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2.67rem;
+  height: 2.67rem;
   margin: 0.2rem auto;
 }
 .tip {

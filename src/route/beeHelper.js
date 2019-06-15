@@ -21,7 +21,7 @@ export default new Router({
         },
         {
           path: 'qustionList',
-          name: 'QustionList',
+          name: 'qustionList',
           component: () =>
             import('@/pages/BeeHelper/QustionList')
         }

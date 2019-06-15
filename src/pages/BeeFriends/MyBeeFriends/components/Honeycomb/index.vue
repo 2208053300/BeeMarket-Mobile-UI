@@ -291,11 +291,22 @@ export default {
     // REVIEW 判断是否超出屏幕
     checkOverflow(val) {
       const hrect = this.$refs[val][0].getBoundingClientRect()
-      const hTop = hrect.y
-      const hLeft = hrect.x
-      if (hTop > window.innerHeight - 50 || hTop < 50) {
+      // 六边形XY轴
+      const hTop = hrect.y || hrect.top
+      const hLeft = hrect.x || hrect.left
+      // 屏幕宽高
+      const wWidth =
+        window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth
+      const wHeight =
+        window.innerHeight ||
+        document.documentElement.clientHeight ||
+        document.body.clientHeight
+      // 是否到达屏幕边距
+      if (hTop > wHeight - 50 || hTop < 50) {
         return false
-      } else if (hLeft > window.innerWidth - 50 || hLeft < 0) {
+      } else if (hLeft > wWidth - 50 || hLeft < 0) {
         return false
       } else {
         return true

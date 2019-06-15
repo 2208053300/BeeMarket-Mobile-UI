@@ -135,8 +135,14 @@ export default {
     },
     // 跳转到分类下的问题列表
     goList(id) {
+      // this.$router.push({
+      //   path: '/qustionList',
+      //   query: {
+      //     id: id
+      //   }
+      // })
       this.$router.push({
-        path: '/qustionList',
+        name: 'qustionList',
         query: {
           id: id
         }

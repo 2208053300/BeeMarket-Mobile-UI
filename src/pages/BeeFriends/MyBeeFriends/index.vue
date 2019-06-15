@@ -21,6 +21,7 @@
         </div>
       </div>
       <div
+        ref="countItem"
         class="my-grade"
         :style="{backgroundImage:'url('+beeIcon.bee_firends_icon_piggybank+')'}"
         @click="showProject=true"
@@ -47,6 +48,7 @@
         alt="蜂友排行"
       >
     </div>
+    <!-- {{ token }} -->
     <honeycomb
       ref="honeycomb"
       :detail-card.sync="detailCard"
@@ -60,7 +62,7 @@
         v-if="showHoney"
         class="honey-pop"
         :style="{backgroundImage:'url('+beeIcon.bee_firend_icon_bubble+')'}"
-        @click="harvestBalance()"
+        @click="harvestBalanceData()"
       >
         <div
           v-if="can_receive_balance"
@@ -86,12 +88,13 @@
 </template>
 
 <script>
+import { getPartner, getReceiveNum, harvestBalance } from '@/api/BeeApi/user'
 import Honeycomb from './components/Honeycomb'
 import UserCard from './components/UserCard'
 import FriendsRank from './components/FriendsRank'
 import JoinProject from './components/JoinProject'
 import ListType from './components/ListType'
-import { getPartner, getReceiveNum } from '@/api/BeeApi/user'
+import CountUp from 'countup.js/dist/countUp.min.js'
 
 export default {
   components: {
@@ -122,9 +125,11 @@ export default {
       partnerType: 1,
       honeyType: 1,
       partnerData: {
-        show_users2: []
+        show_users2: [],
+        sup_balance: 0
       },
-      can_receive_balance: 0
+      can_receive_balance: 0,
+      countUpBalance: null
     }
   },
   computed: {},
@@ -133,6 +138,8 @@ export default {
   mounted() {
     this.getPartnerData()
     this.getReceiveNumData()
+    this.countUpBalance = new CountUp(this.$refs.countItem, 1000)
+    this.countUpNum()
   },
   methods: {
     async getPartnerData() {
@@ -154,11 +161,18 @@ export default {
       const res = await getReceiveNum({ type: this.listType })
       this.can_receive_balance = res.data.can_receive_balance
     },
-    async harvestBalance() {
-      this.showHoney = false
-      setTimeout(() => {
-        this.showHoney = true
-      }, 3000)
+    async harvestBalanceData() {
+      const res = await harvestBalance({ type: this.partnerType })
+      if (res.status_code === 200) {
+        this.showHoney = false
+        setTimeout(() => {
+          this.showHoney = true
+          this.countUpNum()
+        }, 3000)
+      }
+    },
+    countUpNum() {
+      this.countUpBalance.start()
     }
   }
 }
@@ -167,6 +181,8 @@ export default {
 <style scoped lang="less">
 .my-friends {
   height: 100%;
+  width: 100%;
+  overflow: hidden;
   background-color: #fdd354;
   position: relative;
   background-size: contain;
@@ -235,8 +251,8 @@ export default {
     position: fixed;
     bottom: 0.6rem;
     left: 0.4rem;
-    height: 1.15rem;
-    width: 1rem;
+    height: 1.14rem;
+    width: 1.01rem;
     z-index: 100;
   }
   .honey-pop {

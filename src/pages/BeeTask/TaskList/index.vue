@@ -136,7 +136,7 @@
             <van-button
               class="go-task"
               round
-              @click="doTask(taskData.task_list[1])"
+              @click="$router.push({name:'taskDetail',query:{tid:taskData.task_list[1].tid}})"
             >
               去完成
             </van-button>
