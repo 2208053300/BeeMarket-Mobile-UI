@@ -16,11 +16,10 @@ export async function getToken() {
       localStorage.setItem('BM-App-Token', 'waiting')
       // 微信授权登录
       await auditWechat({ code: uriProp })
-      console.log(localStorage.getItem('BM-App-Token'))
-      return localStorage.getItem('BM-App-Token')
     } else {
       console.log('微信CODE为空')
     }
+    return localStorage.getItem('BM-App-Token')
   } else if (osObj.isIphone || osObj.isAndroid) {
     return Cookies.get('token')
   } else {
