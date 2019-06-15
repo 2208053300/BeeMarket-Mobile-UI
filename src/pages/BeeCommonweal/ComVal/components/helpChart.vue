@@ -169,6 +169,7 @@ export default {
           background-color: #fff;
           position: absolute;
           width: 0.16rem;
+          max-height: 1.2rem;
           left: 0;
           bottom: 0;
         }
@@ -176,6 +177,7 @@ export default {
           background-color: rgba(255, 255, 255, 0.5);
           position: absolute;
           width: 0.16rem;
+          max-height: 1.2rem;
           left: 0;
           bottom: 0;
         }

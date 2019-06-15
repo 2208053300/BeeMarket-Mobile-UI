@@ -1,8 +1,25 @@
 <template>
   <div class="rt-fixed">
-    <transition name="van-slide-down">
+    <div
+      class="rt-item"
+      @click="showTypeAction()"
+    >
+      <div class="img-content">
+        <img
+          :src="getImg()"
+          alt="类型"
+        >
+      </div>
+      <div class="arrow-img">
+        <img
+          :src="beeIcon.bee_firends_icon_switch"
+          alt="箭头"
+        >
+      </div>
+    </div>
+    <transition name="van-fade">
       <div
-        v-if="honeyType===1||showType"
+        v-if="honeyType!==1||showType"
         class="rt-item"
         @click="changeType(1)"
       >
@@ -12,20 +29,11 @@
             alt=""
           >
         </div>
-        <div
-          v-if="honeyType===1"
-          class="arrow-img"
-        >
-          <img
-            :src="beeIcon.bee_firends_icon_switch"
-            alt=""
-          >
-        </div>
       </div>
     </transition>
-    <transition name="van-slide-down">
+    <transition name="van-fade">
       <div
-        v-if="honeyType===2||showType"
+        v-if="honeyType!==2||showType"
         class="rt-item"
         @click="changeType(2)"
       >
@@ -35,35 +43,17 @@
             alt=""
           >
         </div>
-        <div
-          v-if="honeyType===2"
-          class="arrow-img"
-        >
-          <img
-            :src="beeIcon.bee_firends_icon_switch"
-            alt=""
-          >
-        </div>
       </div>
     </transition>
-    <transition name="van-slide-down">
+    <transition name="van-fade">
       <div
-        v-if="honeyType===3||showType"
+        v-if="honeyType!==3||showType"
         class="rt-item"
         @click="changeType(3)"
       >
         <div class="img-content">
           <img
             :src="beeIcon.bee_firends_icon_equity"
-            alt=""
-          >
-        </div>
-        <div
-          v-if="honeyType===3"
-          class="arrow-img"
-        >
-          <img
-            :src="beeIcon.bee_firends_icon_switch"
             alt=""
           >
         </div>
@@ -75,7 +65,12 @@
 <script>
 export default {
   components: {},
-  props: {},
+  props: {
+    honeyType: {
+      type: Number,
+      default: 1
+    }
+  },
   data() {
     return {
       beeIcon: {
@@ -84,7 +79,6 @@ export default {
         bee_firends_icom_promotion: require('@/assets/icon/beeFriends/home/bee_firends_icom_promotion.png'),
         bee_firends_icon_equity: require('@/assets/icon/beeFriends/home/bee_firends_icon_equity.png')
       },
-      honeyType: 1,
       showType: false
     }
   },
@@ -94,8 +88,21 @@ export default {
   mounted() {},
   methods: {
     changeType(type) {
+      this.$emit('update:honeyType', type)
+      this.$parent.getPartnerData()
+      this.$parent.getReceiveNumData()
+    },
+    showTypeAction() {
       this.showType = !this.showType
-      this.honeyType = type
+    },
+    getImg() {
+      if (this.honeyType === 1) {
+        return this.beeIcon.bee_firends_icon_recommend
+      } else if (this.honeyType === 2) {
+        return this.beeIcon.bee_firends_icom_promotion
+      } else {
+        return this.beeIcon.bee_firends_icon_equity
+      }
     }
   }
 }

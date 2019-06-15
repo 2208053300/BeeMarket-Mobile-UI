@@ -77,25 +77,42 @@
             </div>
             <div class="friends-detail">
               <div class="head-img">
-                <img
-                  src=""
-                  alt=""
+                <div class="img-content">
+                  <img
+                    :src="item.head_image_url"
+                    alt="头像"
+                  >
+                </div>
+                <div
+                  v-if="item.is_partner"
+                  class="partner-tag"
                 >
+                  <img
+                    :src="beeIcon.bee_firends_invite_icon_firenf"
+                    alt="合伙人"
+                  >
+                </div>
               </div>
               <div class="firends-name">
                 <div class="left-detail">
-                  <span class="name">巧克力冰激凌</span>
-                  <span class="firends">（关联蜂友：<span class="num">100</span>个 ）</span>
+                  <span
+                    class="name"
+                    :class="{partner:item.is_partner}"
+                  >{{ item.nickname }}</span>
+                  <span
+                    v-if="item.current_friends_num"
+                    class="firends"
+                  >（关联蜂友：<span class="num">{{ item.current_friends_num }}</span>个 ）</span>
                   <div class="honey-num">
-                    累计贡献蜜点<span class="num">250</span>个
+                    累计贡献公益值<span class="num"> {{ item.contribution }} </span>个
+                  </div>
+                  <div class="login-time">
+                    最后登录时间：<span class="time">{{ item.last_login_time }}</span>
                   </div>
                 </div>
-                <div class="crown">
-                  <img
-                    :src="beeIcon.bee_firends_invite_icon_crown"
-                    alt=""
-                  >
-                </div>
+                <van-button class="remind-btn">
+                  提醒登录
+                </van-button>
               </div>
             </div>
           </div>
@@ -130,8 +147,8 @@ export default {
         bee_firends_invite_icon_silveraward: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_silveraward.png'),
         bee_firends_invite_icon_bronzeaward: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_bronzeaward.png'),
         bee_firends_invite_icon_off: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_off.png'),
-        bee_firends_invite_icon_crown: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_crown.png'),
-        bee_firends_invite_icon_firends: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_firends.png')
+        bee_firends_invite_icon_firends: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_firends.png'),
+        bee_firends_invite_icon_firenf: require('@/assets/icon/beeFriends/info/bee_firends_invite_icon_firenf.png')
       },
       friendsType: 1,
       friendsData: {}
@@ -232,10 +249,21 @@ export default {
             align-items: center;
             .head-img {
               margin-right: 0.22rem;
-              height: 0.94rem;
-              width: 0.94rem;
-              border: 0.02rem solid #fdbb18;
-              border-radius: 50%;
+              position: relative;
+              .img-content {
+                height: 0.94rem;
+                width: 0.94rem;
+                border: 0.02rem solid #fdbb18;
+                border-radius: 50%;
+                overflow: hidden;
+              }
+              .partner-tag {
+                width: 1.15rem;
+                height: 0.29rem;
+                position: absolute;
+                bottom: 0;
+                left: -0.1rem;
+              }
             }
             .firends-name {
               display: flex;
@@ -247,6 +275,9 @@ export default {
                   font-size: 0.24rem;
                   font-weight: bold;
                 }
+                .partner {
+                  color: @BeeDefault;
+                }
                 .firends {
                   font-size: 0.2rem;
                   .num {
@@ -255,13 +286,25 @@ export default {
                 }
                 .honey-num {
                   font-size: 0.2rem;
+                  color: @Grey2;
+                  margin-top: 0.1rem;
+                }
+                .login-time {
+                  font-size: 0.2rem;
                   color: @Grey1;
                   margin-top: 0.1rem;
                 }
               }
-              .crown {
-                width: 0.44rem;
-                height: 0.34rem;
+              .remind-btn {
+                width: 1.27rem;
+                height: 0.5rem;
+                padding: 0;
+                border: 0.02rem solid @BeeDefault;
+                font-size: 0.24rem;
+                line-height: 0.5rem;
+                border-radius: 0.08rem;
+                color: @BeeDefault;
+                box-sizing: border-box;
               }
             }
           }
