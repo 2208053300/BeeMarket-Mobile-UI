@@ -65,7 +65,10 @@
         >
           <div class="part2-content">
             <span>您暂未完成累计消费，再去看看商品吧!</span>
-            <van-button class="go-shopping">
+            <van-button
+              class="go-shopping"
+              @click="goHome()"
+            >
               去逛逛
             </van-button>
           </div>
@@ -121,9 +124,8 @@
 <script>
 import { getTaskDetail } from '@/api/BeeApi/task'
 import echarts from 'echarts/dist/echarts.simple.min.js'
+import { goHome } from '@/utils'
 
-// import echarts from 'echarts/lib/echarts'
-// require('echarts/lib/chart/pie')
 export default {
   metaInfo: {
     title: '任务详情'
@@ -150,6 +152,7 @@ export default {
     this.getTaskDetailData()
   },
   methods: {
+    goHome,
     initPie() {
       const pie1 = echarts.init(this.$refs.pieChart)
       const option = {
@@ -188,7 +191,9 @@ export default {
       this.taskData = res.data
       this.initPie()
     },
-    geiGift() {}
+    geiGift() {
+      // TODO 跳转下单
+    }
   }
 }
 </script>

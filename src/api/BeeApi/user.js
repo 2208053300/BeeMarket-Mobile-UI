@@ -385,3 +385,19 @@ export function getReceiveNum(data) {
     data
   })
 }
+// 蜂友圈 - 领取余额
+export function harvestBalance(data) {
+  return request({
+    url: '/user/partner/receive',
+    method: 'post',
+    data
+  })
+}
+// 蜂友圈 - 我的收益
+export function getMyEarning(data) {
+  return request({
+    url: '/user/partner/profit_record',
+    method: 'post',
+    data
+  })
+}

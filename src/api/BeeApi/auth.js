@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // NOTE 微信认证
 export function auditWechat(data) {
   return request({
-    url: '/cart/getCartList',
+    url: '/auth/h5login',
     method: 'get',
     params: data
   })
