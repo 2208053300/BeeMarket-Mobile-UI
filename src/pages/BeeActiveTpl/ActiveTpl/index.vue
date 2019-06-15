@@ -23,6 +23,8 @@
         </div>
 
         <!-- 四个商品列表 -->
+        <!-- :style="{ backgroundImage: 'url(' + actionDetails.background_image_url + ')' }" -->
+        <!-- :style="{backgroundColor:item.baColor}" -->
         <ul class="pro-list flex flex-between flex-wrap">
           <li v-for="(item1, index1) in item.product_list" :key="index1" class="item">
             <div class="pro">
