@@ -70,5 +70,5 @@ export function checkToken() {
   }
 }
 async function wxLogin(code) {
-  const res = await auditWechat({ code: code })
+  await auditWechat({ code: code })
 }
