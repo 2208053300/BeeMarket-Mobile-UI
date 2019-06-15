@@ -41,9 +41,9 @@ export function checkToken() {
     //   'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
     //   encodeURIComponent(redirect_uri) +
     //   '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
-    const uriProp = GetRequest()
-    if (uriProp.code) {
-      wxLogin(uriProp.code)
+    const uriProp = GetRequest('code')
+    if (uriProp) {
+      wxLogin(uriProp)
     } else {
       window.location.href =
         'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
