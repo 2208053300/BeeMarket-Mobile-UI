@@ -27,9 +27,11 @@ service.interceptors.request.use(
     })
     console.log('请求参数：', config.data)
     // 强制设置 token 在 getToken 函数中设置
-    if (isLogin() && localStorage.getItem('BM-App-Token') !== 'waiting') {
+    if (isLogin()) {
       config.headers['BM-App-Token'] = getToken()
     }
+    console.log(config.headers['BM-App-Token'])
+
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
