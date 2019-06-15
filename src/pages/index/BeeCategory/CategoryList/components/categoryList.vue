@@ -126,10 +126,14 @@ export default {
       this.category2 = res.data
     },
     changeBorder(index) {
-      const badge = document.querySelector('.van-sidebar-item')
-      // 无关痛痒的报错
-      this.borderPosition = Number(index) * badge.offsetHeight + 14 + 'px'
-      console.log(badge.offsetHeight, index)
+      try {
+        const badge = document.querySelector('.van-sidebar-item')
+        // 无关痛痒的报错
+        this.borderPosition = Number(index) * badge.offsetHeight + 14 + 'px'
+        console.log(badge.offsetHeight, index)
+      } catch (error) {
+        // 第一次加载，正常
+      }
     },
     // FIXME 避免报错数组不渲染
     checkGroup(groups) {
