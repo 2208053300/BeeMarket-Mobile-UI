@@ -10,6 +10,7 @@ import {
 } from '@/utils/auth'
 import { isJSON } from '@/utils'
 import store from '@/store'
+
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
   timeout: 50000 // 请求超时时间(现在是50秒)
@@ -25,10 +26,8 @@ service.interceptors.request.use(
       duration: 0
     })
     console.log('请求参数：', config.data)
-    console.log(getToken())
-
     // 强制设置 token 在 getToken 函数中设置
-    if (isLogin()) {
+    if (isLogin() && localStorage.getItem('BM-App-Token') !== 'waiting') {
       config.headers['BM-App-Token'] = getToken()
     }
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'

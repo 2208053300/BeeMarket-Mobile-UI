@@ -4,10 +4,24 @@ import Cookies from 'js-cookie'
 import { Toast } from 'vant'
 import { auditWechat } from '@/api/BeeApi/auth'
 // 获取Token
-export function getToken() {
+export async function getToken() {
   const osObj = getOs()
-  Toast(Cookies.get('token'))
-  if (osObj.isIphone || osObj.isAndroid || osObj.isWx) {
+  Toast(localStorage.getItem('BM-App-Token'))
+  if (osObj.isWx) {
+    const token = localStorage.getItem('BM-App-Token')
+    const uriProp = GetRequest('code')
+    if (token) {
+      return token
+    } else if (uriProp && !token) {
+      localStorage.setItem('BM-App-Token', 'waiting')
+      // 微信授权登录
+      await auditWechat({ code: uriProp })
+      console.log(localStorage.getItem('BM-App-Token'))
+      return localStorage.getItem('BM-App-Token')
+    } else {
+      console.log('微信CODE为空')
+    }
+  } else if (osObj.isIphone || osObj.isAndroid) {
     return Cookies.get('token')
   } else {
     return localStorage.getItem('BM-App-Token')
@@ -32,24 +46,10 @@ export function checkToken() {
   // 如果是微信，并且没有本地Token，则直接拼接跳转获取token
   const osObj = getOs()
   if (osObj.isWx) {
-    // const propData = Base64.encode(String(location.hash).slice(1))
-    // 截取#符号
-    // const redirect_uri =
-    //   'https://api2.fengjishi.com.cn/auth/h5login?uri=' + propData
-    // 跳转授权页
-    // window.location.href =
-    //   'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-    //   encodeURIComponent(redirect_uri) +
-    //   '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
-    const uriProp = GetRequest('code')
-    if (uriProp) {
-      wxLogin(uriProp)
-    } else {
-      window.location.href =
-        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-        encodeURIComponent(window.location.href) +
-        '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
-    }
+    window.location.href =
+      'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+      encodeURIComponent(window.location.href) +
+      '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
   } else if (osObj.isIphone || osObj.isAndroid) {
     // 如果是APP，获取APP放在cookie里的token
     const token = Cookies.get('token')
@@ -65,8 +65,4 @@ export function checkToken() {
       module.default.push('/login')
     })
   }
-}
-// 微信授权登录
-export async function wxLogin(code) {
-  await auditWechat({ code: code })
 }
