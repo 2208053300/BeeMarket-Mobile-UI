@@ -2,7 +2,7 @@
   <div class="active-tpl">
     <!-- 导航 -->
     <!-- <van-tabs v-model="active" sticky @scroll="tabScroll"> -->
-    <van-tabs v-if="activity.navigate_data.length>1" v-model="active" @click="navClick">
+    <van-tabs v-show="activity.navigate_data.length>1" v-model="active" @click="navClick">
       <van-tab v-for="(item, index) in activity.navigate_data" :key="index" :title="item.name" />
     </van-tabs>
     <!-- 顶部大图 -->
@@ -12,7 +12,7 @@
     <div class="content">
       <div v-for="(item, index) in activity.product_navigate" :key="index" class="nav-content">
         <!-- 标题图片 -->
-        <img :src="item.navigate_img" class="title-img">
+        <img v-if="activity.product_navigate.length>1" :src="item.navigate_img" class="title-img">
         <!-- 主商品 -->
         <div class="main-product">
           <img v-for="(item1, index1) in item.topping_product" :key="index1" :src="item1.show_image" class="main-item" @click="goDetail(item1.pid,item1.target)">
@@ -82,7 +82,11 @@ export default {
       },
       finished: false,
       // 导航选中选
-      active: 0
+      active: 0,
+      // 标签tabs距离顶部的距离
+      top: '0',
+      // 获取 os 平台
+      osObj: getOs()
 
     }
   },
@@ -102,6 +106,8 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.getActivityDetailData()
     this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
+
+    document.querySelector('.showHeader').style.paddingTop = '0'
   },
   methods: {
     // 获取活动数据
@@ -124,10 +130,15 @@ export default {
           var top = document.documentElement.scrollTop || document.body.scrollTop// 设置变量top,表示当前滚动条到顶部的值
           var tt = document.getElementsByClassName('nav-content')[0].clientHeight // 设置变量tt,表示当前滚动窗口高度的值
           console.log(top, tt)
+
+          // const vanTabs = document.querySelector('.van-tabs__wrap')
           if (top > 44) {
             self.$store.state.app.beeHeader = false
+            // vanTabs.style.top = '0'
           } else {
             self.$store.state.app.beeHeader = true
+
+            // vanTabs.style.top = '44px'
           }
           var num = 0
           for (var n = 0; n < heightArr.length; n++) {
@@ -286,7 +297,7 @@ export default {
     color:#fff ;
     background:@BeeDefault ;
   }
-  .van-tabs > .van-tabs__wrap { top: 0; position: fixed; }
+  .van-tabs > .van-tabs__wrap { top: 0; position: fixed; z-index: 999;}
   .van-tabs__line{
      background:rgba(3, 0, 0, 0) ;
   }
@@ -299,12 +310,12 @@ export default {
   }
   .main-product{
     img{width: 100%;}
-    .main-item:nth-of-type(1){
-      height: 6.04rem;
-    }
-    .main-item:nth-of-type(2),.main-item:nth-of-type(3){
-      height: 4.72rem;
-    }
+    // .main-item:nth-of-type(1){
+    //   height: 6.04rem;
+    // }
+    // .main-item:nth-of-type(2),.main-item:nth-of-type(3){
+    //   height: 4.72rem;
+    // }
   }
   // .main-pro1{
   //   width: 100%;
