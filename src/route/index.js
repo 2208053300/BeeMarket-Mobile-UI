@@ -81,13 +81,11 @@ const router = new Router({
               path: '',
               name: 'ServiceHelperIndex',
               component: () =>
-                import(
-                  '@/pages/BeeHelper/ServiceHelperIndex'
-                )
+                import('@/pages/BeeHelper/ServiceHelperIndex')
             },
             {
-              path: 'QustionList',
-              name: 'QustionList',
+              path: 'qustionList',
+              name: 'qustionList',
               component: () =>
                 import('@/pages/BeeHelper/QustionList')
             }
@@ -527,21 +525,20 @@ const router = new Router({
                   name: 'aboutIndex',
                   component: () =>
                     import('@/pages/index/BeePersion/BeeSetting/About/AboutIndex')
-                },
-                {
-                  path: 'useHelp',
-                  name: 'useHelp',
-                  component: () =>
-                    import('@/pages/index/BeePersion/BeeSetting/About/UseHelp')
-                },
-                {
-                  path: 'userAgreement',
-                  name: 'userAgreement',
-                  component: () =>
-                    import(
-                      '@/pages/index/BeePersion/BeeSetting/About/UserAgreement'
-                    )
                 }
+                // {
+                //   path: 'useHelp',
+                //   name: 'useHelp',
+                //   component: () => import('@/pages/BeeHelper')
+                // },
+                // {
+                //   path: 'userAgreement',
+                //   name: 'userAgreement',
+                //   component: () =>
+                //     import(
+                //       '@/pages/index/BeePersion/BeeSetting/About/UserAgreement'
+                //     )
+                // }
               ]
             }
           ]
