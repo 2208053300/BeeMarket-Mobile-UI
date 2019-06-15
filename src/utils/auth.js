@@ -1,16 +1,18 @@
 import { getOs } from '@/utils'
 import { Base64 } from 'js-base64'
 import Cookies from 'js-cookie'
+import { Toast } from 'vant'
 
 // 获取Token
 export function getToken() {
-  const osObj = getOs()
-  if (osObj.isIphone || osObj.isAndroid || osObj.isWx) {
-    return Cookies.get('token')
-  } else {
-    return localStorage.getItem('BM-App-Token')
-  }
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjAyMTkxODUsImV4cCI6MTU2MjgxMTE4NSwianRpIjoiMGM0YTEyYzEzY2RjM2M1NGIwOGRiOWYyMGVlYTZjNWYiLCJzZWMiOiI5MzBkMTg4MzRmNDJjYzgzMWQyZTcwMTk4MzU3ZDIxMCIsInNpZyI6IjQ2MzJhNTdmYTNlNWJlZGUzMTg0MTAyMTBhNGU3MjE0OGYyNDNhNTVmMTE5OGQ2YjRiNTM4MTNmMTliZGRkNzMifQ.wFCE1AXPmHH4JOVR6LwNC9Yy0mX2YRXwWDhiLeBe2fA'
+  // const osObj = getOs()
+  // Toast(Cookies.get('token'))
+  // if (osObj.isIphone || osObj.isAndroid || osObj.isWx) {
+  //   return Cookies.get('token')
+  // } else {
+  //   return localStorage.getItem('BM-App-Token')
+  // }
+  return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjA1NjQ4ODEsImV4cCI6MTU2MzE1Njg4MSwianRpIjoiMzk3NzJmMGUwNjcxMzkxYzk1ODg1MjQyZTc0MGQ0OGUiLCJzZWMiOiI5MzBkMTg4MzRmNDJjYzgzMWQyZTcwMTk4MzU3ZDIxMCIsInNpZyI6IjVmZWM4ZDU3OTY2MzRjYjAyOGI4ZTFlYjU4NTUyOThhZWExZDM1M2IxNjI2MGFkNDQ5ZDI4ZTcxNDgxNzQxOGIifQ.9IJKEe-0ZQ4UAtC6hzT8C_zWDRoalVxwdappFy0igUM'
 }
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除

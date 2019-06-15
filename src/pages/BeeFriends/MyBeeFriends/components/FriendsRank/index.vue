@@ -11,7 +11,11 @@
     >
       <div class="rank-content">
         <div class="rank-type">
-          <div class="type-tab">
+          <div
+            class="type-tab"
+            :class="{disabledTab1:friendsType!==1}"
+            @click="changeType(1)"
+          >
             <van-icon
               :name="beeIcon.bee_firends_basic_icon_firend"
               class="tab-img"
@@ -20,7 +24,11 @@
               蜂友：<span class="num">{{ friendsData.friends_num }} </span>个
             </div>
           </div>
-          <div class="type-tab disabled-tab2">
+          <div
+            class="type-tab"
+            :class="{disabledTab2:friendsType!==2}"
+            @click="changeType(2)"
+          >
             <van-icon
               :name="beeIcon.bee_firends_basic_icon_association"
               class="tab-img"
@@ -95,10 +103,12 @@
               </div>
               <div class="firends-name">
                 <div class="left-detail">
-                  <span
+                  <div
                     class="name"
                     :class="{partner:item.is_partner}"
-                  >{{ item.nickname }}</span>
+                  >
+                    {{ item.nickname }}
+                  </div>
                   <span
                     v-if="item.current_friends_num"
                     class="firends"
@@ -165,6 +175,10 @@ export default {
     },
     handleClose() {
       this.$emit('update:showRank', false)
+    },
+    changeType(type) {
+      this.friendsType = type
+      this.getFriendsData()
     }
   }
 }
@@ -215,12 +229,12 @@ export default {
           top: -0.88rem;
           left: 2.9rem;
         }
-        .disabled-tab1 {
+        .disabledTab1 {
           background-color: @Grey7;
           border-top-left-radius: 0.3rem;
           border-bottom-right-radius: 0.3rem;
         }
-        .disabled-tab2 {
+        .disabledTab2 {
           background-color: @Grey7;
           border-top-right-radius: 0.3rem;
           border-bottom-left-radius: 0.3rem;
@@ -274,6 +288,12 @@ export default {
                 .name {
                   font-size: 0.24rem;
                   font-weight: bold;
+                  display: inline-block;
+                  max-width: 1.5rem;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  vertical-align: middle;
                 }
                 .partner {
                   color: @BeeDefault;

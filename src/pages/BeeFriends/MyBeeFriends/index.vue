@@ -47,6 +47,7 @@
         alt="蜂友排行"
       >
     </div>
+    <!-- {{ token }} -->
     <honeycomb
       ref="honeycomb"
       :detail-card.sync="detailCard"
@@ -92,6 +93,7 @@ import FriendsRank from './components/FriendsRank'
 import JoinProject from './components/JoinProject'
 import ListType from './components/ListType'
 import { getPartner, getReceiveNum } from '@/api/BeeApi/user'
+import Cookies from 'js-cookie'
 
 export default {
   components: {
@@ -124,7 +126,8 @@ export default {
       partnerData: {
         show_users2: []
       },
-      can_receive_balance: 0
+      can_receive_balance: 0,
+      token: 0
     }
   },
   computed: {},
@@ -133,6 +136,7 @@ export default {
   mounted() {
     this.getPartnerData()
     this.getReceiveNumData()
+    this.token = Cookies.get('token')
   },
   methods: {
     async getPartnerData() {
@@ -167,6 +171,8 @@ export default {
 <style scoped lang="less">
 .my-friends {
   height: 100%;
+  width: 100%;
+  overflow: hidden;
   background-color: #fdd354;
   position: relative;
   background-size: contain;
@@ -235,8 +241,8 @@ export default {
     position: fixed;
     bottom: 0.6rem;
     left: 0.4rem;
-    height: 1.15rem;
-    width: 1rem;
+    height: 1.14rem;
+    width: 1.01rem;
     z-index: 100;
   }
   .honey-pop {
