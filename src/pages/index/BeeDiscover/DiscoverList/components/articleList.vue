@@ -76,10 +76,13 @@ export default {
     goDetail(is_article, id) {
       // 是否是文章
       if (is_article) {
+        console.log('这是文章:', is_article)
+
         this.$router.push({
           path: `/discover/article/${id}`
         })
       } else {
+        console.log('这是活动:', is_article)
         this.$router.push({
           path: '/activeTpl',
           query: {
