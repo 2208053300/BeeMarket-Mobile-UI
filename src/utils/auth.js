@@ -1,12 +1,10 @@
 import { getOs, GetRequest } from '@/utils'
 // import { Base64 } from 'js-base64'
 import Cookies from 'js-cookie'
-import { Toast } from 'vant'
 import { auditWechat } from '@/api/BeeApi/auth'
 // 获取Token
 export function getToken() {
   const osObj = getOs()
-  Toast(localStorage.getItem('BM-App-Token'))
   if (osObj.isWx) {
     const token = localStorage.getItem('BM-App-Token')
     const uriProp = GetRequest('code')
@@ -29,7 +27,7 @@ export function getToken() {
   } else {
     return localStorage.getItem('BM-App-Token')
   }
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjA1OTAzMjAsImV4cCI6MTU2MzE4MjMyMCwianRpIjoiZDZlMDU5ZTgwZGU0MzE5YzhmN2M0NzAyN2ZlZjNhZDQiLCJzZWMiOiI1NmFkOGViYmY5ZDM4NDc4MGQ3NGE3NjYyMzc4ZTNiNyIsInNpZyI6ImZkMThhMmZhYjk1YTkxMWU2ZjJiZmJmNmEyYmY4NjlhNGZhODM1ODIxYTFlOGExYmFjOTE0M2VlNjJjMmNkOTEifQ.5aOXGM3H3emEqkHwuuU6VywO726T498L2liJoK7kLWM'
+  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjA1NjQ4ODEsImV4cCI6MTU2MzE1Njg4MSwianRpIjoiMzk3NzJmMGUwNjcxMzkxYzk1ODg1MjQyZTc0MGQ0OGUiLCJzZWMiOiI5MzBkMTg4MzRmNDJjYzgzMWQyZTcwMTk4MzU3ZDIxMCIsInNpZyI6IjVmZWM4ZDU3OTY2MzRjYjAyOGI4ZTFlYjU4NTUyOThhZWExZDM1M2IxNjI2MGFkNDQ5ZDI4ZTcxNDgxNzQxOGIifQ.9IJKEe-0ZQ4UAtC6hzT8C_zWDRoalVxwdappFy0igUM'
 }
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除
@@ -51,7 +49,7 @@ export function checkToken() {
   if (osObj.isWx) {
     window.location.href =
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-      encodeURIComponent('http://app.fengjishi.com.cn/#/category/details?pid=165') +
+      encodeURIComponent(window.location.href) +
       '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
   } else if (osObj.isIphone || osObj.isAndroid) {
     // 如果是APP，获取APP放在cookie里的token
