@@ -4,7 +4,7 @@
       <van-cell
         is-link
         class="other1 sku-select"
-        @click="showSku=true"
+        @click="handleSku"
       >
         <p
           slot="title"
@@ -175,7 +175,7 @@
       </div>
     </van-actionSheet>
     <bee-sku
-      :show-sku.sync="showSku"
+      :show-sku.sync="$store.state.cart.showSku"
       :pid="commodityData.pid"
       :props-id.sync="propsId"
       :p-number.sync="pNumber"
@@ -202,7 +202,6 @@ export default {
   data() {
     return {
       showPromise: false,
-      showSku: false,
       skuName: [],
       propsId: [],
       sku_id: 0,
@@ -229,6 +228,9 @@ export default {
     },
     getSkuName(skuName) {
       this.skuName = skuName
+    },
+    handleSku() {
+      this.$store.state.cart.showSku = true
     }
   }
 }
@@ -239,7 +241,12 @@ export default {
   .other1 {
     margin-top: 0.2rem;
   }
-  .service-cell{
+  .sku-select{
+    .van-cell__title{
+      flex: 4;
+    }
+  }
+  .service-cell {
     padding: 0;
   }
   .van-cell {

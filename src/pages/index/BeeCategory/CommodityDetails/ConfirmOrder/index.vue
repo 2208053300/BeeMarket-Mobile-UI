@@ -21,11 +21,8 @@
         >
           运费
         </div>
-        <div
-          v-if="order.orderDetail.freight_amount"
-          class="cell-val"
-        >
-          ￥{{ order.orderDetail.freight_amount }}
+        <div class="cell-val">
+          ￥{{ order.orderDetail.freight_amount||0 }}
         </div>
       </van-cell>
       <van-cell class="deduction-content">
@@ -134,10 +131,12 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    console.log(this.order)
-
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    console.log(JSON.stringify(this.order.orderDetail))
+    if (JSON.stringify(this.order.orderDetail) === '{}') {
+      this.$router.go(-1)
+    }
   },
   methods: {
     async createOrderData() {
@@ -168,7 +167,13 @@ export default {
       if (res.status_code === 200) {
         console.log(res)
         this.order.payInfo = res.data
-        this.$router.push('/category/details/payOrder')
+        if (this.orderTypeText === 'please') {
+          this.$router.push('/category/details/payForAnother')
+        } else if (this.orderTypeText === 'present') {
+          this.$router.push('/category/details/giveFirends')
+        } else {
+          this.$router.push('/category/details/payOrder')
+        }
       }
     },
     changeOt(val) {
