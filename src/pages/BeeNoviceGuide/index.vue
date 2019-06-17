@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div :class="{ 'show-header': isWx }">
+    <bee-header v-if="isWx"/>
     <img :src="beeIcon.head">
     <div class="video-container">
       <div class="video">
@@ -32,11 +33,13 @@
 </template>
 
 <script>
+import BeeHeader from '@/components/index/BeeHeader'
+import { getOs } from '@/utils/index'
 export default {
   metaInfo: {
     title: '新手攻略'
   },
-  components: {},
+  components: { BeeHeader },
   props: {},
   data() {
     return {
@@ -57,7 +60,11 @@ export default {
       showControls: false
     }
   },
-  computed: {},
+  computed: {
+    isWx() {
+      return getOs().isWx
+    }
+  },
   watch: {},
   created() {},
   mounted() {
@@ -110,5 +117,8 @@ export default {
 }
 .lazy-img[lazy=loaded] {
   opacity: 1;
+}
+.show-header {
+  padding-top: 46px;
 }
 </style>

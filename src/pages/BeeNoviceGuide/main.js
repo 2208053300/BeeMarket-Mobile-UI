@@ -7,12 +7,14 @@ import '@/styles/index/index.less'
 import '@/utils/flexiable'
 
 // NOTE 引入Vant懒加载
-import { Lazyload } from 'vant'
+import { Lazyload, NavBar, Icon } from 'vant'
 import 'vant/lib/index.css'
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
 FastClick.attach(document.body)
 
+Vue.use(NavBar)
+Vue.use(Icon)
 Vue.use(Lazyload, {
   preLoad: 2
 })
