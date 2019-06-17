@@ -34,7 +34,7 @@
               class="tab-img"
             />
             <div class="type-num">
-              关联蜂友：<span class="num">{{ friendsData.relation_friends_num||0 }} </span>个
+              厂商：<span class="num">{{ friendsData.relation_friends_num||0 }} </span>个
             </div>
           </div>
           <div
@@ -85,7 +85,10 @@
             </div>
             <div class="friends-detail">
               <div class="head-img">
-                <div class="img-content">
+                <div
+                  class="img-content"
+                  :style="{borderColor:getColor(index)}"
+                >
                   <img
                     :src="item.head_image_url"
                     alt="头像"
@@ -121,10 +124,18 @@
                   </div>
                 </div>
                 <van-button
+                  v-if="friendsType===1"
                   class="remind-btn"
-                  @click="remindLoginData(item.id)"
+                  @click="remindLoginData(item.user_id)"
                 >
                   提醒登录
+                </van-button>
+                <van-button
+                  v-else
+                  class="remind-btn"
+                  @click="goStore(item.user_id)"
+                >
+                  进入店铺
                 </van-button>
               </div>
             </div>
@@ -191,6 +202,20 @@ export default {
     changeType(type) {
       this.friendsType = type
       this.getFriendsData()
+    },
+    getColor(index) {
+      if (index === 0) {
+        return '#FDBB18'
+      } else if (index === 1) {
+        return '#BEBEBE'
+      } else if (index === 2) {
+        return '#DB7D64'
+      } else {
+        return '#ffffff'
+      }
+    },
+    goStore(id) {
+      // TODO 跳转到店铺
     }
   }
 }
