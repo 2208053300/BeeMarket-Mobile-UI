@@ -603,8 +603,12 @@ const router = new Router({
           path: 'myCollected',
           name: 'myCollected',
           component: () => import('@/pages/index/BeePersion/MyCollected')
+        },
+        {
+          path: 'beeAbout',
+          name: 'beeAbout',
+          component: () => import('@/pages/BeeAbout')
         }
-
       ]
     },
     {
