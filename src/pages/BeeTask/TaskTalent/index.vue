@@ -95,7 +95,6 @@ export default {
         line_bee_circle_banner: require('@/assets/icon/task/talent/line_bee_circle_banner@2x.png'),
         first_screen: require('@/assets/icon/task/talent/first_screen@3x.png')
       },
-      playStatus: false,
       video_url: 'https://img.fengjishi.com.cn/product/video/mi9.mp4',
       hasFirstConsume: 0,
       showControls: false

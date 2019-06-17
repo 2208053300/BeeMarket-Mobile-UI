@@ -88,7 +88,7 @@ export default {
     // 获取百分值
     getAbsolute(value) {
       value = value || 0
-      if (value > 0) {
+      if (value >= 0) {
         return '高于均值' + Math.abs(value) + '%'
       } else {
         return '低于均值' + Math.abs(value) + '%'

@@ -65,11 +65,13 @@ const router = new Router({
           children: [
             {
               path: 'phone',
-              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo/bindPhone')
+              component: () =>
+                import('@/pages/BeeCompleteInfo/CompleteInfo/bindPhone')
             },
             {
               path: 'wechat',
-              component: () => import('@/pages/BeeCompleteInfo/CompleteInfo/bindWechat')
+              component: () =>
+                import('@/pages/BeeCompleteInfo/CompleteInfo/bindWechat')
             }
           ]
         },
@@ -80,14 +82,12 @@ const router = new Router({
             {
               path: '',
               name: 'ServiceHelperIndex',
-              component: () =>
-                import('@/pages/BeeHelper/ServiceHelperIndex')
+              component: () => import('@/pages/BeeHelper/ServiceHelperIndex')
             },
             {
               path: 'qustionList',
               name: 'qustionList',
-              component: () =>
-                import('@/pages/BeeHelper/QustionList')
+              component: () => import('@/pages/BeeHelper/QustionList')
             }
           ]
         },
@@ -129,7 +129,13 @@ const router = new Router({
             },
             {
               path: 'myEarn',
+              name: 'myEarn',
               component: () => import('@/pages/BeeFriends/MyEarn')
+            },
+            {
+              path: 'freeze',
+              name: 'freeze',
+              component: () => import('@/pages/BeeFriends/Freeze')
             }
           ]
         },
@@ -541,13 +547,16 @@ const router = new Router({
             },
             {
               path: 'about',
-              component: () => import('@/pages/index/BeePersion/BeeSetting/About'),
+              component: () =>
+                import('@/pages/index/BeePersion/BeeSetting/About'),
               children: [
                 {
                   path: '',
                   name: 'aboutIndex',
                   component: () =>
-                    import('@/pages/index/BeePersion/BeeSetting/About/AboutIndex')
+                    import(
+                      '@/pages/index/BeePersion/BeeSetting/About/AboutIndex'
+                    )
                 }
                 // {
                 //   path: 'useHelp',
@@ -573,16 +582,12 @@ const router = new Router({
             {
               path: '',
               name: 'ServiceHelperIndex',
-              component: () =>
-                import(
-                  '@/pages/BeeHelper/ServiceHelperIndex'
-                )
+              component: () => import('@/pages/BeeHelper/ServiceHelperIndex')
             },
             {
               path: 'QustionList',
               name: 'QustionList',
-              component: () =>
-                import('@/pages/BeeHelper/QustionList')
+              component: () => import('@/pages/BeeHelper/QustionList')
             }
           ]
         },
@@ -626,8 +631,12 @@ const router = new Router({
           path: 'myCollected',
           name: 'myCollected',
           component: () => import('@/pages/index/BeePersion/MyCollected')
+        },
+        {
+          path: 'beeAbout',
+          name: 'beeAbout',
+          component: () => import('@/pages/BeeAbout')
         }
-
       ]
     },
     {
