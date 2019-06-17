@@ -20,7 +20,8 @@ export function getOs() {
   return {
     isIphone: /iphone os/.test(UserAgent),
     isAndroid: /android/.test(UserAgent),
-    isWx: /micromessenger/.test(UserAgent)
+    isWx: /micromessenger/.test(UserAgent),
+    isApp: /isapp/.test(UserAgent)
     // isIpad: /ipad/.test(UserAgent),
     // isWindowsMobile: /windows mobile/.test(UserAgent),
     // isWin2K: /windows nt 5.0/.test(UserAgent),

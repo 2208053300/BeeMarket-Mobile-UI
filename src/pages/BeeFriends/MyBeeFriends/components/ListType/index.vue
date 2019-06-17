@@ -10,17 +10,14 @@
           alt="类型"
         >
       </div>
-      <div
-        v-if="showType"
-        class="arrow-img"
-      >
+      <div class="arrow-img">
         <img
           :src="beeIcon.bee_firends_icon_switch"
           alt="箭头"
         >
       </div>
     </div>
-    <transition name="van-slide-down">
+    <transition name="bee-slide-down">
       <div
         v-if="honeyType!==1&&showType"
         class="rt-item"
@@ -34,7 +31,7 @@
         </div>
       </div>
     </transition>
-    <transition name="van-slide-down">
+    <transition name="bee-slide-down2">
       <div
         v-if="honeyType!==2&&showType"
         class="rt-item"
@@ -48,7 +45,7 @@
         </div>
       </div>
     </transition>
-    <transition name="van-slide-down">
+    <transition name="bee-slide-down3">
       <div
         v-if="honeyType!==3&&showType"
         class="rt-item"
@@ -129,6 +126,33 @@ export default {
       height: 0.17rem;
       margin: auto;
     }
+  }
+  .bee-slide-down-enter-active,
+  .bee-slide-down-leave-active {
+    transition: all 0.5s;
+  }
+  .bee-slide-down-enter,
+  .bee-slide-down-leave-to {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  .bee-slide-down2-enter-active,
+  .bee-slide-down2-leave-active {
+    transition: all 0.5s;
+  }
+  .bee-slide-down2-enter,
+  .bee-slide-down2-leave-to {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  .bee-slide-down3-enter-active,
+  .bee-slide-down3-leave-active {
+    transition: all 0.5s;
+  }
+  .bee-slide-down3-enter,
+  .bee-slide-down3-leave-to {
+    transform: translateY(-40px);
+    opacity: 0;
   }
 }
 </style>

@@ -22,7 +22,7 @@ export function getToken() {
       console.log('微信CODE为空')
     }
     return localStorage.getItem('BM-App-Token')
-  } else if (osObj.isIphone || osObj.isAndroid) {
+  } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
     return Cookies.get('token')
   } else {
     return localStorage.getItem('BM-App-Token')
@@ -51,7 +51,7 @@ export function checkToken() {
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
       encodeURIComponent(window.location.href) +
       '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
-  } else if (osObj.isIphone || osObj.isAndroid) {
+  } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
     // 如果是APP，获取APP放在cookie里的token
     const token = Cookies.get('token')
     if (token) {

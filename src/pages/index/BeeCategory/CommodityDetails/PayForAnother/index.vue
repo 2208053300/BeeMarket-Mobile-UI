@@ -1,6 +1,7 @@
 <template>
   <div class="pay-for-another">
     <div
+      v-if="payStatus===1"
       class="waiting-pay"
       :style="{backgroundImage:'url('+beeIcon.confirmorder_wait_pay_pic_time+')'}"
     >
@@ -18,7 +19,7 @@
       <div class="gift-text">
         <span class="status-text">需支付金额</span>
         <div class="gift-price">
-          ￥<span class="price-num">840.00</span>
+          ￥<span class="price-num">{{ order.payInfo.pay_amount }}</span>
         </div>
         <div
           v-if="payStatus===1"
@@ -31,8 +32,12 @@
         <div class="info-title">
           赠送好友商品订单
         </div>
-        <p class="gift-name">
-          123456
+        <p
+          v-for="(item,index) in order.payInfo.pnames"
+          :key="index"
+          class="gift-name"
+        >
+          {{ item }}
         </p>
       </div>
     </div>
@@ -55,7 +60,6 @@
       confirm-button-text="退出"
       @confirm="confirmRoute()"
     >
-      <img src="https://img.yzcdn.cn/1.jpg">
       <span>是否退出</span>
       <p>如果退出，好友将不能为您进行代付</p>
     </van-dialog>
@@ -64,6 +68,7 @@
 
 <script>
 import shareChannel from './components/shareChannel'
+import { mapState } from 'vuex'
 export default {
   metaInfo() {
     if (this.payStatus === 0) {
@@ -89,16 +94,25 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['order'])
+  },
   watch: {},
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    console.log(JSON.stringify(this.order.payInfo))
+    if (JSON.stringify(this.order.payInfo) === '{}') {
+      this.$router.go(-1)
+    }
   },
   // NOTE 通过路由守卫弹出弹窗
   beforeRouteLeave(to, from, next) {
     this.toPath = to.path
+    if (JSON.stringify(this.order.payInfo) === '{}') {
+      next()
+    }
     if (!this.isConfirm) {
       this.askExit = true
       next(false)
@@ -171,6 +185,9 @@ export default {
       .info-title {
         font-size: 0.24rem;
         margin-bottom: 0.28rem;
+      }
+      .gift-name {
+        font-size: 0.22rem;
       }
     }
   }

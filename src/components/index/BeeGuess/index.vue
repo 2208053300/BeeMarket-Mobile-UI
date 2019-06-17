@@ -114,9 +114,9 @@ export default {
         this.$router.push({
           path: '/beeFarm'
         })
-      } else if (osObj.isIphone) {
+      } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToAgriculturalProducts.postMessage('')
-      } else if (osObj.isAndroid) {
+      } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToAgriculturalProducts()
       } else {
         this.$router.push({
@@ -134,12 +134,12 @@ export default {
             pid: pid
           }
         })
-      } else if (osObj.isIphone) {
+      } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({
           pid: pid,
           target: target
         })
-      } else if (osObj.isAndroid) {
+      } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToProductDetail(pid, target)
       } else {
         this.$router.push({
@@ -165,7 +165,7 @@ export default {
     padding: 0.4rem 0;
     display: flex;
     justify-content: space-between;
-    .img-content{
+    .img-content {
       width: 1.63rem;
       height: 0.28rem;
     }
