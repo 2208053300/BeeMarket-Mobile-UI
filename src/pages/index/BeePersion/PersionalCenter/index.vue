@@ -39,7 +39,7 @@
               {{ isLogin ? $store.state.user.userInfo.nickname : '未登录' }}
             </div>
             <div
-              v-if="userInfo.personal_info.is_partner"
+              v-if="userInfo.personal_info && userInfo.personal_info.is_partner"
               class="head-type"
             >
               <van-icon name="vip-card-o" />
@@ -103,7 +103,7 @@
             </div>
           </van-col>
           <van-col span="8">
-            <div>
+            <div @click="$router.push('/persion/beeAbout')">
               <van-icon :name="beeIcon.mine_icon_favorite" />
               <span>关于集市</span>
             </div>

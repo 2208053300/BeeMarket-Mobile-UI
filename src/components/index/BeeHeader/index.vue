@@ -38,21 +38,28 @@ export default {
   mounted() {},
   methods: {
     goHome() {
-      // FIXME 多页中，路由不同，需要设置为域名路径？
-      this.$store.state.app.beeHeader = false
-      this.$store.state.app.beeFooter = {
-        show: true,
-        active: 0
+      if (window.location.pathname === '/') {
+        this.$store.state.app.beeHeader = false
+        this.$store.state.app.beeFooter = {
+          show: true,
+          active: 0
+        }
+        this.$router.push('/')
+      } else {
+        window.location.href = '/'
       }
-      this.$router.push('/')
     },
     goCart() {
-      this.$store.state.app.beeHeader = false
-      this.$store.state.app.beeFooter.show = {
-        show: true,
-        active: 3
+      if (window.location.pathname === '/') {
+        this.$store.state.app.beeHeader = false
+        this.$store.state.app.beeFooter.show = {
+          show: true,
+          active: 3
+        }
+        this.$router.push('/cart')
+      } else {
+        window.location.href = '/#/cart'
       }
-      this.$router.push('/cart')
     }
   }
 }
