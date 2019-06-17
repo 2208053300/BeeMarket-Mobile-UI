@@ -375,6 +375,14 @@ const router = new Router({
             {
               path: 'baseInfo',
               component: () => import('@/pages/index/BeePersion/Profile/BaseInfo')
+            },
+            {
+              path: 'accountSafe',
+              component: () => import('@/pages/index/BeePersion/Profile/AccountSafe')
+            },
+            {
+              path: 'accountBind',
+              component: () => import('@/pages/index/BeePersion/Profile/AccountBind')
             }
           ]
         },
