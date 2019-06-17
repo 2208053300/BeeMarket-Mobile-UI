@@ -63,11 +63,11 @@ export default {
   methods: {
     bindWeChat() {
       const osObj = getOs()
-      if (osObj.isIphone) {
+      if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToBindWeChat.postMessage({
           target: ''
         })
-      } else if (osObj.isAndroid) {
+      } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToBindWeChat()
       } else {
         this.$toast.fail('请使用手机打开')

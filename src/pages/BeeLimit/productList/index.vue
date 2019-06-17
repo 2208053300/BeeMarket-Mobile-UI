@@ -63,7 +63,6 @@
 <script>
 import { getBeeLimitList } from '@/api/BeeApi/home'
 import { getOs } from '@/utils'
-import Cookies from 'js-cookie'
 export default {
   metaInfo() {
     return {
@@ -74,8 +73,7 @@ export default {
   props: {},
   data() {
     return {
-      commodityList: [],
-      test1: ''
+      commodityList: []
     }
   },
   computed: {},
@@ -85,7 +83,6 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getBeeLimitListData()
-    this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
   },
   methods: {
     async getBeeLimitListData() {
@@ -99,26 +96,29 @@ export default {
     goDetail(pid, target) {
       const osObj = getOs()
       if (osObj.isWx) {
-        this.$router.push({
-          path: '/category/details',
-          query: {
-            pid: pid
-          }
-        })
-      } else if (osObj.isIphone) {
+        // 微信直接跳转路由
+        window.location.href =
+          this.$store.state.app.homeUri +
+          '/category/details?pid=' +
+          pid +
+          '&target=' +
+          target
+        this.$store.state.order.target = target
+      } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({
           pid: pid,
           target: target
         })
-      } else if (osObj.isAndroid) {
+      } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToProductDetail(pid, target)
       } else {
-        this.$router.push({
-          path: '/category/details',
-          query: {
-            pid: pid
-          }
-        })
+        window.location.href =
+          this.$store.state.app.homeUri +
+          '/category/details?pid=' +
+          pid +
+          '&target=' +
+          target
+        this.$store.state.order.target = target
       }
     }
   }

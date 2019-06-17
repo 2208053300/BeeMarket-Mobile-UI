@@ -32,14 +32,14 @@
         <div class="com-detail1">
           <span class="com-text1">可用公益值</span>
           <p class="com-val">
-            {{ comVal.total_charity_value }}
+            {{ comVal.available_charity_value }}
           </p>
           <span
             class="time"
             @click="goDetail"
           >本期分值 {{ comVal.begin_time }} - {{ comVal.end_time }} ></span>
           <p class="rank">
-            在好友排名第2名
+            在好友排名第{{ comVal.ranking }}名
           </p>
         </div>
         <div class="com-detail2">
@@ -111,9 +111,9 @@ export default {
       const osObj = getOs()
       if (osObj.isWx) {
         this.$router.push({ name: 'CommonwealDetail' })
-      } else if (osObj.isIphone) {
+      } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToPWVDetail.postMessage('')
-      } else if (osObj.isAndroid) {
+      } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToPWVDetail()
       } else {
         this.$router.push({ name: 'CommonwealDetail' })

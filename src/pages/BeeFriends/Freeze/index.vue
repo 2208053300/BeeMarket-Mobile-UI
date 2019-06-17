@@ -144,12 +144,12 @@ export default {
             pid: pid
           }
         })
-      } else if (osObj.isIphone) {
+      } else if (osObj.isIphone && osObj.isApp) {
         // window.webkit.messageHandlers.ToProductDetail.postMessage({
         //   pid: pid,
         //   target: target
         // })
-      } else if (osObj.isAndroid) {
+      } else if (osObj.isAndroid && osObj.isApp) {
         // window.beeMarket.ToProductDetail(pid, target)
       } else {
         this.$router.push({
