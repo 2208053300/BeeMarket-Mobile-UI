@@ -10,6 +10,8 @@ import {
 } from '@/utils/auth'
 import { isJSON } from '@/utils'
 import store from '@/store'
+import { getOs } from '@/utils'
+
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
   timeout: 50000 // 请求超时时间(现在是50秒)
@@ -25,12 +27,16 @@ service.interceptors.request.use(
       duration: 0
     })
     console.log('请求参数：', config.data)
-    console.log(getToken())
-
     // 强制设置 token 在 getToken 函数中设置
+    const osObj = getOs()
     if (isLogin()) {
       config.headers['BM-App-Token'] = getToken()
+    } else if (osObj.isWx) {
+      // REVIEW 如果是微信，默认第一次直接授权
+      checkToken()
     }
+    console.log(config.headers['BM-App-Token'])
+
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {

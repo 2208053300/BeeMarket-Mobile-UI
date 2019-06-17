@@ -20,7 +20,7 @@
         >
       </div>
     </div>
-    <transition name="van-fade">
+    <transition name="van-slide-down">
       <div
         v-if="honeyType!==1&&showType"
         class="rt-item"
@@ -34,7 +34,7 @@
         </div>
       </div>
     </transition>
-    <transition name="van-fade">
+    <transition name="van-slide-down">
       <div
         v-if="honeyType!==2&&showType"
         class="rt-item"
@@ -48,7 +48,7 @@
         </div>
       </div>
     </transition>
-    <transition name="van-fade">
+    <transition name="van-slide-down">
       <div
         v-if="honeyType!==3&&showType"
         class="rt-item"

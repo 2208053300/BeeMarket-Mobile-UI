@@ -23,7 +23,7 @@
       <div
         ref="countItem"
         class="my-grade"
-        :style="{backgroundImage:'url('+beeIcon.bee_firends_icon_piggybank+')'}"
+        :style="{backgroundImage:'url('+beeIcon.bee_firend_icon_gold_top+')'}"
         @click="showProject=true"
       >
         {{ partnerData.sup_balance }}
@@ -53,8 +53,12 @@
       ref="honeycomb"
       :detail-card.sync="detailCard"
       :partner-data="partnerData"
+      :detail-item.sync="detailItem"
     />
-    <user-card :detail-card.sync="detailCard" />
+    <user-card
+      :detail-card.sync="detailCard"
+      :detail-item.sync="detailItem"
+    />
     <friends-rank :show-rank.sync="showRank" />
     <join-project :show-project.sync="showProject" />
     <transition name="fade1">
@@ -71,7 +75,7 @@
           {{ can_receive_balance }}个
         </div>
         <div
-          v-if="partnerData.can_receive_balance"
+          v-if="can_receive_balance"
           class="handle-tip"
         >
           <div class="tip-hand">
@@ -112,7 +116,7 @@ export default {
       showProject: false,
       beeIcon: {
         bee_firends_img_avatar_bg: require('@/assets/icon/beeFriends/home/bee_firends_img_avatar_bg.png'),
-        bee_firends_icon_piggybank: require('@/assets/icon/beeFriends/home/bee_firends_icon_piggybank.png'),
+        bee_firend_icon_gold_top: require('@/assets/icon/beeFriends/home/bee_firend_icon_gold_top.png'),
         bee_firends_icom_rule: require('@/assets/icon/beeFriends/home/bee_firends_icom_rule.png'),
         bee_firends_icon_firends: require('@/assets/icon/beeFriends/home/bee_firends_icon_firends.png'),
         bee_firend_icon_gold: require('@/assets/icon/beeFriends/home/bee_firend_icon_gold.png'),
@@ -129,7 +133,8 @@ export default {
         sup_balance: 0
       },
       can_receive_balance: 0,
-      countUpBalance: null
+      countUpBalance: null,
+      detailItem: {}
     }
   },
   computed: {},
@@ -147,23 +152,30 @@ export default {
     async getPartnerData() {
       const res = await getPartner({ type: this.partnerType })
       this.partnerData = res.data
-      // this.$refs.honeycomb.combData = this.partnerData.show_users2
-      const testArr = []
-      for (let index = 0; index < 20; index++) {
-        testArr.push(...this.partnerData.show_users2)
-      }
-      this.$refs.honeycomb.combData = testArr
-      console.log(testArr)
+      this.$refs.honeycomb.combData = this.partnerData.show_users2
+      // const testArr = []
+      // for (let index = 0; index < 20; index++) {
+      //   testArr.push(...this.partnerData.show_users2)
+      // }
+      // this.$refs.honeycomb.combData = testArr
+      // console.log(testArr)
 
-      await this.$refs.honeycomb.handleAction(testArr.length)
-      // await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
+      // await this.$refs.honeycomb.handleAction(testArr.length)
+      await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
       await this.$refs.honeycomb.animateList()
     },
     async getReceiveNumData() {
-      const res = await getReceiveNum({ type: this.listType })
-      this.can_receive_balance = res.data.can_receive_balance
+      const res = await getReceiveNum({ type: this.partnerType })
+      this.can_receive_balance = res.data ? res.data.can_receive_balance : 0
     },
     async harvestBalanceData() {
+      if (!this.can_receive_balance) {
+        this.$toast({
+          position: 'bottom',
+          message: '您目前还没有可收集的余额！'
+        })
+        return false
+      }
       const res = await harvestBalance({ type: this.partnerType })
       if (res.status_code === 200) {
         this.showHoney = false

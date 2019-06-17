@@ -13,8 +13,8 @@
       >
         <div class="card-header">
           <div class="title-content">
-            <!-- <span>个人信息</span> -->
-            <span>厂家信息</span>
+            <span v-if="detailItem.is_partner">个人信息</span>
+            <span v-else>厂家信息</span>
           </div>
           <div
             class="close-img"
@@ -38,17 +38,26 @@
             </div>
           </div>
           <div class="user-name">
-            用户名用户名
+            {{ detailItem.nickname }}
           </div>
-          <!-- <div class="user-grade">
+          <div
+            v-if="detailItem.is_partner"
+            class="user-grade"
+          >
             <van-icon :name="beeIcon.bee_firends_basic_icon_star" />
             <span class="name">合伙人</span>
-          </div> -->
-          <div class="store-name">
+          </div>
+          <div
+            v-else
+            class="store-name"
+          >
             店铺名
           </div>
         </div>
-        <div class="partner-content">
+        <div
+          v-if="detailItem.is_partner"
+          class="partner-content"
+        >
           <div
             class="partner"
             :style="{backgroundImage:'url('+beeIcon.bee_firends_img_bg_prompt+')'}"
@@ -56,14 +65,20 @@
             蜂集市合伙商家
           </div>
         </div>
-        <!-- <div class="friends-content">
-          <div class="friends-part">
+        <div
+          v-else
+          class="friends-content"
+        >
+          <div
+            v-if="detailItem.business"
+            class="friends-part"
+          >
             <van-icon
               :name="beeIcon.bee_firends_basic_icon_vendor"
               class="firends-image"
             />
             <div class="friends-num">
-              厂商:<span class="num">43</span>个
+              厂商:<span class="num">{{ detailItem.business }}</span>个
             </div>
           </div>
           <div class="friends-part">
@@ -72,19 +87,22 @@
               class="firends-image"
             />
             <div class="friends-num">
-              蜂友:<span class="num">43</span>个
+              蜂友:<span class="num">{{ detailItem.friend }}</span>个
             </div>
           </div>
-          <div class="friends-part">
+          <div
+            v-if="!detailItem.business"
+            class="friends-part"
+          >
             <van-icon
               :name="beeIcon.bee_firends_basic_icon_association"
               class="firends-image"
             />
             <div class="friends-num">
-              关联蜂友:<span class="num">43</span>个
+              关联蜂友:<span class="num">{{ detailItem.relation_friend }}</span>个
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
     </van-popup>
   </div>
@@ -97,6 +115,10 @@ export default {
     detailCard: {
       type: Boolean,
       default: false
+    },
+    detailItem: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {
@@ -186,7 +208,7 @@ export default {
           color: @Black1;
           margin: 0.2rem auto 0.16rem;
         }
-        .store-name{
+        .store-name {
           font-size: 0.3rem;
         }
         .user-grade {

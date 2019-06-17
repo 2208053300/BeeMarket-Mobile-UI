@@ -21,7 +21,7 @@
               class="tab-img"
             />
             <div class="type-num">
-              蜂友：<span class="num">{{ friendsData.friends_num }} </span>个
+              蜂友：<span class="num">{{ friendsData.friends_num||0 }} </span>个
             </div>
           </div>
           <div
@@ -34,7 +34,7 @@
               class="tab-img"
             />
             <div class="type-num">
-              关联蜂友：<span class="num">{{ friendsData.relation_friends_num }} </span>个
+              关联蜂友：<span class="num">{{ friendsData.relation_friends_num||0 }} </span>个
             </div>
           </div>
           <div
@@ -120,7 +120,10 @@
                     最后登录时间：<span class="time">{{ item.last_login_time }}</span>
                   </div>
                 </div>
-                <van-button class="remind-btn">
+                <van-button
+                  class="remind-btn"
+                  @click="remindLoginData(item.id)"
+                >
                   提醒登录
                 </van-button>
               </div>
@@ -138,7 +141,7 @@
 </template>
 
 <script>
-import { getFriends } from '@/api/BeeApi/user'
+import { getFriends, remindLogin } from '@/api/BeeApi/user'
 
 export default {
   components: {},
@@ -171,7 +174,16 @@ export default {
   methods: {
     async getFriendsData() {
       const res = await getFriends({ type: this.friendsType })
-      this.friendsData = res.data
+      this.friendsData = res.data || {}
+    },
+    async remindLoginData(id) {
+      const res = await remindLogin({ remind_user_id: id })
+      if (res.status_code === 200) {
+        this.$toast({
+          type: 'success',
+          message: res.message
+        })
+      }
     },
     handleClose() {
       this.$emit('update:showRank', false)
