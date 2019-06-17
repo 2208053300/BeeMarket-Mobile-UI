@@ -2,6 +2,7 @@ const order = {
   state: {
     orderDetail: {},
     source: 'shopcart',
+    target: 'general',
     addrDetail: {},
     payInfo: {}
   },

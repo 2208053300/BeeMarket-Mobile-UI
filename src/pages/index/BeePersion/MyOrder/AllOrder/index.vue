@@ -94,6 +94,7 @@ export default {
   },
   methods: {
     async changeOrder(index) {
+      this.formData.page = 1
       if ([-1, 0, 1, 2, 3].indexOf(index) !== -1) {
         this.formData.s_status = index
       }

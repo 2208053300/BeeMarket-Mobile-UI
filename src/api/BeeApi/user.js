@@ -401,3 +401,11 @@ export function getMyEarning(data) {
     data
   })
 }
+// 蜂友圈 - 我的收益
+export function remindLogin(data) {
+  return request({
+    url: '/user/partner/remind_user',
+    method: 'post',
+    data
+  })
+}

@@ -132,9 +132,9 @@ export default {
         this.$router.push({
           path: '/beeTask'
         })
-      } else if (osObj.isIphone) {
+      } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToBeeTask.postMessage('')
-      } else if (osObj.isAndroid) {
+      } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToBeeTask()
       } else {
         this.$router.push({

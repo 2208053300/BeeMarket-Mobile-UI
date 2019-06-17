@@ -16,7 +16,7 @@
         :class="[{showitem:showList.indexOf(item2.id)!==-1&&item2.nickname&&checkOverflow('hexagon'+item2.id)},{firstItem:item2.id===config.center_point.id}]"
         class="comb-card hexagon"
         :test="index2"
-        @click="showDetail(item2.id)"
+        @click="showDetail(item2)"
       >
         <div class="box1" />
         <div class="box2">
@@ -285,8 +285,9 @@ export default {
         this.showTime++
       }, 100)
     },
-    showDetail() {
+    showDetail(item) {
       this.$emit('update:detailCard', true)
+      this.$emit('update:detailItem', item)
     },
     // REVIEW 判断是否超出屏幕
     checkOverflow(val) {

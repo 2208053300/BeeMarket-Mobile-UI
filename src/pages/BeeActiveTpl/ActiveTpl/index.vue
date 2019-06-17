@@ -104,10 +104,41 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+
     this.getActivityDetailData()
+
+    // app 调用本地 方法，需将该方法挂载到window
+    window.appShare = this.appShare
+
     this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
 
-    document.querySelector('.showHeader').style.paddingTop = '0'
+    // document.querySelector('.showHeader').style.paddingTop = '0'
+
+    console.log(this.osObj)
+
+    if (this.osObj.isWx) {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+
+    } else if (this.osObj.isIphone) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
+    } else if (this.osObj.isAndroid) {
+      window.beeMarket.showShareIcon(true)
+    } else {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+
+    }
   },
   methods: {
     // 获取活动数据
@@ -178,12 +209,12 @@ export default {
             target
           }
         })
-      } else if (osObj.isIphone) {
+      } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({
           pid: pid,
           target: target
         })
-      } else if (osObj.isAndroid) {
+      } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToProductDetail(pid, target)
       } else {
         this.$router.push({
@@ -280,6 +311,37 @@ export default {
           document.body.scrollTop = total
           document.documentElement.scrollTop = total
         }
+      }
+    },
+
+    // 分享
+    appShare() {
+      if (this.osObj.isWx) {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+      } else if (this.osObj.isIphone) {
+        window.webkit.messageHandlers.ToShare.postMessage({
+          title: 'title',
+          desc: 'desc',
+          img_path: 'https://img.fengjishi.com.cn/bsm/marketing/app_discover_ZmrHYXhcwEH3v3hQ.jpg',
+          // 地址应该放 web 站 网页
+          url: window.location.href
+        })
+      } else if (this.osObj.isAndroid) {
+        window.beeMarket.ToShare('title', 'desc', 'https://img.fengjishi.com.cn/bsm/marketing/app_discover_ZmrHYXhcwEH3v3hQ.jpg', window.location.href)
+      } else {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
       }
     }
 

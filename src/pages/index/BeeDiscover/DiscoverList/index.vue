@@ -1,6 +1,6 @@
 <template>
   <div class="discover-container">
-<van-tabs
+    <van-tabs
       v-model="active"
       :color="BeeDefault"
       :title-active-color="BeeDefault"
@@ -20,7 +20,7 @@
         <article-list />
       </van-tab>
     </van-tabs>
-</div>
+  </div>
 </template>
 
 <script>
@@ -55,11 +55,11 @@ export default {
   padding: 0.1rem 0.3rem 60px;
   box-sizing: border-box;
   .van-tabs {
-    .van-tabs__wrap{
+    .van-tabs__wrap {
       margin: 0 0.6rem;
     }
-    .van-hairline--top-bottom::after{
-      border:none;
+    .van-hairline--top-bottom::after {
+      border: none;
     }
   }
 }

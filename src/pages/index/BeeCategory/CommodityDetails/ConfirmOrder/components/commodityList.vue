@@ -28,7 +28,7 @@
                   {{ item2.pname }}
                 </div>
                 <span class="num">
-                  x1
+                  x{{ item2.number }}
                 </span>
               </div>
               <div class="sku-price">
@@ -41,10 +41,10 @@
               </div>
             </div>
           </div>
-          <div class="buy-num">
+          <!-- <div class="buy-num">
             <span class="buy-text">购买数量</span>
             <van-stepper v-model="item2.number" />
-          </div>
+          </div> -->
         </div>
         <div class="commodity-message">
           <span class="message-text">留言：</span>
@@ -59,7 +59,6 @@
 </template>
 
 <script>
-// import { getOrderCommodity } from '@/api/category'
 import { mapState } from 'vuex'
 export default {
   components: {},
@@ -76,15 +75,8 @@ export default {
   },
   watch: {},
   created() {},
-  mounted() {
-    // this.getOrderCommodity()
-  },
-  methods: {
-    // async getOrderCommodity() {
-    //   const res = await getOrderCommodity()
-    //   this.orderCommodity = res.data.orderCommodity
-    // }
-  }
+  mounted() {},
+  methods: {}
 }
 </script>
 
@@ -139,13 +131,13 @@ export default {
               display: flex;
               justify-content: space-between;
               margin-top: 0.2rem;
-              .sku-text{
+              .sku-text {
                 font-size: 0.24rem;
                 color: @Grey1;
               }
-              .price-num{
+              .price-num {
                 font-size: 0.28rem;
-                color:  @BeeDefault;
+                color: @BeeDefault;
               }
             }
           }

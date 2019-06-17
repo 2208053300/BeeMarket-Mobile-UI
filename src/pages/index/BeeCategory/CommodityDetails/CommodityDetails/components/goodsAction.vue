@@ -102,6 +102,7 @@ export default {
       // TODO 如果未选择，如果初始带着商品属性跳转到商品详情页
       if (!this.$store.state.cart.skuId) {
         this.$toast('请先选择商品规格')
+        this.$store.state.cart.showSku = true
         return false
       }
       const res = await addShopcartProduct({
@@ -115,6 +116,7 @@ export default {
     async confirmOrderData() {
       if (!this.$store.state.cart.skuId) {
         this.$toast('请先选择商品规格')
+        this.$store.state.cart.showSku = true
         return false
       }
       const res = await confirmOrder(
@@ -147,7 +149,7 @@ export default {
     padding: 0.14rem 0.15rem;
     display: flex;
     justify-content: space-between;
-    background-color: #FFF5E9;
+    background-color: #fff5e9;
     .img-content {
       width: 1.88rem;
     }

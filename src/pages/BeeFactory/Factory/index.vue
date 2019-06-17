@@ -31,7 +31,9 @@
       <div class="form-box">
         <span class="form-title">厂商资料填写</span>
 
-        <form id="form" action="">
+        <form id="form" class="form" action="">
+          <img :src="icon.halfCircle" alt="" class="half-circle left">
+          <img :src="icon.halfCircle" class="half-circle right">
           <van-cell-group>
             <div class="van-cell van-field">
               <div class="van-cell__title van-field__label">
@@ -219,13 +221,14 @@ export default {
         factory_img1: require('@/assets/icon/joinFactory/factory_img1.png'),
         factory_img2: require('@/assets/icon/joinFactory/factory_img2.png'),
         add_shop_pic: require('@/assets/icon/joinFactory/add_shop_pic.png'),
-        factory_form_bg: require('@/assets/icon/joinFactory/factory_form_bg.png')
+        factory_form_bg: require('@/assets/icon/joinFactory/factory_form_bg.png'),
+        halfCircle: require('@/assets/icon/joinFactory/factory_img_circle.png')
       },
       // 表单model
       factory: {
-        firm: '测试',
-        contacter: '测试',
-        contact_phone: '13025644567',
+        firm: '',
+        contacter: '',
+        contact_phone: '',
         cat_name: '',
         cat_id: '',
         jy_id: '',
@@ -479,6 +482,7 @@ export default {
   .van-cell {
     display: flex;
     justify-content: space-between;
+    border-radius:0.1rem;
   }
   .van-field__label {
     display: flex;
@@ -590,10 +594,25 @@ export default {
     display: inline-block;
   }
   .form {
-    background: url(../../../assets/icon/joinFactory/factory_form_bg.png)
-      no-repeat;
-    background-size: 100% 100%;
-    padding: 0.4rem 0.2rem 0.1rem;
+    // background: url(../../../assets/icon/joinFactory/factory_form_bg.png)
+    //   no-repeat;
+    // background-size: 100% 100%;
+    // padding: 0.4rem 0.2rem 0.1rem;
+    position: relative;
+    .half-circle{
+      position: absolute;
+      width: 0.16rem;
+      height: 0.44rem;
+      top: 40%;
+      z-index: 9;
+    }
+    .left{
+      left: 0;
+      transform: rotate(180deg)
+    }
+    .right{
+      right:0;
+    }
   }
   .form-group {
     display: flex;
