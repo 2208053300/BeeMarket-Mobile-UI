@@ -1,6 +1,6 @@
 <template>
   <div :class="{ 'show-header': isWx }">
-    <bee-header v-if="isWx"/>
+    <bee-header v-if="isWx" />
     <img :src="beeIcon.head">
     <div class="video-container">
       <div class="video">
