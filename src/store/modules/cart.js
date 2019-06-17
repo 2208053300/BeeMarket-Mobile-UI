@@ -3,7 +3,8 @@ const cart = {
     cartInfo: [],
     cartSelected: [],
     skuId: 0,
-    pNumber: 1
+    pNumber: 1,
+    showSku: false
   },
   mutations: {
     SET_CartINFO: (state, cartInfo) => {
