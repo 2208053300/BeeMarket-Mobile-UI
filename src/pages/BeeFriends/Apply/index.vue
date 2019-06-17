@@ -37,9 +37,11 @@
           <form
             id="formP"
             action=""
-            class="form personal"
+            class="form personal bg-white"
             :class="{ active: isPersonal === true }"
           >
+            <img :src="icon.halfCircle" alt="" class="half-circle left">
+            <img :src="icon.halfCircle" class="half-circle right">
             <div class="form-group">
               <label for="personalName"><span>*</span>本人姓名</label>
               <div class="form-control">
@@ -193,7 +195,11 @@ export default {
       addressError: false,
 
       // 是否同意 合伙人共创协议
-      isAgree: true
+      isAgree: true,
+
+      icon: {
+        halfCircle: require('@/assets/icon/joinFactory/factory_img_circle.png')
+      }
     }
   },
   computed: {},
@@ -462,9 +468,9 @@ export default {
     display: inline-block;
   }
   .form {
-    background: url(../../../assets/icon/joinFactory/factory_form_bg.png)
-      no-repeat;
-    background-size: 100% 100%;
+    // background: url(../../../assets/icon/joinFactory/factory_form_bg.png)
+    //   no-repeat;
+    // background-size: 100% 100%;
     padding: 0.4rem 0.2rem 0.1rem;
   }
   .form-group {
@@ -611,6 +617,21 @@ export default {
   }
   .form {
     display: none;
+    position: relative;
+    .half-circle{
+      position: absolute;
+      width: 0.16rem;
+      height: 0.44rem;
+      top: 40%;
+      z-index: 9;
+    }
+    .left{
+      left: 0;
+      transform: rotate(180deg)
+    }
+    .right{
+      right:0;
+    }
   }
   .form.active {
     display: block;
