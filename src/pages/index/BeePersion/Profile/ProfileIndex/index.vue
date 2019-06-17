@@ -49,7 +49,6 @@ export default {
   data() {
     return {
       avatarImg: require('@/assets/icon/personalCenter/head_default.png')
-
     }
   },
   computed: {
