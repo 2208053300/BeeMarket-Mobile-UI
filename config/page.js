@@ -100,7 +100,7 @@ module.exports = {
     entry: 'src/pages/BeeAbout/main.js',
     title: '关于集市'
   },
-  // 新手攻略
+  // 新手攻略.
   beeNoviceGuide: {
     entry: 'src/pages/BeeNoviceGuide/main.js',
     title: '新手攻略'
