@@ -370,7 +370,7 @@ const router = new Router({
           children: [
             {
               path: '',
-              component: () => import('@/pages/index/BeePersion/Profile/ProfileIndex')
+              component: () => import('@/pages/index/BeePersion/Profile/profileIndex')
             },
             {
               path: 'baseInfo',
