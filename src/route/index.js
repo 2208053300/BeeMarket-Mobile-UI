@@ -364,6 +364,21 @@ const router = new Router({
           component: () => import('@/pages/index/BeePersion/PersionalCenter')
         },
         {
+          path: 'profile',
+          name: 'profile',
+          component: () => import('@/pages/index/BeePersion/Profile'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/index/BeePersion/Profile/profileIndex')
+            },
+            {
+              path: 'baseInfo',
+              component: () => import('@/pages/index/BeePersion/Profile/BaseInfo')
+            }
+          ]
+        },
+        {
           path: 'myQrcode',
           name: 'myQrcode',
           component: () => import('@/pages/index/BeePersion/MyQrcode')
@@ -603,8 +618,12 @@ const router = new Router({
           path: 'myCollected',
           name: 'myCollected',
           component: () => import('@/pages/index/BeePersion/MyCollected')
+        },
+        {
+          path: 'beeAbout',
+          name: 'beeAbout',
+          component: () => import('@/pages/BeeAbout')
         }
-
       ]
     },
     {
