@@ -91,7 +91,7 @@
             </div>
           </div>
           <div
-            v-if="!detailItem.business"
+            v-if="centerPoint.id!==detailItem.id"
             class="friends-part"
           >
             <van-icon

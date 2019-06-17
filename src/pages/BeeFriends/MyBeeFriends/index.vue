@@ -9,7 +9,7 @@
     >
       <div
         class="header-img"
-        @click="$router.push('/myEarn')"
+        @click="$router.push({name:'myEarn'})"
       >
         <div class="header-img2">
           <div class="header-img3">
