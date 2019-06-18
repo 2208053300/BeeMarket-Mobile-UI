@@ -42,7 +42,11 @@
               v-if="userInfo.personal_info && userInfo.personal_info.is_partner"
               class="head-type"
             >
-              <van-icon name="vip-card-o" />
+              <van-icon
+                v-for="(item,index) in userInfo.personal_info.grade"
+                :key="index"
+                :name="beeIcon.mine_icon_star_partner"
+              />
               <span>合伙人</span>
             </div>
           </van-col>
@@ -143,7 +147,8 @@ export default {
         mine_icon_pug: require('@/assets/icon/personalCenter/mine_icon_pug@2x.png'),
         mine_icon_customer: require('@/assets/icon/personalCenter/mine_icon_customer@2x.png'),
         mine_icon_set: require('@/assets/icon/personalCenter/mine_icon_set@2x.png'),
-        head_default: require('@/assets/icon/personalCenter/head_default.png')
+        head_default: require('@/assets/icon/personalCenter/head_default.png'),
+        mine_icon_star_partner: require('@/assets/icon/personalCenter/mine_icon_star_partner@2x.png')
       },
       userInfo: {
         personal_info: {
@@ -229,7 +234,7 @@ export default {
         background-color: #7f5723;
         display: inline-block;
         margin-top: 0.2rem;
-        padding: 0.06rem 0.3rem;
+        padding: 0.06rem 0.2rem;
         border-radius: 0.5rem;
         .van-icon {
           vertical-align: text-top;
@@ -243,7 +248,7 @@ export default {
     margin: 0 0.16rem 50px;
     position: relative;
     top: -1rem;
-    .cherity-img{
+    .cherity-img {
       height: 100%;
       width: 100%;
       background-size: cover;
