@@ -17,7 +17,7 @@
           <span>蜂集市，让生活丰富起来</span>
         </div>
         <van-icon
-          :name="beeIcon.home_icon_message"
+          :name="$store.state.user.have_no_read?beeIcon.home_icon_message:beeIcon.home_icon_message_prompt"
           class="message-icon"
           @click="$router.push('/beeNotice')"
         />
@@ -119,6 +119,8 @@ export default {
     this.$store.state.app.beeFooter.show = true
     this.getHomeData()
     // wxapi.wxRegister(this.wxRegCallback)
+    // 获取用户消息
+    this.$store.dispatch('GerUserMsg')
   },
   methods: {
     async getHomeData() {

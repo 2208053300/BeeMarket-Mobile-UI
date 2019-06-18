@@ -1,3 +1,5 @@
+import { getUserMsg } from '@/api/BeeApi/user'
+
 const user = {
   state: {
     userInfo: {
@@ -5,7 +7,8 @@ const user = {
       head_image: localStorage.getItem('head_image') || '',
       mobileAstr: localStorage.getItem('mobileAstr') || ''
     },
-    addressData: {}
+    addressData: {},
+    have_no_read: false
   },
   mutations: {
     SET_USER_INFO: (state, userInfo) => {
@@ -26,6 +29,9 @@ const user = {
     },
     SET_ADDRESSDATE: (state, addressData) => {
       state.addressData = addressData
+    },
+    SET_HAVE_NO_READ: (state, have_no_read) => {
+      state.have_no_read = have_no_read
     }
   },
   actions: {
@@ -34,6 +40,10 @@ const user = {
         commit('SET_USER_INFO')
         resolve()
       })
+    },
+    async GerUserMsg({ commit }) {
+      const res = await getUserMsg()
+      commit('SET_HAVE_NO_READ', res.data.have_no_read)
     }
   }
 }

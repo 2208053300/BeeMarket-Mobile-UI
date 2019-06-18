@@ -417,3 +417,11 @@ export function remindLogin(data) {
     data
   })
 }
+// 返回用户是否有未读消息
+export function getUserMsg(data) {
+  return request({
+    url: '/user/news/get_msg',
+    method: 'post',
+    data
+  })
+}
