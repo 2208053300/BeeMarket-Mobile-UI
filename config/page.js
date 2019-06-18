@@ -104,5 +104,10 @@ module.exports = {
   beeNoviceGuide: {
     entry: 'src/pages/BeeNoviceGuide/main.js',
     title: '新手攻略'
+  },
+  // 集市课堂
+  beeClassroom: {
+    entry: 'src/pages/BeeClassroom/main.js',
+    title: '集市课堂'
   }
 }
