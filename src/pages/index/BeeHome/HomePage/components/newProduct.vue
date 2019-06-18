@@ -5,10 +5,10 @@
     </div>
     <div class="product-list">
       <div
-        v-for="product in homeData.new_product"
-        :key="product.product_name"
+        v-for="(product,index) in homeData.new_product"
+        :key="index"
         class="product-detail"
-        @click="$router.push({path:'/category/details',query:{pid:product.product_id}})"
+        @click="goDetail(product.product_id,product.target)"
       >
         <div class="product-img">
           <img
@@ -50,7 +50,15 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goDetail(pid, target) {
+      this.$router.push({
+        path: '/category/details',
+        query: { pid: pid, target: target }
+      })
+      this.$store.state.order.target = target
+    }
+  }
 }
 </script>
 

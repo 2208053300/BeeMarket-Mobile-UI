@@ -22,12 +22,12 @@ const router = new Router({
           component: Home
         },
         {
-          path: 'activeTpl',
+          path: 'beeActiveTpl',
           component: () => import('@/pages/BeeActiveTpl'),
           children: [
             {
               path: '',
-              name: 'activeTpl',
+              name: 'beeActiveTpl',
               component: () => import('@/pages/BeeActiveTpl/ActiveTpl')
             }
           ]

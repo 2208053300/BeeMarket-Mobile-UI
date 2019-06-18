@@ -3,6 +3,7 @@
     <div
       class="action-header"
       :style="{backgroundImage:'url('+homeData.charity_action.show_image+')'}"
+      @click="$router.push({path:'/discover/action',query:{id:homeData.charity_action.action.action_id}})"
     />
     <div
       class="action-body"
@@ -59,11 +60,11 @@ export default {
     height: 1.76rem;
     padding: 0.4rem 0.3rem 0.32rem;
     box-sizing: border-box;
-    .action-title{
+    .action-title {
       font-size: 0.3rem;
       color: #ffffff;
     }
-    .action-subhead{
+    .action-subhead {
       font-size: 0.24rem;
       color: #ffffff;
       margin-top: 0.2rem;

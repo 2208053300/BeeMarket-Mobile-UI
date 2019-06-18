@@ -84,7 +84,7 @@ export default {
       } else {
         console.log('这是活动:', is_article)
         this.$router.push({
-          path: '/activeTpl',
+          path: '/beeActiveTpl',
           query: {
             id
           }

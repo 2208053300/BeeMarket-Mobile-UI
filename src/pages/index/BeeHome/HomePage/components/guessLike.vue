@@ -15,7 +15,7 @@
         v-for="(item,index) in guessData"
         :key="index"
         class="guess-card"
-        @click="$router.push({path: '/category/details',query: {pid: product_id}})"
+        @click="goDetail(item.product_id,item.target)"
       >
         <img
           :src="item.thumb_url"
@@ -75,6 +75,13 @@ export default {
           this.finished = true
         }
       }, 500)
+    },
+    goDetail(pid, target) {
+      this.$router.push({
+        path: '/category/details',
+        query: { pid: pid, target: target }
+      })
+      this.$store.state.order.target = target
     }
   }
 }

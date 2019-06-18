@@ -67,7 +67,7 @@
             <span>您暂未完成累计消费，再去看看商品吧!</span>
             <van-button
               class="go-shopping"
-              @click="goHome()"
+              @click="arouseApp"
             >
               去逛逛
             </van-button>
@@ -124,7 +124,7 @@
 <script>
 import { getTaskDetail } from '@/api/BeeApi/task'
 import echarts from 'echarts/dist/echarts.simple.min.js'
-import { goHome } from '@/utils'
+import { goHome, getOs } from '@/utils'
 
 export default {
   metaInfo: {
@@ -152,7 +152,6 @@ export default {
     this.getTaskDetailData()
   },
   methods: {
-    goHome,
     initPie() {
       const pie1 = echarts.init(this.$refs.pieChart)
       const option = {
@@ -193,6 +192,19 @@ export default {
     },
     geiGift() {
       // TODO 跳转下单
+    },
+    arouseApp() {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        // 微信直接跳转路由
+        goHome()
+      } else if (osObj.isIphone && osObj.isApp) {
+        window.webkit.messageHandlers.ToCatList.postMessage(1)
+      } else if (osObj.isAndroid && osObj.isApp) {
+        window.beeMarket.ToCatList()
+      } else {
+        goHome()
+      }
     }
   }
 }

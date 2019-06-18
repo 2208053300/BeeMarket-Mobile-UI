@@ -26,7 +26,7 @@
       <van-button
         round
         class="join-help2"
-        @click="goHome()"
+        @click="arouseApp()"
       >
         进入商城
       </van-button>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { goHome } from '@/utils'
+import { goHome, getOs } from '@/utils'
 export default {
   components: {},
   props: {},
@@ -55,7 +55,19 @@ export default {
     this.charity_value = this.$route.query.charity_value | 0
   },
   methods: {
-    goHome
+    arouseApp() {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        // 微信直接跳转路由
+        goHome()
+      } else if (osObj.isIphone && osObj.isApp) {
+        window.webkit.messageHandlers.ToCatList.postMessage(1)
+      } else if (osObj.isAndroid && osObj.isApp) {
+        window.beeMarket.ToCatList()
+      } else {
+        goHome()
+      }
+    }
   }
 }
 </script>
