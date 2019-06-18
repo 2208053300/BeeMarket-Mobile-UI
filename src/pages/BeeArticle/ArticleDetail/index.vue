@@ -120,22 +120,21 @@ export default {
       this.$store.state.app.beeFooter.show = false
     },
     // 网页跳转
-    webPush(pid) {
+    webPush(pid, target) {
       if (window.location.pathname === '/') {
         this.$router.push({
           path: '/category/details',
-          query: {
-            pid: pid
-          }
+          query: { pid: pid, target: target }
+
         })
       } else {
-        window.location.href = `/#/category/details?pid=${pid}`
+        window.location.href = `/#/category/details?pid=${pid}&target=${target}`
       }
     },
     goProduct(pid, target) {
       const osObj = getOs()
       if (osObj.isWx) {
-        this.webPush(pid)
+        this.webPush(pid, target)
       } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({
           pid: pid,
@@ -144,7 +143,7 @@ export default {
       } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToProductDetail(pid, target)
       } else {
-        this.webPush(pid)
+        this.webPush(pid, target)
       }
     },
     // 分享

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="item flex" @click="$router.push({path:'/category/details',query:{pid:item.pid}})">
+    <div
+      class="item flex"
+      @click="goDetail(item.pid,item.target)"
+    >
       <div class="img">
         <img :src="item.tUrl">
       </div>
@@ -10,10 +13,19 @@
         </p>
         <div class="tags-price">
           <div class="tags">
-            <van-button v-if="item.is_hot" round size="mini">
+            <van-button
+              v-if="item.is_hot"
+              round
+              size="mini"
+            >
               热销
             </van-button>
-            <van-button v-for="(tag, index) in item.tags" :key="index" round size="mini">
+            <van-button
+              v-for="(tag, index) in item.tags"
+              :key="index"
+              round
+              size="mini"
+            >
               {{ tag }}
             </van-button>
           </div>
@@ -29,9 +41,7 @@
 
 <script>
 export default {
-  components: {
-
-  },
+  components: {},
   props: {
     item: {
       type: Object,
@@ -39,67 +49,70 @@ export default {
     }
   },
   data() {
-    return {
-
-    }
+    return {}
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
-  created() {
-
-  },
-  mounted() {
-
-  },
+  computed: {},
+  watch: {},
+  created() {},
+  mounted() {},
   methods: {
-
+    goDetail(pid, target) {
+      this.$router.push({
+        path: '/category/details',
+        query: { pid: pid, target: target }
+      })
+      this.$store.state.order.target = target
+    }
   }
 }
 </script>
 
 <style scoped lang="less">
 // .item{margin-bottom: 0.1rem;}
-.img{
+.img {
   width: 2.8rem;
   height: 2.8rem;
   border-radius: 0.1rem;
   border: 1px solid #ddd;
-  img{width:100%;height:100%;}
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
-.info{
+.info {
   padding: 0.2rem 0;
   margin-left: 0.2rem;
   flex: 1;
 }
-.name{
+.name {
   font-size: 0.28rem;
   color: #666;
   margin: 0;
 }
-.tags{margin-bottom:0.2rem; }
-.van-button{
-  border-color:@BeeDefault;
+.tags {
+  margin-bottom: 0.2rem;
+}
+.van-button {
+  border-color: @BeeDefault;
   color: @BeeDefault;
-  &:first-of-type{
+  &:first-of-type {
     color: #fff;
     border: 0;
     // background: url(../../../../../../assets/category/list_pic_label.png) no-repeat;
     background-size: 100% 100%;
   }
 }
-.now-price{
+.now-price {
   color: @BeeDefault;
   font-size: 0.24rem;
-  span{font-size: 0.34rem;}
+  span {
+    font-size: 0.34rem;
+  }
 }
-.del-price{
-  margin-left:0.1rem;
-  text-decoration:line-through;
-  font-size: 0.2rem ;
+.del-price {
+  margin-left: 0.1rem;
+  text-decoration: line-through;
+  font-size: 0.2rem;
   color: #999;
 }
 </style>
