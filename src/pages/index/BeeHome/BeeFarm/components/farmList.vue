@@ -48,8 +48,15 @@
       </div>
     </div> -->
     <!-- 筛选排序 -->
-    <FilterBox @getFilter="getFilter" @showWay="showWay" @changeArea="changeArea" />
-    <div v-if="gridList" class="grid-list">
+    <FilterBox
+      @getFilter="getFilter"
+      @showWay="showWay"
+      @changeArea="changeArea"
+    />
+    <div
+      v-if="gridList"
+      class="grid-list"
+    >
       <van-list
         v-model="loading"
         :finished="finished"
@@ -61,7 +68,7 @@
             v-for="(item,index) in commodityList"
             :key="index"
             class="commodity-card"
-            @click="$router.push({path:'/category/details',query:{pid:item.pid}})"
+            @click="goDetail(item.pid, item.target)"
           >
             <img
               :src="item.tUrl"
@@ -116,7 +123,7 @@
           v-for="(item,index) in commodityList"
           :key="index"
           class="commodity-card"
-          @click="$router.push({path:'/category/details',query:{pid:item.pid}})"
+          @click="goDetail(item.pid, item.target)"
         >
           <div class="commodity-img">
             <img
@@ -217,17 +224,14 @@ export default {
         // asc 顺序 还是 desc 倒序
         order: '',
         // 页码
-        page: 1
+        page: 1,
+        t: 'produce'
       }
     }
   },
   computed: {},
-  watch: {
-
-  },
-  created() {
-
-  },
+  watch: {},
+  created() {},
   mounted() {},
   methods: {
     // 获取二级分类下商品列表
@@ -291,6 +295,13 @@ export default {
       }
       // 返回对象
       return _newPar
+    },
+    goDetail(pid, target) {
+      this.$router.push({
+        path: '/category/details',
+        query: { pid: pid, target: target }
+      })
+      this.$store.state.order.target = target
     }
 
     // async getProductListData(data) {
@@ -311,7 +322,6 @@ export default {
     //     }
     //   }, 500)
     // }
-
   }
 }
 </script>

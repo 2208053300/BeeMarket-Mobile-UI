@@ -5,8 +5,8 @@
     </div>
     <div class="project-list">
       <div
-        v-for="project in homeData.feature.top"
-        :key="project.mixed_id"
+        v-for="(project,index) in homeData.feature.top"
+        :key="index"
         class="project-detail"
       >
         <div class="project-img">
