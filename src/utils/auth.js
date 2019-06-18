@@ -1,7 +1,8 @@
 import { getOs } from '@/utils'
 // import { Base64 } from 'js-base64'
 import Cookies from 'js-cookie'
-// import { auditWechat } from '@/api/BeeApi/auth'
+import { auditWechat } from '@/api/BeeApi/auth'
+import { GetRequest } from '@/utils/index'
 // 获取Token
 export function getToken() {
   const osObj = getOs()
@@ -67,6 +68,6 @@ export function checkToken() {
     })
   }
 }
-// async function wxLogin(code) {
-//   await auditWechat({ code: code })
-// }
+async function wxLogin(code) {
+  await auditWechat({ code: code })
+}
