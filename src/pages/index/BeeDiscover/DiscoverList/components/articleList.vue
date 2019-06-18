@@ -7,7 +7,7 @@
       <van-list
         v-model="loading"
         :finished="finished"
-        finished-text="没有更多了"
+        finished-text="我也是有底线的 o(´^｀)o"
         @load="getArticleListData"
       >
         <div
@@ -105,6 +105,7 @@ export default {
     overflow: hidden;
     padding: 0.2rem;
     box-sizing: border-box;
+    box-shadow: 0 0 0.1rem 0.04rem @Grey7;
     .article-img {
       border-radius: 0.16rem;
       overflow: hidden;

@@ -2,6 +2,7 @@
   <!-- v-lazy-container="{ selector: 'img' }" -->
   <div class="rich-details">
     <div class="product-desc">
+      <!-- eslint-disable-next-line -->
       <iframe
         id="productIframe"
         ref="productIframe"

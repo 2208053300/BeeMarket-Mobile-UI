@@ -120,7 +120,7 @@ import { BeeDefault, Grey2 } from '@/styles/index/variables.less'
 export default {
   metaInfo() {
     return {
-      title: '限量蜂抢'
+      title: '购物车'
     }
   },
   components: {
@@ -241,7 +241,8 @@ export default {
   color: @Grey2;
 }
 .cart-container {
-  margin: 50px 0 60px;
+  padding: 50px 0 60px;
+  box-sizing: border-box;
   .bee-below {
     width: 100%;
   }

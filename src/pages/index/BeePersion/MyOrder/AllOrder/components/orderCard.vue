@@ -2,7 +2,7 @@
   <div class="order-content">
     <van-list
       v-model="loading"
-      finished-text="没有更多了"
+      finished-text="我也是有底线的 o(´^｀)o"
       class="guess-container"
       :finished="finished"
       :immediate-check="false"

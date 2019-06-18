@@ -14,6 +14,7 @@
         v-for="product in homeData.produce"
         :key="product.product_id"
         class="product-detail"
+        @click="goDetail(product.product_id, product.target)"
       >
         <div class="product-img">
           <img
@@ -55,7 +56,15 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goDetail(pid, target) {
+      this.$router.push({
+        path: '/category/details',
+        query: { pid: pid, target: target }
+      })
+      this.$store.state.order.target = target
+    }
+  }
 }
 </script>
 
