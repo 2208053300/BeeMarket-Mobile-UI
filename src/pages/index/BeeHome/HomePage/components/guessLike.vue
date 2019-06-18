@@ -5,7 +5,7 @@
     </div>
     <van-list
       v-model="loading"
-      finished-text="没有更多了"
+      finished-text="我也是有底线的 o(´^｀)o"
       class="guess-container"
       :finished="finished"
       :immediate-check="false"
@@ -130,6 +130,10 @@ export default {
         }
       }
     }
+  }
+  .van-list__finished-text {
+    grid-column-start: 1;
+    grid-column-end: 3;
   }
 }
 </style>

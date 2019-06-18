@@ -165,6 +165,7 @@ export default {
     margin-bottom: 0.2rem;
     background-color: #fff;
     padding: 0.3rem 0.2rem;
+    box-shadow: 0 0 0.1rem 0.04rem @Grey7;
     .van-card {
       background-color: #ffffff;
       padding: 0;

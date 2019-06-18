@@ -7,7 +7,7 @@
       <van-list
         v-model="loading"
         :finished="finished"
-        finished-text="没有更多了"
+        finished-text="我也是有底线的 o(´^｀)o"
         :immediate-check="false"
         @load="onLoad"
       >
@@ -122,6 +122,7 @@ export default {
     overflow: hidden;
     padding: 0.2rem;
     box-sizing: border-box;
+    box-shadow: 0 0 0.1rem 0.04rem @Grey7;
     .action-img {
       width: 6.56rem;
       height: 2.78rem;
