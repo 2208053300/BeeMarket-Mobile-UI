@@ -32,7 +32,7 @@
     </div>
     <div class="store-recommend">
       <div class="recommend-title">
-        - 店铺推荐 -
+        -  店铺推荐  -
       </div>
       <div class="recommend-content">
         <div

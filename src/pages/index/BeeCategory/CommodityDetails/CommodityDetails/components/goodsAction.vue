@@ -1,6 +1,9 @@
 <template>
   <div class="goods-action">
-    <div class="limit-product">
+    <div
+      v-if="commodityData.remaining"
+      class="limit-product"
+    >
       <div class="img-content">
         <img
           :src="beeIcon.product_detail_pic_grab"
@@ -8,7 +11,7 @@
         >
       </div>
       <div class="now-num">
-        仅剩 <span class="num">80</span> 件
+        仅剩 <span class="num">{{ commodityData.remaining }}</span> 件
       </div>
     </div>
     <van-goods-action v-if="commodityData">
@@ -25,6 +28,7 @@
       <van-goods-action-icon
         :icon="beeIcon.product_detail_icon_shopcart"
         text="购物车"
+        @click="$router.push('/cart')"
       />
       <!-- TODO 不可购买 -->
       <van-goods-action-button

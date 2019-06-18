@@ -54,12 +54,9 @@ export default {
     },
     // 打开活动
     goAction(banner) {
-      const pathname = urlParse(banner.url).pathname
-      const urlMap = {
-        '/beeActiveTpl': 'activeTpl'
-      }
+      // const pathname = urlParse(banner.url).pathname
       this.$router.push({
-        path: urlMap[pathname],
+        path: '/beeActiveTpl',
         query: {
           id: banner.plan_id
         }

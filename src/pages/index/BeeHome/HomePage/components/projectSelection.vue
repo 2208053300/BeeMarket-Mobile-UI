@@ -8,11 +8,12 @@
         v-for="(project, index) in homeData.feature.top"
         :key="index"
         class="project-detail"
+        @click="goDetail(project)"
       >
         <div class="project-img">
           <img
             :src="project.show_image"
-            alt=""
+            alt="专题图片"
           >
         </div>
         <div class="project-name">
@@ -57,7 +58,22 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goDetail(project) {
+      if (project.type === 1) {
+        this.$router.push({
+          path: '/beeActiveTpl',
+          query: { id: project.mixed_id }
+        })
+      } else if (project.type === 2) {
+        console.log(`/discover/article/${project.mixed_id}`)
+
+        this.$router.push({
+          path: `/discover/article/${project.mixed_id}`
+        })
+      }
+    }
+  }
 }
 </script>
 

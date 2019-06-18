@@ -1,8 +1,8 @@
 <template>
   <div class="com-detail">
     <van-notice-bar
-      v-if="recordList.scroll_message"
-      :text="recordList.scroll_message"
+      v-if="recordData.scroll_message"
+      :text="recordData.scroll_message"
       left-icon="volume-o"
       background="transparent"
     />
@@ -32,23 +32,31 @@
     </van-tabs>
     <div class="detail-card">
       <van-cell-group>
-        <van-cell
-          v-for="(item,index) in recordList.details"
-          :key="index"
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text="我也是有底线的 o(´^｀)o"
+          :immediate-check="false"
+          @load="onLoad"
         >
-          <template slot="title">
-            <div class="desc">
-              {{ item.desc }}
+          <van-cell
+            v-for="(item,index) in recordData.details"
+            :key="index"
+          >
+            <template slot="title">
+              <div class="desc">
+                {{ item.desc }}
+              </div>
+              <div class="time">
+                {{ item.created_at }}
+              </div>
+            </template>
+            <div class="comVal">
+              <span v-if="item.type===2">+{{ item.number }}</span>
+              <span v-else>-{{ item.number }}</span>
             </div>
-            <div class="time">
-              {{ item.created_at }}
-            </div>
-          </template>
-          <div class="comVal">
-            <span v-if="item.type===2">+{{ item.number }}</span>
-            <span v-else>-{{ item.number }}</span>
-          </div>
-        </van-cell>
+          </van-cell>
+        </van-list>
       </van-cell-group>
     </div>
   </div>
@@ -67,9 +75,13 @@ export default {
   props: {},
   data() {
     return {
-      recordList: {},
+      recordData: {},
       BeeDefault,
-      active: 0
+      active: 0,
+      loading: false,
+      finished: false,
+      page: 1,
+      recordList: []
     }
   },
   computed: {},
@@ -81,12 +93,34 @@ export default {
     this.mineCharityValueDetailData()
   },
   methods: {
-    async mineCharityValueDetailData() {
-      const res = await mineCharityValueDetail()
-      this.recordList = res.data
+    async mineCharityValueDetailData(data) {
+      const res = await mineCharityValueDetail(data)
+      this.recordData = res.data
+      this.recordList = res.data.details
+      this.page = 2
     },
     getList(index) {
-      // TODO 等接口，状态
+      this.mineCharityValueDetailData({
+        page: this.page,
+        status_code: this.active + 1
+      })
+      this.page = 2
+    },
+    onLoad() {
+      // 异步更新数据
+      setTimeout(async() => {
+        const res = await mineCharityValueDetail({
+          page: this.page,
+          status_code: this.active + 1
+        })
+        this.recordList.push(...res.data.details)
+        this.page++
+        this.loading = false
+        // 数据全部加载完成
+        if (res.data.details.length === 0) {
+          this.finished = true
+        }
+      }, 500)
     }
   }
 }

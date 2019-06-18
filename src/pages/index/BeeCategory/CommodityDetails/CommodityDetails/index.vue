@@ -7,13 +7,13 @@
     >
       <commodity-overview :commodity-data="commodityData" />
       <other-info :commodity-data="commodityData" />
-      <div class="advertisement">
+      <!-- <div class="advertisement">
         广告位
         <img
           src=""
           alt=""
         >
-      </div>
+      </div> -->
       <user-assessment :commodity-data="commodityData" />
       <store-details :commodity-data="commodityData" />
       <rich-details :commodity-data="commodityData" />

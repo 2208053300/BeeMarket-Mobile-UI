@@ -9,7 +9,13 @@ const app = {
     // 图片错误时加载默认图片填充
     defaultImg:
       "this.src='https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg'",
-    homeUri: 'http://app.fengjishi.com.cn/#'
+    homeUri: 'http://app.fengjishi.com.cn/#',
+    share_data: {
+      desc: '',
+      img: '',
+      link: '',
+      title: ''
+    }
   },
   mutations: {
     SET_BEEFOOTER: (state, beeFooter) => {

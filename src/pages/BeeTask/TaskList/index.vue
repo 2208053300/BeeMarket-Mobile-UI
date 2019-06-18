@@ -13,7 +13,10 @@
           alt=""
         >
       </div>
-      <div class="header-text1">
+      <div
+        class="header-text1"
+        @click="$router.push('/persion/BeeCommonweal')"
+      >
         我的公益值：<span class="num">{{ taskData.basic_info.mine_charity_num }}</span> >
       </div>
       <div class="header-text2">
@@ -29,7 +32,7 @@
         <div class="body-title">
           <div class="title-text1">
             <div class="circle" />
-            {{ taskData.task_list[0].title }}
+            <span>{{ taskData.task_list[0].title }}</span>
             <div class="circle" />
           </div>
           <div class="title-text2">
@@ -118,7 +121,7 @@
         <div class="body-title">
           <div class="title-text1">
             <div class="circle" />
-            {{ taskData.task_list[1].title }}
+            <span>{{ taskData.task_list[1].title }}</span>
             <div class="circle" />
           </div>
           <div class="title-text2">
@@ -201,7 +204,7 @@ export default {
         task_pic_value: require('@/assets/icon/task/task_pic_value@2x.png')
       },
       showAll: false,
-      showSuccess: true
+      showSuccess: false
     }
   },
   computed: {},
@@ -224,7 +227,19 @@ export default {
       }
     },
     doTask(item) {
-      window.location.href = item.target_url
+      switch (item.target_to) {
+        case 1:
+          this.$router.push('/discover')
+          break
+        case 2:
+          window.location.href = item.target_url
+          break
+        case 3:
+          this.$router.push({ path: '/persion/order', query: { s_status: 3 } })
+          break
+        default:
+          break
+      }
     },
     getBg1(tid, status) {
       if (tid !== 7) {

@@ -31,8 +31,8 @@
           <img
             :src="category2.top.top_ad_image"
             alt="广告图"
+            :onerror="$store.state.app.defaultImg"
           >
-          act_id
         </div>
       </div>
       <template v-if="checkGroup(category2.groups)">
@@ -52,8 +52,10 @@
               @click="$router.push({path:'/category/SecCategoryList',query:{cid:item2.cid}})"
             >
               <div class="category3-img">
-                <img :src="item2.cat_image">
-                <!-- <img v-lazy="item2.cat_image"> -->
+                <img
+                  :src="item2.cat_image"
+                  :onerror="$store.state.app.defaultImg"
+                >
               </div>
               <div class="category3-title">
                 {{ item2.cname }}
@@ -231,6 +233,7 @@ export default {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 0.18rem;
+      margin-top: 0.24rem;
       .category3-card {
         .category3-img {
           height: 1.68rem;
@@ -238,9 +241,11 @@ export default {
           overflow: hidden;
           border-radius: 0.04rem;
           border: 0.02rem solid @Grey7;
+          box-sizing: border-box;
+          box-shadow: 0 0 0.1rem 0.04rem @Grey7;
         }
         .category3-title {
-          max-width: 1.4rem;
+          max-width: 1.68rem;
           text-align: center;
           font-size: 0.22rem;
           color: @Grey2;

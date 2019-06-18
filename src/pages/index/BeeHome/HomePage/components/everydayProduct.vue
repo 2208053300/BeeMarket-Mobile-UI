@@ -2,7 +2,12 @@
   <div class="everyday-product">
     <div class="card-top">
       <div class="card-title">
-        <van-icon :name="beeIcon.home_icon_everyday" />
+        <div class="everyday-icon">
+          <img
+            :src="beeIcon.home_icon_everyday"
+            alt="每日好货"
+          >
+        </div>
         <div class="title-text">
           每日好货
         </div>
@@ -15,7 +20,7 @@
           v-for="(item,index) in homeData.daily_product.products"
           :key="index"
           class="product-content"
-          @click="$router.push({path:'/category/details',query:{pid:item.product_id}})"
+          @click="goDetail(item.product_id, item.target)"
         >
           <div class="product-img">
             <img
@@ -37,12 +42,14 @@
         <img
           :src="homeData.limited_plan.left.show_image"
           alt="limited"
+          @click="$router.push('/beeLimit')"
         >
       </div>
       <div class="right-action">
         <img
           :src="homeData.limited_plan.right.show_image"
           alt="limited"
+          @click="$router.push({path:'/beeActiveTpl',query:{id:homeData.limited_plan.right.plan_id}})"
         >
       </div>
     </div>
@@ -84,7 +91,15 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goDetail(pid, target) {
+      this.$router.push({
+        path: '/category/details',
+        query: { pid: pid, target: target }
+      })
+      this.$store.state.order.target = target
+    }
+  }
 }
 </script>
 
@@ -100,9 +115,13 @@ export default {
     .card-title {
       font-size: 0.32rem;
       display: flex;
-      align-items: flex-end;
-      .van-icon {
-        align-self: center;
+      align-items: center;
+      .everyday-icon {
+        width: 0.28rem;
+        height: 0.3rem;
+        img {
+          vertical-align: inherit;
+        }
       }
       .title-text {
         margin: 0 0.3rem 0 0.12rem;
@@ -110,6 +129,7 @@ export default {
       .title-tips {
         font-size: 0.26rem;
         color: @Grey1;
+        align-self: flex-end;
       }
     }
     .product-list {

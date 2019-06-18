@@ -9,7 +9,7 @@
       <van-list
         v-model="loading"
         :finished="finished"
-        finished-text="没有更多了"
+        finished-text="我也是有底线的 o(´^｀)o"
         :offset="offset"
         :immediate-check="immediate"
         class="vertical-list"
@@ -22,7 +22,7 @@
       <van-list
         v-model="loading"
         :finished="finished"
-        finished-text="没有更多了"
+        finished-text="我也是有底线的 o(´^｀)o"
         :offset="offset"
         :immediate-check="immediate"
         class="hor-list "

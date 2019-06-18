@@ -5,10 +5,13 @@
       :key="action.mixed_id"
       class="action-card"
     >
-      <div class="action-img">
+      <div
+        class="action-img"
+        @click="goDetail1(action)"
+      >
         <img
           :src="action.show_img"
-          alt=""
+          alt="展示图"
         >
       </div>
       <div class="product-list">
@@ -16,6 +19,7 @@
           v-for="product in action.products"
           :key="product.product_id"
           class="product-detail"
+          @click="goDetail2(product.product_id, product.target)"
         >
           <div class="product-img">
             <img
@@ -74,7 +78,29 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goDetail1(project) {
+      if (project.type === 1) {
+        this.$router.push({
+          path: '/beeActiveTpl',
+          query: { id: project.mixed_id }
+        })
+      } else if (project.type === 2) {
+        console.log(`/discover/article/${project.mixed_id}`)
+
+        this.$router.push({
+          path: `/discover/article/${project.mixed_id}`
+        })
+      }
+    },
+    goDetail2(pid, target) {
+      this.$router.push({
+        path: '/category/details',
+        query: { pid: pid, target: target }
+      })
+      this.$store.state.order.target = target
+    }
+  }
 }
 </script>
 

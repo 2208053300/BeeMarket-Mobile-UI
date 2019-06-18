@@ -2,6 +2,7 @@
   <div
     class="bee-product"
     :style="{backgroundImage:'url('+homeData.plan.show_image+')'}"
+    @click="$router.push('/beeFactory')"
   />
 </template>
 
