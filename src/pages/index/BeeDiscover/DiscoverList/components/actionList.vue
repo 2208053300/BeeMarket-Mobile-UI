@@ -8,6 +8,7 @@
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
+        :immediate-check="false"
         @load="onLoad"
       >
         <div
@@ -83,12 +84,14 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    this.getActionListData()
+  },
   methods: {
     async getActionListData() {
       const res = await getActionList()
       this.actionList = res.data
-      this.page = 1
+      this.page = 2
       // 加载状态结束
       this.loading = false
     },
