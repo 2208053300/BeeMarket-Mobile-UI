@@ -107,14 +107,12 @@ export default {
 
     this.getActivityDetailData()
 
-    // app 调用本地 方法，需将该方法挂载到window
-    window.appShare = this.appShare
-
     this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
 
     // document.querySelector('.showHeader').style.paddingTop = '0'
 
-    console.log(this.osObj)
+    // app 调用本地 方法，需将该方法挂载到window
+    window.appShare = this.appShare
 
     if (this.osObj.isWx) {
       // this.$router.push({
@@ -125,9 +123,9 @@ export default {
       //   }
       // })
 
-    } else if (this.osObj.isIphone) {
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
       window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
-    } else if (this.osObj.isAndroid) {
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
       window.beeMarket.showShareIcon(true)
     } else {
       // this.$router.push({
@@ -324,16 +322,21 @@ export default {
       //     target
       //   }
       // })
-      } else if (this.osObj.isIphone) {
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToShare.postMessage({
           title: 'title',
           desc: 'desc',
           img_path: 'https://img.fengjishi.com.cn/bsm/marketing/app_discover_ZmrHYXhcwEH3v3hQ.jpg',
           // 地址应该放 web 站 网页
-          url: window.location.href
+          url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
         })
-      } else if (this.osObj.isAndroid) {
-        window.beeMarket.ToShare('title', 'desc', 'https://img.fengjishi.com.cn/bsm/marketing/app_discover_ZmrHYXhcwEH3v3hQ.jpg', window.location.href)
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToShare(
+          'title',
+          'desc',
+          'https://img.fengjishi.com.cn/bsm/marketing/app_discover_ZmrHYXhcwEH3v3hQ.jpg',
+          this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+        )
       } else {
       // this.$router.push({
       //   path: '/category/details',

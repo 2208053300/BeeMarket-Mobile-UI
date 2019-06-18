@@ -128,7 +128,7 @@ export default {
       center_point['class'] = 'c0'
 
       this.config['center_point'] = center_point
-
+      this.$parent.centerPoint = center_point
       this.config['circle_list'] = []
       for (let i = 0; i <= this.config['total_circle']; i++) {
         if (i === 0) {

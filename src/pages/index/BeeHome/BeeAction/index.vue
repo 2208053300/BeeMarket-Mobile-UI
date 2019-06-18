@@ -139,6 +139,7 @@ export default {
         .left-text {
           flex: 1;
           margin-right: 0.4rem;
+          max-width: 5.5rem;
         }
         .action-title {
           font-size: 0.32rem;

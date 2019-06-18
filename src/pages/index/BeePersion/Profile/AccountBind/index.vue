@@ -2,34 +2,28 @@
   <div class="profile">
     <ul class="cell-list bg-white">
       <li>
-        <div class="item flex flex-between align-center" @click="$router.push('/persion/profile/baseInfo')">
-          <span class="title">基本信息</span>
-          <div class="link-icon">
-            <img :src="avatarImg" alt="" class="avatar">
+        <div class="item flex flex-between align-center">
+          <span class="title">手机绑定</span>
+          <div class="link-icon  flex align-center">
+            <span class="tip">请尽快绑定您的手机号码</span>
             <van-icon name="arrow" size="0.26rem" color="#666" />
           </div>
         </div>
       </li>
       <li>
-        <div class="item flex flex-between align-center" @click="$router.push('/persion/profile/accountSafe')">
-          <span class="title">账户安全</span>
-          <div class="link-icon">
+        <div class="item flex flex-between align-center">
+          <span class="title">微信绑定</span>
+          <div class="link-icon  flex align-center">
+            <span class="tip">请尽快绑定您的微信</span>
             <van-icon name="arrow" size="0.26rem" color="#666" />
           </div>
         </div>
       </li>
       <li>
-        <div class="item flex flex-between align-center" @click="$router.push('/persion/profile/accountBind')">
-          <span class="title">账户绑定</span>
-          <div class="link-icon">
-            <van-icon name="arrow" size="0.26rem" color="#666" />
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="item flex flex-between align-center" @click="$router.push('/persion/BeeSetting')">
-          <span class="title">设置</span>
-          <div class="link-icon">
+        <div class="item flex flex-between align-center">
+          <span class="title">qq绑定</span>
+          <div class="link-icon flex align-center">
+            <span class="tip">请尽快绑定您的QQ</span>
             <van-icon name="arrow" size="0.26rem" color="#666" class="icon" />
           </div>
         </div>
@@ -40,6 +34,9 @@
 
 <script>
 export default {
+  metaInfo: {
+    title: '账户安全'
+  },
   components: {
 
   },
@@ -49,6 +46,7 @@ export default {
   data() {
     return {
       avatarImg: require('@/assets/icon/personalCenter/head_default.png')
+
     }
   },
   computed: {
@@ -84,5 +82,6 @@ export default {
   }
   .title{font-size: .3rem;color:#333;}
   .avatar{width: 1rem;height: 1rem; margin-right: .2rem;}
+  .tip{font-size:0.26rem ;color:#999; margin-right: 0.2rem;}
 }
 </style>

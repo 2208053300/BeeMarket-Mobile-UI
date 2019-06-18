@@ -9,7 +9,7 @@
     >
       <div
         class="header-img"
-        @click="$router.push('/myEarn')"
+        @click="$router.push({name:'myEarn'})"
       >
         <div class="header-img2">
           <div class="header-img3">
@@ -26,7 +26,11 @@
         :style="{backgroundImage:'url('+beeIcon.bee_firend_icon_gold_top+')'}"
         @click="showProject=true"
       >
-        {{ partnerData.sup_balance }}
+        <ICountUp
+          :delay="delay"
+          :end-val="Number(partnerData.sup_balance)"
+          :options="options"
+        />
       </div>
     </div>
     <div class="rule-fixed">
@@ -48,7 +52,6 @@
         alt="蜂友排行"
       >
     </div>
-    <!-- {{ token }} -->
     <honeycomb
       ref="honeycomb"
       :detail-card.sync="detailCard"
@@ -58,6 +61,8 @@
     <user-card
       :detail-card.sync="detailCard"
       :detail-item.sync="detailItem"
+      :honey-type="honeyType"
+      :center-point="centerPoint"
     />
     <friends-rank :show-rank.sync="showRank" />
     <join-project :show-project.sync="showProject" />
@@ -72,7 +77,7 @@
           v-if="can_receive_balance"
           class="get-num"
         >
-          {{ can_receive_balance }}个
+          {{ can_receive_balance }}
         </div>
         <div
           v-if="can_receive_balance"
@@ -98,7 +103,7 @@ import UserCard from './components/UserCard'
 import FriendsRank from './components/FriendsRank'
 import JoinProject from './components/JoinProject'
 import ListType from './components/ListType'
-import CountUp from 'countup.js/dist/countUp.min.js'
+import ICountUp from 'vue-countup-v2'
 
 export default {
   components: {
@@ -106,7 +111,8 @@ export default {
     UserCard,
     FriendsRank,
     JoinProject,
-    ListType
+    ListType,
+    ICountUp
   },
   props: {},
   data() {
@@ -126,15 +132,25 @@ export default {
         bee_firends_img_bg: require('@/assets/icon/beeFriends/home/bee_firends_img_bg.png')
       },
       showHoney: true,
-      partnerType: 1,
-      honeyType: 1,
+      honeyType: 2,
       partnerData: {
         show_users2: [],
         sup_balance: 0
       },
       can_receive_balance: 0,
       countUpBalance: null,
-      detailItem: {}
+      detailItem: {},
+      delay: 1000,
+      options: {
+        useEasing: true,
+        useGrouping: true,
+        separator: ',',
+        decimal: '.',
+        prefix: '',
+        suffix: '',
+        decimalPlaces: 2
+      },
+      centerPoint: {}
     }
   },
   computed: {},
@@ -145,12 +161,10 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.getPartnerData()
     this.getReceiveNumData()
-    this.countUpBalance = new CountUp(this.$refs.countItem, 1000)
-    this.countUpNum()
   },
   methods: {
     async getPartnerData() {
-      const res = await getPartner({ type: this.partnerType })
+      const res = await getPartner({ type: this.honeyType })
       this.partnerData = res.data
       this.$refs.honeycomb.combData = this.partnerData.show_users2
       // const testArr = []
@@ -165,7 +179,7 @@ export default {
       await this.$refs.honeycomb.animateList()
     },
     async getReceiveNumData() {
-      const res = await getReceiveNum({ type: this.partnerType })
+      const res = await getReceiveNum({ type: this.honeyType })
       this.can_receive_balance = res.data ? res.data.can_receive_balance : 0
     },
     async harvestBalanceData() {
@@ -176,7 +190,7 @@ export default {
         })
         return false
       }
-      const res = await harvestBalance({ type: this.partnerType })
+      const res = await harvestBalance({ type: this.honeyType })
       if (res.status_code === 200) {
         this.showHoney = false
         setTimeout(() => {

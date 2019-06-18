@@ -13,7 +13,7 @@
       >
         <div class="card-header">
           <div class="title-content">
-            <span v-if="detailItem.is_partner">个人信息</span>
+            <span v-if="honeyType!==1">个人信息</span>
             <span v-else>厂家信息</span>
           </div>
           <div
@@ -31,8 +31,8 @@
             <div class="header-img2">
               <div class="header-img3">
                 <img
-                  src=""
-                  alt=""
+                  :src="detailItem.head_image_url"
+                  alt="头像"
                 >
               </div>
             </div>
@@ -41,7 +41,7 @@
             {{ detailItem.nickname }}
           </div>
           <div
-            v-if="detailItem.is_partner"
+            v-if="honeyType!==1"
             class="user-grade"
           >
             <van-icon :name="beeIcon.bee_firends_basic_icon_star" />
@@ -55,7 +55,7 @@
           </div>
         </div>
         <div
-          v-if="detailItem.is_partner"
+          v-if="honeyType===1"
           class="partner-content"
         >
           <div
@@ -66,11 +66,11 @@
           </div>
         </div>
         <div
-          v-else
+          v-if="honeyType!==1"
           class="friends-content"
         >
           <div
-            v-if="detailItem.business"
+            v-if="centerPoint.id===detailItem.id"
             class="friends-part"
           >
             <van-icon
@@ -91,7 +91,7 @@
             </div>
           </div>
           <div
-            v-if="!detailItem.business"
+            v-if="centerPoint.id!==detailItem.id"
             class="friends-part"
           >
             <van-icon
@@ -117,6 +117,14 @@ export default {
       default: false
     },
     detailItem: {
+      type: Object,
+      default: () => {}
+    },
+    honeyType: {
+      type: Number,
+      default: 1
+    },
+    centerPoint: {
       type: Object,
       default: () => {}
     }
@@ -200,6 +208,7 @@ export default {
               border-radius: 50%;
               border: 0.02rem solid #fed559;
               background-color: #fff;
+              overflow: hidden;
             }
           }
         }

@@ -66,7 +66,9 @@ export default {
   data() {
     return {
       article: {},
-      finished: false
+      finished: false,
+      // 获取 os 平台
+      osObj: getOs()
     }
   },
   computed: {},
@@ -84,6 +86,32 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getArticleDetailData()
+    // app 调用本地 方法，需将该方法挂载到window
+    window.appShare = this.appShare
+
+    if (this.osObj.isWx) {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(true)
+    } else {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+
+    }
   },
   methods: {
     async getArticleDetailData() {
@@ -117,6 +145,41 @@ export default {
         window.beeMarket.ToProductDetail(pid, target)
       } else {
         this.webPush(pid)
+      }
+    },
+    // 分享
+    appShare() {
+      if (this.osObj.isWx) {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToShare.postMessage({
+          title: 'title',
+          desc: 'desc',
+          img_path: 'https://img.fengjishi.com.cn/bsm/marketing/app_discover_ZmrHYXhcwEH3v3hQ.jpg',
+          // 地址应该放 web 站 网页
+          url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+        })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToShare(
+          'title',
+          'desc',
+          'https://img.fengjishi.com.cn/bsm/marketing/app_discover_ZmrHYXhcwEH3v3hQ.jpg',
+          this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+        )
+      } else {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
       }
     }
   }

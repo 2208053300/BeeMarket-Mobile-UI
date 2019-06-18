@@ -3,6 +3,7 @@
     <van-popup
       v-model="showRule"
       position="bottom"
+      :close-on-click-overlay="false"
       @click-overlay="closeRule"
       @close="closeRule"
     >
