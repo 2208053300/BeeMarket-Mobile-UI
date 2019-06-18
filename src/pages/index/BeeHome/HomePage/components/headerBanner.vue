@@ -20,7 +20,7 @@
 </template>
 
 <script>
-const urlParse = require('url-parse')
+// const urlParse = require('url-parse')
 export default {
   components: {},
   props: {
@@ -54,7 +54,7 @@ export default {
     },
     // 打开活动
     goAction(banner) {
-      const pathname = urlParse(banner.url).pathname
+      // const pathname = urlParse(banner.url).pathname
       this.$router.push({
         path: '/beeActiveTpl',
         query: {

@@ -235,7 +235,7 @@ export default {
           window.location.href = item.target_url
           break
         case 3:
-          this.$router.push({ path: '/persion/order', query: { s_status: 3 } })
+          this.$router.push({ path: '/persion/order', query: { s_status: 3 }})
           break
         default:
           break
