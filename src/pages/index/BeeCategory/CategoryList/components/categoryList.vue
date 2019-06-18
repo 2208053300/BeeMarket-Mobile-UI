@@ -32,7 +32,6 @@
             :src="category2.top.top_ad_image"
             alt="广告图"
           >
-          act_id
         </div>
       </div>
       <template v-if="checkGroup(category2.groups)">
@@ -231,6 +230,7 @@ export default {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 0.18rem;
+      margin-top: 0.24rem;
       .category3-card {
         .category3-img {
           height: 1.68rem;
@@ -238,9 +238,10 @@ export default {
           overflow: hidden;
           border-radius: 0.04rem;
           border: 0.02rem solid @Grey7;
+          box-sizing: border-box;
         }
         .category3-title {
-          max-width: 1.4rem;
+          max-width: 1.68rem;
           text-align: center;
           font-size: 0.22rem;
           color: @Grey2;
