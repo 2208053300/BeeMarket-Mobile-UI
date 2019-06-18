@@ -65,6 +65,6 @@ export default {
 }
 </script>
 
-<style  lang="less">
+<style lang="less">
 .fixed-header{z-index: 9999;}
 </style>

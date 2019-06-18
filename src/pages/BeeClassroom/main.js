@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './index.vue'
-import router from '@/route/beeArticle'
+import router from '@/route/beeClassroom'
 import Meta from 'vue-meta'
 import '@/styles/normalize.min.css'
 import '@/styles/index/index.less'
