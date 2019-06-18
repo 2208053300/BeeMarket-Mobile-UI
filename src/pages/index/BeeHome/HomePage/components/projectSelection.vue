@@ -5,7 +5,7 @@
     </div>
     <div class="project-list">
       <div
-        v-for="(project,index) in homeData.feature.top"
+        v-for="(project, index) in homeData.feature.top"
         :key="index"
         class="project-detail"
       >
