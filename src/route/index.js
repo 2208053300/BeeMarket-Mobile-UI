@@ -196,6 +196,21 @@ const router = new Router({
               component: () => import('@/pages/BeeTask/TaskTalent')
             }
           ]
+        },
+        {
+          path: 'beeClassroom',
+          component: () => import('@/pages/BeeClassroom'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/BeeClassroom/ClassroomList')
+            },
+            {
+              path: 'detail/:id',
+              name: 'classroomDetail',
+              component: () => import('@/pages/BeeClassroom/ClassroomDetail')
+            }
+          ]
         }
       ]
     },
