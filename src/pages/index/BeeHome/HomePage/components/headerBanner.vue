@@ -2,7 +2,6 @@
   <div class="header-banner">
     <van-swipe
       :autoplay="3000"
-      :height="170"
       indicator-color="white"
     >
       <van-swipe-item
@@ -101,6 +100,7 @@ export default {
   .van-swipe {
     .van-swipe-item {
       background-color: @Grey2;
+      height: 3.1rem!important;
     }
     .van-swipe__indicators {
       .van-swipe__indicator {

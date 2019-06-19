@@ -147,7 +147,7 @@ export default {
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = true
-    this.$store.state.app.beeFooter.show = true
+    this.$store.state.app.beeFooter.show = false
     // TODO 如果已经成功，则不执行渲染，否则报错
     this.getTaskDetailData()
   },
@@ -188,9 +188,12 @@ export default {
     async getTaskDetailData() {
       const res = await getTaskDetail({ tid: this.$route.query.tid })
       this.taskData = res.data
-      this.initPie()
+      this.taskData.proportion = 49
+      if (this.taskData.proportion < 100) {
+        this.initPie()
+      }
     },
-    geiGift() {
+    getGift() {
       // TODO 跳转下单
     },
     arouseApp() {

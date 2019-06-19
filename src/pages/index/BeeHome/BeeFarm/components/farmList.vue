@@ -60,6 +60,7 @@
       <van-list
         v-model="loading"
         :finished="finished"
+        :immediate-check="false"
         finished-text="我也是有底线的 o(´^｀)o"
         @load="getProductListData(condition)"
       >
@@ -116,6 +117,7 @@
       <van-list
         v-model="loading"
         :finished="finished"
+        :immediate-check="false"
         finished-text="我也是有底线的 o(´^｀)o"
         @load="getProductListData(condition)"
       >
@@ -179,8 +181,61 @@
           <span class="filter-line">————</span> 地区筛选 <span class="filter-line">————</span>
         </div>
         <div class="filter-content">
-          <div class="filter-card activeCard">
+          <div
+            class="filter-card"
+            :class="{activeCard:condition.area===''}"
+            @click="changeArea2('')"
+          >
             全部地区
+          </div>
+          <div
+            class="filter-card"
+            :class="{activeCard:condition.area===1}"
+            @click="changeArea2(1)"
+          >
+            西南地区
+          </div>
+          <div
+            class="filter-card"
+            :class="{activeCard:condition.area===2}"
+            @click="changeArea2(2)"
+          >
+            东北地区
+          </div>
+          <div
+            class="filter-card"
+            :class="{activeCard:condition.area===3}"
+            @click="changeArea2(3)"
+          >
+            西北地区
+          </div>
+          <div
+            class="filter-card"
+            :class="{activeCard:condition.area===4}"
+            @click="changeArea2(4)"
+          >
+            华南地区
+          </div>
+          <div
+            class="filter-card"
+            :class="{activeCard:condition.area===5}"
+            @click="changeArea2(5)"
+          >
+            华中地区
+          </div>
+          <div
+            class="filter-card"
+            :class="{activeCard:condition.area===6}"
+            @click="changeArea2(6)"
+          >
+            华北地区
+          </div>
+          <div
+            class="filter-card"
+            :class="{activeCard:condition.area===7}"
+            @click="changeArea2(7)"
+          >
+            华东地区
           </div>
         </div>
       </div>
@@ -207,8 +262,8 @@ export default {
       gridList: false,
       loading: false,
       finished: false,
-      commodityList: [],
       showArea: false,
+      commodityList: [],
       beeIcon: {
         list_icon_horizontal: require('@/assets/icon/category/list_icon_horizontal@2x.png'),
         list_icon_vertical: require('@/assets/icon/category/list_icon_vertical@2x.png'),
@@ -225,7 +280,8 @@ export default {
         order: '',
         // 页码
         page: 1,
-        t: 'produce'
+        target: 'produce',
+        area: ''
       }
     }
   },
@@ -252,10 +308,6 @@ export default {
     // 单排展示还是双排展示
     showWay(val) {
       this.gridList = val
-    },
-    // 选择地区
-    changeArea(val) {
-      this.showArea = val
     },
     // 筛选条件 // 0按综合获取 1销量 2价格
     getFilter(type) {
@@ -302,26 +354,15 @@ export default {
         query: { pid: pid, target: target }
       })
       this.$store.state.order.target = target
+    },
+    changeArea(bool) {
+      this.showArea = bool
+    },
+    changeArea2(aid) {
+      this.condition.area = aid
+      this.showArea = false
+      this.getProductListData()
     }
-
-    // async getProductListData(data) {
-    //   const res = await getProductList(data)
-    //   this.commodityList = res.data.products
-    // },
-    // onLoad() {
-    //   // 异步更新数据
-    //   setTimeout(async() => {
-    //     const res = await getProductList(this.nowCondition)
-    //     this.commodityList.push(...res.data.products)
-    //     // 加载状态结束
-    //     this.loading = false
-
-    //     // 数据全部加载完成
-    //     if (res.data.products.length === 0) {
-    //       this.finished = true
-    //     }
-    //   }, 500)
-    // }
   }
 }
 </script>
@@ -331,7 +372,7 @@ export default {
   // margin-top: 0.2rem;
   padding: 0.3rem;
   background-color: #fff;
-  // border-radius: 0.2rem;
+  border-radius: 0.2rem;
   box-sizing: border-box;
   .content-filter {
     display: flex;
