@@ -23,8 +23,7 @@
 </template>
 
 <script>
-// import { getArticleDetail } from '@/api/BeeApi/action'
-
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '公益合伙人'
@@ -33,7 +32,8 @@ export default {
   props: {},
   data() {
     return {
-
+      // 获取 os 平台
+      osObj: getOs()
     }
   },
   computed: {},
@@ -51,6 +51,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     // this.getArticleDetailData()
+    this.clearHistory()
   },
   methods: {
     // 跳转到注册页面
@@ -63,20 +64,31 @@ export default {
     // 跳转到申请页面
     goApply() {
       this.$router.push({
-        path: '/beeJoinFriendCicle/apply'
+        name: 'apply'
       })
     },
-
-    goProduct(pid) {
-      // 判断是否来自webApp
-      if (this.$route.query.origin) {
-        window.location.href = `/#/category/details?pid=${pid}`
+    // 清除历史
+    clearHistory() {
+      if (this.osObj.isWx) {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.clearHistory.postMessage({})
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.clearHistory()
       } else {
-        console.log('本地应用')
-        this.$router.push({
-          path: '/category/details',
-          query: { pid }
-        })
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
       }
     }
 
@@ -93,10 +105,12 @@ export default {
 .public-interest-partner{
     .action{width: 100%; height: 3.98rem; background: url(../../../assets/icon/joinFriendCicle/background.png) no-repeat; background-size:100% 100% ; padding-top: 0.55rem;
         display: block;
+        box-sizing: border-box;
         img{width: 4.3rem; height: 1.1rem; margin: 0 auto;}
     }
     .action2{width: 100%; height: 3.69rem; background: url(../../../assets/icon/joinFriendCicle/gy_part7_2.png) no-repeat; background-size:100% 100% ; padding-top: 0.55rem;
         display: block;
+        box-sizing: border-box;
         img{width: 4.3rem; height: 1.1rem; margin: 0 auto;}
     }
 }

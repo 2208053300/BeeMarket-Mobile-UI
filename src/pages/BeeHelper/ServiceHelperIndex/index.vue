@@ -87,7 +87,7 @@ export default {
       isShow: false,
       user: {
         nickname: '',
-        head_image_url: ''
+        head_image_url: require('@/assets/icon/personalCenter/head_default.png')
       },
       hot_problem: [
       ],

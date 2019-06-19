@@ -377,6 +377,22 @@ export function unsolved(data) {
     data
   })
 }
+// 蜂友圈 - 申请合伙人
+export function applyBeeFriend(data) {
+  return request({
+    url: '/user/partner/apply',
+    method: 'post',
+    data
+  })
+}
+// 蜂友圈 - 判断是否是合伙人
+export function isPartner(data) {
+  return request({
+    url: '/user/partner/is_partner',
+    method: 'post',
+    data
+  })
+}
 // 蜂友圈 - 首页API
 export function getPartner(data) {
   return request({
@@ -505,6 +521,15 @@ export function getMobile(data) {
 export function changeLoginPwd(data) {
   return request({
     url: '/user/account/changepwd',
+    method: 'post',
+    data
+  })
+}
+
+// 关于我们 二维码
+export function aboutUsQrImg(data) {
+  return request({
+    url: '/app/aboutUs',
     method: 'post',
     data
   })

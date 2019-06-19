@@ -10,8 +10,9 @@
       <detail-card3 class="details-card" :action-details="actionDetails" />
     </div>
     <div class="footer-action">
-      <div v-if="actionDetails.is_join" class="helped-text">
-        您已参与了该项目的助力，分享给更多好友，一起助力吧!
+      <div v-if="actionDetails.current_is_join" class="helped-text">
+        <!-- 您已参与了该项目的助力，分享给更多好友，一起助力吧! -->
+        您已参与了助力，分享给更多好友，一起助力吧!
       </div>
       <div class="action-button not-help">
         <!-- <van-button class="share-help">
@@ -185,9 +186,9 @@ export default {
     wxShareTimeline() {
       // 微信自定义分享到朋友圈
       const option = {
-        title: '分享标题, 请自行替换', // 分享标题, 请自行替换
+        title: this.actionDetails.subtitle, // 分享标题, 请自行替换
         link: window.location.href.split('#')[0], // 分享链接，根据自身项目决定是否需要split
-        imgUrl: 'logo.png', // 分享图标, 请自行替换，需要绝对路径
+        imgUrl: this.actionDetails.share_image, // 分享图标, 请自行替换，需要绝对路径
         success: () => {
           alert('分享成功')
         },
@@ -201,10 +202,10 @@ export default {
     wxShareAppMessage() {
       // 微信自定义分享给朋友
       const option = {
-        title: '限时团购周 挑战最低价', // 分享标题, 请自行替换
-        desc: '限时团购周 挑战最低价', // 分享描述, 请自行替换
+        title: this.actionDetails.subtitle, // 分享标题, 请自行替换
+        desc: this.actionDetails.top_desc, // 分享描述, 请自行替换
         link: window.location.href.split('#')[0], // 分享链接，根据自身项目决定是否需要split
-        imgUrl: 'logo.png', // 分享图标, 请自行替换，需要绝对路径
+        imgUrl: this.actionDetails.share_image, // 分享图标, 请自行替换，需要绝对路径
         success: () => {
           alert('分享成功')
         },
