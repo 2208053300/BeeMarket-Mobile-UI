@@ -12,14 +12,13 @@
           <van-icon
             :name="beeIcon.nav_icon_edit"
             size="20px"
-            style="margin-right:21px"
             @click="editCart"
           />
-          <van-icon
+          <!-- <van-icon
             :name="beeIcon.nav_icon_share"
             size="20px"
             @click="goSharePage"
-          />
+          /> -->
         </div>
         <span
           v-else
@@ -45,6 +44,7 @@
           <van-button
             type="default"
             class="add-btn"
+            @click="$router.push('/category')"
           >
             去添加
           </van-button>
@@ -111,6 +111,7 @@
 
 <script>
 import { getShopcartList, delShopcartProduct } from '@/api/BeeApi/user'
+import { collectProduct } from '@/api/BeeApi/product'
 import { confirmOrder } from '@/api/BeeApi/order'
 import CartList from './components/CartList'
 import BeeGuess from '@/components/index/BeeGuess'
@@ -137,7 +138,7 @@ export default {
       showEdit: false,
       beeIcon: {
         nav_icon_edit: require('@/assets/icon/cart/nav_icon_edit@2x.png'),
-        nav_icon_share: require('@/assets/icon/cart/nav_icon_share@2x.png'),
+        // nav_icon_share: require('@/assets/icon/cart/nav_icon_share@2x.png'),
         shopping_cart_pic_no: require('@/assets/icon/cart/shopping_cart_pic_no@2x.png')
       },
       guessData: []
@@ -224,8 +225,15 @@ export default {
       this.showEdit = !this.showEdit
     },
     // TODO 移入关注
-    starSelected() {
-      console.log(this.cart.cartSelected)
+    async starSelected() {
+      const ctids = this.cart.cartSelected.map(item => {
+        return item.cart_id
+      })
+      const res = await collectProduct({
+        contentId: [...ctids],
+        type: 1
+      })
+      this.$toast(res.message)
     },
     // TODO 删除选中
     async delSelected() {
@@ -235,6 +243,7 @@ export default {
       const res = await delShopcartProduct(JSON.stringify({ ctids: ctids }))
       if (res.status_code === 200) {
         this.getShopcartListData()
+        this.showEdit = false
       }
     }
   }
