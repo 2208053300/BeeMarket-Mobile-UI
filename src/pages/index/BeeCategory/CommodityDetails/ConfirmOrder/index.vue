@@ -56,7 +56,7 @@
         />
       </van-cell>
       <!-- TODO赠送好友取消该选项 -->
-      <van-cell v-if="orderTypeText!=='present'">
+      <!-- <van-cell v-if="orderTypeText!=='present'">
         <div
           slot="title"
           class="cell-title"
@@ -68,7 +68,7 @@
           :checked-color="BeeDefault"
           @change="changeOt"
         />
-      </van-cell>
+      </van-cell> -->
       <van-cell class="deduction-content">
         <div
           slot="title"
