@@ -142,14 +142,14 @@ export default {
     // 跳转到下载页面
     goDownloadPage() {
       this.$router.push({
-        path: '/download'
+        name: 'download'
       })
     },
 
     // 跳转到用户协议
     goAgreenment() {
       this.$router.push({
-        path: '/agreement'
+        name: 'agreement'
       })
     },
 

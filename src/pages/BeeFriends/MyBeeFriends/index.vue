@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
 import { getPartner, getReceiveNum, harvestBalance } from '@/api/BeeApi/user'
 import Honeycomb from './components/Honeycomb'
 import UserCard from './components/UserCard'
@@ -150,11 +151,27 @@ export default {
         suffix: '',
         decimalPlaces: 2
       },
-      centerPoint: {}
+      centerPoint: {},
+      // 获取 os 平台
+      osObj: getOs()
     }
   },
   computed: {},
   watch: {},
+  async beforeCreate() {
+    // 初始化实例之前判断该用户蜂友圈状态跳转页面
+    await this.$store.dispatch('GerUserStatus')
+    console.log('蜂友圈状态：', this.$store.state.user.userStatus)
+    setTimeout(() => {
+      console.log('蜂友圈状态：', this.$store.state.user.userStatus)
+    }, 1000)
+    // 0 非合伙人 1 合伙人 2 冻结
+    if (this.$store.state.user.userStatus === 0) {
+      this.$router.push({ name: 'introduction' })
+    } else if (this.$store.state.user.userStatus === 2) {
+      this.$router.push({ name: 'freeze' })
+    }
+  },
   created() {},
   mounted() {
     // this.$store.state.app.beeHeader = true
@@ -163,6 +180,7 @@ export default {
     this.getReceiveNumData()
   },
   methods: {
+
     async getPartnerData() {
       const res = await getPartner({ type: this.honeyType })
       this.partnerData = res.data

@@ -254,7 +254,10 @@ export default {
           }
           // 执行提交表单请求
           const res2 = await applyBeeFriend(data)
-          console.log(res2)
+          if (res2.status_code === 200) {
+            await this.$store.dispatch('GerUserStatus')
+            this.$router.push({ name: 'beeFriends' })
+          }
         } else {
           this.$toast('请同意合伙人共创协议')
         }

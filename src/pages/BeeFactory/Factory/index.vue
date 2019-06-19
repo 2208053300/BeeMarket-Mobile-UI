@@ -282,7 +282,7 @@ export default {
     // 跳转到入驻政策
     goEnterPolicty() {
       this.$router.push({
-        path: '/beeFactory/enterPolicty'
+        name: 'enterPolicty'
       })
     },
     // 示例

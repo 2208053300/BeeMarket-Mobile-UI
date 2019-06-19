@@ -23,7 +23,6 @@
 </template>
 
 <script>
-// import { getArticleDetail } from '@/api/BeeApi/action'
 
 export default {
   metaInfo: {
@@ -63,7 +62,7 @@ export default {
     // 跳转到申请页面
     goApply() {
       this.$router.push({
-        path: '/beeJoinFriendCicle/apply'
+        name: 'apply'
       })
     },
 

@@ -101,7 +101,7 @@
         </van-row>
         <van-row style="margin-top:0.5rem;">
           <van-col span="8">
-            <div @click="$router.push('/beeHelper')">
+            <div @click="$router.push({name:'ServiceHelperIndex'})">
               <van-icon :name="beeIcon.mine_icon_customer" />
               <span>客服帮助</span>
             </div>
