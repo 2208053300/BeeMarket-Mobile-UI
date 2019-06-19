@@ -3,39 +3,39 @@
     <div class="commodity-card">
       <div class="store-name">
         <van-icon name="shop-o" />
-        <span class="name">{{ orderDetail.storeName }}
+        <span class="name">{{ orderDetail.store_name }}
           <van-icon name="arrow" />
         </span>
       </div>
       <div class="commodity-content">
         <div
-          v-for="item2 in orderDetail.product"
-          :key="item2.id"
+          v-for="(product,index) in orderDetail.products"
+          :key="index"
           class="commodity-content2"
         >
           <div class="commodity-details">
             <div class="commodity-img">
               <img
-                :src="item2.previewImg"
-                alt=""
+                :src="product.tUrl"
+                alt="预览图"
               >
             </div>
             <div class="commodity-info">
               <div class="name-unit">
                 <div class="name">
-                  {{ item2.name }}
+                  {{ product.pname }}
                 </div>
 
                 <span class="price-num">
-                  ￥{{ item2.currentPrice }}
+                  ￥{{ product.sell_price }}
                 </span>
               </div>
               <div class="sku-price">
                 <div class="sku-text">
-                  {{ item2.sku }}
+                  {{ product.props_name }}
                 </div>
                 <span class="num">
-                  x{{ item2.num }}
+                  x{{ product.number }}
                 </span>
               </div>
             </div>
@@ -63,15 +63,15 @@
         <div class="price-detail">
           <div class="price-text">
             <span>商品总额</span>
-            <span>￥{{ orderDetail.price1 }}</span>
+            <span>￥{{ orderDetail.product_amount }}</span>
           </div>
           <div class="price-text">
             <span>公益值抵扣</span>
-            <span>￥{{ orderDetail.price2 }}</span>
+            <span>￥{{ orderDetail.charity_used }}</span>
           </div>
           <div class="price-text">
             <span>运费</span>
-            <span>￥{{ orderDetail.price3 }}</span>
+            <span>￥{{ orderDetail.freight_amount }}</span>
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@
         :class="{realPay2:[1,2,3].indexOf(orderDetail.status)!==-1}"
       >
         <span>实付金额</span>
-        <span class="pay-num">￥{{ orderDetail.price4 }}</span>
+        <span class="pay-num">￥{{ orderDetail.actual_paid }}</span>
       </div>
     </div>
   </div>

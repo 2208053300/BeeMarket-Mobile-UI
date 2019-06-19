@@ -224,6 +224,14 @@ export function getOrderList(data) {
     data
   })
 }
+// 获取订单详情
+export function getOrderDetail(data) {
+  return request({
+    url: '/user/order/detail',
+    method: 'post',
+    data
+  })
+}
 // 我的售后单删除售后单
 export function delAfterOrder(data) {
   return request({

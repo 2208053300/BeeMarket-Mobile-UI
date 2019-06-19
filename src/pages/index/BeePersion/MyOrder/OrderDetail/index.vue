@@ -27,7 +27,7 @@
         class="status-text2"
       >
         <!-- TODO 这里是时分秒倒计时？ -->
-        剩余时间: {{ orderDetail.payTime }}
+        剩余时间: {{ orderDetail.count_down }}
       </span>
       <span
         v-if="[6].indexOf(orderDetail.status)!==-1"
@@ -51,10 +51,10 @@
         </div>
         <div class="details2-content">
           <div class="details2-text">
-            订单编号：{{ orderDetail.orderNum }}
+            订单编号：{{ orderDetail.order_no }}
           </div>
           <div class="details2-text">
-            下单时间：{{ orderDetail.time1 }}
+            下单时间：{{ orderDetail.created_at }}
           </div>
           <div
             v-if="[6].indexOf(orderDetail.status)!==-1"
@@ -66,13 +66,13 @@
             v-if="[6].indexOf(orderDetail.status)===-1"
             class="details2-text"
           >
-            支付方式：{{ orderDetail.payWay }}
+            支付方式：{{ orderDetail.pay_method_name }}
           </div>
           <div
             v-if="[6].indexOf(orderDetail.status)===-1"
             class="details2-text"
           >
-            支付时间：{{ orderDetail.time2 }}
+            支付时间：{{ orderDetail.paid_at }}
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { getOrderDetail } from '@/api/user'
+import { getOrderDetail } from '@/api/BeeApi/user'
 import orderAddress from './components/orderAddress'
 import commodityList from './components/commodityList'
 import orderOp from './components/orderOp'
@@ -118,8 +118,10 @@ export default {
   },
   methods: {
     async getOrderDetailData() {
-      const res = await getOrderDetail()
-      this.orderDetail = res.data.orderData
+      const res = await getOrderDetail({
+        order_no: this.$route.query.order_no
+      })
+      this.orderDetail = res.data
     }
   }
 }

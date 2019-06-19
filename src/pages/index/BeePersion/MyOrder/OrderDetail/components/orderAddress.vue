@@ -32,15 +32,15 @@
       />
       <div class="address-details">
         <div class="user-details">
-          <span class="name">{{ orderDetail.addressData.username }}</span>
+          <span class="name">{{ orderDetail.name }}</span>
           <span
-            v-if="orderDetail.addressData.phone"
+            v-if="orderDetail.mobileNum"
             class="phone"
-          >{{ orderDetail.addressData.phone|toTel }}</span>
+          >{{ orderDetail.mobileNum|toTel }}</span>
         </div>
         <div class="address">
           <div class="address-details">
-            {{ orderDetail.addressData.details }}
+            {{ orderDetail.address }}
           </div>
         </div>
       </div>

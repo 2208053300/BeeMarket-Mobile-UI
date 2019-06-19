@@ -12,6 +12,7 @@
         v-for="(card,index) in orderList"
         :key="index"
         class="order-card"
+        @click="$router.push({path:'/persion/order/orderDetail',query:{order_no:card.order_no}})"
       >
         <div class="card-title">
           <div class="store-name">
@@ -111,6 +112,7 @@
             v-if="card.s_pay===0"
             round
             class="order-button"
+            @click.stop=""
           >
             <!-- TODO 接口缺少时间 -->
             付款<span>23:59</span>
@@ -119,7 +121,7 @@
             v-if="card.s_order===4"
             round
             class="order-button"
-            @click="$router.push('/persion/order/orderDetail')"
+            @click="$router.push({path:'/persion/order/orderDetail',query:{order_no:card.order_no}})"
           >
             查看详情
           </van-button>
