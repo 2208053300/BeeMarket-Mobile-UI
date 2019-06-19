@@ -2,56 +2,67 @@
   <div class="bee-limit">
     <div class="limit-content">
       <div class="header-img">
-        限量蜂抢
+        <img
+          :src="productData.banner_url"
+          alt=""
+        >
       </div>
       <div class="limit-list">
-        <div
-          v-for="item in commodityList.product_list"
-          :key="item.pid"
-          class="commodity-content"
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text="我也是有底线的 o(´^｀)o"
+          :immediate-check="false"
+          @load="onLoad"
         >
-          <div class="commodity-details">
-            <div class="commodity-img">
-              <img
-                :src="item.thumb_url"
-                alt=""
-              >
-            </div>
-            <div class="commodity-info">
-              <div class="name">
-                {{ item.pname }}
-              </div>
-              <div class="desc">
-                {{ item.pname }}
-              </div>
-              <div class="price">
-                <div class="now-price">
-                  ￥{{ item.price }}
-                </div>
-                <span class="old-price">
-                  ￥{{ item.marketing_price }}
-                </span>
-              </div>
-              <div class="info-footer">
-                <div class="limit-num">
-                  <span class="num">仅剩{{ item.remain_qty }}件</span>
-                  <div class="progress-content">
-                    <div
-                      :style="{width:getProgress(item.remain_qty,item.remain_qty)}"
-                      class="limit-progress"
-                    />
-                  </div>
-                </div>
-                <van-button
-                  class="go-buy"
-                  @click="goDetail(item.pid,item.target)"
+          <div
+            v-for="(item,index) in commodityList"
+            :key="index"
+            class="commodity-content"
+          >
+            <div class="commodity-details">
+              <div class="commodity-img">
+                <img
+                  :src="item.thumb_url"
+                  alt=""
                 >
-                  马上抢
-                </van-button>
+              </div>
+              <div class="commodity-info">
+                <div class="name">
+                  {{ item.pname }}
+                </div>
+                <div class="desc">
+                  {{ item.pname }}
+                </div>
+                <div class="price">
+                  <div class="now-price">
+                    ￥{{ item.price }}
+                  </div>
+                  <span class="old-price">
+                    ￥{{ item.marketing_price }}
+                  </span>
+                </div>
+                <div class="info-footer">
+                  <div class="limit-num">
+                    <span class="num">仅剩{{ item.remain_qty }}件</span>
+                    <div class="progress-content">
+                      <div
+                        :style="{width:getProgress(item.remain_qty,item.total_qty)}"
+                        class="limit-progress"
+                      />
+                    </div>
+                  </div>
+                  <van-button
+                    class="go-buy"
+                    @click="goDetail(item.pid,item.target)"
+                  >
+                    马上抢
+                  </van-button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </van-list>
       </div>
       <div class="waiting-more">
         <span>- 更多优品持续筹备中 -</span>
@@ -73,7 +84,11 @@ export default {
   props: {},
   data() {
     return {
-      commodityList: []
+      commodityList: [],
+      productData: {},
+      loading: false,
+      finished: false,
+      page: 1
     }
   },
   computed: {},
@@ -87,7 +102,10 @@ export default {
   methods: {
     async getBeeLimitListData() {
       const res = await getBeeLimitList()
-      this.commodityList = res.data
+      this.productData = res.data
+      this.page = 2
+      this.commodityList = res.data.product_list
+      this.loading = false
     },
     getProgress(val1, val2) {
       return (val1 / val2) * 100 + '%'
@@ -120,6 +138,24 @@ export default {
           target
         this.$store.state.order.target = target
       }
+    },
+    onLoad() {
+      // 异步更新数据
+      setTimeout(async() => {
+        if (this.productData.total === this.commodityList.length) {
+          this.finished = true
+          this.loading = false
+          return
+        }
+        const res = await getBeeLimitList({ page: this.page })
+        this.commodityList.push(...res.data)
+        this.page++
+        this.loading = false
+        // 数据全部加载完成
+        // if (res.data.product_list.length === 0) {
+        //   this.finished = true
+        // }
+      }, 500)
     }
   }
 }
@@ -138,6 +174,7 @@ export default {
       height: 3rem;
       border-radius: 0.16rem;
       background-color: #000;
+      overflow: hidden;
     }
     .commodity-content:last-child {
       .commodity-details .commodity-info .info-footer {

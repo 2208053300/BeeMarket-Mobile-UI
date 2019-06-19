@@ -97,9 +97,8 @@ export default {
   methods: {
     // 获取农副产品分类数据
     async getSecondCategoryData() {
-      const res = await getSecondCategory({ cid: 1, t: 'produce' })
+      const res = await getSecondCategory({ target: 'produce' })
       this.farmCategory = res.data.cats
-      // this.condition.cid = this.farmCategory[0].cid
       this.$refs.farmList.condition.cid = this.farmCategory[0].cid
       this.$refs.farmList.getProductListData()
     },

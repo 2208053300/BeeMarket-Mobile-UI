@@ -156,6 +156,8 @@ export default {
     width: 100%;
     height: 1.7rem;
     margin-bottom: 0.2rem;
+    border-radius: 0.1rem;
+    overflow: hidden;
   }
   .select-category {
     width: 21%;
@@ -213,7 +215,7 @@ export default {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            border-radius: 0.04rem;
+            border-radius: 0.08rem;
             border: 0.02rem solid @Grey7;
           }
           .category3-title {
