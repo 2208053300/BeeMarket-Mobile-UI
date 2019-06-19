@@ -377,6 +377,14 @@ export function unsolved(data) {
     data
   })
 }
+// 蜂友圈 - 申请合伙人
+export function applyBeeFriend(data) {
+  return request({
+    url: '/user/partner/apply',
+    method: 'post',
+    data
+  })
+}
 // 蜂友圈 - 首页API
 export function getPartner(data) {
   return request({
