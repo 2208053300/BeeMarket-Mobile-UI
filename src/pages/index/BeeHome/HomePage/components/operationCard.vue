@@ -1,7 +1,7 @@
 <template>
   <div class="operation-card">
     <div class="op-item">
-      <div class="img-content">
+      <div class="img-content" @click="$router.push('/beeClassroom')">
         <img
           :src="beeIcon.home_icon_classroom"
           alt="集市课堂"

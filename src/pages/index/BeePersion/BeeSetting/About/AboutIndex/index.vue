@@ -8,7 +8,7 @@
           class="logo"
         >
         <img
-          src="http://temp.im/640x260"
+          :src="icon.qrImg"
           alt=""
           class="qr-code"
         >
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { aboutUsQrImg } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '关于我们'
@@ -43,7 +44,8 @@ export default {
   data() {
     return {
       icon: {
-        logo: require('@/assets/icon/personalCenter/func/mine_aboutus_img_logo@2x.png')
+        logo: require('@/assets/icon/personalCenter/func/mine_aboutus_img_logo@2x.png'),
+        qrImg: ''
       }
     }
   },
@@ -53,10 +55,16 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+
+    this.getQrImg()
   },
   methods: {
-    back() {
-      this.$router.go(-1)
+    // 获取二维码
+    async getQrImg() {
+      const res = await aboutUsQrImg()
+      if (res.status_code === 200) {
+        this.icon.qrImg = 'data:image/jpeg;base64,' + res.data
+      }
     }
   }
 }

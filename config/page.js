@@ -88,7 +88,7 @@ module.exports = {
   // 关于我们 二维码注册
   beeRegister: {
     entry: 'src/pages/BeeRegister/main.js',
-    title: '注册'
+    title: ''
   },
   // 公告
   beeAnnouncement: {

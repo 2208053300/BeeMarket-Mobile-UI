@@ -171,7 +171,7 @@
 </template>
 
 <script>
-
+import { applyBeeFriend } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '申请合伙人'
@@ -245,16 +245,19 @@ export default {
         // 验证通过
         if (this.isAgree) {
           this.$toast('可以提交！')
-          // const data = {
-          //   name: this.personalName,
-          //   card_no: this.card_no,
-          //   number: this.number,
-          //   wx_account: this.wx_account,
-          //   address: this.address
-          // }
+          const data = {
+            name: this.personalName,
+            card_no: this.card_no,
+            number: this.number,
+            wx_account: this.wx_account,
+            address: this.address
+          }
           // 执行提交表单请求
-          // const res2 = await submitApplyData(data)
-          // console.log(res2)
+          const res2 = await applyBeeFriend(data)
+          if (res2.status_code === 200) {
+            await this.$store.dispatch('GerUserStatus')
+            this.$router.push({ name: 'beeFriends' })
+          }
         } else {
           this.$toast('请同意合伙人共创协议')
         }

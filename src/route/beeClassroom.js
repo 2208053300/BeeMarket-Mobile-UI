@@ -9,12 +9,12 @@ export default new Router({
 
   routes: [
     {
-      path: '/',
-      name: 'index',
+      path: '',
       component: () => import('@/pages/BeeClassroom'),
       children: [
         {
           path: '',
+          name: 'index',
           component: () => import('@/pages/BeeClassroom/ClassroomList')
         },
         {

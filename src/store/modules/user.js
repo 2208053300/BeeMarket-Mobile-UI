@@ -1,4 +1,4 @@
-import { getUserMsg } from '@/api/BeeApi/user'
+import { getUserMsg, isPartner } from '@/api/BeeApi/user'
 
 const user = {
   state: {
@@ -8,7 +8,8 @@ const user = {
       mobileAstr: localStorage.getItem('mobileAstr') || ''
     },
     addressData: {},
-    have_no_read: false
+    have_no_read: false,
+    userStatus: 1
   },
   mutations: {
     SET_USER_INFO: (state, userInfo) => {
@@ -32,6 +33,9 @@ const user = {
     },
     SET_HAVE_NO_READ: (state, have_no_read) => {
       state.have_no_read = have_no_read
+    },
+    SET_USER_STATUS: (state, userStatus) => {
+      state.userStatus = userStatus
     }
   },
   actions: {
@@ -44,6 +48,10 @@ const user = {
     async GerUserMsg({ commit }) {
       const res = await getUserMsg()
       commit('SET_HAVE_NO_READ', res.data.have_no_read)
+    },
+    async GerUserStatus({ commit }) {
+      const res = await isPartner()
+      commit('SET_USER_STATUS', res.data.is_partner)
     }
   }
 }

@@ -4,18 +4,8 @@
       <img :src="beeIcon.topImg">
     </div>
     <div class="name text-center">
-      <!-- 需判断是webapp打开还是 分享打开 -->
       <div class="app-show">
         <img :src="beeIcon.nameDefaultImg" class="img-default">
-        <p class="text">
-          “我为公益代言”
-        </p>
-      </div>
-      <div v-if="false" class="share-show">
-        <img :src="beeIcon.nameDefaultImg" class="avatar">
-        <p class="nickyname">
-          王麻子
-        </p>
         <p class="text">
           “我为公益代言”
         </p>
