@@ -35,8 +35,6 @@ service.interceptors.request.use(
       // REVIEW 如果是微信，默认第一次直接授权
       checkToken()
     }
-    console.log(config.headers['BM-App-Token'])
-
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
@@ -68,8 +66,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     Toast.clear()
-    // console.log(response)
-
+    console.log(response)
     if (response.headers['bm-app-token']) {
       setToken(response.headers['bm-app-token'])
     }
@@ -87,7 +84,6 @@ service.interceptors.response.use(
     } else {
       // Toast.success(res.message)
     }
-    console.log(res)
     return res
   },
   error => {

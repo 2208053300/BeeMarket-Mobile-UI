@@ -120,7 +120,7 @@ import { BeeDefault, Grey2 } from '@/styles/index/variables.less'
 export default {
   metaInfo() {
     return {
-      title: '限量蜂抢'
+      title: '购物车'
     }
   },
   components: {
@@ -161,18 +161,23 @@ export default {
       // 猜你喜欢
       this.guessData = res.data.guess
       // 获取全选状态
+      this.cart.cartSelected = []
       this.cart.cartInfo.map(item => {
         if (!item.checked) {
           this.allSelectedBox = false
         }
         // 获取已选商品对象
-        this.cart.cartSelected = item.products.filter(item2 => {
-          return item2.checked
-        })
+        this.cart.cartSelected.push(
+          ...item.products.filter(item2 => {
+            return item2.checked
+          })
+        )
       })
       // 总价
       this.totalPrices = 0
+
       this.cart.cartSelected.map(item => {
+        console.log(item.sell_price)
         this.totalPrices += item.sell_price * item.number * 100
       })
     },
@@ -241,7 +246,8 @@ export default {
   color: @Grey2;
 }
 .cart-container {
-  margin: 50px 0 60px;
+  padding: 50px 0 60px;
+  box-sizing: border-box;
   .bee-below {
     width: 100%;
   }

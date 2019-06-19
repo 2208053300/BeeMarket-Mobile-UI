@@ -224,6 +224,14 @@ export function getOrderList(data) {
     data
   })
 }
+// 获取订单详情
+export function getOrderDetail(data) {
+  return request({
+    url: '/user/order/detail',
+    method: 'post',
+    data
+  })
+}
 // 我的售后单删除售后单
 export function delAfterOrder(data) {
   return request({
@@ -422,6 +430,14 @@ export function remindLogin(data) {
 export function sendSms(data) {
   return request({
     url: '/user/auth/sendSms',
+    method: 'post',
+    data
+  })
+}
+// 返回用户是否有未读消息
+export function getUserMsg(data) {
+  return request({
+    url: '/user/news/get_msg',
     method: 'post',
     data
   })

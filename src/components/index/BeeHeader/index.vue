@@ -1,6 +1,9 @@
 <template>
   <div style="position:relative; z-index:9999;">
-    <van-nav-bar fixed class="fixed-header">
+    <van-nav-bar
+      fixed
+      class="fixed-header"
+    >
       <van-icon
         slot="left"
         :name="beeIcon.tab_icon_home_s"
@@ -21,9 +24,7 @@
 <script>
 export default {
   components: {},
-  props: {
-
-  },
+  props: {},
   data() {
     return {
       beeIcon: {
@@ -46,7 +47,7 @@ export default {
         }
         this.$router.push('/')
       } else {
-        window.location.href = '/'
+        window.location.href = this.$store.state.app.homeUri
       }
     },
     goCart() {
@@ -58,7 +59,7 @@ export default {
         }
         this.$router.push('/cart')
       } else {
-        window.location.href = '/#/cart'
+        window.location.href = this.$store.state.app.homeUri + '/cart'
       }
     }
   }
@@ -66,5 +67,7 @@ export default {
 </script>
 
 <style  lang="less">
-.fixed-header{z-index: 9999;}
+.fixed-header {
+  z-index: 9999;
+}
 </style>

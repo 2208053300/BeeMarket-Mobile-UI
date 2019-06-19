@@ -8,6 +8,7 @@
       <van-swipe-item
         v-for="(item, index) in homeData.banner"
         :key="index"
+        @click="goPage(item)"
       >
         <img
           :src="item.show_img"
@@ -19,6 +20,7 @@
 </template>
 
 <script>
+// const urlParse = require('url-parse')
 export default {
   components: {},
   props: {
@@ -38,7 +40,55 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    // 根据banner类型打开指定页面
+    goPage(banner) {
+      const bannerHandlers = {
+        1: this.goAction,
+        2: this.goArticle,
+        3: this.goWebPage,
+        4: this.goProduct,
+        5: this.goPublicWelfareAction
+      }
+      bannerHandlers[banner.type](banner)
+    },
+    // 打开活动
+    goAction(banner) {
+      // const pathname = urlParse(banner.url).pathname
+      this.$router.push({
+        path: '/beeActiveTpl',
+        query: {
+          id: banner.plan_id
+        }
+      })
+    },
+    // 打开文章
+    goArticle(banner) {
+      this.$router.push(`/discover/article/${banner.article_id}`)
+    },
+    // 打开网页
+    goWebPage(banner) {
+      window.location.href = banner.url
+    },
+    // 打开商品详情页
+    goProduct(banner) {
+      this.$router.push({
+        path: '/category/details',
+        query: {
+          pid: banner.product_id
+        }
+      })
+    },
+    // 打开公益行动
+    goPublicWelfareAction(banner) {
+      this.$router.push({
+        path: '/discover/action',
+        query: {
+          id: banner.action_id
+        }
+      })
+    }
+  }
 }
 </script>
 

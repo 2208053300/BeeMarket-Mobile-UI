@@ -1,6 +1,9 @@
 <template>
   <div class="user-assessment">
-    <div class="has-assessment">
+    <div
+      v-if="commodityData.comments_count"
+      class="has-assessment"
+    >
       <div
         class="assessment-title"
         @click="goAssessment()"
@@ -68,9 +71,12 @@
         </van-button>
       </div>
     </div>
-    <!-- <div v-if="" class="no-assessment">
+    <div
+      v-else
+      class="no-assessment"
+    >
       暂无用户评价
-    </div> -->
+    </div>
   </div>
 </template>
 

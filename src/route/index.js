@@ -22,54 +22,40 @@ const router = new Router({
           component: Home
         },
         {
-          path: 'beeFactory',
-          name: 'beeFactory',
-          component: () => import('@/pages/BeeFactory'),
-          children: [
-            {
-              path: '',
-              component: () => import('@/pages/BeeFactory/Factory')
-            },
-            {
-              path: 'enterPolicty',
-              component: () => import('@/pages/BeeFactory/EnterPolicty')
-            }
-          ]
-        },
-        {
-          path: 'activeTpl',
-          name: 'activeTpl',
+          path: 'beeActiveTpl',
           component: () => import('@/pages/BeeActiveTpl'),
           children: [
             {
               path: '',
+              name: 'beeActiveTpl',
               component: () => import('@/pages/BeeActiveTpl/ActiveTpl')
             }
           ]
         },
         {
           path: 'beeLimit',
-          name: 'beeLimit',
           component: () => import('@/pages/BeeLimit'),
           children: [
             {
               path: '',
+              name: 'beeLimit',
               component: () => import('@/pages/BeeLimit/productList')
             }
           ]
         },
         {
           path: 'beeCompleteInfo',
-          name: 'beeCompleteInfo',
           component: () => import('@/pages/BeeCompleteInfo'),
           children: [
             {
               path: 'phone',
+              name: 'beeCompleteInfo',
               component: () =>
                 import('@/pages/BeeCompleteInfo/CompleteInfo/bindPhone')
             },
             {
               path: 'wechat',
+              name: 'wechat',
               component: () =>
                 import('@/pages/BeeCompleteInfo/CompleteInfo/bindWechat')
             }
@@ -92,30 +78,49 @@ const router = new Router({
           ]
         },
         {
+          path: 'beeFactory',
+          component: () => import('@/pages/BeeFactory'),
+          children: [
+            {
+              path: '',
+              name: 'beeFactory',
+              component: () => import('@/pages/BeeFactory/Factory')
+            },
+            {
+              path: 'enterPolicty',
+              name: 'enterPolicty',
+              component: () => import('@/pages/BeeFactory/EnterPolicty')
+            }
+          ]
+        },
+        {
           path: 'beeFriends',
-          name: 'beeFriends',
           component: () => import('@/pages/BeeFriends'),
           children: [
             {
               path: '',
+              name: 'beeFriends',
               component: () => import('@/pages/BeeFriends/MyBeeFriends')
-            },
-            {
-              path: 'apply',
-              component: () => import('@/pages/BeeFriends/Apply')
-            },
-            {
-              path: 'waitAudit',
-              component: () => import('@/pages/BeeFriends/WaitAudit')
-            },
-            {
-              path: 'introduction',
-              component: () => import('@/pages/BeeFriends/Introduction')
             },
             {
               path: 'myEarn',
               name: 'myEarn',
               component: () => import('@/pages/BeeFriends/MyEarn')
+            },
+            {
+              path: 'apply',
+              name: 'apply',
+              component: () => import('@/pages/BeeFriends/Apply')
+            },
+            {
+              path: 'waitAudit',
+              name: 'waitAudit',
+              component: () => import('@/pages/BeeFriends/WaitAudit')
+            },
+            {
+              path: 'introduction',
+              name: 'introduction',
+              component: () => import('@/pages/BeeFriends/Introduction')
             },
             {
               path: 'freeze',
@@ -126,19 +131,21 @@ const router = new Router({
         },
         {
           path: 'beeRegister',
-          name: 'beeRegister',
           component: () => import('@/pages/BeeRegister'),
           children: [
             {
               path: '',
+              name: 'beeRegister',
               component: () => import('@/pages/BeeRegister/Register')
             },
             {
               path: 'download',
+              name: 'download',
               component: () => import('@/pages/BeeRegister/Download')
             },
             {
               path: 'agreement',
+              name: 'agreement',
               component: () => import('@/pages/BeeRegister/UserAgreement')
             }
           ]
@@ -150,11 +157,11 @@ const router = new Router({
         },
         {
           path: 'beeAnnouncement',
-          name: 'beeAnnouncement',
           component: () => import('@/pages/BeeAnnouncement'),
           children: [
             {
               path: '',
+              name: 'beeAnnouncement',
               component: () => import('@/pages/BeeAnnouncement/Announcement')
             }
           ]
@@ -187,6 +194,21 @@ const router = new Router({
               path: 'talent',
               name: 'becomeTalent',
               component: () => import('@/pages/BeeTask/TaskTalent')
+            }
+          ]
+        },
+        {
+          path: 'beeClassroom',
+          component: () => import('@/pages/BeeClassroom'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/BeeClassroom/ClassroomList')
+            },
+            {
+              path: 'detail/:id',
+              name: 'classroomDetail',
+              component: () => import('@/pages/BeeClassroom/ClassroomDetail')
             }
           ]
         }
@@ -356,20 +378,25 @@ const router = new Router({
         },
         {
           path: 'profile',
-          name: 'profile',
           component: () => import('@/pages/index/BeePersion/Profile'),
           children: [
             {
               path: '',
-              component: () => import('@/pages/index/BeePersion/Profile/ProfileIndex')
+              name: 'profile',
+              component: () =>
+                import('@/pages/index/BeePersion/Profile/ProfileIndex')
             },
             {
               path: 'baseInfo',
-              component: () => import('@/pages/index/BeePersion/Profile/BaseInfo')
+              name: 'baseInfo',
+              component: () =>
+                import('@/pages/index/BeePersion/Profile/BaseInfo')
             },
             {
               path: 'accountSafe',
-              component: () => import('@/pages/index/BeePersion/Profile/AccountSafe')
+              name: 'accountSafe',
+              component: () =>
+                import('@/pages/index/BeePersion/Profile/AccountSafe')
             },
             {
               path: 'changePhone',
@@ -618,22 +645,6 @@ const router = new Router({
                 //     )
                 // }
               ]
-            }
-          ]
-        },
-        {
-          path: 'ServiceHelper',
-          component: () => import('@/pages/BeeHelper'),
-          children: [
-            {
-              path: '',
-              name: 'ServiceHelperIndex',
-              component: () => import('@/pages/BeeHelper/ServiceHelperIndex')
-            },
-            {
-              path: 'QustionList',
-              name: 'QustionList',
-              component: () => import('@/pages/BeeHelper/QustionList')
             }
           ]
         },

@@ -30,12 +30,12 @@
             slot="thumb"
             :src="item.tUrl"
             alt="商品预览图"
-            @click.stop="showDetails(item.pid)"
+            @click.stop="goDetail(item.pid,item.target)"
           >
           <span
             slot="title"
             class="card-title"
-            @click.stop="showDetails(item.pid)"
+            @click.stop="goDetail(item.pid,item.target)"
           >{{ item.pname }}</span>
           <div
             slot="desc"
@@ -115,14 +115,12 @@ export default {
       }
     },
     // TODO 跳转详情
-    showDetails(id) {
-      console.log(id)
+    goDetail(pid, target) {
       this.$router.push({
         path: '/category/details',
-        query: {
-          pid: id
-        }
+        query: { pid: pid, target: target }
       })
+      this.$store.state.order.target = target
     },
     // TODO 显示SKU选择器
     showSku(pid, propsId, number, ctid) {
@@ -165,6 +163,7 @@ export default {
     margin-bottom: 0.2rem;
     background-color: #fff;
     padding: 0.3rem 0.2rem;
+    box-shadow: 0 0 0.1rem 0.04rem @Grey7;
     .van-card {
       background-color: #ffffff;
       padding: 0;

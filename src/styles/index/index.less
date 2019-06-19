@@ -1,10 +1,10 @@
-@import "variables.less";
-@import "common.less";
-@import "mixin.less";
+@import 'variables.less';
+@import 'common.less';
+@import 'mixin.less';
 
 #app {
   height: 100%;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;
@@ -22,4 +22,15 @@ body {
       color: #42b983;
     }
   }
+}
+
+// 引入图标暂时避免拉伸
+.van-icon--image img {
+  width: auto;
+  height: auto;
+}
+// 网格布局列表加载中文字
+.van-list__finished-text {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }

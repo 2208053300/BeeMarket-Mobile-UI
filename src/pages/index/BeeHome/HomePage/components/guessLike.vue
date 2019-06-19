@@ -5,7 +5,7 @@
     </div>
     <van-list
       v-model="loading"
-      finished-text="没有更多了"
+      finished-text="我也是有底线的 o(´^｀)o"
       class="guess-container"
       :finished="finished"
       :immediate-check="false"
@@ -15,7 +15,7 @@
         v-for="(item,index) in guessData"
         :key="index"
         class="guess-card"
-        @click="$router.push({path: '/category/details',query: {pid: product_id}})"
+        @click="goDetail(item.product_id,item.target)"
       >
         <img
           :src="item.thumb_url"
@@ -75,6 +75,13 @@ export default {
           this.finished = true
         }
       }, 500)
+    },
+    goDetail(pid, target) {
+      this.$router.push({
+        path: '/category/details',
+        query: { pid: pid, target: target }
+      })
+      this.$store.state.order.target = target
     }
   }
 }
@@ -130,6 +137,10 @@ export default {
         }
       }
     }
+  }
+  .van-list__finished-text {
+    grid-column-start: 1;
+    grid-column-end: 3;
   }
 }
 </style>
