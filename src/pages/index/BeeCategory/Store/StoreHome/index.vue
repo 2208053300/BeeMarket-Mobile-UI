@@ -2,11 +2,11 @@
   <div class="store-home">
     <!--FIXME如果有背景图 -->
     <div class="store-bg" />
-    <div
-      class="store-header"
-      @click="showLicense=true"
-    >
-      <div class="header-left">
+    <div class="store-header">
+      <div
+        class="header-left"
+        @click="showLicense=true"
+      >
         <div class="store-img">
           <img
             :src="storeDetails.store_logo"
@@ -22,6 +22,7 @@
         <van-button
           type="default"
           round
+          @click="handleFollow"
         >
           <span v-if="storeDetails.mfavor">已关注</span>
           <span v-else>关注店铺</span>
@@ -61,6 +62,7 @@
 <script>
 import storeContent from './components/storeContent'
 import { getStoreDetail } from '@/api/BeeApi/store'
+import { collectProduct, cancelCollect } from '@/api/BeeApi/product'
 export default {
   metaInfo: {
     title: '店铺首页'
@@ -103,6 +105,23 @@ export default {
         path: '/category/store/license',
         query: { mid: this.formData.mid }
       })
+    },
+    async handleFollow() {
+      if (this.storeDetails.mfavor) {
+        const res = await cancelCollect({
+          content_ids: this.formData.mid,
+          type: 2
+        })
+        this.storeDetails.mfavor = 0
+        this.$toast(res.message)
+      } else {
+        const res = await collectProduct({
+          contentId: [this.formData.mid],
+          type: 2
+        })
+        this.storeDetails.mfavor = 1
+        this.$toast(res.message)
+      }
     }
   }
 }
