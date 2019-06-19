@@ -23,7 +23,7 @@
 </template>
 
 <script>
-
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '公益合伙人'
@@ -32,7 +32,8 @@ export default {
   props: {},
   data() {
     return {
-
+      // 获取 os 平台
+      osObj: getOs()
     }
   },
   computed: {},
@@ -50,6 +51,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     // this.getArticleDetailData()
+    this.clearHistory()
   },
   methods: {
     // 跳转到注册页面
@@ -65,17 +67,28 @@ export default {
         name: 'apply'
       })
     },
-
-    goProduct(pid) {
-      // 判断是否来自webApp
-      if (this.$route.query.origin) {
-        window.location.href = `/#/category/details?pid=${pid}`
+    // 清除历史
+    clearHistory() {
+      if (this.osObj.isWx) {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.clearHistory.postMessage({})
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.clearHistory()
       } else {
-        console.log('本地应用')
-        this.$router.push({
-          path: '/category/details',
-          query: { pid }
-        })
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
       }
     }
 

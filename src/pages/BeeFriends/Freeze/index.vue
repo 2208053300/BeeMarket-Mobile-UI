@@ -124,7 +124,9 @@ export default {
         freezeImg3: require('@/assets/icon/task/talent/talent_bg_title3@2x.png')
       },
       // 获取cookie
-      test1: ''
+      test1: '',
+      // 获取 os 平台
+      osObj: getOs()
     }
   },
   computed: {},
@@ -132,6 +134,7 @@ export default {
   created() {},
   mounted() {
     this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
+    this.clearHistory()
   },
   methods: {
     // 此处判断浏览器环境，跳转到商品分类页面
@@ -158,6 +161,30 @@ export default {
             pid: pid
           }
         })
+      }
+    },
+    // 清除历史
+    clearHistory() {
+      if (this.osObj.isWx) {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.clearHistory.postMessage({})
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.clearHistory()
+      } else {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
       }
     }
   },
