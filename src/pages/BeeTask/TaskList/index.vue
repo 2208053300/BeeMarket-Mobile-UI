@@ -162,7 +162,7 @@
           领取成功
         </div>
         <div class="success-num">
-          恭喜您获得 <span class="num">10</span> 公益值
+          恭喜您获得 <span class="num">100</span> 公益值
         </div>
         <div class="done-btn">
           <van-button
@@ -439,10 +439,6 @@ export default {
         }
         .helpBg {
           height: 2.84rem;
-          .task-action {
-            position: relative;
-            left: -0.2rem;
-          }
         }
         .endBg {
           .left-info {
