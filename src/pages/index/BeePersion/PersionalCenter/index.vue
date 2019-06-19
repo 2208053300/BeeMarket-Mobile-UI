@@ -71,13 +71,26 @@
         class="persion-op"
         type="flex"
         align="center"
-      />
+      >
+        <div
+          v-if="userInfo.bee_circle"
+          class="cherity-img"
+          :style="{backgroundImage:'url('+userInfo.bee_circle.image_url+')'}"
+          @click="$router.push('/beeFriends')"
+        />
+      </van-row>
       <van-row
         class="persion-op"
         type="flex"
         align="center"
-      />
-
+      >
+        <div
+          v-if="userInfo.bee_class"
+          class="cherity-img"
+          :style="{backgroundImage:'url('+userInfo.bee_class.image_url+')'}"
+          @click="$router.push('/beeClassroom')"
+        />
+      </van-row>
       <div class="more-op">
         <van-row>
           <van-col span="8">
