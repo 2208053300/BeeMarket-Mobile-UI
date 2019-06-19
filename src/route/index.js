@@ -399,10 +399,69 @@ const router = new Router({
                 import('@/pages/index/BeePersion/Profile/AccountSafe')
             },
             {
+              path: 'changePhone',
+              component: () => import('@/pages/index/BeePersion/Profile/ChangePhone'),
+              children: [
+                {
+                  path: '',
+                  component: () => import('@/pages/index/BeePersion/Profile/ChangePhone/GetSms')
+                },
+                {
+                  path: 'bindPhone',
+                  name: 'bindPhone',
+                  component: () => import('@/pages/index/BeePersion/Profile/ChangePhone/BindPhone')
+                }
+              ]
+            },
+            {
+              path: 'setPayPw',
+              component: () => import('@/pages/index/BeePersion/Profile/SetPayPw'),
+              children: [
+                {
+                  path: '',
+                  component: () => import('@/pages/index/BeePersion/Profile/SetPayPw/RemindPw')
+                },
+                {
+                  path: 'inputOldPw',
+                  name: 'inputOldPw',
+                  component: () => import('@/pages/index/BeePersion/Profile/SetPayPw/InputOldPw')
+                },
+                {
+                  path: 'setPw',
+                  name: 'setPw',
+                  component: () => import('@/pages/index/BeePersion/Profile/SetPayPw/SetPw')
+                }
+              ]
+            },
+            {
+              path: 'setLoginPw',
+              component: () => import('@/pages/index/BeePersion/Profile/SetLoginPw'),
+              children: [
+                {
+                  path: '',
+                  component: () => import('@/pages/index/BeePersion/Profile/SetLoginPw/GetSms')
+                },
+                {
+                  path: 'setPw',
+                  name: 'setPw',
+                  component: () => import('@/pages/index/BeePersion/Profile/SetLoginPw/SetPw')
+                }
+              ]
+            },
+            {
               path: 'accountBind',
-              name: 'accountBind',
-              component: () =>
-                import('@/pages/index/BeePersion/Profile/AccountBind')
+              component: () => import('@/pages/index/BeePersion/Profile/AccountBind'),
+              children: [
+                {
+                  path: '',
+                  component: () => import('@/pages/index/BeePersion/Profile/AccountBind/BindIndex')
+                },
+                {
+                  path: 'bindPhone',
+                  name: 'bindPhone',
+                  component: () => import('@/pages/index/BeePersion/Profile/AccountBind/BindPhone')
+                }
+              ]
             }
           ]
         },

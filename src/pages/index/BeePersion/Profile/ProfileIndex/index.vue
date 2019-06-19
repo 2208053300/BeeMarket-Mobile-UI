@@ -5,7 +5,7 @@
         <div class="item flex flex-between align-center" @click="$router.push('/persion/profile/baseInfo')">
           <span class="title">基本信息</span>
           <div class="link-icon">
-            <img :src="avatarImg" alt="" class="avatar">
+            <img :src="head_image" alt="" class="avatar">
             <van-icon name="arrow" size="0.26rem" color="#666" />
           </div>
         </div>
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { getPorfileData } from '@/api/BeeApi/user'
+
 export default {
   components: {
 
@@ -48,7 +50,7 @@ export default {
   },
   data() {
     return {
-      avatarImg: require('@/assets/icon/personalCenter/head_default.png')
+      head_image: require('@/assets/icon/personalCenter/head_default.png')
     }
   },
   computed: {
@@ -63,9 +65,17 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+
+    // userInfo
+    this.getPersionadata()
   },
   methods: {
-
+    // 获取用户基本信息
+    async getPersionadata() {
+      const res = await getPorfileData()
+      this.head_image = res.data.head_image
+      console.log('用户信息：', res)
+    }
   }
 }
 </script>
@@ -83,6 +93,6 @@ export default {
     }
   }
   .title{font-size: .3rem;color:#333;}
-  .avatar{width: 1rem;height: 1rem; margin-right: .2rem;}
+  .avatar{width: 1rem;height: 1rem; border-radius:50%; margin-right: .2rem;}
 }
 </style>

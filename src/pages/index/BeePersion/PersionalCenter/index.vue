@@ -194,6 +194,8 @@ export default {
       // TODO 跳转到个人信息页面
       if (!isLogin()) {
         this.$router.push('/login')
+      } else {
+        this.$router.push('/persion/profile')
       }
     }
   }

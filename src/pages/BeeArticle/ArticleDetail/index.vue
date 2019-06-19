@@ -158,18 +158,18 @@ export default {
       // })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToShare.postMessage({
-          title: 'title',
-          desc: 'desc',
-          img_path: 'https://img.fengjishi.com.cn/bsm/marketing/app_discover_ZmrHYXhcwEH3v3hQ.jpg',
+          title: this.activity.share_data.title,
+          desc: this.activity.share_data.desc,
+          img_path: this.activity.share_data.img,
           // 地址应该放 web 站 网页
-          url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+          url: this.$store.state.app.homeUri + '/discover/article/' + this.$route.params.id
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(
-          'title',
-          'desc',
-          'https://img.fengjishi.com.cn/bsm/marketing/app_discover_ZmrHYXhcwEH3v3hQ.jpg',
-          this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+          this.activity.share_data.title,
+          this.activity.share_data.desc,
+          this.activity.share_data.img,
+          this.$store.state.app.homeUri + '/discover/article/' + this.$route.params.id
         )
       } else {
       // this.$router.push({
