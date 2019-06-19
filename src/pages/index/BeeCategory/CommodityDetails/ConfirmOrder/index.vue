@@ -38,6 +38,7 @@
         <van-switch
           v-model="charity_used"
           :active-color="BeeDefault"
+          @change="deductionMoney"
         />
       </van-cell>
     </van-cell-group>
@@ -56,7 +57,7 @@
         />
       </van-cell>
       <!-- TODO赠送好友取消该选项 -->
-      <van-cell v-if="orderTypeText!=='present'">
+      <!-- <van-cell v-if="orderTypeText!=='present'">
         <div
           slot="title"
           class="cell-title"
@@ -68,7 +69,7 @@
           :checked-color="BeeDefault"
           @change="changeOt"
         />
-      </van-cell>
+      </van-cell> -->
       <van-cell class="deduction-content">
         <div
           slot="title"
@@ -181,6 +182,17 @@ export default {
         this.orderTypeText = 'please'
       } else {
         this.orderTypeText = 'general'
+      }
+    },
+    deductionMoney(checked) {
+      if (checked) {
+        this.order.orderDetail.order_amount =
+          this.order.orderDetail.order_amount -
+          this.order.orderDetail.charity_deduction
+      } else {
+        this.order.orderDetail.order_amount =
+          this.order.orderDetail.order_amount +
+          this.order.orderDetail.charity_deduction
       }
     }
   }

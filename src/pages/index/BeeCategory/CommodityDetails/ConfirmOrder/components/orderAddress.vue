@@ -39,12 +39,13 @@
                 >
                   默认
                 </div>
-                <div
+                <!-- 需要调整字段显示中文 -->
+                <!-- <div
                   v-if="order.addrDetail.tag"
                   class="address-tag"
                 >
                   {{ order.addrDetail.tag }}
-                </div>
+                </div> -->
                 <div class="address-details">
                   {{ order.addrDetail.address }}
                 </div>
