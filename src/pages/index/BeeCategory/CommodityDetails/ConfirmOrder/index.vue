@@ -38,6 +38,7 @@
         <van-switch
           v-model="charity_used"
           :active-color="BeeDefault"
+          @change="deductionMoney"
         />
       </van-cell>
     </van-cell-group>
@@ -181,6 +182,17 @@ export default {
         this.orderTypeText = 'please'
       } else {
         this.orderTypeText = 'general'
+      }
+    },
+    deductionMoney(checked) {
+      if (checked) {
+        this.order.orderDetail.order_amount =
+          this.order.orderDetail.order_amount -
+          this.order.orderDetail.charity_deduction
+      } else {
+        this.order.orderDetail.order_amount =
+          this.order.orderDetail.order_amount +
+          this.order.orderDetail.charity_deduction
       }
     }
   }
