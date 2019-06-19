@@ -32,3 +32,20 @@ export function userLogin(data) {
     data
   })
 }
+
+// 设置/修改 登录密码第一步，验证短信
+export function forgotFirst(data) {
+  return request({
+    url: '/auth/forgot/first',
+    method: 'post',
+    data
+  })
+}
+// 账户安全信息 获取手机号码
+export function forgot(data) {
+  return request({
+    url: '/auth/forgot',
+    method: 'post',
+    data
+  })
+}

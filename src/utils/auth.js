@@ -4,30 +4,30 @@ import Cookies from 'js-cookie'
 import { auditWechat } from '@/api/BeeApi/auth'
 // 获取Token
 export function getToken() {
-  // const osObj = getOs()
-  // if (osObj.isWx) {
-  //   const token = localStorage.getItem('BM-App-Token')
-  //   const uriProp = GetRequest('code')
-  //   if (token) {
-  //     return token
-  //   } else if (
-  //     uriProp &&
-  //     !token &&
-  //     localStorage.getItem('BM-App-Token') !== 'waiting'
-  //   ) {
-  //     localStorage.setItem('BM-App-Token', 'waiting')
-  //     // 微信授权登录
-  //     wxLogin(uriProp)
-  //   } else {
-  //     console.log('微信CODE为空')
-  //   }
-  //   return localStorage.getItem('BM-App-Token')
-  // } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
-  //   return Cookies.get('token')
-  // } else {
-  //   return localStorage.getItem('BM-App-Token')
-  // }
-  return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjA1NjQ4ODEsImV4cCI6MTU2MzE1Njg4MSwianRpIjoiMzk3NzJmMGUwNjcxMzkxYzk1ODg1MjQyZTc0MGQ0OGUiLCJzZWMiOiI5MzBkMTg4MzRmNDJjYzgzMWQyZTcwMTk4MzU3ZDIxMCIsInNpZyI6IjVmZWM4ZDU3OTY2MzRjYjAyOGI4ZTFlYjU4NTUyOThhZWExZDM1M2IxNjI2MGFkNDQ5ZDI4ZTcxNDgxNzQxOGIifQ.9IJKEe-0ZQ4UAtC6hzT8C_zWDRoalVxwdappFy0igUM'
+  const osObj = getOs()
+  if (osObj.isWx) {
+    const token = localStorage.getItem('BM-App-Token')
+    const uriProp = GetRequest('code')
+    if (token) {
+      return token
+    } else if (
+      uriProp &&
+      !token &&
+      localStorage.getItem('BM-App-Token') !== 'waiting'
+    ) {
+      localStorage.setItem('BM-App-Token', 'waiting')
+      // 微信授权登录
+      wxLogin(uriProp)
+    } else {
+      console.log('微信CODE为空')
+    }
+    return localStorage.getItem('BM-App-Token')
+  } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
+    return Cookies.get('token')
+  } else {
+    return localStorage.getItem('BM-App-Token')
+  }
+  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjA4NDY3NzUsImV4cCI6MTU2MzQzODc3NSwianRpIjoiNjNmZmVkMjQwNjk5MzZiYzlkZTkyZGNlNTAxOWNmYjkiLCJzZWMiOiIzMTY5YTA3YTcwYmJkZGNiY2M1YjMwYzM2MWJmNTZlOCIsInNpZyI6ImMxMmY5MmM1YjEwNWM3ZThjNzQxMDNiNWE4ODNmZTlmMmI1MjQzMDhlOTczMzkzNjlkNWVjMGVjOTMxZWRiMmEifQ.SM1hM99uRUGTfH-IbYwcP3hAzI5Tg_5iaA8Z755S9lQ'
 }
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除

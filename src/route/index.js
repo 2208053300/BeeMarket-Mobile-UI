@@ -92,21 +92,6 @@ const router = new Router({
           ]
         },
         {
-          path: 'beeFactory',
-          name: 'beeFactory',
-          component: () => import('@/pages/BeeFactory'),
-          children: [
-            {
-              path: '',
-              component: () => import('@/pages/BeeFactory/Factory')
-            },
-            {
-              path: 'enterPolicty',
-              component: () => import('@/pages/BeeFactory/EnterPolicty')
-            }
-          ]
-        },
-        {
           path: 'beeFriends',
           name: 'beeFriends',
           component: () => import('@/pages/BeeFriends'),
@@ -387,8 +372,69 @@ const router = new Router({
               component: () => import('@/pages/index/BeePersion/Profile/AccountSafe')
             },
             {
+              path: 'changePhone',
+              component: () => import('@/pages/index/BeePersion/Profile/ChangePhone'),
+              children: [
+                {
+                  path: '',
+                  component: () => import('@/pages/index/BeePersion/Profile/ChangePhone/GetSms')
+                },
+                {
+                  path: 'bindPhone',
+                  name: 'bindPhone',
+                  component: () => import('@/pages/index/BeePersion/Profile/ChangePhone/BindPhone')
+                }
+              ]
+            },
+            {
+              path: 'setPayPw',
+              component: () => import('@/pages/index/BeePersion/Profile/SetPayPw'),
+              children: [
+                {
+                  path: '',
+                  component: () => import('@/pages/index/BeePersion/Profile/SetPayPw/RemindPw')
+                },
+                {
+                  path: 'inputOldPw',
+                  name: 'inputOldPw',
+                  component: () => import('@/pages/index/BeePersion/Profile/SetPayPw/InputOldPw')
+                },
+                {
+                  path: 'setPw',
+                  name: 'setPw',
+                  component: () => import('@/pages/index/BeePersion/Profile/SetPayPw/SetPw')
+                }
+              ]
+            },
+            {
+              path: 'setLoginPw',
+              component: () => import('@/pages/index/BeePersion/Profile/SetLoginPw'),
+              children: [
+                {
+                  path: '',
+                  component: () => import('@/pages/index/BeePersion/Profile/SetLoginPw/GetSms')
+                },
+                {
+                  path: 'setPw',
+                  name: 'setPw',
+                  component: () => import('@/pages/index/BeePersion/Profile/SetLoginPw/SetPw')
+                }
+              ]
+            },
+            {
               path: 'accountBind',
-              component: () => import('@/pages/index/BeePersion/Profile/AccountBind')
+              component: () => import('@/pages/index/BeePersion/Profile/AccountBind'),
+              children: [
+                {
+                  path: '',
+                  component: () => import('@/pages/index/BeePersion/Profile/AccountBind/BindIndex')
+                },
+                {
+                  path: 'bindPhone',
+                  name: 'bindPhone',
+                  component: () => import('@/pages/index/BeePersion/Profile/AccountBind/BindPhone')
+                }
+              ]
             }
           ]
         },

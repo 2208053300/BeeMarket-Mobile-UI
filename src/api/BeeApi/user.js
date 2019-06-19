@@ -417,3 +417,80 @@ export function remindLogin(data) {
     data
   })
 }
+
+// 用户支付密码设置、换绑手机 - 发送短信
+export function sendSms(data) {
+  return request({
+    url: '/user/auth/sendSms',
+    method: 'post',
+    data
+  })
+}
+
+// 用户支付密码设置、换绑手机 - 短信验证
+export function smsVerify(data) {
+  return request({
+    url: '/user/auth/smsVerify',
+    method: 'post',
+    data
+  })
+}
+
+// 用户手机号码换绑 - 绑定新手机号
+export function rebind(data) {
+  return request({
+    url: '/user/mobile/rebind',
+    method: 'post',
+    data
+  })
+}
+// 判断用户是否已设置支付密码
+export function isSetPw(data) {
+  return request({
+    url: '/user/pay/isset',
+    method: 'post',
+    data
+  })
+}
+// 验证原支付密码
+export function verifyOldPayPw(data) {
+  return request({
+    url: '/user/pay/verifyorig',
+    method: 'post',
+    data
+  })
+}
+// 设置、重置支付密码
+export function setPayPw(data) {
+  return request({
+    url: '/user/pay/set',
+    method: 'post',
+    data
+  })
+}
+// 获取用户账户安全信息 是否设置了支付密码 是否绑定了手机号码
+export function security(data) {
+  return request({
+    url: '/user/baseinfo/security',
+    method: 'post',
+    data
+  })
+}
+// 账户安全信息 获取手机号码
+export function getMobile(data) {
+  return request({
+    url: '/user/mobile/get',
+    method: 'post',
+    data
+  })
+}
+
+// 账户安全信息 修改登录密码
+export function changeLoginPwd(data) {
+  return request({
+    url: '/user/account/changepwd',
+    method: 'post',
+    data
+  })
+}
+

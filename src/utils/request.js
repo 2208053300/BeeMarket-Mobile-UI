@@ -68,7 +68,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     Toast.clear()
-    console.log(response)
+    // console.log(response)
 
     if (response.headers['bm-app-token']) {
       setToken(response.headers['bm-app-token'])
