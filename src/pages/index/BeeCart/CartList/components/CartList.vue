@@ -30,12 +30,12 @@
             slot="thumb"
             :src="item.tUrl"
             alt="商品预览图"
-            @click.stop="showDetails(item.pid,item.target)"
+            @click.stop="goDetail(item.pid,item.target)"
           >
           <span
             slot="title"
             class="card-title"
-            @click.stop="showDetails(item.pid,item.target)"
+            @click.stop="goDetail(item.pid,item.target)"
           >{{ item.pname }}</span>
           <div
             slot="desc"

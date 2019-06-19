@@ -3,7 +3,10 @@
     <div class="license-content">
       <span>根据国家工商总局《网络交易管理办发》要求对网店营业执照信息公示如下：</span>
       <div class="license-img">
-        <img src="" alt="">
+        <img
+          :src="licenseUrl"
+          alt="经营许可"
+        >
       </div>
     </div>
     <div class="license-explain">
@@ -14,6 +17,7 @@
 </template>
 
 <script>
+import { getStoreLicense } from '@/api/BeeApi/store'
 export default {
   metaInfo: {
     title: '经营许可'
@@ -21,7 +25,9 @@ export default {
   components: {},
   props: {},
   data() {
-    return {}
+    return {
+      licenseUrl: ''
+    }
   },
   computed: {},
   watch: {},
@@ -29,8 +35,14 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    this.getStoreLicenseData()
   },
-  methods: {}
+  methods: {
+    async getStoreLicenseData() {
+      const res = await getStoreLicense({ mid: this.$route.query.mid })
+      this.licenseUrl = res.data.license
+    }
+  }
 }
 </script>
 
@@ -45,9 +57,10 @@ export default {
     border-radius: 0.2rem;
     margin-bottom: 0.32rem;
     font-size: 0.28rem;
-    .license-img{
+    .license-img {
       margin-top: 0.32rem;
       max-width: 6.52rem;
+      min-width: 6.52rem;
     }
   }
   .license-explain {

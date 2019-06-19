@@ -39,7 +39,7 @@
           <div
             slot="title"
             class="cell-title"
-            @click="$router.push('/category/store/license')"
+            @click="goLicense"
           >
             <van-icon :name="beeIcon.license" /> 经营许可
           </div>
@@ -97,6 +97,12 @@ export default {
       this.storeDetails = res.data
       this.commodityList.push(...res.data.products)
       this.formData.page++
+    },
+    goLicense() {
+      this.$router.push({
+        path: '/category/store/license',
+        query: { mid: this.formData.mid }
+      })
     }
   }
 }
