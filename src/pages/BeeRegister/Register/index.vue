@@ -1,7 +1,7 @@
 <template>
   <div class="RgsCtn">
     <div class="RegistrtFirst">
-      <img src="../../../assets/icon/register/registerTitle1.png" alt="">
+      <img src="../../../assets/icon/register/registerTitle1.jpg" alt="">
       <video
         controls="controls"
         poster="/static/src/Img/vedio_bg.png"
@@ -10,7 +10,7 @@
         <source src="/static/video/beginner.mp4" type="video/mp4">
       </video>
       <div class="RNext">
-        <img src="../../../assets/icon/register/registerNext.png" alt="">
+        <img src="../../../assets/icon/register/registerNext.jpg" alt="">
       </div>
       <!--<button>注册</button>-->
     </div>
@@ -247,7 +247,7 @@ export default {
     padding-bottom: 20px;
     overflow: hidden;
     width: 90%;
-    margin:0 auto;
+    margin:0 auto ;
 }
 
 .register > p {
@@ -386,15 +386,16 @@ label .check {
 }
 .modal {
     position: relative;
-    background: url(../../../assets/icon/register/register_bg.png);
-    padding-top: 30px;
-    background-size: 100%;
+    background: url(../../../assets/icon/register/register_bg.png) no-repeat 100% 100%;
+    // background-size:100% 100%;
+    padding-top: 20px;
 }
 .modal .modelTitle{
         width: 100%;
     text-align: center;
     position: absolute;
     top: -28px;
+    // top: 0;
 }
 .modelTitle img{
     width: 200px;

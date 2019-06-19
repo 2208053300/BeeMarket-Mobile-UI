@@ -93,10 +93,12 @@ export default {
 .public-interest-partner{
     .action{width: 100%; height: 3.98rem; background: url(../../../assets/icon/joinFriendCicle/background.png) no-repeat; background-size:100% 100% ; padding-top: 0.55rem;
         display: block;
+        box-sizing: border-box;
         img{width: 4.3rem; height: 1.1rem; margin: 0 auto;}
     }
     .action2{width: 100%; height: 3.69rem; background: url(../../../assets/icon/joinFriendCicle/gy_part7_2.png) no-repeat; background-size:100% 100% ; padding-top: 0.55rem;
         display: block;
+        box-sizing: border-box;
         img{width: 4.3rem; height: 1.1rem; margin: 0 auto;}
     }
 }
