@@ -13,11 +13,6 @@ export default new Router({
       children: [
         {
           path: '',
-          name: 'beeIndex',
-          component: () => import('@/pages/BeeFriends/beeIndex')
-        },
-        {
-          path: 'beeFriends',
           name: 'beeFriends',
           component: () => import('@/pages/BeeFriends/MyBeeFriends')
         },
