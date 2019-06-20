@@ -13,8 +13,8 @@
         <div class="rank-type">
           <div
             class="type-tab"
-            :class="{disabledTab1:friendsType!==1}"
-            @click="changeType(1)"
+            :class="{disabledTab1:friendsType!==2}"
+            @click="changeType(2)"
           >
             <van-icon
               :name="beeIcon.bee_firends_basic_icon_firend"
@@ -26,8 +26,8 @@
           </div>
           <div
             class="type-tab"
-            :class="{disabledTab2:friendsType!==2}"
-            @click="changeType(2)"
+            :class="{disabledTab2:friendsType!==1}"
+            @click="changeType(1)"
           >
             <van-icon
               :name="beeIcon.bee_firends_basic_icon_association"
@@ -174,7 +174,7 @@ export default {
         bee_firends_invite_icon_firends: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_firends.png'),
         bee_firends_invite_icon_firenf: require('@/assets/icon/beeFriends/info/bee_firends_invite_icon_firenf.png')
       },
-      friendsType: 1,
+      friendsType: 2,
       friendsData: {}
     }
   },
