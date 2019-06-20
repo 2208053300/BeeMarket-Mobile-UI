@@ -535,3 +535,19 @@ export function aboutUsQrImg(data) {
   })
 }
 
+// 个人中心-订单 获取 订单未评价商品列表
+export function uncomment(data) {
+  return request({
+    url: '/user/order/uncomment',
+    method: 'post',
+    data
+  })
+}
+// 个人中心-订单 获取 评价商品
+export function addComment(data) {
+  return request({
+    url: '/user/comment/add',
+    method: 'post',
+    data
+  })
+}

@@ -500,7 +500,21 @@ const router = new Router({
               path: 'comment',
               name: 'Comment',
               component: () =>
-                import('@/pages/index/BeePersion/MyOrder/Comment')
+                import('@/pages/index/BeePersion/MyOrder/Comment'),
+              children: [
+                {
+                  path: '',
+                  name: 'CommentProduct',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/Comment/CommentIndex')
+                },
+                {
+                  path: 'waitCommentOrder',
+                  name: 'waitCommentOrder',
+                  component: () =>
+                    import('@/pages/index/BeePersion/MyOrder/Comment/WaitCommentOrder')
+                }
+              ]
             },
             {
               path: 'logistics',
