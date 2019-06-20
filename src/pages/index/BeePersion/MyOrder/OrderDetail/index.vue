@@ -3,9 +3,9 @@
     <div class="order-status">
       <div class="status-text">
         <!-- TODO 不确定赠送好友状态字段 -->
-        <span v-if="orderDetail.status===15">(未支付)已取消</span>
+        <span>{{ getText1() }}</span>
         <!--
-        <span v-if="orderDetail.status===0">待付款</span>
+        <span v-if="orderDetail.status===15">(未支付)已取消</span>
         <span v-if="orderDetail.status===1">待发货</span>
         <span v-if="[2,3].indexOf(orderDetail.status)!==-1">待收货</span>
         <span v-if="orderDetail.status===4">待评价</span>
@@ -21,20 +21,26 @@
         <span v-if="orderDetail.status===14">（好友未接收）待付款</span>
         <span v-if="orderDetail.status===16">(未处理)已取消</span>
          -->
+        <span
+          v-if="orderDetail.s_pay===0"
+          class="status-text2"
+        >
+          <!-- TODO 这里是时分秒倒计时？ -->
+          剩余时间: {{ orderDetail.count_down|getTime }}
+        </span>
+        <span
+          v-if="[6].indexOf(orderDetail.status)!==-1"
+          class="status-text2"
+        >
+          {{ orderDetail.statusText }}
+        </span>
       </div>
-      <span
-        v-if="[0,7,8,12].indexOf(orderDetail.status)!==-1"
-        class="status-text2"
-      >
-        <!-- TODO 这里是时分秒倒计时？ -->
-        剩余时间: {{ orderDetail.count_down }}
-      </span>
-      <span
-        v-if="[6].indexOf(orderDetail.status)!==-1"
-        class="status-text2"
-      >
-        {{ orderDetail.statusText }}
-      </span>
+      <div class="bag-img">
+        <img
+          :src="beeIcon.mine_order_buymyself_img_top_box"
+          alt=""
+        >
+      </div>
     </div>
     <div class="detail-content">
       <order-address
@@ -50,6 +56,12 @@
           订单信息
         </div>
         <div class="details2-content">
+          <div
+            v-if="orderDetail.note"
+            class="details2-text"
+          >
+            订单留言：{{ orderDetail.note }}
+          </div>
           <div class="details2-text">
             订单编号：{{ orderDetail.order_no }}
           </div>
@@ -63,13 +75,13 @@
             取消时间：{{ orderDetail.time1 }}
           </div>
           <div
-            v-if="[6].indexOf(orderDetail.status)===-1"
+            v-if="orderDetail.s_pay!==0"
             class="details2-text"
           >
             支付方式：{{ orderDetail.pay_method_name }}
           </div>
           <div
-            v-if="[6].indexOf(orderDetail.status)===-1"
+            v-if="orderDetail.s_pay!==0"
             class="details2-text"
           >
             支付时间：{{ orderDetail.paid_at }}
@@ -78,7 +90,7 @@
       </div>
     </div>
     <order-op :order-detail="orderDetail" />
-    <bee-guess />
+    <bee-guess :guess-data="orderDetail.guess" />
   </div>
 </template>
 
@@ -88,7 +100,8 @@ import orderAddress from './components/orderAddress'
 import commodityList from './components/commodityList'
 import orderOp from './components/orderOp'
 import BeeGuess from '@/components/index/BeeGuess'
-
+import { formatSeconds } from '@/utils'
+import { setTimeout } from 'timers'
 export default {
   metaInfo: {
     title: '订单详情'
@@ -99,12 +112,21 @@ export default {
     orderOp,
     BeeGuess
   },
+  filters: {
+    getTime(val) {
+      const timeStr = formatSeconds(val)
+      return timeStr
+    }
+  },
   props: {},
   data() {
     return {
       orderDetail: {
         addressData: {},
         product: []
+      },
+      beeIcon: {
+        mine_order_buymyself_img_top_box: require('@/assets/icon/order/mine_order_buymyself_img_top_box@2x.png')
       }
     }
   },
@@ -122,6 +144,34 @@ export default {
         order_no: this.$route.query.order_no
       })
       this.orderDetail = res.data
+      // REVIEW 如果有倒计时
+      setInterval(() => {
+        this.orderDetail.count_down--
+      }, 1000)
+    },
+    // 获取订单状态文字
+    getText1(val) {
+      let text1 = ''
+      switch (this.orderDetail.s_order) {
+        case 1:
+          text1 = '待发货'
+          break
+        case 3:
+          text1 = '已发货'
+          break
+        default:
+          break
+      }
+      switch (this.orderDetail.s_pay) {
+        case 0:
+          text1 = '待付款'
+          break
+        case 1:
+          break
+        default:
+          break
+      }
+      return text1
     }
   }
 }
@@ -129,7 +179,6 @@ export default {
 
 <style scoped lang="less">
 .order-detail {
-
   padding-bottom: 1rem;
   .order-status {
     height: 1.8rem;
@@ -137,12 +186,20 @@ export default {
     background-color: @BeeDefault;
     padding: 0.5rem 0.32rem 0.66rem;
     box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
     .status-text {
-      margin-bottom: 0.2rem;
       font-size: 0.32rem;
+      .status-text2 {
+        margin-top: 0.2rem;
+        font-size: 0.26rem;
+        display: block;
+      }
     }
-    .status-text2 {
-      font-size: 0.26rem;
+    .bag-img {
+      width: 1.38rem;
+      height: 1.21rem;
+      align-self: center;
     }
   }
   .detail-content {
