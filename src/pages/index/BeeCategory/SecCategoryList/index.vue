@@ -8,7 +8,12 @@
         @click="goSearchPage"
       />
       <!-- 二级导航 -->
-      <van-tabs v-model="nowThirdIndex" swipeable @click="getCateId" @change="getCateId">
+      <van-tabs
+        v-model="nowThirdIndex"
+        swipeable
+        @click="getCateId"
+        @change="getCateId"
+      >
         <!-- 展示全部分类图片开关 -->
         <div
           class="show-all-cate"
@@ -93,7 +98,6 @@ export default {
       overlay: false,
       // 当前选中分类index
       nowThirdIndex: 0
-
     }
   },
   computed: {},
@@ -110,8 +114,18 @@ export default {
   methods: {
     // 获取二级分类列表
     async getSecondCategoryData() {
-      const res = await getSecondCategory({ cid: this.$route.query.cid })
-      console.log('二级分类：', res)
+      let cateData = {}
+      if (this.$route.query.target) {
+        cateData = {
+          cid: this.$route.query.cid,
+          target: this.$route.query.target
+        }
+      } else {
+        cateData = {
+          cid: this.$route.query.cid
+        }
+      }
+      const res = await getSecondCategory(cateData)
       this.categoryThirdList = res.data.cats
       // this.condition.cid = this.categoryThirdList[0].cid
 

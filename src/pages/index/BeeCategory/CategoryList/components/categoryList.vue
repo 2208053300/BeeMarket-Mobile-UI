@@ -70,7 +70,7 @@
             v-for="(item,index) in category2.groups"
             :key="index"
             class="category3-card"
-            @click="$router.push({path:'/category/SecCategoryList',query:{cid:item.cid}})"
+            @click="goList(item)"
           >
             <div class="category3-img">
               <img :src="item.cat_image">
@@ -141,6 +141,19 @@ export default {
     checkGroup(groups) {
       if (groups.length !== 0) {
         return 'gid' in groups[0]
+      }
+    },
+    goList(item) {
+      if ('produce' in item) {
+        this.$router.push({
+          path: '/category/SecCategoryList',
+          query: { cid: item.cid, target: 'produce' }
+        })
+      } else {
+        this.$router.push({
+          path: '/category/SecCategoryList',
+          query: { cid: item.cid }
+        })
       }
     }
   }
