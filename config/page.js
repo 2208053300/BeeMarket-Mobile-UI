@@ -73,7 +73,7 @@ module.exports = {
   // 活动模板
   beeActiveTpl: {
     entry: 'src/pages/BeeActiveTpl/main.js',
-    title: '活动'
+    title: ''
   },
   // 完善资料
   beeCompleteInfo: {
