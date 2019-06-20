@@ -17,7 +17,7 @@
           <span>蜂集市，让生活丰富起来</span>
         </div>
         <van-icon
-          :name="$store.state.user.have_no_read?beeIcon.home_icon_message:beeIcon.home_icon_message_prompt"
+          :name="$store.state.user.have_no_read?beeIcon.home_icon_message_prompt:beeIcon.home_icon_message"
           class="message-icon"
           @click="$router.push('/beeNotice')"
         />

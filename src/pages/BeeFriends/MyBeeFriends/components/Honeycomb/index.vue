@@ -13,7 +13,7 @@
         v-for="(item2,index2) in item"
         :key="index2"
         :ref="'hexagon'+item2.id"
-        :class="[{showitem:showList.indexOf(item2.id)!==-1&&item2.nickname&&checkOverflow('hexagon'+item2.id)},{firstItem:item2.id===config.center_point.id}]"
+        :class="[{showitem:showList.indexOf(item2.id)!==-1&&item2.nickname&&checkOverflow('hexagon'+item2.id)},{firstItem:item2.id===config.center_point.id},{partnerItem:item2.is_partner}]"
         class="comb-card hexagon"
         :test="index2"
         @click="showDetail(item2)"
@@ -402,6 +402,17 @@ export default {
     }
     .showitem {
       opacity: 1;
+    }
+    .partnerItem{
+      .box1{
+        border-bottom-color: @BeeDefault;
+      }
+      .box2{
+        background-color: @BeeDefault;
+      }
+      .box3{
+        border-top-color: @BeeDefault;
+      }
     }
   }
 }

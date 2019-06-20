@@ -88,7 +88,7 @@ export default {
       font-size: 0.26rem;
       color: @Grey1;
       .van-icon {
-        vertical-align: middle;
+        vertical-align: text-top;
       }
     }
   }

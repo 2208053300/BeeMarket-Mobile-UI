@@ -114,6 +114,7 @@ export default {
         number: this.$store.state.cart.pNumber,
         product_source: 'general'
       })
+      this.$store.state.cart.skuId = 0
       this.$toast(res.message)
     },
     // 立即购买
@@ -132,6 +133,7 @@ export default {
         })
       )
       if (res.status_code === 200) {
+        this.$store.state.cart.skuId = 0
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
         this.$router.push('/category/details/confirmOrder')

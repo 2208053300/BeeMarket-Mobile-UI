@@ -2,6 +2,7 @@
   <div
     class="my-friends"
     :style="{backgroundImage:'url('+beeIcon.bee_firends_img_bg+')'}"
+    :class="{hasHeader:$store.state.app.beeHeader}"
   >
     <div
       class="user-fixed"
@@ -160,7 +161,7 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    // this.$store.state.app.beeHeader = true
+    this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getPartnerData()
     this.getReceiveNumData()
@@ -168,7 +169,6 @@ export default {
     this.clearHistory()
   },
   methods: {
-
     async getPartnerData() {
       const res = await getPartner({ type: this.honeyType })
       this.partnerData = res.data
@@ -211,25 +211,27 @@ export default {
     // 清除历史
     clearHistory() {
       if (this.osObj.isWx) {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
+        // this.$router.push({
+        //   path: '/category/details',
+        //   query: {
+        //     pid,
+        //     target
+        //   }
+        // })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.clearHistory.postMessage({ url: window.location.href })
+        window.webkit.messageHandlers.clearHistory.postMessage({
+          url: window.location.href
+        })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.clearHistory()
       } else {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
+        // this.$router.push({
+        //   path: '/category/details',
+        //   query: {
+        //     pid,
+        //     target
+        //   }
+        // })
       }
     }
   }
@@ -246,6 +248,7 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+
   .user-fixed {
     position: fixed;
     top: 0.32rem;
@@ -387,6 +390,17 @@ export default {
     transform: translateY(-30px);
     bottom: 6rem;
     opacity: 0;
+  }
+}
+.hasHeader {
+  .user-fixed {
+    top: 1.2rem;
+  }
+  .rt-fixed{
+    top: 1.2rem;
+  }
+  .rule-fixed{
+    top: 2.5rem;
   }
 }
 </style>

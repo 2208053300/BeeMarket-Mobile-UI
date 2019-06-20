@@ -93,7 +93,7 @@ export default {
 
 <style lang="less">
 .header-banner {
-  margin: 0.2rem 0.3rem;
+  margin: 0.2rem 0.3rem 0;
   border-radius: 0.2rem;
   overflow: hidden;
   height: 3.1rem;

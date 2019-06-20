@@ -92,26 +92,23 @@ export default {
 
 <style scoped lang="less">
 .operation-card {
-  margin: 0 0.16rem;
-  height: 1.5rem;
-  background-color: #fff;
+  margin: 0.4rem 0.16rem 0.2rem;
   border-radius: 0.2rem;
-  box-shadow: 0 0 0.2rem @Grey6;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   align-items: center;
   .op-item {
     text-align: center;
     .img-content {
-      width: 0.69rem;
-      height: 0.76rem;
+      width: 0.66rem;
+      height: 0.63rem;
       margin: auto;
     }
     .op-text {
       font-size: 0.24rem;
       padding: 0;
       margin: 0;
-      margin-top: 0.12rem;
+      margin-top: 0.1rem;
     }
   }
 }

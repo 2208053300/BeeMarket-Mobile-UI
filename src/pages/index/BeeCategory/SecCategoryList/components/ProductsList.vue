@@ -15,7 +15,12 @@
         class="vertical-list"
         @load="getGoodsList(condition)"
       >
-        <VerticalListItem v-for="(item, index) in goodsList" :key="index" :item="item" class="item" />
+        <VerticalListItem
+          v-for="(item, index) in goodsList"
+          :key="index"
+          :item="item"
+          class="item"
+        />
       </van-list>
     </div>
     <div v-else>
@@ -29,7 +34,11 @@
         @load="getGoodsList(condition)"
       >
         <div class="item flex flex-wrap">
-          <HorizontalListItem v-for="(item, index) in goodsList" :key="index" :item="item" />
+          <HorizontalListItem
+            v-for="(item, index) in goodsList"
+            :key="index"
+            :item="item"
+          />
         </div>
       </van-list>
     </div>
@@ -79,8 +88,7 @@ export default {
     }
   },
   computed: {},
-  watch: {
-  },
+  watch: {},
   created() {},
   mounted() {
     // this.getGoodsList(this.condition)
@@ -88,7 +96,11 @@ export default {
   methods: {
     // 获取二级分类下商品列表
     getGoodsList() {
-      const data = this.filterParams(this.condition)
+      let data = this.filterParams(this.condition)
+      // 如果是农产品分类
+      if (this.$route.query.target) {
+        data = { ...data, target: 'produce' }
+      }
       setTimeout(async() => {
         const res = await getProductList(data)
 
@@ -150,12 +162,13 @@ export default {
 </script>
 
 <style scoped lang="less">
-.hor-list{
+.hor-list {
   padding: 0 0.3rem;
 }
-.vertical-list{
+.vertical-list {
   padding: 0 0.3rem;
-  .item{margin-bottom:0.1rem;}
+  .item {
+    margin-bottom: 0.1rem;
+  }
 }
-
 </style>
