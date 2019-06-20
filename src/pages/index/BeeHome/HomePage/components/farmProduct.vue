@@ -4,7 +4,10 @@
       <span class="title">
         农副产品
       </span>
-      <div class="more" @click="$router.push('/beefarm')">
+      <div
+        class="more"
+        @click="$router.push('/beefarm')"
+      >
         更多
         <van-icon name="arrow" />
       </div>
@@ -70,10 +73,9 @@ export default {
 
 <style scoped lang="less">
 .farm-card {
-  margin: 0.2rem 0.16rem 0;
-  padding: 0.32rem 0.16rem;
+  margin: 0.2rem 0;
+  padding: 0.2rem 0.16rem 0.1rem;
   background-color: #fff;
-  border-radius: 0.2rem;
   box-shadow: 0 0 0.2rem @Grey6;
   .card-title {
     display: flex;
@@ -85,19 +87,19 @@ export default {
     .more {
       font-size: 0.26rem;
       color: @Grey1;
-      .van-icon{
+      .van-icon {
         vertical-align: middle;
       }
     }
   }
   .product-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 0.08rem;
     margin-top: 0.3rem;
+    overflow-x: scroll;
+    white-space: nowrap;
     .product-detail {
       display: inline-block;
       border-radius: 0.08rem;
+      margin-right: 0.08rem;
       .product-img {
         border-radius: 0.08rem;
         overflow: hidden;
