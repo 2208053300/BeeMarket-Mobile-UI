@@ -14,7 +14,7 @@ export default new Router({
         {
           path: '',
           name: 'beeIndex',
-          component: () => import('@/pages/BeeFriends/Index')
+          component: () => import('@/pages/BeeFriends/beeIndex')
         },
         {
           path: 'beeFriends',
