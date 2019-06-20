@@ -216,6 +216,12 @@ export default {
     },
     goStore(id) {
       // TODO 跳转到店铺
+      this.$router.push({
+        path: '/category/store',
+        query: {
+          mid: id
+        }
+      })
     }
   }
 }

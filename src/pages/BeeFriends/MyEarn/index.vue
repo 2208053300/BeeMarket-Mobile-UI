@@ -127,6 +127,9 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
+    this.$store.state.app.beeFooter.show = false
+
     this.getMyEarningData()
   },
   methods: {
@@ -137,15 +140,12 @@ export default {
       })
       this.detailData = res.data
       this.detailList = res.data.record.list
-      if (this.earnType === 'left') {
-        this.finished = true
-      } else {
-        this.finished = false
-      }
       this.page = 2
     },
     changeEarnType(type) {
       this.earnType = type
+      this.page = 1
+      this.finished = false
       this.getMyEarningData()
     },
     onLoad() {
@@ -157,10 +157,8 @@ export default {
         })
         this.detailList.push(...res.data.record.list)
         this.loading = false
-        if (this.earnType !== 'left') {
-          if (this.detailList.length >= res.data.recoed.total_num) {
-            this.finished = true
-          }
+        if (res.data.record.length === 0) {
+          this.finished = true
         }
       }, 500)
     }

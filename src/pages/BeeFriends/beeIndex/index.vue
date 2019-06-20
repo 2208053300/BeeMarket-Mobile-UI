@@ -4,23 +4,18 @@
 
 <script>
 export default {
-  components: {
-
-  },
-  props: {
-
-  },
-  data() {
+  meteInfo() {
     return {
-
+      title: '蜂友圈'
     }
   },
-  computed: {
-
+  components: {},
+  props: {},
+  data() {
+    return {}
   },
-  watch: {
-
-  },
+  computed: {},
+  watch: {},
   async beforeCreate() {
     // 初始化实例之前判断该用户蜂友圈状态跳转页面
     await this.$store.dispatch('GerUserStatus')
@@ -37,24 +32,11 @@ export default {
       this.$router.push({ name: 'freeze' })
     }
   },
-  created() {
-
-  },
-  mounted() {
-
-  },
-  methods: {
-
-  },
-  meteInfo() {
-    return {
-
-      title: '蜂友圈'
-    }
-  }
+  created() {},
+  mounted() {},
+  methods: {}
 }
 </script>
 
 <style scoped lang="less">
-
 </style>

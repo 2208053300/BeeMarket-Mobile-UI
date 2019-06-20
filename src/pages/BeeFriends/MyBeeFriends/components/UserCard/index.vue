@@ -41,14 +41,14 @@
             {{ detailItem.nickname }}
           </div>
           <div
-            v-if="honeyType!==1"
+            v-if="honeyType!==1&&detailItem.is_partner"
             class="user-grade"
           >
             <van-icon :name="beeIcon.bee_firends_basic_icon_star" />
             <span class="name">合伙人</span>
           </div>
           <div
-            v-else
+            v-if="honeyType===1&&!detailItem.is_partner"
             class="store-name"
           >
             店铺名
