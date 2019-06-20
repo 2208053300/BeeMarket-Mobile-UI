@@ -119,7 +119,9 @@ export default {
     // 获取帮助首页信息
     async getIndexData() {
       const res = await getServiceIndex()
-      this.user = res.data.user_info
+      if (res.data.user_info.head_image_url) {
+        this.user = res.data.user_info
+      }
       this.hot_problem = res.data.hot_problem
       this.problem_type = res.data.problem_type
     },

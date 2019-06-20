@@ -174,7 +174,7 @@ export default {
       //   }
       // })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.clearHistory.postMessage({})
+        window.webkit.messageHandlers.clearHistory.postMessage({ url: window.location.href })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.clearHistory()
       } else {

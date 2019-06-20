@@ -466,6 +466,7 @@ export default {
 <style  lang="less">
 .factory-body {
   background: #fed559;
+  .van-cell-group{ border-radius:0.1rem;}
   .van-cell:not(:last-child)::after {
     content: " ";
     position: absolute;

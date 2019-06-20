@@ -16,13 +16,13 @@
       />
     </div>
 
-    <van-button
+    <!-- <van-button
       type="primary"
       block
       class="margin-t-20 logout-btn"
     >
       退出
-    </van-button>
+    </van-button> -->
   </div>
 </template>
 
