@@ -5,12 +5,17 @@
       :style="{backgroundImage:'url('+beeIcon.mine_img_avatar_bg+')'}"
     >
       <div class="nav-right">
-        <van-icon
-          :name="beeIcon.mine_icon_message"
-          size="20px"
-          style="margin-right:0.5rem;"
-          @click="$router.push('/beeNotice')"
-        />
+        <div class="message-content">
+          <van-icon
+            :name="beeIcon.mine_icon_message"
+            size="20px"
+            @click="$router.push('/beeNotice')"
+          />
+          <div
+            v-if="$store.state.user.have_no_read"
+            class="red-dot"
+          />
+        </div>
         <van-icon
           :name="beeIcon.mine_icon_qrcode"
           size="20px"
@@ -178,6 +183,7 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
+    this.$store.dispatch('GerUserMsg')
     this.getPersionalCenterData()
   },
   methods: {
@@ -226,6 +232,20 @@ export default {
     box-sizing: border-box;
     .nav-right {
       text-align: right;
+      .message-content {
+        margin-right: 0.4rem;
+        display: inline-block;
+        position: relative;
+        .red-dot {
+          position: absolute;
+          right: -0.05rem;
+          top: -0.05rem;
+          height: 0.15rem;
+          width: 0.15rem;
+          background-color: #fc4545;
+          border-radius: 50%;
+        }
+      }
     }
     .head-user {
       height: 1.58rem;
