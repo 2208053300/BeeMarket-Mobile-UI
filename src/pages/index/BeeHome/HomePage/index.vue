@@ -8,7 +8,7 @@
             alt=""
           >
         </div>
-        <div class="search-input">
+        <div class="search-input" @click="$router.push('/category/SearchCommodity')">
           <van-icon
             slot="left-icon"
             :name="beeIcon.nav_icon_search"

@@ -413,7 +413,7 @@ const router = new Router({
                 },
                 {
                   path: 'bindPhone',
-                  name: 'bindPhone',
+                  name: 'changePhone',
                   component: () => import('@/pages/index/BeePersion/Profile/ChangePhone/BindPhone')
                 }
               ]
@@ -433,7 +433,7 @@ const router = new Router({
                 },
                 {
                   path: 'setPw',
-                  name: 'setPw',
+                  name: 'setPayPw',
                   component: () => import('@/pages/index/BeePersion/Profile/SetPayPw/SetPw')
                 }
               ]
@@ -448,7 +448,7 @@ const router = new Router({
                 },
                 {
                   path: 'setPw',
-                  name: 'setPw',
+                  name: 'setLoginPw',
                   component: () => import('@/pages/index/BeePersion/Profile/SetLoginPw/SetPw')
                 }
               ]

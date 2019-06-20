@@ -72,7 +72,7 @@ export default {
     // 判断是否已设置支付密码、是否绑定了手机号码
     async isSet() {
       const res = await security()
-      if (res.code === 1 && res.state_code === 200) {
+      if (res.code === 1 && res.status_code === 200) {
         this.mobile_bind = res.data.mobile_bind
         this.paypwd_set = res.data.paypwd_set
         // 如果没有绑定手机号码，调转到绑定手机号码页面,带路由路径便于绑定号码后跳回

@@ -135,13 +135,13 @@
               <div class="check-action">
                 <img
                   v-show="isAgree"
-                  src="../../../assets/icon/joinFactory/checked_red.png"
+                  :src="icon.agreeImg"
                   class="check-img js-agreement"
                   @click="isAgree = !isAgree"
                 >
                 <img
                   v-show="!isAgree"
-                  src="../../../assets/icon/joinFactory/unchecked_red.png"
+                  :src="icon.notAgreeImg"
                   class="check-img js-agreement"
                   @click="isAgree = !isAgree"
                 >
@@ -198,7 +198,9 @@ export default {
       isAgree: true,
 
       icon: {
-        halfCircle: require('@/assets/icon/joinFactory/factory_img_circle.png')
+        halfCircle: require('@/assets/icon/joinFactory/factory_img_circle.png'),
+        agreeImg: require('@/assets/icon/joinFactory/checked_red.png'),
+        notAgreeImg: require('@/assets/icon/joinFactory/unchecked_red.png')
       }
     }
   },

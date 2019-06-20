@@ -11,6 +11,7 @@
         placeholder="蜂集市，让生活丰富起来"
         @focus="changeLeft"
         @blur="changeCenter"
+        @search="getConfirmWold(searchKey)"
       >
         <van-icon
           slot="left-icon"
@@ -81,15 +82,25 @@ export default {
         }
       ],
       // 是否显示商品列表
-      isShowProductList: false
+      isShowProductList: false,
+      timeout: null,
+      // 搜索历史
+      searchHistory: []
     }
   },
   computed: {},
   watch: {
-    searchKey: {
-      handler(val) {
+    // searchKey: {
+    //   handler(val) {
+    //     this.getGuess()
+    //   }
+    // }
+    searchKey(curVal, oldVal) {
+      // 实现input连续输入，只发一次请求
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
         this.getGuess()
-      }
+      }, 300)
     }
   },
   created() {},
@@ -101,22 +112,31 @@ export default {
     // NOTE 当点击搜索栏时，更改样式
     changeLeft() {
       // this.searchStatus = true
-      this.searchAlign = 'left'
+      // this.searchAlign = 'left'
+      this.searchAlign = 'center'
     },
     changeCenter() {
       // this.searchStatus = false
       this.searchAlign = 'center'
     },
     async getGuess() {
+      this.searchAlign = 'center'
       this.isShowGuess = true
       const res = await searchSuggust({ search: this.searchKey })
       console.log('搜索建议：', res)
     },
-    // 确认搜索关键词
+    // 确认搜索关键词并以此搜索商品
     getConfirmWold(val) {
       console.log('搜索关键词：', val)
+      this.isShowGuess1 = false
       this.searchKey = val
-
+      if (this.searchHistory.indexOf(val) !== -1) {
+        this.searchHistory.unshift(val)
+        if (this.searchHistory.length > 10) {
+          this.searchHistory.splice(9, 1)
+        }
+        localStorage.setItem('searchHistory', this.searchHistory)
+      }
       // this.isShowGuess = false
 
       this.isShowProductList = true
@@ -125,14 +145,28 @@ export default {
     },
     // 取消搜索，回到分类页面
     cancelSearch() {
-      this.$router.push({
-        path: '/category'
-      })
+      this.$router.go(-1)
+      // this.$router.push({
+      //   path: '/category'
+      // })
     },
+    // onInput
+    onInput() {
+      console.log(this.searchKey)
+      this._debounce(() => {
+        console.log(123456)
+      }, 200)
+    },
+
     // 防抖
     debounce(func, wait) {
+      console.log('fdfsdfdfd')
+      console.log(func)
+
       let timeout = ''
       return v => {
+        console.log(333)
+
         if (timeout) {
           clearTimeout(timeout)
         }

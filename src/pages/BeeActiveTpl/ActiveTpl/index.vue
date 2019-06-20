@@ -87,8 +87,9 @@ export default {
       // 标签tabs距离顶部的距离
       top: '0',
       // 获取 os 平台
-      osObj: getOs()
-
+      osObj: getOs(),
+      // 顶部导航栏的高度 固定头部 和 tabs
+      topH: 0
     }
   },
   computed: {},
@@ -108,12 +109,28 @@ export default {
 
     this.getActivityDetailData()
 
-    this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
-
-    if (document.querySelector('.showHeader')) {
-      console.log('有 showHeader')
-      document.querySelector('.showHeader').style.paddingTop = '0'
+    // this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
+    const vanDom = document.querySelector('.van-tabs__wrap')
+    // console.log('公共头部：', document.querySelector('.fixed-header'))
+    if (document.querySelector('.fixed-header')) {
+      // console.log('有 showHeader')
+      // document.querySelector('.showHeader').style.paddingTop = '0'
+      if (vanDom) {
+        vanDom.style.top = '44px'
+      }
+      this.topH = 90
+    } else {
+      this.topH = 44
+      if (vanDom) {
+        vanDom.style.top = '0'
+      }
     }
+
+    // if ((this.osObj.isIphone && this.osObj.isApp) || (this.osObj.isAndroid && this.osObj.isApp)) {
+    //   vanDom.style.top = '0'
+    // } else {
+    //   vanDom.style.top = '44px'
+    // }
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare
 
@@ -147,31 +164,30 @@ export default {
       const res = await activityDetail({ id: this.$route.query.id })
       this.activity = res.data
       if (this.activity.navigate_data.length > 1) {
-        console.log(456789)
         var self = this
         var $scrollBox = document
         var scrollCallback = self.debounce(function() {
-          console.log('scroll')
+          // console.log('scroll')
           const navContents = document.querySelectorAll('.nav-content')
           const heightArr = []
           navContents.forEach(item => {
-            heightArr.push(item.offsetTop)
+            heightArr.push(item.offsetTop - self.topH)
           })
-          console.log(navContents, heightArr)
+          // console.log(navContents, heightArr)
 
           var top = document.documentElement.scrollTop || document.body.scrollTop// 设置变量top,表示当前滚动条到顶部的值
           var tt = document.getElementsByClassName('nav-content')[0].clientHeight // 设置变量tt,表示当前滚动窗口高度的值
           console.log(top, tt)
 
           // const vanTabs = document.querySelector('.van-tabs__wrap')
-          if (top > 44) {
-            self.$store.state.app.beeHeader = false
-            // vanTabs.style.top = '0'
-          } else {
-            self.$store.state.app.beeHeader = true
+          // if (top > 44) {
+          //   self.$store.state.app.beeHeader = true
+          //   vanTabs.style.top = '44px'
+          // } else {
+          //   self.$store.state.app.beeHeader = true
 
-            // vanTabs.style.top = '44px'
-          }
+          //   vanTabs.style.top = '44px'
+          // }
           var num = 0
           for (var n = 0; n < heightArr.length; n++) {
             // 在此处通过判断滚动条到顶部的值和当前窗口高度的关系
@@ -331,14 +347,14 @@ export default {
           desc: this.activity.share_data.desc,
           img_path: this.activity.share_data.img,
           // 地址应该放 web 站 网页
-          url: this.$store.state.app.homeUri + '/activeTpl?id=' + this.$route.query.id
+          url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(
           this.activity.share_data.title,
           this.activity.share_data.desc,
           this.activity.share_data.img,
-          this.$store.state.app.homeUri + '/activeTpl?id=' + this.$route.query.id
+          this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
         )
       } else {
       // this.$router.push({
@@ -365,7 +381,10 @@ export default {
     color:#fff ;
     background:@BeeDefault ;
   }
-  .van-tabs > .van-tabs__wrap { top: 0; position: fixed; z-index: 999;}
+  .van-tabs > .van-tabs__wrap {
+    top: 0;
+    position: fixed; z-index: 999;
+  }
   .van-tabs__line{
      background:rgba(3, 0, 0, 0) ;
   }

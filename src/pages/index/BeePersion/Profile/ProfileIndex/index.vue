@@ -26,14 +26,14 @@
           </div>
         </div>
       </li>
-      <li>
+      <!-- <li>
         <div class="item flex flex-between align-center" @click="$router.push('/persion/BeeSetting')">
           <span class="title">设置</span>
           <div class="link-icon">
             <van-icon name="arrow" size="0.26rem" color="#666" class="icon" />
           </div>
         </div>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>
