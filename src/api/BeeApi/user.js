@@ -441,7 +441,14 @@ export function remindLogin(data) {
     data
   })
 }
-
+// 蜂友圈 - 提现界面数据
+export function getWithdrawNum(data) {
+  return request({
+    url: '/user/partner/withdraw_data',
+    method: 'post',
+    data
+  })
+}
 // 用户支付密码设置、换绑手机 - 发送短信
 export function sendSms(data) {
   return request({
