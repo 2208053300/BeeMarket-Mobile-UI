@@ -3,11 +3,12 @@
     <div
       class="action-header"
       :style="{backgroundImage:'url('+homeData.charity_action.show_image+')'}"
-      @click="$router.push({path:'/discover/action',query:{id:homeData.charity_action.action.action_id}})"
+      @click="$router.push('/discover')"
     />
     <div
       class="action-body"
       :style="{backgroundImage:'url('+homeData.charity_action.action.show_img+')'}"
+      @click="$router.push({path:'/discover/action',query:{id:homeData.charity_action.action.action_id}})"
     >
       <span class="action-title">
         {{ homeData.charity_action.action.main_title }}

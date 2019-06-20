@@ -6,7 +6,7 @@
         v-model="searchKey"
         :input-align="searchAlign"
         :show-action="searchStatus"
-        :class="{searchIcon:searchStatus&&searchKey===''}"
+        :class="{searchIcon:searchStatus||searchKey!==''}"
         shape="round"
         placeholder="蜂集市，让生活丰富起来"
         @click="goSearchPage"

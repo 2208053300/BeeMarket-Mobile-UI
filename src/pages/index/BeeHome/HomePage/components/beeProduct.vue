@@ -2,7 +2,7 @@
   <div
     class="bee-product"
     :style="{backgroundImage:'url('+homeData.plan.show_image+')'}"
-    @click="$router.push('/beeFactory')"
+    @click="goUrl(homeData.plan.url,homeData.plan.plan_id)"
   />
 </template>
 
@@ -28,7 +28,12 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goUrl(url, id) {
+      // REVIEW
+      this.$router.push({ path: '/beeActiveTpl', query: { id: id }})
+    }
+  }
 }
 </script>
 
