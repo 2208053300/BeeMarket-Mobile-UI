@@ -160,17 +160,17 @@ export default {
   watch: {},
   async beforeCreate() {
     // 初始化实例之前判断该用户蜂友圈状态跳转页面
-    await this.$store.dispatch('GerUserStatus')
-    console.log('蜂友圈状态：', this.$store.state.user.userStatus)
-    setTimeout(() => {
-      console.log('蜂友圈状态：', this.$store.state.user.userStatus)
-    }, 1000)
-    // 0 非合伙人 1 合伙人 2 冻结
-    if (this.$store.state.user.userStatus === 0) {
-      this.$router.push({ name: 'introduction' })
-    } else if (this.$store.state.user.userStatus === 2) {
-      this.$router.push({ name: 'freeze' })
-    }
+    // await this.$store.dispatch('GerUserStatus')
+    // console.log('蜂友圈状态：', this.$store.state.user.userStatus)
+    // setTimeout(() => {
+    //   console.log('蜂友圈状态：', this.$store.state.user.userStatus)
+    // }, 1000)
+    // // 0 非合伙人 1 合伙人 2 冻结
+    // if (this.$store.state.user.userStatus === 0) {
+    //   this.$router.push({ name: 'introduction' })
+    // } else if (this.$store.state.user.userStatus === 2) {
+    //   this.$router.push({ name: 'freeze' })
+    // }
   },
   created() {},
   mounted() {
@@ -219,6 +219,30 @@ export default {
     },
     countUpNum() {
       this.countUpBalance.start()
+    },
+    // 清除历史
+    clearHistory() {
+      if (this.osObj.isWx) {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.clearHistory.postMessage({ url: window.location.href })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.clearHistory()
+      } else {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+      }
     }
   }
 }

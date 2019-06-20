@@ -1,6 +1,6 @@
 <template>
   <div class="help bg-white">
-    <BeeHeader />
+    <!-- <BeeHeader /> -->
     <h5>提示条款</h5>
     <p>
       在接受本协议之前，请您仔细阅读本协议的全部内容（特别是以<b>粗体下划线标注</b>的内容）。如果您对本协议的条款有疑问，请通过蜂集市客服渠道进行询问，蜂集市将向您解释条款内容，<b>您点击“同意”按钮即视为您完全理解并接受本协议</b>。
@@ -264,7 +264,7 @@ b {
   text-indent: 2em;
 }
 .help{
-  padding: 0 0.2rem;
+  padding: 0.2rem 0.2rem 0;
    -webkit-user-select:none;
      -moz-user-select:none;
      -ms-user-select:none;
@@ -272,7 +272,7 @@ b {
     .content{padding: 0.2rem;}
     h4{margin-bottom: 0.25rem; text-indent: 2em; margin-top: 0.3rem; font-size: 0.34rem;}
     h4.toph4{margin-top: 0;}
-    h5{margin-bottom: 0.2rem; text-indent: 2em; font-size: 0.3rem; font-weight: 600;}
+    h5{margin-bottom: 0.2rem; text-indent: 2em; font-size: 0.3rem; font-weight: 600; margin-top: 0;}
     h6{margin-bottom: 0.2rem; text-indent: 2em; font-size: 0.3rem; font-weight: 600; color: #666;}
     p{font-size: 0.3rem; margin-bottom: 0.2rem; color: #666; line-height: 1.5; text-indent: 2em;}
 

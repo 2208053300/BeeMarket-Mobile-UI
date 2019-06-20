@@ -14,14 +14,17 @@ export default new Router({
       children: [
         {
           path: '',
+          name: 'beeRegister',
           component: () => import('@/pages/BeeRegister/Register')
         },
         {
           path: 'download',
+          name: 'download',
           component: () => import('@/pages/BeeRegister/Download')
         },
         {
           path: 'agreement',
+          name: 'agreement',
           component: () => import('@/pages/BeeRegister/UserAgreement')
         }
       ]

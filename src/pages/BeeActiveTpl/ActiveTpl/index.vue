@@ -371,10 +371,10 @@ export default {
   }
   .top-img{
     width: 100%;
-    height: 8.88rem;
+    // height: 8.88rem;
   }
   .title-img{
-    height: 1.56rem;
+    // height: 1.56rem;
   }
   .main-product{
     img{width: 100%;}
