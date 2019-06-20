@@ -71,7 +71,10 @@
           @click="$router.push('/persion/BeeCommonweal')"
         />
       </van-row>
-      <bee-order :express-info="userInfo.express_info" />
+      <bee-order
+        :express-info="userInfo.express_info"
+        :order-status="userInfo.order_status"
+      />
       <van-row
         class="persion-op"
         type="flex"
