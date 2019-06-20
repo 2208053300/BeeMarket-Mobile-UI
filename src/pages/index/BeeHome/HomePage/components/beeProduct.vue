@@ -39,7 +39,7 @@ export default {
 
 <style scoped lang="less">
 .bee-product {
-  margin: 0.2rem 0.16rem;
+  margin: 0 0.16rem 0.2rem;
   height: 2.2rem;
   background-color: #fff;
   border-radius: 0.2rem;
