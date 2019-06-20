@@ -41,14 +41,14 @@
       <div class="left-action">
         <img
           :src="homeData.limited_plan.left.show_image"
-          alt="limited"
+          alt="限量蜂抢"
           @click="$router.push('/beeLimit')"
         >
       </div>
       <div class="right-action">
         <img
           :src="homeData.limited_plan.right.show_image"
-          alt="limited"
+          alt="集市活动"
           @click="$router.push({path:'/beeActiveTpl',query:{id:homeData.limited_plan.right.plan_id}})"
         >
       </div>

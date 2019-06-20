@@ -4,7 +4,7 @@
 #!/bin/bash
 PROG_NAME=$0
 ACTION=$1
-ONLINE_OFFLINE_WAIT_TIME=30                        # 实例上下线的等待时间
+ONLINE_OFFLINE_WAIT_TIME=10                        # 实例上下线的等待时间
 APP_START_TIMEOUT=60                               # 等待应用启动的时间
 HEALTH_CHECK_URL=http://app.fengjishi.com.cn/#/    # 应用健康检查URL
 HEALTH_CHECK_FILE_DIR=/home/admin/status           # 脚本会在这个目录下生成 nginx-status 文件

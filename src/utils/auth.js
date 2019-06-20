@@ -70,4 +70,16 @@ export function checkToken() {
 }
 async function wxLogin(code) {
   await auditWechat({ code: code })
+  // // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
+  if (
+    localStorage.getItem('BM-App-Token') === 'waiting' ||
+    !localStorage.getItem('BM-App-Token')
+  ) {
+    const uriProp = GetRequest('state')
+    // 只带state后面的参数跳转
+    window.location.href =
+      'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+      encodeURIComponent(window.location.origin + window.location.pathname + uriProp.slice(5)) +
+      '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+  }
 }

@@ -4,8 +4,8 @@ import request from '@/utils/request'
 export function auditWechat(data) {
   return request({
     url: '/auth/h5login',
-    method: 'get',
-    params: data
+    method: 'post',
+    data
   })
 }
 // NOTE 用户登录,检查是否已注册
