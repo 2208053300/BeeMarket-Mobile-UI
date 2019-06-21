@@ -5,7 +5,7 @@
         <span>
           搜索历史
         </span>
-        <van-icon :name="beeIcon.cat_icon_delete" />
+        <van-icon :name="beeIcon.cat_icon_delete" @click="clearHistory" />
       </div>
       <div class="history-tag">
         <div
@@ -77,6 +77,11 @@ export default {
       this.$parent.searchStatus = false
 
       this.$parent.getConfirmWold(val)
+    },
+    // 清空历史
+    clearHistory() {
+      this.$parent.searchHistory = []
+      localStorage.removeItem('searchHistory', '')
     }
   }
 }
