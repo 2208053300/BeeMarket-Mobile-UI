@@ -29,12 +29,14 @@ export async function getToken() {
         window.location.href =
           'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
           encodeURIComponent(
-            window.location.origin + window.location.pathname + uriProp2.slice(5)
+            window.location.origin +
+              window.location.pathname +
+              uriProp2.slice(5)
           ) +
           '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
       }
     } else {
-      console.log('微信CODE为空')
+      checkToken()
     }
     return localStorage.getItem('BM-App-Token')
   } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
@@ -81,12 +83,19 @@ export function checkToken() {
   if (osObj.isWx) {
     const uriProp = GetRequest('code')
     if (uriProp) {
-      window.location.reload()
+      const uriProp2 = GetRequest('state')
+      // 只带state后面的参数跳转
+      window.location.href =
+        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+        encodeURIComponent(
+          window.location.origin + window.location.pathname + uriProp2.slice(5)
+        ) +
+        '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     } else {
       window.location.href =
-      'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-      encodeURIComponent(window.location.href) +
-      '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+        encodeURIComponent(window.location.href) +
+        '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     }
   } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
     // 如果是APP，获取APP放在cookie里的token
