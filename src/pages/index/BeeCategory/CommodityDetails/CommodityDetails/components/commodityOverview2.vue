@@ -21,8 +21,8 @@
     </div>
     <div class="product-desc">
       <div class="desc-text">
-        安排见谁都阿吉豆爱上你都暗示你打死你电脑上DNA
-        <!-- {{ commodityData.intro }} -->
+        <!-- 安排见谁都阿吉豆爱上你都暗示你打死你电脑上DNA -->
+        {{ commodityData.intro }}
       </div>
       <div class="product-tags">
         <div

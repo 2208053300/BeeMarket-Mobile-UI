@@ -59,7 +59,7 @@
           class="cell-title"
         >
           <span class="title-text">备注</span>
-          <span class="cell-content">这是备注</span>
+          <span class="cell-content">{{ commodityData.remarks }}</span>
         </p>
       </van-cell>
     </van-cell-group>

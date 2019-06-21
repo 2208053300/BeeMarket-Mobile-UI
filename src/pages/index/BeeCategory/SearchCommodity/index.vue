@@ -25,7 +25,7 @@
     </van-nav-bar>
     <div class="category-container">
       <!-- 搜索历史 为您推荐 -->
-      <search-keyword v-show="searchStatus && searchKey === ''" />
+      <search-keyword v-show="searchStatus && searchKey === ''" :search-history="searchHistory" />
       <!-- 搜索建议 -->
       <search-guess
         v-show="isShowGuess && isShowGuess1 && searchKey !== ''"
@@ -107,6 +107,9 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = false
+
+    console.log('localStarog历史记录:', localStorage.getItem('searchHistory'))
+
   },
   methods: {
     // NOTE 当点击搜索栏时，更改样式
@@ -122,6 +125,8 @@ export default {
     async getGuess() {
       this.searchAlign = 'center'
       this.isShowGuess = true
+      this.isShowGuess1 = true
+      this.isShowProductList = false
       const res = await searchSuggust({ search: this.searchKey })
       console.log('搜索建议：', res)
     },
@@ -130,11 +135,13 @@ export default {
       console.log('搜索关键词：', val)
       this.isShowGuess1 = false
       this.searchKey = val
-      if (this.searchHistory.indexOf(val) !== -1) {
+      if (this.searchHistory.indexOf(val) === -1) {
         this.searchHistory.unshift(val)
         if (this.searchHistory.length > 10) {
           this.searchHistory.splice(9, 1)
         }
+        console.log('searchHistory:', this.searchHistory)
+
         localStorage.setItem('searchHistory', this.searchHistory)
       }
       // this.isShowGuess = false

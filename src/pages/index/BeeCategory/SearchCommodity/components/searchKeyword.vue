@@ -38,10 +38,15 @@
 import { getSearchHistory, getRecommendData } from '@/api/category'
 export default {
   components: {},
-  props: {},
+  props: {
+    searchHistory: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
-      searchHistory: [],
+      // searchHistory: [],
       recommendData: [],
       beeIcon: {
         cat_icon_delete: require('@/assets/icon/category/cat_icon_delete@2x.png')
