@@ -89,6 +89,7 @@
                 <div class="van-field__body" @click="showCat = true">
                   <input
                     v-model.trim="factory.cat_name"
+                    disabled
                     type="text"
                     placeholder="请选择"
                     class="van-field__control  van-field__control--left"
@@ -107,6 +108,7 @@
                 <div class="van-field__body" @click="showJy = true">
                   <input
                     v-model.trim="factory.jy_name"
+                    disabled
                     type="text"
                     placeholder="请选择"
                     class="van-field__control  van-field__control--left"

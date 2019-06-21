@@ -158,17 +158,17 @@ export default {
       // })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToShare.postMessage({
-          title: this.activity.share_data.title,
-          desc: this.activity.share_data.desc,
-          img_path: this.activity.share_data.img,
+          title: this.article.share_data.title,
+          desc: this.article.share_data.desc,
+          img_path: this.article.share_data.img,
           // 地址应该放 web 站 网页
           url: this.$store.state.app.homeUri + '/discover/article/' + this.$route.params.id
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(
-          this.activity.share_data.title,
-          this.activity.share_data.desc,
-          this.activity.share_data.img,
+          this.article.share_data.title,
+          this.article.share_data.desc,
+          this.article.share_data.img,
           this.$store.state.app.homeUri + '/discover/article/' + this.$route.params.id
         )
       } else {

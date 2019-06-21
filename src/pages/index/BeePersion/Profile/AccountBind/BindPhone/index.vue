@@ -42,7 +42,7 @@
           class="loginBtn"
           :disabled="!checkLogin()"
           :class="{loginBtn2:checkLogin()}"
-          @click="rebindNum"
+          @click="bindNum"
         >
           绑定手机号
         </van-button>
@@ -52,8 +52,8 @@
 </template>
 
 <script>
-import { rebind } from '@/api/BeeApi/user'
-import { sendSms } from '@/api/BeeApi/auth'
+// import { rebind } from '@/api/BeeApi/user'
+import { sendSms, bindPhone } from '@/api/BeeApi/auth'
 
 export default {
   metaInfo: {
@@ -105,16 +105,14 @@ export default {
         this.changeCountDoen()
       }
     },
-    async rebindNum() {
-      const res = await rebind({
+    async bindNum() {
+      const res = await bindPhone({
         mobileNum: this.phone,
-        type: 2,
-        source: 'H5',
+        type: 10,
         smsCode: this.verificationCode
       })
       if (res.status_code === 200) {
-        this.$store.state.user.userInfo = res.data
-        this.$router.push({ path: this.redirect || '/' })
+        this.$router.push({ path: '/persion/profile/accountBind' })
       }
     },
     // 开始倒计时

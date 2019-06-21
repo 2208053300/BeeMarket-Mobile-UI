@@ -121,6 +121,8 @@ export default {
       const res = await getServiceIndex()
       if (res.data.user_info.head_image_url) {
         this.user = res.data.user_info
+      } else {
+        this.urser.nickname = '游客'
       }
       this.hot_problem = res.data.hot_problem
       this.problem_type = res.data.problem_type

@@ -1,13 +1,13 @@
 
 <template>
   <div>
-    <div class="fun-list margin-t-20">
+    <!-- <div class="fun-list margin-t-20">
       <van-cell
         title="功能反馈"
         is-link
         @click="goFeedBack"
       />
-    </div>
+    </div> -->
     <div class="fun-list margin-t-20">
       <van-cell
         title="关于"
