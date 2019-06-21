@@ -12,6 +12,7 @@
           v-for="item in searchHistory"
           :key="item"
           class="history-item"
+          @click="search(item)"
         >
           {{ item }}
         </div>
@@ -26,6 +27,7 @@
           v-for="item in recommendData"
           :key="item"
           class="recommend-item"
+          @click="search(item)"
         >
           {{ item }}
         </div>
@@ -69,6 +71,12 @@ export default {
     async getRecommendData() {
       const res = await getRecommendData()
       this.recommendData = res.data.recommendData
+    },
+    // 根据历史记录或者推荐记录作为关键词搜索
+    search(val) {
+      this.$parent.searchStatus = false
+
+      this.$parent.getConfirmWold(val)
     }
   }
 }

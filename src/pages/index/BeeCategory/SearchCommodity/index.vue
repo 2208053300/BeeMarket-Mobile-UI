@@ -34,7 +34,7 @@
         @getConfirmWold="getConfirmWold"
       />
       <!-- 搜索的商品列表 -->
-      <ProductsList v-show="isShowProductList && searchKey !== ''" ref="ProductsList" class="bg-white" />
+      <ProductsList v-show="isShowProductList " ref="ProductsList" class="bg-white" />
     </div>
   </div>
 </template>
@@ -108,8 +108,7 @@ export default {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = false
 
-    console.log('localStarog历史记录:', localStorage.getItem('searchHistory'))
-
+    this.searchHistory = localStorage.getItem('searchHistory').split(',')
   },
   methods: {
     // NOTE 当点击搜索栏时，更改样式
@@ -131,10 +130,10 @@ export default {
       console.log('搜索建议：', res)
     },
     // 确认搜索关键词并以此搜索商品
-    getConfirmWold(val) {
+    async getConfirmWold(val) {
       console.log('搜索关键词：', val)
       this.isShowGuess1 = false
-      this.searchKey = val
+      // this.searchKey = val
       if (this.searchHistory.indexOf(val) === -1) {
         this.searchHistory.unshift(val)
         if (this.searchHistory.length > 10) {
