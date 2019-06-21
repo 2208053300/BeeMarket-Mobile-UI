@@ -1,12 +1,12 @@
 <template>
   <div class="order-address">
+    <!-- v-if="orderDetail.s_pay===1&&orderDetail.s_order===3" -->
     <div
-      v-if="[2,3,4,5,9,10,11].indexOf(orderDetail.status)!==-1"
       class="order-logistics"
     >
       <van-icon
-        name="location-o"
-        size="0.40rem"
+        :name="beeIcon.mine_order_icon_logisics"
+        size="0.50rem"
       />
       <div class="logistics-text">
         <!-- TODO 未录入与拆分判断 -->
@@ -27,8 +27,8 @@
       class="default-address"
     >
       <van-icon
-        name="location-o"
-        size="0.40rem"
+        :name="beeIcon.mine_order_icon_address"
+        size="0.50rem"
       />
       <div class="address-details">
         <div class="user-details">
@@ -36,7 +36,7 @@
           <span
             v-if="orderDetail.mobileNum"
             class="phone"
-          >{{ orderDetail.mobileNum|toTel }}</span>
+          >{{ orderDetail.mobileNum }}</span>
         </div>
         <div class="address">
           <div class="address-details">
@@ -109,7 +109,11 @@ export default {
   },
   data() {
     return {
-      BeeDefault
+      BeeDefault,
+      beeIcon: {
+        mine_order_icon_address: require('@/assets/icon/order/mine_order_icon_address@2x.png'),
+        mine_order_icon_logisics: require('@/assets/icon/order/mine_order_icon_logisics@2x.png')
+      }
     }
   },
   computed: {},
@@ -124,7 +128,7 @@ export default {
 .order-address {
   background-color: #fff;
   .order-logistics {
-    padding: 0.3rem 0.16rem 0.4rem 0.3rem;
+    padding: 0.3rem 0.16rem 0.3rem 0.3rem;
     border-bottom: 0.02rem solid @Grey6;
     color: @BeeDefault;
     font-size: 0.24rem;
@@ -134,8 +138,6 @@ export default {
     .logistics-text {
       flex: 1;
       margin-left: 0.3rem;
-      .logistics-text2 {
-      }
       .logistics-time {
         margin-top: 0.2rem;
       }

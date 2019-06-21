@@ -163,10 +163,6 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1.86rem;
-    .left-action {
-    }
-    .right-action {
-    }
   }
 }
 </style>

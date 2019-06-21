@@ -1,12 +1,12 @@
 <template>
   <div class="order-op">
-    <div class="left-button">
+    <!-- <div class="left-button">
       <van-button class="back-list">
         返回订单列表
       </van-button>
-    </div>
+    </div> -->
     <van-button
-      v-if="[0,12,13,14].indexOf(orderDetail.status)!==-1"
+      v-if="orderDetail.s_pay===0"
       round
       @click="cancelPop=true"
     >
@@ -20,20 +20,20 @@
       自己接收
     </van-button>
     <van-button
-      v-if="orderDetail.status===0"
+      v-if="orderDetail.s_pay===0"
       round
     >
       朋友代付
     </van-button>
     <van-button
-      v-if="[0,14].indexOf(orderDetail.status)!==-1"
+      v-if="orderDetail.s_pay===0"
       round
       class="bee-button"
     >
       去支付
     </van-button>
     <van-button
-      v-if="[1,9].indexOf(orderDetail.status)!==-1"
+      v-if="orderDetail.s_pay===1&&orderDetail.s_order===1"
       round
     >
       提醒发货
@@ -46,7 +46,7 @@
     </van-button>
 
     <van-button
-      v-if="[2,3,4,10,11].indexOf(orderDetail.status)!==-1"
+      v-if="orderDetail.s_pay===1&&[3].indexOf(orderDetail.s_order)"
       round
     >
       查看物流
@@ -66,7 +66,7 @@
       去评价
     </van-button>
     <van-button
-      v-if="[2,3].indexOf(orderDetail.status)!==-1"
+      v-if="orderDetail.s_pay===1&&[3].indexOf(orderDetail.s_order)"
       round
       class="bee-button"
     >

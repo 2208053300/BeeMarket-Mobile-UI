@@ -35,6 +35,23 @@ export function getToken() {
 export function setToken(Token) {
   return localStorage.setItem('BM-App-Token', Token)
 }
+
+// 获取多端登陆
+export function getVerify() {
+  const osObj = getOs()
+  if (osObj.isWx) {
+    return localStorage.getItem('BM-Verify-Ver')
+  } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
+    return Cookies.get('BM-Verify-Ver')
+  } else {
+    return localStorage.getItem('BM-Verify-Ver')
+  }
+}
+// 设置多端登陆
+export function setVerify(verify) {
+  return localStorage.setItem('BM-Verify-Ver', verify)
+}
+
 // 判断是否登录
 export function isLogin() {
   return getToken() !== null
@@ -79,7 +96,9 @@ async function wxLogin(code) {
     // 只带state后面的参数跳转
     window.location.href =
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-      encodeURIComponent(window.location.origin + window.location.pathname + uriProp.slice(5)) +
+      encodeURIComponent(
+        window.location.origin + window.location.pathname + uriProp.slice(5)
+      ) +
       '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
   }
 }
