@@ -90,7 +90,7 @@ export default {
         talent_bg_title: require('@/assets/icon/task/talent/talent_bg_title@3x.png'),
         talent_bg_title2: require('@/assets/icon/task/talent/talent_bg_title2@3x.png'),
         talent_bg_title3: require('@/assets/icon/task/talent/talent_bg_title3@3x.png'),
-        title_icon_stop: require('@/assets/icon/task/talent/title_icon_stop@2x.png'),
+        title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
         stop_pic_line: require('@/assets/icon/task/talent/stop_pic_line@2x.png'),
         line_bee_circle_banner: require('@/assets/icon/task/talent/line_bee_circle_banner@2x.png'),
         first_screen: require('@/assets/icon/task/talent/first_screen@3x.png')

@@ -58,7 +58,7 @@ export default {
       video_url: 'https://img.fengjishi.com.cn/product/video/mi9.mp4',
       showControls: false,
       beeIcon: {
-        title_icon_stop: require('@/assets/icon/noviceGuide/title_icon_stop@2x.png'),
+        title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
         first_screen: require('@/assets/icon/task/talent/first_screen@3x.png')
       }
     }
