@@ -36,7 +36,10 @@
             class="product-content"
           >
             <div class="product-img">
-              <img :src="product.thumb_url" alt="">
+              <img
+                :src="product.thumb_url"
+                alt=""
+              >
             </div>
             <div class="product-details">
               <div class="name-price">
@@ -98,7 +101,7 @@
             v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
             round
             class="order-button"
-            @click="$router.push('/persion/order/logistics')"
+            @click.stop="$router.push({path:'/persion/order/logistics',query:{order_no:card.order_no}})"
           >
             物流追踪
           </van-button>
@@ -109,7 +112,11 @@
           >
             确认收货
           </van-button>
-          <van-button v-if="card.s_order === 1" round class="order-button">
+          <van-button
+            v-if="card.s_order === 1"
+            round
+            class="order-button"
+          >
             提醒发货
           </van-button>
           <van-button

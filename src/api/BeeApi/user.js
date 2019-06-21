@@ -558,3 +558,19 @@ export function addComment(data) {
     data
   })
 }
+// 个人中心-订单 物流信息（列表）
+export function getLogisticsList(data) {
+  return request({
+    url: '/user/delivery/info',
+    method: 'post',
+    data
+  })
+}
+// 个人中心-订单 物流详情
+export function getLogisticsDetail2(data) {
+  return request({
+    url: '/user/delivery/detail',
+    method: 'post',
+    data
+  })
+}
