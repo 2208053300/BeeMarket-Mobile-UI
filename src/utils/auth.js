@@ -44,7 +44,8 @@ export async function getToken() {
   } else {
     return localStorage.getItem('BM-App-Token')
   }
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJINSIsInZlciI6MSwiaWF0IjoxNTYxMTA0NDQ4LCJleHAiOjE1NjM2OTY0NDgsImp0aSI6IjljOTg3ODI4OTNmYjExZTliZjQ0MDAwMDVkMGM5MDQwIiwic2VjIjoiNTZhZDhlYmJmOWQzODQ3ODBkNzRhNzY2MjM3OGUzYjciLCJzaWciOiJlZWQ0NWJkMWUwNGFkOTdhM2FiOGYxZTFiOTg2NWU0ZmRhOGUyOTZlMzk5OTQxZDgwOTQ3ZTQxZDhkOTI1YTQ0In0.BhR7v2pVyyy9TSFbjV0QVHl9VrGO5lRQV_sHVqXdaBQ'
+  // localStorage.setItem('BM-Verify-Ver', 1)
+  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJINSIsInZlciI6MSwiaWF0IjoxNTYxMTE0MzE3LCJleHAiOjE1NjM3MDYzMTcsImp0aSI6Ijk2ZDYyNzhlOTQxMjExZTliMWFmMDAwMDVkMGNiNmNkIiwic2VjIjoiNWNkNWE3MjJiNmU5OWE1YjIyYWQwYzg4YTBlMzM3MWIiLCJzaWciOiJhNTMyNDU2MTY5N2RhY2E1MTQ0YzllMTNkYmFlMjU3YTFlMDE4NzY3YTExNmU4MDE0ZWZlNzMwNGE4ZGFjMWNkIn0._Cm5jgEXAyiHcbcIJAdRJSC6aQhW5dYpNEXl3KycrG0'
 }
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除
@@ -69,8 +70,8 @@ export function setVerify(verify) {
 }
 
 // 判断是否登录
-export function isLogin() {
-  return getToken() !== null
+export async function isLogin() {
+  return await getToken() !== null
 }
 // 清除登录信息
 export function removeToken() {
