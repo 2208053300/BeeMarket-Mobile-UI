@@ -219,7 +219,7 @@ export default {
       // NOTE 图标使用了vant里的搜索框，所以只能相对定位
       .van-field__left-icon {
         // position: relative;
-        // left: 1.2rem;
+        left: 0rem;
       }
     }
   }

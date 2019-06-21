@@ -109,7 +109,7 @@ export default {
       const res = await bindPhone({
         mobileNum: this.phone,
         type: 10,
-        t: Date.parse(new Date()).toString().substr(0, 10),
+        // t: Date.parse(new Date()).toString().substr(0, 10),
         smsCode: this.verificationCode
       })
       if (res.status_code === 200) {
