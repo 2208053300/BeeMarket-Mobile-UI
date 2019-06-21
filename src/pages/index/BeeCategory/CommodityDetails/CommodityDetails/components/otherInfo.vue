@@ -25,8 +25,8 @@
         </p>
       </van-cell>
     </van-cell-group>
-    <van-cell-group>
-      <van-cell class="other1">
+    <van-cell-group class="other1">
+      <!-- <van-cell>
         <p
           slot="title"
           class="cell-title"
@@ -34,14 +34,14 @@
           <span class="title-text">配送</span>
           <span class="cell-content">至 重庆 重庆市渝北区</span>
         </p>
-      </van-cell>
+      </van-cell> -->
       <van-cell>
         <p
           slot="title"
           class="cell-title"
         >
           <span class="title-text">活动</span>
-          <span class="cell-content">购买且确认收货后至多可获得+++</span>
+          <span class="cell-content">{{ commodityData.charity_get }}</span>
         </p>
       </van-cell>
       <van-cell>
@@ -50,16 +50,16 @@
           class="cell-title"
         >
           <span class="title-text">运费</span>
-          <span class="cell-content">免运费</span>
+          <span class="cell-content">集市所有商品均无条件包邮（特殊地区及活动除外）</span>
         </p>
       </van-cell>
-      <van-cell>
+      <van-cell v-if="commodityData.remarks">
         <p
           slot="title"
           class="cell-title"
         >
           <span class="title-text">备注</span>
-          <span class="cell-content">这是备注</span>
+          <span class="cell-content">{{ commodityData.remarks }}</span>
         </p>
       </van-cell>
     </van-cell-group>
@@ -94,7 +94,7 @@
                 正品保证
               </div>
               <div class="promise-desc">
-                商家在售商品均持续加入保险承保范围予以正品保证
+                商家在售商品均持续加入保险承保范围予以正品保证。
               </div>
             </div>
           </div>
@@ -110,7 +110,7 @@
                 极速发货
               </div>
               <div class="promise-desc">
-                订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
+                订单支付后集市商家将在48小时内为您发货（遇节假日等特殊情况除外）。
               </div>
             </div>
           </div>
@@ -126,7 +126,7 @@
                 瑕疵包换
               </div>
               <div class="promise-desc">
-                订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
+                商品收货时如出现运输变质，破损变形等瑕疵情况集市及商家将第一时间为您调换。
               </div>
             </div>
           </div>
@@ -142,7 +142,7 @@
                 极速审核
               </div>
               <div class="promise-desc">
-                订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
+                为用户提供的针对售后退换货流程的专项服务，开通后售后服务单会在48小时内审核完毕
               </div>
             </div>
           </div>
@@ -158,7 +158,7 @@
                 公益宝贝
               </div>
               <div class="promise-desc">
-                订单支付后，集市商家将在48小时内为您发货（遇节假日等特殊情况除外）
+                您的每笔集市消费，都将参与至持续透明的蜂公益活动中，人人公益将爱传递，愿公益的快乐伴随您每一天
               </div>
             </div>
           </div>

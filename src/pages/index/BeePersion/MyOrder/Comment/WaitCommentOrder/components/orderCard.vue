@@ -125,7 +125,8 @@ export default {
       this.$router.push({
         name: 'CommentProduct',
         query: {
-          sku_id
+          sku_id,
+          order_no: this.order_no
         }
       })
     }

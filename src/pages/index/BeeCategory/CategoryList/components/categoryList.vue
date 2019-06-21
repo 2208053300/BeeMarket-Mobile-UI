@@ -23,18 +23,20 @@
       v-if="category2.groups"
       class="category2-container"
     >
-      <div
-        v-if="category2.top"
-        class="advertisement"
-      >
-        <div class="top-img">
-          <img
-            :src="category2.top.top_ad_image"
-            alt="广告图"
-            :onerror="$store.state.app.defaultImg"
-          >
+      <template v-if="category2.top">
+        <div
+          v-if="category2.top.top_ad_image"
+          class="advertisement"
+        >
+          <div class="top-img">
+            <img
+              :src="category2.top.top_ad_image"
+              alt="广告图"
+              :onerror="$store.state.app.defaultImg"
+            >
+          </div>
         </div>
-      </div>
+      </template>
       <template v-if="checkGroup(category2.groups)">
         <div
           v-for="(item,index) in category2.groups"
@@ -95,7 +97,9 @@ export default {
     return {
       activeKey: 0,
       category1: [],
-      category2: [],
+      category2: {
+        top: {}
+      },
       beeIcon: {
         cat_pic_select: require('@/assets/icon/category/cat_pic_select@2x.png')
       },
@@ -132,7 +136,6 @@ export default {
         const badge = document.querySelector('.van-sidebar-item')
         // 无关痛痒的报错
         this.borderPosition = Number(index) * badge.offsetHeight + 14 + 'px'
-        console.log(badge.offsetHeight, index)
       } catch (error) {
         // 第一次加载，正常
       }

@@ -188,7 +188,6 @@ export default {
     async getTaskDetailData() {
       const res = await getTaskDetail({ tid: this.$route.query.tid })
       this.taskData = res.data
-      this.taskData.proportion = 49
       if (this.taskData.proportion < 100) {
         this.initPie()
       }

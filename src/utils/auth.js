@@ -28,13 +28,30 @@ export function getToken() {
   } else {
     return localStorage.getItem('BM-App-Token')
   }
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjEwMTIzMzksImV4cCI6MTU2MzYwNDMzOSwianRpIjoiMTU5ZTVlNDA2YTRhMzRiZjllN2ZhOGNjZGZjMjI3NzUiLCJzZWMiOiJkZmRhMWI5NTQ0YWZiNDc4NGRkODBjYjFmNTJjZGU5NCIsInNpZyI6IjNjZDAzMjQyMGM5OWVkMDk1MmUxMzYwZmIzZGJjMjI2MWM5N2RjMTdkYmNlYTUzOTRiZWNmYjEwMzAzYWVhMjYifQ.w8Tbczs73tb_IONDQbV4b90g5AFUE5-XUhXhH7TmatM'
+  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjEwODY0OTQsImV4cCI6MTU2MzY3ODQ5NCwianRpIjoiZTg5M2FlM2RkY2JhMzFmYzg3MGYyMGE2NzE5MTYzZTciLCJzZWMiOiI3YTk5NjU5ZTA1OWY1Nzg1NzlhMzJlZjE2ODMwZTU4NiIsInNpZyI6IjI0OGViMDI0ZjI5NDc5MzdlZWMxZWVjMDk2NTU1YzBhMDc5NTQ2YzA2YTI3OGExNDJlNDViZDkxZjYyMDNlMjYifQ.wIG6A0a4bJq2prcFgbXjdAD5lad08-tFE1bDiQiEQRw'
 }
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除
 export function setToken(Token) {
   return localStorage.setItem('BM-App-Token', Token)
 }
+
+// 获取多端登陆
+export function getVerify() {
+  const osObj = getOs()
+  if (osObj.isWx) {
+    return localStorage.getItem('BM-Verify-Ver')
+  } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
+    return Cookies.get('BM-Verify-Ver')
+  } else {
+    return localStorage.getItem('BM-Verify-Ver')
+  }
+}
+// 设置多端登陆
+export function setVerify(verify) {
+  return localStorage.setItem('BM-Verify-Ver', verify)
+}
+
 // 判断是否登录
 export function isLogin() {
   return getToken() !== null
@@ -79,7 +96,9 @@ async function wxLogin(code) {
     // 只带state后面的参数跳转
     window.location.href =
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-      encodeURIComponent(window.location.origin + window.location.pathname + uriProp.slice(5)) +
+      encodeURIComponent(
+        window.location.origin + window.location.pathname + uriProp.slice(5)
+      ) +
       '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
   }
 }

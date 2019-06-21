@@ -66,6 +66,7 @@
         <van-button
           type="default"
           round
+          @click="goAssessment()"
         >
           查看全部评价
         </van-button>
@@ -199,11 +200,12 @@ export default {
     margin-top: 0.32rem;
     .van-button {
       // NOTE 设计图给的宽度装不下
-      width: 2.1rem;
+      width: 2.2rem;
       height: 0.6rem;
       line-height: 0.6rem;
       border: 0.02rem solid @Grey2;
       font-size: 0.24rem;
+      white-space: nowrap;
     }
   }
 }

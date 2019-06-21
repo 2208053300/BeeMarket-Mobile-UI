@@ -5,6 +5,7 @@
       class="project-pop"
       position="bottom"
       :close-on-click-overlay="false"
+      @open="getWithdrawNumData"
       @close="handleClose"
       @click-overlay="handleClose"
     >
@@ -26,10 +27,10 @@
             <div class="project-detail">
               <div class="left-text">
                 <div class="text1">
-                  可提现：<span class="num">2000</span>元
+                  可提现：<span class="num">{{ withdrawNum }}</span>元
                 </div>
                 <div class="text2">
-                  兑换率：1桶=100元
+                  兑换率：1桶=1元
                 </div>
               </div>
               <div class="action-btn">
@@ -44,6 +45,7 @@
 </template>
 
 <script>
+import { getWithdrawNum } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {
@@ -56,7 +58,8 @@ export default {
     return {
       beeIcon: {
         bee_firends_invite_icon_off: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_off.png')
-      }
+      },
+      withdrawNum: 0
     }
   },
   computed: {},
@@ -64,6 +67,10 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    async getWithdrawNumData() {
+      const res = await getWithdrawNum()
+      this.withdrawNum = res.data.sup_balance
+    },
     handleClose() {
       this.$emit('update:showProject', false)
     }
@@ -89,7 +96,7 @@ export default {
         top: 0.16rem;
         right: 0.16rem;
         width: 0.4rem;
-          height: 0.4rem;
+        height: 0.4rem;
       }
       .project-card {
         margin-top: 0.22rem;

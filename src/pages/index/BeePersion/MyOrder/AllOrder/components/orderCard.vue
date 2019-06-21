@@ -9,10 +9,15 @@
       @load="onLoad"
     >
       <div
-        v-for="(card,index) in orderList"
+        v-for="(card, index) in orderList"
         :key="index"
         class="order-card"
-        @click="$router.push({path:'/persion/order/orderDetail',query:{order_no:card.order_no}})"
+        @click="
+          $router.push({
+            path: '/persion/order/orderDetail',
+            query: { order_no: card.order_no }
+          })
+        "
       >
         <div class="card-title">
           <div class="store-name">
@@ -26,15 +31,12 @@
         </div>
         <div class="card-content">
           <div
-            v-for="(product,index2) in card.product_list"
+            v-for="(product, index2) in card.product_list"
             :key="index2"
             class="product-content"
           >
             <div class="product-img">
-              <img
-                :src="product.thumb_url"
-                alt=""
-              >
+              <img :src="product.thumb_url" alt="">
             </div>
             <div class="product-details">
               <div class="name-price">
@@ -53,7 +55,7 @@
           </div>
         </div>
         <div class="order-total">
-          <span v-if="card.toFriend===1">赠送朋友订单</span>
+          <span v-if="card.toFriend === 1">赠送朋友订单</span>
           <div class="total-details">
             <div class="total-num">
               共<span>{{ card.total_number }}</span>件商品
@@ -65,29 +67,35 @@
         </div>
         <div class="order-op">
           <van-button
-            v-if="[-1,4].indexOf(card.s_order)!==-1||card.s_pay===-1"
+            v-if="[-1, 4].indexOf(card.s_order) !== -1 || card.s_pay === -1"
             round
             class="order-button"
           >
             删除订单
           </van-button>
           <van-button
-            v-if="card.s_order===4"
+            v-if="card.s_order === 4"
             round
             class="order-button"
-            @click="$router.push('/persion/order/comment')"
+            @click="
+              goComent(
+                card.order_no,
+                card.comment_product_num,
+                card.product_sku_id
+              )
+            "
           >
             评价晒单
           </van-button>
           <van-button
-            v-if="[-1,4].indexOf(card.s_order)!==-1"
+            v-if="[-1, 4].indexOf(card.s_order) !== -1"
             round
             class="order-button"
           >
             再次购买
           </van-button>
           <van-button
-            v-if="[1,2,3].indexOf(card.s_order)!==-1"
+            v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
             round
             class="order-button"
             @click="$router.push('/persion/order/logistics')"
@@ -95,21 +103,17 @@
             物流追踪
           </van-button>
           <van-button
-            v-if="[1,2,3].indexOf(card.s_order)!==-1"
+            v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
             round
             class="order-button"
           >
             确认收货
           </van-button>
-          <van-button
-            v-if="card.s_order===1"
-            round
-            class="order-button"
-          >
+          <van-button v-if="card.s_order === 1" round class="order-button">
             提醒发货
           </van-button>
           <van-button
-            v-if="card.s_pay===0"
+            v-if="card.s_pay === 0"
             round
             class="order-button"
             @click.stop=""
@@ -118,10 +122,15 @@
             付款<span>23:59</span>
           </van-button>
           <van-button
-            v-if="card.s_order===4"
+            v-if="card.s_order === 4"
             round
             class="order-button"
-            @click="$router.push({path:'/persion/order/orderDetail',query:{order_no:card.order_no}})"
+            @click="
+              $router.push({
+                path: '/persion/order/orderDetail',
+                query: { order_no: card.order_no }
+              })
+            "
           >
             查看详情
           </van-button>
@@ -169,6 +178,25 @@ export default {
           this.finished = true
         }
       }, 500)
+    },
+    // 评论晒单
+    goComent(order_no, num, sku_id) {
+      if (num > 1) {
+        this.$router.push({
+          name: 'waitCommentOrder',
+          qurey: {
+            order_no
+          }
+        })
+      } else {
+        this.$router.push({
+          name: 'CommentProduct',
+          qurey: {
+            order_no,
+            sku_id
+          }
+        })
+      }
     }
   }
 }
@@ -177,6 +205,7 @@ export default {
 <style scoped lang="less">
 .order-content {
   margin: 0.32rem 0.12rem;
+  background-color: @GreyBg;
   .order-card {
     background-color: #fff;
     padding: 0.3rem 0.32rem;

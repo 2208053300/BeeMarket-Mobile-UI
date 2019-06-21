@@ -22,7 +22,7 @@
                 class="num"
                 :class="{muchNum:orderStatus.wait_payment>9}"
               >
-                <span v-if="orderStatus.wait_payment>99">{{ orderStatus.wait_payment }}</span>
+                <span v-if="orderStatus.wait_payment<99">{{ orderStatus.wait_payment }}</span>
                 <span v-else>99+</span>
               </div>
             </div>
@@ -39,7 +39,7 @@
                 class="num"
                 :class="{muchNum:orderStatus.wait_ship>9}"
               >
-                <span v-if="orderStatus.wait_ship>99">{{ orderStatus.wait_ship }}</span>
+                <span v-if="orderStatus.wait_ship<99">{{ orderStatus.wait_ship }}</span>
                 <span v-else>99+</span>
               </div>
             </div>
@@ -56,7 +56,7 @@
                 class="num"
                 :class="{muchNum:orderStatus.wait_receipt>9}"
               >
-                <span v-if="orderStatus.wait_receipt>99">{{ orderStatus.wait_receipt }}</span>
+                <span v-if="orderStatus.wait_receipt<99">{{ orderStatus.wait_receipt }}</span>
                 <span v-else>99+</span>
               </div>
             </div>
@@ -73,7 +73,7 @@
                 class="num"
                 :class="{muchNum:orderStatus.wait_assess>9}"
               >
-                <span v-if="orderStatus.wait_assess>99">{{ orderStatus.wait_assess }}</span>
+                <span v-if="orderStatus.wait_assess<99">{{ orderStatus.wait_assess }}</span>
                 <span v-else>99+</span>
               </div>
             </div>
@@ -90,7 +90,7 @@
                 class="num"
                 :class="{muchNum:orderStatus.after_sale>9}"
               >
-                <span v-if="orderStatus.after_sale>99">{{ orderStatus.after_sale }}</span>
+                <span v-if="orderStatus.after_sale<99">{{ orderStatus.after_sale }}</span>
                 <span v-else>99+</span>
               </div>
             </div>

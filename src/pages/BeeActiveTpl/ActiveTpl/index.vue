@@ -51,6 +51,7 @@
 
 <script>
 import { getOs } from '@/utils'
+// import Cookies from 'js-cookie'
 import { activityDetail } from '@/api/BeeApi/action'
 
 export default {
@@ -100,6 +101,8 @@ export default {
   beforeDestroy() {
     // 销毁之前把白色背景给清除掉
     document.querySelector('body').style.background = ''
+    // 取消监听
+    document.removeEventListener('scroll', this.scrollCallback, false)
   },
   created() {},
   mounted() {
@@ -163,56 +166,61 @@ export default {
       const res = await activityDetail({ id: this.$route.query.id })
       this.activity = res.data
       if (this.activity.navigate_data.length > 1) {
-        var self = this
-        var $scrollBox = document
-        var scrollCallback = self.debounce(function() {
-          // console.log('scroll')
-          const navContents = document.querySelectorAll('.nav-content')
-          const heightArr = []
-          navContents.forEach(item => {
-            heightArr.push(item.offsetTop - self.topH)
-          })
-          // console.log(navContents, heightArr)
+        console.log('需要监听滚动')
 
-          var top = document.documentElement.scrollTop || document.body.scrollTop// 设置变量top,表示当前滚动条到顶部的值
-          var tt = document.getElementsByClassName('nav-content')[0].clientHeight // 设置变量tt,表示当前滚动窗口高度的值
-          console.log(top, tt)
-
-          // const vanTabs = document.querySelector('.van-tabs__wrap')
-          // if (top > 44) {
-          //   self.$store.state.app.beeHeader = true
-          //   vanTabs.style.top = '44px'
-          // } else {
-          //   self.$store.state.app.beeHeader = true
-
-          //   vanTabs.style.top = '44px'
-          // }
-          var num = 0
-          for (var n = 0; n < heightArr.length; n++) {
-            // 在此处通过判断滚动条到顶部的值和当前窗口高度的关系
-            // （当前窗口的n倍 <= top <= 当前窗口的n+1倍）来取得和导航索引值的对应关系
-            if (top >= heightArr[n] && top < heightArr[n + 1]) {
-              num = n
-              console.log('判断序号：', n)
-            } else if (top >= heightArr[heightArr.length - 1]) {
-              num = heightArr.length - 1
-            }
-            self.active = num
-            console.log('当前序号：', self.active)
-          }
-          // for (var n = 0; n < self.navList.length; n++) {
-          //   // 在此处通过判断滚动条到顶部的值和当前窗口高度的关系
-          //   // （当前窗口的n倍 <= top <= 当前窗口的n+1倍）来取得和导航索引值的对应关系
-          //   if (top >= n * tt && top <= (n + 1) * tt) {
-          //     num = n
-          //   }
-          //   self.active = num
-          // }
-        }, 200)
-        $scrollBox.addEventListener('scroll', scrollCallback)
+        document.addEventListener('scroll', this.scrollCallback, false)
       }
     },
+    test() {
+      console.log('gundnggg')
+    },
+    // 滚动监听的函数
+    scrollCallback() {
+      var self = this
+      // self.debounce(function() {
+      const navContents = document.querySelectorAll('.nav-content')
+      const heightArr = []
+      navContents.forEach(item => {
+        heightArr.push(item.offsetTop - self.topH)
+      })
+      // console.log(navContents, heightArr)
 
+      var top = document.documentElement.scrollTop || document.body.scrollTop// 设置变量top,表示当前滚动条到顶部的值
+      // var tt = document.getElementsByClassName('nav-content')[0].clientHeight // 设置变量tt,表示当前滚动窗口高度的值
+      // console.log(top, tt)
+
+      // const vanTabs = document.querySelector('.van-tabs__wrap')
+      // if (top > 44) {
+      //   self.$store.state.app.beeHeader = true
+      //   vanTabs.style.top = '44px'
+      // } else {
+      //   self.$store.state.app.beeHeader = true
+
+      //   vanTabs.style.top = '44px'
+      // }
+      var num = 0
+      for (var n = 0; n < heightArr.length; n++) {
+        // 在此处通过判断滚动条到顶部的值和当前窗口高度的关系
+        // （当前窗口的n倍 <= top <= 当前窗口的n+1倍）来取得和导航索引值的对应关系
+        if (top >= heightArr[n] && top < heightArr[n + 1]) {
+          num = n
+          // console.log('判断序号：', n)
+        } else if (top >= heightArr[heightArr.length - 1]) {
+          num = heightArr.length - 1
+        }
+        self.active = num
+        // console.log('当前序号：', self.active)
+      }
+      // for (var n = 0; n < self.navList.length; n++) {
+      //   // 在此处通过判断滚动条到顶部的值和当前窗口高度的关系
+      //   // （当前窗口的n倍 <= top <= 当前窗口的n+1倍）来取得和导航索引值的对应关系
+      //   if (top >= n * tt && top <= (n + 1) * tt) {
+      //     num = n
+      //   }
+      //   self.active = num
+      // }
+      // }, 100)
+    },
     // 跳转到商品详情页
     // 此处判断浏览器环境，做出跳转
     goDetail(pid, target) {
@@ -285,12 +293,6 @@ export default {
     // 点击导航
     // navClick(e) {
     navClick(index, title) {
-      // console.log(index, title)
-      // const itemH = document.getElementsByClassName('nav-content')[0].clientHeight
-      // console.log(itemH)
-      // var scrollBox1 = document.querySelector('.active-tpl')
-      // console.log(scrollBox1)
-      // window.scrollTo(0, index * itemH)
       // 用 class="nav-content" 添加锚点
       const jump = document.querySelectorAll('.nav-content')
       const total = jump[index].offsetTop

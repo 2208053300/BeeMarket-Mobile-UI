@@ -1,9 +1,29 @@
 <template>
   <div class="public-interest-partner text-center">
     <img src="../../../assets/icon/joinFriendCicle/gy_part1.png" alt="公益合伙人">
-    <video controls="controls" poster="../../../assets/icon/register/vedio_bg.png" style="width: 100%">
-      <source src="/static/video/film.mp4" type="video/mp4">
-    </video>
+    <!-- <video controls="controls" autoplay poster="../../../assets/icon/register/vedio_bg.png" style="width: 100%">
+      <source src="https://app.fengjishi.com/static/video/film.mp4" type="video/mp4">
+    </video> -->
+    <div class="video-container">
+      <div class="video">
+        <video
+          ref="video"
+          :src="video_url"
+          :poster="beeIcon.first_screen"
+          class="video-body"
+          :controls="showControls"
+        />
+        <div v-if="!showControls" style="position: relative">
+          <div class="control">
+            <img
+              :src="beeIcon.title_icon_stop"
+              style="width: 1.28rem;height: 1.28rem"
+              @click="play"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- {// <img src="../../../assets/icon/joinFriendCicle/teach(new).png" alt=""> } -->
     <img src="../../../assets/icon/joinFriendCicle/gy_part2.png" alt="公益合伙人">
     <img src="../../../assets/icon/joinFriendCicle/gy_part3.png" alt="公益合伙人">
@@ -33,7 +53,14 @@ export default {
   data() {
     return {
       // 获取 os 平台
-      osObj: getOs()
+      osObj: getOs(),
+      // video_url: 'https://app.fengjishi.com/static/video/film.mp4',
+      video_url: 'https://img.fengjishi.com.cn/product/video/mi9.mp4',
+      showControls: false,
+      beeIcon: {
+        title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
+        first_screen: require('@/assets/icon/task/talent/first_screen@3x.png')
+      }
     }
   },
   computed: {},
@@ -97,14 +124,46 @@ export default {
       //   }
       // })
       }
+    },
+    // 播放
+    play() {
+      this.$refs.video.play()
+      this.showControls = true
     }
-
   }
 }
 </script>
 
 <style scoped  lang="less">
 //inPartner.html earnedRouter.html
+@videoWidth: 6.4rem;
+@videoHeight: 3.3rem;
+.video-container {
+  // background: url(../../assets/icon/noviceGuide/00-新手教培_改_02.png);
+  background-size: cover;
+  padding: 0.52rem 0.54rem;
+  .video {
+    width: @videoWidth;
+    height: @videoHeight;
+    border-radius: 0.08rem;
+    .video-body {
+      background-color: black;
+      width: @videoWidth;
+      height: @videoHeight;
+      border-radius: 0.08rem;
+    }
+    .control {
+      width: @videoWidth;
+      height: @videoHeight;
+      top: -3.3rem;
+      left: 0;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
 .public-interest-partner{
     width: 100%;
     img{width: 100%; height:auto; display: block;}

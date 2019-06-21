@@ -148,7 +148,6 @@ export default {
     },
     // 分享
     appShare() {
-      alert(1)
       if (this.osObj.isWx) {
       // this.$router.push({
       //   path: '/category/details',
@@ -158,7 +157,6 @@ export default {
       //   }
       // })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
-        alert(2)
         window.webkit.messageHandlers.ToShare.postMessage({
           title: this.article.share_data.title,
           desc: this.article.share_data.desc,
@@ -167,7 +165,6 @@ export default {
           url: this.$store.state.app.homeUri + '/discover/article/' + this.$route.params.id
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
-        alert(3)
         window.beeMarket.ToShare(
           this.article.share_data.title,
           this.article.share_data.desc,

@@ -11,6 +11,9 @@
         <span class="rate-text">总体评价</span>
         <van-rate
           v-model="score"
+          :size="size"
+          :icon="beeIcon.product_detail_icon_flower_pressed"
+          :void-icon="beeIcon.product_detail_icon_flower_normat"
           :color="BeeDefault"
           :allow-half="allowHalf"
         />
@@ -76,7 +79,7 @@
       </div>
     </div>
     <div class="comment-op">
-      <van-button class="submit-comment" @click="submit">
+      <van-button :loading="loading" class="submit-comment" @click="submit">
         提交
       </van-button>
     </div>
@@ -84,8 +87,9 @@
 </template>
 
 <script>
+import { zipImg } from '@/utils/imgUp'
 import { BeeDefault } from '@/styles/index/variables.less'
-// import { addComment } from '@/api/BeeApi/user'
+import { addComment } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '发表评价'
@@ -94,10 +98,19 @@ export default {
   props: {},
   data() {
     return {
+      loading: false,
       BeeDefault,
-      score: 0,
+      score: 5,
+      size: '0.3rem',
       commentText: '',
-      allowHalf: true,
+      beeIcon: {
+        product_detail_icon_flower_pressed: require('@/assets/icon/product/product_detail_icon_flower_pressed@2x.png'),
+        product_detail_icon_flower_normat: require('@/assets/icon/product/product_detail_icon_flower_normat@2x.png'),
+        product_detail_evaluation_icon_flower_pressed: require('@/assets/icon/product/product_detail_evaluation_icon_flower_pressed@2x.png'),
+        product_detail_evaluation_icon_flower_normat: require('@/assets/icon/product/product_detail_evaluation_icon_flower_normat@2x.png'),
+        product_detail_icon_avatar: require('@/assets/icon/product/product_detail_icon_avatar@2x.png')
+      },
+      allowHalf: false,
       showBorder: false,
       isAnonymity: false,
       commentImgs: []
@@ -113,25 +126,51 @@ export default {
   methods: {
     // 提交评论
     async submit() {
-      // const res = await addComment({
-      //   order_no: this.order_no,
-      //   sku_id: this.sku_id,
-      //   score: this.score,
-      //   content: this.commentText,
-      //   anonymous: this.isAnonymity
-      // //  images[]:''
-      // })
+      if (!this.score) {
+        this.$toast.fail('请给出评分后提交！')
+        return
+      }
+      this.loading = true
+      const files = this.commentImgs.map(item => {
+        return item.file
+      })
+      const formData = new FormData()
+      const results = await Promise.all(
+        files.map(async file => {
+          const res = await zipImg(file)
+          formData.append('images[]', res)
+          return res
+        })
+      )
+      console.log('results:', results)
+      formData.set('order_no', this.order_no)
+      formData.set('sku_id', this.sku_id)
+      formData.set('score', this.score)
+      formData.set('content', this.content)
+      formData.set('anonymous', this.anonymous)
+      const res = await addComment(formData)
+      if (res.status_code === 200) {
+        this.$toast.success(res.message)
+        setTimeout(() => {
+          this.$router.go(-1)
+        }, 2000)
+      }
     },
     // 是否匿名
     toggleAnonymity() {
       this.$refs.anonymityBox.toggle()
     },
-    onRead(file) {
+    // 上传图片
+    async onRead(file) {
       console.log(file)
-      if (this.commentImgs.length >= 6) {
-        this.$toast('评论图片最多上传6个！')
+      if (Array.isArray(file)) {
+        this.commentImgs.push(...file)
       } else {
         this.commentImgs.push(file)
+      }
+      if (this.commentImgs.length >= 6) {
+        this.commentImgs.length = 6
+        this.$toast('评论图片最多上传6个！')
       }
     },
     delImg(index) {
@@ -143,7 +182,8 @@ export default {
 
 <style scoped lang="less">
 .comment {
-
+  .upload-text{font-size: 0.24rem;}
+  .upload-title{font-size: 0.28rem; color: #333}
   .comment-content {
     background-color: #fff;
     box-sizing: border-box;
@@ -166,6 +206,7 @@ export default {
       }
       .van-rate {
         margin: 0 0.2rem;
+        display: flex;
       }
       .rate-value {
         font-size: 0.4rem;
