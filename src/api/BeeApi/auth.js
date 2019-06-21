@@ -27,7 +27,7 @@ export function sendSms(data) {
 // NOTE 用户首次绑定手机号,验证短信验证码
 export function bindPhone(data) {
   return request({
-    url: '/auth/register/second',
+    url: '/auth/bind',
     method: 'post',
     data
   })
