@@ -187,7 +187,7 @@ p {
   font-weight: bold;
 }
 .recommend-content {
-  padding: 0.04rem 1.08rem 1rem 1.08rem;
+  padding: 0.04rem 0.72rem 1rem 1.08rem;
   color: @BeeDefault3;
   font-size: 0.28rem;
   ul {
