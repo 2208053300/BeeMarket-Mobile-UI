@@ -79,10 +79,15 @@ export function checkToken() {
   // 如果是微信，并且没有本地Token，则直接拼接跳转获取token
   const osObj = getOs()
   if (osObj.isWx) {
-    window.location.href =
+    const uriProp = GetRequest('code')
+    if (uriProp) {
+      window.location.reload()
+    } else {
+      window.location.href =
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
       encodeURIComponent(window.location.href) +
       '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+    }
   } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
     // 如果是APP，获取APP放在cookie里的token
     const token = Cookies.get('token')
