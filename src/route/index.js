@@ -498,7 +498,6 @@ const router = new Router({
             },
             {
               path: 'comment',
-              name: 'Comment',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/Comment'),
               children: [
