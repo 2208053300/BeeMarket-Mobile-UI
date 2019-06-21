@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 import { auditWechat } from '@/api/BeeApi/auth'
 import { GetRequest } from '@/utils/index'
 // 获取Token
-export function getToken() {
+export async function getToken() {
   const osObj = getOs()
   if (osObj.isWx) {
     const token = localStorage.getItem('BM-App-Token')
@@ -18,7 +18,21 @@ export function getToken() {
     ) {
       localStorage.setItem('BM-App-Token', 'waiting')
       // 微信授权登录
-      wxLogin(uriProp)
+      await auditWechat({ code: uriProp })
+      // // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
+      if (
+        localStorage.getItem('BM-App-Token') === 'waiting' ||
+        !localStorage.getItem('BM-App-Token')
+      ) {
+        const uriProp2 = GetRequest('state')
+        // 只带state后面的参数跳转
+        window.location.href =
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+          encodeURIComponent(
+            window.location.origin + window.location.pathname + uriProp2.slice(5)
+          ) +
+          '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+      }
     } else {
       console.log('微信CODE为空')
     }
@@ -28,7 +42,7 @@ export function getToken() {
   } else {
     return localStorage.getItem('BM-App-Token')
   }
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjEwODY0OTQsImV4cCI6MTU2MzY3ODQ5NCwianRpIjoiZTg5M2FlM2RkY2JhMzFmYzg3MGYyMGE2NzE5MTYzZTciLCJzZWMiOiI3YTk5NjU5ZTA1OWY1Nzg1NzlhMzJlZjE2ODMwZTU4NiIsInNpZyI6IjI0OGViMDI0ZjI5NDc5MzdlZWMxZWVjMDk2NTU1YzBhMDc5NTQ2YzA2YTI3OGExNDJlNDViZDkxZjYyMDNlMjYifQ.wIG6A0a4bJq2prcFgbXjdAD5lad08-tFE1bDiQiEQRw'
+  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJINSIsInZlciI6MSwiaWF0IjoxNTYxMTA0NDQ4LCJleHAiOjE1NjM2OTY0NDgsImp0aSI6IjljOTg3ODI4OTNmYjExZTliZjQ0MDAwMDVkMGM5MDQwIiwic2VjIjoiNTZhZDhlYmJmOWQzODQ3ODBkNzRhNzY2MjM3OGUzYjciLCJzaWciOiJlZWQ0NWJkMWUwNGFkOTdhM2FiOGYxZTFiOTg2NWU0ZmRhOGUyOTZlMzk5OTQxZDgwOTQ3ZTQxZDhkOTI1YTQ0In0.BhR7v2pVyyy9TSFbjV0QVHl9VrGO5lRQV_sHVqXdaBQ'
 }
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除
@@ -83,22 +97,5 @@ export function checkToken() {
     import('@/route/index').then(module => {
       module.default.push('/login')
     })
-  }
-}
-async function wxLogin(code) {
-  await auditWechat({ code: code })
-  // // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
-  if (
-    localStorage.getItem('BM-App-Token') === 'waiting' ||
-    !localStorage.getItem('BM-App-Token')
-  ) {
-    const uriProp = GetRequest('state')
-    // 只带state后面的参数跳转
-    window.location.href =
-      'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-      encodeURIComponent(
-        window.location.origin + window.location.pathname + uriProp.slice(5)
-      ) +
-      '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
   }
 }

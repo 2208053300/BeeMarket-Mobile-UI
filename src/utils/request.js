@@ -42,8 +42,6 @@ service.interceptors.request.use(
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
       config.headers['Content-Type'] = 'application/json'
-      // config.headers['Content-Type'] = 'application/*'
-      // console.log(config.data)
       return config
     }
     // 去除options预请求方法
@@ -85,7 +83,7 @@ service.interceptors.response.use(
         store.commit('CLEAR_USER_INFO')
         checkToken()
       }
-      Toast.fail(res.message || 'error')
+      // Toast.fail(res.message || 'error')
       return Promise.reject(res.message || 'error')
     } else {
       // Toast.success(res.message)
@@ -94,7 +92,7 @@ service.interceptors.response.use(
   },
   error => {
     Toast.clear()
-    Toast.fail(error)
+    // Toast.fail(error)
     return Promise.reject(error)
   }
 )

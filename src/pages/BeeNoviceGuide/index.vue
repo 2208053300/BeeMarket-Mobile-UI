@@ -46,7 +46,7 @@ export default {
       beeIcon: {
         head: require('@/assets/icon/noviceGuide/00-新手教培_改_01.png'),
         videoBackground: require('@/assets/icon/noviceGuide/00-新手教培_改_02.png'),
-        title_icon_stop: require('@/assets/icon/noviceGuide/title_icon_stop@2x.png'),
+        title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
         first_screen: require('@/assets/icon/task/talent/first_screen@3x.png')
       },
       imgs: [
