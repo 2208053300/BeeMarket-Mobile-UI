@@ -10,11 +10,11 @@ export default new Router({
   routes: [
     {
       path: '',
-      name: 'beeActiveTpl',
       component: () => import('@/pages/BeeActiveTpl'),
       children: [
         {
           path: '',
+          name: 'beeActiveTpl',
           component: () => import('@/pages/BeeActiveTpl/ActiveTpl')
         }
       ]
