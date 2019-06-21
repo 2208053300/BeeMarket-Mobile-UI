@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     bindPhone() {
-      window.location.href = '/#/login'
+      window.location.href = '/#/persion/profile/accountBind/bindPhone'
     }
   }
 }
