@@ -6,7 +6,9 @@ import {
   getToken,
   removeToken,
   isLogin,
-  checkToken
+  checkToken,
+  getVerify,
+  setVerify
 } from '@/utils/auth'
 import { isJSON } from '@/utils'
 import store from '@/store'
@@ -31,6 +33,7 @@ service.interceptors.request.use(
     const osObj = getOs()
     if (isLogin()) {
       config.headers['BM-App-Token'] = getToken()
+      // config.headers['BM-Verify-Ver'] = getVerify()
     } else if (osObj.isWx) {
       // REVIEW 如果是微信，默认第一次直接授权
       checkToken()
@@ -69,6 +72,9 @@ service.interceptors.response.use(
     console.log(response)
     if (response.headers['bm-app-token']) {
       setToken(response.headers['bm-app-token'])
+    }
+    if (response.headers['bm-verify-ver']) {
+      setVerify(response.headers['bm-verify-ver'])
     }
     const res = response.data
     if (res.code !== 1) {

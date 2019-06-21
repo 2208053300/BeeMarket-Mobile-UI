@@ -124,7 +124,7 @@
                   </div>
                 </div>
                 <van-button
-                  v-if="friendsType===1"
+                  v-if="friendsType===2"
                   class="remind-btn"
                   @click="remindLoginData(item.user_id)"
                 >

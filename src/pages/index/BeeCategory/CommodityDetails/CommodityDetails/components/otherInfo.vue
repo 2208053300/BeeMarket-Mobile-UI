@@ -25,8 +25,8 @@
         </p>
       </van-cell>
     </van-cell-group>
-    <van-cell-group>
-      <van-cell class="other1">
+    <van-cell-group class="other1">
+      <!-- <van-cell>
         <p
           slot="title"
           class="cell-title"
@@ -34,17 +34,17 @@
           <span class="title-text">配送</span>
           <span class="cell-content">至 重庆 重庆市渝北区</span>
         </p>
-      </van-cell>
+      </van-cell> -->
       <van-cell>
         <p
           slot="title"
           class="cell-title"
         >
           <span class="title-text">活动</span>
-          <span class="cell-content">购买且确认收货后至多可获得+++</span>
+          <span class="cell-content">{{ commodityData.charity_get }}</span>
         </p>
       </van-cell>
-      <van-cell>
+      <!-- <van-cell>
         <p
           slot="title"
           class="cell-title"
@@ -52,14 +52,14 @@
           <span class="title-text">运费</span>
           <span class="cell-content">免运费</span>
         </p>
-      </van-cell>
-      <van-cell>
+      </van-cell> -->
+      <van-cell v-if="commodityData.remarks">
         <p
           slot="title"
           class="cell-title"
         >
           <span class="title-text">备注</span>
-          <span class="cell-content">这是备注</span>
+          <span class="cell-content">{{ commodityData.remarks }}</span>
         </p>
       </van-cell>
     </van-cell-group>

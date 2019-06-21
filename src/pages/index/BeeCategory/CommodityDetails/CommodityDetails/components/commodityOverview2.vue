@@ -19,12 +19,26 @@
         公益值可免单
       </div>
     </div>
-    <div class="product-desc">
-      <div class="desc-text">
-        安排见谁都阿吉豆爱上你都暗示你打死你电脑上DNA
-        <!-- {{ commodityData.intro }} -->
+    <div
+      v-if="commodityData.intro||commodityData.tags.length>0||commodityData.area"
+      class="product-desc"
+    >
+      <div
+        v-if="commodityData.intro"
+        class="desc-text"
+      >
+        {{ commodityData.intro }}
       </div>
-      <div class="product-tags">
+      <div
+        v-if="commodityData.tags"
+        class="product-tags"
+      >
+        <div
+          v-if="commodityData.area"
+          class="area-tag"
+        >
+          商品来自：{{ commodityData.area }}
+        </div>
         <div
           v-for="(item,index) in commodityData.tags"
           :key="index"
@@ -97,7 +111,7 @@ export default {
         color: @Grey2;
       }
     }
-    .com-free{
+    .com-free {
       height: 0.28rem;
       line-height: 0.28rem;
       width: 1.6rem;
@@ -124,6 +138,17 @@ export default {
       display: flex;
       justify-content: center;
       align-items: flex-end;
+      .area-tag {
+        max-width: 2.2rem;
+        padding: 0.03rem 0.08rem;
+        box-sizing: border-box;
+        font-size: 0.2rem;
+        text-align: center;
+        color: @Red1;
+        border: 0.02rem solid @Red1;
+        margin-right: 0.12rem;
+        border-radius: 0.04rem;
+      }
       .bee-tag {
         display: inline-block;
         font-size: 0.2rem;

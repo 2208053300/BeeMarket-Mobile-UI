@@ -177,6 +177,7 @@ export default {
 <style scoped lang="less">
 .order-content {
   margin: 0.32rem 0.12rem;
+  background-color: @GreyBg;
   .order-card {
     background-color: #fff;
     padding: 0.3rem 0.32rem;

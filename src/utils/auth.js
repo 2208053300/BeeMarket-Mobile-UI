@@ -5,36 +5,53 @@ import { auditWechat } from '@/api/BeeApi/auth'
 import { GetRequest } from '@/utils/index'
 // 获取Token
 export function getToken() {
-  // const osObj = getOs()
-  // if (osObj.isWx) {
-  //   const token = localStorage.getItem('BM-App-Token')
-  //   const uriProp = GetRequest('code')
-  //   if (token) {
-  //     return token
-  //   } else if (
-  //     uriProp &&
-  //     !token &&
-  //     localStorage.getItem('BM-App-Token') !== 'waiting'
-  //   ) {
-  //     localStorage.setItem('BM-App-Token', 'waiting')
-  //     // 微信授权登录
-  //     wxLogin(uriProp)
-  //   } else {
-  //     console.log('微信CODE为空')
-  //   }
-  //   return localStorage.getItem('BM-App-Token')
-  // } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
-  //   return Cookies.get('token')
-  // } else {
-  //   return localStorage.getItem('BM-App-Token')
-  // }
-  return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjA5NDUyMDcsImV4cCI6MTU2MzUzNzIwNywianRpIjoiNjM0YjE0YjVlMjI1Mzk0Yzk4ZTZhODcwNDA0YjliMGEiLCJzZWMiOiIzMTY5YTA3YTcwYmJkZGNiY2M1YjMwYzM2MWJmNTZlOCIsInNpZyI6IjhmYzg1Y2Y1NTU3MmI0YzA0MTk2OTg3MjkyNjEzODJlYWNkYjZlMGU2YjAwNThjMzk5M2YwMWFlZDcwNTFhMTMifQ.fxfkH1xl1WeCJ7ZT8bhPTOXLxDSlWOQRZm1JjY9Tm-Q'
+  const osObj = getOs()
+  if (osObj.isWx) {
+    const token = localStorage.getItem('BM-App-Token')
+    const uriProp = GetRequest('code')
+    if (token) {
+      return token
+    } else if (
+      uriProp &&
+      !token &&
+      localStorage.getItem('BM-App-Token') !== 'waiting'
+    ) {
+      localStorage.setItem('BM-App-Token', 'waiting')
+      // 微信授权登录
+      wxLogin(uriProp)
+    } else {
+      console.log('微信CODE为空')
+    }
+    return localStorage.getItem('BM-App-Token')
+  } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
+    return Cookies.get('token')
+  } else {
+    return localStorage.getItem('BM-App-Token')
+  }
+  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjA5NDUyMDcsImV4cCI6MTU2MzUzNzIwNywianRpIjoiNjM0YjE0YjVlMjI1Mzk0Yzk4ZTZhODcwNDA0YjliMGEiLCJzZWMiOiIzMTY5YTA3YTcwYmJkZGNiY2M1YjMwYzM2MWJmNTZlOCIsInNpZyI6IjhmYzg1Y2Y1NTU3MmI0YzA0MTk2OTg3MjkyNjEzODJlYWNkYjZlMGU2YjAwNThjMzk5M2YwMWFlZDcwNTFhMTMifQ.fxfkH1xl1WeCJ7ZT8bhPTOXLxDSlWOQRZm1JjY9Tm-Q'
 }
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除
 export function setToken(Token) {
   return localStorage.setItem('BM-App-Token', Token)
 }
+
+// 获取多端登陆
+export function getVerify() {
+  const osObj = getOs()
+  if (osObj.isWx) {
+    return localStorage.getItem('BM-Verify-Ver')
+  } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
+    return Cookies.get('BM-Verify-Ver')
+  } else {
+    return localStorage.getItem('BM-Verify-Ver')
+  }
+}
+// 设置多端登陆
+export function setVerify(verify) {
+  return localStorage.setItem('BM-Verify-Ver', verify)
+}
+
 // 判断是否登录
 export function isLogin() {
   return getToken() !== null
@@ -79,7 +96,9 @@ async function wxLogin(code) {
     // 只带state后面的参数跳转
     window.location.href =
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-      encodeURIComponent(window.location.origin + window.location.pathname + uriProp.slice(5)) +
+      encodeURIComponent(
+        window.location.origin + window.location.pathname + uriProp.slice(5)
+      ) +
       '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
   }
 }
