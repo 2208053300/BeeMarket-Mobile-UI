@@ -101,6 +101,8 @@ export default {
   beforeDestroy() {
     // 销毁之前把白色背景给清除掉
     document.querySelector('body').style.background = ''
+    // 取消监听
+    document.removeEventListener('scroll')
   },
   created() {},
   mounted() {
@@ -209,7 +211,7 @@ export default {
           //   }
           //   self.active = num
           // }
-        }, 200)
+        }, 100)
         $scrollBox.addEventListener('scroll', scrollCallback)
       }
     },
@@ -286,12 +288,6 @@ export default {
     // 点击导航
     // navClick(e) {
     navClick(index, title) {
-      // console.log(index, title)
-      // const itemH = document.getElementsByClassName('nav-content')[0].clientHeight
-      // console.log(itemH)
-      // var scrollBox1 = document.querySelector('.active-tpl')
-      // console.log(scrollBox1)
-      // window.scrollTo(0, index * itemH)
       // 用 class="nav-content" 添加锚点
       const jump = document.querySelectorAll('.nav-content')
       const total = jump[index].offsetTop
