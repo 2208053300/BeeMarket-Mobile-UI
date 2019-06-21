@@ -16,8 +16,8 @@
       </div>
       <div class="assessment-pre">
         <div
-          v-for="item in commodityData.latest_comments"
-          :key="item.nickname"
+          v-for="(item,index) in commodityData.latest_comments"
+          :key="index"
           class="assessment-container"
         >
           <div class="assessment-header">
@@ -49,8 +49,8 @@
             <span class="assessment">{{ item.content }}</span>
             <div class="assessment-img">
               <div
-                v-for="item2 in item.images"
-                :key="item2"
+                v-for="(item2,index2) in item.images"
+                :key="index2"
                 class="assessment-img-container"
               >
                 <img

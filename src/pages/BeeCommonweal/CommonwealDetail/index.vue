@@ -100,11 +100,11 @@ export default {
       this.page = 2
     },
     getList(index) {
+      this.page = 1
       this.mineCharityValueDetailData({
         page: this.page,
         status_code: this.active + 1
       })
-      this.page = 2
     },
     onLoad() {
       // 异步更新数据

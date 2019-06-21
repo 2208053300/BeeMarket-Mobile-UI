@@ -52,7 +52,7 @@
               商品来自：{{ item.area }}
             </div>
 
-            <template v-if="item.area">
+            <template v-if="item.area&&item.tags.length>0">
               <div
                 class="bee-tag"
                 :class="{hotTag:item.tags[0]==='热销'}"

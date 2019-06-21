@@ -7,7 +7,7 @@ import {
   removeToken,
   isLogin,
   checkToken,
-  // getVerify,
+  getVerify,
   setVerify
 } from '@/utils/auth'
 import { isJSON } from '@/utils'
@@ -33,7 +33,7 @@ service.interceptors.request.use(
     const osObj = getOs()
     if (isLogin()) {
       config.headers['BM-App-Token'] = getToken()
-      // config.headers['BM-Verify-Ver'] = getVerify()
+      config.headers['BM-Verify-Ver'] = getVerify()
     } else if (osObj.isWx) {
       // REVIEW 如果是微信，默认第一次直接授权
       checkToken()

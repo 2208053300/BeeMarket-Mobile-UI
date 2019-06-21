@@ -17,8 +17,11 @@
           round
           type="default"
           class="follow"
+          :class="{followed:commodityData.mfavor}"
+          @click="handleFollow()"
         >
-          关注店铺
+          <span v-if="!commodityData.mfavor">关注店铺</span>
+          <span v-else>已关注</span>
         </van-button>
         <van-button
           round
@@ -32,7 +35,7 @@
     </div>
     <div class="store-recommend">
       <div class="recommend-title">
-        -  店铺推荐  -
+        - 店铺推荐 -
       </div>
       <div class="recommend-content">
         <div
@@ -59,6 +62,7 @@
 </template>
 
 <script>
+import { collectProduct, cancelCollect } from '@/api/BeeApi/product'
 export default {
   components: {},
   props: {
@@ -84,6 +88,22 @@ export default {
           mid: mid
         }
       })
+    },
+    async handleFollow() {
+      if (this.commodityData.mfavor) {
+        const res = await cancelCollect({
+          content_ids: this.commodityData.mid,
+          type: 2
+        })
+        this.commodityData.mfavor = this.$toast(res.message)
+      } else {
+        const res = await collectProduct({
+          contentId: [this.commodityData.mid],
+          type: 2
+        })
+        this.commodityData.mfavor = 1
+        this.$toast(res.message)
+      }
     }
   }
 }
@@ -130,6 +150,10 @@ export default {
         color: @BeeDefault;
         border: 0.02rem solid @BeeDefault;
         margin-right: 0.24rem;
+      }
+      .followed {
+        color: @Grey2;
+        border-color: @Grey2;
       }
       .stroll {
         border: none;
