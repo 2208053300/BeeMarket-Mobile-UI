@@ -36,13 +36,7 @@ export default {
         {
           id: 2,
           title: '开启你的蜂友圈',
-          img: require('@/assets/icon/classroom/classroom_pic_market@2x.png'),
-          date: '2019.06.22'
-        },
-        {
-          id: 3,
-          title: '开启你的蜂友圈2',
-          img: require('@/assets/icon/classroom/classroom_pic_market@2x.png'),
+          img: require('@/assets/icon/classroom/classroom_pic_friend@2x.png'),
           date: '2019.06.22'
         }
       ]
