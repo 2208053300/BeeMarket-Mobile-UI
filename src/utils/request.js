@@ -20,7 +20,7 @@ const service = axios.create({
 })
 
 service.interceptors.request.use(
-  config => {
+  async config => {
     // 加载蒙层
     Toast.loading({
       mask: true,
@@ -31,8 +31,8 @@ service.interceptors.request.use(
     console.log('请求参数：', config.data)
     // 强制设置 token 在 getToken 函数中设置
     const osObj = getOs()
-    if (isLogin()) {
-      config.headers['BM-App-Token'] = getToken()
+    if (await isLogin()) {
+      config.headers['BM-App-Token'] = await getToken()
       config.headers['BM-Verify-Ver'] = getVerify()
     } else if (osObj.isWx) {
       // REVIEW 如果是微信，默认第一次直接授权
@@ -42,8 +42,6 @@ service.interceptors.request.use(
     // 此处如果有JSON数据，需要加上请求头
     if (isJSON(config.data)) {
       config.headers['Content-Type'] = 'application/json'
-      // config.headers['Content-Type'] = 'application/*'
-      // console.log(config.data)
       return config
     }
     // 去除options预请求方法
@@ -85,7 +83,7 @@ service.interceptors.response.use(
         store.commit('CLEAR_USER_INFO')
         checkToken()
       }
-      Toast.fail(res.message || 'error')
+      // Toast.fail(res.message || 'error')
       return Promise.reject(res.message || 'error')
     } else {
       // Toast.success(res.message)
@@ -94,7 +92,7 @@ service.interceptors.response.use(
   },
   error => {
     Toast.clear()
-    Toast.fail(error)
+    // Toast.fail(error)
     return Promise.reject(error)
   }
 )

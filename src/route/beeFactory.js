@@ -18,6 +18,7 @@ export default new Router({
         },
         {
           path: 'enterPolicty',
+          name: 'enterPolicty',
           component: () => import('@/pages/BeeFactory/EnterPolicty')
         }
       ]

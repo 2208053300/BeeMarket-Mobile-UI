@@ -80,7 +80,7 @@
       :loop="true"
       class="previewImg"
       @close="closePre"
-      @change.stop="onChange2"
+      @change="onChange2"
     >
       <template slot="index">
         {{ preIndex +1 }}/{{ imgList.length }}
@@ -158,6 +158,8 @@ export default {
       this.$store.state.app.beeHeader = true
     },
     onChange2(index) {
+      console.log(123)
+
       this.preIndex = index
     }
   }

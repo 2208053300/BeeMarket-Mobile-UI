@@ -43,7 +43,7 @@ module.exports = {
   // 蜂公益行动详情
   beePublic: {
     entry: 'src/pages/BeePublic/main.js',
-    title: '行动详情'
+    title: '公益详情'
   },
   // 文章详情
   beeArticle: {

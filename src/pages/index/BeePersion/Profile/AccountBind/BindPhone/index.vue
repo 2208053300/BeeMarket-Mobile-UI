@@ -109,11 +109,14 @@ export default {
       const res = await bindPhone({
         mobileNum: this.phone,
         type: 10,
-        t: Date.parse(new Date()).toString().substr(0, 10),
+        // t: Date.parse(new Date()).toString().substr(0, 10),
         smsCode: this.verificationCode
       })
+      this.$toast(res.message)
       if (res.status_code === 200) {
-        this.$router.push({ path: '/persion/profile/accountBind' })
+        setTimeout(() => {
+          this.$router.push({ path: '/persion/profile/accountBind' })
+        }, 2000)
       }
     },
     // 开始倒计时

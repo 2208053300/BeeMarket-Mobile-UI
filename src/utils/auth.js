@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 import { auditWechat } from '@/api/BeeApi/auth'
 import { GetRequest } from '@/utils/index'
 // 获取Token
-export function getToken() {
+export async function getToken() {
   const osObj = getOs()
   if (osObj.isWx) {
     const token = localStorage.getItem('BM-App-Token')
@@ -18,9 +18,25 @@ export function getToken() {
     ) {
       localStorage.setItem('BM-App-Token', 'waiting')
       // 微信授权登录
-      wxLogin(uriProp)
+      await auditWechat({ code: uriProp })
+      // // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
+      if (
+        localStorage.getItem('BM-App-Token') === 'waiting' ||
+        !localStorage.getItem('BM-App-Token')
+      ) {
+        const uriProp2 = GetRequest('state')
+        // 只带state后面的参数跳转
+        window.location.href =
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+          encodeURIComponent(
+            window.location.origin +
+              window.location.pathname +
+              uriProp2.slice(5)
+          ) +
+          '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+      }
     } else {
-      console.log('微信CODE为空')
+      checkToken()
     }
     return localStorage.getItem('BM-App-Token')
   } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
@@ -28,7 +44,8 @@ export function getToken() {
   } else {
     return localStorage.getItem('BM-App-Token')
   }
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXBlIjoxLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjEwODY0OTQsImV4cCI6MTU2MzY3ODQ5NCwianRpIjoiZTg5M2FlM2RkY2JhMzFmYzg3MGYyMGE2NzE5MTYzZTciLCJzZWMiOiI3YTk5NjU5ZTA1OWY1Nzg1NzlhMzJlZjE2ODMwZTU4NiIsInNpZyI6IjI0OGViMDI0ZjI5NDc5MzdlZWMxZWVjMDk2NTU1YzBhMDc5NTQ2YzA2YTI3OGExNDJlNDViZDkxZjYyMDNlMjYifQ.wIG6A0a4bJq2prcFgbXjdAD5lad08-tFE1bDiQiEQRw'
+  // localStorage.setItem('BM-Verify-Ver', 1)
+  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJINSIsInZlciI6MSwiaWF0IjoxNTYxMTEzOTIyLCJleHAiOjE1NjM3MDU5MjIsImp0aSI6ImFiY2E5OGIwOTQxMTExZTk5MTU1MDAwMDVkMGNiNTQyIiwic2VjIjoiN2E5OTY1OWUwNTlmNTc4NTc5YTMyZWYxNjgzMGU1ODYiLCJzaWciOiIxZWQwNGZjNTQxMDRkYTBlNTVlMjdjNGE1ZTRmNjkzNDNhNWU1MjdjMTdmYzhkZDYxMmVkN2U5YWVkOTFhNDRmIn0.V97IPVUb0Z1bLcEsAK2QMNAXP20_g8TdjnEUlZFQetU'
 }
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除
@@ -53,8 +70,8 @@ export function setVerify(verify) {
 }
 
 // 判断是否登录
-export function isLogin() {
-  return getToken() !== null
+export async function isLogin() {
+  return await getToken() !== null
 }
 // 清除登录信息
 export function removeToken() {
@@ -65,10 +82,22 @@ export function checkToken() {
   // 如果是微信，并且没有本地Token，则直接拼接跳转获取token
   const osObj = getOs()
   if (osObj.isWx) {
-    window.location.href =
-      'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-      encodeURIComponent(window.location.href) +
-      '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+    const uriProp = GetRequest('code')
+    if (uriProp) {
+      const uriProp2 = GetRequest('state')
+      // 只带state后面的参数跳转
+      window.location.href =
+        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+        encodeURIComponent(
+          window.location.origin + window.location.pathname + uriProp2.slice(5)
+        ) +
+        '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+    } else {
+      window.location.href =
+        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+        encodeURIComponent(window.location.href) +
+        '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+    }
   } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
     // 如果是APP，获取APP放在cookie里的token
     const token = Cookies.get('token')
@@ -83,22 +112,5 @@ export function checkToken() {
     import('@/route/index').then(module => {
       module.default.push('/login')
     })
-  }
-}
-async function wxLogin(code) {
-  await auditWechat({ code: code })
-  // // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
-  if (
-    localStorage.getItem('BM-App-Token') === 'waiting' ||
-    !localStorage.getItem('BM-App-Token')
-  ) {
-    const uriProp = GetRequest('state')
-    // 只带state后面的参数跳转
-    window.location.href =
-      'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-      encodeURIComponent(
-        window.location.origin + window.location.pathname + uriProp.slice(5)
-      ) +
-      '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
   }
 }
