@@ -85,7 +85,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
-import { addComment } from '@/api/BeeApi/user'
+// import { addComment } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '发表评价'
@@ -113,14 +113,14 @@ export default {
   methods: {
     // 提交评论
     async submit() {
-      const res = await addComment({
-        order_no: this.order_no,
-        sku_id: this.sku_id,
-        score: this.score,
-        content: this.commentText,
-        anonymous: this.isAnonymity
-      //  images[]:''
-      })
+      // const res = await addComment({
+      //   order_no: this.order_no,
+      //   sku_id: this.sku_id,
+      //   score: this.score,
+      //   content: this.commentText,
+      //   anonymous: this.isAnonymity
+      // //  images[]:''
+      // })
     },
     // 是否匿名
     toggleAnonymity() {

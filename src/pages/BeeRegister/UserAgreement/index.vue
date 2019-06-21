@@ -231,9 +231,8 @@
 </template>
 
 <script>
-import BeeHeader from '@/components/index/BeeHeader'
 export default {
-  components: { BeeHeader },
+  components: {},
   props: {},
   data() {
     return {}

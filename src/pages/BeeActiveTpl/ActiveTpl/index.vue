@@ -51,7 +51,6 @@
 
 <script>
 import { getOs } from '@/utils'
-import Cookies from 'js-cookie'
 import { activityDetail } from '@/api/BeeApi/action'
 
 export default {
