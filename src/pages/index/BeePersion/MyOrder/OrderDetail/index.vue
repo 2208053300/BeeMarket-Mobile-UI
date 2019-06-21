@@ -101,7 +101,7 @@ import commodityList from './components/commodityList'
 import orderOp from './components/orderOp'
 import BeeGuess from '@/components/index/BeeGuess'
 import { formatSeconds } from '@/utils'
-import { setTimeout } from 'timers'
+// import { setTimeout } from 'timers'
 export default {
   metaInfo: {
     title: '订单详情'

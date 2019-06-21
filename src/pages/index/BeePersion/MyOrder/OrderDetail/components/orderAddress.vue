@@ -138,8 +138,6 @@ export default {
     .logistics-text {
       flex: 1;
       margin-left: 0.3rem;
-      .logistics-text2 {
-      }
       .logistics-time {
         margin-top: 0.2rem;
       }

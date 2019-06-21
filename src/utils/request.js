@@ -7,7 +7,7 @@ import {
   removeToken,
   isLogin,
   checkToken,
-  getVerify,
+  // getVerify,
   setVerify
 } from '@/utils/auth'
 import { isJSON } from '@/utils'

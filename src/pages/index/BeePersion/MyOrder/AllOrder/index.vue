@@ -117,6 +117,4 @@ export default {
 </script>
 
 <style scoped lang="less">
-.all-order {
-}
 </style>
