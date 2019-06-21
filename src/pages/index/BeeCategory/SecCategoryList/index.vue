@@ -2,11 +2,11 @@
   <div class="sec-category">
     <div class="container position-ab-top-46">
       <!-- 搜索栏 -->
-      <van-search
+      <!-- <van-search
         placeholder="请输入搜索关键词"
         style="position:relative; z-index:9998;"
         @click="goSearchPage"
-      />
+      /> -->
       <!-- 二级导航 -->
       <van-tabs
         v-model="nowThirdIndex"

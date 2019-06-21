@@ -107,8 +107,10 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = false
-
-    this.searchHistory = localStorage.getItem('searchHistory').split(',')
+    const searchHistory = localStorage.getItem('searchHistory')
+    if (searchHistory) {
+      this.searchHistory = searchHistory.split(',')
+    }
   },
   methods: {
     // NOTE 当点击搜索栏时，更改样式
@@ -131,23 +133,28 @@ export default {
     },
     // 确认搜索关键词并以此搜索商品
     async getConfirmWold(val) {
-      console.log('搜索关键词：', val)
-      this.isShowGuess1 = false
-      // this.searchKey = val
-      if (this.searchHistory.indexOf(val) === -1) {
-        this.searchHistory.unshift(val)
-        if (this.searchHistory.length > 10) {
-          this.searchHistory.splice(9, 1)
+      await this.changeKey(val)
+
+      setTimeout(() => {
+        if (this.searchHistory.indexOf(val) === -1) {
+          this.searchHistory.unshift(val)
+          if (this.searchHistory.length > 10) {
+            this.searchHistory.splice(9, 1)
+          }
+          console.log('searchHistory:', this.searchHistory)
+
+          localStorage.setItem('searchHistory', this.searchHistory)
         }
-        console.log('searchHistory:', this.searchHistory)
+        this.isShowGuess = false
 
-        localStorage.setItem('searchHistory', this.searchHistory)
-      }
-      // this.isShowGuess = false
-
-      this.isShowProductList = true
-      this.$refs.ProductsList.condition.search = val
-      this.$refs.ProductsList.getGoodsList()
+        this.isShowProductList = true
+        this.$refs.ProductsList.condition.search = val
+        this.$refs.ProductsList.getGoodsList()
+      }, 400)
+    },
+    // 改变搜索关键词
+    async changeKey(val) {
+      this.searchKey = val
     },
     // 取消搜索，回到分类页面
     cancelSearch() {
@@ -166,9 +173,6 @@ export default {
 
     // 防抖
     debounce(func, wait) {
-      console.log('fdfsdfdfd')
-      console.log(func)
-
       let timeout = ''
       return v => {
         console.log(333)
