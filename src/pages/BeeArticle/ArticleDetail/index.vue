@@ -162,14 +162,14 @@ export default {
           desc: this.article.share_data.desc,
           img_path: this.article.share_data.img,
           // 地址应该放 web 站 网页
-          url: this.$store.state.app.homeUri + '/discover/article/' + this.$route.params.id
+          url: this.article.share_data.link
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(
           this.article.share_data.title,
           this.article.share_data.desc,
           this.article.share_data.img,
-          this.$store.state.app.homeUri + '/discover/article/' + this.$route.params.id
+          this.article.share_data.link
         )
       } else {
       // this.$router.push({

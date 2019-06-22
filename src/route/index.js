@@ -128,6 +128,11 @@ const router = new Router({
               component: () => import('@/pages/BeeFriends/Agreement')
             },
             {
+              path: 'pay',
+              name: 'FriendPay',
+              component: () => import('@/pages/BeeFriends/Pay')
+            },
+            {
               path: 'freeze',
               name: 'freeze',
               component: () => import('@/pages/BeeFriends/Freeze')

@@ -45,6 +45,11 @@ export default new Router({
           path: 'freeze',
           name: 'freeze',
           component: () => import('@/pages/BeeFriends/Freeze')
+        },
+        {
+          path: 'pay',
+          name: 'FriendPay',
+          component: () => import('@/pages/BeeFriends/Pay')
         }
       ]
     }
