@@ -254,7 +254,7 @@ export default {
     .van-tabs__line {
       width: 0.9rem !important;
       height: 0.04rem;
-      left: 0.45rem;
+      /*left: 0.45rem;*/
       background-color: @BeeDefault;
     }
     .van-tab {
