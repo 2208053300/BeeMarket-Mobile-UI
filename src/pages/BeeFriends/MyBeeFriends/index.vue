@@ -3,7 +3,7 @@
     v-if="$store.state.user.userStatus === 1"
     class="my-friends"
     :style="{backgroundImage:'url('+beeIcon.bee_firends_img_bg+')'}"
-    :class="{hasHeader:$store.state.app.beeHeader}"
+    :class="{hasHeader:$store.state.app.beeHeader&&!osObj.isApp}"
   >
     <div
       class="user-fixed"
@@ -35,7 +35,10 @@
         />
       </div>
     </div>
-    <div class="rule-fixed">
+    <div
+      class="rule-fixed"
+      @click="showRule=true"
+    >
       <img
         :src="beeIcon.bee_firends_icom_rule"
         alt="规则"
@@ -95,6 +98,64 @@
         </div>
       </div>
     </transition>
+    <van-popup
+      v-model="showRule"
+      position="bottom"
+      class="rule-pop"
+      :close-on-click-overlay="false"
+      @close="handleCloseRule"
+      @click-overlay="handleCloseRule"
+    >
+      <div class="rule-content">
+        <div
+          class="rule-header"
+          @click="handleCloseRule"
+        >
+          <div class="close-img">
+            <img
+              :src="beeIcon.bee_firends_invite_icon_off"
+              alt=""
+            >
+          </div>
+        </div>
+        <div class="head-img">
+          <img :src="beeIcon.rule_head">
+        </div>
+        <div
+          class="rule-video"
+          :style="{backgroundImage:'url('+beeIcon.videoBackground+')'}"
+        >
+          <div class="video">
+            <video
+              ref="video"
+              src="https://app.fengjishi.com/static/video/film.mp4"
+              :poster="beeIcon.first_screen"
+              class="video-body"
+              :controls="showControls"
+            />
+            <div
+              v-if="!showControls"
+              style="position: relative"
+            >
+              <div class="control">
+                <img
+                  :src="beeIcon.title_icon_stop"
+                  style="width: 1.28rem;height: 1.28rem"
+                  @click="play"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="img-content">
+          <img
+            v-lazy="beeIcon.bee_firends_img_rule"
+            :src="beeIcon.bee_firends_img_rule"
+            alt=""
+          >
+        </div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -132,7 +193,13 @@ export default {
         bee_firend_icon_moregold: require('@/assets/icon/beeFriends/home/bee_firend_icon_moregold.png'),
         bee_firend_icon_bubble: require('@/assets/icon/beeFriends/home/bee_firend_icon_bubble.png'),
         bee_firend_icon_charge: require('@/assets/icon/beeFriends/home/bee_firend_icon_charge.png'),
-        bee_firends_img_bg: require('@/assets/icon/beeFriends/home/bee_firends_img_bg.png')
+        bee_firends_img_bg: require('@/assets/icon/beeFriends/home/bee_firends_img_bg.png'),
+        bee_firends_img_rule: require('@/assets/icon/beeFriends/home/bee_firends_img_rule.png'),
+        bee_firends_invite_icon_off: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_off.png'),
+        title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
+        first_screen: require('@/assets/icon/task/talent/first_screen@3x.png'),
+        videoBackground: require('@/assets/icon/noviceGuide/00-新手教培_改_02.png'),
+        rule_head: require('@/assets/icon/noviceGuide/00-新手教培_改_01.png')
       },
       showHoney: true,
       honeyType: 2,
@@ -155,30 +222,19 @@ export default {
       },
       centerPoint: {},
       // 获取 os 平台
-      osObj: getOs()
+      osObj: getOs(),
+      showRule: false,
+      showControls: false
     }
   },
   computed: {},
   watch: {},
-  async beforeCreate() {
-    // 初始化实例之前判断该用户蜂友圈状态跳转页面
-    await this.$store.dispatch('GerUserStatus')
-    // 0 非合伙人 1 合伙人 2 冻结
-    if (this.$store.state.user.userStatus === 0) {
-      this.$router.replace({ name: 'introduction' })
-    } else if (this.$store.state.user.userStatus === 1) {
-      this.$router.replace({ name: 'beeFriends' })
-    } else if (this.$store.state.user.userStatus === 2) {
-      this.$router.replace({ name: 'freeze' })
-    }
-  },
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getPartnerData()
     this.getReceiveNumData()
-
     this.clearHistory()
   },
   methods: {
@@ -246,6 +302,18 @@ export default {
         //   }
         // })
       }
+    },
+    // 播放视频
+    play() {
+      this.$refs.video.play()
+      this.showControls = true
+    },
+    pause() {
+      this.$refs.video.pause()
+    },
+    handleCloseRule() {
+      this.showRule = false
+      this.pause()
     }
   }
 }
@@ -256,7 +324,7 @@ export default {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background-color: #fdd354!important;
+  background-color: #fdd354 !important;
   position: relative;
   background-size: contain;
   background-repeat: no-repeat;
@@ -346,7 +414,7 @@ export default {
         transform: translateY(0);
       }
       to {
-        transform: translateY(10px);
+        transform: translateY(0.3rem);
       }
     }
     .get-num {
@@ -403,6 +471,58 @@ export default {
     transform: translateY(-30px);
     bottom: 6rem;
     opacity: 0;
+  }
+  .rule-pop {
+    border-radius: 0.3rem 0.3rem 0 0;
+    .rule-content {
+      height: 12rem;
+      overflow: scroll;
+      position: relative;
+      .rule-header {
+        position: fixed;
+        width: 100%;
+        height: 0.6rem;
+        background-color: #fff;
+        .close-img {
+          position: absolute;
+          top: 0.16rem;
+          right: 0.16rem;
+          width: 0.4rem;
+          height: 0.4rem;
+        }
+      }
+      .head-img {
+        margin-top: 0.6rem;
+      }
+      @videoWidth: 6.4rem;
+      @videoHeight: 3.28rem;
+      .rule-video {
+        background-size: cover;
+        .video {
+          padding: 0.52rem 0.54rem;
+          border-radius: 0.08rem;
+          .video-body {
+            background-color: black;
+            width: @videoWidth;
+            height: @videoHeight;
+            border-radius: 0.08rem;
+          }
+          .control {
+            width: @videoWidth;
+            height: @videoHeight;
+            top: -@videoHeight;
+            left: 0;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+      }
+      .img-content {
+        height: 45.49rem;
+      }
+    }
   }
 }
 .hasHeader {

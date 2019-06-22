@@ -4,7 +4,7 @@
       <span @click="editProduct">{{ editStatus ? '完成' : '编辑' }}</span>
     </div>
     <div class="store-container">
-      <van-checkbox-group v-model="editData">
+      <van-checkbox-group v-model="editData" @change="checkBoxChange">
         <van-pull-refresh v-model="loading" @refresh="$emit('change')">
           <van-list
             v-model="loading"
@@ -28,7 +28,7 @@
                 />
               </div>
               <div>
-                <van-cell style="border-radius: 0.2rem">
+                <van-cell style="border-radius: 0.2rem" @click="goStore(store.store_id)">
                   <div
                     slot="title"
                     class="left-title"
@@ -37,6 +37,7 @@
                       <img
                         :src="store.store_logo"
                         alt="store.storeName"
+                        :onerror="$store.state.app.defaultImg"
                       >
                     </div>
                     <span>{{ store.store_name }}</span>
@@ -113,6 +114,7 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    // 点击全选
     allSelected() {
       if (this.allSelectedBox) {
         this.editData = []
@@ -120,9 +122,11 @@ export default {
         this.editData = this.storeList
       }
     },
+    // 编辑收藏
     editProduct() {
       this.editStatus = !this.editStatus
     },
+    // 取消收藏
     async cancelCollected() {
       const ids = this.editData.map(data => {
         return data.store_id
@@ -135,9 +139,26 @@ export default {
         content_ids: JSON.stringify(ids),
         type: 2
       })
-      if (res.code) {
-        this.$emit('change')
-      }
+      this.$toast({
+        message: res.message,
+        duration: 1000,
+        onClose: () => {
+          this.$emit('change')
+        }
+      })
+    },
+    // 打开店铺页面
+    goStore(storeId) {
+      this.$router.push({
+        path: '/category/store',
+        query: {
+          mid: storeId
+        }
+      })
+    },
+    // 选择框改变
+    checkBoxChange(model) {
+      this.allSelectedBox = model.length === this.storeList.length
     }
   }
 }

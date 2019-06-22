@@ -375,7 +375,8 @@ export default {
       }
       .btn-content {
         position: absolute;
-        bottom: 0;
+        // vant自带边距
+        bottom: -0.02rem;
         width: 100%;
         .fast-invite {
           background-color: @BeeDefault;

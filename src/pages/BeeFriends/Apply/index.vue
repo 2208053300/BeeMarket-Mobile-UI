@@ -256,10 +256,15 @@ export default {
             address: this.address
           }
           // 执行提交表单请求
-          const res2 = await applyBeeFriend(data)
-          if (res2.status_code === 200) {
-            await this.$store.dispatch('GerUserStatus')
-            this.$router.push({ name: 'beeFriends' })
+          try {
+            const res2 = await applyBeeFriend(data)
+            this.$toast(res2.message)
+            if (res2.status_code === 200) {
+              await this.$store.dispatch('GerUserStatus')
+              this.$router.push({ name: 'beeFriends' })
+            }
+          } catch (error) {
+            this.$toast(error)
           }
         } else {
           this.$toast('请同意合伙人共创协议')

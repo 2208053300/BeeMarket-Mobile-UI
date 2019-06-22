@@ -20,7 +20,7 @@
       </div>
     </div>
     <div
-      v-if="commodityData.intro||commodityData.tags!==[]||commodityData.area"
+      v-if="commodityData.intro!==''||commodityData.tags!==[]||commodityData.area"
       class="product-desc"
     >
       <div
@@ -125,7 +125,8 @@ export default {
     }
   }
   .product-desc {
-    margin: 0 0.3rem 0.2rem;
+    margin: 0 auto 0.2rem;
+    width: 4.84rem;
     background-color: #fff;
     padding: 0 1rem 0.24rem;
     text-align: center;
