@@ -79,7 +79,7 @@ export default {
     //
     goBindPhone() {
       if (!this.mobile_bind) {
-        this.$router.push({ path: '/persion/profile/accountBind/bindPhone' })
+        this.$router.replace({ path: '/persion/profile/accountBind/bindPhone' })
       }
     }
   }
