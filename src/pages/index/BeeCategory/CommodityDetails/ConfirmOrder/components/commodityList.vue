@@ -50,6 +50,7 @@
           <span class="message-text">留言：</span>
           <van-field
             v-model="item.note"
+            autosize
             placeholder="选填您的要求"
           />
         </div>

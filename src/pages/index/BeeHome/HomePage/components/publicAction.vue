@@ -1,5 +1,8 @@
 <template>
-  <div class="public-action">
+  <div
+    class="public-action"
+    :style="{backgroundImage:'url('+homeData.charity_action.action.show_img+')'}"
+  >
     <div
       class="action-header"
       :style="{backgroundImage:'url('+homeData.charity_action.show_image+')'}"
@@ -7,7 +10,6 @@
     />
     <div
       class="action-body"
-      :style="{backgroundImage:'url('+homeData.charity_action.action.show_img+')'}"
       @click="$router.push({path:'/discover/action',query:{id:homeData.charity_action.action.action_id}})"
     >
       <span class="action-title">
@@ -53,6 +55,7 @@ export default {
   border-radius: 0.2rem;
   box-shadow: 0 0 0.2rem @Grey6;
   overflow: hidden;
+    background-size: cover;
   .action-header {
     height: 2.24rem;
     background-size: cover;
