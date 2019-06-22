@@ -27,7 +27,7 @@
                   :checked-color="BeeDefault"
                 />
               </div>
-              <van-card @click="goDetail(product.product_id)">
+              <van-card @click="goDetail(product.product_id, product.target)">
                 <div
                   slot="thumb"
                   class="card-img"
@@ -173,10 +173,10 @@ export default {
       this.allSelectedBox = model.length === this.productList.length
     },
     // 打开商品详情
-    goDetail(pid) {
+    goDetail(pid, target) {
       this.$router.push({
         path: '/category/details',
-        query: { pid: pid, target: 'produce' }
+        query: { pid: pid, target: target }
       })
     }
   }
