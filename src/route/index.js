@@ -129,7 +129,7 @@ const router = new Router({
             },
             {
               path: 'pay',
-              name: 'FriendPay',
+              name: 'friendPay',
               component: () => import('@/pages/BeeFriends/Pay')
             },
             {
