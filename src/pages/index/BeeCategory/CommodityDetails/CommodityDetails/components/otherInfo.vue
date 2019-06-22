@@ -18,7 +18,10 @@
             v-else
             class="title-text"
           >已选</span>
-          <span class="cell-content">{{ skuName.join(' ') }}</span>
+          <span
+            v-if="$store.state.cart.skuId!==0"
+            class="cell-content"
+          >{{ skuName.join(' ') }}</span>
         </p>
         <p class="cell-value">
           选择
@@ -241,8 +244,8 @@ export default {
   .other1 {
     margin-top: 0.2rem;
   }
-  .sku-select{
-    .van-cell__title{
+  .sku-select {
+    .van-cell__title {
       flex: 4;
     }
   }

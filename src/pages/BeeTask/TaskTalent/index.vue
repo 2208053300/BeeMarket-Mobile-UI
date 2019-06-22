@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="task-talent">
     <div class="banner">
       <img :src="beeIcon.talent_pic_banner">
     </div>
@@ -136,61 +136,63 @@ export default {
 </script>
 
 <style scoped lang="less">
-.banner {
-  padding: 0.2rem 0.3rem;
-}
-.body {
-  background: white;
-  margin: 0 0.3rem 0.2rem 0.3rem;
-  padding: 0 0.24rem 0.6rem 0.24rem;
-  text-align: center;
-}
-p {
-  margin: 0;
-}
-.video {
-  border-radius: 0.16rem;
-  margin-top: 0.24rem;
-  .video-body {
-    background-color: black;
-    width: 6.42rem;
-    height: 3.3rem;
-    border-radius: 0.16rem
+.task-talent {
+  .banner {
+    padding: 0.2rem 0.3rem;
   }
-  .control {
-    width: 6.42rem;
-    height: 3.3rem;
-    top: -3.3rem;
-    left: 0;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .body {
+    background: white;
+    margin: 0 0.3rem 0.2rem 0.3rem;
+    padding: 0 0.24rem 0.6rem 0.24rem;
+    text-align: center;
   }
-}
-.has-first-consume {
   p {
-    margin-top: 0.4rem;
-    font-size: 0.22rem;
-    color: @Grey1;
+    margin: 0;
   }
-}
-.go-shopping {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0.2rem;
-  width: 2rem;
-  height: 0.64rem;
-  line-height: 0.64rem;
-  border-radius: 0.08rem;
-  background: linear-gradient(to right, #ffbd2f, @BeeDefault);
-  font-size: 0.3rem;
-  color: white;
-  &:active {
-    filter: opacity(90%);
+  .video {
+    border-radius: 0.16rem;
+    margin-top: 0.24rem;
+    .video-body {
+      background-color: black;
+      width: 6.42rem;
+      height: 3.3rem;
+      border-radius: 0.16rem
+    }
+    .control {
+      width: 6.42rem;
+      height: 3.3rem;
+      top: -3.3rem;
+      left: 0;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
-}
-.disable {
-  filter: opacity(20%);
+  .has-first-consume {
+    p {
+      margin-top: 0.4rem;
+      font-size: 0.22rem;
+      color: @Grey1;
+    }
+  }
+  .go-shopping {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.2rem;
+    width: 2rem;
+    height: 0.64rem;
+    line-height: 0.64rem;
+    border-radius: 0.08rem;
+    background: linear-gradient(to right, #ffbd2f, @BeeDefault);
+    font-size: 0.3rem;
+    color: white;
+    &:active {
+      filter: opacity(90%);
+    }
+  }
+  .disable {
+    filter: opacity(20%);
+  }
 }
 </style>

@@ -4,8 +4,9 @@
       <van-tabs
         v-model="activeTab"
         background="transparent"
-        :color="BeeDefault"
-        :title-active-color="BeeDefault"
+        :color="!storeDetails.store_bg?BeeDefault:'#ffffff'"
+        :title-active-color="!storeDetails.store_bg?BeeDefault:'#ffffff'"
+        :title-inactive-color="!storeDetails.store_bg?Grey2:'#ffffff'"
       >
         <van-tab>
           <div
@@ -29,29 +30,98 @@
             @click="changeSort('price')"
           >
             价格
-            <van-icon
-              v-if="order==='asc'"
-              :name="beeIcon.low_white"
-              @click.stop="changeOrder"
-            />
-            <van-icon
+
+            <div
+              v-if="!storeDetails.store_bg"
+              class="noBg-sort"
+            >
+              <div
+                v-if="formData.sort!=='price'"
+                class="sort-icon"
+              >
+                <img
+                  :src="beeIcon.shop_icon_price_gray_normat"
+                  alt=""
+                >
+              </div>
+              <div
+                v-else
+                class="sort-icon"
+              >
+                <img
+                  v-if="order==='asc'"
+                  :src="beeIcon.list_icon_price_high"
+                  alt=""
+                >
+                <img
+                  v-else
+                  :src="beeIcon.list_icon_price_low"
+                  alt=""
+                >
+              </div>
+            </div>
+            <div
               v-else
-              :name="beeIcon.shop_icon_price_high_white"
-              @click.stop="changeOrder"
-            />
+              class="noBg-sort"
+            >
+              <div
+                v-if="formData.sort!=='price'"
+                class="sort-icon"
+              >
+                <img
+                  :src="beeIcon.shop_icon_price_normat"
+                  alt=""
+                >
+              </div>
+              <div
+                v-else
+                class="sort-icon"
+              >
+                <img
+                  v-if="order==='asc'"
+                  :src="beeIcon.shop_icon_price_high_white"
+                  alt=""
+                >
+                <img
+                  v-else
+                  :src="beeIcon.shop_icon_price_low_white"
+                  alt=""
+                >
+              </div>
+            </div>
           </div>
         </van-tab>
       </van-tabs>
-      <div class="icon-content">
+      <div
+        v-if="!storeDetails.store_bg"
+        class="icon-content"
+      >
         <van-icon
           v-if="gridList"
-          :name="beeIcon.vertical_horizontal"
+          :name="beeIcon.list_icon_horizontal"
           class="change-list"
           @click="gridList=false"
         />
         <van-icon
           v-else
-          :name="beeIcon.vertical_white"
+          :name="beeIcon.list_icon_vertical"
+          class="change-list"
+          @click="gridList=true"
+        />
+      </div>
+      <div
+        v-else
+        class="icon-content"
+      >
+        <van-icon
+          v-if="gridList"
+          :name="beeIcon.shop_icon_vertical_horizontal"
+          class="change-list"
+          @click="gridList=false"
+        />
+        <van-icon
+          v-else
+          :name="beeIcon.shop_icon_vertical_white"
           class="change-list"
           @click="gridList=true"
         />
@@ -162,7 +232,7 @@
 </template>
 
 <script>
-import { BeeDefault } from '@/styles/index/variables.less'
+import { BeeDefault, Grey2 } from '@/styles/index/variables.less'
 import { getStoreDetail } from '@/api/BeeApi/store'
 export default {
   components: {},
@@ -187,15 +257,23 @@ export default {
   data() {
     return {
       BeeDefault,
+      Grey2,
       activeTab: 0,
       gridList: true,
       loading: false,
       finished: false,
       beeIcon: {
-        vertical_horizontal: require('@/assets/icon/store/shop_icon_vertical_horizontal@2x.png'),
-        vertical_white: require('@/assets/icon/store/shop_icon_vertical_white@2x.png'),
-        low_white: require('@/assets/icon/store/shop_icon_price_low_white@2x.png'),
-        shop_icon_price_high_white: require('@/assets/icon/store/shop_icon_price_high_white@2x.png')
+        shop_icon_vertical_horizontal: require('@/assets/icon/store/shop_icon_vertical_horizontal@2x.png'),
+        shop_icon_vertical_white: require('@/assets/icon/store/shop_icon_vertical_white@2x.png'),
+        shop_icon_price_high_white: require('@/assets/icon/store/shop_icon_price_high_white@2x.png'),
+        shop_icon_price_low_white: require('@/assets/icon/store/shop_icon_price_low_white@2x.png'),
+        shop_icon_price_normat: require('@/assets/icon/store/shop_icon_price_normat@2x.png'),
+        list_icon_horizontal: require('@/assets/icon/category/list_icon_horizontal@2x.png'),
+        list_icon_vertical: require('@/assets/icon/category/list_icon_vertical@2x.png'),
+        shop_icon_price_gray_normat: require('@/assets/icon/store/shop_icon_price_gray_normat@2x.png'),
+        list_icon_price_high: require('@/assets/icon/category/list_icon_price_high@2x.png'),
+        list_icon_price_low: require('@/assets/icon/category/list_icon_price_low@2x.png')
+
       },
       order: 'asc'
     }
@@ -220,6 +298,8 @@ export default {
       }, 500)
     },
     changeSort(sort) {
+      this.formData.page = 1
+      this.finished = false
       const newForm = this.formData
       newForm.sort = sort
       if (sort === 'new') {
@@ -227,8 +307,8 @@ export default {
         this.$emit('update:formData', newForm)
         this.$parent.getStoreDetailData()
       } else if (sort === 'price') {
-        this.$emit('update:formData', newForm)
-        this.$parent.getStoreDetailData()
+        this.order === 'dasc'
+        this.changeOrder()
       } else {
         delete newForm.sort
         delete newForm.order
@@ -260,9 +340,16 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 0.52rem;
+    margin: 0 0.52rem 0 0;
     .van-tabs {
       flex: 3;
+    }
+    .noBg-sort {
+      display: inline-block;
+      .sort-icon {
+        width: 0.16rem;
+        height: 0.25rem;
+      }
     }
     .icon-content {
       flex: 2;

@@ -20,7 +20,10 @@
         "
       >
         <div class="card-title">
-          <div class="store-name">
+          <div
+            class="store-name"
+            @click.stop="$router.push({path:'/category/store',query:{mid:card.merchant_id}})"
+          >
             {{ card.store_name }}
             <van-icon name="arrow" />
           </div>
@@ -72,7 +75,7 @@
           <van-button
             v-if="[-1, 4].indexOf(card.s_order) !== -1 || card.s_pay === -1"
             round
-            class="order-button"
+            class="order-button del-button"
           >
             删除订单
           </van-button>
@@ -80,7 +83,7 @@
             v-if="card.s_order === 4"
             round
             class="order-button"
-            @click="
+            @click.stop="
               goComent(
                 card.order_no,
                 card.comment_product_num,
@@ -94,6 +97,7 @@
             v-if="[-1, 4].indexOf(card.s_order) !== -1"
             round
             class="order-button"
+            @click.stop="buyAgain(card)"
           >
             再次购买
           </van-button>
@@ -103,7 +107,7 @@
             class="order-button"
             @click.stop="$router.push({path:'/persion/order/logistics',query:{order_no:card.order_no}})"
           >
-            物流追踪
+            查看物流
           </van-button>
           <van-button
             v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
@@ -126,7 +130,7 @@
             @click.stop=""
           >
             <!-- TODO 接口缺少时间 -->
-            付款<span>23:59</span>
+            去支付
           </van-button>
           <van-button
             v-if="card.s_order === 4"
@@ -148,7 +152,7 @@
 </template>
 
 <script>
-import { getOrderList } from '@/api/BeeApi/user'
+import { getOrderList, addShopcartProduct } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {
@@ -204,6 +208,16 @@ export default {
           }
         })
       }
+    },
+    buyAgain(order) {
+      order.product_list.map(async item => {
+        await addShopcartProduct({
+          sid: item.sku_id,
+          number: item.number,
+          product_source: order.t_order
+        })
+      })
+      this.$toast('已加入购物车')
     }
   }
 }
@@ -225,7 +239,7 @@ export default {
       .store-name {
         font-size: 0.24rem;
         .van-icon {
-          vertical-align: middle;
+          vertical-align: text-top;
         }
       }
       .order-status {
@@ -306,12 +320,16 @@ export default {
       .order-button {
         padding: 0;
         font-size: 0.24rem;
-        width: 1.4rem;
+        min-width: 1.4rem;
         height: 0.56rem;
         line-height: 0.56rem;
         margin-left: 0.2rem;
         color: @BeeDefault;
         border-color: @BeeDefault;
+      }
+      .del-button {
+        color: @Grey2;
+        border-color: @Grey2;
       }
     }
   }
