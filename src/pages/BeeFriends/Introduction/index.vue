@@ -97,32 +97,13 @@ export default {
     // 清除历史
     clearHistory() {
       if (this.osObj.isWx) {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
+        //
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.clearHistory.postMessage({ url: window.location.href })
-        // window.webkit.messageHandlers.ToShare.postMessage({
-        //   title: 'test',
-        //   desc: 'test',
-        //   img_path: '',
-        //   // 地址应该放 web 站 网页
-        //   url: this.$store.state.app.homeUri + '/activeTpl?id=' + this.$route.query.id
-        // })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.clearHistory()
       } else {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
+        //
       }
     },
     // 播放
