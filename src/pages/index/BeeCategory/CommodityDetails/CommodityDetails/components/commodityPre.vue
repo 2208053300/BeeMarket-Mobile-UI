@@ -17,7 +17,8 @@
       <van-swipe-item
         v-for="(item,index) in commodityData.album"
         :key="item.tUrl"
-        @click="showPre(index)"
+        @touchmove="touchMove=true"
+        @touchend="showPre(index)"
       >
         <img
           :src="item.tUrl"
@@ -116,7 +117,8 @@ export default {
       playStatus: false,
       showImgPre: false,
       imgList: [],
-      preIndex: 0
+      preIndex: 0,
+      touchMove: false
     }
   },
   computed: {},
@@ -147,6 +149,10 @@ export default {
     },
     // 预览图片
     showPre(index) {
+      if (this.touchMove) {
+        this.touchMove = false
+        return
+      }
       this.preIndex = index
       this.imgList = this.commodityData.album.map(item => {
         return item.qUrl
