@@ -104,7 +104,6 @@ export function checkToken() {
     const token = Cookies.get('token')
     if (token) {
       setToken(token)
-      location.reload()
     } else {
       console.log('没得到token', Cookies.get())
     }
