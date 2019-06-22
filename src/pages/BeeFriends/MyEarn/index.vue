@@ -143,7 +143,11 @@ export default {
       if (this.earnType === 'left') {
         this.finished = true
       } else {
-        this.finished = false
+        if (this.detailList.length === res.data.record.total_num) {
+          this.finished = true
+        } else {
+          this.finished = false
+        }
       }
       this.page = 2
     },
@@ -163,7 +167,7 @@ export default {
         this.page++
         this.detailList.push(...res.data.record.list)
         this.loading = false
-        if (res.data.record.list.length === 0) {
+        if (this.detailList.length === res.data.record.total_num) {
           this.finished = true
         }
       }, 500)
