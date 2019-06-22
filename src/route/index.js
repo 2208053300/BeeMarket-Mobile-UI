@@ -123,6 +123,11 @@ const router = new Router({
               component: () => import('@/pages/BeeFriends/Introduction')
             },
             {
+              path: 'agreement',
+              name: 'partnerAgreement',
+              component: () => import('@/pages/BeeFriends/Agreement')
+            },
+            {
               path: 'freeze',
               name: 'freeze',
               component: () => import('@/pages/BeeFriends/Freeze')

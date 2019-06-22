@@ -3,7 +3,7 @@
     <div class="logistics-status">
       <div class="logistics-img">
         <img
-          :src="logisticsInfo.product_img"
+          :src="logisticsInfo.product_img||logisticsInfo.tUrl"
           alt=""
         >
       </div>
@@ -23,7 +23,7 @@
           {{ logisticsInfo.express_status }}
         </div>
         <div class="logistics-text1">
-          快递方式：<span class="bee-text">{{ logisticsInfo.express_mode }}</span>
+          快递方式：<span class="bee-text">{{ logisticsInfo.express_mode||logisticsInfo.express_name }}</span>
         </div>
         <div class="logistics-text1">
           物流编号：<span class="bee-text">{{ logisticsInfo.express_no }}</span>
@@ -39,7 +39,11 @@
         <span>您的订单正由平台积极处理中，请耐心等待</span>
       </div> -->
       <!-- TODO 最后一个不加线 -->
-      <div v-for="(item, index) in logisticsInfo.express_details" :key="index" class="status-content">
+      <div
+        v-for="(item, index) in logisticsInfo.express_details"
+        :key="index"
+        class="status-content"
+      >
         <div class="bee-cir" />
         <div class="bee-line" />
         <div class="status-text">
@@ -58,7 +62,7 @@
 
 <script>
 import BeeGuess from '@/components/index/BeeGuess'
-import { getAfterLogDetail } from '@/api/BeeApi/user'
+import { getAfterLogDetail, getLogisticsDetail2 } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '物流详情'
@@ -76,13 +80,24 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getLogisticsDetail()
+    if (this.$route.query.aid) {
+      this.getLogisticsDetailData()
+    } else {
+      this.getLogisticsDetail2Data()
+    }
   },
   methods: {
     // 获取物流详情
-    async getLogisticsDetail() {
+    async getLogisticsDetailData() {
       const res = await getAfterLogDetail({ aid: this.$route.query.aid })
       console.log('物流详情：', res)
+      this.logisticsInfo = res.data
+    },
+    async getLogisticsDetail2Data() {
+      const res = await getLogisticsDetail2({
+        order_no: this.$route.query.order_no,
+        express_no: this.$route.query.express_no
+      })
       this.logisticsInfo = res.data
     }
   }
@@ -91,7 +106,6 @@ export default {
 
 <style scoped lang="less">
 .logistics-detail {
-
   .logistics-status {
     background-color: @Yellow1;
     padding: 0.24rem 0.3rem;

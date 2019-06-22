@@ -105,7 +105,7 @@
             v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
             round
             class="order-button"
-            @click="$router.push('/persion/order/logistics')"
+            @click.stop="$router.push({path:'/persion/order/logistics',query:{order_no:card.order_no}})"
           >
             查看物流
           </van-button>

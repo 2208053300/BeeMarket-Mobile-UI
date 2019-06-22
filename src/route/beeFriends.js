@@ -27,6 +27,11 @@ export default new Router({
           component: () => import('@/pages/BeeFriends/Introduction')
         },
         {
+          path: 'agreement',
+          name: 'partnerAgreement',
+          component: () => import('@/pages/BeeFriends/Agreement')
+        },
+        {
           path: 'apply',
           name: 'apply',
           component: () => import('@/pages/BeeFriends/Apply')

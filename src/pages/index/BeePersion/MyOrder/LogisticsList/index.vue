@@ -2,27 +2,39 @@
   <div class="logistics-list">
     <div class="logisticsList-content">
       <!-- TODO v-for -->
-      <div class="logistics-card">
+      <div
+        v-for="(logistics,index) in logisticsList"
+        :key="index"
+        class="logistics-card"
+      >
         <div class="logistics-title">
           <span class="status-text">该商品被拆分成多个包裹</span>
           <span class="status">待收货</span>
         </div>
         <div class="img-content">
-          <div class="logistics-img">
+          <div
+            v-for="(item,index2) in logistics.images"
+            :key="index2"
+            class="logistics-img"
+          >
             <img
-              src=""
-              alt=""
+              :src="item"
+              alt="商品图片"
             >
           </div>
         </div>
         <div class="num-list">
           <!-- TODO v-for -->
-          <div class="number-content">
+          <div
+            v-for="(item3,index3) in logistics.express_no"
+            :key="index3"
+            class="number-content"
+          >
             <div class="number-left">
-              <span>物流单号:</span>
-              <span class="number">1234567980</span>
+              <span>物流单号: </span>
+              <span class="number">{{ item3 }}</span>
             </div>
-            <van-button @click="$router.push('/persion/order/logisticsDetail')">
+            <van-button @click="goDetail(item3)">
               物流详情
             </van-button>
           </div>
@@ -33,6 +45,7 @@
 </template>
 
 <script>
+import { getLogisticsList } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '查看物流'
@@ -50,14 +63,27 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    this.getLogisticsListData()
   },
-  methods: {}
+  methods: {
+    async getLogisticsListData() {
+      const res = await getLogisticsList({
+        order_no: this.$route.query.order_no
+      })
+      this.logisticsList = res.data.deliveries
+    },
+    goDetail(express) {
+      this.$router.push({
+        path: '/persion/order/logisticsDetail',
+        query: { order_no: this.$route.query.order_no, express_no: express }
+      })
+    }
+  }
 }
 </script>
 
 <style scoped lang="less">
 .logistics-list {
-
   padding-top: 0.3rem;
   .logisticsList-content {
     margin: 0 0.2rem;
