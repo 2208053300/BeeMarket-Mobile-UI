@@ -159,6 +159,15 @@ export default {
         case 3:
           text1 = '已发货'
           break
+        case 4:
+          text1 = '待评价'
+          break
+        case 5:
+          text1 = '已完成'
+          break
+        case -1:
+          text1 = '已取消'
+          break
         default:
           break
       }

@@ -55,6 +55,7 @@
       v-if="[5,6,11,15].indexOf(orderDetail.status)!==-1"
       round
       class="bee-button"
+      @click="buyAgain(orderDetail)"
     >
       再次购买
     </van-button>
@@ -133,6 +134,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
+import { addShopcartProduct } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {
@@ -154,7 +156,18 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    buyAgain(order) {
+      order.products.map(async item => {
+        await addShopcartProduct({
+          sid: item.sku_id,
+          number: item.number,
+          product_source: order.t_order
+        })
+      })
+      this.$toast('已加入购物车')
+    }
+  }
 }
 </script>
 

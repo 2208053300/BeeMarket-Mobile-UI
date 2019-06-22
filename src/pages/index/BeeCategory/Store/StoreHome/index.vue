@@ -1,7 +1,14 @@
 <template>
-  <div class="store-home">
-    <!--FIXME如果有背景图 -->
-    <div class="store-bg" />
+  <div
+    class="store-home"
+    :class="{hasBg:storeDetails.store_bg}"
+  >
+    <!-- FIXME 如果有背景图 -->
+    <div
+      v-if="storeDetails.store_bg"
+      class="store-bg"
+      :style="{backgroundImage:'url('+storeDetails.store_bg+')'}"
+    />
     <div class="store-header">
       <div
         class="header-left"
@@ -97,8 +104,8 @@ export default {
     async getStoreDetailData() {
       const res = await getStoreDetail(this.formData)
       this.storeDetails = res.data
-      this.commodityList.push(...res.data.products)
-      this.formData.page++
+      this.commodityList = res.data.products
+      this.formData.page = 2
     },
     goLicense() {
       this.$router.push({
@@ -208,6 +215,17 @@ export default {
         text-align: center;
         font-size: 0.28rem;
         color: @Grey2;
+      }
+    }
+  }
+}
+.hasBg {
+  .store-header {
+    color: #fff;
+    .header-right {
+      .van-button {
+        color: #fff;
+        border-color: #fff;
       }
     }
   }
