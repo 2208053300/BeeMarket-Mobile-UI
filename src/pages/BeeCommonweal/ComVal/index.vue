@@ -140,7 +140,6 @@ export default {
         height: 0.8rem;
         width: 0.8rem;
         border-radius: 50%;
-        background-color: #000;
         display: inline-block;
         vertical-align: middle;
         margin-right: 0.3rem;
