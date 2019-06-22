@@ -4,7 +4,7 @@
       <span @click="editProduct">{{ editStatus ? '完成' : '编辑' }}</span>
     </div>
     <div class="product-container">
-      <van-checkbox-group v-model="editData">
+      <van-checkbox-group v-model="editData" @change="checkBoxChange">
         <van-pull-refresh v-model="loading" @refresh="$emit('change')">
           <van-list
             v-model="loading"
@@ -27,7 +27,7 @@
                   :checked-color="BeeDefault"
                 />
               </div>
-              <van-card>
+              <van-card @click="goDetail(product.product_id, product.target)">
                 <div
                   slot="thumb"
                   class="card-img"
@@ -35,6 +35,7 @@
                   <img
                     :src="product.thumb_url"
                     alt="商品预览图"
+                    :onerror="$store.state.app.defaultImg"
                   >
                   <div
                     v-if="!product.is_upper||!product.is_stock"
@@ -134,6 +135,7 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    // 全选事件
     allSelected() {
       if (this.allSelectedBox) {
         this.editData = []
@@ -141,6 +143,7 @@ export default {
         this.editData = this.productList
       }
     },
+    // 取消收藏
     async cancelCollected() {
       const ids = this.editData.map(data => {
         return data.product_id
@@ -153,12 +156,28 @@ export default {
         content_ids: JSON.stringify(ids),
         type: 1
       })
-      if (res.code) {
-        this.$emit('change')
-      }
+      this.$toast({
+        message: res.message,
+        duration: 1000,
+        onClose: () => {
+          this.$emit('change')
+        }
+      })
     },
+    // 编辑商品收藏
     editProduct() {
       this.editStatus = !this.editStatus
+    },
+    // 选择框改变
+    checkBoxChange(model) {
+      this.allSelectedBox = model.length === this.productList.length
+    },
+    // 打开商品详情
+    goDetail(pid, target) {
+      this.$router.push({
+        path: '/category/details',
+        query: { pid: pid, target: target }
+      })
     }
   }
 }
