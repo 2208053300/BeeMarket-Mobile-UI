@@ -109,5 +109,10 @@ module.exports = {
   beeClassroom: {
     entry: 'src/pages/BeeClassroom/main.js',
     title: '集市课堂'
+  },
+  // 成为达人
+  beeTalent: {
+    entry: 'src/pages/BeeTalent/main.js',
+    title: '成为达人'
   }
 }

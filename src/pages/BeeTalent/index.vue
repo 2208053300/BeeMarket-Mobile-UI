@@ -1,5 +1,6 @@
 <template>
-  <div class="task-talent">
+  <div class="task-talent" :class="{ 'show-header': isWx }">
+    <bee-header v-if="isWx" />
     <div class="banner">
       <img :src="beeIcon.talent_pic_banner">
     </div>
@@ -76,12 +77,13 @@
 import { getOs } from '@/utils'
 import bmHeader from './components/header'
 import { isConsume } from '@/api/BeeApi/task'
+import BeeHeader from '@/components/index/BeeHeader'
 
 export default {
   metaInfo: {
     title: '成为达人'
   },
-  components: { bmHeader },
+  components: { bmHeader, BeeHeader },
   props: {},
   data() {
     return {
@@ -97,15 +99,14 @@ export default {
       },
       video_url: 'https://img.fengjishi.com.cn/product/video/mi9.mp4',
       hasFirstConsume: 0,
-      showControls: false
+      showControls: false,
+      isWx: getOs().isWx
     }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {
-    this.$store.state.app.beeHeader = getOs().isWx
-    this.$store.state.app.beeFooter.show = false
     this.getHasConsume()
   },
   methods: {
@@ -194,5 +195,8 @@ export default {
   .disable {
     filter: opacity(20%);
   }
+}
+.show-header {
+  padding-top: 46px;
 }
 </style>

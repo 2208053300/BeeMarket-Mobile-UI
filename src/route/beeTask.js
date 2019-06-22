@@ -20,11 +20,6 @@ export default new Router({
           path: 'taskDetail',
           name: 'taskDetail',
           component: () => import('@/pages/BeeTask/TaskDetail')
-        },
-        {
-          path: 'talent',
-          name: 'becomeTalent',
-          component: () => import('@/pages/BeeTask/TaskTalent')
         }
       ]
     }
