@@ -1,5 +1,5 @@
 <template>
-  <div class="article">
+  <div class="article-detail">
     <p class="article-title">
       {{ article.title }}
     </p>
@@ -186,7 +186,9 @@ export default {
 </script>
 
 <style lang="less">
-.article {
+.article-detail {
+  height: 100%;
+  background: white;
   .article-title {
     margin: 0;
     padding: 0.56rem 0.3rem 0.44rem;
