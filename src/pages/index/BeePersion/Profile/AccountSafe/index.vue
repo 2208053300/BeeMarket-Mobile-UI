@@ -2,7 +2,7 @@
   <div class="profile">
     <ul class="cell-list bg-white">
       <li>
-        <div class="item flex flex-between align-center" @click="$router.push('/persion/profile/changePhone')">
+        <div class="item flex flex-between align-center" @click="changePhone">
           <span class="title">修改手机号码</span>
           <div class="link-icon  flex align-center">
             <span class="tip">手机号码更改请及时修改</span>
@@ -11,7 +11,7 @@
         </div>
       </li>
       <li>
-        <div class="item flex flex-between align-center" @click="$router.push('/persion/profile/setLoginPw')">
+        <div class="item flex flex-between align-center" @click="changeLoginPw">
           <span class="title">修改登录密码</span>
           <div class="link-icon  flex align-center">
             <span class="tip">建议定期更改以保密码安全</span>
@@ -77,25 +77,59 @@ export default {
         this.paypwd_set = res.data.paypwd_set
         // 如果没有绑定手机号码，调转到绑定手机号码页面,带路由路径便于绑定号码后跳回
         if (!this.mobile_bind) {
-          this.$router.push({
-            path: '/persion/profile/accountBind/bindPhone',
-            query: {
-              path: '/persion/profile/accountSafe'
-            }
-          })
+          this.confirm()
         }
       }
     },
+    // 修改手机号码
+    changePhone() {
+      if (this.mobile_bind) {
+        this.$router.push('/persion/profile/changePhone')
+      } else {
+        this.confirm()
+      }
+    },
+    // 修改登录密码
+    changeLoginPw() {
+      if (this.mobile_bind) {
+        this.$router.push('/persion/profile/setLoginPw')
+      } else {
+        this.confirm()
+      }
+    },
+
     // 设置支付密码
     setPayPw() {
       // 修改
-      this.$router.push('/persion/profile/setPayPw')
+      if (this.mobile_bind) {
+        this.$router.push('/persion/profile/setPayPw')
+      } else {
+        this.confirm()
+      }
+
       // if (this.paypwd_set) {
       //   this.$router.push('/persion/profile/setPayPw')
       //   // 首次设置
       // } else {
       //   this.$router.push('/persion/profile/setPayPw/setPw')
       // }
+    },
+
+    // 提示确认弹框
+    confirm() {
+      this.$dialog.confirm({
+        title: '提示',
+        message: '请先绑定手机号码！'
+      }).then(() => {
+        this.$router.push({
+          path: '/persion/profile/accountBind/bindPhone',
+          query: {
+            path: '/persion/profile/accountSafe'
+          }
+        })
+      }).catch(() => {
+        // on cancel
+      })
     }
 
   }
