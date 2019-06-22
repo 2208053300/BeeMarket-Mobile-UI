@@ -123,8 +123,10 @@ export default {
     document.querySelector('.van-tabs__wrap').style.top = `46px`
   },
   beforeDestroy() {
-    document.querySelector('.van-tabs__wrap').style.position = ''
-    document.querySelector('.van-tabs__wrap').style.top = ``
+    if (document.querySelector('.van-tabs__wrap')) {
+      document.querySelector('.van-tabs__wrap').style.position = ''
+      document.querySelector('.van-tabs__wrap').style.top = ``
+    }
   },
   methods: {
     changeTab(index, title) {

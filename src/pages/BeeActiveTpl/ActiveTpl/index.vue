@@ -226,13 +226,14 @@ export default {
     goDetail(pid, target) {
       const osObj = getOs()
       if (osObj.isWx) {
-        this.$router.push({
-          path: '/category/details',
-          query: {
-            pid,
-            target
-          }
-        })
+        window.location.href = this.$store.state.app.homeUri + '/category/details?' + 'pid=' + pid + '&target=' + target
+        // this.$router.push({
+        //   path: '/category/details',
+        //   query: {
+        //     pid,
+        //     target
+        //   }
+        // })
       } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({
           pid: pid,
@@ -241,13 +242,15 @@ export default {
       } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToProductDetail(pid, target)
       } else {
-        this.$router.push({
-          path: '/category/details',
-          query: {
-            pid,
-            target
-          }
-        })
+        window.location.href = this.$store.state.app.homeUri + '/category/details?' + 'pid=' + pid + '&target=' + target
+
+        // this.$router.push({
+        //   path: '/category/details',
+        //   query: {
+        //     pid,
+        //     target
+        //   }
+        // })
       }
     },
     // tabScroll
@@ -348,14 +351,16 @@ export default {
           desc: this.activity.share_data.desc,
           img_path: this.activity.share_data.img,
           // 地址应该放 web 站 网页
-          url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+          url: this.activity.share_data.link
+          // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(
           this.activity.share_data.title,
           this.activity.share_data.desc,
           this.activity.share_data.img,
-          this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+          this.activity.share_data.link,
+          // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
         )
       } else {
       // this.$router.push({

@@ -2,7 +2,7 @@ const app = {
   state: {
     beeHeader: false,
     beeFooter: {
-      show: true,
+      show: false,
       active: 0
     },
     pushName: '',
@@ -10,6 +10,7 @@ const app = {
     defaultImg:
       "this.src='https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg'",
     homeUri: 'http://app.fengjishi.com.cn/#',
+    // homeUri1: 'http://app.fengjishi.com.cn',
     share_data: {
       desc: '',
       img: '',
