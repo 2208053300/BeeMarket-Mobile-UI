@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="class-room-detail">
     <div style="background: white">
       <p class="title">
         {{ detail.title }}
@@ -129,88 +129,90 @@ export default {
 </script>
 
 <style lang="less">
-@videoWidth: 6.4rem;
-@videoHeight: 3.28rem;
-p {
-  margin: 0;
-}
-.title {
-  padding: 0.52rem 0.3rem 0 0.3rem;
-  font-size: 0.44rem;
-  color: @Grey12;
-  font-weight: bold;
-  font-family: "PingFang SC",sans-serif;
-}
-.subtitle {
-  padding: 0.4rem 0.3rem 0 0.3rem;
-  color: @Grey1;
-  font-size: 0.24rem;
-  span {
-    padding: 0 0.28rem;
-    font-size: 0.28rem;
-    color: @BeeDefault;
+.class-room-detail {
+  @videoWidth: 6.4rem;
+  @videoHeight: 3.28rem;
+  p {
+    margin: 0;
+  }
+  .title {
+    padding: 0.52rem 0.3rem 0 0.3rem;
+    font-size: 0.44rem;
+    color: @Grey12;
+    font-weight: bold;
     font-family: "PingFang SC",sans-serif;
   }
-}
-.video {
-  padding: 0.8rem 0.54rem 0 0.54rem;
-  border-radius: 0.08rem;
-  .video-body {
-    background-color: black;
-    width: @videoWidth;
-    height: @videoHeight;
+  .subtitle {
+    padding: 0.4rem 0.3rem 0 0.3rem;
+    color: @Grey1;
+    font-size: 0.24rem;
+    span {
+      padding: 0 0.28rem;
+      font-size: 0.28rem;
+      color: @BeeDefault;
+      font-family: "PingFang SC",sans-serif;
+    }
+  }
+  .video {
+    padding: 0.8rem 0.54rem 0 0.54rem;
     border-radius: 0.08rem;
-  }
-  .control {
-    width: @videoWidth;
-    height: @videoHeight;
-    top: -@videoHeight;
-    left: 0;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
-.article {
-  padding: 0.32rem 0.54rem 0 0.54rem;
-  font-size: 0.28rem;
-  font-family: "PingFang SC", sans-serif;
-  line-height: 1.8;
-  color: @Grey12;
-}
-.recommend-tip {
-  background: black;
-  color: white;
-  font-size: 0.34rem;
-  font-family: "PingFang SC", sans-serif;
-  font-weight: bold;
-}
-.recommend-content {
-  padding: 0.04rem 1.08rem 1rem 1.08rem;
-  color: @BeeDefault3;
-  font-size: 0.28rem;
-  ul {
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    li {
-      letter-spacing: 0.02rem;
+    .video-body {
+      background-color: black;
+      width: @videoWidth;
+      height: @videoHeight;
+      border-radius: 0.08rem;
+    }
+    .control {
+      width: @videoWidth;
+      height: @videoHeight;
+      top: -@videoHeight;
+      left: 0;
+      position: absolute;
       display: flex;
-      align-items: baseline;
-      line-height: 0.38rem;
-      margin-top: 0.36rem;
-      vertical-align: middle;
-      div {
-        flex-shrink: 0;
-        height: 0.38rem;
-      }
-      .point {
-        display: inline-block;
-        width: 0.1rem;
-        height: 0.1rem;
-        background-color: @BeeDefault3;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .article {
+    padding: 0.32rem 0.54rem 0 0.54rem;
+    font-size: 0.28rem;
+    font-family: "PingFang SC", sans-serif;
+    line-height: 1.8;
+    color: @Grey12;
+  }
+  .recommend-tip {
+    background: black;
+    color: white;
+    font-size: 0.34rem;
+    font-family: "PingFang SC", sans-serif;
+    font-weight: bold;
+  }
+  .recommend-content {
+    padding: 0.04rem 1.08rem 1rem 1.08rem;
+    color: @BeeDefault3;
+    font-size: 0.28rem;
+    ul {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      li {
+        letter-spacing: 0.02rem;
+        display: flex;
+        align-items: baseline;
+        line-height: 0.38rem;
+        margin-top: 0.36rem;
         vertical-align: middle;
-        margin-right: 0.24rem;
+        div {
+          flex-shrink: 0;
+          height: 0.38rem;
+        }
+        .point {
+          display: inline-block;
+          width: 0.1rem;
+          height: 0.1rem;
+          background-color: @BeeDefault3;
+          vertical-align: middle;
+          margin-right: 0.24rem;
+        }
       }
     }
   }

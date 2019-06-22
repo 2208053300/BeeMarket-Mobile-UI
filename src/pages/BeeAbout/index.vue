@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bee-about">
     <img
       v-for="(img, index) in icon"
       :key="index"
@@ -51,11 +51,13 @@ export default {
 </script>
 
 <style scoped lang="less">
-img {
-  transition: 300ms linear;
-  opacity: 0;
-}
-img[lazy=loaded] {
-  opacity: 1;
+.bee-about {
+  img {
+    transition: 300ms linear;
+    opacity: 0;
+  }
+  img[lazy=loaded] {
+    opacity: 1;
+  }
 }
 </style>
