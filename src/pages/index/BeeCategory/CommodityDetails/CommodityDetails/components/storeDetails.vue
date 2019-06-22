@@ -95,7 +95,8 @@ export default {
           content_ids: this.commodityData.mid,
           type: 2
         })
-        this.commodityData.mfavor = this.$toast(res.message)
+        this.commodityData.mfavor = 0
+        this.$toast(res.message)
       } else {
         const res = await collectProduct({
           contentId: [this.commodityData.mid],

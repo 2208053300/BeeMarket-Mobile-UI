@@ -7,7 +7,8 @@
       <van-swipe-item
         v-for="(item, index) in homeData.banner"
         :key="index"
-        @click="goPage(item)"
+        @touchmove="isMove=true"
+        @touchend="goPage(item)"
       >
         <img
           :src="item.show_img"
@@ -33,7 +34,9 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      isMove: false // 轮播图触摸事件是否为移动
+    }
   },
   computed: {},
   watch: {},
@@ -42,6 +45,10 @@ export default {
   methods: {
     // 根据banner类型打开指定页面
     goPage(banner) {
+      if (this.isMove) {
+        this.isMove = false
+        return
+      }
       const bannerHandlers = {
         1: this.goAction,
         2: this.goArticle,
