@@ -5,48 +5,47 @@ import { auditWechat } from '@/api/BeeApi/auth'
 import { GetRequest } from '@/utils/index'
 // 获取Token
 export async function getToken() {
-  // const osObj = getOs()
-  // if (osObj.isWx) {
-  //   const token = localStorage.getItem('BM-App-Token')
-  //   const uriProp = GetRequest('code')
-  //   if (token) {
-  //     return token
-  //   } else if (
-  //     uriProp &&
-  //     !token &&
-  //     localStorage.getItem('BM-App-Token') !== 'waiting'
-  //   ) {
-  //     localStorage.setItem('BM-App-Token', 'waiting')
-  //     // 微信授权登录
-  //     await auditWechat({ code: uriProp })
-  //     // // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
-  //     if (
-  //       localStorage.getItem('BM-App-Token') === 'waiting' ||
-  //       !localStorage.getItem('BM-App-Token')
-  //     ) {
-  //       const uriProp2 = GetRequest('state')
-  //       // 只带state后面的参数跳转
-  //       window.location.href =
-  //         'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-  //         encodeURIComponent(
-  //           window.location.origin +
-  //             window.location.pathname +
-  //             uriProp2.slice(5)
-  //         ) +
-  //         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
-  //     }
-  //   } else {
-  //     checkToken()
-  //   }
-  //   return localStorage.getItem('BM-App-Token')
-  // } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
-  //   return Cookies.get('token')
-  // } else {
-  //   return localStorage.getItem('BM-App-Token')
-  // }
-  localStorage.setItem('BM-Verify-Ver', 1)
-  return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJINSIsInZlciI6MSwiaWF0IjoxNTYxMTY3NjMxLCJleHAiOjE1NjM3NTk2MzEsImp0aSI6ImI4OGFkYTkyOTQ4ZTExZTlhZDkwMDAwMDVkMGQ4NzBmIiwic2VjIjoiNWNkNWE3MjJiNmU5OWE1YjIyYWQwYzg4YTBlMzM3MWIiLCJzaWciOiIzNjk5ZTBlMDViODg3YzA0ODI3YjFlNDdkNzdmNWJjMTdkM2Q4NmViOWUzZDI2YmE1MzMzMjFkYzNlZTgxNjVmIn0.6VjoitdeIx1XfNJYEipq37D0Tvcz7ckVaKMzvLs5efU'
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJpT1MiLCJ2ZXIiOjEsImlhdCI6MTU2MTE2ODU0OSwiZXhwIjoxNTYzNzYwNTQ5LCJqdGkiOiJkYmY3NWY5NDk0OTAxMWU5YmQ1NTAwMDA1ZDBkOGFhNSIsInNlYyI6ImRmZGExYjk1NDRhZmI0Nzg0ZGQ4MGNiMWY1MmNkZTk0Iiwic2lnIjoiMzZlMGJiYmI3MDEyNzQ4OTcwZDE4ZGE0MGQ5YjU2ZDU5NDE3ZGMwMDJiYTVhMmM2YzE2MGQ4NjE1NjVjMjJhMyJ9.RQIYlvNWayHOgrFY6LCybOVhyZZGOfvGlvwhRKvfnBg'
+  const osObj = getOs()
+  if (osObj.isWx) {
+    const token = localStorage.getItem('BM-App-Token')
+    const uriProp = GetRequest('code')
+    if (token) {
+      return token
+    } else if (
+      uriProp &&
+      !token &&
+      localStorage.getItem('BM-App-Token') !== 'waiting'
+    ) {
+      localStorage.setItem('BM-App-Token', 'waiting')
+      // 微信授权登录
+      await auditWechat({ code: uriProp })
+      // // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
+      if (
+        localStorage.getItem('BM-App-Token') === 'waiting' ||
+        !localStorage.getItem('BM-App-Token')
+      ) {
+        const uriProp2 = GetRequest('state')
+        // 只带state后面的参数跳转
+        window.location.href =
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+          encodeURIComponent(
+            window.location.origin +
+              window.location.pathname +
+              uriProp2.slice(5)
+          ) +
+          '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+      }
+    } else {
+      checkToken()
+    }
+    return localStorage.getItem('BM-App-Token')
+  } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
+    return Cookies.get('token')
+  } else {
+    return localStorage.getItem('BM-App-Token')
+  }
+  // localStorage.setItem('BM-Verify-Ver', 1)
+  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJINSIsInZlciI6MSwiaWF0IjoxNTYxMTY3NjMxLCJleHAiOjE1NjM3NTk2MzEsImp0aSI6ImI4OGFkYTkyOTQ4ZTExZTlhZDkwMDAwMDVkMGQ4NzBmIiwic2VjIjoiNWNkNWE3MjJiNmU5OWE1YjIyYWQwYzg4YTBlMzM3MWIiLCJzaWciOiIzNjk5ZTBlMDViODg3YzA0ODI3YjFlNDdkNzdmNWJjMTdkM2Q4NmViOWUzZDI2YmE1MzMzMjFkYzNlZTgxNjVmIn0.6VjoitdeIx1XfNJYEipq37D0Tvcz7ckVaKMzvLs5efU'
 }
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除
