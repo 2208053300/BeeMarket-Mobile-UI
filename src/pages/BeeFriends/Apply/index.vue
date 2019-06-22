@@ -148,7 +148,8 @@
                 <span
                   class="text"
                 >已阅读并同意<a
-                  href="/partner/partnerAgreement"
+                  href="javascript:;"
+                  @click="goAgreement"
                 >合伙人共创协议</a></span>
               </div>
               <p class="help-text agreement-tip">
@@ -268,7 +269,12 @@ export default {
         this.$toast('请正确填写个人资料表单！')
       }
     },
-
+    // 合伙人协议
+    goAgreement() {
+      this.$router.push({
+        name: 'partnerAgreement'
+      })
+    },
     // 个人资料验证
     changePersonalName() {
       if (!/^[\u4e00-\u9fa5_a-zA-Z0-9]{2,10}$/.test(this.personalName)) {
@@ -341,9 +347,9 @@ export default {
 }
 </script>
 
-<style  lang="less">
+<style scoped  lang="less">
 .factory-body {
-  background: #fed559;
+  background: #fed559 !important;
   height: auto !important;
   .van-cell:not(:last-child)::after {
     content: " ";
@@ -361,6 +367,7 @@ export default {
   .van-cell {
     display: flex;
     justify-content: space-between;
+    border-radius: 0.1rem;
   }
   .van-field__label {
     display: flex;
@@ -621,6 +628,7 @@ export default {
     color: #fed559;
   }
   .form {
+    border-radius: 0.1rem;
     display: none;
     position: relative;
     .half-circle{
