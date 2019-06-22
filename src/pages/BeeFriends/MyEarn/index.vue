@@ -229,6 +229,7 @@ export default {
     padding: 0.3rem 0 0.3rem 0.6rem;
     background-color: #fff;
     min-height: 9rem;
+    position: relative;
     .detail-title {
       .title-img {
         height: 0.53rem;

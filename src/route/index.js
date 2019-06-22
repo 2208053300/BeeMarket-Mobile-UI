@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/index/BeeHome/HomePage'
+import { getToken } from '@/utils/auth'
 
 Vue.use(Router)
 const router = new Router({
@@ -410,66 +411,89 @@ const router = new Router({
             },
             {
               path: 'changePhone',
-              component: () => import('@/pages/index/BeePersion/Profile/ChangePhone'),
+              component: () =>
+                import('@/pages/index/BeePersion/Profile/ChangePhone'),
               children: [
                 {
                   path: '',
-                  component: () => import('@/pages/index/BeePersion/Profile/ChangePhone/GetSms')
+                  component: () =>
+                    import(
+                      '@/pages/index/BeePersion/Profile/ChangePhone/GetSms'
+                    )
                 },
                 {
                   path: 'bindPhone',
                   name: 'changePhone',
-                  component: () => import('@/pages/index/BeePersion/Profile/ChangePhone/BindPhone')
+                  component: () =>
+                    import(
+                      '@/pages/index/BeePersion/Profile/ChangePhone/BindPhone'
+                    )
                 }
               ]
             },
             {
               path: 'setPayPw',
-              component: () => import('@/pages/index/BeePersion/Profile/SetPayPw'),
+              component: () =>
+                import('@/pages/index/BeePersion/Profile/SetPayPw'),
               children: [
                 {
                   path: '',
-                  component: () => import('@/pages/index/BeePersion/Profile/SetPayPw/RemindPw')
+                  component: () =>
+                    import('@/pages/index/BeePersion/Profile/SetPayPw/RemindPw')
                 },
                 {
                   path: 'inputOldPw',
                   name: 'inputOldPw',
-                  component: () => import('@/pages/index/BeePersion/Profile/SetPayPw/InputOldPw')
+                  component: () =>
+                    import(
+                      '@/pages/index/BeePersion/Profile/SetPayPw/InputOldPw'
+                    )
                 },
                 {
                   path: 'setPw',
                   name: 'setPayPw',
-                  component: () => import('@/pages/index/BeePersion/Profile/SetPayPw/SetPw')
+                  component: () =>
+                    import('@/pages/index/BeePersion/Profile/SetPayPw/SetPw')
                 }
               ]
             },
             {
               path: 'setLoginPw',
-              component: () => import('@/pages/index/BeePersion/Profile/SetLoginPw'),
+              component: () =>
+                import('@/pages/index/BeePersion/Profile/SetLoginPw'),
               children: [
                 {
                   path: '',
-                  component: () => import('@/pages/index/BeePersion/Profile/SetLoginPw/GetSms')
+                  component: () =>
+                    import('@/pages/index/BeePersion/Profile/SetLoginPw/GetSms')
                 },
                 {
                   path: 'setPw',
                   name: 'setLoginPw',
-                  component: () => import('@/pages/index/BeePersion/Profile/SetLoginPw/SetPw')
+                  component: () =>
+                    import('@/pages/index/BeePersion/Profile/SetLoginPw/SetPw')
                 }
               ]
             },
             {
               path: 'accountBind',
-              component: () => import('@/pages/index/BeePersion/Profile/AccountBind'),
+              component: () =>
+                import('@/pages/index/BeePersion/Profile/AccountBind'),
               children: [
                 {
                   path: '',
-                  component: () => import('@/pages/index/BeePersion/Profile/AccountBind/BindIndex')
+                  component: () =>
+                    import(
+                      '@/pages/index/BeePersion/Profile/AccountBind/BindIndex'
+                    )
                 },
                 {
                   path: 'bindPhone',
                   name: 'bindPhone',
-                  component: () => import('@/pages/index/BeePersion/Profile/AccountBind/BindPhone')
+                  component: () =>
+                    import(
+                      '@/pages/index/BeePersion/Profile/AccountBind/BindPhone'
+                    )
                 }
               ]
             }
@@ -515,13 +539,17 @@ const router = new Router({
                   path: '',
                   name: 'CommentProduct',
                   component: () =>
-                    import('@/pages/index/BeePersion/MyOrder/Comment/CommentIndex')
+                    import(
+                      '@/pages/index/BeePersion/MyOrder/Comment/CommentIndex'
+                    )
                 },
                 {
                   path: 'waitCommentOrder',
                   name: 'waitCommentOrder',
                   component: () =>
-                    import('@/pages/index/BeePersion/MyOrder/Comment/WaitCommentOrder')
+                    import(
+                      '@/pages/index/BeePersion/MyOrder/Comment/WaitCommentOrder'
+                    )
                 }
               ]
             },
@@ -732,17 +760,8 @@ const router = new Router({
 })
 // TODO 此处需要加个守卫，当用户跳转到需要用户信息的操作界面，如果未登录，跳转登录界面
 // TODO 需要在每个页面发生跳转时，定义回退的路由路径，在发生回退时，退回到指定路由，防止跳转错误
-// router.beforeEach((to, from, next) => {
-//   // 判断路由是否在白名单内
-//   if (['/login'].includes(to.path)) {
-//     next()
-//     return
-//   }
-//   // 判断是否登录
-//   if (getToken()) {
-//     next()
-//   } else {
-//     next('/login')
-//   }
-// })
+router.beforeEach(async(to, from, next) => {
+  await getToken()
+  next()
+})
 export default router
