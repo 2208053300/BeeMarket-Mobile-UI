@@ -11,7 +11,10 @@
     >
       <div class="sku-content">
         <div class="product-header">
-          <div class="product-img">
+          <div
+            class="product-img"
+            @click="showPreview=true"
+          >
             <img
               :src="propsData.tUrl"
               alt=""
@@ -75,6 +78,11 @@
           确定
         </van-button>
       </div>
+      <van-image-preview
+        v-model="showPreview"
+        :images="[propsData.qUrl]"
+        class="previewImg"
+      />
     </van-popup>
   </div>
 </template>
@@ -112,7 +120,8 @@ export default {
       selProps: [],
       beeIcon: {
         shopping_cart_icon_cancel: require('@/assets/icon/cart/shopping_cart_icon_cancel@2x.png')
-      }
+      },
+      showPreview: false
     }
   },
   computed: {},
@@ -204,6 +213,7 @@ export default {
   .skuPop {
     border-top-right-radius: 0.2rem;
     border-top-left-radius: 0.2rem;
+    overflow: initial;
     .sku-content {
       padding: 0.4rem 0.3rem 0.3rem;
       max-height: 8rem;

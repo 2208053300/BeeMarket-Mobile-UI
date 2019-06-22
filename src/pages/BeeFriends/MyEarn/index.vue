@@ -140,12 +140,17 @@ export default {
       })
       this.detailData = res.data
       this.detailList = res.data.record.list
+      if (this.earnType === 'left') {
+        this.finished = true
+      } else {
+        this.finished = false
+      }
       this.page = 2
     },
     changeEarnType(type) {
       this.earnType = type
       this.page = 1
-      this.finished = false
+      this.finished = true
       this.getMyEarningData()
     },
     onLoad() {
@@ -155,9 +160,10 @@ export default {
           type: this.earnType,
           page: this.page
         })
+        this.page++
         this.detailList.push(...res.data.record.list)
         this.loading = false
-        if (res.data.record.length === 0) {
+        if (res.data.record.list.length === 0) {
           this.finished = true
         }
       }, 500)

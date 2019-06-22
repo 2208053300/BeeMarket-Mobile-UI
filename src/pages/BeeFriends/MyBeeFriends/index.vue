@@ -256,7 +256,7 @@ export default {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background-color: #fdd354;
+  background-color: #fdd354!important;
   position: relative;
   background-size: contain;
   background-repeat: no-repeat;
