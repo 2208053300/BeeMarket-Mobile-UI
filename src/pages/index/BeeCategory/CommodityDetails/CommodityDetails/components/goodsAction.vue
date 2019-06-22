@@ -34,13 +34,11 @@
       <van-goods-action-button
         text="加入购物车"
         class="add-cart"
-        :disabled="$store.state.cart.skuId===0"
         @click="addShopcartProductData"
       />
       <van-goods-action-button
         text="立即购买"
         class="buy-now"
-        :disabled="$store.state.cart.skuId===0"
         @click="confirmOrderData"
       />
     </van-goods-action>
