@@ -145,8 +145,12 @@ export default {
   },
   methods: {
     async getAddressDetailData() {
-      const res = await getAddressDetail({ addr_id: this.$route.query.addr_id })
-      this.beeForm = res.data
+      try {
+        const res = await getAddressDetail({ addr_id: this.$route.query.addr_id })
+        this.beeForm = res.data
+      } catch (e) {
+        this.$toast.fail(e)
+      }
     },
     async saveAddress() {
       // TODO 上传表单，并且返回上一级列表
@@ -156,7 +160,7 @@ export default {
           this.$router.go(-1)
         }
       } catch (error) {
-        console.log(error)
+        this.$toast.fail(error)
       }
     },
     async editAddress() {
@@ -167,7 +171,7 @@ export default {
           this.$router.go(-1)
         }
       } catch (error) {
-        console.log(error)
+        this.$toast.fail(error)
       }
     },
     areaSelected(selected) {

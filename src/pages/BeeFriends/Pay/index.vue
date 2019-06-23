@@ -212,13 +212,17 @@ export default {
         this.$toast('请正确填写姓名、身份证号码')
         return false
       }
-      const res = await toCash({
-        status: this.status,
-        name: this.name,
-        idNo: this.idNo
-      })
-      if (res.status_code === 200) {
-        this.status = 2
+      try {
+        const res = await toCash({
+          status: this.status,
+          name: this.name,
+          idNo: this.idNo
+        })
+        if (res.status_code === 200) {
+          this.status = 2
+        }
+      } catch (error) {
+        this.$toast(error)
       }
     },
     // 第二步 防水墙
@@ -241,14 +245,18 @@ export default {
     },
     // 第二步 获取短信验证码
     async getSms() {
-      const res = await toCash({
-        status: 2,
-        ticket: this.ticket,
-        rand_str: this.rand_str
-      })
-      if (res.status_code === 200) {
-        this.$toast(res.message)
-        this.changeCountDoen()
+      try {
+        const res = await toCash({
+          status: 2,
+          ticket: this.ticket,
+          rand_str: this.rand_str
+        })
+        if (res.status_code === 200) {
+          this.$toast(res.message + ',请注意查收！')
+          this.changeCountDoen()
+        }
+      } catch (error) {
+        this.$toast(error)
       }
     },
     // 提交第三步
@@ -259,7 +267,7 @@ export default {
       }
       try {
         const res = await toCash({
-          status: 2,
+          status: 3,
           money: this.money,
           sms_code: this.sms
         })
@@ -361,6 +369,18 @@ export default {
           this.isActive = true
           this.money = this.MAX_MONEY
           this.cashTip = '可以提现！'
+        }
+      } else {
+        if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
+          this.isActive = true
+          this.cashTip = '可以提现！'
+        } else if (this.money > this.MAX_MONEY) {
+          this.isActive = true
+          this.money = this.MAX_MONEY
+          this.cashTip = '提现金额至多' + this.MAX_MONEY + '!'
+        } else if (this.money < this.MIN_MONEY) {
+          this.isActive = false
+          this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
         }
       }
     }

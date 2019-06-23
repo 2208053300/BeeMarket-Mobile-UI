@@ -108,7 +108,7 @@
             </div>
           </van-col>
           <van-col span="8">
-            <div @click="$router.push('/persion/addressSetting')">
+            <div @click="$router.push('/persion/addressSetting?mode=manage')">
               <van-icon :name="beeIcon.mine_icon_address" />
               <span>地址管理</span>
             </div>
