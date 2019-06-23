@@ -114,7 +114,7 @@
             v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
             round
             class="order-button"
-            @click="completeOrderData(card.order_no)"
+            @click.stop="completeOrderData(card.order_no)"
           >
             确认收货
           </van-button>
@@ -122,6 +122,7 @@
             v-if="card.s_order === 1"
             round
             class="order-button"
+            @click="remindDelivery(card.order_no)"
           >
             提醒发货
           </van-button>
@@ -154,7 +155,11 @@
 </template>
 
 <script>
-import { getOrderList, addShopcartProduct } from '@/api/BeeApi/user'
+import {
+  getOrderList,
+  addShopcartProduct,
+  remindOrder
+} from '@/api/BeeApi/user'
 import { deleteOrder, completeOrder } from '@/api/BeeApi/order'
 
 export default {
@@ -234,6 +239,13 @@ export default {
     // 确认收货
     async completeOrderData(order_no) {
       const res = await completeOrder({ order_no: order_no })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+      }
+    },
+    // 提醒发货
+    async remindDelivery(order_no) {
+      const res = await remindOrder({ order_no: order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
       }
