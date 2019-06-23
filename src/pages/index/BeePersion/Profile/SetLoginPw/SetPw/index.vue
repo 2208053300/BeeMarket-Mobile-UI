@@ -122,15 +122,19 @@ export default {
 
     // 完成
     async submit() {
-      const res = await changeLoginPwd({
-        passwd: this.password,
-        sign: this.sign
-      })
-      if (res.status_code === 200) {
-        this.$toast(res.message)
-        this.$router.push({ path: '/persion/profile/accountSafe' })
+      try {
+        const res = await changeLoginPwd({
+          passwd: this.password,
+          sign: this.sign
+        })
+        if (res.status_code === 200) {
+          this.$toast(res.message)
+          this.$router.push({ path: '/persion/profile/accountSafe' })
         // this.$store.state.user.userInfo = res.data
         // this.$router.push({ path: this.redirect || '/' })
+        }
+      } catch (error) {
+        this.$toast(error)
       }
     },
     // 密码强度检测

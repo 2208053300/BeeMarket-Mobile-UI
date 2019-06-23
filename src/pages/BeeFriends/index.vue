@@ -4,10 +4,8 @@
 
 <script>
 export default {
-  meteInfo() {
-    return {
-      title: '蜂友圈'
-    }
+  meteInfo: {
+    title: '蜂友圈'
   },
   components: {},
   props: {},

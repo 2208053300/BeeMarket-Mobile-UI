@@ -104,6 +104,11 @@
 import { getMyEarning } from '@/api/BeeApi/user'
 
 export default {
+  meteInfo() {
+    return {
+      title: '我的收益'
+    }
+  },
   components: {},
   props: {},
   data() {

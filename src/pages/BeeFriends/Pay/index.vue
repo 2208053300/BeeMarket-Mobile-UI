@@ -78,7 +78,7 @@
           </div>
           <div class="tip-info">
             <p>
-              <span>最多可提现余额<span id="num">0</span>元</span>
+              <span>最多可提现余额<span id="num">{{ totalNum }}</span>元</span>
               <span class="error to-cash-error">{{ cashTip }}</span>
             </p>
             <span class="all-to-cash" @click="money = totalNum">全部提现</span>
@@ -221,6 +221,36 @@ export default {
         this.status = 2
       }
     },
+    // 第二步 防水墙
+    tencentCaptcha(res) {
+      this.show = true
+      console.log('防水墙1111111')
+      // res（未通过验证）= {ret: 1, ticket: null}
+      // res（验证成功） = {ret: 0, ticket: "String", randstr: "String"}
+
+      // 通过防水墙，发送验证码，验证短信验证码，通过则提交数据
+      if (res.ret === 0) {
+        console.log(res)
+
+        this.ticket = res.ticket
+        this.rand_str = res.randstr
+
+        this.show = true
+        this.getSms()
+      }
+    },
+    // 第二步 获取短信验证码
+    async getSms() {
+      const res = await toCash({
+        status: 2,
+        ticket: this.ticket,
+        rand_str: this.rand_str
+      })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+        this.changeCountDoen()
+      }
+    },
     // 提交第三步
     async confirmSubmit() {
       if (!(this.sms && this.sms.length === 6)) {
@@ -259,22 +289,6 @@ export default {
       return true
     },
 
-    // 防水墙
-    tencentCaptcha(res) {
-      this.show = true
-      console.log('防水墙1111111')
-      // res（未通过验证）= {ret: 1, ticket: null}
-      // res（验证成功） = {ret: 0, ticket: "String", randstr: "String"}
-
-      // 通过防水墙，发送验证码，验证短信验证码，通过则提交数据
-      if (res.ret === 0) {
-        this.ticket = res.ticket
-        this.rand_str = res.rand_str
-
-        this.show = true
-        this.getSms()
-      }
-    },
     // 获取 可提现数量
     async getCanWithdraw() {
       try {
@@ -287,18 +301,7 @@ export default {
         this.$toast.fail(error)
       }
     },
-    // 第二步 获取短信验证码
-    async getSms() {
-      const res = await toCash({
-        status: 2,
-        ticket: this.ticket,
-        rand_str: this.rand_str
-      })
-      if (res.status_code === 200) {
-        this.$toast(res.message)
-        this.changeCountDoen()
-      }
-    },
+
     // 获取手机号码
     async getMobileNum() {
       const res = await getMobile()
@@ -358,6 +361,18 @@ export default {
           this.isActive = true
           this.money = this.MAX_MONEY
           this.cashTip = '可以提现！'
+        }
+      } else {
+        if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
+          this.isActive = true
+          this.cashTip = '可以提现！'
+        } else if (this.money > this.MAX_MONEY) {
+          this.isActive = true
+          this.money = this.MAX_MONEY
+          this.cashTip = '提现金额至多' + this.MAX_MONEY + '!'
+        } else if (this.money < this.MIN_MONEY) {
+          this.isActive = false
+          this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
         }
       }
     }
