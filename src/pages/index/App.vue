@@ -25,7 +25,6 @@
 <script>
 import BeeHeader from '@/components/index/BeeHeader'
 import BeeFooter from '@/components/index/BeeFooter'
-
 export default {
   metaInfo: {
     title: '蜂集市'

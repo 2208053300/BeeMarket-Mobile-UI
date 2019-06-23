@@ -9,13 +9,9 @@ export async function getToken() {
   if (osObj.isWx) {
     const token = sessionStorage.getItem('BM-App-Token')
     const uriProp = GetRequest('code')
-    if (token) {
+    if (token && token !== 'waiting') {
       return token
-    } else if (
-      uriProp &&
-      !token &&
-      sessionStorage.getItem('BM-App-Token') !== 'waiting'
-    ) {
+    } else if (uriProp && !token && token !== 'waiting') {
       sessionStorage.setItem('BM-App-Token', 'waiting')
       // 微信授权登录
       await auditWechat({ code: uriProp })
@@ -36,7 +32,7 @@ export async function getToken() {
           '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
       }
     } else {
-      checkToken()
+      await checkToken()
     }
     return sessionStorage.getItem('BM-App-Token')
   } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {

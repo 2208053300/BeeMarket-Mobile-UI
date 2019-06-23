@@ -76,7 +76,10 @@ service.interceptors.response.use(
     }
     const res = response.data
     if (res.code !== 1) {
-      if (res.status_code === 403) {
+      if (
+        res.status_code === 403 ||
+        (res.status_code === 400 && res.message === '获取用户信息失败')
+      ) {
         Toast('登录信息失效')
         // 清理登录信息并跳转到登录页面
         removeToken()

@@ -16,7 +16,7 @@
       >
         <div class="store-img">
           <img
-            :src="storeDetails.store_logo"
+            :src="storeDetails.store_logo||beeIcon.store"
             alt=""
           >
         </div>
@@ -83,7 +83,8 @@ export default {
       storeDetails: {},
       showLicense: false,
       beeIcon: {
-        license: require('@/assets/icon/store/shop_icon_license@2x.png')
+        license: require('@/assets/icon/store/shop_icon_license@2x.png'),
+        store: require('@/assets/icon/store/store.png')
       },
       formData: {
         page: 1

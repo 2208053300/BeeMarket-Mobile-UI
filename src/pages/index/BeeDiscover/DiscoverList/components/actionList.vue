@@ -8,9 +8,9 @@
         v-model="loading"
         :finished="finished"
         finished-text="我也是有底线的 o(´^｀)o"
-        :immediate-check="false"
         @load="onLoad"
       >
+        <!-- :immediate-check="false" -->
         <div
           v-for="(item,index) in actionList"
           :key="index"
@@ -85,7 +85,7 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    this.getActionListData()
+    // this.getActionListData()
   },
   methods: {
     async getActionListData() {
