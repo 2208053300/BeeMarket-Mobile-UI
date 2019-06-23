@@ -45,12 +45,14 @@ export async function getToken() {
     return localStorage.getItem('BM-App-Token')
   }
   // localStorage.setItem('BM-Verify-Ver', 1)
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJINSIsInZlciI6MSwiaWF0IjoxNTYxMTY3NjMxLCJleHAiOjE1NjM3NTk2MzEsImp0aSI6ImI4OGFkYTkyOTQ4ZTExZTlhZDkwMDAwMDVkMGQ4NzBmIiwic2VjIjoiNWNkNWE3MjJiNmU5OWE1YjIyYWQwYzg4YTBlMzM3MWIiLCJzaWciOiIzNjk5ZTBlMDViODg3YzA0ODI3YjFlNDdkNzdmNWJjMTdkM2Q4NmViOWUzZDI2YmE1MzMzMjFkYzNlZTgxNjVmIn0.6VjoitdeIx1XfNJYEipq37D0Tvcz7ckVaKMzvLs5efU'
   // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJpT1MiLCJ2ZXIiOjEsImlhdCI6MTU2MTE4Mzg2MSwiZXhwIjoxNTYzNzc1ODYxLCJqdGkiOiI4MmIxZDQ5MDk0YjQxMWU5OGRjMzAwMDA1ZDBkYzY3NSIsInNlYyI6ImRmZGExYjk1NDRhZmI0Nzg0ZGQ4MGNiMWY1MmNkZTk0Iiwic2lnIjoiNzU4OWZhOGFmMDE5YjhlMGRhNzBhNjM4M2YyNmQ5YzQ0N2YwZWNjMzExYTk0YmU1ZTJhY2QyNGI1MzhhOWI4NSJ9.T3P6MIBhNlJQbBg3k_tZoNuaUu7u-6yGhRaFdYk0V8k'
 }
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除
 export function setToken(Token) {
+  window.onunload = function() {
+    removeToken()
+  }
   return localStorage.setItem('BM-App-Token', Token)
 }
 
@@ -72,7 +74,7 @@ export function setVerify(verify) {
 
 // 判断是否登录
 export async function isLogin() {
-  return await getToken() !== null
+  return (await getToken()) !== null
 }
 // 清除登录信息
 export function removeToken() {

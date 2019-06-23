@@ -574,3 +574,11 @@ export function getLogisticsDetail2(data) {
     data
   })
 }
+// 个人中心-订单 提醒发货（仅提醒）
+export function remindOrder(data) {
+  return request({
+    url: '/user/delivery/prompt',
+    method: 'post',
+    data
+  })
+}

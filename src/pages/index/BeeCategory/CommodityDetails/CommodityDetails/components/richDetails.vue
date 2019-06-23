@@ -7,7 +7,7 @@
         id="productIframe"
         ref="productIframe"
         :src="commodityData.desc_url"
-        height="667"
+        height="6670"
         onload="this.height=this.contentWindow.document.documentElement.scrollHeight;console.log(this.contentWindow.document.documentElement.scrollHeight)"
         frameborder="0"
         class="desc-iframe"

@@ -35,12 +35,14 @@
     <van-button
       v-if="orderDetail.s_pay===1&&orderDetail.s_order===1"
       round
+      @click="remindDelivery"
     >
       提醒发货
     </van-button>
     <van-button
       v-if="[4,5,6,11,15].indexOf(orderDetail.status)!==-1"
       round
+      @click="deleteOrderData"
     >
       删除订单
     </van-button>
@@ -102,9 +104,9 @@
           <van-radio-group v-model="cancelReason">
             <van-cell-group>
               <van-cell
-                title="我不想要了1"
+                title="1.多拍/拍错/不喜欢/不想要了"
                 clickable
-                @click="cancelReason = '1'"
+                @click="cancelReason = '多拍/拍错/不喜欢/不想要了'"
               >
                 <van-radio
                   name="1"
@@ -112,19 +114,52 @@
                 />
               </van-cell>
               <van-cell
-                title="我不想要了2"
+                title="2.商品属性规格选错"
                 clickable
-                @click="cancelReason = '2'"
+                @click="cancelReason = '商品属性规格选错'"
               >
                 <van-radio
                   name="2"
                   :checked-color="BeeDefault"
                 />
               </van-cell>
+              <van-cell
+                title="3.地址信息填写错误"
+                clickable
+                @click="cancelReason = '地址信息填写错误'"
+              >
+                <van-radio
+                  name="3"
+                  :checked-color="BeeDefault"
+                />
+              </van-cell>
+              <van-cell
+                title="4.商品暂时无货"
+                clickable
+                @click="cancelReason = '商品暂时无货'"
+              >
+                <van-radio
+                  name="4"
+                  :checked-color="BeeDefault"
+                />
+              </van-cell>
+              <van-cell
+                title="5.其他"
+                clickable
+                @click="cancelReason = '其他'"
+              >
+                <van-radio
+                  name="5"
+                  :checked-color="BeeDefault"
+                />
+              </van-cell>
             </van-cell-group>
           </van-radio-group>
         </div>
-        <div class="submit-cancel">
+        <div
+          class="submit-cancel"
+          @click="closeOrderData"
+        >
           提交
         </div>
       </div>
@@ -134,7 +169,9 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
-import { addShopcartProduct } from '@/api/BeeApi/user'
+import { addShopcartProduct, remindOrder } from '@/api/BeeApi/user'
+import { closeOrder, deleteOrder } from '@/api/BeeApi/order'
+
 export default {
   components: {},
   props: {
@@ -157,6 +194,7 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    // 再次购买
     buyAgain(order) {
       order.products.map(async item => {
         await addShopcartProduct({
@@ -166,6 +204,30 @@ export default {
         })
       })
       this.$toast('已加入购物车')
+    },
+    // 提醒发货
+    async remindDelivery() {
+      const res = await remindOrder({ order_no: this.$route.query.order_no })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+      }
+    },
+    // 取消订单
+    async closeOrderData() {
+      const res = await closeOrder({
+        order_no: this.$route.query.order_no,
+        reason: this.cancelReason
+      })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+      }
+    },
+    // 删除订单
+    async deleteOrderData() {
+      const res = await deleteOrder({ order_no: this.$route.query.order_no })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+      }
     }
   }
 }
