@@ -60,17 +60,20 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getProductDetailData()
+    this.getProductDetailData(this.$route.query.pid, this.$route.query.target)
   },
   methods: {
-    async getProductDetailData() {
-      const res = await getProductDetail({
-        pid: this.$route.query.pid,
-        target: this.$route.query.target
-      })
+    // 获取商品详情
+    async getProductDetailData(pid, target) {
+      const res = await getProductDetail({ pid, target })
       this.commodityData = res.data
       // NOTE 先放这里
     }
+  },
+  // 路由更新之前获取商品详情
+  beforeRouteUpdate(to, from, next) {
+    this.getProductDetailData(to.query.pid, to.query.target)
+    next()
   }
 }
 </script>

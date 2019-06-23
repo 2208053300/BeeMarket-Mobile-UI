@@ -42,6 +42,7 @@
           v-for="item in commodityData.recommend_products"
           :key="item.pid"
           class="recommend-commodity"
+          @click="goDetail(item.pid)"
         >
           <div class="commodity-img">
             <img
@@ -105,6 +106,12 @@ export default {
         this.commodityData.mfavor = 1
         this.$toast(res.message)
       }
+    },
+    goDetail(pid) {
+      this.$router.push({
+        path: '/category/details',
+        query: { pid: pid }
+      })
     }
   }
 }
