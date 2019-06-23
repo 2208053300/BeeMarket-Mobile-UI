@@ -32,3 +32,11 @@ export function deleteOrder(data) {
     data
   })
 }
+// 确认收货（订单完成）
+export function completeOrder(data) {
+  return request({
+    url: '/order/complete',
+    method: 'post',
+    data
+  })
+}

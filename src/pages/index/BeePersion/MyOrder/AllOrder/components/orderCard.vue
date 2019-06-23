@@ -114,6 +114,7 @@
             v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
             round
             class="order-button"
+            @click="completeOrderData(card.order_no)"
           >
             确认收货
           </van-button>
@@ -154,7 +155,7 @@
 
 <script>
 import { getOrderList, addShopcartProduct } from '@/api/BeeApi/user'
-import { deleteOrder } from '@/api/BeeApi/order'
+import { deleteOrder, completeOrder } from '@/api/BeeApi/order'
 
 export default {
   components: {},
@@ -212,6 +213,7 @@ export default {
         })
       }
     },
+    // 再次购买
     buyAgain(order) {
       order.product_list.map(async item => {
         await addShopcartProduct({
@@ -222,8 +224,16 @@ export default {
       })
       this.$toast('已加入购物车')
     },
+    // 删除订单
     async deleteOrderData(order_no) {
       const res = await deleteOrder({ order_no: order_no })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+      }
+    },
+    // 确认收货
+    async completeOrderData(order_no) {
+      const res = await completeOrder({ order_no: order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
       }

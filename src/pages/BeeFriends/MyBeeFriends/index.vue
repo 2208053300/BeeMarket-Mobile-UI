@@ -170,10 +170,8 @@ import ListType from './components/ListType'
 import ICountUp from 'vue-countup-v2'
 
 export default {
-  meteInfo() {
-    return {
-      title: '蜂友圈'
-    }
+  metaInfo: {
+    title: '蜂友圈'
   },
   components: {
     Honeycomb,
