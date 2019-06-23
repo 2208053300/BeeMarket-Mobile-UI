@@ -106,18 +106,22 @@ export default {
       }
     },
     async bindNum() {
-      const res = await bindPhone({
-        mobileNum: this.phone,
-        type: 10,
-        // t: Date.parse(new Date()).toString().substr(0, 10),
-        smsCode: this.verificationCode,
-        source: 'H5'
-      })
-      this.$toast(res.message)
-      if (res.status_code === 200) {
-        setTimeout(() => {
-          this.$router.push({ path: '/persion/profile/accountBind' })
-        }, 2000)
+      try {
+        const res = await bindPhone({
+          mobileNum: this.phone,
+          type: 10,
+          // t: Date.parse(new Date()).toString().substr(0, 10),
+          smsCode: this.verificationCode,
+          source: 'H5'
+        })
+        this.$toast(res.message)
+        if (res.status_code === 200) {
+          setTimeout(() => {
+            this.$router.push({ path: '/persion/profile/accountBind' })
+          }, 2000)
+        }
+      } catch (error) {
+        this.$toast.fail(error)
       }
     },
     // 开始倒计时
