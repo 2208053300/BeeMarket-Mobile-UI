@@ -9,9 +9,9 @@ export async function getToken() {
   if (osObj.isWx) {
     const token = sessionStorage.getItem('BM-App-Token')
     const uriProp = GetRequest('code')
-    if (token && token !== 'waiting') {
+    if (!!token && token !== 'waiting') {
       return token
-    } else if (uriProp && !token && token !== 'waiting') {
+    } else if (uriProp && token !== 'waiting') {
       sessionStorage.setItem('BM-App-Token', 'waiting')
       // 微信授权登录
       await auditWechat({ code: uriProp })
@@ -20,16 +20,7 @@ export async function getToken() {
         sessionStorage.getItem('BM-App-Token') === 'waiting' ||
         !sessionStorage.getItem('BM-App-Token')
       ) {
-        const uriProp2 = GetRequest('state')
-        // 只带state后面的参数跳转
-        window.location.href =
-          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-          encodeURIComponent(
-            window.location.origin +
-              window.location.pathname +
-              uriProp2.slice(5)
-          ) +
-          '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+        await checkToken()
       }
     } else {
       await checkToken()
