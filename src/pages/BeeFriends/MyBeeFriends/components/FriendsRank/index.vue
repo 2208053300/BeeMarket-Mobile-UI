@@ -153,6 +153,7 @@
 
 <script>
 import { getFriends, remindLogin } from '@/api/BeeApi/user'
+import { getOs } from '@/utils'
 
 export default {
   components: {},
@@ -215,13 +216,29 @@ export default {
       }
     },
     goStore(id) {
-      // TODO 跳转到店铺
-      this.$router.push({
-        path: '/category/store',
-        query: {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        // 微信直接跳转路由
+        this.$router.push({
+          path: '/category/store',
+          query: {
+            mid: id
+          }
+        })
+      } else if (osObj.isIphone && osObj.isApp) {
+        window.webkit.messageHandlers.ToShore.postMessage({
           mid: id
-        }
-      })
+        })
+      } else if (osObj.isAndroid && osObj.isApp) {
+        window.beeMarket.ToShore(id)
+      } else {
+        this.$router.push({
+          path: '/category/store',
+          query: {
+            mid: id
+          }
+        })
+      }
     }
   }
 }

@@ -16,3 +16,19 @@ export function createOrder(data) {
     data
   })
 }
+// 订单取消
+export function closeOrder(data) {
+  return request({
+    url: '/order/close',
+    method: 'post',
+    data
+  })
+}
+// 删除订单
+export function deleteOrder(data) {
+  return request({
+    url: '/order/delete',
+    method: 'post',
+    data
+  })
+}
