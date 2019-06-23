@@ -7,22 +7,22 @@ import { GetRequest } from '@/utils/index'
 export async function getToken() {
   const osObj = getOs()
   if (osObj.isWx) {
-    const token = localStorage.getItem('BM-App-Token')
+    const token = sessionStorage.getItem('BM-App-Token')
     const uriProp = GetRequest('code')
     if (token) {
       return token
     } else if (
       uriProp &&
       !token &&
-      localStorage.getItem('BM-App-Token') !== 'waiting'
+      sessionStorage.getItem('BM-App-Token') !== 'waiting'
     ) {
-      localStorage.setItem('BM-App-Token', 'waiting')
+      sessionStorage.setItem('BM-App-Token', 'waiting')
       // 微信授权登录
       await auditWechat({ code: uriProp })
       // // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
       if (
-        localStorage.getItem('BM-App-Token') === 'waiting' ||
-        !localStorage.getItem('BM-App-Token')
+        sessionStorage.getItem('BM-App-Token') === 'waiting' ||
+        !sessionStorage.getItem('BM-App-Token')
       ) {
         const uriProp2 = GetRequest('state')
         // 只带state后面的参数跳转
@@ -38,13 +38,13 @@ export async function getToken() {
     } else {
       checkToken()
     }
-    return localStorage.getItem('BM-App-Token')
+    return sessionStorage.getItem('BM-App-Token')
   } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
     return Cookies.get('token')
   } else {
-    return localStorage.getItem('BM-App-Token')
+    return sessionStorage.getItem('BM-App-Token')
   }
-  // localStorage.setItem('BM-Verify-Ver', 1)
+  // sessionStorage.setItem('BM-Verify-Ver', 1)
   // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJpT1MiLCJ2ZXIiOjEsImlhdCI6MTU2MTE4Mzg2MSwiZXhwIjoxNTYzNzc1ODYxLCJqdGkiOiI4MmIxZDQ5MDk0YjQxMWU5OGRjMzAwMDA1ZDBkYzY3NSIsInNlYyI6ImRmZGExYjk1NDRhZmI0Nzg0ZGQ4MGNiMWY1MmNkZTk0Iiwic2lnIjoiNzU4OWZhOGFmMDE5YjhlMGRhNzBhNjM4M2YyNmQ5YzQ0N2YwZWNjMzExYTk0YmU1ZTJhY2QyNGI1MzhhOWI4NSJ9.T3P6MIBhNlJQbBg3k_tZoNuaUu7u-6yGhRaFdYk0V8k'
 }
 // 设置Token
@@ -53,23 +53,23 @@ export function setToken(Token) {
   window.onunload = function() {
     removeToken()
   }
-  return localStorage.setItem('BM-App-Token', Token)
+  return sessionStorage.setItem('BM-App-Token', Token)
 }
 
 // 获取多端登陆
 export function getVerify() {
   const osObj = getOs()
   if (osObj.isWx) {
-    return localStorage.getItem('BM-Verify-Ver')
+    return sessionStorage.getItem('BM-Verify-Ver')
   } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
     return Cookies.get('BM-Verify-Ver')
   } else {
-    return localStorage.getItem('BM-Verify-Ver')
+    return sessionStorage.getItem('BM-Verify-Ver')
   }
 }
 // 设置多端登陆
 export function setVerify(verify) {
-  return localStorage.setItem('BM-Verify-Ver', verify)
+  return sessionStorage.setItem('BM-Verify-Ver', verify)
 }
 
 // 判断是否登录
@@ -78,7 +78,7 @@ export async function isLogin() {
 }
 // 清除登录信息
 export function removeToken() {
-  return localStorage.removeItem('BM-App-Token')
+  return sessionStorage.removeItem('BM-App-Token')
 }
 // REVIEW 此处判断用户登录情况
 export function checkToken() {
