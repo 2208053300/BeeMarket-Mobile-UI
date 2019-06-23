@@ -261,7 +261,7 @@ export default {
             this.$toast(res2.message)
             if (res2.status_code === 200) {
               await this.$store.dispatch('GerUserStatus')
-              this.$router.push({ name: 'beeFriends' })
+              this.$router.replace({ name: 'beeFriends' })
             }
           } catch (error) {
             this.$toast(error)
