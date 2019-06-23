@@ -231,6 +231,13 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    if (this.osObj.isIphone && this.osObj.isApp) {
+      // window.webkit.messageHandlers.clearHistory.postMessage({
+      //   url: window.location.href
+      // })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.setTitle('蜂友圈')
+    }
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getPartnerData()
