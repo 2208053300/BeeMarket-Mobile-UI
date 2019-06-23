@@ -14,7 +14,10 @@ export async function getToken() {
   if (osObj.isWx) {
     const token = sessionStorage.getItem('BM-App-Token')
     const uriProp = GetRequest('code')
-    if (token && token !== 'waiting') {
+    if (!uriProp) {
+      await checkToken()
+    }
+    if (token) {
       return token
     } else if (uriProp && token !== 'waiting') {
       sessionStorage.setItem('BM-App-Token', 'waiting')
@@ -24,8 +27,6 @@ export async function getToken() {
         console.log('微信授权失败，code')
         await checkToken()
       }
-    } else {
-      await checkToken()
     }
   }
   return sessionStorage.getItem('BM-App-Token')
