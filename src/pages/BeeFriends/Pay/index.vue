@@ -81,7 +81,7 @@
               <span>最多可提现余额<span id="num">0</span>元</span>
               <span class="error to-cash-error">{{ cashTip }}</span>
             </p>
-            <span class="all-to-cash">全部提现</span>
+            <span class="all-to-cash" @click="money = totalNum">全部提现</span>
           </div>
         </div>
       </div>
@@ -146,8 +146,7 @@
 import {
   getWithdrawNum,
   toCash,
-  getMobile,
-  sendSms
+  getMobile
 } from '@/api/BeeApi/user'
 
 export default {
@@ -167,7 +166,7 @@ export default {
       // 定时器
       timeout: null,
       // 当前状态 1 验证姓名，2 提现数量
-      status: 2,
+      status: 1,
       // pic
       wxIcon: require('@/assets/icon/beeFriends/info/icon_wx.png'),
       // 是否可提现
@@ -180,7 +179,7 @@ export default {
       // 金额提示
       cashTip: '请输入提现金额！',
       // 短信验证码弹框
-      show: true,
+      show: false,
       // 手机号码
       phone: '',
       // 验证码
@@ -210,13 +209,9 @@ export default {
     // 提交第一步
     async submitFir() {
       if (!this.valiName() && !this.valiIdNo()) {
-        console.log(11111111)
-
-        // this.$toast('请正确填写姓名、身份证号码')
+        this.$toast('请正确填写姓名、身份证号码')
         return false
       }
-      console.log(22222222)
-
       const res = await toCash({
         status: this.status,
         name: this.name,
@@ -226,15 +221,19 @@ export default {
         this.status = 2
       }
     },
-    // 提交第二步
+    // 提交第三步
     async confirmSubmit() {
+      if (!(this.sms && this.sms.length === 6)) {
+        this.$toast.fail('请正确填写验证码！')
+        return false
+      }
       try {
-        // const res = await toCash({
-        //   status: this.status,
-        //   money: this.money,
-        //   ticket: this.ticket,
-        //   rand_str: this.rand_str
-        // })
+        const res = await toCash({
+          status: 2,
+          money: this.money,
+          sms_code: this.sms
+        })
+        this.$toast(res.message)
       } catch (error) {
         this.$toast.fail(error)
       }
@@ -271,6 +270,9 @@ export default {
       if (res.ret === 0) {
         this.ticket = res.ticket
         this.rand_str = res.rand_str
+
+        this.show = true
+        this.getSms()
       }
     },
     // 获取 可提现数量
@@ -285,10 +287,12 @@ export default {
         this.$toast.fail(error)
       }
     },
-    // 获取短信验证码
+    // 第二步 获取短信验证码
     async getSms() {
-      const res = await sendSms({
-        type: 'paypwd'
+      const res = await toCash({
+        status: 2,
+        ticket: this.ticket,
+        rand_str: this.rand_str
       })
       if (res.status_code === 200) {
         this.$toast(res.message)
