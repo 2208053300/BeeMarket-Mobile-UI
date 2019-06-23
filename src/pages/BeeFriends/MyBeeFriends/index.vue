@@ -304,7 +304,6 @@ export default {
         //   path: '/category/details',
         //   query: {
         //     pid,
-        //     target
         //   }
         // })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
