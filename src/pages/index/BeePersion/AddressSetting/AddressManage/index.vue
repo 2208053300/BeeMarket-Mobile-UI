@@ -17,21 +17,8 @@
         @change="getAddressListData"
       />
       <div class="new-address">
-        <!-- <van-button
-          class="new-button"
-          @click="$router.push('/persion/addressSetting/addAddress')"
-        >
-          <van-icon name="plus" />
-          新增收货地址
-        </van-button> -->
         <van-button
           class="done-button"
-          @click="doneAddress"
-        >
-          确认
-        </van-button>
-        <van-button
-          class="add-new"
           @click="$router.push('/persion/addressSetting/addAddress')"
         >
           <van-icon name="plus" />新增收货地址
@@ -69,14 +56,6 @@ export default {
     async getAddressListData() {
       const res = await getAddressList()
       this.addressList = res.data
-    },
-    doneAddress() {
-      // TODO 此处做判断，跳转回之前的页面，带上选好的地址数据
-      this.$store.state.order.addrDetail = this.addressList.filter(item => {
-        return item.def
-      })[0]
-
-      this.$router.push({ name: this.$store.state.app.pushName })
     }
   }
 }
@@ -91,9 +70,10 @@ export default {
     font-size: 0.28rem;
   }
   .new-address {
+    position: fixed;
     width: 100%;
+    bottom: 0.3rem;
     text-align: center;
-    margin-top: 2.4rem;
     .done-button {
       width: 5.86rem;
       height: 0.9rem;

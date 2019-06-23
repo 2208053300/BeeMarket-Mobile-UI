@@ -179,7 +179,7 @@ export default {
     selectAddress() {
       this.$store.state.app.pushName = 'confirmOrder'
       // TODO 重新选择送货地址
-      this.$router.push('/persion/addressSetting')
+      this.$router.push('/persion/addressSetting?mode=select')
     },
     sendToFirend() {
       this.$router.push('/category/details/giveFirends')

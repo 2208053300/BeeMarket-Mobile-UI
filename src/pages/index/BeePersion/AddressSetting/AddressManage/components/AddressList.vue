@@ -4,6 +4,7 @@
       v-for="(address,index) in addressList"
       :key="index"
       class="address-content"
+      @click="selectAddr(address)"
     >
       <div class="address-name">
         <span>{{ address.name }}</span>
@@ -30,7 +31,7 @@
           <div
             v-else
             class="default2"
-            @click="setDefault(address.addr_id)"
+            @click.stop="setDefault(address.addr_id)"
           >
             <van-icon :name="beeIcon.mine_address_checkbox_square_n" />
             <span>设为默认</span>
@@ -40,11 +41,11 @@
           <van-icon
             :name="beeIcon.mine_address_icon_edit"
             style="margin-right:0.7rem;"
-            @click="editAddress(address.addr_id)"
+            @click.stop="editAddress(address.addr_id)"
           />
           <van-icon
             :name="beeIcon.mine_address_icon_del"
-            @click="delAddress(address.addr_id)"
+            @click.stop="delAddress(address.addr_id)"
           />
         </div>
       </div>
@@ -89,23 +90,26 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    console.log(this.$route.query.mode)
+  },
   methods: {
-    // TODO 设置默认地址
+    // 设置默认地址
     async setDefault(addr_id) {
-      this.$toast.loading({
-        mask: true,
-        message: '加载中'
-      })
       try {
-        await defaultAddress({ addr_id })
-        this.$emit('change')
-        this.$toast.clear()
+        const res = await defaultAddress({ addr_id })
+        this.$toast({
+          message: res.message,
+          duration: 1000,
+          onClose: () => {
+            this.$emit('change')
+          }
+        })
       } catch (e) {
-        this.$toast.clear()
         this.$toast.fail(e)
       }
     },
+    // 编辑地址
     editAddress(id) {
       this.$router.push({
         path: '/persion/addressSetting/addAddress',
@@ -114,15 +118,26 @@ export default {
         }
       })
     },
+    // 删除地址
     async delAddress(id) {
       try {
         const res = await delAddress({ addr_id: id })
-        if (res.status_code === 200) {
-          this.$toast(res.message)
-          this.$emit('change')
-        }
+        this.$toast({
+          message: res.message,
+          duration: 1000,
+          onClose: () => {
+            this.$emit('change')
+          }
+        })
       } catch (error) {
-        this.$toast(error)
+        this.$toast.fail(error)
+      }
+    },
+    // 选择地址
+    selectAddr(addr) {
+      if (this.$route.query.mode === 'select') {
+        this.$store.state.order.addrDetail = addr
+        this.$router.push({ name: this.$store.state.app.pushName })
       }
     }
   }
@@ -132,7 +147,7 @@ export default {
 <style scoped lang="less">
 .address-list {
   margin: 0 0.2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   .address-content {
     background-color: #fff;
     margin-top: 0.2rem;
