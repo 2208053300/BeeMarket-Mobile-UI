@@ -84,15 +84,19 @@ export default {
     async onInput1(key) {
       this.value1 = (this.value1 + key).slice(0, 6)
       if (this.value1.length === 6 && this.value1 === this.value) {
-        const res = await setPayPw({
-          paypwd: this.value1,
-          sign: this.sign
-        })
-        if (res.status_code === 200) {
-          this.$toast(res.message)
-          this.$router.push({
-            path: '/persion/profile/accountSafe'
+        try {
+          const res = await setPayPw({
+            paypwd: this.value1,
+            sign: this.sign
           })
+          if (res.status_code === 200) {
+            this.$toast(res.message)
+            this.$router.push({
+              path: '/persion/profile/accountSafe'
+            })
+          }
+        } catch (error) {
+          this.$toast(error)
         }
       } else {
         this.isConfirm = false
