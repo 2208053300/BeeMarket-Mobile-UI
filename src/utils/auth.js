@@ -30,6 +30,7 @@ export async function getToken() {
     }
   }
   return sessionStorage.getItem('BM-App-Token')
+
   // sessionStorage.setItem('BM-Verify-Ver', 1)
   // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJINSIsInZlciI6MSwiaWF0IjoxNTYxMjYyNTgxLCJleHAiOjE1NjM4NTQ1ODEsImp0aSI6ImNhZjlhNzQ4OTU2YjExZTliMjU0MDAwMDVkMGVmOWY1Iiwic2VjIjoiN2E5OTY1OWUwNTlmNTc4NTc5YTMyZWYxNjgzMGU1ODYiLCJzaWciOiJhN2U5OTMwMGU5Njk4NDI5ZDA0MDRlNjE3MGI4YTI0NGZkMDk4NjRkZmY4OThjNWEwOGY4MWFkMTlhNGFkMWQxIn0.2tJIEQMiTsqx12DytcpmkqRkzfjbCIKyaRN9l2v9U_I'
 }

@@ -449,7 +449,7 @@ export function getWithdrawNum(data) {
     data
   })
 }
-// 蜂友圈 - 提现第一步 验证姓名， 身份证 第二步 金额 凭据
+// 蜂友圈 - 提现第一步 验证姓名、 身份证，发送短信， 第三步 金额 凭据
 export function toCash(data) {
   return request({
     url: '/user/partner/withdraw',
