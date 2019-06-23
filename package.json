@@ -28,6 +28,7 @@
     "weixin-js-sdk": "^1.4.0-test"
   },
   "devDependencies": {
+    "@carpenter/vue-tencent-captcha": "^0.1.0",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-service": "^3.5.0",

@@ -94,7 +94,7 @@
 </template>
 
 <script>
-// import { getArticleDetail } from '@/api/BeeApi/action'
+import { sendSms, h5register } from '@/api/BeeApi/auth'
 
 export default {
   metaInfo: {
@@ -154,21 +154,64 @@ export default {
     },
 
     // 提交注册
-    submit() {
-      console.log('123456s')
+    async submit() {
+      // 判断手机号码 验证码 密码
+      const reg = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/
+      const reg2 = /^\d{6}$/
+      if (!(this.phone && reg.test(this.phone))) {
+        this.$toast.fail('请正确输入手机号码！')
+        return false
+      }
+      if (!(this.validNum && reg2.test(this.validNum))) {
+        this.$toast.fail('请正确输入短信验证码！')
+        return false
+      }
+      if (!(this.pw && this.pw.length > 5)) {
+        this.$toast.fail('请正确设置密码')
+        return false
+      }
+      if (!this.isAgree) {
+        this.$toast.fail('请同意用户注册协议')
+        return false
+      }
+      try {
+        const res = await h5register({
+          mobileNum: this.phone,
+          smsCode: this.validNum,
+          passwd: this.pw,
+          t: Date.parse(new Date()).toString().substr(0, 10)
+        })
+        if (res.status_code === 200) {
+          // 注册成功
+          this.$router.push({
+            name: 'download'
+          })
+        }
+      } catch (error) {
+        this.$toast.fail(error)
+      }
     },
 
     // 获取验证码
-    getValidNum() {
-      this.isShowBtn = false
-      this.downTime = 10
-      setInterval(() => {
-        this.downTime--
-        if (this.downTime < 0) {
-          this.downTime = 0
-          this.isShowBtn = true
-        }
-      }, 1000)
+    async getValidNum() {
+      try {
+        const res = await sendSms({
+          mobileNum: this.phone,
+          type: 'reg'
+        })
+        this.$toast(res.message)
+        this.isShowBtn = false
+        this.downTime = 60
+        setInterval(() => {
+          this.downTime--
+          if (this.downTime < 0) {
+            this.downTime = 0
+            this.isShowBtn = true
+          }
+        }, 1000)
+      } catch (error) {
+        this.$toast.fail(error)
+      }
     },
     // 验证手机号码
     inputPhone() {

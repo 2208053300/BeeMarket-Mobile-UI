@@ -110,7 +110,8 @@ export default {
         mobileNum: this.phone,
         type: 10,
         // t: Date.parse(new Date()).toString().substr(0, 10),
-        smsCode: this.verificationCode
+        smsCode: this.verificationCode,
+        source: 'H5'
       })
       this.$toast(res.message)
       if (res.status_code === 200) {
