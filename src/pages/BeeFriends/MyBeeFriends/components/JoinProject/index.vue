@@ -30,11 +30,13 @@
                   可提现：<span class="num">{{ withdrawNum }}</span>元
                 </div>
                 <div class="text2">
-                  兑换率：1桶=1元
+                  兑换率：1:1
                 </div>
               </div>
               <div class="action-btn">
-                <van-button>我要提现</van-button>
+                <van-button @click="toCash">
+                  我要提现
+                </van-button>
               </div>
             </div>
           </div>
@@ -73,6 +75,12 @@ export default {
     },
     handleClose() {
       this.$emit('update:showProject', false)
+    },
+    // 去提现
+    toCash() {
+      this.$router.push({
+        name: 'friendPay'
+      })
     }
   }
 }

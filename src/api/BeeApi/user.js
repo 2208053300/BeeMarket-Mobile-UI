@@ -449,6 +449,22 @@ export function getWithdrawNum(data) {
     data
   })
 }
+// 蜂友圈 - 提现第一步 验证姓名， 身份证 第二步 金额 凭据
+export function toCash(data) {
+  return request({
+    url: '/user/partner/withdraw',
+    method: 'post',
+    data
+  })
+}
+// 蜂友圈 - 提现第二步 验证姓名 身份证
+export function toCashSec(data) {
+  return request({
+    url: '/user/partner/withdraw',
+    method: 'post',
+    data
+  })
+}
 // 用户支付密码设置、换绑手机 - 发送短信
 export function sendSms(data) {
   return request({

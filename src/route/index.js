@@ -130,7 +130,7 @@ const router = new Router({
             },
             {
               path: 'pay',
-              name: 'FriendPay',
+              name: 'friendPay',
               component: () => import('@/pages/BeeFriends/Pay')
             },
             {
@@ -200,11 +200,6 @@ const router = new Router({
               path: 'taskDetail',
               name: 'taskDetail',
               component: () => import('@/pages/BeeTask/TaskDetail')
-            },
-            {
-              path: 'talent',
-              name: 'becomeTalent',
-              component: () => import('@/pages/BeeTask/TaskTalent')
             }
           ]
         },
