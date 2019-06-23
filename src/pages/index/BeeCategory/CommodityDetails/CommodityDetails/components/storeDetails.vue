@@ -4,7 +4,7 @@
       <div class="header-left">
         <div class="store-img">
           <img
-            :src="commodityData.store_logo"
+            :src="commodityData.store_logo||beeIcon.store"
             alt=""
           >
         </div>
@@ -75,7 +75,11 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      beeIcon: {
+        store: require('@/assets/icon/store/store.png')
+      }
+    }
   },
   computed: {},
   watch: {},
