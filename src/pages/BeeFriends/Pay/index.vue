@@ -219,20 +219,20 @@ export default {
     },
     // 防水墙
     tencentCaptcha() {
-      const captcha1 = new TencentCaptcha('2001213699', function(res) {
-        console.log('防水墙1111111')
-      })
-      captcha1.show() // 显示验证码
+      // const captcha1 = new TencentCaptcha('2001213699', function(res) {
+      //   console.log('防水墙1111111')
+      // })
+      // captcha1.show() // 显示验证码
     },
     tencentCaptcha1() {
-      const captcha1 = new TencentCaptcha(
-        document.getElementById('TencentCaptcha1'),
-        '2001213699',
-        function(res) {
-          console.log('防水墙22222222222')
-        },
-      )
-      captcha1.show() // 显示验证码
+      // const captcha1 = new TencentCaptcha(
+      //   document.getElementById('TencentCaptcha1'),
+      //   '2001213699',
+      //   function(res) {
+      //     console.log('防水墙22222222222')
+      //   },
+      // )
+      // captcha1.show() // 显示验证码
     }
   },
   meteInfo() {
