@@ -16,7 +16,7 @@ export async function getToken() {
     const uriProp = GetRequest('code')
     if (token && token !== 'waiting') {
       return token
-    } else if (uriProp) {
+    } else if (uriProp && token !== 'waiting') {
       sessionStorage.setItem('BM-App-Token', 'waiting')
       await auditWechat({ code: uriProp })
       // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
