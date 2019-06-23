@@ -667,6 +667,11 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@carpenter/vue-tencent-captcha@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npm.taobao.org/@carpenter/vue-tencent-captcha/download/@carpenter/vue-tencent-captcha-0.1.0.tgz#abf43b81863efaea85abfc969e6c56cd801fd77f"
+  integrity sha1-q/Q7gYY++uqFq/yWnmxWzYAf138=
+
 "@hapi/address@2.x.x":
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/@hapi/address/download/@hapi/address-2.0.0.tgz#9f05469c88cb2fd3dcd624776b54ee95c312126a"

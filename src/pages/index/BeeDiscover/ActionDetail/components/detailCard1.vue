@@ -107,7 +107,7 @@ export default {
   .action-title {
     font-size: 0.32rem;
     padding: 0 0.32rem;
-    .img{background: #f4f4f4; margin-right: 0.1rem; display: flex;
+    .img{ margin-right: 0.1rem; display: flex;
       .icon{width:0.78rem; height: 0.78rem; margin: auto;}
     }
     .main-title{font-size:0.32rem;margin-bottom:0.2rem;margin-top:0; font-weight: 600;}
@@ -149,7 +149,6 @@ export default {
       .help-icon {
         width: 0.8rem;
         height: 0.8rem;
-        background-color:#f4f4f4;
         color: @BeeDefault;
         display: flex;
         margin-right:0.1rem;
