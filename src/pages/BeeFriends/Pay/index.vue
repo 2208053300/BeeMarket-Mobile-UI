@@ -259,7 +259,7 @@ export default {
       }
       try {
         const res = await toCash({
-          status: 2,
+          status: 3,
           money: this.money,
           sms_code: this.sms
         })
