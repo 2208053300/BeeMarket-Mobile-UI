@@ -362,6 +362,18 @@ export default {
           this.money = this.MAX_MONEY
           this.cashTip = '可以提现！'
         }
+      } else {
+        if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
+          this.isActive = true
+          this.cashTip = '可以提现！'
+        } else if (this.money > this.MAX_MONEY) {
+          this.isActive = true
+          this.money = this.MAX_MONEY
+          this.cashTip = '提现金额至多' + this.MAX_MONEY + '!'
+        } else if (this.money < this.MIN_MONEY) {
+          this.isActive = false
+          this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
+        }
       }
     }
   },
