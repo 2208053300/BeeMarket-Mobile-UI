@@ -109,9 +109,13 @@ export default {
 
     // 获取短信验证码
     async sendSmsData() {
-      const res = await sendSms({ type: 'unbind' })
-      if (res.status_code === 200) {
-        this.changeCountDoen()
+      try {
+        const res = await sendSms({ type: 'unbind' })
+        if (res.status_code === 200) {
+          this.changeCountDoen()
+        }
+      } catch (error) {
+        this.$toast(error)
       }
     },
     // 验证成功，调整到绑定新手机号码页面
@@ -119,7 +123,8 @@ export default {
       const res = await smsVerify({
         smsCode: this.verificationCode,
         type: 'unbind',
-        t: Date.parse(new Date()).toString().substr(0, 10)
+        t: Date.parse(new Date()).toString().substr(0, 10),
+        source: 'H5'
       })
       if (res.status_code === 200) {
         console.log(res)
