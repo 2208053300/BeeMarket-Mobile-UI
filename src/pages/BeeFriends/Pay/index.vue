@@ -66,7 +66,11 @@
         </div>
       </div>
       <div class="btn-div text-center">
-        <van-button id="TencentCaptcha" type="button" class="btn cash-btn active" data-appid="2001213699" data-cbfn="callback">
+        <van-button id="TencentCaptcha" type="button" class="btn cash-btn active" data-appid="2001213699" data-cbfn="callback" @click="tencentCaptcha">
+          <!-- <van-button id="TencentCaptcha" type="button" class="btn cash-btn active" data-appid="2049348716" data-cbfn="callback"> -->
+          确认提现
+        </van-button>
+        <van-button id="TencentCaptcha1" type="button" class="btn cash-btn active" @click="tencentCaptcha1">
           <!-- <van-button id="TencentCaptcha" type="button" class="btn cash-btn active" data-appid="2049348716" data-cbfn="callback"> -->
           确认提现
         </van-button>
@@ -212,6 +216,23 @@ export default {
       //     $('.to-cash-error').text('可以提现！')
       //   }
       // }
+    },
+    // 防水墙
+    tencentCaptcha() {
+      const captcha1 = new TencentCaptcha('2001213699', function(res) {
+        console.log('防水墙1111111')
+      })
+      captcha1.show() // 显示验证码
+    },
+    tencentCaptcha1() {
+      const captcha1 = new TencentCaptcha(
+        document.getElementById('TencentCaptcha1'),
+        '2001213699',
+        function(res) {
+          console.log('防水墙22222222222')
+        },
+      )
+      captcha1.show() // 显示验证码
     }
   },
   meteInfo() {
