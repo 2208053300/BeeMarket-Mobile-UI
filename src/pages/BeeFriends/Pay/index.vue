@@ -168,7 +168,7 @@ export default {
       // 定时器
       timeout: null,
       // 当前状态 1 验证姓名，2 提现数量
-      status: 2,
+      status: 1,
       // pic
       wxIcon: require('@/assets/icon/beeFriends/info/icon_wx.png'),
       // 是否可提现
@@ -211,13 +211,9 @@ export default {
     // 提交第一步
     async submitFir() {
       if (!this.valiName() && !this.valiIdNo()) {
-        console.log(11111111)
-
-        // this.$toast('请正确填写姓名、身份证号码')
+        this.$toast('请正确填写姓名、身份证号码')
         return false
       }
-      console.log(22222222)
-
       const res = await toCash({
         status: this.status,
         name: this.name,
@@ -227,15 +223,19 @@ export default {
         this.status = 2
       }
     },
-    // 提交第二步
+    // 提交第三步
     async confirmSubmit() {
+      if (!(this.sms && this.sms.length === 6)) {
+        this.$toast.fail('请正确填写验证码！')
+        return false
+      }
       try {
         const res = await toCash({
-          status: this.status,
+          status: 2,
           money: this.money,
-          ticket: this.ticket,
-          rand_str: this.rand_str
+          sms_code: this.sms
         })
+        this.$toast(res.message)
       } catch (error) {
         this.$toast.fail(error)
       }
@@ -286,10 +286,12 @@ export default {
         this.$toast.fail(error)
       }
     },
-    // 获取短信验证码
+    // 第二步 获取短信验证码
     async getSms() {
-      const res = await sendSms({
-        type: 'paypwd'
+      const res = await toCash({
+        status: 2,
+        ticket: this.ticket,
+        rand_str: this.rand_str
       })
       if (res.status_code === 200) {
         this.$toast(res.message)

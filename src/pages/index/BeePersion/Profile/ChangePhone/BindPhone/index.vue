@@ -108,15 +108,19 @@ export default {
       }
     },
     async rebindNum() {
-      const res = await rebind({
-        mobileNum: this.phone,
-        smsCode: this.verificationCode
-      })
-      if (res.status_code === 200) {
-        console.log(res)
-        // 换绑成功更新 token，并跳转页面
-        // setToken(res.data)
-        this.$router.push({ path: '/persion/profile/accountSafe' })
+      try {
+        const res = await rebind({
+          mobileNum: this.phone,
+          smsCode: this.verificationCode
+        })
+        if (res.status_code === 200) {
+          this.$toast(res.message)
+          setTimeout(() => {
+            this.$router.push({ path: '/persion/profile/accountSafe' })
+          }, 2000)
+        }
+      } catch (error) {
+        this.$toast.fail(error)
       }
     },
     // 开始倒计时
