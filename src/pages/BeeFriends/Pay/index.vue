@@ -147,8 +147,7 @@ import {
   getWithdrawNum,
   toCash,
   getMobile,
-  sendSms,
-  smsVerify
+  sendSms
 } from '@/api/BeeApi/user'
 
 export default {
@@ -230,12 +229,12 @@ export default {
     // 提交第二步
     async confirmSubmit() {
       try {
-        const res = await toCash({
-          status: this.status,
-          money: this.money,
-          ticket: this.ticket,
-          rand_str: this.rand_str
-        })
+        // const res = await toCash({
+        //   status: this.status,
+        //   money: this.money,
+        //   ticket: this.ticket,
+        //   rand_str: this.rand_str
+        // })
       } catch (error) {
         this.$toast.fail(error)
       }
