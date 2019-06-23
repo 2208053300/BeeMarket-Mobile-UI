@@ -112,7 +112,8 @@ export default {
         const res = await rebind({
           mobileNum: this.phone,
           smsCode: this.verificationCode,
-          sign: this.sign
+          sign: this.sign,
+          source: 'H5'
         })
         if (res.status_code === 200) {
           this.$toast(res.message)
