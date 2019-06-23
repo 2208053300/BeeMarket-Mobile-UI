@@ -9,7 +9,7 @@ const user = {
     },
     addressData: {},
     have_no_read: false,
-    userStatus: 1
+    userStatus: 0
   },
   mutations: {
     SET_USER_INFO: (state, userInfo) => {

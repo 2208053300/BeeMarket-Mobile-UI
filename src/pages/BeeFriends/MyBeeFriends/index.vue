@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="$store.state.user.userStatus === 1"
+    v-if="$store.state.user.userStatus===1"
     class="my-friends"
     :style="{backgroundImage:'url('+beeIcon.bee_firends_img_bg+')'}"
     :class="{hasHeader:$store.state.app.beeHeader&&!osObj.isApp}"
@@ -170,6 +170,11 @@ import ListType from './components/ListType'
 import ICountUp from 'vue-countup-v2'
 
 export default {
+  meteInfo() {
+    return {
+      title: '蜂友圈'
+    }
+  },
   components: {
     Honeycomb,
     UserCard,
@@ -227,17 +232,31 @@ export default {
       showControls: false
     }
   },
+  async beforeRouteEnter(to, from, next) {
+    await next(async vm => {
+      // 通过 `vm` 访问组件实例
+      await vm.$store.dispatch('GerUserStatus')
+      // 0 非合伙人 1 合伙人 2 冻结
+      if (vm.$store.state.user.userStatus === 0) {
+        await vm.$router.replace({ name: 'introduction' })
+      } else if (vm.$store.state.user.userStatus === 1) {
+        await vm.$router.replace({ name: 'beeFriends' })
+      } else if (vm.$store.state.user.userStatus === 2) {
+        await vm.$router.replace({ name: 'freeze' })
+      }
+    })
+  },
   computed: {},
   watch: {},
   created() {},
   mounted() {
-    if (this.osObj.isIphone && this.osObj.isApp) {
-      // window.webkit.messageHandlers.clearHistory.postMessage({
-      //   url: window.location.href
-      // })
-    } else if (this.osObj.isAndroid && this.osObj.isApp) {
-      window.beeMarket.setTitle('蜂友圈')
-    }
+    // if (this.osObj.isIphone && this.osObj.isApp) {
+    //   // window.webkit.messageHandlers.clearHistory.postMessage({
+    //   //   url: window.location.href
+    //   // })
+    // } else if (this.osObj.isAndroid && this.osObj.isApp) {
+    //   window.beeMarket.setTitle('蜂友圈')
+    // }
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getPartnerData()
@@ -246,19 +265,15 @@ export default {
   },
   methods: {
     async getPartnerData() {
-      const res = await getPartner({ type: this.honeyType })
-      this.partnerData = res.data
-      this.$refs.honeycomb.combData = this.partnerData.show_users2
-      // const testArr = []
-      // for (let index = 0; index < 20; index++) {
-      //   testArr.push(...this.partnerData.show_users2)
-      // }
-      // this.$refs.honeycomb.combData = testArr
-      // console.log(testArr)
-
-      // await this.$refs.honeycomb.handleAction(testArr.length)
-      await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
-      await this.$refs.honeycomb.animateList()
+      try {
+        const res = await getPartner({ type: this.honeyType })
+        this.partnerData = res.data
+        this.$refs.honeycomb.combData = this.partnerData.show_users2
+        await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
+        await this.$refs.honeycomb.animateList()
+      } catch (error) {
+        this.$toast(error)
+      }
     },
     async getReceiveNumData() {
       const res = await getReceiveNum({ type: this.honeyType })
