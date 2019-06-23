@@ -271,7 +271,10 @@ export default {
           money: this.money,
           sms_code: this.sms
         })
-        this.$toast(res.message)
+        if (res.status_code === 200) {
+          this.$toast(res.message)
+          this.show = false
+        }
       } catch (error) {
         this.$toast.fail(error)
       }
