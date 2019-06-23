@@ -208,7 +208,7 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 .bee-sku {
   .skuPop {
     border-top-right-radius: 0.2rem;
@@ -275,6 +275,39 @@ export default {
           }
           .product-num {
             margin-top: 0.12rem;
+          }
+          .van-stepper {
+            // NOTE 覆盖步进器样式
+            .van-stepper__minus {
+              height: 0.4rem;
+              background-color: #fff;
+              margin: 0;
+              padding: 0.22rem;
+              border: 0.01rem solid rgb(226, 226, 226);
+              border-right: none;
+              border-top-left-radius: 45%;
+              border-bottom-left-radius: 45%;
+              color: #c5c5c5;
+            }
+            .van-stepper__input {
+              height: 0.4rem;
+              background-color: #fff;
+              margin: 0;
+              border: 0.01rem solid rgb(156, 156, 156);
+              font-size: 0.2rem;
+              color: @Grey2;
+            }
+            .van-stepper__plus {
+              height: 0.4rem;
+              background-color: #fff;
+              margin: 0;
+              padding: 0.22rem;
+              border: 0.01rem solid rgb(156, 156, 156);
+              border-left: none;
+              border-top-right-radius: 45%;
+              border-bottom-right-radius: 45%;
+              color: @Grey2;
+            }
           }
         }
       }

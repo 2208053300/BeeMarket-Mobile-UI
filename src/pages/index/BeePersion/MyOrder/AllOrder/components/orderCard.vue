@@ -76,6 +76,7 @@
             v-if="[-1, 4].indexOf(card.s_order) !== -1 || card.s_pay === -1"
             round
             class="order-button del-button"
+            @click="deleteOrderData(card.order_no)"
           >
             删除订单
           </van-button>
@@ -153,6 +154,8 @@
 
 <script>
 import { getOrderList, addShopcartProduct } from '@/api/BeeApi/user'
+import { deleteOrder } from '@/api/BeeApi/order'
+
 export default {
   components: {},
   props: {
@@ -218,6 +221,12 @@ export default {
         })
       })
       this.$toast('已加入购物车')
+    },
+    async deleteOrderData(order_no) {
+      const res = await deleteOrder({ order_no: order_no })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+      }
     }
   }
 }
