@@ -81,7 +81,7 @@
               <span>最多可提现余额<span id="num">0</span>元</span>
               <span class="error to-cash-error">{{ cashTip }}</span>
             </p>
-            <span class="all-to-cash">全部提现</span>
+            <span class="all-to-cash" @click="money = totalNum">全部提现</span>
           </div>
         </div>
       </div>
@@ -146,9 +146,7 @@
 import {
   getWithdrawNum,
   toCash,
-  getMobile,
-  sendSms,
-  smsVerify
+  getMobile
 } from '@/api/BeeApi/user'
 
 export default {
@@ -181,7 +179,7 @@ export default {
       // 金额提示
       cashTip: '请输入提现金额！',
       // 短信验证码弹框
-      show: true,
+      show: false,
       // 手机号码
       phone: '',
       // 验证码
@@ -272,6 +270,9 @@ export default {
       if (res.ret === 0) {
         this.ticket = res.ticket
         this.rand_str = res.rand_str
+
+        this.show = true
+        this.getSms()
       }
     },
     // 获取 可提现数量
