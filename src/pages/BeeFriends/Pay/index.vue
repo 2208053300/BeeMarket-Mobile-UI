@@ -1,7 +1,7 @@
 <template>
   <div class="pay">
     <!-- 身份认证 -->
-    <div v-if="status===1" class="auth">
+    <div v-if="status === 1" class="auth">
       <p class="title">
         请填写真实的个人信息
       </p>
@@ -10,7 +10,13 @@
           <div class="form-group">
             <label for="user_name">用户姓名</label>
             <div class="input-box">
-              <input id="user_name" v-model.trim="name" type="text" placeholder="请填写真实姓名" @input="valiName()">
+              <input
+                id="user_name"
+                v-model.trim="name"
+                type="text"
+                placeholder="请填写真实姓名"
+                @input="valiName()"
+              >
               <p v-show="nameError" class="error name-error">
                 请正确输入姓名！
               </p>
@@ -19,7 +25,14 @@
           <div class="form-group">
             <label for="user_ID">身份证号</label>
             <div class="input-box">
-              <input id="user_ID" v-model.trim="idNo" type="text" placeholder="请填写真实的身份证号码" value="" @input="valiIdNo()">
+              <input
+                id="user_ID"
+                v-model.trim="idNo"
+                type="text"
+                placeholder="请填写真实的身份证号码"
+                value=""
+                @input="valiIdNo()"
+              >
               <p v-show="idNoError" class="error id-error">
                 请正确输入身份证号码！
               </p>
@@ -28,7 +41,8 @@
           </div>
         </div>
         <p class="tip">
-          身份信息对应关联的提现微信账户，请务必填写本人真实姓名， 以及真实身份证号，否则将无法提现金额！
+          身份信息对应关联的提现微信账户，请务必填写本人真实姓名，
+          以及真实身份证号，否则将无法提现金额！
         </p>
       </form>
       <div class="text-center">
@@ -40,7 +54,7 @@
     </div>
 
     <!-- 提现到微信 -->
-    <div v-if="status===2" class="to-cash">
+    <div v-if="status === 2" class="to-cash">
       <div class="info">
         <div class="to-wx">
           <span>提现到微信</span>
@@ -53,42 +67,93 @@
             提现余额数
           </p>
           <div class="input-div">
-            <input id="inputNum" v-model.trim="money" type="number" min="1" placeholder="金额">
+            <input
+              id="inputNum"
+              v-model.trim="money"
+              type="number"
+              min="1"
+              placeholder="金额"
+            >
             <span>(元)</span>
           </div>
           <div class="tip-info">
             <p>
               <span>最多可提现余额<span id="num">0</span>元</span>
-              <span class="error to-cash-error">请输入提现金额！</span>
+              <span class="error to-cash-error">{{ cashTip }}</span>
             </p>
             <span class="all-to-cash">全部提现</span>
           </div>
         </div>
       </div>
       <div class="btn-div text-center">
-        <van-button id="TencentCaptcha" type="button" class="btn cash-btn active" data-appid="2001213699" data-cbfn="callback" @click="tencentCaptcha">
-          <!-- <van-button id="TencentCaptcha" type="button" class="btn cash-btn active" data-appid="2049348716" data-cbfn="callback"> -->
-          确认提现
-        </van-button>
-        <van-button id="TencentCaptcha1" type="button" class="btn cash-btn active" @click="tencentCaptcha1">
-          <!-- <van-button id="TencentCaptcha" type="button" class="btn cash-btn active" data-appid="2049348716" data-cbfn="callback"> -->
-          确认提现
-        </van-button>
+        <vueTencentCaptcha
+          style="height:42px;"
+          :class="{ active: isActive }"
+          class="van-button van-button--button van-button--normal btn cash-btn"
+          appid="2049348716"
+          @callback="tencentCaptcha"
+        >
+          <span class="van-button__text">
+            确认提现
+          </span>
+        </vueTencentCaptcha>
         <p>每天只能提现一次，一次至少100元，最多1000元!</p>
       </div>
     </div>
+
+    <!-- 短信验证码 -->
+    <van-popup v-model="show" @closed="closed">
+      <div class="sms bg-white">
+        <p class="sms-tip text-center">
+          请输入{{ phone }}的短信验证码
+        </p>
+        <div class="flex flex-between align-center">
+          <van-field
+            v-model="sms"
+            placeholder="请输入短信验证码"
+            class="input"
+          />
+          <van-button
+            slot="button"
+            size="small"
+            class="get-code"
+            :disabled="!checkPhoneRight()"
+            @click="getSms"
+          >
+            <!-- TODO 获取短信验证码 -->
+            <span
+              v-if="countDown === 0"
+              class="text1"
+              :class="{ text2: checkPhoneRight() }"
+            >获取验证码</span>
+            <span v-else class="text3">({{ countDown }}s)</span>
+          </van-button>
+        </div>
+        <div class="btn-group flex flex-column  align-center">
+          <van-button round class="btn comfirm-btn" @click="confirmSubmit">
+            确定
+          </van-button>
+          <van-button round class="btn cancel" @click="show = false">
+            取消
+          </van-button>
+        </div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import { toCash } from '@/api/BeeApi/user'
+import {
+  getWithdrawNum,
+  toCash,
+  getMobile,
+  sendSms,
+  smsVerify
+} from '@/api/BeeApi/user'
+
 export default {
-  components: {
-
-  },
-  props: {
-
-  },
+  components: {},
+  props: {},
   data() {
     return {
       // 姓名
@@ -105,51 +170,42 @@ export default {
       // 当前状态 1 验证姓名，2 提现数量
       status: 2,
       // pic
-      wxIcon: require('@/assets/icon/beeFriends/info/icon_wx.png')
+      wxIcon: require('@/assets/icon/beeFriends/info/icon_wx.png'),
+      // 是否可提现
+      isActive: true,
+      // 单此提现金额最少1，最多1000
+      MIN_MONEY: 1,
+      MAX_MONEY: 1000,
+      // 可提现总金额
+      totalNum: 0,
+      // 金额提示
+      cashTip: '请输入提现金额！',
+      // 短信验证码弹框
+      show: true,
+      // 手机号码
+      phone: '',
+      // 验证码
+      sms: '',
+      // 倒计时
+      countDown: 0
     }
   },
-  computed: {
-
-  },
+  computed: {},
   watch: {
-    // name: {
-    //   handel(newVal, old) {
-    //     clearTimeout(this.timeout)
-    //     this.timeout = setTimeout(() => {
-    //       this.valiName()
-    //     }, 300)
-    //   }
-    // },
-    // idNo: {
-    //   handel(newVal, old) {
-    //     clearTimeout(this.timeout)
-    //     this.timeout = setTimeout(() => {
-    //       this.valiIdNo()
-    //     }, 300)
-    //   }
-    // }
     money(curVal, oldVal) {
       // 实现input连续输入，只发一次请求
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
-        this.money = parseInt(this.money)
-        console.log(this.money)
+        this.adjustMoney()
+        // this.money = parseInt(this.money)
+        // console.log(this.money)
       }, 300)
     }
   },
-  created() {
-    // if (window.TencentCaptCha === undefined) {
-    //   const script = document.createElement('script')
-    //   const head = document.getElementsByTagName('head')[0]
-    //   script.type = 'text/javascript'
-    //   script.charset = 'UTF-8'
-    //   script.src = 'https://ssl.captcha.qq.com/TCaptcha.js'
-    //   head.appendChild(script)
-    // }
-  },
+  created() {},
   mounted() {
-    // 点击提交触发 腾讯防水墙
-    window.callback = this.callback
+    this.getCanWithdraw()
+    // this.getMobileNum()
   },
   methods: {
     // 提交第一步
@@ -171,9 +227,18 @@ export default {
         this.status = 2
       }
     },
-    // 防水墙方法
-    callback(res) {
-      console.log('防水墙')
+    // 提交第二步
+    async confirmSubmit() {
+      try {
+        const res = await toCash({
+          status: this.status,
+          money: this.money,
+          ticket: this.ticket,
+          rand_str: this.rand_str
+        })
+      } catch (error) {
+        this.$toast.fail(error)
+      }
     },
     // 验证姓名
     valiName() {
@@ -195,117 +260,329 @@ export default {
 
       return true
     },
-    // 提现页面实时判断输入框的值
-    getNum() {
-      var value = this.money
-      console.log(value)
 
-      // if (value == '' || value == null || isNaN(value)) {
-      //   flagNum = false
-      //   $('.cash-btn').removeClass('active')
-      //   $('.to-cash-error').text('请输入有效数值！')
-      // } else {
-      //   if (value > totalNum) {
-      //     $('#inputNum').val(totalNum)
-      //     flagNum = true
-      //     $('.cash-btn').addClass('active')
-      //     $('.to-cash-error').text('可以提现！')
-      //   } else {
-      //     flagNum = true
-      //     $('.cash-btn').addClass('active')
-      //     $('.to-cash-error').text('可以提现！')
-      //   }
-      // }
-    },
     // 防水墙
-    tencentCaptcha() {
-      // const captcha1 = new TencentCaptcha('2001213699', function(res) {
-      //   console.log('防水墙1111111')
-      // })
-      // captcha1.show() // 显示验证码
+    tencentCaptcha(res) {
+      this.show = true
+      console.log('防水墙1111111')
+      // res（未通过验证）= {ret: 1, ticket: null}
+      // res（验证成功） = {ret: 0, ticket: "String", randstr: "String"}
+
+      // 通过防水墙，发送验证码，验证短信验证码，通过则提交数据
+      if (res.ret === 0) {
+        this.ticket = res.ticket
+        this.rand_str = res.rand_str
+      }
     },
-    tencentCaptcha1() {
-      // const captcha1 = new TencentCaptcha(
-      //   document.getElementById('TencentCaptcha1'),
-      //   '2001213699',
-      //   function(res) {
-      //     console.log('防水墙22222222222')
-      //   },
-      // )
-      // captcha1.show() // 显示验证码
+    // 获取 可提现数量
+    async getCanWithdraw() {
+      try {
+        const res = await getWithdrawNum()
+        if (res.status_code === 200) {
+          this.totalNum = res.data.sup_balance
+          this.phone = res.data.phone
+        }
+      } catch (error) {
+        this.$toast.fail(error)
+      }
+    },
+    // 获取短信验证码
+    async getSms() {
+      const res = await sendSms({
+        type: 'paypwd'
+      })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+        this.changeCountDoen()
+      }
+    },
+    // 获取手机号码
+    async getMobileNum() {
+      const res = await getMobile()
+      console.log('获取手机号码：', res)
+      this.phone = res.data.mobileNum
+    },
+    checkPhoneRight() {
+      // const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+      // return reg.test(this.phone)
+      return true
+    },
+    // 开始倒计时
+    changeCountDoen() {
+      this.countDown = 60
+      const clock = window.setInterval(() => {
+        this.countDown--
+        if (this.countDown === 0) {
+          window.clearInterval(clock)
+        }
+      }, 1000)
+    },
+    // 关闭弹出
+    closed() {
+      this.sms = ''
+    },
+    // 调整金额
+    adjustMoney() {
+      let value = this.money.toString()
+      console.log(value, typeof value)
+
+      // 是小数
+      if (value.indexOf('.') !== -1) {
+        var str = value.split('.')
+        var intNum = str[0]
+        var floatNum = str[1]
+        if (floatNum.length > 2) {
+          floatNum = floatNum.substr(0, 2)
+          value = intNum + '.' + floatNum
+        }
+        this.money = +value
+      }
+      // 判断金额是否在范围内
+      if (this.money >= this.totalNum) {
+        this.money = this.totalNum
+        if (this.totalNum < this.MIN_MONEY) {
+          this.isActive = false
+          this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
+        } else if (
+          this.totalNum >= this.MIN_MONEY &&
+          this.totalNum <= this.MAX_MONEY
+        ) {
+          this.isActive = true
+          this.money = this.totalNum
+
+          this.cashTip = '可以提现！'
+        } else if (this.totalNum > this.MAX_MONEY) {
+          this.isActive = true
+          this.money = this.MAX_MONEY
+          this.cashTip = '可以提现！'
+        }
+      }
     }
   },
   meteInfo() {
     return {
-
       title: '提现'
     }
-  }
-}
-
-window.callback = function(res) {
-  console.log(res)
-  // res（用户主动关闭验证码）= {ret: 2, ticket: null}
-  // res（验证成功） = {ret: 0, ticket: "String", randstr: "String"}
-  if (res.ret === 0) {
-    alert(res.ticket) // 票据
   }
 }
 </script>
 
 <style scoped lang="less">
-.pay{
-  .auth{font-size: 0.24rem; color: #999; display: block;
-    .title{ padding-left: 0.3rem; height: 0.64rem; line-height: 0.64rem;}
-    .form-box{padding-left: 0.3rem;}
-    .form-group{ display: flex; justify-content: space-between; align-items: center;  padding: 0.2rem 0;
-        label{font-size: 0.28rem; width: 1.25rem;}
-        .input-box{width: 5.4rem; padding-right: 0.3rem;}
-        input{width: 100%; font-size: 0.3rem; color: #333; border: none; outline: none; height: 0.6rem; line-height: 0.6rem;-webkit-tap-highlight-color:transparent;
-              margin-bottom: 0.1rem; padding-left: 0.2rem;}
-        .error{ padding-left: 0.2rem; color: red; margin: 0;}
+.pay {
+  .auth {
+    font-size: 0.24rem;
+    color: #999;
+    display: block;
+    .title {
+      padding-left: 0.3rem;
+      height: 0.64rem;
+      line-height: 0.64rem;
     }
-    .form-group:nth-of-type(1){border-bottom: 1px solid #e5e5e5;}
-    .tip{padding-left: 0.3rem; line-height: 1.7; margin-top: 0.3rem;}
-    .submit-btn{background: #ccc; font-size: 0.32rem; color: #fff; border: none; outline: none; border-radius: 0.1rem; width:6.3rem;
-                // padding: 0.3rem 0;
-                 margin-top: 0.5rem; pointer-events: none; transition: background 0.3s ease-in;}
-    .submit-btn.active{ background:#f49822 ;  pointer-events: auto;}
-}
-.to-cash{font-size: 0.24rem; color: #999; border-radius: 0.1rem; margin-top: 0.2rem;
-    .info{background: #fbfbfb;}
-     .to-wx{display: flex;justify-content: space-between; align-items: center; padding: 0.3rem 0.4rem;
-            span{height: 0.25rem;}
-            .img{width:0.57rem ;height: 0.57rem;}
-            img{width: 100%;}
+    .form-box {
+      padding-left: 0.3rem;
+    }
+    .form-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.2rem 0;
+      label {
+        font-size: 0.28rem;
+        width: 1.25rem;
+      }
+      .input-box {
+        width: 5.4rem;
+        padding-right: 0.3rem;
+      }
+      input {
+        width: 100%;
+        font-size: 0.3rem;
+        color: #333;
+        border: none;
+        outline: none;
+        height: 0.6rem;
+        line-height: 0.6rem;
+        -webkit-tap-highlight-color: transparent;
+        margin-bottom: 0.1rem;
+        padding-left: 0.2rem;
+      }
+      .error {
+        padding-left: 0.2rem;
+        color: red;
+        margin: 0;
+      }
+    }
+    .form-group:nth-of-type(1) {
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .tip {
+      padding-left: 0.3rem;
+      line-height: 1.7;
+      margin-top: 0.3rem;
+    }
+    .submit-btn {
+      background: #ccc;
+      font-size: 0.32rem;
+      color: #fff;
+      border: none;
+      outline: none;
+      border-radius: 0.1rem;
+      width: 6.3rem;
+      // padding: 0.3rem 0;
+      margin-top: 0.5rem;
+      pointer-events: none;
+      transition: background 0.3s ease-in;
+    }
+    .submit-btn.active {
+      background: #f49822;
+      pointer-events: auto;
+    }
+  }
+  .to-cash {
+    font-size: 0.24rem;
+    color: #999;
+    border-radius: 0.1rem;
+    margin-top: 0.2rem;
+    .info {
+      background: #fbfbfb;
+    }
+    .to-wx {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.3rem 0.4rem;
+      span {
+        height: 0.25rem;
+      }
+      .img {
+        width: 0.57rem;
+        height: 0.57rem;
+      }
+      img {
+        width: 100%;
+      }
+    }
+    .num-info {
+      padding: 0.3rem 0.4rem;
+      .title {
+        font-size: 0.3rem;
+        color: #221814;
+        margin-bottom: 0.3rem;
+      }
+      .input-div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 0.2rem;
+        input {
+          font-size: 1rem;
+          padding-left: 0.1rem;
+          height: 1.2rem;
+          width: 5.6rem;
+          border: none;
+          outline: none;
+          -webkit-tap-highlight-color: transparent;
         }
-     .num-info{padding: 0.3rem 0.4rem;
-        .title{font-size: 0.3rem ; color: #221814;margin-bottom: 0.3rem;}
-        .input-div{ display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5e5e5; padding-bottom: 0.2rem;
-            input{font-size: 1rem; padding-left:0.1rem; height: 1.2rem; width: 5.6rem; border: none; outline: none; -webkit-tap-highlight-color:transparent;}
-            input::-webkit-input-placeholder{
-                    color: #ccc;
-            }
-            input::-moz-placeholder{
-                    color: #ccc;
-            }
-            input:-ms-input-placeholder{
-                    color: #ccc;
-            }
-            span{ font-size: 0.3rem;}
+        input::-webkit-input-placeholder {
+          color: #ccc;
         }
-        .tip-info{font-size: 0.26rem; color: #666; display: flex; align-items: center; justify-content: space-between; margin-top: 0.2rem;
-            .error{color: #cf3815; margin-left: 0.15rem;}
-            .all-to-cash{color: #ffa42f;}
+        input::-moz-placeholder {
+          color: #ccc;
         }
-     }
-     .btn-div{
-         .btn{background: #ccc; font-size: 0.32rem; color: #fff; border: none; outline: none; border-radius: 0.1rem; width:6.3rem;
-                // padding: 0.3rem 0;
-                 margin-top: 0.5rem;pointer-events: none;}
-         .btn.active{pointer-events: auto; background: #f49822;}
-         p{margin-top: 0.2rem;}
-     }
-}
+        input:-ms-input-placeholder {
+          color: #ccc;
+        }
+        span {
+          font-size: 0.3rem;
+        }
+      }
+      .tip-info {
+        font-size: 0.26rem;
+        color: #666;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0.2rem;
+        .error {
+          color: #cf3815;
+          margin-left: 0.15rem;
+        }
+        .all-to-cash {
+          color: #ffa42f;
+        }
+      }
+    }
+    .btn-div {
+      .btn {
+        background: #ccc;
+        font-size: 0.32rem;
+        color: #fff;
+        border: none;
+        outline: none;
+        border-radius: 0.1rem;
+        width: 6.3rem;
+        // padding: 0.3rem 0;
+        margin-top: 0.5rem;
+        pointer-events: none;
+      }
+      .btn.active {
+        pointer-events: auto;
+        background: #f49822;
+      }
+      p {
+        margin-top: 0.2rem;
+      }
+    }
+  }
+  .van-popup {
+    border-radius: 0.1rem;
+    padding: 0.6rem 0.6rem 0.4rem;
+    width: 80%;
+    box-sizing: border-box;
+  }
+  .sms {
+    .input {
+      font-size: 0.26rem;
+      color: #333;
+    }
+    .get-code {
+      border: none;
+      border-left: 0.02rem solid @Grey4;
+      font-size: 0.28rem;
+      color: @Grey11;
+      height: 0.27rem;
+      line-height: 0.27rem;
+      padding: 0;
+      padding-left: 0.18rem;
+      width: 2.5rem;
+      .text2 {
+        color: @ProductName;
+      }
+      .text3 {
+        color: @BeeDefault;
+      }
+    }
+    .sms-tip {
+      font-size: 0.28rem;
+      margin: 0 auto 1.2rem;
+    }
+    .btn {
+      width: 3.4rem;
+      height: 0.84rem;
+      line-height: 0.84rem;
+      font-size: 0.28rem;
+    }
+    .comfirm-btn {
+      background-color: @BeeDefault;
+      color: #fff;
+      margin: 0.6rem auto 0.3rem;
+    }
+    .cancel-btn {
+      background-color: none;
+      border: 1px solid #999;
+      color: #999;
+    }
+  }
 }
 </style>

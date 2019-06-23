@@ -16,6 +16,9 @@ import 'vant/lib/index.css'
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
 FastClick.attach(document.body)
+// 腾讯防水墙
+import vueTencentCaptcha from '@carpenter/vue-tencent-captcha'
+Vue.use(vueTencentCaptcha)
 
 Vue.use(Vant)
 Vue.use(Lazyload, {
