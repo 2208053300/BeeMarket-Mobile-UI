@@ -24,6 +24,14 @@ export function sendSms(data) {
     data
   })
 }
+// NOTE 用户登录,发送验证码
+export function h5register(data) {
+  return request({
+    url: '/auth/h5register',
+    method: 'post',
+    data
+  })
+}
 // NOTE 用户首次绑定手机号,验证短信验证码
 export function bindPhone(data) {
   return request({
