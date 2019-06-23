@@ -58,7 +58,7 @@ module.exports = {
   // 蜂友圈
   beeFriends: {
     entry: 'src/pages/BeeFriends/main.js',
-    title: '蜂友圈'
+    title: '​​​​​'
   },
   // 好友代付
   beeReplace: {

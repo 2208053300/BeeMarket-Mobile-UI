@@ -72,6 +72,7 @@
       v-if="orderDetail.s_pay===1&&[3].indexOf(orderDetail.s_order)"
       round
       class="bee-button"
+      @click="completeOrderData(card.order_no)"
     >
       确认收货
     </van-button>
@@ -170,7 +171,7 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 import { addShopcartProduct, remindOrder } from '@/api/BeeApi/user'
-import { closeOrder, deleteOrder } from '@/api/BeeApi/order'
+import { closeOrder, deleteOrder, completeOrder } from '@/api/BeeApi/order'
 
 export default {
   components: {},
@@ -225,6 +226,13 @@ export default {
     // 删除订单
     async deleteOrderData() {
       const res = await deleteOrder({ order_no: this.$route.query.order_no })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+      }
+    },
+    // 确认收货（订单完成）
+    async completeOrderData() {
+      const res = await completeOrder({ order_no: this.$route.query.order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
       }
