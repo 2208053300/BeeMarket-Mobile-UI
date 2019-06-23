@@ -7,8 +7,7 @@
         id="productIframe"
         ref="productIframe"
         :src="commodityData.desc_url"
-        height="6670"
-        onload="this.height=this.contentWindow.document.documentElement.scrollHeight;console.log(this.contentWindow.document.documentElement.scrollHeight)"
+        :onload="setHeight()"
         frameborder="0"
         class="desc-iframe"
         scrolling="no"
@@ -54,8 +53,16 @@ export default {
     // console.log(this.$refs.productIframe.contentDocument.querySelectAll('img'))
   },
   methods: {
-    getHeight() {
-      console.log(this.$refs)
+    // 设置详情高度
+    setHeight() {
+      const iframe = document.querySelector('#productIframe')
+      if (iframe) {
+        const iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow
+        if (iframeWin.document.body) {
+          iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight
+          console.log('计算高度:', iframe.height)
+        }
+      }
     }
   }
 }
@@ -76,6 +83,7 @@ export default {
   }
   .product-desc {
     .desc-iframe {
+      height: 0;
       width: 100%;
     }
   }
