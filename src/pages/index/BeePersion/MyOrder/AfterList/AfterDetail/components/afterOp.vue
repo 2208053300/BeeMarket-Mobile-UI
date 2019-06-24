@@ -86,6 +86,11 @@ export default {
           // on confirm
           const res = await delAfterOrder({ aid: this.aid })
           this.$toast.success(res.message)
+          setTimeout(() => {
+            this.$router.push({
+              name: 'afterList'
+            })
+          }, 1500)
         })
         .catch(() => {
           this.$toast('已取消')
@@ -123,6 +128,9 @@ export default {
           // on confirm
           const res = await cancelAfterOrder({ aid: this.aid })
           this.$toast.success(res.message)
+          setTimeout(() => {
+            window.location.reload
+          }, 1500)
         })
         .catch(() => {
           this.$toast('已取消')
@@ -147,6 +155,9 @@ export default {
           // on confirm
           const res = await cancelAfterOrder({ aid: this.aid })
           this.$toast.success(res.message)
+          setTimeout(() => {
+            window.location.reload
+          }, 1500)
         })
         .catch(() => {
           this.$toast('已取消')

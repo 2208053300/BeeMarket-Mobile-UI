@@ -155,8 +155,10 @@ import { applyPageData, submitApplyData } from '@/api/BeeApi/user'
 import { BeeDefault } from '@/styles/index/variables.less'
 export default {
   // NOTE 根据选择条件更改title
-  metaInfo: {
-    title: '退货'
+  metaInfo() {
+    return {
+      title: this.title
+    }
   },
   components: {},
   props: {},
@@ -165,8 +167,9 @@ export default {
       loading: false,
       // 类型 1退 2换 3补
       type_code: this.$route.query.type_code,
+      title: '',
       // 售后数量
-      apply_number: this.$route.query.type_code,
+      apply_number: this.$route.query.apply_number,
       // id
       order_product_id: this.$route.query.order_product_id,
       aid: this.$route.query.aid,
@@ -202,6 +205,13 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    if (this.type_code === 1) {
+      this.title = '退货'
+    } else if (this.type_code === 2) {
+      this.title = '换货'
+    } else if (this.type_code === 3) {
+      this.title = '补寄'
+    }
     if (this.order_product_id) {
       this.getCommodityDetailData({
         order_product_id: this.order_product_id,
@@ -269,8 +279,14 @@ export default {
       try {
         const res = await submitApplyData(formData)
         this.loading = false
-        console.log(res)
+        this.$toast(res.message)
+        setTimeout(() => {
+          this.$router.push({
+            name: 'AllOrder'
+          })
+        }, 2000)
       } catch (error) {
+        this.$toast(error)
         this.loading = false
       }
     },

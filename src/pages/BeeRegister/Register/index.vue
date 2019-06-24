@@ -8,7 +8,7 @@
         style="width: 100%;pointer-events: auto;"
       >
         <source
-          src="https://app.fengjishi.com/static/video/beginner.mp4"
+          src="https://img.fengjishi.com.cn/app/videos/education/intro.mp4"
           type="video/mp4"
         >
       </video>
