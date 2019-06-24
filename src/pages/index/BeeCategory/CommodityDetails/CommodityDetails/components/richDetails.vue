@@ -119,6 +119,7 @@ export default {
           }
         }
         const _throttle = function() {
+          console.log('scrool')
           clearTimeout(poll)
           poll = setTimeout(_pollImages, throttle)
         }
@@ -144,8 +145,8 @@ export default {
         }
       })(window, document)
       Echo.init({
-        offset: 2000,
-        throttle: 200,
+        offset: 10,
+        throttle: 0,
         firstnum: 3
       })
     }

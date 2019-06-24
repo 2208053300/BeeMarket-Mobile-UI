@@ -141,7 +141,8 @@ export default {
         // nav_icon_share: require('@/assets/icon/cart/nav_icon_share@2x.png'),
         shopping_cart_pic_no: require('@/assets/icon/cart/shopping_cart_pic_no@2x.png')
       },
-      guessData: []
+      guessData: [],
+      authStatus: 0
     }
   },
   computed: {
