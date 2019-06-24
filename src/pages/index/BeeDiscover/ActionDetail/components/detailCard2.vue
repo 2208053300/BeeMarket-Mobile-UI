@@ -2,11 +2,13 @@
   <div class="card2">
     <van-tabs v-model="active">
       <van-tab title="项目简介">
-        <div class="item-info">
-          {{ actionDetails.company_info.company_desc }}
-          <!-- <div class="show-more text-center">
+        <div class="item-info" :class="{more: showMore===true}">
+          <!-- eslint-disable-next-line  -->
+          <div v-html="actionDetails.project_desc" />
+
+          <div v-show="!showMore" class="show-more text-center" @click="showMore=true">
             更多详情<van-icon name="arrow-down" size="0.26rem" color="#ff8422" />
-          </div> -->
+          </div>
         </div>
       </van-tab>
       <van-tab title="项目进度">
@@ -53,6 +55,7 @@ export default {
   },
   data() {
     return {
+      showMore: false,
       BeeDefault,
       active: 0
     }
@@ -94,6 +97,7 @@ export default {
       font-size: 0.26rem;
       background-image: linear-gradient(to bottom,rgba(255,255,255,.5),rgba(255,255,255,1))
     }
+    &.more{height: auto;}
   }
    .action-content {
      padding: 0.3rem;
