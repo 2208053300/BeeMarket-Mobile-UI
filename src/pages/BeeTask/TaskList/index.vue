@@ -224,6 +224,7 @@ export default {
       const res = await getTaskAward({ tid: tid })
       if (res.status_code === 200) {
         this.showSuccess = true
+        this.getTaskListData()
       }
     },
     doTask(item) {
@@ -390,16 +391,17 @@ export default {
             top: 0.12rem;
             font-size: 0.2rem;
             color: #ffffff;
-            line-height: 0.28rem;
+            line-height: 0.35rem;
             text-align: center;
           }
           .left-info {
-            padding-left: 0.44rem;
+            padding: 0 0.44rem;
             flex: 1;
             .task-title2 {
               font-size: 0.32rem;
               font-weight: bold;
               color: @Orange2;
+              margin-top: 0.1rem;
               .get-num {
                 font-size: 0.36rem;
                 margin-left: 0.2rem;
@@ -408,18 +410,18 @@ export default {
             .task-subhead {
               font-size: 0.24rem;
               color: @BeeDefault;
-              margin-top: 0.16rem;
+              margin-top: 0.08rem;
             }
             .task-status {
               font-size: 0.22rem;
-              margin-top: 0.2rem;
+              margin-top: 0.1rem;
               .num {
                 color: @BeeDefault;
               }
             }
             .invite-num {
               font-size: 0.24rem;
-              margin-top: 0.24rem;
+              margin-top: 0.2rem;
               white-space: nowrap;
               .num {
                 color: @BeeDefault;
@@ -439,6 +441,10 @@ export default {
         }
         .helpBg {
           height: 2.84rem;
+          .task-action{
+            position: relative;
+            left: -0.24rem;
+          }
         }
         .endBg {
           .left-info {

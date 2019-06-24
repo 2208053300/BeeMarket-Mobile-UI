@@ -3,6 +3,9 @@
     <van-popup
       v-model="showPop"
       class="pop1"
+      :close-on-click-overlay="false"
+      @close="handleClose"
+      @click-overlay="handleClose"
     >
       <div
         class="pop-content"
@@ -15,7 +18,7 @@
       </div>
       <div
         class="close-img"
-        @click="showPop=false"
+        @click="handleClose"
       >
         <img
           :src="beeIcon.icon_cancel"
@@ -43,7 +46,12 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    handleClose() {
+      this.showPop = false
+      this.$store.state.user.is_new_user = 1
+    }
+  }
 }
 </script>
 
