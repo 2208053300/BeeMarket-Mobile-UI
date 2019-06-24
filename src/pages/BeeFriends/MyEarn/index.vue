@@ -4,7 +4,7 @@
       <div class="head-img">
         <div class="img-content">
           <img
-            :src="detailData.basic.head_image_url"
+            :src="detailData.basic.head_image_url||beeIcon.head_default"
             alt="头像"
           >
         </div>

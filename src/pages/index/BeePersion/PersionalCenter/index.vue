@@ -41,7 +41,7 @@
             offset="2"
           >
             <div class="head-name">
-              {{ isLogin ? $store.state.user.userInfo.nickname : '未登录' }}
+              {{ $store.state.user.userInfo.nickname||'未登录' }}
             </div>
             <div
               v-if="userInfo.personal_info && userInfo.personal_info.is_partner"
@@ -250,7 +250,7 @@ export default {
     },
     // 跳转到需要登录的路由
     async authRoute(path) {
-      if (!await isLogin()) {
+      if (!(await isLogin())) {
         this.$router.push('/login')
       } else {
         this.$router.push(path)
@@ -345,7 +345,7 @@ export default {
       padding: 0.32rem 0;
       text-align: center;
       font-size: 0.26rem;
-      .img-content{
+      .img-content {
         margin: 0 auto 0.2rem;
         width: 0.45rem;
         height: 0.41rem;

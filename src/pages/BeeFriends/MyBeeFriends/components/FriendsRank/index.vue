@@ -58,6 +58,7 @@
             v-model="loading"
             :finished="finished"
             finished-text="我也是有底线的 o(´^｀)o"
+            :immediate-check="false"
             @load="onLoad"
           >
             <div
@@ -235,6 +236,7 @@ export default {
           type: this.friendsType,
           page: this.page
         })
+        this.friendsData = res.data || {}
         this.friendsList.push(...res.data.friendsList)
         this.page++
         this.loading = false
@@ -252,9 +254,9 @@ export default {
     },
     changeType(type) {
       this.friendsType = type
-      this.page = 2
+      this.page = 1
       this.finished = false
-      this.getFriendsData()
+      // this.getFriendsData()
     },
     getColor(index) {
       if (index === 0) {
