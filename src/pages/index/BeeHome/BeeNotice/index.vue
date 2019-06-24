@@ -103,6 +103,7 @@ export default {
       const res = await getNewestNews()
       this.newsList = res.data
     },
+    // type 1 活动 2 公告 3 消息
     goPage(type) {
       if (type === 1) {
         this.$router.push({

@@ -7,7 +7,7 @@
         poster="/static/src/Img/vedio_bg.png"
         style="width: 100%;pointer-events: auto;"
       >
-        <source src="/static/video/beginner.mp4" type="video/mp4">
+        <source src="https://app.fengjishi.com/static/video/beginner.mp4" type="video/mp4">
       </video>
       <div class="RNext">
         <img src="../../../assets/icon/register/registerNext.jpg" alt="">

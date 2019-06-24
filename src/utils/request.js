@@ -23,8 +23,7 @@ service.interceptors.request.use(
   async config => {
     // 加载蒙层
     Toast.loading({
-      mask: true,
-      message: 'loading...',
+      mask: false,
       forbidClick: true,
       duration: 0
     })
@@ -84,7 +83,7 @@ service.interceptors.response.use(
         checkToken()
       }
       if (res.status_code === 400) {
-        Toast.fail(res.message)
+        // Toast.fail(res.message)
       }
       // Toast.fail(res.message || 'error')
       return Promise.reject(res.message || 'error')

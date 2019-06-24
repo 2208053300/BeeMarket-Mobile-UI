@@ -409,6 +409,14 @@ export function getFriends(data) {
     data
   })
 }
+// 蜂友圈 - 快速邀请
+export function remindAll(data) {
+  return request({
+    url: '/user/partner/remind_all',
+    method: 'post',
+    data
+  })
+}
 // 蜂友圈 - 返回可领取余额
 export function getReceiveNum(data) {
   return request({

@@ -1,47 +1,55 @@
 <template>
   <div class="bee-action">
-    <div
-      v-for="item in actionList"
-      :key="item.id"
-      class="action-content"
-      @click="goAction(item)"
-    >
-      <div class="action-time">
-        <div class="time-text">
-          {{ item.created_at }}
+    <div v-if="actionList.length>0">
+      <div
+        v-for="(item,index) in actionList"
+        :key="index"
+        class="action-content"
+        @click="goAction(item)"
+      >
+        <!-- 时间 -->
+        <div class="action-time">
+          <div class="time-text">
+            {{ item.created_at }}
+          </div>
         </div>
-      </div>
-      <div class="action-detail">
-        <div
-          v-if="item.background_img"
-          class="action-img"
-        >
-          <img
-            :src="item.background_img"
-            alt=""
-          >
-          <div
-            v-if="item.is_end"
-            class="end-action"
-          >
+        <!-- 详情 -->
+        <div class="action-detail">
+          <!-- 图片 -->
+          <div v-if="item.background_img" class="action-img">
             <img
-              :src="beeIcon.message_activity_pic_over"
+              :src="item.background_img"
               alt=""
             >
-          </div>
-        </div>
-        <div class="action-text">
-          <div class="left-text">
-            <div class="action-title">
-              {{ item.title }}
+            <div
+              v-if="item.is_end"
+              class="end-action"
+            >
+              <img
+                :src="beeIcon.message_activity_pic_over"
+                alt=""
+              >
             </div>
-            <div class="action-desc">
-              {{ item.content }}
-            </div>
           </div>
-          <van-icon name="arrow" />
+          <div class="action-text">
+            <div class="left-text">
+              <!-- 标题 -->
+              <div v-if="item.title" class="action-title">
+                {{ item.title }}
+              </div>
+              <!-- 描述 -->
+              <div class="action-desc">
+                {{ item.content }}
+              </div>
+            </div>
+            <!-- 箭头 -->
+            <van-icon v-if="type===2" name="arrow" />
+          </div>
         </div>
       </div>
+    </div>
+    <div v-else class="no-action text-center">
+      <img :src="beeIcon.empty" alt="">
     </div>
   </div>
 </template>
@@ -69,9 +77,11 @@ export default {
   props: {},
   data() {
     return {
+      type: this.$route.query.type,
       actionList: [],
       beeIcon: {
-        message_activity_pic_over: require('@/assets/icon/home/message_activity_pic_over@2x.png')
+        message_activity_pic_over: require('@/assets/icon/home/message_activity_pic_over@2x.png'),
+        empty: require('@/assets/icon/product/product_detail_pic_nodetails@2x.png')
       }
     }
   },
@@ -85,12 +95,30 @@ export default {
   },
   methods: {
     async getNewestNewsListData() {
-      const res = await getNewestNewsList({ type: this.$route.query.type })
-      this.actionList = res.data
+      const res = await getNewestNewsList({ type: this.type })
+      if (res.data) {
+        this.actionList = res.data
+      }
     },
-    goAction() {
-      // TODO 跳转到指定活动页
+    goAction(item) {
+      // TODO 跳转到指定活动页 1 活动 2公告 3 消息
+      if (this.type === 1) {
+        this.$router.push({
+          name: 'beeActiveTpl',
+          query: {
+            id: item.id
+          }
+        })
+      } else if (this.type === 2) {
+        this.$router.push({
+          name: 'beeAnnouncement',
+          query: {
+            id: item.id
+          }
+        })
+      }
     }
+
   }
 }
 </script>
@@ -152,6 +180,10 @@ export default {
         }
       }
     }
+  }
+  .no-action{
+    padding-top: 30%;
+    img{width:2.88rem;height: 2.68rem;}
   }
 }
 </style>

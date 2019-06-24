@@ -52,8 +52,8 @@ export default {
         aid: this.$route.query.aid,
         share_id: this.$route.query.uid
       })
-      this.$toast(res.message)
       if (res.status_code === 200) {
+        this.$toast(res.message)
         this.$router.push({
           path: '/helpSuccess',
           query: {
