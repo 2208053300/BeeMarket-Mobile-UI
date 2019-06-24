@@ -1,33 +1,35 @@
 <template>
-  <div
-    ref="combList"
-    class="comb-list"
-    :style="{transform:'scale('+listScale+') translate('+listX+'px,'+listY+'px)'}"
-  >
+  <div class="comb-content">
     <div
-      v-for="(item,index) in FriendList"
-      :key="index"
-      class="line"
+      ref="combList"
+      class="comb-list"
+      :style="{transform:'scale('+listScale+') translate('+listX+'px,'+listY+'px)'}"
     >
       <div
-        v-for="(item2,index2) in item"
-        :key="index2"
-        :ref="'hexagon'+item2.id"
-        :class="[{showitem:showList.indexOf(item2.id)!==-1&&item2.nickname&&checkOverflow('hexagon'+item2.id)},{firstItem:item2.id===config.center_point.id},{partnerItem:item2.is_partner}]"
-        class="comb-card hexagon"
-        :test="index2"
-        @click="showDetail(item2)"
+        v-for="(item,index) in FriendList"
+        :key="index"
+        class="line"
       >
-        <div class="box1" />
-        <div class="box2">
-          <div class="img-content">
-            <img
-              :src="item2.head_image_url"
-              alt=""
-            >
+        <div
+          v-for="(item2,index2) in item"
+          :key="index2"
+          :ref="'hexagon'+item2.id"
+          :class="[{showitem:showList.indexOf(item2.id)!==-1&&item2.nickname&&checkOverflow('hexagon'+item2.id)},{firstItem:item2.id===config.center_point.id},{partnerItem:item2.is_partner}]"
+          class="comb-card hexagon"
+          :test="index2"
+          @click="showDetail(item2)"
+        >
+          <div class="box1" />
+          <div class="box2">
+            <div class="img-content">
+              <img
+                :src="item2.head_image_url"
+                alt=""
+              >
+            </div>
           </div>
+          <div class="box3" />
         </div>
-        <div class="box3" />
       </div>
     </div>
   </div>
@@ -43,11 +45,14 @@ export default {
     detailCard: {
       type: Boolean,
       default: false
+    },
+    combData: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
-      combData: [],
       config: {},
       max_row_count: 0,
       min_row_count: 0,
@@ -90,20 +95,6 @@ export default {
     })
   },
   methods: {
-    // async getBeeFriendsData() {
-    //   const res = await axios(
-    //     'https://www.easy-mock.com/mock/5c74955332eba876f9c7b0cf/BeeMarket-Admin/beeFriends'
-    //   )
-    //   this.combData = res.data.data
-    //   console.log(res.data.data)
-    //   this.handleAction(this.combData.length)
-    //   this.animateList()
-    // },
-    // 初始化
-    // init(data) {
-    //   this.handleAction(data.length)
-    //   this.combData = data
-    // },
     // 计算总圈数
     getCircleCount(num) {
       const circle_num = Math.ceil(Math.sqrt((num - 1) / 3 + 0.25) - 0.5)
@@ -112,6 +103,7 @@ export default {
       return this.max_row_count - this.min_row_count
     },
     handleAction(num) {
+      this.$notify('提示文案')
       // 总圈数配置给config
       this.config['total_circle'] = this.getCircleCount(num)
       const row_count = {}
@@ -235,7 +227,7 @@ export default {
             'circle_list'
           ][i][j]
           row[this.config['circle_list'][i][j]['y']][k] = {
-            ...this.combData[k],
+            ...this.$parent.partnerData.show_users2[k],
             ...row[this.config['circle_list'][i][j]['y']][k]
           }
           // 动画顺序
@@ -318,100 +310,103 @@ export default {
 </script>
 
 <style scoped lang="less">
-.comb-list {
-  position: relative;
+.comb-content {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .line {
+  .comb-list {
+    position: relative;
+    height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    margin-top: -5px;
-    .hexagon {
-      opacity: 0;
-      width: 1.1rem;
-      height: 1.3rem;
-      position: relative;
-      transition: opacity 1s;
-      margin: 0 0.1rem;
+    align-items: center;
+
+    .line {
+      display: flex;
+      justify-content: center;
       margin-top: -5px;
-      .box1 {
-        width: 0;
-        border-left: 0.55rem solid transparent;
-        border-right: 0.55rem solid transparent;
-        border-bottom: 0.3rem solid #fff;
-      }
-      .box2 {
+      .hexagon {
+        opacity: 0;
         width: 1.1rem;
-        height: 0.65rem;
-        background-color: #fff;
-        .img-content {
-          position: absolute;
-          top: 0.24rem;
-          left: 0.16rem;
-          overflow: hidden;
-          width: 0.8rem;
-          height: 0.8rem;
-          box-sizing: border-box;
-          border-radius: 50%;
-          border: 0.04rem solid @BeeDefault;
+        height: 1.3rem;
+        position: relative;
+        transition: opacity 1s;
+        margin: 0 0.1rem;
+        margin-top: -5px;
+        .box1 {
+          width: 0;
+          border-left: 0.55rem solid transparent;
+          border-right: 0.55rem solid transparent;
+          border-bottom: 0.3rem solid #fff;
+        }
+        .box2 {
+          width: 1.1rem;
+          height: 0.65rem;
+          background-color: #fff;
+          .img-content {
+            position: absolute;
+            top: 0.24rem;
+            left: 0.16rem;
+            overflow: hidden;
+            width: 0.8rem;
+            height: 0.8rem;
+            box-sizing: border-box;
+            border-radius: 50%;
+            border: 0.04rem solid @BeeDefault;
+          }
+        }
+        .box3 {
+          width: 0;
+          border-top: 0.3rem solid #fff;
+          border-left: 0.55rem solid transparent;
+          border-right: 0.55rem solid transparent;
         }
       }
-      .box3 {
-        width: 0;
-        border-top: 0.3rem solid #fff;
-        border-left: 0.55rem solid transparent;
-        border-right: 0.55rem solid transparent;
-      }
-    }
-    .firstItem {
-      position: relative;
-      left: -0.05rem;
-      top: -0.08rem;
-      .box1 {
-        width: 0;
-        border-left: 0.6rem solid transparent;
-        border-right: 0.6rem solid transparent;
-        border-bottom: 0.35rem solid #fff;
-      }
-      .box2 {
-        width: 1.2rem;
-        height: 0.75rem;
-        background-color: #fff;
-        .img-content {
-          position: absolute;
-          top: 0.24rem;
-          left: 0.1rem;
-          overflow: hidden;
-          width: 1rem;
-          height: 1rem;
-          box-sizing: border-box;
-          border-radius: 50%;
-          border: 0.04rem solid @BeeDefault;
+      .firstItem {
+        position: relative;
+        left: -0.05rem;
+        top: -0.08rem;
+        .box1 {
+          width: 0;
+          border-left: 0.6rem solid transparent;
+          border-right: 0.6rem solid transparent;
+          border-bottom: 0.35rem solid #fff;
+        }
+        .box2 {
+          width: 1.2rem;
+          height: 0.75rem;
+          background-color: #fff;
+          .img-content {
+            position: absolute;
+            top: 0.24rem;
+            left: 0.1rem;
+            overflow: hidden;
+            width: 1rem;
+            height: 1rem;
+            box-sizing: border-box;
+            border-radius: 50%;
+            border: 0.04rem solid @BeeDefault;
+          }
+        }
+        .box3 {
+          width: 0;
+          border-top: 0.35rem solid #fff;
+          border-left: 0.6rem solid transparent;
+          border-right: 0.6rem solid transparent;
         }
       }
-      .box3 {
-        width: 0;
-        border-top: 0.35rem solid #fff;
-        border-left: 0.6rem solid transparent;
-        border-right: 0.6rem solid transparent;
+      .showitem {
+        opacity: 1;
       }
-    }
-    .showitem {
-      opacity: 1;
-    }
-    .partnerItem{
-      .box1{
-        border-bottom-color: @BeeDefault;
-      }
-      .box2{
-        background-color: @BeeDefault;
-      }
-      .box3{
-        border-top-color: @BeeDefault;
+      .partnerItem {
+        .box1 {
+          border-bottom-color: @BeeDefault;
+        }
+        .box2 {
+          background-color: @BeeDefault;
+        }
+        .box3 {
+          border-top-color: @BeeDefault;
+        }
       }
     }
   }
