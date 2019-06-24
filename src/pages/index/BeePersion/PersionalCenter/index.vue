@@ -22,7 +22,7 @@
           @click="$router.push('/persion/myQrcode')"
         />
       </div>
-      <div @click="clickHead">
+      <div @click="authRoute('/persion/profile')">
         <van-row
           class="head-user"
           type="flex"
@@ -231,7 +231,7 @@ export default {
       const res = await getPersionalCenter()
       this.userInfo = res.data
       // 如果个人信息发生了改变,则更新vuex中的用户信息
-      if (isLogin()) {
+      if (await isLogin()) {
         const info = this.userInfo.personal_info
         const userState = this.$store.state.user.userInfo
         let changed = false
@@ -248,13 +248,12 @@ export default {
         }
       }
     },
-    // 点击用户信息区域
-    clickHead() {
-      // TODO 跳转到个人信息页面
-      if (!isLogin()) {
+    // 跳转到需要登录的路由
+    async authRoute(path) {
+      if (!await isLogin()) {
         this.$router.push('/login')
       } else {
-        this.$router.push('/persion/profile')
+        this.$router.push(path)
       }
     }
   }
