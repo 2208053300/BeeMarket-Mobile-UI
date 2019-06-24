@@ -82,6 +82,9 @@ service.interceptors.response.use(
         store.commit('CLEAR_USER_INFO')
         checkToken()
       }
+      if (res.status_code === 400 && res.message === '获取用户信息失败') {
+        checkToken()
+      }
       return Promise.reject(res.message || 'error')
     } else {
       // Toast.success(res.message)

@@ -109,19 +109,34 @@
         <van-row>
           <van-col span="8">
             <div @click="$router.push('/persion/myCollected')">
-              <van-icon :name="beeIcon.mine_icon_favorite" />
+              <div class="img-content">
+                <img
+                  :src="beeIcon.mine_icon_favorite"
+                  alt="我的收藏"
+                >
+              </div>
               <span>我的收藏</span>
             </div>
           </van-col>
           <van-col span="8">
             <div @click="$router.push('/persion/addressSetting?mode=manage')">
-              <van-icon :name="beeIcon.mine_icon_address" />
+              <div class="img-content">
+                <img
+                  :src="beeIcon.mine_icon_address"
+                  alt="地址管理"
+                >
+              </div>
               <span>地址管理</span>
             </div>
           </van-col>
           <van-col span="8">
             <div @click="$router.push('/persion/history')">
-              <van-icon :name="beeIcon.mine_icon_pug" />
+              <div class="img-content">
+                <img
+                  :src="beeIcon.mine_icon_pug"
+                  alt="历史足迹"
+                >
+              </div>
               <span>历史足迹</span>
             </div>
           </van-col>
@@ -129,19 +144,34 @@
         <van-row style="margin-top:0.5rem;">
           <van-col span="8">
             <div @click="$router.push({name:'ServiceHelperIndex'})">
-              <van-icon :name="beeIcon.mine_icon_customer" />
+              <div class="img-content">
+                <img
+                  :src="beeIcon.mine_icon_customer"
+                  alt="客服帮助"
+                >
+              </div>
               <span>客服帮助</span>
             </div>
           </van-col>
           <van-col span="8">
             <div @click="$router.push('/persion/beeAbout')">
-              <van-icon :name="beeIcon.mine_icon_favorite" />
+              <div class="img-content">
+                <img
+                  :src="beeIcon.mine_icon_aboutbm"
+                  alt="关于集市"
+                >
+              </div>
               <span>关于集市</span>
             </div>
           </van-col>
           <van-col span="8">
             <div @click="$router.push('/persion/BeeSetting')">
-              <van-icon :name="beeIcon.mine_icon_set" />
+              <div class="img-content">
+                <img
+                  :src="beeIcon.mine_icon_set"
+                  alt="功能设置"
+                >
+              </div>
               <span>功能设置</span>
             </div>
           </van-col>
@@ -171,6 +201,7 @@ export default {
         mine_icon_message: require('@/assets/icon/personalCenter/mine_icon_message@2x.png'),
         mine_icon_favorite: require('@/assets/icon/personalCenter/mine_icon_favorite@2x.png'),
         mine_icon_address: require('@/assets/icon/personalCenter/mine_icon_address@2x.png'),
+        mine_icon_aboutbm: require('@/assets/icon/personalCenter/mine_icon_aboutbm@2x.png'),
         mine_icon_pug: require('@/assets/icon/personalCenter/mine_icon_pug@2x.png'),
         mine_icon_customer: require('@/assets/icon/personalCenter/mine_icon_customer@2x.png'),
         mine_icon_set: require('@/assets/icon/personalCenter/mine_icon_set@2x.png'),
@@ -315,10 +346,10 @@ export default {
       padding: 0.32rem 0;
       text-align: center;
       font-size: 0.26rem;
-      .van-icon {
-        display: block;
-        font-size: 0.5rem;
+      .img-content{
         margin: 0 auto 0.2rem;
+        width: 0.45rem;
+        height: 0.41rem;
       }
       .van-row {
         position: relative;

@@ -489,7 +489,14 @@ export function getUserMsg(data) {
     data
   })
 }
-
+// 返回用户是否新用户
+export function getUserIsNew(data) {
+  return request({
+    url: '/user/is_new_user',
+    method: 'post',
+    data
+  })
+}
 // 用户支付密码设置、换绑手机 - 短信验证
 export function smsVerify(data) {
   return request({

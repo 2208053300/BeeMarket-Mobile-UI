@@ -118,12 +118,13 @@ export default {
       const osObj = getOs()
       if (osObj.isWx) {
         // 微信直接跳转路由
-        window.location.href =
-          this.$store.state.app.homeUri +
-          '/category/details?pid=' +
-          pid +
-          '&target=' +
-          target
+        this.$router.push({
+          path: '/category/details',
+          query: {
+            pid: pid,
+            target: target
+          }
+        })
         this.$store.state.order.target = target
       } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({

@@ -28,13 +28,13 @@
         - 协作机构 -
       </div>
       <div class="institutions-content2">
-        <div class="institutions-item item1">
+        <div class="institutions-item">
           <img
             :src="beeIcon.confirmorder_pic_bee"
             alt=""
           >
         </div>
-        <div class="institutions-item item2">
+        <div class="institutions-item">
           <img
             :src="beeIcon.confirmorder_pic_qilin"
             alt=""
@@ -153,8 +153,8 @@ export default {
       grid-template-rows: repeat(2, 0.8rem);
       grid-row-gap: 0.4rem;
       .institutions-item {
-        width: 100%;
-        height: 100%;
+        height: 0.8rem;
+        width: 2.16rem;
         margin: auto;
         &:nth-child(n + 2) {
           border-right: 0.02rem solid @Grey4;

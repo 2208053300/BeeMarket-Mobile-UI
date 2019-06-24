@@ -370,7 +370,7 @@ export default {
   .task1-content {
     .task-body {
       .task-list {
-        margin-top: 0.64rem;
+        margin-top: 1rem;
         .task-detail {
           height: 2.3rem;
           width: 100%;
