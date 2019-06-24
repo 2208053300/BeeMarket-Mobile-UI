@@ -105,6 +105,8 @@ export default {
     },
     // 筛选条件 // 0按综合获取 1销量 2价格
     getFilter(type) {
+      console.log(232323232)
+
       if (type === 0) {
         this.condition.sort = ''
         this.condition.order = ''
@@ -121,8 +123,8 @@ export default {
       // 清空已有数据，重置页码，获取新的数据
       this.goodsList = []
       this.condition.page = 1
+
       this.getGoodsList()
-      // this.$refs.ProductsList.getGoodsList(this.condition)
     },
     // 布局方式
     showWay(isVertical) {

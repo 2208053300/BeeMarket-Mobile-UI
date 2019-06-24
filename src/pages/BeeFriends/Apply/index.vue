@@ -52,6 +52,7 @@
                   name="name"
                   placeholder="（必填）"
                   @input="changePersonalName"
+                  @blur.prevent="blurScroll"
                 >
                 <p v-if="personalNameError" class="help-text name-tip">
                   请重新输入姓名！
@@ -68,6 +69,7 @@
                   name="card_no"
                   placeholder="（必填）"
                   @input="changePersonalCard"
+                  @blur.prevent="blurScroll"
                 >
                 <p v-if="card_noError" class="help-text card-tip">
                   请重新输入身份证号！
@@ -85,6 +87,7 @@
                   name="number"
                   placeholder="（请输入注册号码）"
                   @input="changePersonTell"
+                  @blur.prevent="blurScroll"
                 >
                 <p v-if="numberError" class="help-text tel-tip">
                   请重新输入手机号码！
@@ -102,6 +105,7 @@
                   name="wx_account"
                   placeholder="（必填）"
                   @input="changeWxAccount"
+                  @blur.prevent="blurScroll"
                 >
                 <p v-if="wx_accountError" class="help-text wx-tip">
                   请重新输入微信号码！
@@ -119,6 +123,7 @@
                   name="address"
                   placeholder="请填写详细地址"
                   @input="changeAddress"
+                  @blur.prevent="blurScroll"
                 />
                 <p v-if="addressError" class="help-text address-tip">
                   地址不能为空!
@@ -334,18 +339,13 @@ export default {
         }, wait)
       }
     },
-    //  示例
-    goProduct(pid) {
-      // 判断是否来自webApp
-      if (this.$route.query.origin) {
-        window.location.href = `/#/category/details?pid=${pid}`
-      } else {
-        console.log('本地应用')
-        this.$router.push({
-          path: '/category/details',
-          query: { pid }
-        })
-      }
+    // ios 12 解决键盘顶起页面问题
+    blurScroll() {
+      setTimeout(function() {
+        var scrollHeight =
+          document.documentElement.scrollTop || document.body.scrollTop || 0
+        window.scrollTo(0, Math.max(scrollHeight - 1, 0))
+      }, 100)
     }
 
   }

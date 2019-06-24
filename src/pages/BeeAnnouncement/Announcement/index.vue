@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { getArticleDetail } from '@/api/BeeApi/action'
+import { getNoticeDetail } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 export default {
   metaInfo() {
@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     async getArticleDetailData() {
-      const res = await getArticleDetail({ id: this.$route.query.id })
+      const res = await getNoticeDetail({ id: this.$route.query.id })
       this.article = res.data
       this.$store.state.app.beeFooter.show = false
     },
