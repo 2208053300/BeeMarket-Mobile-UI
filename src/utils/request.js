@@ -84,7 +84,7 @@ service.interceptors.response.use(
         checkToken()
       }
       if (res.status_code === 400) {
-        Toast.fail(res.message)
+        // Toast.fail(res.message)
       }
       // Toast.fail(res.message || 'error')
       return Promise.reject(res.message || 'error')
