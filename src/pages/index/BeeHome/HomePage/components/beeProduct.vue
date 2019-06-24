@@ -1,7 +1,7 @@
 <template>
   <div
     class="bee-product"
-    :style="{backgroundImage:'url('+homeData.plan.show_image+')'}"
+    :style="{backgroundImage:'url('+(homeData.plan.show_image ||$store.state.app.defaultImg3)+')'}"
     @click="goUrl(homeData.plan.url,homeData.plan.plan_id)"
   />
 </template>

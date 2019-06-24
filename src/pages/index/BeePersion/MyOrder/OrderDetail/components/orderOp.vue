@@ -109,50 +109,45 @@
               <van-cell
                 title="1.多拍/拍错/不喜欢/不想要了"
                 clickable
-                @click="cancelReason = '多拍/拍错/不喜欢/不想要了'"
               >
                 <van-radio
-                  name="1"
+                  name="多拍/拍错/不喜欢/不想要了"
                   :checked-color="BeeDefault"
                 />
               </van-cell>
               <van-cell
                 title="2.商品属性规格选错"
                 clickable
-                @click="cancelReason = '商品属性规格选错'"
               >
                 <van-radio
-                  name="2"
+                  name="商品属性规格选错"
                   :checked-color="BeeDefault"
                 />
               </van-cell>
               <van-cell
                 title="3.地址信息填写错误"
                 clickable
-                @click="cancelReason = '地址信息填写错误'"
               >
                 <van-radio
-                  name="3"
+                  name="地址信息填写错误"
                   :checked-color="BeeDefault"
                 />
               </van-cell>
               <van-cell
                 title="4.商品暂时无货"
                 clickable
-                @click="cancelReason = '商品暂时无货'"
               >
                 <van-radio
-                  name="4"
+                  name="商品暂时无货"
                   :checked-color="BeeDefault"
                 />
               </van-cell>
               <van-cell
                 title="5.其他"
                 clickable
-                @click="cancelReason = '其他'"
               >
                 <van-radio
-                  name="5"
+                  name="其他"
                   :checked-color="BeeDefault"
                 />
               </van-cell>
@@ -323,6 +318,9 @@ export default {
           padding: 0.6rem 0.32rem;
           font-size: 0.26rem;
           color: @Grey1;
+        }
+        .van-radio{
+          display: inline-block;
         }
       }
       .submit-cancel {

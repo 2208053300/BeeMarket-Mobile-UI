@@ -82,7 +82,7 @@
               </div>
               <div class="commodity-tag">
                 <div class="from-area">
-                  商品来自：西南地区
+                  商品来自：{{ item.area }}
                 </div>
                 <!-- <div
                   v-for="item2 in item.tags"
@@ -141,7 +141,7 @@
             <div class="commodity-tag">
               <!-- // TODO 根据字段渲染 -->
               <div class="from-area">
-                商品来自：西南地区
+                商品来自：{{ item.area }}
               </div>
               <!-- <div
                 v-for="item2 in item.tags"
@@ -200,21 +200,21 @@
             :class="{activeCard:condition.area===2}"
             @click="changeArea2(2)"
           >
-            东北地区
+            西北地区
           </div>
           <div
             class="filter-card"
             :class="{activeCard:condition.area===3}"
             @click="changeArea2(3)"
           >
-            西北地区
+            华南地区
           </div>
           <div
             class="filter-card"
             :class="{activeCard:condition.area===4}"
             @click="changeArea2(4)"
           >
-            华南地区
+            华东地区
           </div>
           <div
             class="filter-card"
@@ -235,7 +235,7 @@
             :class="{activeCard:condition.area===7}"
             @click="changeArea2(7)"
           >
-            华东地区
+            东北地区
           </div>
         </div>
       </div>
@@ -273,7 +273,7 @@ export default {
       // 请求数据条件
       condition: {
         // 当前选中分类id
-        cid: 0,
+        cid: 1,
         // 筛选条件  sell_price 售价，sold 销量
         sort: '',
         // asc 顺序 还是 desc 倒序
@@ -295,7 +295,6 @@ export default {
       const data = this.filterParams(this.condition)
       setTimeout(async() => {
         const res = await getProductList(data)
-
         this.commodityList.push(...res.data.products)
         this.page++
         this.loading = false
@@ -304,6 +303,11 @@ export default {
           this.finished = true
         }
       }, 500)
+    },
+    async getProductListData2() {
+      const data = this.filterParams(this.condition)
+      const res = await getProductList(data)
+      this.commodityList = res.data.products
     },
     // 单排展示还是双排展示
     showWay(val) {
@@ -361,7 +365,7 @@ export default {
     changeArea2(aid) {
       this.condition.area = aid
       this.showArea = false
-      this.getProductListData()
+      this.getProductListData2()
     }
   }
 }

@@ -55,7 +55,7 @@
             >
               <div class="category3-img">
                 <img
-                  :src="item2.cat_image"
+                  :src="item2.cat_image ||$store.state.app.defaultImg2"
                   :onerror="$store.state.app.defaultImg"
                 >
               </div>
@@ -75,7 +75,7 @@
             @click="goList(item)"
           >
             <div class="category3-img">
-              <img :src="item.cat_image">
+              <img :src="item.cat_image ||$store.state.app.defaultImg2">
               <!-- <img v-lazy="item.cat_image"> -->
             </div>
             <div class="category3-title">

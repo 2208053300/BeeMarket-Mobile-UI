@@ -24,7 +24,7 @@
         >
           <div class="product-img">
             <img
-              :src="item.thumb_url"
+              :src="item.thumb_url ||$store.state.app.defaultImg2"
               alt="商品缩略图"
             >
           </div>
@@ -40,14 +40,14 @@
     <div class="card-bottom">
       <div class="left-action">
         <img
-          :src="homeData.limited_plan.left.show_image"
+          :src="homeData.limited_plan.left.show_image ||$store.state.app.defaultImg3"
           alt="限量蜂抢"
           @click="$router.push('/beeLimit')"
         >
       </div>
       <div class="right-action">
         <img
-          :src="homeData.limited_plan.right.show_image"
+          :src="homeData.limited_plan.right.show_image ||$store.state.app.defaultImg3"
           alt="集市活动"
           @click="$router.push({path:'/beeActiveTpl',query:{id:homeData.limited_plan.right.plan_id}})"
         >
