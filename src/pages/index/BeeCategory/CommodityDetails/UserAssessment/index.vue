@@ -79,19 +79,34 @@
           </div>
           <div class="assessment-img">
             <div
-              v-for="item2 in item.images"
-              :key="item2"
+              v-for="(item2,index2) in item.images"
+              :key="index2"
               class="assessment-img-container"
             >
               <img
                 :src="item2"
-                alt=""
+                @click="showPre(index2,item.images)"
               >
             </div>
           </div>
         </div>
       </van-list>
     </div>
+    <!-- 图片预览 -->
+    <van-image-preview
+      v-model="showImgPre"
+      :images="imgList"
+      :start-position="preIndex"
+      :show-indicators="true"
+      :loop="true"
+      class="previewImg"
+      @close="closePre"
+      @change="onChange2"
+    >
+      <template slot="index">
+        {{ preIndex +1 }}/{{ imgList.length }}
+      </template>
+    </van-image-preview>
   </div>
 </template>
 
@@ -117,7 +132,12 @@ export default {
         product_detail_evaluation_icon_flower_normat: require('@/assets/icon/product/product_detail_evaluation_icon_flower_normat@2x.png'),
         product_detail_icon_avatar: require('@/assets/icon/product/product_detail_icon_avatar@2x.png')
       },
-      formData: {}
+      formData: {},
+      // 图片预览
+      showImgPre: false,
+      imgList: [],
+      preIndex: 0,
+      touchMove: false
     }
   },
   computed: {},
@@ -158,6 +178,25 @@ export default {
         this.getAssessmentData()
         this.assessmentType = '全部'
       }
+    },
+    // 预览图片
+    showPre(index, images) {
+      if (this.touchMove) {
+        this.touchMove = false
+        return
+      }
+      this.preIndex = index
+      this.imgList = images
+      this.showImgPre = true
+      this.$store.state.app.beeHeader = false
+    },
+    closePre() {
+      this.$store.state.app.beeHeader = true
+    },
+    onChange2(index) {
+      console.log(123)
+
+      this.preIndex = index
     }
   }
 }
@@ -259,7 +298,9 @@ export default {
         .assessment-img-container {
           display: inline-block;
           border-radius: 0.1rem;
+          height: 2.26rem;
           overflow: hidden;
+
         }
       }
     }

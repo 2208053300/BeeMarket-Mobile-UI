@@ -56,6 +56,7 @@
                 <img
                   :src="item2"
                   alt=""
+                  @click="showPre(index2,item.images)"
                 >
               </div>
             </div>
@@ -78,6 +79,22 @@
     >
       暂无用户评价
     </div>
+
+    <!-- 图片预览 -->
+    <van-image-preview
+      v-model="showImgPre"
+      :images="imgList"
+      :start-position="preIndex"
+      :show-indicators="true"
+      :loop="true"
+      class="previewImg"
+      @close="closePre"
+      @change="onChange2"
+    >
+      <template slot="index">
+        {{ preIndex +1 }}/{{ imgList.length }}
+      </template>
+    </van-image-preview>
   </div>
 </template>
 
@@ -101,6 +118,10 @@ export default {
   },
   data() {
     return {
+      showImgPre: false,
+      imgList: [],
+      preIndex: 0,
+      touchMove: false,
       beeIcon: {
         product_detail_icon_flower_pressed: require('@/assets/icon/product/product_detail_icon_flower_pressed@2x.png'),
         product_detail_icon_flower_normat: require('@/assets/icon/product/product_detail_icon_flower_normat@2x.png'),
@@ -118,6 +139,25 @@ export default {
         path: '/category/details/userAssessment',
         query: { pid: this.$route.query.pid }
       })
+    },
+    // 预览图片
+    showPre(index, images) {
+      if (this.touchMove) {
+        this.touchMove = false
+        return
+      }
+      this.preIndex = index
+      this.imgList = images
+      this.showImgPre = true
+      this.$store.state.app.beeHeader = false
+    },
+    closePre() {
+      this.$store.state.app.beeHeader = true
+    },
+    onChange2(index) {
+      console.log(123)
+
+      this.preIndex = index
     }
   }
 }
@@ -189,6 +229,7 @@ export default {
           .assessment-img-container {
             display: inline-block;
             border-radius: 0.1rem;
+            height:1.7rem;
             overflow: hidden;
           }
         }

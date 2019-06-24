@@ -170,9 +170,9 @@ export default {
       // pic
       wxIcon: require('@/assets/icon/beeFriends/info/icon_wx.png'),
       // 是否可提现
-      isActive: true,
+      isActive: false,
       // 单此提现金额最少1，最多1000
-      MIN_MONEY: 1,
+      MIN_MONEY: 100,
       MAX_MONEY: 1000,
       // 可提现总金额
       totalNum: 0,
@@ -232,17 +232,17 @@ export default {
 
       // 通过防水墙，发送验证码，验证短信验证码，通过则提交数据
       if (res.ret === 0) {
-        console.log(res)
+        // console.log(res)
 
         this.ticket = res.ticket
         this.rand_str = res.randstr
         try {
-          const res = await toCash({
+          const res1 = await toCash({
             status: 2,
             ticket: res.ticket,
             rand_str: res.randstr
           })
-          if (res.status_code === 200) {
+          if (res1.status_code === 200) {
             this.show = true
             this.getSms()
           }
