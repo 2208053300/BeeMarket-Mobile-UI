@@ -6,7 +6,7 @@
       :class="{limitProduct:1}"
     >
       <commodity-overview :commodity-data="commodityData" />
-      <other-info :commodity-data="commodityData" />
+      <other-info :commodity-data="commodityData" @sku-done="skuDone" />
       <!-- <div class="advertisement">
         广告位
         <img
@@ -19,7 +19,7 @@
       <rich-details :commodity-data="commodityData" />
       <bee-guess />
     </div>
-    <goods-action :commodity-data="commodityData" />
+    <goods-action ref="goodsAction" :commodity-data="commodityData" />
   </div>
 </template>
 
@@ -58,6 +58,7 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.$store.state.cart.skuId = 0
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getProductDetailData(this.$route.query.pid, this.$route.query.target)
@@ -68,10 +69,15 @@ export default {
       const res = await getProductDetail({ pid, target })
       this.commodityData = res.data
       // NOTE 先放这里
+    },
+    // SKU选择完成
+    skuDone() {
+      this.$refs['goodsAction'].skuDone()
     }
   },
   // 路由更新之前获取商品详情
   beforeRouteUpdate(to, from, next) {
+    this.$store.state.cart.skuId = 0
     this.getProductDetailData(to.query.pid, to.query.target)
     next()
   }

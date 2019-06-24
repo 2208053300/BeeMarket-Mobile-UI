@@ -184,6 +184,7 @@
       :p-number.sync="pNumber"
       @get-sku-name="getSkuName"
       @get-sku-id="getSkuId"
+      @sku-done="$emit('sku-done')"
     />
   </div>
 </template>

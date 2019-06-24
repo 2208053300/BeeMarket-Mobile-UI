@@ -100,9 +100,14 @@ export default {
       }
     },
     async sendSmsData() {
-      const res = await sendSms({ mobileNum: this.phone, type: 'login' })
-      if (res.status_code === 200) {
-        this.changeCountDoen()
+      try {
+        const res = await sendSms({ mobileNum: this.phone, type: 'login' })
+        if (res.status_code === 200) {
+          this.$toast.success('已发送验证码')
+          this.changeCountDoen()
+        }
+      } catch (e) {
+        this.$toast.fail(e)
       }
     },
     async userLoginData() {

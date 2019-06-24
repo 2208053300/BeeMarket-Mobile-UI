@@ -202,6 +202,7 @@ export default {
       // FIXME 此处注意方法顺序
       this.$emit('get-sku-name', this.skuName)
       this.$emit('get-sku-id', this.propsData.sku_id)
+      this.$emit('sku-done') // SKU选择完成
       // return this.propsData.sku_id
     }
   }
