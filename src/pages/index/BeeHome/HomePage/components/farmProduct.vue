@@ -21,7 +21,7 @@
       >
         <div class="product-img">
           <img
-            :src="product.thumb_url"
+            :src="product.thumb_url ||$store.state.app.defaultImg2"
             alt=""
           >
         </div>

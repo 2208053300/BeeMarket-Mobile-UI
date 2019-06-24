@@ -127,7 +127,7 @@
             提醒发货
           </van-button>
           <van-button
-            v-if="card.s_pay === 0"
+            v-if="card.s_pay === 0&&card.s_order !== -1"
             round
             class="order-button"
             @click.stop=""

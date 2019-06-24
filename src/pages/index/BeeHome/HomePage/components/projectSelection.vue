@@ -12,7 +12,7 @@
       >
         <div class="project-img">
           <img
-            :src="project.show_image"
+            :src="project.show_image ||$store.state.app.defaultImg2"
             alt="专题图片"
           >
         </div>

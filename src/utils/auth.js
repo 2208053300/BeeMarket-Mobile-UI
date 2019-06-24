@@ -2,7 +2,7 @@ import { getOs } from '@/utils'
 // import { Base64 } from 'js-base64'
 import Cookies from 'js-cookie'
 import { auditWechat } from '@/api/BeeApi/auth'
-import { GetRequest } from '@/utils/index'
+import { GetRequest, getQueryString } from '@/utils/index'
 
 // SECTION 获取Token
 export async function getToken() {
@@ -14,6 +14,7 @@ export async function getToken() {
   if (osObj.isWx) {
     const token = sessionStorage.getItem('BM-App-Token')
     const uriProp = GetRequest('code')
+    const uid = getQueryString('uid')
     if (!uriProp) {
       await checkToken()
     }
@@ -21,7 +22,7 @@ export async function getToken() {
       return token
     } else if (uriProp && token !== 'waiting') {
       sessionStorage.setItem('BM-App-Token', 'waiting')
-      await auditWechat({ code: uriProp })
+      await auditWechat({ code: uriProp, uid: uid })
       // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
       if (sessionStorage.getItem('BM-App-Token') === 'waiting') {
         console.log('微信授权失败，code')
