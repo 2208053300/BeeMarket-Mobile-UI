@@ -127,7 +127,9 @@ export default {
     // wxapi.wxRegister(this.wxRegCallback)
     // 获取用户消息
     this.$store.dispatch('GerUserMsg')
-    this.$store.dispatch('getUserIsNew')
+    if (this.$store.state.user.is_new_user !== 1) {
+      this.$store.dispatch('getUserIsNew')
+    }
   },
   methods: {
     async getHomeData() {

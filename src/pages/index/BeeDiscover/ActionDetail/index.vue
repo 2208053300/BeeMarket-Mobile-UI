@@ -4,13 +4,28 @@
       <img :src="actionDetails.background_image_url" alt="">
     </div> -->
     <div class="details-content">
-      <detail-card0 class="details-card" :action-details="actionDetails" />
-      <detail-card1 class="details-card" :action-details="actionDetails" />
-      <detail-card2 class="details-card" :action-details="actionDetails" />
-      <detail-card3 class="details-card" :action-details="actionDetails" />
+      <detail-card0
+        class="details-card"
+        :action-details="actionDetails"
+      />
+      <detail-card1
+        class="details-card"
+        :action-details="actionDetails"
+      />
+      <detail-card2
+        class="details-card"
+        :action-details="actionDetails"
+      />
+      <detail-card3
+        class="details-card"
+        :action-details="actionDetails"
+      />
     </div>
     <div class="footer-action">
-      <div v-if="actionDetails.current_is_join" class="helped-text">
+      <div
+        v-if="actionDetails.current_is_join"
+        class="helped-text"
+      >
         <!-- 您已参与了该项目的助力，分享给更多好友，一起助力吧! -->
         您已参与了助力，分享给更多好友，一起助力吧!
       </div>
@@ -19,12 +34,18 @@
           发起助力
         </van-button> -->
         <van-button
+          v-if="!actionDetails.is_join"
           class="go-help"
-          :disabled="actionDetails.is_join"
           @click="goHelp"
         >
-          <span v-if="!actionDetails.is_join">参与并发起助力</span>
-          <span v-else>已参与助力</span>
+          <span>参与并发起助力</span>
+        </van-button>
+        <van-button
+          v-else
+          class="go-help"
+          @click="goHelp"
+        >
+          <span>发起助力</span>
         </van-button>
       </div>
     </div>
@@ -63,8 +84,14 @@
       class="share-modal"
       @closed="closed"
     >
-      <div class="text-right" style="padding:0.2rem 0.2rem 0 0">
-        <img :src="beeIcon.shareTip" class="shareTip">
+      <div
+        class="text-right"
+        style="padding:0.2rem 0.2rem 0 0"
+      >
+        <img
+          :src="beeIcon.shareTip"
+          class="shareTip"
+        >
       </div>
     </van-popup>
   </div>
