@@ -50,7 +50,7 @@ export default {
     async helpActionData() {
       const res = await helpAction({
         aid: this.$route.query.aid,
-        share_id: this.$route.query.user_id
+        share_id: this.$route.query.uid
       })
       this.$toast(res.message)
       if (res.status_code === 200) {

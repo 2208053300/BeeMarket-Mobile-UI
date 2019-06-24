@@ -13,6 +13,12 @@
         <div class="select-title">
           可选项目
         </div>
+        <div class="rank-header">
+          <img
+            :src="beeIcon.bee_firends_withdraw_icon_piggybank"
+            alt="项目列表"
+          >
+        </div>
         <div
           class="close-list"
           @click="handleClose"
@@ -23,7 +29,11 @@
           >
         </div>
         <div class="card-content">
-          <div class="project-card">
+          <div
+            class="project-card"
+            :style="{backgroundImage:'url('+beeIcon.tixianBg+')'}"
+          >
+            <div class="card-overlay" />
             <div class="project-detail">
               <div class="left-text">
                 <div class="text1">
@@ -59,7 +69,9 @@ export default {
   data() {
     return {
       beeIcon: {
-        bee_firends_invite_icon_off: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_off.png')
+        bee_firends_invite_icon_off: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_off.png'),
+        tixianBg: require('@/assets/icon/beeFriends/rank/tixianBg.png'),
+        bee_firends_withdraw_icon_piggybank: require('@/assets/icon/beeFriends/rank/bee_firends_withdraw_icon_piggybank.png')
       },
       withdrawNum: 0
     }
@@ -91,6 +103,7 @@ export default {
   .project-pop {
     border-top-left-radius: 0.3rem;
     border-top-right-radius: 0.3rem;
+    overflow: inherit;
     .project-content {
       position: relative;
       padding: 0.5rem 0.4rem;
@@ -106,12 +119,27 @@ export default {
         width: 0.4rem;
         height: 0.4rem;
       }
+      .rank-header {
+        position: absolute;
+        width: 1.73rem;
+        height: 1.76rem;
+        top: -0.88rem;
+        left: 2.9rem;
+      }
       .project-card {
         margin-top: 0.22rem;
         border-radius: 0.1rem;
         height: 3.5rem;
-        background-color: #f7b925;
         position: relative;
+        background-size: cover;
+        .card-overlay {
+          height: 100%;
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0),
+            rgba(0, 0, 0, 0.5)
+          );
+        }
         .project-detail {
           position: absolute;
           bottom: 0.3rem;

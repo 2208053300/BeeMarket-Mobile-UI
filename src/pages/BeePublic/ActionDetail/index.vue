@@ -62,7 +62,7 @@ export default {
   methods: {
     async getShareDetailData() {
       const res = await getShareDetail({
-        user_id: this.$route.query.user_id,
+        user_id: this.$route.query.uid,
         aid: this.$route.query.aid
       })
       this.actionData = res.data

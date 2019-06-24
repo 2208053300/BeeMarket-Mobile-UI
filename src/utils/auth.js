@@ -48,12 +48,12 @@ export function checkToken() {
   if (osObj.isWx) {
     const uriProp = GetRequest('code')
     if (uriProp) {
-      const uriProp2 = GetRequest('state')
+      const uriProp2 = window.location.href.slice(window.location.href.indexOf('STATE') + 5)
       // 只带state后面的参数跳转
       window.location.href =
         'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
         encodeURIComponent(
-          window.location.origin + window.location.pathname + uriProp2.slice(5)
+          window.location.origin + window.location.pathname + uriProp2
         ) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     } else {
