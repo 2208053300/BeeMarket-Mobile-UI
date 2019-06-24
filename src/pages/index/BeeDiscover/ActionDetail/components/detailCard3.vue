@@ -125,6 +125,8 @@ export default {
     .info{
       background:@BeeDefault;
       border-top-left-radius: 1rem;
+      border-bottom-left-radius: 0.1rem;
+      border-bottom-right-radius: 0.1rem;
       max-height: 5rem;
       overflow: scroll;
       padding:0.52rem ;
