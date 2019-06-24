@@ -88,3 +88,11 @@ export function getAssessment(data) {
     data
   })
 }
+// 商品描述
+export function getProductDesc(data) {
+  return request({
+    url: '/product/desc',
+    method: 'get',
+    params: data
+  })
+}
