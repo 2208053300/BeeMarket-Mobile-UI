@@ -271,7 +271,6 @@ export default {
     async getPartnerData() {
       const res = await getPartner({ type: this.honeyType })
       this.partnerData = res.data
-      this.$notify('提示文案')
       await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
       await this.$refs.honeycomb.animateList()
     },
@@ -280,7 +279,7 @@ export default {
         const res = await getReceiveNum({ type: this.honeyType })
         this.can_receive_balance = res.data ? res.data.can_receive_balance : 0
       } catch (error) {
-        this.$toast(error)
+        //
       }
     },
     async harvestBalanceData() {
