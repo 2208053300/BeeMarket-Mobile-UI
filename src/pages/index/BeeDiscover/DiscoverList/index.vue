@@ -28,6 +28,11 @@ import { BeeDefault } from '@/styles/index/variables.less'
 import actionList from './components/actionList'
 import articleList from './components/articleList'
 export default {
+  metaInfo() {
+    return {
+      title: '发现'
+    }
+  },
   components: {
     actionList,
     articleList

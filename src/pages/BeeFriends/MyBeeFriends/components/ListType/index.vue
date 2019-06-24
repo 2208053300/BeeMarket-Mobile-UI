@@ -88,6 +88,9 @@ export default {
   mounted() {},
   methods: {
     changeType(type) {
+      if (type === 3) {
+        this.$toast('功能维护中！')
+      }
       this.$emit('update:honeyType', type)
       this.$parent.getPartnerData()
       this.$parent.getReceiveNumData()

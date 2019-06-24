@@ -1,6 +1,6 @@
 <template>
   <div class="communication-record">
-    <div class="audit-status">
+    <div v-if="afterCommuniInfo.merchant_check" class="audit-status">
       <div class="status-title ">
         <span>商家审核</span>
         <span class="time">{{ afterCommuniInfo.merchant_check.time }}</span>

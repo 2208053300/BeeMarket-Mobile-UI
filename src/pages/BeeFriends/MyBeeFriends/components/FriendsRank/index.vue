@@ -149,10 +149,7 @@
             </div>
           </van-list>
         </div>
-        <div
-          v-if="friendsList.length>0"
-          class="btn-content"
-        >
+        <div class="btn-content">
           <van-button
             class="fast-invite"
             @click="fastInvite"
@@ -206,8 +203,10 @@ export default {
       const res = await getFriends({ type: this.friendsType })
       this.friendsData = res.data || {}
       this.friendsList = res.data.friendsList
-      if (this.friendsList.length === 0) {
+      if (this.friendsList.length < 10) {
         this.finished = true
+      } else {
+        this.finished = false
       }
     },
     async remindLoginData(id) {
@@ -216,6 +215,11 @@ export default {
         this.$toast({
           type: 'success',
           message: res.message
+        })
+      } else {
+        this.$toast({
+          type: 'waring',
+          message: '帐号列表推送全部失败,请稍后重试!'
         })
       }
     },
@@ -236,7 +240,6 @@ export default {
           type: this.friendsType,
           page: this.page
         })
-        this.friendsData = res.data || {}
         this.friendsList.push(...res.data.friendsList)
         this.page++
         this.loading = false
@@ -254,9 +257,9 @@ export default {
     },
     changeType(type) {
       this.friendsType = type
-      this.page = 1
-      this.finished = false
-      // this.getFriendsData()
+      this.page = 2
+      this.finished = true
+      this.getFriendsData()
     },
     getColor(index) {
       if (index === 0) {

@@ -128,7 +128,7 @@
           <div class="video">
             <video
               ref="video"
-              src="https://app.fengjishi.com/static/video/film.mp4"
+              src="https://img.fengjishi.com.cn/app/videos/education/friendship-course-1.mp4"
               :poster="beeIcon.first_screen"
               class="video-body"
               :controls="showControls"

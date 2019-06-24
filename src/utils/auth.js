@@ -65,9 +65,6 @@ export function checkToken() {
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除
 export function setToken(Token) {
-  window.onunload = function() {
-    removeToken()
-  }
   return sessionStorage.setItem('BM-App-Token', Token)
 }
 // 清除登录信息

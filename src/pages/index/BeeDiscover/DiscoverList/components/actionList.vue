@@ -8,6 +8,7 @@
         v-model="loading"
         :finished="finished"
         finished-text="我也是有底线的 o(´^｀)o"
+        :immediate-check="false"
         @load="onLoad"
       >
         <!-- :immediate-check="false" -->
@@ -85,7 +86,7 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    // this.getActionListData()
+    this.getActionListData()
   },
   methods: {
     async getActionListData() {
@@ -94,6 +95,9 @@ export default {
       this.page = 2
       // 加载状态结束
       this.loading = false
+      if (res.data.length < 10) {
+        this.finished = true
+      }
     },
     onLoad() {
       // 异步更新数据

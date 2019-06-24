@@ -188,6 +188,11 @@ import { getPersionalCenter } from '@/api/BeeApi/user'
 import { isLogin } from '@/utils/auth'
 
 export default {
+  metaInfo() {
+    return {
+      title: '个人中心'
+    }
+  },
   components: {
     BeeOrder
   },
