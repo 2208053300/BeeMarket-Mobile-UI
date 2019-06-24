@@ -39,14 +39,17 @@
               </div> -->
                 <van-radio-group v-model="gender" class="flex">
                   <van-radio
-                    name="1"
+                    :name="1"
                     checked-color="#ff8200"
                     style="margin-right: 0.5rem;"
                   >
                     男
                   </van-radio>
-                  <van-radio name="0" checked-color="#ff8200">
+                  <van-radio :name="0" checked-color="#ff8200" style="margin-right: 0.5rem;">
                     女
+                  </van-radio>
+                  <van-radio :name="2" checked-color="#ff8200">
+                    保密
                   </van-radio>
                 </van-radio-group>
               </div>
@@ -102,7 +105,7 @@ export default {
       // nickname
       nickname: '',
       // 选择性别;
-      gender: '0',
+      gender: '',
       // 日期遮罩
       dateModal: false,
       currentDate: new Date(),
@@ -125,7 +128,7 @@ export default {
 
     // 保存更新个人资料
     async submit() {
-      if (!this.nickname || !this.gender || !this.birthday) {
+      if (!this.nickname || this.gender === '' || !this.birthday) {
         this.$toast('请完善信息后提交！')
         return
       }
@@ -165,21 +168,23 @@ export default {
       const res = await getPorfileData()
       this.head_image = res.data.head_image
       this.nickname = res.data.nickname
-      this.gender = res.data.gender.toString()
+      this.gender = res.data.gender
       this.birthday = res.data.birthday
       console.log('用户信息：', res)
     },
     // 更新头像上传图片
     async onRead(file) {
-      console.log(file)
-      this.head_image = file.content
-      this.img = file
-
-      const formData = new FormData()
-      const res = await zipImg(file.file)
-      formData.set('head_image', res)
-      const res1 = await updateHeadImage(formData)
-      console.log('更新头像：', res1)
+      try {
+        const formData = new FormData()
+        const res = await zipImg(file.file)
+        formData.set('head_image', res)
+        const res1 = await updateHeadImage(formData)
+        this.$toast.success(res1.message)
+        this.head_image = file.content
+        this.img = file
+      } catch (e) {
+        this.$toast.fail(e)
+      }
     }
   }
 }
