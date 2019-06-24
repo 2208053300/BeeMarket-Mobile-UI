@@ -50,10 +50,13 @@ export function checkToken() {
         ) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     } else {
+      console.log(454545)
       window.location.href =
         'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
         encodeURIComponent(window.location.href) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+      debugger
+      console.log(999999)
     }
   } else {
     // 如果是网页端，没有token弹出手机号登录界面
@@ -65,9 +68,6 @@ export function checkToken() {
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除
 export function setToken(Token) {
-  window.onunload = function() {
-    removeToken()
-  }
   return sessionStorage.setItem('BM-App-Token', Token)
 }
 // 清除登录信息

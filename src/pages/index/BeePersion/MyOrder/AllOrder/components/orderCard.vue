@@ -73,7 +73,7 @@
         </div>
         <div class="order-op">
           <van-button
-            v-if="[-1, 4].indexOf(card.s_order) !== -1 || card.s_pay === -1"
+            v-if="[-1, 4,5].indexOf(card.s_order) !== -1 || card.s_pay === -1"
             round
             class="order-button del-button"
             @click="deleteOrderData(card.order_no)"
@@ -95,7 +95,7 @@
             评价晒单
           </van-button>
           <van-button
-            v-if="[-1, 4].indexOf(card.s_order) !== -1"
+            v-if="[-1, 4,5].indexOf(card.s_order) !== -1"
             round
             class="order-button"
             @click.stop="buyAgain(card)"

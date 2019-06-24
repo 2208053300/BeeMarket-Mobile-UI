@@ -121,6 +121,8 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    console.log(77777)
+
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
     this.getHomeData()
