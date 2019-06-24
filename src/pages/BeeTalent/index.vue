@@ -97,7 +97,7 @@ export default {
         line_bee_circle_banner: require('@/assets/icon/task/talent/line_bee_circle_banner@2x.png'),
         first_screen: require('@/assets/icon/task/talent/first_screen@3x.png')
       },
-      video_url: 'https://img.fengjishi.com.cn/product/video/mi9.mp4',
+      video_url: 'https://img.fengjishi.com.cn/app/videos/education/friendship-course-1.mp4',
       hasFirstConsume: 0,
       showControls: false,
       isWx: getOs().isWx
