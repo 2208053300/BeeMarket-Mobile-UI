@@ -130,9 +130,8 @@
             v-if="card.s_pay === 0&&card.s_order !== -1"
             round
             class="order-button"
-            @click.stop=""
+            @click.stop="$router.push('/category/details/payOrder?orderNo='+card.order_no)"
           >
-            <!-- TODO 接口缺少时间 -->
             去支付
           </van-button>
           <!-- v-if="card.s_order === 4" -->

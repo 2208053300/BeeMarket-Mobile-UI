@@ -172,6 +172,7 @@ export default {
       if (res.status_code === 200) {
         console.log(res)
         this.order.payInfo = res.data
+        console.log('支付信息', res.data)
         if (this.orderTypeText === 'please') {
           this.$router.push('/category/details/payForAnother')
         } else if (this.orderTypeText === 'present') {

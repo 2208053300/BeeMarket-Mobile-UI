@@ -23,6 +23,7 @@
       v-if="orderDetail.s_pay===0 && orderDetail.s_order!==-1"
       round
       class="bee-button"
+      @click="$router.push('/category/details/payOrder?orderNo='+orderDetail.order_no)"
     >
       去支付
     </van-button>
@@ -68,7 +69,7 @@
       v-if="orderDetail.s_pay===1&&[3].includes(orderDetail.s_order)"
       round
       class="bee-button"
-      @click="completeOrderData(card.order_no)"
+      @click="completeOrderData(orderDetail.order_no)"
     >
       确认收货
     </van-button>

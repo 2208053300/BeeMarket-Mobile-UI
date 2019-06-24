@@ -629,3 +629,11 @@ export function remindOrder(data) {
     data
   })
 }
+// 个人中心-订单 支付
+export function repayOrder(data) {
+  return request({
+    url: '/user/order/repay',
+    method: 'post',
+    data
+  })
+}
