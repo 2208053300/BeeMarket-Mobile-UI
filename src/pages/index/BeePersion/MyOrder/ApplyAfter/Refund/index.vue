@@ -73,7 +73,7 @@
             placeholder="请详细描述商品问题，以便增加申请通过率"
             rows="1"
             autosize
-            maxlength="500"
+            maxlength="140"
             :border="borderNone"
           />
           <div class="max-len">
