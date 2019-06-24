@@ -225,10 +225,8 @@ export default {
         this.$toast(error)
       }
     },
-    // 第二步 防水墙
-    tencentCaptcha(res) {
-      this.show = true
-      console.log('防水墙1111111')
+    // 第二步 防水墙 验证票据
+    async tencentCaptcha(res) {
       // res（未通过验证）= {ret: 1, ticket: null}
       // res（验证成功） = {ret: 0, ticket: "String", randstr: "String"}
 
@@ -238,28 +236,46 @@ export default {
 
         this.ticket = res.ticket
         this.rand_str = res.randstr
-
-        this.show = true
-        this.getSms()
+        try {
+          const res = await toCash({
+            status: 2,
+            ticket: res.ticket,
+            rand_str: res.randstr
+          })
+          if (res.status_code === 200) {
+            this.show = true
+            this.getSms()
+          }
+        } catch (error) {
+          this.$toast(error)
+        }
       }
     },
-    // 第二步 获取短信验证码
+    // 第三步 获取短信验证码
     async getSms() {
       try {
         const res = await toCash({
-          status: 2,
-          ticket: this.ticket,
-          rand_str: this.rand_str
+          status: 3
         })
         if (res.status_code === 200) {
-          this.$toast(res.message + ',请注意查收！')
+          this.$toast(res.message)
           this.changeCountDoen()
         }
       } catch (error) {
         this.$toast(error)
       }
     },
-    // 提交第三步
+    // 开始倒计时
+    changeCountDoen() {
+      this.countDown = 60
+      const clock = window.setInterval(() => {
+        this.countDown--
+        if (this.countDown === 0) {
+          window.clearInterval(clock)
+        }
+      }, 1000)
+    },
+    // 提交第四步
     async confirmSubmit() {
       if (!(this.sms && this.sms.length === 6)) {
         this.$toast.fail('请正确填写验证码！')
@@ -267,13 +283,14 @@ export default {
       }
       try {
         const res = await toCash({
-          status: 3,
+          status: 4,
           money: this.money,
           sms_code: this.sms
         })
         if (res.status_code === 200) {
           this.$toast(res.message)
           this.show = false
+          this.totalNum = this.totalNum - this.money
         }
       } catch (error) {
         this.$toast.fail(error)
@@ -324,16 +341,7 @@ export default {
       // return reg.test(this.phone)
       return true
     },
-    // 开始倒计时
-    changeCountDoen() {
-      this.countDown = 60
-      const clock = window.setInterval(() => {
-        this.countDown--
-        if (this.countDown === 0) {
-          window.clearInterval(clock)
-        }
-      }, 1000)
-    },
+
     // 关闭弹出
     closed() {
       this.sms = ''

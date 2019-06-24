@@ -719,7 +719,8 @@ export default {
     display: flex;
     align-items: center;
     .check-img {
-      width: 0.28rem;
+      width: 0.26rem;
+      height: 0.26rem;
       margin-right: 0.1rem;
     }
     .text {
