@@ -509,5 +509,8 @@ export default {
       color: @Grey1;
     }
   }
+
+  .van-cell__value{text-align: right;}
+  .van-radio{display: inline-block;}
 }
 </style>

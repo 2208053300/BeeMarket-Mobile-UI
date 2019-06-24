@@ -140,7 +140,7 @@ export default {
     // 联系客服
     contactServer() {
       this.$router.push({
-        path: '/persion/ServiceHelper'
+        name: 'ServiceHelperIndex'
       })
     },
 
