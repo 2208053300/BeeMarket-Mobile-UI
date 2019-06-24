@@ -70,7 +70,7 @@ export default {
       // 活动标题
       activity: {
         id: '',
-        title: '',
+        title: '　',
         background_img: '',
         navigate_data: [],
         product_navigate: [

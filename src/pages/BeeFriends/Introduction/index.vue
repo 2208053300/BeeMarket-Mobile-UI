@@ -120,7 +120,7 @@ export default {
 @videoWidth: 6.4rem;
 @videoHeight: 3.3rem;
 .video-container {
-  // background: url(../../assets/icon/noviceGuide/00-新手教培_改_02.png);
+  background: url(../../../assets/icon/noviceGuide/00-新手教培_改_02.png);
   background-size: cover;
   padding: 0.52rem 0.54rem;
   .video {

@@ -6,7 +6,7 @@
       </van-button>
     </div> -->
     <van-button
-      v-if="orderDetail.s_pay===0"
+      v-if="orderDetail.s_pay===0||[1].indexOf(orderDetail.s_order)!==-1"
       round
       @click="cancelPop=true"
     >
@@ -33,14 +33,14 @@
       去支付
     </van-button>
     <van-button
-      v-if="orderDetail.s_pay===1&&orderDetail.s_order===1"
+      v-if="orderDetail.s_pay===1&&[1].indexOf(orderDetail.s_order)!==-1"
       round
       @click="remindDelivery"
     >
       提醒发货
     </van-button>
     <van-button
-      v-if="[4,5,6,11,15].indexOf(orderDetail.status)!==-1"
+      v-if="orderDetail.take_apart>1||[4,5,-1].indexOf(orderDetail.s_order)!==-1"
       round
       @click="deleteOrderData"
     >
@@ -48,13 +48,14 @@
     </van-button>
 
     <van-button
-      v-if="orderDetail.s_pay===1&&[3].indexOf(orderDetail.s_order)"
+      v-if="orderDetail.s_pay===1&&[3,4].indexOf(orderDetail.s_order)!==-1"
       round
+      @click="showLogistics(orderDetail)"
     >
       查看物流
     </van-button>
     <van-button
-      v-if="[5,6,11,15].indexOf(orderDetail.status)!==-1"
+      v-if="[5,-1].indexOf(orderDetail.s_order)!==-1"
       round
       class="bee-button"
       @click="buyAgain(orderDetail)"
@@ -62,16 +63,18 @@
       再次购买
     </van-button>
     <van-button
-      v-if="[4].indexOf(orderDetail.status)!==-1"
+      v-if="[4].indexOf(orderDetail.s_order)!==-1"
       round
       class="bee-button"
+      @click="goComment(orderDetail)"
     >
       去评价
     </van-button>
     <van-button
-      v-if="orderDetail.s_pay===1&&[3].indexOf(orderDetail.s_order)"
+      v-if="orderDetail.s_pay===1&&[3].indexOf(orderDetail.s_order)!==-1"
       round
       class="bee-button"
+      @click="completeOrderData(card.order_no)"
     >
       确认收货
     </van-button>
@@ -106,50 +109,45 @@
               <van-cell
                 title="1.多拍/拍错/不喜欢/不想要了"
                 clickable
-                @click="cancelReason = '多拍/拍错/不喜欢/不想要了'"
               >
                 <van-radio
-                  name="1"
+                  name="多拍/拍错/不喜欢/不想要了"
                   :checked-color="BeeDefault"
                 />
               </van-cell>
               <van-cell
                 title="2.商品属性规格选错"
                 clickable
-                @click="cancelReason = '商品属性规格选错'"
               >
                 <van-radio
-                  name="2"
+                  name="商品属性规格选错"
                   :checked-color="BeeDefault"
                 />
               </van-cell>
               <van-cell
                 title="3.地址信息填写错误"
                 clickable
-                @click="cancelReason = '地址信息填写错误'"
               >
                 <van-radio
-                  name="3"
+                  name="地址信息填写错误"
                   :checked-color="BeeDefault"
                 />
               </van-cell>
               <van-cell
                 title="4.商品暂时无货"
                 clickable
-                @click="cancelReason = '商品暂时无货'"
               >
                 <van-radio
-                  name="4"
+                  name="商品暂时无货"
                   :checked-color="BeeDefault"
                 />
               </van-cell>
               <van-cell
                 title="5.其他"
                 clickable
-                @click="cancelReason = '其他'"
               >
                 <van-radio
-                  name="5"
+                  name="其他"
                   :checked-color="BeeDefault"
                 />
               </van-cell>
@@ -170,7 +168,7 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 import { addShopcartProduct, remindOrder } from '@/api/BeeApi/user'
-import { closeOrder, deleteOrder } from '@/api/BeeApi/order'
+import { closeOrder, deleteOrder, completeOrder } from '@/api/BeeApi/order'
 
 export default {
   components: {},
@@ -227,6 +225,41 @@ export default {
       const res = await deleteOrder({ order_no: this.$route.query.order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
+      }
+    },
+    // 确认收货（订单完成）
+    async completeOrderData() {
+      const res = await completeOrder({ order_no: this.$route.query.order_no })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+      }
+    },
+    // 查看物流
+    showLogistics(item) {
+      if (item.take_apart > 1) {
+        this.$router.push({
+          path: '/persion/order/logistics',
+          query: { order_no: item.order_no }
+        })
+      } else {
+        this.$router.push({
+          path: '/persion/order/logisticsDetail',
+          query: { order_no: item.order_no }
+        })
+      }
+    },
+    // 去评价
+    goComment(item) {
+      if (item.uncomment >= 2) {
+        this.$router.push({
+          path: '/persion/order/comment/waitCommentOrder',
+          query: { order_no: item.order_no }
+        })
+      } else {
+        this.$router.push({
+          path: '/persion/order/comment',
+          query: { order_no: item.order_no, sku_id: item.products[0].sku_id }
+        })
       }
     }
   }
@@ -285,6 +318,9 @@ export default {
           padding: 0.6rem 0.32rem;
           font-size: 0.26rem;
           color: @Grey1;
+        }
+        .van-radio{
+          display: inline-block;
         }
       }
       .submit-cancel {

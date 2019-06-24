@@ -103,9 +103,13 @@ export default {
       return reg2.test(this.verificationCode)
     },
     async sendSmsData() {
-      const res = await sendSms({ type: 'passwd' })
-      if (res.status_code === 200) {
-        this.changeCountDoen()
+      try {
+        const res = await sendSms({ type: 'passwd' })
+        if (res.status_code === 200) {
+          this.changeCountDoen()
+        }
+      } catch (error) {
+        this.$toast(error)
       }
     },
     // 验证成功，跳转到设置登录密码页面

@@ -1,6 +1,69 @@
 <template>
   <div class="confirmOrder-address">
-    <van-tabs
+    <div
+      class="order-address"
+      @click="selectAddress()"
+    >
+      <div
+        v-if="order.addrDetail"
+        class="default-address"
+      >
+        <van-icon
+          :name="beeIcon.confirmorder_icon_address"
+          size="0.40rem"
+        />
+        <div class="address-details">
+          <div class="user-details">
+            <span class="name">{{ order.addrDetail.name }}</span>
+            <span
+              v-if="order.addrDetail.mobileNum"
+              class="phone"
+            >{{ order.addrDetail.mobileNum }}</span>
+          </div>
+          <div class="address">
+            <div
+              v-if="order.addrDetail.def"
+              class="address-tag default-tag"
+            >
+              默认
+            </div>
+            <!-- 需要调整字段显示中文 -->
+            <!-- <div
+                  v-if="order.addrDetail.tag"
+                  class="address-tag"
+                >
+                  {{ order.addrDetail.tag }}
+                </div> -->
+            <div class="address-details">
+              {{ order.addrDetail.address }}
+            </div>
+          </div>
+        </div>
+        <van-icon
+          name="arrow"
+          color="#ffffff"
+        />
+      </div>
+      <div
+        v-else
+        class="no-default-address"
+      >
+        <div class="no-left">
+          <van-icon
+            :name="beeIcon.confirmorder_icon_address"
+            size="0.40rem"
+          />
+          <span class="no-text">请选择收货地址</span>
+        </div>
+        <div class="no-right">
+          <van-icon
+            name="arrow"
+            color="#ffffff"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- <van-tabs
       v-model="buyFor"
       :color="BeeDefault"
       :title-active-color="BeeDefault"
@@ -12,69 +75,7 @@
         <div slot="title">
           自己购买
         </div>
-        <div
-          class="order-address"
-          @click="selectAddress()"
-        >
-          <div
-            v-if="order.addrDetail"
-            class="default-address"
-          >
-            <van-icon
-              :name="beeIcon.confirmorder_icon_address"
-              size="0.40rem"
-            />
-            <div class="address-details">
-              <div class="user-details">
-                <span class="name">{{ order.addrDetail.name }}</span>
-                <span
-                  v-if="order.addrDetail.mobileNum"
-                  class="phone"
-                >{{ order.addrDetail.mobileNum }}</span>
-              </div>
-              <div class="address">
-                <div
-                  v-if="order.addrDetail.def"
-                  class="address-tag default-tag"
-                >
-                  默认
-                </div>
-                <!-- 需要调整字段显示中文 -->
-                <!-- <div
-                  v-if="order.addrDetail.tag"
-                  class="address-tag"
-                >
-                  {{ order.addrDetail.tag }}
-                </div> -->
-                <div class="address-details">
-                  {{ order.addrDetail.address }}
-                </div>
-              </div>
-            </div>
-            <van-icon
-              name="arrow"
-              color="#ffffff"
-            />
-          </div>
-          <div
-            v-else
-            class="no-default-address"
-          >
-            <div class="no-left">
-              <van-icon
-                :name="beeIcon.confirmorder_icon_address"
-                size="0.40rem"
-              />
-              <span class="no-text">请选择收货地址</span>
-            </div>
-            <div class="no-right">
-              <van-icon
-                name="arrow"
-                color="#ffffff"
-              />
-            </div>
-          </div>
-        </div>
+        原位
       </van-tab>
       <van-tab>
         <div slot="title">
@@ -138,7 +139,7 @@
           </div>
         </div>
       </van-tab>
-    </van-tabs>
+    </van-tabs> -->
   </div>
 </template>
 
@@ -204,7 +205,6 @@ export default {
     }
   }
   .order-address {
-    padding-top: 0.24rem;
     background-color: #fff;
     .no-default-address {
       height: 1.08rem;

@@ -18,7 +18,7 @@
             class="logistics-img"
           >
             <img
-              :src="item"
+              :src="item||$store.state.app.defaultImg2"
               alt="商品图片"
             >
           </div>

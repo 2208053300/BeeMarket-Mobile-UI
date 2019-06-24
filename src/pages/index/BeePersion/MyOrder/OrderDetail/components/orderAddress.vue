@@ -1,8 +1,9 @@
 <template>
   <div class="order-address">
-    <!-- v-if="orderDetail.s_pay===1&&orderDetail.s_order===3" -->
     <div
+      v-if="[3,4,5].indexOf(orderDetail.s_order)!==-1"
       class="order-logistics"
+      @click="showLogistics(orderDetail)"
     >
       <van-icon
         :name="beeIcon.mine_order_icon_logisics"
@@ -10,11 +11,23 @@
       />
       <div class="logistics-text">
         <!-- TODO 未录入与拆分判断 -->
-        <div class="logistics-text2">
-          您的订单正由平台积极处理中，请耐心等待
+        <div
+          v-if="orderDetail.express_latest"
+          class="logistics-text2"
+        >
+          {{ orderDetail.express_latest }}
         </div>
-        <div class="logistics-time">
-          2019
+        <div
+          v-if="orderDetail.express_time"
+          class="logistics-time"
+        >
+          {{ orderDetail.express_time }}
+        </div>
+        <div
+          v-if="orderDetail.take_apart"
+          class="logistics part"
+        >
+          该订单已拆成{{ orderDetail.take_apart }}个包裹，点击查看
         </div>
       </div>
       <van-icon
@@ -120,7 +133,21 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    showLogistics(item) {
+      if (item.take_apart > 1) {
+        this.$router.push({
+          path: '/persion/order/logistics',
+          query: { order_no: item.order_no }
+        })
+      } else {
+        this.$router.push({
+          path: '/persion/order/logisticsDetail',
+          query: { order_no: item.order_no }
+        })
+      }
+    }
+  }
 }
 </script>
 

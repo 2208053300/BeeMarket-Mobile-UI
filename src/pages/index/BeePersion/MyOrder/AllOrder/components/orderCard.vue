@@ -103,17 +103,18 @@
             再次购买
           </van-button>
           <van-button
-            v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
+            v-if="[2, 3].indexOf(card.s_order) !== -1"
             round
             class="order-button"
-            @click.stop="$router.push({path:'/persion/order/logistics',query:{order_no:card.order_no}})"
+            @click.stop="showLogistics(card)"
           >
-            查看物流
+            物流追踪
           </van-button>
           <van-button
-            v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
+            v-if="[2, 3].indexOf(card.s_order) !== -1"
             round
             class="order-button"
+            @click.stop="completeOrderData(card.order_no)"
           >
             确认收货
           </van-button>
@@ -121,11 +122,12 @@
             v-if="card.s_order === 1"
             round
             class="order-button"
+            @click="remindDelivery(card.order_no)"
           >
             提醒发货
           </van-button>
           <van-button
-            v-if="card.s_pay === 0"
+            v-if="card.s_pay === 0&&card.s_order !== -1"
             round
             class="order-button"
             @click.stop=""
@@ -133,8 +135,8 @@
             <!-- TODO 接口缺少时间 -->
             去支付
           </van-button>
-          <van-button
-            v-if="card.s_order === 4"
+          <!-- v-if="card.s_order === 4" -->
+          <!-- <van-button
             round
             class="order-button"
             @click="
@@ -145,7 +147,7 @@
             "
           >
             查看详情
-          </van-button>
+          </van-button> -->
         </div>
       </div>
     </van-list>
@@ -153,8 +155,12 @@
 </template>
 
 <script>
-import { getOrderList, addShopcartProduct } from '@/api/BeeApi/user'
-import { deleteOrder } from '@/api/BeeApi/order'
+import {
+  getOrderList,
+  addShopcartProduct,
+  remindOrder
+} from '@/api/BeeApi/user'
+import { deleteOrder, completeOrder } from '@/api/BeeApi/order'
 
 export default {
   components: {},
@@ -212,6 +218,7 @@ export default {
         })
       }
     },
+    // 再次购买
     buyAgain(order) {
       order.product_list.map(async item => {
         await addShopcartProduct({
@@ -222,10 +229,38 @@ export default {
       })
       this.$toast('已加入购物车')
     },
+    // 删除订单
     async deleteOrderData(order_no) {
       const res = await deleteOrder({ order_no: order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
+      }
+    },
+    // 确认收货
+    async completeOrderData(order_no) {
+      const res = await completeOrder({ order_no: order_no })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+      }
+    },
+    // 提醒发货
+    async remindDelivery(order_no) {
+      const res = await remindOrder({ order_no: order_no })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+      }
+    },
+    showLogistics(item) {
+      if (item.take_apart > 1) {
+        this.$router.push({
+          path: '/persion/order/logistics',
+          query: { order_no: item.order_no }
+        })
+      } else {
+        this.$router.push({
+          path: '/persion/order/logisticsDetail',
+          query: { order_no: item.order_no }
+        })
       }
     }
   }

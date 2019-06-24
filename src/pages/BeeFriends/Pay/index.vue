@@ -54,7 +54,7 @@
     </div>
 
     <!-- 提现到微信 -->
-    <div v-if="status === 2" class="to-cash">
+    <div v-else class="to-cash">
       <div class="info">
         <div class="to-wx">
           <span>提现到微信</span>
@@ -170,9 +170,9 @@ export default {
       // pic
       wxIcon: require('@/assets/icon/beeFriends/info/icon_wx.png'),
       // 是否可提现
-      isActive: true,
+      isActive: false,
       // 单此提现金额最少1，最多1000
-      MIN_MONEY: 1,
+      MIN_MONEY: 100,
       MAX_MONEY: 1000,
       // 可提现总金额
       totalNum: 0,
@@ -212,46 +212,70 @@ export default {
         this.$toast('请正确填写姓名、身份证号码')
         return false
       }
-      const res = await toCash({
-        status: this.status,
-        name: this.name,
-        idNo: this.idNo
-      })
-      if (res.status_code === 200) {
-        this.status = 2
+      try {
+        const res = await toCash({
+          status: this.status,
+          name: this.name,
+          idNo: this.idNo
+        })
+        if (res.status_code === 200) {
+          this.status = 2
+        }
+      } catch (error) {
+        this.$toast(error)
       }
     },
-    // 第二步 防水墙
-    tencentCaptcha(res) {
-      this.show = true
-      console.log('防水墙1111111')
+    // 第二步 防水墙 验证票据
+    async tencentCaptcha(res) {
       // res（未通过验证）= {ret: 1, ticket: null}
       // res（验证成功） = {ret: 0, ticket: "String", randstr: "String"}
 
       // 通过防水墙，发送验证码，验证短信验证码，通过则提交数据
       if (res.ret === 0) {
-        console.log(res)
+        // console.log(res)
 
         this.ticket = res.ticket
         this.rand_str = res.randstr
-
-        this.show = true
-        this.getSms()
+        try {
+          const res1 = await toCash({
+            status: 2,
+            ticket: res.ticket,
+            rand_str: res.randstr
+          })
+          if (res1.status_code === 200) {
+            this.show = true
+            this.getSms()
+          }
+        } catch (error) {
+          this.$toast(error)
+        }
       }
     },
-    // 第二步 获取短信验证码
+    // 第三步 获取短信验证码
     async getSms() {
-      const res = await toCash({
-        status: 2,
-        ticket: this.ticket,
-        rand_str: this.rand_str
-      })
-      if (res.status_code === 200) {
-        this.$toast(res.message)
-        this.changeCountDoen()
+      try {
+        const res = await toCash({
+          status: 3
+        })
+        if (res.status_code === 200) {
+          this.$toast(res.message)
+          this.changeCountDoen()
+        }
+      } catch (error) {
+        this.$toast(error)
       }
     },
-    // 提交第三步
+    // 开始倒计时
+    changeCountDoen() {
+      this.countDown = 60
+      const clock = window.setInterval(() => {
+        this.countDown--
+        if (this.countDown === 0) {
+          window.clearInterval(clock)
+        }
+      }, 1000)
+    },
+    // 提交第四步
     async confirmSubmit() {
       if (!(this.sms && this.sms.length === 6)) {
         this.$toast.fail('请正确填写验证码！')
@@ -259,11 +283,15 @@ export default {
       }
       try {
         const res = await toCash({
-          status: 2,
+          status: 4,
           money: this.money,
           sms_code: this.sms
         })
-        this.$toast(res.message)
+        if (res.status_code === 200) {
+          this.$toast(res.message)
+          this.show = false
+          this.totalNum = this.totalNum - this.money
+        }
       } catch (error) {
         this.$toast.fail(error)
       }
@@ -313,16 +341,7 @@ export default {
       // return reg.test(this.phone)
       return true
     },
-    // 开始倒计时
-    changeCountDoen() {
-      this.countDown = 60
-      const clock = window.setInterval(() => {
-        this.countDown--
-        if (this.countDown === 0) {
-          window.clearInterval(clock)
-        }
-      }, 1000)
-    },
+
     // 关闭弹出
     closed() {
       this.sms = ''

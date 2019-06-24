@@ -261,7 +261,7 @@ export default {
             this.$toast(res2.message)
             if (res2.status_code === 200) {
               await this.$store.dispatch('GerUserStatus')
-              this.$router.push({ name: 'beeFriends' })
+              this.$router.replace({ name: 'beeFriends' })
             }
           } catch (error) {
             this.$toast(error)
@@ -719,7 +719,8 @@ export default {
     display: flex;
     align-items: center;
     .check-img {
-      width: 0.28rem;
+      width: 0.26rem;
+      height: 0.26rem;
       margin-right: 0.1rem;
     }
     .text {

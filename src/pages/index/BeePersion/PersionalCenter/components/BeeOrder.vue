@@ -64,7 +64,7 @@
           </div>
           <div
             class="op-text"
-            @click="$router.push({path:'/persion/order',query:{s_status:3}})"
+            @click="$router.push({path:'/persion/order',query:{s_status:4}})"
           >
             <div class="icon-num">
               <van-icon :name="beeIcon.mine_icon_not_commented" />
@@ -109,14 +109,16 @@
             :key="index"
           >
             <div>
-              <div class="order-status">
+              <div
+                class="order-status"
+                @click="showLogistics(item)"
+              >
                 <van-row>
                   <van-col span="6">
                     <div class="order-img">
                       <img
-                        :src="item.thumb_url"
+                        :src="item.thumb_url||$store.state.app.defaultImg2"
                         alt="商品缩略图"
-                        :onerror="$store.state.app.defaultImg"
                       >
                     </div>
                   </van-col>
@@ -190,7 +192,14 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    showLogistics(item) {
+      this.$router.push({
+        path: '/persion/order/logisticsDetail',
+        query: { order_no: item.order_no, express_no: item.express_no }
+      })
+    }
+  }
 }
 </script>
 
@@ -243,7 +252,7 @@ export default {
             top: -0.1rem;
             right: 0;
           }
-          .muchNum{
+          .muchNum {
             height: auto;
             width: auto;
             padding: 0.05rem 0.08rem;
