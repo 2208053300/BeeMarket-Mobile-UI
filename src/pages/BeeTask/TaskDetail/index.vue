@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import { confirmOrder } from '@/api/BeeApi/order'
+// import { confirmOrder } from '@/api/BeeApi/order'
 import { getTaskDetail } from '@/api/BeeApi/task'
 import echarts from 'echarts/dist/echarts.simple.min.js'
 import { goHome, getOs } from '@/utils'
