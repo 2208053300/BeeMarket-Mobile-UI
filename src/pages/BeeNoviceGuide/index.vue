@@ -56,7 +56,8 @@ export default {
         require('@/assets/icon/noviceGuide/00-新手教培_改_06.png'),
         require('@/assets/icon/noviceGuide/00-新手教培_改_07.png')
       ],
-      video_url: 'https://img.fengjishi.com.cn/product/video/mi9.mp4',
+      // video_url: 'https://img.fengjishi.com.cn/product/video/mi9.mp4',
+      video_url: 'https://app.fengjishi.com/static/video/beginner.mp4',
       showControls: false
     }
   },

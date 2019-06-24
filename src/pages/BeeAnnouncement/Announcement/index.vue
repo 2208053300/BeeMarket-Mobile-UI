@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     async getArticleDetailData() {
-      const res = await getArticleDetail({ id: this.$route.params.id })
+      const res = await getArticleDetail({ id: this.$route.query.id })
       this.article = res.data
       this.$store.state.app.beeFooter.show = false
     },
