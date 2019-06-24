@@ -50,13 +50,10 @@ export function checkToken() {
         ) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     } else {
-      console.log(454545)
       window.location.href =
         'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
         encodeURIComponent(window.location.href) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
-      debugger
-      console.log(999999)
     }
   } else {
     // 如果是网页端，没有token弹出手机号登录界面
