@@ -99,7 +99,6 @@ export default {
         }
 
         const _pollImages = function() {
-          console.log('加载图片')
           let num = 0
           for (let i = 0; i < store.length; i++) {
             const self = store[i]
