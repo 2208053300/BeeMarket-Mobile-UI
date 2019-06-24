@@ -247,7 +247,9 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    this.getPartnerData()
+  },
   mounted() {
     // if (this.osObj.isIphone && this.osObj.isApp) {
     //   // window.webkit.messageHandlers.clearHistory.postMessage({
@@ -258,7 +260,6 @@ export default {
     // }
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getPartnerData()
     this.getReceiveNumData()
     this.clearHistory()
   },
