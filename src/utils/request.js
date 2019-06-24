@@ -82,10 +82,6 @@ service.interceptors.response.use(
         store.commit('CLEAR_USER_INFO')
         checkToken()
       }
-      if (res.status_code === 400) {
-        // Toast.fail(res.message)
-      }
-      // Toast.fail(res.message || 'error')
       return Promise.reject(res.message || 'error')
     } else {
       // Toast.success(res.message)

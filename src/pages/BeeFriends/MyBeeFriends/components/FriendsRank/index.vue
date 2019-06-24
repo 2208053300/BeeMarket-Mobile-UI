@@ -205,6 +205,9 @@ export default {
       const res = await getFriends({ type: this.friendsType })
       this.friendsData = res.data || {}
       this.friendsList = res.data.friendsList
+      if (this.friendsList.length === 0) {
+        this.finished = true
+      }
     },
     async remindLoginData(id) {
       const res = await remindLogin({ remind_user_id: id })
@@ -236,7 +239,10 @@ export default {
         this.page++
         this.loading = false
         // 数据全部加载完成
-        if (this.friendsList.length === res.data.friends_num) {
+        if (
+          this.friendsList.length === res.data.friends_num ||
+          res.data.friendsList.length === 0
+        ) {
           this.finished = true
         }
       }, 500)
