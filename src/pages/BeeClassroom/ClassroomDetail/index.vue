@@ -131,7 +131,7 @@ export default {
 <style lang="less">
 .class-room-detail {
   @videoWidth: 6.4rem;
-  @videoHeight: 3.28rem;
+  @videoHeight: 3.3rem;
   p {
     margin: 0;
   }
