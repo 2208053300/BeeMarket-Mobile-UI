@@ -54,6 +54,12 @@
               />
               <span>合伙人</span>
             </div>
+            <div
+              v-else
+              class="head-type"
+            >
+              <span>非合伙人</span>
+            </div>
           </van-col>
         </van-row>
       </div>
