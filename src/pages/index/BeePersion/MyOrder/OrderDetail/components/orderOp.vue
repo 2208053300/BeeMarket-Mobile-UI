@@ -170,6 +170,7 @@ export default {
         })
       })
       this.$toast('已加入购物车')
+      this.$router.push('/cart')
     },
     // 提醒发货
     async remindDelivery() {
@@ -207,6 +208,7 @@ export default {
       const res = await completeOrder({ order_no: this.$route.query.order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
+        this.$router.back()
       }
     },
     // 查看物流

@@ -15,10 +15,10 @@ export async function getToken() {
     const token = sessionStorage.getItem('BM-App-Token')
     const uriProp = GetRequest('code')
     const uid = getQueryString('uid')
-    if (!uriProp) {
+    if (!uriProp && !token) {
       await checkToken()
     }
-    if (token) {
+    if (token && token !== 'waiting') {
       return token
     } else if (uriProp && token !== 'waiting') {
       sessionStorage.setItem('BM-App-Token', 'waiting')
@@ -31,15 +31,6 @@ export async function getToken() {
     }
   }
   return sessionStorage.getItem('BM-App-Token')
-
-  // sessionStorage.setItem('BM-Verify-Ver', 1)
-  // 李浩的token
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJINSIsInZlciI6MSwiaWF0IjoxNTYxMjYyNTgxLCJleHAiOjE1NjM4NTQ1ODEsImp0aSI6ImNhZjlhNzQ4OTU2YjExZTliMjU0MDAwMDVkMGVmOWY1Iiwic2VjIjoiN2E5OTY1OWUwNTlmNTc4NTc5YTMyZWYxNjgzMGU1ODYiLCJzaWciOiJhN2U5OTMwMGU5Njk4NDI5ZDA0MDRlNjE3MGI4YTI0NGZkMDk4NjRkZmY4OThjNWEwOGY4MWFkMTlhNGFkMWQxIn0.2tJIEQMiTsqx12DytcpmkqRkzfjbCIKyaRN9l2v9U_I'
-  // 13068376780 的token
-
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJINSIsInZlciI6IjUiLCJpYXQiOjE1NjEyODM0NTUsImV4cCI6MTU2Mzg3NTQ1NSwianRpIjoiNjUzMDRlOTA5NTljMTFlOThkMjYwMDAwNWQwZjRiN2YiLCJzZWMiOiIzMTY5YTA3YTcwYmJkZGNiY2M1YjMwYzM2MWJmNTZlOCIsInNpZyI6IjgyYmViNWY3MjBjMTVkZmRkYTMxYjEyMjczOTJiNGQ2OTNlNzRiNTQzZjdkNzMzZTI2NzI1N2UzNmQyNmRkZmUifQ.9GNIIrHJjCOgDcRKYnoGIqLk7m1YiSlSoxmSMT3Qpwc'
-  // 黄大林 的 token
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJpT1MiLCJ2ZXIiOjEsImlhdCI6MTU2MTE5NDQ3NCwiZXhwIjoxNTYzNzg2NDc0LCJqdGkiOiIzODNiZmQ5Njk0Y2QxMWU5OGI5YTAwMDA1ZDBkZWZlYSIsInNlYyI6ImRmZGExYjk1NDRhZmI0Nzg0ZGQ4MGNiMWY1MmNkZTk0Iiwic2lnIjoiM2Y0NzEyYTE0ZDIxN2UwZDJlOTk2MTE1MGJiN2YyYzkyMWEzZjFhMzUyYWQzMjVhYjkyMWU2OTJkZWRlMzQ2ZSJ9.t-G6hcM1YNZV44n33dLJoahGZUoHzs-idt5rqXH6bT4'
 }
 // REVIEW 此处判断用户登录情况
 export function checkToken() {
@@ -48,7 +39,9 @@ export function checkToken() {
   if (osObj.isWx) {
     const uriProp = GetRequest('code')
     if (uriProp) {
-      const uriProp2 = window.location.href.slice(window.location.href.indexOf('STATE') + 5)
+      const uriProp2 = window.location.href.slice(
+        window.location.href.indexOf('STATE') + 5
+      )
       // 只带state后面的参数跳转
       window.location.href =
         'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +

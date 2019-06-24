@@ -103,7 +103,6 @@ export default {
       return this.max_row_count - this.min_row_count
     },
     handleAction(num) {
-      this.$notify('提示文案')
       // 总圈数配置给config
       this.config['total_circle'] = this.getCircleCount(num)
       const row_count = {}
