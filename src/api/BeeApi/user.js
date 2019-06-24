@@ -176,6 +176,14 @@ export function getNewestNewsList(data) {
     data
   })
 }
+// 消息中心-获取公告详情
+export function getNoticeDetail(data) {
+  return request({
+    url: '/market/noticeDetails',
+    method: 'post',
+    data
+  })
+}
 // 我的售后单物流详情
 export function getAfterLogDetail(data) {
   return request({
