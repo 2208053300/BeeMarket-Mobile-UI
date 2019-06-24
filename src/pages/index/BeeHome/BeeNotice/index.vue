@@ -17,12 +17,12 @@
         >
           <img
             v-if="item.is_read"
-            :src="beeIcon.message_icon_activity_p"
+            :src="beeIcon.message_icon_activity_n"
             alt=""
           >
           <img
             v-else
-            :src="beeIcon.message_icon_activity_n"
+            :src="beeIcon.message_icon_activity_p"
             alt=""
           >
         </div>
@@ -32,12 +32,12 @@
         >
           <img
             v-if="item.is_read"
-            :src="beeIcon.message_icon_announcement_p"
+            :src="beeIcon.message_icon_announcement_n"
             alt=""
           >
           <img
             v-else
-            :src="beeIcon.message_icon_announcement_n"
+            :src="beeIcon.message_icon_announcement_p"
             alt=""
           >
         </div>
@@ -47,12 +47,12 @@
         >
           <img
             v-if="item.is_read"
-            :src="beeIcon.message_icon_notice_p"
+            :src="beeIcon.message_icon_notice_n"
             alt=""
           >
           <img
             v-else
-            :src="beeIcon.message_icon_notice_n"
+            :src="beeIcon.message_icon_notice_p"
             alt=""
           >
         </div>

@@ -106,9 +106,9 @@
             v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
             round
             class="order-button"
-            @click.stop="$router.push({path:'/persion/order/logistics',query:{order_no:card.order_no}})"
+            @click.stop="showLogistics(card)"
           >
-            查看物流
+            物流追踪
           </van-button>
           <van-button
             v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
@@ -248,6 +248,19 @@ export default {
       const res = await remindOrder({ order_no: order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
+      }
+    },
+    showLogistics(item) {
+      if (item.take_apart > 1) {
+        this.$router.push({
+          path: '/persion/order/logistics',
+          query: { order_no: item.order_no }
+        })
+      } else {
+        this.$router.push({
+          path: '/persion/order/logisticsDetail',
+          query: { order_no: item.order_no }
+        })
       }
     }
   }

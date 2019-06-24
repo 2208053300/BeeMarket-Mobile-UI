@@ -50,8 +50,9 @@
     <van-button
       v-if="orderDetail.s_pay===1&&[3].indexOf(orderDetail.s_order)"
       round
+      @click="showLogistics(orderDetail)"
     >
-      查看物流
+      物流追踪
     </van-button>
     <van-button
       v-if="[5,6,11,15].indexOf(orderDetail.status)!==-1"
@@ -235,6 +236,19 @@ export default {
       const res = await completeOrder({ order_no: this.$route.query.order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
+      }
+    },
+    showLogistics(item) {
+      if (item.take_apart > 1) {
+        this.$router.push({
+          path: '/persion/order/logistics',
+          query: { order_no: item.order_no }
+        })
+      } else {
+        this.$router.push({
+          path: '/persion/order/logisticsDetail',
+          query: { order_no: item.order_no }
+        })
       }
     }
   }
