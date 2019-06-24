@@ -213,8 +213,7 @@ export default {
           head_img: this.$store.state.user.userInfo.head_image,
           nickname: this.$store.state.user.userInfo.nickname
         }
-      },
-      isLogin: isLogin()
+      }
     }
   },
   computed: {},
