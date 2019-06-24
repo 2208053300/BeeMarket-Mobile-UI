@@ -12,9 +12,6 @@
     </van-notice-bar>
     <div class="detail-content">
       <header-card :action-data="actionData" />
-      <div class="between-text">
-        — 蜂集市 & 中瀚集团在行动，携手发起公益项目 —
-      </div>
       <title-card :action-data="actionData" />
       <detail-card :action-data="actionData" />
       <caring-enterprise :action-data="actionData" />

@@ -36,6 +36,7 @@
     <project-selection :home-data="homeData" />
     <action-list :home-data="homeData" />
     <guess-like :guess-data="homeData.random_product" />
+    <actionPop />
   </div>
 </template>
 
@@ -52,6 +53,7 @@ import farmProduct from './components/farmProduct'
 import projectSelection from './components/projectSelection'
 import actionList from './components/actionList'
 import guessLike from './components/guessLike'
+import actionPop from './components/actionPop'
 // import wxapi from '@/utils/wxapi'
 export default {
   components: {
@@ -64,7 +66,8 @@ export default {
     farmProduct,
     projectSelection,
     actionList,
-    guessLike
+    guessLike,
+    actionPop
   },
   props: {},
   data() {
@@ -124,6 +127,7 @@ export default {
     // wxapi.wxRegister(this.wxRegCallback)
     // 获取用户消息
     this.$store.dispatch('GerUserMsg')
+    this.$store.dispatch('getUserIsNew')
   },
   methods: {
     async getHomeData() {

@@ -1,4 +1,4 @@
-import { getUserMsg, isPartner } from '@/api/BeeApi/user'
+import { getUserMsg, isPartner, getUserIsNew } from '@/api/BeeApi/user'
 
 const user = {
   state: {
@@ -9,7 +9,8 @@ const user = {
     },
     addressData: {},
     have_no_read: false,
-    userStatus: 0
+    userStatus: 0,
+    is_new_user: false
   },
   mutations: {
     SET_USER_INFO: (state, userInfo) => {
@@ -36,6 +37,9 @@ const user = {
     },
     SET_USER_STATUS: (state, userStatus) => {
       state.userStatus = userStatus
+    },
+    SET_IS_NEW_USER: (state, is_new_user) => {
+      state.is_new_user = is_new_user
     }
   },
   actions: {
@@ -48,6 +52,10 @@ const user = {
     async GerUserMsg({ commit }) {
       const res = await getUserMsg()
       commit('SET_HAVE_NO_READ', res.data.have_no_read)
+    },
+    async getUserIsNew({ commit }) {
+      const res = await getUserIsNew()
+      commit('SET_IS_NEW_USER', res.data.is_new_user)
     },
     async GerUserStatus({ commit }) {
       const res = await isPartner()

@@ -176,6 +176,14 @@ export function getNewestNewsList(data) {
     data
   })
 }
+// 消息中心-获取公告详情
+export function getNoticeDetail(data) {
+  return request({
+    url: '/market/noticeDetails',
+    method: 'post',
+    data
+  })
+}
 // 我的售后单物流详情
 export function getAfterLogDetail(data) {
   return request({
@@ -489,7 +497,14 @@ export function getUserMsg(data) {
     data
   })
 }
-
+// 返回用户是否新用户
+export function getUserIsNew(data) {
+  return request({
+    url: '/user/is_new_user',
+    method: 'post',
+    data
+  })
+}
 // 用户支付密码设置、换绑手机 - 短信验证
 export function smsVerify(data) {
   return request({

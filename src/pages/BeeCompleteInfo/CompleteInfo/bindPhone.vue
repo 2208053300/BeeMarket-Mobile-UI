@@ -19,7 +19,8 @@
       <div style="display: flex;justify-content: center">
         <div class="btn" @click="bindPhone">
           <img :src="beeIcon.data_icon_phone" class="phone">
-          <span>去绑定手机号</span>
+          <span v-if="mobile_bind">您已绑定手机</span>
+          <span v-else>去绑定手机号</span>
         </div>
       </div>
       <div class="step-2">
@@ -36,6 +37,7 @@
 </template>
 
 <script>
+import { security } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '完善资料'
@@ -50,7 +52,9 @@ export default {
         data_icon_2: require('@/assets/icon/task/perfectData/data_icon_2@2x.png'),
         data_icon_phone: require('@/assets/icon/task/perfectData/data_icon_phone@3x.png'),
         data_pic_description: require('@/assets/icon/task/perfectData/data_pic_description@2x.png')
-      }
+      },
+      // 是否已绑定手机号码
+      mobile_bind: false
     }
   },
   computed: {},
@@ -58,10 +62,21 @@ export default {
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = true
+
+    this.isSet()
   },
   methods: {
     bindPhone() {
-      window.location.href = '/#/persion/profile/accountBind/bindPhone'
+      if (!this.mobile_bind) {
+        window.location.href = '/#/persion/profile/accountBind/bindPhone'
+      }
+    },
+    // 判断是否已设置支付密码、是否绑定了手机号码
+    async isSet() {
+      const res = await security()
+      if (res.code === 1 && res.status_code === 200) {
+        this.mobile_bind = res.data.mobile_bind
+      }
     }
   }
 }

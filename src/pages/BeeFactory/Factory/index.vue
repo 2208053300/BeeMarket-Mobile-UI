@@ -46,6 +46,7 @@
                     type="text"
                     placeholder="请输入厂商名称"
                     class="van-field__control  van-field__control--left"
+                    @blur.prevent="blurScroll"
                   >
                 </div>
               </div>
@@ -62,6 +63,7 @@
                     type="text"
                     placeholder="请输入联系人姓名"
                     class="van-field__control  van-field__control--left"
+                    @blur.prevent="blurScroll"
                   >
                 </div>
               </div>
@@ -77,6 +79,7 @@
                     type="tel"
                     placeholder="请输入联系人电话"
                     class="van-field__control  van-field__control--left"
+                    @blur.prevent="blurScroll"
                   >
                 </div>
               </div>
@@ -130,6 +133,7 @@
                     type="text"
                     placeholder="请输入推荐人姓名"
                     class="van-field__control  van-field__control--left"
+                    @blur.prevent="blurScroll"
                   >
                 </div>
               </div>
@@ -145,6 +149,7 @@
                     type="tel"
                     placeholder="请输入推荐人电话"
                     class="van-field__control  van-field__control--left"
+                    @blur.prevent="blurScroll"
                   >
                 </div>
               </div>
@@ -464,6 +469,14 @@ export default {
       } else {
         return true
       }
+    },
+    // ios 12 解决键盘顶起页面问题
+    blurScroll() {
+      setTimeout(function() {
+        var scrollHeight =
+          document.documentElement.scrollTop || document.body.scrollTop || 0
+        window.scrollTo(0, Math.max(scrollHeight - 1, 0))
+      }, 100)
     }
   }
 }

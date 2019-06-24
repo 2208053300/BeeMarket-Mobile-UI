@@ -12,7 +12,7 @@
     <div class="header-card2">
       <div class="header-img">
         <img
-          :src="actionData.head_img"
+          :src="actionData.head_img||beeIcon.head_default"
           alt=""
         >
       </div>
@@ -38,7 +38,8 @@ export default {
   data() {
     return {
       beeIcon: {
-        confirmorder_pic_word_top: require('@/assets/icon/discover/confirmorder_pic_word_top@2x.png')
+        confirmorder_pic_word_top: require('@/assets/icon/discover/confirmorder_pic_word_top@2x.png'),
+        head_default: require('@/assets/icon/personalCenter/head_default.png')
       }
     }
   },
