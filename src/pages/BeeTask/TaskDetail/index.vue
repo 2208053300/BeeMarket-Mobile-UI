@@ -195,16 +195,16 @@ export default {
     },
     async getGift() {
       // TODO 跳转下单
-      const res = await confirmOrder(
-        JSON.stringify({
-          ctids: ctids
-        })
-      )
-      if (res.status_code === 200) {
-        this.$store.state.order.orderDetail = res.data
-        this.$store.state.order.addrDetail = res.data.addr
-        this.$router.push('/category/details/confirmOrder')
-      }
+      // const res = await confirmOrder(
+      //   JSON.stringify({
+      //     ctids: ctids
+      //   })
+      // )
+      // if (res.status_code === 200) {
+      //   this.$store.state.order.orderDetail = res.data
+      //   this.$store.state.order.addrDetail = res.data.addr
+      //   this.$router.push('/category/details/confirmOrder')
+      // }
     },
     arouseApp() {
       const osObj = getOs()
