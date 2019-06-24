@@ -9,6 +9,8 @@ const app = {
     // 图片错误时加载默认图片填充
     defaultImg:
       "this.src='https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg'",
+    defaultImg2: require('@/assets/icon/home/ic_default@2x.png'),
+    defaultImg3: require('@/assets/icon/home/ic_banner_default@2x.png'),
     homeUri: 'http://app.fengjishi.com.cn/#',
     // homeUri1: 'http://app.fengjishi.com.cn',
     share_data: {

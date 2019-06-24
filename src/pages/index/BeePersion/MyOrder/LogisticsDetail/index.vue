@@ -3,7 +3,7 @@
     <div class="logistics-status">
       <div class="logistics-img">
         <img
-          :src="logisticsInfo.product_img||logisticsInfo.tUrl"
+          :src="logisticsInfo.tUrl||$store.state.app.defaultImg2"
           alt=""
         >
       </div>
@@ -18,34 +18,45 @@
           官方电话：<span class="bee-text">正在更新中</span>
         </div>
       </div> -->
-      <div class="text-content2">
+      <div
+        class="text-content2"
+        :class="{updating:!logisticsInfo.express_status}"
+      >
         <div class="logistics-text">
           {{ logisticsInfo.express_status }}
         </div>
+        <!-- TODO 物流状态 -->
         <div class="logistics-text1">
-          快递方式：<span class="bee-text">{{ logisticsInfo.express_mode||logisticsInfo.express_name }}</span>
+          快递方式：<span class="bee-text">{{ logisticsInfo.express_name||'正在更新中' }}</span>
         </div>
         <div class="logistics-text1">
-          物流编号：<span class="bee-text">{{ logisticsInfo.express_no }}</span>
+          物流编号：<span class="bee-text">{{ logisticsInfo.express_no||'正在更新中' }}</span>
         </div>
         <div class="logistics-text1">
-          官方电话：<span class="bee-text">{{ logisticsInfo.express_tel }}</span>
+          官方电话：<span class="bee-text">{{ logisticsInfo.express_tel||'正在更新中' }}</span>
         </div>
       </div>
     </div>
     <div class="logistics-status2">
-      <!-- <div class="status-content">
-        <div class="bee-cir" />
-        <span>您的订单正由平台积极处理中，请耐心等待</span>
-      </div> -->
-      <!-- TODO 最后一个不加线 -->
       <div
-        v-for="(item, index) in logisticsInfo.express_details"
-        :key="index"
+        v-if="logisticsInfo.detail===[]"
         class="status-content"
       >
         <div class="bee-cir" />
-        <div class="bee-line" />
+        <span>您的订单正由平台积极处理中，请耐心等待</span>
+      </div>
+      <!-- TODO 最后一个不加线 -->
+      <div
+        v-for="(item, index) in logisticsInfo.detail"
+        :key="index"
+        class="status-content"
+        :class="{noBottom:(logisticsInfo.detail.length-1)===index}"
+      >
+        <div class="bee-cir" />
+        <div
+          v-if="(logisticsInfo.detail.length-1)!==index"
+          class="bee-line"
+        />
         <div class="status-text">
           <div class="status-text1">
             {{ item.context }}
@@ -145,6 +156,11 @@ export default {
         }
       }
     }
+    .updating {
+      .bee-text {
+        color: @BeeDefault;
+      }
+    }
   }
   .logistics-status2 {
     padding: 0.2rem 0 0.2rem 0.2rem;
@@ -161,11 +177,11 @@ export default {
         margin-bottom: 0.3rem;
       }
       .bee-cir {
-        width: 0.4rem;
-        height: 0.4rem;
+        width: 0.36rem;
+        height: 0.36rem;
         border-radius: 50%;
         background-color: @BeeDefault;
-        margin-right: 0.44rem;
+        margin-right: 0.4rem;
       }
       .status-text {
         flex: 1;
@@ -183,12 +199,17 @@ export default {
         }
       }
       .bee-line {
-        width: 0.02rem;
-        height: 1rem;
+        width: 0.04rem;
+        height: 75%;
         position: absolute;
         background-color: @Grey6;
-        left: 0.18rem;
-        top: 74%;
+        left: 0.16rem;
+        top: 70%;
+      }
+    }
+    .noBottom{
+      .status-text{
+        border-bottom: none;
       }
     }
   }

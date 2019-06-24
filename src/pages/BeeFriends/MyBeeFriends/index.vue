@@ -16,7 +16,7 @@
         <div class="header-img2">
           <div class="header-img3">
             <img
-              :src="partnerData.user_head"
+              :src="partnerData.user_head||beeIcon.head_default"
               alt="头像"
             >
           </div>
@@ -202,7 +202,8 @@ export default {
         title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
         first_screen: require('@/assets/icon/task/talent/first_screen@3x.png'),
         videoBackground: require('@/assets/icon/noviceGuide/00-新手教培_改_02.png'),
-        rule_head: require('@/assets/icon/noviceGuide/00-新手教培_改_01.png')
+        rule_head: require('@/assets/icon/noviceGuide/00-新手教培_改_01.png'),
+        head_default: require('@/assets/icon/personalCenter/head_default.png')
       },
       showHoney: true,
       honeyType: 2,
