@@ -102,7 +102,7 @@ export default {
       return reg.test(this.phone) && reg2.test(this.verificationCode)
     },
     async sendSmsData() {
-      const res = await sendSms({ mobileNum: this.phone, type: 'bind' })
+      const res = await sendSms({ mobileNum: this.phone, type: 'rbind' })
       if (res.status_code === 200) {
         this.changeCountDoen()
       }

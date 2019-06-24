@@ -54,7 +54,7 @@
     </div>
 
     <!-- 提现到微信 -->
-    <div v-if="status === 2" class="to-cash">
+    <div v-else class="to-cash">
       <div class="info">
         <div class="to-wx">
           <span>提现到微信</span>
