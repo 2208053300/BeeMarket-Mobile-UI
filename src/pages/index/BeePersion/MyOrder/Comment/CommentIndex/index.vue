@@ -114,8 +114,8 @@ export default {
       showBorder: false,
       isAnonymity: false,
       commentImgs: [],
-      order_no: this.$router.query.order_no,
-      sku_id: this.$router.query.sku_id
+      order_no: this.$route.query.order_no,
+      sku_id: this.$route.query.sku_id
     }
   },
   computed: {},

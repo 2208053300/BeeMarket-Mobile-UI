@@ -243,14 +243,6 @@ export default {
         window.beeMarket.ToProductDetail(pid, target)
       } else {
         window.location.href = this.$store.state.app.homeUri + '/category/details?' + 'pid=' + pid + '&target=' + target
-
-        // this.$router.push({
-        //   path: '/category/details',
-        //   query: {
-        //     pid,
-        //     target
-        //   }
-        // })
       }
     },
     // tabScroll

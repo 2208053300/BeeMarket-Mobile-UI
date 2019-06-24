@@ -15,10 +15,10 @@ export async function getToken() {
     const token = sessionStorage.getItem('BM-App-Token')
     const uriProp = GetRequest('code')
     const uid = getQueryString('uid')
-    if (!uriProp) {
+    if (!uriProp && !token) {
       await checkToken()
     }
-    if (token) {
+    if (token && token !== 'waiting') {
       return token
     } else if (uriProp && token !== 'waiting') {
       sessionStorage.setItem('BM-App-Token', 'waiting')
@@ -31,9 +31,6 @@ export async function getToken() {
     }
   }
   return sessionStorage.getItem('BM-App-Token')
-
-  // sessionStorage.setItem('BM-Verify-Ver', 1)
-  // return 'eyJhcHAiOiJCZWVNYXJrZXQgLSBBUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzcmMiOiJINSIsInZlciI6IjMiLCJpYXQiOjE1NjEzODQ3MDcsImV4cCI6MTU2Mzk3NjcwNywianRpIjoiMjNlM2NmYzQ5Njg4MTFlOWFjOWYwMDAwNWQxMGQ3MDMiLCJzZWMiOiIzMTY5YTA3YTcwYmJkZGNiY2M1YjMwYzM2MWJmNTZlOCIsInNpZyI6IjJlNTkwOGQ5NTRkNjYzYzI2MDc0Mjk4MzNhN2U1YzU2ZTliYjNkY2U3NTQwMTI4NTgxYWJkMTg1MjQ3MzY5NzYifQ._FOlYMlxDXp9dU48k9N4lBYO-P-34TypSF6PX1sjqIk'
 }
 // REVIEW 此处判断用户登录情况
 export function checkToken() {
@@ -42,7 +39,9 @@ export function checkToken() {
   if (osObj.isWx) {
     const uriProp = GetRequest('code')
     if (uriProp) {
-      const uriProp2 = window.location.href.slice(window.location.href.indexOf('STATE') + 5)
+      const uriProp2 = window.location.href.slice(
+        window.location.href.indexOf('STATE') + 5
+      )
       // 只带state后面的参数跳转
       window.location.href =
         'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +

@@ -201,6 +201,8 @@ export default {
     },
     // 评论晒单
     goComent(order_no, num, sku_id) {
+      console.log(order_no, num, sku_id)
+
       if (num > 1) {
         this.$router.push({
           name: 'waitCommentOrder',
@@ -228,12 +230,14 @@ export default {
         })
       })
       this.$toast('已加入购物车')
+      this.$router.push('/cart')
     },
     // 删除订单
     async deleteOrderData(order_no) {
       const res = await deleteOrder({ order_no: order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
+        this.$parent.changeOrder()
       }
     },
     // 确认收货
@@ -241,6 +245,7 @@ export default {
       const res = await completeOrder({ order_no: order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
+        this.$parent.changeOrder()
       }
     },
     // 提醒发货
@@ -250,6 +255,7 @@ export default {
         this.$toast(res.message)
       }
     },
+    // 物流追踪
     showLogistics(item) {
       if (item.take_apart > 1) {
         this.$router.push({

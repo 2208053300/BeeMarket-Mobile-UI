@@ -263,7 +263,11 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.getPartnerData()
     // FIXME ios bug暂时无解
-    setTimeout(this.getPartnerData(), 1000)
+    try {
+      setTimeout(this.getPartnerData(), 3000)
+    } catch (error) {
+      //
+    }
     this.getReceiveNumData()
     this.clearHistory()
   },
@@ -498,6 +502,7 @@ export default {
   }
   .rule-pop {
     border-radius: 0.3rem 0.3rem 0 0;
+    overflow: hidden;
     .rule-content {
       height: 12rem;
       overflow: scroll;
@@ -507,6 +512,7 @@ export default {
         width: 100%;
         height: 0.6rem;
         background-color: #fff;
+        z-index: 100;
         .close-img {
           position: absolute;
           top: 0.16rem;
