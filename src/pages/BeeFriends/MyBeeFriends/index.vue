@@ -271,7 +271,7 @@ export default {
         await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
         await this.$refs.honeycomb.animateList()
       } catch (error) {
-        this.$toast('初始化失败')
+        // this.$toast('初始化失败')
         // this.getPartnerData()
       }
     },
