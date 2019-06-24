@@ -401,6 +401,14 @@ export function isPartner(data) {
     data
   })
 }
+// 蜂友圈 - 冻结页面数据
+export function getFreezeData(data) {
+  return request({
+    url: '/user/partner/frozen',
+    method: 'post',
+    data
+  })
+}
 // 蜂友圈 - 首页API
 export function getPartner(data) {
   return request({

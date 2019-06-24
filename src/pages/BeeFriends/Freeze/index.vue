@@ -7,11 +7,11 @@
         <img :src="icon.avatar" class="img">
         <div class="info">
           <p class="name">
-            xiaojia
+            {{ freeze.nickname }}
           </p>
           <div class="role flex">
             <div class="stars">
-              <img :src="icon.star" class="star-img">
+              <img v-for="item in freeze.partner_level" :key="item" :src="icon.star" class="star-img">
             </div>
             <span>合伙人</span>
           </div>
@@ -24,7 +24,7 @@
           可收取金额
         </p>
         <p class="num">
-          120
+          {{ freeze.can_receive_balance }}
         </p>
       </div>
       <!-- 余额 蜂友 厂商 -->
@@ -34,7 +34,7 @@
             余额（元）
           </p>
           <p class="num">
-            1200
+            {{ freeze.sup_balance }}
           </p>
         </li>
         <li>
@@ -42,7 +42,7 @@
             蜂友（人）
           </p>
           <p class="num">
-            1200
+            {{ freeze.friends_num }}
           </p>
         </li>
         <li>
@@ -50,7 +50,7 @@
             厂商（家）
           </p>
           <p class="num">
-            1200
+            {{ freeze.merchart_mun }}
           </p>
         </li>
       </ul>
@@ -108,7 +108,8 @@
 </template>
 
 <script>
-import { getOs } from '@/utils'
+import { goHome, getOs } from '@/utils'
+import { getFreezeData } from '@/api/BeeApi/user'
 import Cookies from 'js-cookie'
 export default {
   components: {},
@@ -126,7 +127,9 @@ export default {
       // 获取cookie
       test1: '',
       // 获取 os 平台
-      osObj: getOs()
+      osObj: getOs(),
+      // 冻结数据
+      freeze: {}
     }
   },
   computed: {},
@@ -135,56 +138,44 @@ export default {
   mounted() {
     this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
     this.clearHistory()
+    this.getFreeze()
   },
   methods: {
     // 此处判断浏览器环境，跳转到商品分类页面
-    goSortList(pid, target) {
+    goSortList() {
       const osObj = getOs()
       if (osObj.isWx) {
-        this.$router.push({
-          path: '/category',
-          query: {
-            pid: pid
-          }
-        })
+        // 微信直接跳转路由
+        goHome()
       } else if (osObj.isIphone && osObj.isApp) {
-        // window.webkit.messageHandlers.ToProductDetail.postMessage({
-        //   pid: pid,
-        //   target: target
-        // })
+        window.webkit.messageHandlers.ToCatList.postMessage(1)
       } else if (osObj.isAndroid && osObj.isApp) {
-        // window.beeMarket.ToProductDetail(pid, target)
+        window.beeMarket.ToCatList()
       } else {
-        this.$router.push({
-          path: '/category',
-          query: {
-            pid: pid
-          }
-        })
+        goHome()
       }
     },
     // 清除历史
     clearHistory() {
       if (this.osObj.isWx) {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
+        //
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.clearHistory.postMessage({ url: window.location.href })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.clearHistory()
       } else {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
+        //
+      }
+    },
+    // 获取 冻结蜂友圈数据
+    async getFreeze() {
+      try {
+        const res = await getFreezeData()
+        console.log(res)
+        this.icon.avatar = res.data.head_image_url
+        this.freeze = res.data
+      } catch (error) {
+        this.$toast(error)
       }
     }
   },
