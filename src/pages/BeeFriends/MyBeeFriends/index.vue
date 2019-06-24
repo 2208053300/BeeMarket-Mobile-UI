@@ -272,7 +272,7 @@ export default {
         await this.$refs.honeycomb.animateList()
       } catch (error) {
         this.$toast('初始化失败')
-        this.getPartnerData()
+        // this.getPartnerData()
       }
     },
     async getReceiveNumData() {
