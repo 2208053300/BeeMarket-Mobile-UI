@@ -77,7 +77,7 @@ export default {
   props: {},
   data() {
     return {
-      type: this.$route.query.type,
+      type: parseInt(this.$route.query.type),
       actionList: [],
       beeIcon: {
         message_activity_pic_over: require('@/assets/icon/home/message_activity_pic_over@2x.png'),
@@ -101,8 +101,11 @@ export default {
       }
     },
     goAction(item) {
+      console.log(item)
+
       // TODO 跳转到指定活动页 1 活动 2公告 3 消息
       if (this.type === 1) {
+        console.log('活动')
         this.$router.push({
           name: 'beeActiveTpl',
           query: {
@@ -110,6 +113,7 @@ export default {
           }
         })
       } else if (this.type === 2) {
+        console.log('公告')
         this.$router.push({
           name: 'beeAnnouncement',
           query: {
