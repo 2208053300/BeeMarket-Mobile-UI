@@ -4,16 +4,15 @@
       <van-cell
         style="border-top-left-radius: 0.2rem;border-top-right-radius: 0.2rem"
         title="我的订单"
-        is-link
         value="查看全部订单"
-        to="/persion/order"
+        @click="authRoute('/persion/order')"
       />
       <!-- TODO 跳转时带上订单状态，安装后直接切换标签栏 -->
       <div class="order-op">
         <div class="op-type">
           <div
             class="op-text"
-            @click="$router.push({path:'/persion/order',query:{s_status:0}})"
+            @click="authRoute({path:'/persion/order',query:{s_status:0}})"
           >
             <div class="icon-num">
               <van-icon :name="beeIcon.mine_icon_unpaid" />
@@ -30,7 +29,7 @@
           </div>
           <div
             class="op-text"
-            @click="$router.push({path:'/persion/order',query:{s_status:1}})"
+            @click="authRoute({path:'/persion/order',query:{s_status:1}})"
           >
             <div class="icon-num">
               <van-icon :name="beeIcon.mine_icon_undelivered" />
@@ -47,7 +46,7 @@
           </div>
           <div
             class="op-text"
-            @click="$router.push({path:'/persion/order',query:{s_status:2}})"
+            @click="authRoute({path:'/persion/order',query:{s_status:2}})"
           >
             <div class="icon-num">
               <van-icon :name="beeIcon.mine_icon_not_signed" />
@@ -64,7 +63,7 @@
           </div>
           <div
             class="op-text"
-            @click="$router.push({path:'/persion/order',query:{s_status:4}})"
+            @click="authRoute({path:'/persion/order',query:{s_status:4}})"
           >
             <div class="icon-num">
               <van-icon :name="beeIcon.mine_icon_not_commented" />
@@ -81,7 +80,7 @@
           </div>
           <div
             class="op-text"
-            @click="$router.push('/persion/order/afterList')"
+            @click="authRoute('/persion/order/afterList')"
           >
             <div class="icon-num">
               <van-icon :name="beeIcon.mine_icon_customer_service" />
@@ -155,6 +154,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
+import { isLogin } from '@/utils/auth'
 export default {
   components: {},
   props: {
@@ -198,6 +198,14 @@ export default {
         path: '/persion/order/logisticsDetail',
         query: { order_no: item.order_no, express_no: item.express_no }
       })
+    },
+    // 跳转到需要登录的路由
+    async authRoute(path) {
+      if (!await isLogin()) {
+        this.$router.push('/login')
+      } else {
+        this.$router.push(path)
+      }
     }
   }
 }
