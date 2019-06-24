@@ -22,7 +22,7 @@
         <span v-if="orderDetail.status===16">(未处理)已取消</span>
          -->
         <span
-          v-if="orderDetail.s_pay===0"
+          v-if="orderDetail.s_pay===0 && orderDetail.s_order !== -1"
           class="status-text2"
         >
           <!-- TODO 这里是时分秒倒计时？ -->
@@ -89,7 +89,7 @@
         </div>
       </div>
     </div>
-    <order-op :order-detail="orderDetail" />
+    <order-op :order-detail="orderDetail" @change="getOrderDetailData" />
     <bee-guess :guess-data="orderDetail.guess" />
   </div>
 </template>
@@ -128,7 +128,8 @@ export default {
       },
       beeIcon: {
         mine_order_buymyself_img_top_box: require('@/assets/icon/order/mine_order_buymyself_img_top_box@2x.png')
-      }
+      },
+      timer: ''
     }
   },
   computed: {},
@@ -145,11 +146,11 @@ export default {
         order_no: this.$route.query.order_no
       })
       this.orderDetail = res.data
-      // REVIEW 如果有倒计时
-      const time = setInterval(() => {
+      clearInterval(this.timer)
+      this.timer = setInterval(() => {
         this.orderDetail.count_down--
         if (this.orderDetail.count_down === 0) {
-          clearInterval(time)
+          clearInterval(this.timer)
           window.location.reload()
         }
       }, 1000)
@@ -157,6 +158,15 @@ export default {
     // 获取订单状态文字
     getText1(val) {
       let text1 = ''
+      switch (this.orderDetail.s_pay) {
+        case 0:
+          text1 = '待付款'
+          break
+        case 1:
+          break
+        default:
+          break
+      }
       switch (this.orderDetail.s_order) {
         case 1:
           text1 = '待发货'
@@ -172,15 +182,6 @@ export default {
           break
         case -1:
           text1 = '已取消'
-          break
-        default:
-          break
-      }
-      switch (this.orderDetail.s_pay) {
-        case 0:
-          text1 = '待付款'
-          break
-        case 1:
           break
         default:
           break

@@ -141,6 +141,10 @@ export default {
   },
   methods: {
     async createOrderData() {
+      if (!this.order.addrDetail) {
+        this.$toast('请选择收货地址')
+        return
+      }
       const storeData = []
       // 获取商品数据
       this.order.orderDetail.stores.map((item, index) => {
