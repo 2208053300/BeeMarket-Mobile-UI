@@ -264,16 +264,11 @@ export default {
   },
   methods: {
     async getPartnerData() {
-      try {
-        const res = await getPartner({ type: this.honeyType })
-        this.partnerData = res.data
-        this.$refs.honeycomb.combData = res.data.show_users2
-        await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
-        await this.$refs.honeycomb.animateList()
-      } catch (error) {
-        // this.$toast('初始化失败')
-        // this.getPartnerData()
-      }
+      const res = await getPartner({ type: this.honeyType })
+      this.partnerData = res.data
+      this.$refs.honeycomb.combData = res.data.show_users2
+      await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
+      await this.$refs.honeycomb.animateList()
     },
     async getReceiveNumData() {
       try {

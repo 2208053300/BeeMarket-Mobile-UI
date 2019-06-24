@@ -54,95 +54,108 @@
           </div>
         </div>
         <div class="rank-list">
-          <div
-            v-for="(item,index) in friendsData.friendsList"
-            :key="index"
-            class="friends-cell"
+          <van-list
+            v-model="loading"
+            :finished="finished"
+            finished-text="我也是有底线的 o(´^｀)o"
+            @load="onLoad"
           >
-            <div class="ranking">
-              <!-- 如果排名前小于三 -->
-              <div
-                v-if="index<=2"
-                class="rank-num"
-              >
-                <img
-                  v-if="index===0"
-                  :src="beeIcon.bee_firends_invite_icon_goldaward"
-                  alt="1"
-                >
-                <img
-                  v-if="index===1"
-                  :src="beeIcon.bee_firends_invite_icon_silveraward"
-                  alt="2"
-                >
-                <img
-                  v-if="index===2"
-                  :src="beeIcon.bee_firends_invite_icon_bronzeaward"
-                  alt="3"
-                >
-              </div>
-              <span v-else>{{ index+1 }}</span>
-            </div>
-            <div class="friends-detail">
-              <div class="head-img">
+            <div
+              v-for="(item,index) in friendsData.friendsList"
+              :key="index"
+              class="friends-cell"
+            >
+              <div class="ranking">
+                <!-- 如果排名前小于三 -->
                 <div
-                  class="img-content"
-                  :style="{borderColor:getColor(index)}"
+                  v-if="index<=2"
+                  class="rank-num"
                 >
                   <img
-                    :src="item.head_image_url"
-                    alt="头像"
+                    v-if="index===0"
+                    :src="beeIcon.bee_firends_invite_icon_goldaward"
+                    alt="1"
                   >
-                </div>
-                <div
-                  v-if="item.is_partner"
-                  class="partner-tag"
-                >
                   <img
-                    :src="beeIcon.bee_firends_invite_icon_firenf"
-                    alt="合伙人"
+                    v-if="index===1"
+                    :src="beeIcon.bee_firends_invite_icon_silveraward"
+                    alt="2"
+                  >
+                  <img
+                    v-if="index===2"
+                    :src="beeIcon.bee_firends_invite_icon_bronzeaward"
+                    alt="3"
                   >
                 </div>
+                <span v-else>{{ index+1 }}</span>
               </div>
-              <div class="firends-name">
-                <div class="left-detail">
+              <div class="friends-detail">
+                <div class="head-img">
                   <div
-                    class="name"
-                    :class="{partner:item.is_partner}"
+                    class="img-content"
+                    :style="{borderColor:getColor(index)}"
                   >
-                    {{ item.nickname }}
+                    <img
+                      :src="item.head_image_url"
+                      alt="头像"
+                    >
                   </div>
-                  <span
-                    v-if="item.current_friends_num"
-                    class="firends"
-                  >（关联蜂友：<span class="num">{{ item.current_friends_num }}</span>个 ）</span>
-                  <div class="honey-num">
-                    累计贡献公益值<span class="num"> {{ item.contribution }} </span>个
-                  </div>
-                  <div class="login-time">
-                    最后登录时间：<span class="time">{{ item.last_login_time }}</span>
+                  <div
+                    v-if="item.is_partner"
+                    class="partner-tag"
+                  >
+                    <img
+                      :src="beeIcon.bee_firends_invite_icon_firenf"
+                      alt="合伙人"
+                    >
                   </div>
                 </div>
-                <van-button
-                  v-if="friendsType===2"
-                  class="remind-btn"
-                  @click="remindLoginData(item.user_id)"
-                >
-                  提醒登录
-                </van-button>
-                <van-button
-                  v-else
-                  class="remind-btn"
-                  @click="goStore(item.user_id)"
-                >
-                  进入店铺
-                </van-button>
+                <div class="firends-name">
+                  <div class="left-detail">
+                    <div
+                      class="name"
+                      :class="{partner:item.is_partner}"
+                    >
+                      {{ item.nickname }}
+                    </div>
+                    <span
+                      v-if="item.current_friends_num"
+                      class="firends"
+                    >（关联蜂友：<span class="num">{{ item.current_friends_num }}</span>个 ）</span>
+                    <div class="honey-num">
+                      累计贡献公益值<span class="num"> {{ item.contribution }} </span>个
+                    </div>
+                    <div class="login-time">
+                      最后登录时间：<span class="time">{{ item.last_login_time }}</span>
+                    </div>
+                  </div>
+                  <van-button
+                    v-if="friendsType===2"
+                    class="remind-btn"
+                    @click="remindLoginData(item.user_id)"
+                  >
+                    提醒登录
+                  </van-button>
+                  <van-button
+                    v-else
+                    class="remind-btn"
+                    @click="goStore(item.user_id)"
+                  >
+                    进入店铺
+                  </van-button>
+                </div>
               </div>
             </div>
-          </div>
+          </van-list>
         </div>
-        <div class="btn-content">
-          <van-button class="fast-invite">
+        <div
+          v-if="friendsList.length>0"
+          class="btn-content"
+        >
+          <van-button
+            class="fast-invite"
+            @click="fastInvite"
+          >
             快速邀请
           </van-button>
         </div>
@@ -152,7 +165,7 @@
 </template>
 
 <script>
-import { getFriends, remindLogin } from '@/api/BeeApi/user'
+import { getFriends, remindLogin, remindAll } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 
 export default {
@@ -176,7 +189,11 @@ export default {
         bee_firends_invite_icon_firenf: require('@/assets/icon/beeFriends/info/bee_firends_invite_icon_firenf.png')
       },
       friendsType: 2,
-      friendsData: {}
+      friendsData: {},
+      friendsList: [],
+      loading: false,
+      finished: false,
+      page: 1
     }
   },
   computed: {},
@@ -187,6 +204,7 @@ export default {
     async getFriendsData() {
       const res = await getFriends({ type: this.friendsType })
       this.friendsData = res.data || {}
+      this.friendsList = res.data.friendsList
     },
     async remindLoginData(id) {
       const res = await remindLogin({ remind_user_id: id })
@@ -197,11 +215,39 @@ export default {
         })
       }
     },
+    // 快速邀请
+    async fastInvite() {
+      const res = await remindAll()
+      if (res.status_code === 200) {
+        this.$toast({
+          type: 'success',
+          message: res.message
+        })
+      }
+    },
+    onLoad() {
+      // 异步更新数据
+      setTimeout(async() => {
+        const res = await getFriends({
+          type: this.friendsType,
+          page: this.page
+        })
+        this.friendsList.push(...res.data.friendsList)
+        this.page++
+        this.loading = false
+        // 数据全部加载完成
+        if (this.friendsList.length === res.data.friends_num) {
+          this.finished = true
+        }
+      }, 500)
+    },
     handleClose() {
       this.$emit('update:showRank', false)
     },
     changeType(type) {
       this.friendsType = type
+      this.page = 2
+      this.finished = false
       this.getFriendsData()
     },
     getColor(index) {
