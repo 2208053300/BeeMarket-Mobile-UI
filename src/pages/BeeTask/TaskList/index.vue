@@ -67,7 +67,10 @@
               <div class="task-subhead">
                 {{ item.subtitle }}
               </div>
-              <div class="task-status">
+              <div
+                v-if="item.tid!==7"
+                class="task-status"
+              >
                 已有 <span class="num">{{ item.complete_num }}人</span> 完成该任务
               </div>
               <div
@@ -89,7 +92,7 @@
               v-if="item.task_status===1"
               class="task-action"
               :style="{backgroundImage:'url('+beeIcon.task_btn_n+')'}"
-              @click="getAward(item.tid)"
+              @click="getAward(item)"
             >
               <span>领取</span>
             </div>
@@ -162,7 +165,7 @@
           领取成功
         </div>
         <div class="success-num">
-          恭喜您获得 <span class="num">100</span> 公益值
+          恭喜您获得 <span class="num">{{ getNum }}</span> 公益值
         </div>
         <div class="done-btn">
           <van-button
@@ -182,6 +185,11 @@
 import { getTaskList, getTaskAward } from '@/api/BeeApi/task'
 
 export default {
+  metaInfo() {
+    return {
+      title: '新手专享'
+    }
+  },
   components: {},
   props: {},
   data() {
@@ -204,7 +212,8 @@ export default {
         task_pic_value: require('@/assets/icon/task/task_pic_value@2x.png')
       },
       showAll: false,
-      showSuccess: false
+      showSuccess: false,
+      getNum: 100
     }
   },
   computed: {},
@@ -220,9 +229,10 @@ export default {
       const res = await getTaskList({ way: 'H5' })
       this.taskData = res.data
     },
-    async getAward(tid) {
-      const res = await getTaskAward({ tid: tid })
+    async getAward(item) {
+      const res = await getTaskAward({ tid: item.tid })
       if (res.status_code === 200) {
+        this.getNum = item.available_charity_value
         this.showSuccess = true
         this.getTaskListData()
       }
@@ -441,7 +451,7 @@ export default {
         }
         .helpBg {
           height: 2.84rem;
-          .task-action{
+          .task-action {
             position: relative;
             left: -0.24rem;
           }

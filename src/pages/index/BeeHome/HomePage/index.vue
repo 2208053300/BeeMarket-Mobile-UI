@@ -57,6 +57,11 @@ import actionPop from './components/actionPop'
 import { isLogin } from '@/utils/auth'
 // import wxapi from '@/utils/wxapi'
 export default {
+  metaInfo() {
+    return {
+      title: '首页'
+    }
+  },
   components: {
     headerBanner,
     operationCard,

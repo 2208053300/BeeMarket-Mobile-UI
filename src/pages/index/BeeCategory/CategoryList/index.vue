@@ -45,6 +45,11 @@ import { Grey1 } from '@/styles/index/variables.less'
 import categoryList from './components/categoryList'
 // import searchGuess from './components/searchGuess'
 export default {
+  metaInfo() {
+    return {
+      title: '分类'
+    }
+  },
   components: {
     // searchKeyword,
     categoryList

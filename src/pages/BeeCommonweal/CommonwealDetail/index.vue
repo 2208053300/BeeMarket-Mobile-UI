@@ -133,7 +133,7 @@ export default {
       background-color: transparent;
     }
     .van-cell {
-      background-color: transparent;
+      // background-color: transparent;
       .desc {
         font-size: 0.32rem;
       }
