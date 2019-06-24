@@ -57,7 +57,10 @@ export default {
   props: {},
   data() {
     return {
-      afterCommuniInfo: {}
+      afterCommuniInfo: {
+        buyer_desc: {},
+        merchant_check: {}
+      }
     }
   },
   computed: {},
