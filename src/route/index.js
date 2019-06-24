@@ -754,9 +754,8 @@ const router = new Router({
     }
   ]
 })
-// TODO 此处需要加个守卫，当用户跳转到需要用户信息的操作界面，如果未登录，跳转登录界面
-// TODO 需要在每个页面发生跳转时，定义回退的路由路径，在发生回退时，退回到指定路由，防止跳转错误
 router.beforeEach(async(to, from, next) => {
+  // 如果是微信未授权，等待跳转
   const token = await getToken()
   const osObj = getOs()
   if (osObj.isWx && token) {
