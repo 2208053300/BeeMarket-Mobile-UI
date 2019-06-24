@@ -22,12 +22,6 @@
     <van-button
       v-if="orderDetail.s_pay===0 && orderDetail.s_order!==-1"
       round
-    >
-      朋友代付
-    </van-button>
-    <van-button
-      v-if="orderDetail.s_pay===0 && orderDetail.s_order!==-1"
-      round
       class="bee-button"
     >
       去支付
