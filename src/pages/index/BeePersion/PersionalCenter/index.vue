@@ -74,7 +74,7 @@
           v-if="userInfo.bee_charity"
           class="cherity-img"
           :style="{backgroundImage:'url('+userInfo.bee_charity.image_url+')'}"
-          @click="$router.push('/persion/BeeCommonweal')"
+          @click="authRoute('/persion/BeeCommonweal')"
         />
       </van-row>
       <bee-order
@@ -90,7 +90,7 @@
           v-if="userInfo.bee_circle"
           class="cherity-img"
           :style="{backgroundImage:'url('+userInfo.bee_circle.image_url+')'}"
-          @click="$router.push('/beeFriends')"
+          @click="authRoute('/beeFriends')"
         />
       </van-row>
       <van-row
@@ -108,7 +108,7 @@
       <div class="more-op">
         <van-row>
           <van-col span="8">
-            <div @click="$router.push('/persion/myCollected')">
+            <div @click="authRoute('/persion/myCollected')">
               <div class="img-content">
                 <img
                   :src="beeIcon.mine_icon_favorite"
@@ -119,7 +119,7 @@
             </div>
           </van-col>
           <van-col span="8">
-            <div @click="$router.push('/persion/addressSetting?mode=manage')">
+            <div @click="authRoute('/persion/addressSetting?mode=manage')">
               <div class="img-content">
                 <img
                   :src="beeIcon.mine_icon_address"
@@ -130,7 +130,7 @@
             </div>
           </van-col>
           <van-col span="8">
-            <div @click="$router.push('/persion/history')">
+            <div @click="authRoute('/persion/history')">
               <div class="img-content">
                 <img
                   :src="beeIcon.mine_icon_pug"

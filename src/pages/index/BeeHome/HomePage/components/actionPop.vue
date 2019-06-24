@@ -9,7 +9,7 @@
     >
       <div
         class="pop-content"
-        @click="$router.push('/beeTask')"
+        @click="goTask"
       >
         <img
           :src="beeIcon.newuserimage"
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { isLogin } from '@/utils/auth'
 export default {
   components: {},
   props: {},
@@ -50,6 +51,14 @@ export default {
     handleClose() {
       this.showPop = false
       this.$store.state.user.is_new_user = 1
+    },
+    // 去蜂任务
+    async goTask() {
+      if (!await isLogin()) {
+        this.$router.push('/login')
+      } else {
+        this.$router.push('/beeTask')
+      }
     }
   }
 }
