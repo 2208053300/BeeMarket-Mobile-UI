@@ -29,10 +29,10 @@
           剩余时间: {{ orderDetail.count_down|getTime }}
         </span>
         <span
-          v-if="[6].indexOf(orderDetail.status)!==-1"
+          v-if="[-1].indexOf(orderDetail.s_order)!==-1"
           class="status-text2"
         >
-          {{ orderDetail.statusText }}
+          {{ orderDetail.canceled_reason }}
         </span>
       </div>
       <div class="bag-img">
@@ -69,10 +69,10 @@
             下单时间：{{ orderDetail.created_at }}
           </div>
           <div
-            v-if="[6].indexOf(orderDetail.status)!==-1"
+            v-if="[-1].indexOf(orderDetail.s_order)!==-1"
             class="details2-text"
           >
-            取消时间：{{ orderDetail.time1 }}
+            取消时间：{{ orderDetail.canceled_at }}
           </div>
           <div
             v-if="orderDetail.s_pay!==0"
@@ -101,7 +101,8 @@ import commodityList from './components/commodityList'
 import orderOp from './components/orderOp'
 import BeeGuess from '@/components/index/BeeGuess'
 import { formatSeconds } from '@/utils'
-// import { setTimeout } from 'timers'
+import { clearInterval, setInterval } from 'timers'
+
 export default {
   metaInfo: {
     title: '订单详情'
@@ -145,8 +146,12 @@ export default {
       })
       this.orderDetail = res.data
       // REVIEW 如果有倒计时
-      setInterval(() => {
+      const time = setInterval(() => {
         this.orderDetail.count_down--
+        if (this.orderDetail.count_down === 0) {
+          clearInterval(time)
+          window.location.reload()
+        }
       }, 1000)
     },
     // 获取订单状态文字

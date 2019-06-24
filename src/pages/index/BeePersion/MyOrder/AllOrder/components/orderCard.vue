@@ -103,7 +103,7 @@
             再次购买
           </van-button>
           <van-button
-            v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
+            v-if="[2, 3].indexOf(card.s_order) !== -1"
             round
             class="order-button"
             @click.stop="showLogistics(card)"
@@ -111,7 +111,7 @@
             物流追踪
           </van-button>
           <van-button
-            v-if="[1, 2, 3].indexOf(card.s_order) !== -1"
+            v-if="[2, 3].indexOf(card.s_order) !== -1"
             round
             class="order-button"
             @click.stop="completeOrderData(card.order_no)"
@@ -135,8 +135,8 @@
             <!-- TODO 接口缺少时间 -->
             去支付
           </van-button>
-          <van-button
-            v-if="card.s_order === 4"
+          <!-- v-if="card.s_order === 4" -->
+          <!-- <van-button
             round
             class="order-button"
             @click="
@@ -147,7 +147,7 @@
             "
           >
             查看详情
-          </van-button>
+          </van-button> -->
         </div>
       </div>
     </van-list>

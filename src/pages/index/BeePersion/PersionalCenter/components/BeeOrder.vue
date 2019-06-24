@@ -64,7 +64,7 @@
           </div>
           <div
             class="op-text"
-            @click="$router.push({path:'/persion/order',query:{s_status:3}})"
+            @click="$router.push({path:'/persion/order',query:{s_status:4}})"
           >
             <div class="icon-num">
               <van-icon :name="beeIcon.mine_icon_not_commented" />

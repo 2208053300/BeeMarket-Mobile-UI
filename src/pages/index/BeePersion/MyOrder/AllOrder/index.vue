@@ -43,7 +43,7 @@
       <van-tab>
         <div
           slot="title"
-          @click="changeOrder(3)"
+          @click="changeOrder(4)"
         >
           待评价
         </div>
@@ -95,7 +95,7 @@ export default {
   methods: {
     async changeOrder(index) {
       this.formData.page = 1
-      if ([-1, 0, 1, 2, 3].indexOf(index) !== -1) {
+      if ([-1, 0, 1, 2, 4].indexOf(index) !== -1) {
         this.formData.s_status = index
       }
       const res = await getOrderList(this.formData)
@@ -104,7 +104,7 @@ export default {
     },
     // 如果是带着状态参数进入页面
     changeTab(s_status) {
-      if ([0, 1, 2, 3].indexOf(s_status) !== -1) {
+      if ([0, 1, 2, 4].indexOf(s_status) !== -1) {
         this.changeOrder(s_status)
         // 更改活动标签栏
         this.active = s_status + 1

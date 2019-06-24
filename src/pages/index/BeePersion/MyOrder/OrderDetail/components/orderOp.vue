@@ -6,7 +6,7 @@
       </van-button>
     </div> -->
     <van-button
-      v-if="orderDetail.s_pay===0"
+      v-if="orderDetail.s_pay===0||[1].indexOf(orderDetail.s_order)!==-1"
       round
       @click="cancelPop=true"
     >
@@ -33,14 +33,14 @@
       去支付
     </van-button>
     <van-button
-      v-if="orderDetail.s_pay===1&&orderDetail.s_order===1"
+      v-if="orderDetail.s_pay===1&&[1].indexOf(orderDetail.s_order)!==-1"
       round
       @click="remindDelivery"
     >
       提醒发货
     </van-button>
     <van-button
-      v-if="[4,5,6,11,15].indexOf(orderDetail.status)!==-1"
+      v-if="orderDetail.take_apart>1||[4,5,-1].indexOf(orderDetail.s_order)!==-1"
       round
       @click="deleteOrderData"
     >
@@ -48,14 +48,14 @@
     </van-button>
 
     <van-button
-      v-if="orderDetail.s_pay===1&&[3].indexOf(orderDetail.s_order)"
+      v-if="orderDetail.s_pay===1&&[3,4].indexOf(orderDetail.s_order)!==-1"
       round
       @click="showLogistics(orderDetail)"
     >
-      物流追踪
+      查看物流
     </van-button>
     <van-button
-      v-if="[5,6,11,15].indexOf(orderDetail.status)!==-1"
+      v-if="[5,-1].indexOf(orderDetail.s_order)!==-1"
       round
       class="bee-button"
       @click="buyAgain(orderDetail)"
@@ -63,14 +63,15 @@
       再次购买
     </van-button>
     <van-button
-      v-if="[4].indexOf(orderDetail.status)!==-1"
+      v-if="[4].indexOf(orderDetail.s_order)!==-1"
       round
       class="bee-button"
+      @click="goComment(orderDetail)"
     >
       去评价
     </van-button>
     <van-button
-      v-if="orderDetail.s_pay===1&&[3].indexOf(orderDetail.s_order)"
+      v-if="orderDetail.s_pay===1&&[3].indexOf(orderDetail.s_order)!==-1"
       round
       class="bee-button"
       @click="completeOrderData(card.order_no)"
@@ -238,6 +239,7 @@ export default {
         this.$toast(res.message)
       }
     },
+    // 查看物流
     showLogistics(item) {
       if (item.take_apart > 1) {
         this.$router.push({
@@ -248,6 +250,20 @@ export default {
         this.$router.push({
           path: '/persion/order/logisticsDetail',
           query: { order_no: item.order_no }
+        })
+      }
+    },
+    // 去评价
+    goComment(item) {
+      if (item.uncomment >= 2) {
+        this.$router.push({
+          path: '/persion/order/comment/waitCommentOrder',
+          query: { order_no: item.order_no }
+        })
+      } else {
+        this.$router.push({
+          path: '/persion/order/comment',
+          query: { order_no: item.order_no, sku_id: item.products[0].sku_id }
         })
       }
     }

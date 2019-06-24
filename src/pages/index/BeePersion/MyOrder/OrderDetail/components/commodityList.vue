@@ -41,24 +41,24 @@
             </div>
           </div>
           <div
-            v-if="[1,2,3].indexOf(orderDetail.status)!==-1"
+            v-if="[3,4,5].indexOf(orderDetail.s_order)!==-1"
             class="apply-after"
           >
             <van-button
               class="apply-button"
-              @click="$router.push('/persion/order/applyAfter')"
+              @click="$router.push({path:'/persion/order/applyAfter',query:{order_product_id:product.opid}})"
             >
               申请售后
             </van-button>
           </div>
-          <div
+          <!-- <div
             v-if="[6].indexOf(orderDetail.status)!==-1"
             class="apply-after"
           >
             <van-button class="apply-button">
               加入购物车
             </van-button>
-          </div>
+          </div> -->
         </div>
         <div class="price-detail">
           <div class="price-text">
