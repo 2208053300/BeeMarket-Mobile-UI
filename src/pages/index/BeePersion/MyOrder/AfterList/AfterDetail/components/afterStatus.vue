@@ -87,7 +87,7 @@
       </div> -->
     </div>
 
-    <div class="status-part2">
+    <div v-if="afterDetail.closed_type!==3" class="status-part2">
       <div
         v-if="afterDetail.status_code===-1 || (afterDetail.status_code===5&&afterDetail.closed_type===1)"
         class="reject-reason"
@@ -100,7 +100,7 @@
         </div>
       </div>
       <div
-        v-if="[1,2,3].indexOf(afterDetail.status_code)!==-1"
+        v-if="[1,2,3].indexOf(afterDetail.status_code)!==-1 && afterDetail.return_addr"
         class="refund-address"
       >
         <div class="address-text">
