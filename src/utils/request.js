@@ -23,8 +23,7 @@ service.interceptors.request.use(
   async config => {
     // 加载蒙层
     Toast.loading({
-      mask: true,
-      message: 'loading...',
+      mask: false,
       forbidClick: true,
       duration: 0
     })

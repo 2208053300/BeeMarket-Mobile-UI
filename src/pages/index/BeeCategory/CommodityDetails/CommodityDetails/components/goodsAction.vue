@@ -68,7 +68,8 @@ export default {
         product_detail_icon_attention_d: require('@/assets/icon/product/product_detail_icon_attention_d@2x.png'),
         product_detail_icon_shopcart: require('@/assets/icon/product/product_detail_icon_shopcart@2x.png'),
         product_detail_pic_grab: require('@/assets/icon/product/product_detail_pic_grab@2x.png')
-      }
+      },
+      action: ''
     }
   },
   computed: {},
@@ -83,6 +84,15 @@ export default {
           mid: mid
         }
       })
+    },
+    // SKU选择完成回调
+    skuDone() {
+      // 判断触发SKU选择的动作是添加购物车还是立即购买
+      if (this.action === 'addCart') {
+        this.addShopcartProductData()
+      } else {
+        this.confirmOrderData()
+      }
     },
     async handleFollow() {
       if (this.commodityData.favor) {
@@ -104,6 +114,7 @@ export default {
     // 加入购物车
     async addShopcartProductData() {
       // TODO 如果未选择，如果初始带着商品属性跳转到商品详情页
+      this.action = 'addCart'
       if (!this.$store.state.cart.skuId) {
         this.$toast('请先选择商品规格')
         this.$store.state.cart.showSku = true
@@ -114,11 +125,11 @@ export default {
         number: this.$store.state.cart.pNumber,
         product_source: 'general'
       })
-      this.$store.state.cart.skuId = 0
       this.$toast(res.message)
     },
     // 立即购买
     async confirmOrderData() {
+      this.action = 'buy'
       if (!this.$store.state.cart.skuId) {
         this.$toast('请先选择商品规格')
         this.$store.state.cart.showSku = true
@@ -133,7 +144,6 @@ export default {
         })
       )
       if (res.status_code === 200) {
-        this.$store.state.cart.skuId = 0
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
         this.$router.push('/category/details/confirmOrder')
