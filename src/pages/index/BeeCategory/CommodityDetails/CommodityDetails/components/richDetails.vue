@@ -99,6 +99,7 @@ export default {
         }
 
         const _pollImages = function() {
+          console.log('加载图片')
           let num = 0
           for (let i = 0; i < store.length; i++) {
             const self = store[i]
@@ -119,7 +120,6 @@ export default {
           }
         }
         const _throttle = function() {
-          console.log('scrool')
           clearTimeout(poll)
           poll = setTimeout(_pollImages, throttle)
         }
@@ -134,7 +134,7 @@ export default {
           }
           _throttle()
           if (document.addEventListener) {
-            window.addEventListener('scroll', _throttle, false)
+            window.addEventListener('scroll', _throttle, true)
           } else {
             window.attachEvent('onscroll', _throttle)
           }
@@ -145,8 +145,8 @@ export default {
         }
       })(window, document)
       Echo.init({
-        offset: 10,
-        throttle: 0,
+        offset: 1000,
+        throttle: 200,
         firstnum: 3
       })
     }
