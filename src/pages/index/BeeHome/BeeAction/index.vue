@@ -1,52 +1,59 @@
 <template>
   <div class="bee-action">
     <div v-if="actionList.length>0">
-      <div
-        v-for="(item,index) in actionList"
-        :key="index"
-        class="action-content"
-        @click="goAction(item)"
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="我也是有底线的 o(´^｀)o"
+        @load="getNewestNewsListData"
       >
-        <!-- 时间 -->
-        <div class="action-time">
-          <div class="time-text">
-            {{ item.created_at }}
+        <div
+          v-for="(item,index) in actionList"
+          :key="index"
+          class="action-content"
+          @click="goAction(item)"
+        >
+          <!-- 时间 -->
+          <div class="action-time">
+            <div class="time-text">
+              {{ item.created_at }}
+            </div>
           </div>
-        </div>
-        <!-- 详情 -->
-        <div class="action-detail">
-          <!-- 图片 -->
-          <div v-if="item.background_img" class="action-img">
-            <img
-              :src="item.background_img"
-              alt=""
-            >
-            <div
-              v-if="item.is_end"
-              class="end-action"
-            >
+          <!-- 详情 -->
+          <div class="action-detail">
+            <!-- 图片 -->
+            <div v-if="item.background_img" class="action-img">
               <img
-                :src="beeIcon.message_activity_pic_over"
+                :src="item.background_img"
                 alt=""
               >
-            </div>
-          </div>
-          <div class="action-text">
-            <div class="left-text">
-              <!-- 标题 -->
-              <div v-if="item.title" class="action-title">
-                {{ item.title }}
-              </div>
-              <!-- 描述 -->
-              <div class="action-desc">
-                {{ item.content }}
+              <div
+                v-if="item.is_end"
+                class="end-action"
+              >
+                <img
+                  :src="beeIcon.message_activity_pic_over"
+                  alt=""
+                >
               </div>
             </div>
-            <!-- 箭头 -->
-            <van-icon v-if="type===2" name="arrow" />
+            <div class="action-text">
+              <div class="left-text">
+                <!-- 标题 -->
+                <div v-if="item.title" class="action-title">
+                  {{ item.title }}
+                </div>
+                <!-- 描述 -->
+                <div class="action-desc">
+                  {{ item.content }}
+                </div>
+              </div>
+              <!-- 箭头 -->
+              <van-icon v-if="type===2" name="arrow" />
+            </div>
           </div>
         </div>
-      </div>
+      </van-list>
     </div>
     <div v-else class="no-action text-center">
       <img :src="beeIcon.empty" alt="">
@@ -58,16 +65,17 @@
 import { getNewestNewsList } from '@/api/BeeApi/user'
 export default {
   metaInfo() {
-    const type = this.$route.query.type
-    if (type === 1) {
+    const type = this.$route.query.type + ''
+    console.log('type', type)
+    if (type === '1') {
       return {
         title: '蜂集市活动'
       }
-    } else if (type === 2) {
+    } else if (type === '2') {
       return {
         title: '蜂集市公告'
       }
-    } else if (type === 3) {
+    } else if (type === '3') {
       return {
         title: '蜂集市通知'
       }
@@ -82,7 +90,11 @@ export default {
       beeIcon: {
         message_activity_pic_over: require('@/assets/icon/home/message_activity_pic_over@2x.png'),
         empty: require('@/assets/icon/product/product_detail_pic_nodetails@2x.png')
-      }
+      },
+      loading: false,
+      finished: false,
+      page: 1,
+      pageSize: 10
     }
   },
   computed: {},
@@ -95,14 +107,26 @@ export default {
   },
   methods: {
     async getNewestNewsListData() {
-      const res = await getNewestNewsList({ type: this.type })
-      if (res.data) {
-        this.actionList = res.data
+      try {
+        const res = await getNewestNewsList({
+          type: this.type,
+          page: this.page,
+          pageSize: this.pageSize
+        })
+        this.page += 1
+        this.loading = false
+        if (res.data) {
+          this.actionList.push(...res.data)
+        }
+        if (res.data.length < this.pageSize) {
+          this.finished = true
+        }
+      } catch (e) {
+        this.$toast.fail(e)
       }
     },
     goAction(item) {
       console.log(item)
-
       // TODO 跳转到指定活动页 1 活动 2公告 3 消息
       if (this.type === 1) {
         console.log('活动')

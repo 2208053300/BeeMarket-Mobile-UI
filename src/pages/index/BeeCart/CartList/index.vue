@@ -40,13 +40,23 @@
             class="null-img"
             :style="{backgroundImage:'url('+beeIcon.shopping_cart_pic_no+')'}"
           />
-          <span class="null-text">购物车空空如也</span>
+          <span v-if="authStatus === 1" class="null-text">购物车空空如也</span>
+          <span v-if="authStatus === 2" class="null-text">您还未登录~</span>
           <van-button
+            v-if="authStatus === 1"
             type="default"
             class="add-btn"
             @click="$router.push('/category')"
           >
             去添加
+          </van-button>
+          <van-button
+            v-if="authStatus === 2"
+            type="default"
+            class="add-btn"
+            @click="$router.push('/login')"
+          >
+            去登录
           </van-button>
         </div>
         <cart-list
@@ -117,7 +127,7 @@ import CartList from './components/CartList'
 import BeeGuess from '@/components/index/BeeGuess'
 import { mapState } from 'vuex'
 import { BeeDefault, Grey2 } from '@/styles/index/variables.less'
-
+import { isLogin } from '@/utils/auth'
 export default {
   metaInfo() {
     return {
@@ -141,7 +151,8 @@ export default {
         // nav_icon_share: require('@/assets/icon/cart/nav_icon_share@2x.png'),
         shopping_cart_pic_no: require('@/assets/icon/cart/shopping_cart_pic_no@2x.png')
       },
-      guessData: []
+      guessData: [],
+      authStatus: 0 // 1为登录 2为未登录 0为未知
     }
   },
   computed: {
@@ -154,6 +165,9 @@ export default {
     this.$store.state.app.beeFooter.show = true
     // TODO 如果本地缓存直接读取，如果无缓存从后台获取
     this.getShopcartListData()
+    isLogin().then(bool => {
+      this.authStatus = bool ? 1 : 2
+    })
   },
   methods: {
     async getShopcartListData() {

@@ -16,16 +16,20 @@
           v-if="[1,2,3].indexOf(afterDetail.status_code)!==-1"
           class="status-text2"
         > -->
-          <span v-if="afterDetail.status_content.remain_time" class="status-text2">
+          <span v-if="afterDetail.status_content.remain_time>0" class="status-text2">
             <!-- TODO 这里是时分秒倒计时？ -->
             剩余时间: {{ remain_time_sec }}
+          </span>
+
+          <span v-if="afterDetail.status_content.content_desc" class="status-text2">
+            {{ afterDetail.status_content.content_desc }}
           </span>
         </div>
         <img :src="refundImg" alt="" class="refund-img">
       </div>
     </div>
     <div class="detail-content">
-      <!-- 状态描述 -->
+      <!-- 收货状态描述 -->
       <after-status :after-detail="afterDetail" class="details-card" />
 
       <!-- 待商家收货2、已完成4 有物流信息 -->
@@ -64,12 +68,12 @@
       <div class="go-details details-card">
         <van-cell-group>
           <van-cell
-            v-if="afterDetail.type_code === 3"
+            v-if="afterDetail.type_code === 2 && [2,3,4].includes( afterDetail.status_code)"
             title="物流信息"
             value="查看详情"
             is-link
             @click="
-              router.push({
+              $router.push({
                 path: '/persion/order/logisticsDetail',
                 query: { aid: afterDetail.aid }
               })
@@ -126,7 +130,14 @@ export default {
       // 售后单id
       aid: this.$route.query.aid,
       // 售后单详情
-      afterDetail: {},
+      afterDetail: {
+        aid: null,
+        product_info: {},
+        status_code: 0,
+        status_content: {},
+        status_desc: {},
+        type_code: 0
+      },
       // 剩余处理时间
       remain_time_sec: 0,
       // 顶部状态栏右边图片
@@ -147,11 +158,17 @@ export default {
       const res = await getAfterDetail({ aid: this.aid })
       this.afterDetail = res.data
       // this.remain_time_sec = this.afterDetail.status_content.remain_time
-      setInterval(() => {
-        this.afterDetail.status_content.remain_time--
-        // this.remain_time_sec--
-        this.remain_time_sec = this.formatSeconds(this.afterDetail.status_content.remain_time)
-      }, 1000)
+      if (this.afterDetail.status_content.remain_time) {
+        const clock = setInterval(() => {
+          this.afterDetail.status_content.remain_time--
+          this.remain_time_sec = this.formatSeconds(this.afterDetail.status_content.remain_time)
+          if (this.afterDetail.status_content.remain_time === 0) {
+            this.afterDetail.status_content.remain_time = 0
+            this.remain_time_sec = this.formatSeconds(this.afterDetail.status_content.remain_time)
+            window.clearInterval(clock)
+          }
+        }, 1000)
+      }
     },
     // 剩余处理时间 秒转时分
     // 将秒数转换为时分秒格式

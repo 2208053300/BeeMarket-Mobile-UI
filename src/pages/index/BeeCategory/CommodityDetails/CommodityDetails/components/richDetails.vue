@@ -133,7 +133,7 @@ export default {
           }
           _throttle()
           if (document.addEventListener) {
-            window.addEventListener('scroll', _throttle, false)
+            window.addEventListener('scroll', _throttle, true)
           } else {
             window.attachEvent('onscroll', _throttle)
           }
@@ -144,7 +144,7 @@ export default {
         }
       })(window, document)
       Echo.init({
-        offset: 2000,
+        offset: 1000,
         throttle: 200,
         firstnum: 3
       })

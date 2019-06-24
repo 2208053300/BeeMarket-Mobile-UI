@@ -13,7 +13,7 @@
     </div>
     <div
       class="op-item"
-      @click="$router.push('beeTask')"
+      @click="authRoute('beeTask')"
     >
       <div class="img-content">
         <img
@@ -27,7 +27,7 @@
     </div>
     <div
       class="op-item"
-      @click="$router.push('beeFriends')"
+      @click="authRoute('beeFriends')"
     >
       <div class="img-content">
         <img
@@ -68,6 +68,8 @@
 </template>
 
 <script>
+import { isLogin } from '@/utils/auth'
+
 export default {
   components: {},
   props: {},
@@ -86,7 +88,15 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    async authRoute(path) {
+      if (!(await isLogin())) {
+        this.$router.push('/login')
+      } else {
+        this.$router.push(path)
+      }
+    }
+  }
 }
 </script>
 

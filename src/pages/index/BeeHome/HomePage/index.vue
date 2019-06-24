@@ -22,7 +22,7 @@
         <van-icon
           :name="$store.state.user.have_no_read?beeIcon.home_icon_message_prompt:beeIcon.home_icon_message"
           class="message-icon"
-          @click="$router.push('/beeNotice')"
+          @click="authRoute('/beeNotice')"
         />
       </div>
       <header-banner :home-data="homeData" />
@@ -54,6 +54,7 @@ import projectSelection from './components/projectSelection'
 import actionList from './components/actionList'
 import guessLike from './components/guessLike'
 import actionPop from './components/actionPop'
+import { isLogin } from '@/utils/auth'
 // import wxapi from '@/utils/wxapi'
 export default {
   components: {
@@ -142,6 +143,14 @@ export default {
       // 用于微信JS-SDK回调
       // this.wxShareTimeline()
       // this.wxShareAppMessage()
+    },
+    // 跳转到需要登录的路由
+    async authRoute(path) {
+      if (!(await isLogin())) {
+        this.$router.push('/login')
+      } else {
+        this.$router.push(path)
+      }
     }
   }
 }
