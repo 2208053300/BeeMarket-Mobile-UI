@@ -210,6 +210,10 @@ export default {
       } else {
         this.$router.push(path)
       }
+    },
+    // 获取分享链接
+    getShareLink() {
+      return `http://app.fengjishi.com.cn/beeClassroom#/detail/${this.$route.params.id}?uid=${this.uid}`
     }
   },
   // 当前打开另外一个课堂时会调用此方法
@@ -217,10 +221,6 @@ export default {
     // TODO 获取课堂详情 jethro
     console.log('TODO 获取课堂详情:', to.params.id)
     next()
-  },
-  // 获取分享链接
-  getShareLink() {
-    return `http://app.fengjishi.com.cn/beeClassroom#/detail/${this.$route.params.id}`
   }
 }
 </script>
