@@ -260,9 +260,9 @@ export default {
       border-radius: 0.08rem;
     }
     .control {
-      width: @videoWidth;
-      height: @videoHeight;
-      top: -@videoHeight;
+      width: 1.28rem;
+      height: 1.28rem;
+      top: -50%;
       left: 0;
       position: absolute;
       display: flex;

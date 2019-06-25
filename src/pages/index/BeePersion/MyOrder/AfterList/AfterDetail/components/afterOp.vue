@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { delAfterOrder, cancelAfterOrder } from '@/api/BeeApi/user'
+import { delAfterOrder, cancelAfterOrder, comfirmCom } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {
@@ -156,11 +156,15 @@ export default {
         })
         .then(async() => {
           // on confirm
-          const res = await cancelAfterOrder({ aid: this.aid })
-          this.$toast.success(res.message)
-          setTimeout(() => {
-            window.location.reload()
-          }, 1500)
+          try {
+            const res = await comfirmCom({ aid: this.aid })
+            this.$toast.success(res.message)
+            setTimeout(() => {
+              window.location.reload()
+            }, 1500)
+          } catch (error) {
+            this.$toast(error)
+          }
         })
         .catch(() => {
           this.$toast('已取消')

@@ -152,6 +152,14 @@ export function getAfterList(data) {
     data
   })
 }
+// 我的售后单 确认完成
+export function comfirmCom(data) {
+  return request({
+    url: '/user/customer/confirm',
+    method: 'post',
+    data
+  })
+}
 // 消息中心-首页
 export function getNewestNews(data) {
   return request({

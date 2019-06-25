@@ -2,7 +2,7 @@
   <div class="RgsCtn">
     <div class="RegistrtFirst">
       <img src="../../../assets/icon/register/registerTitle1.jpg" alt="">
-      <video
+      <!-- <video
         controls="controls"
         poster="/static/src/Img/vedio_bg.png"
         style="width: 100%;pointer-events: auto;"
@@ -11,7 +11,29 @@
           src="https://img.fengjishi.com.cn/app/videos/education/intro.mp4"
           type="video/mp4"
         >
-      </video>
+      </video> -->
+      <div class="video">
+        <video
+          ref="video"
+          :src="video.video_url"
+          :poster="video.first_screen"
+          class="video-body"
+          :controls="video.showControls"
+          webkit-playsinline="true"
+          playsinline
+          x5-video-player-type="h5"
+          x5-video-player-fullscreen="true"
+        />
+        <!-- <div v-if="!video.showControls" style="position: relative"> -->
+
+        <div v-if="!video.showControls" class="control" @click="play">
+          <img
+            :src="video.title_icon_stop"
+            style="width: 1.28rem;height: 1.28rem"
+          >
+        </div>
+      </div>
+
       <div class="RNext">
         <img src="../../../assets/icon/register/registerNext.jpg" alt="">
       </div>
@@ -178,7 +200,15 @@ export default {
       isAgree: true,
       // 验证码间隔时间
       downTime: 10,
-      isShowBtn: true
+      isShowBtn: true,
+      // 视屏
+      video: {
+        video_url: 'https://img.fengjishi.com.cn/app/videos/education/intro.mp4',
+        first_screen: require('@/assets/icon/register/vedio_bg.png'),
+        title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
+        showControls: false
+      }
+
     }
   },
   computed: {},
@@ -199,9 +229,16 @@ export default {
 
     // 请求任一接口判断是否登录
     // await this.$store.dispatch('GerUserStatus')
-    await isLogin()
+    // await isLogin()
   },
   methods: {
+    // 播放视频
+    play() {
+      console.log('play')
+
+      this.$refs.video.play()
+      this.video.showControls = true
+    },
     // 跳转到下载页面
     goDownloadPage() {
       this.$router.push({
@@ -254,6 +291,8 @@ export default {
           })
         }
       } catch (error) {
+        console.log('fail')
+
         this.$toast.fail(error)
       }
     },
@@ -318,13 +357,32 @@ export default {
 }
 </script>
 
-<style  lang="less">
+<style scoped lang="less">
+.video {
+  position: relative;
+    .video-body {
+      background-color: black;
+      width: 100%;
+      height: 4.35rem;
+    }
+    .control {
+      width:1.28rem;
+      height: 1.28rem;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      transform: translate(-50%,-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 .RgsCtn {
   background: rgba(229, 229, 229, 229);
 }
 
 .RegistrtFirst {
-  pointer-events: none;
+  // pointer-events: none;
   -webkit-tap-highlight-color: transparent !important;
   tap-highlight-color: transparent !important;
 }
