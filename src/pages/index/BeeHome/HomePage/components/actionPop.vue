@@ -40,7 +40,7 @@ export default {
         newuserimage: require('@/assets/icon/home/index/newuserimage@2x.png'),
         icon_cancel: require('@/assets/icon/home/index/icon_cancel@2x.png')
       },
-      showPop: this.$store.state.user.is_new_user
+      showPop: this.$store.state.user.is_new_user !== 1
     }
   },
   computed: {},

@@ -50,6 +50,7 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
+    this.active = this.$route.query.active || 0
   },
   methods: {}
 }

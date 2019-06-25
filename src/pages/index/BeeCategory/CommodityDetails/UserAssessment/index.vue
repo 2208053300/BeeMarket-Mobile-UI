@@ -6,8 +6,6 @@
           <span class="rate-text">评分</span>
           <van-rate
             v-model="assessmentData.avg_score"
-            :icon="beeIcon.product_detail_evaluation_icon_flower_pressed"
-            :void-icon="beeIcon.product_detail_evaluation_icon_flower_normat"
             readonly
           />
         </div>
@@ -70,8 +68,6 @@
           </div>
           <van-rate
             v-model="item.score"
-            :icon="beeIcon.product_detail_icon_flower_pressed"
-            :void-icon="beeIcon.product_detail_icon_flower_normat"
             readonly
           />
           <div class="assessment">
@@ -126,10 +122,6 @@ export default {
       finished: false,
       assessmentList: [],
       beeIcon: {
-        product_detail_icon_flower_pressed: require('@/assets/icon/product/product_detail_icon_flower_pressed@2x.png'),
-        product_detail_icon_flower_normat: require('@/assets/icon/product/product_detail_icon_flower_normat@2x.png'),
-        product_detail_evaluation_icon_flower_pressed: require('@/assets/icon/product/product_detail_evaluation_icon_flower_pressed@2x.png'),
-        product_detail_evaluation_icon_flower_normat: require('@/assets/icon/product/product_detail_evaluation_icon_flower_normat@2x.png'),
         product_detail_icon_avatar: require('@/assets/icon/product/product_detail_icon_avatar@2x.png')
       },
       formData: {},
@@ -300,7 +292,6 @@ export default {
           border-radius: 0.1rem;
           height: 2.26rem;
           overflow: hidden;
-
         }
       }
     }
