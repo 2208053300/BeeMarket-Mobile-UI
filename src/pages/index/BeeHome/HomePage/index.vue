@@ -31,8 +31,9 @@
     <bee-product :home-data="homeData" />
     <everyday-product :home-data="homeData" />
     <bee-product2 :home-data="homeData" />
-    <new-product :home-data="homeData" />
     <farm-product :home-data="homeData" />
+    <bottom-card :home-data="homeData" />
+    <new-product :home-data="homeData" />
     <action-list :home-data="homeData" />
     <guess-like :guess-data="homeData.random_product" />
     <actionPop />
@@ -45,6 +46,7 @@ import { getHome } from '@/api/BeeApi/home'
 import headerBanner from './components/headerBanner'
 import operationCard from './components/operationCard'
 import everydayProduct from './components/everydayProduct'
+import bottomCard from './components/bottomCard'
 import beeProduct from './components/beeProduct'
 import beeProduct2 from './components/beeProduct2'
 import newProduct from './components/newProduct'
@@ -66,6 +68,7 @@ export default {
     beeProduct,
     beeProduct2,
     everydayProduct,
+    bottomCard,
     newProduct,
     farmProduct,
     actionList,
