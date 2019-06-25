@@ -73,7 +73,7 @@
           </div>
         </div>
       </div>
-      <div class="bottom-btn">
+      <!-- <div class="bottom-btn">
         <van-button
           class="goTask"
           round
@@ -81,7 +81,7 @@
         >
           进入新手专享
         </van-button>
-      </div>
+      </div> -->
     </div>
     <bee-guess :guess-data="comVal.charity_products" />
   </div>

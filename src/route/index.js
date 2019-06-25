@@ -138,6 +138,11 @@ const router = new Router({
               path: 'freeze',
               name: 'freeze',
               component: () => import('@/pages/BeeFriends/Freeze')
+            },
+            {
+              path: 'rule',
+              name: 'beeFriendRule',
+              component: () => import('@/pages/BeeFriends/Rule')
             }
           ]
         },
