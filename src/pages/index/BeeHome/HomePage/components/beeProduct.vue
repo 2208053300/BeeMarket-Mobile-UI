@@ -2,8 +2,8 @@
   <div class="main-action">
     <div
       class="bee-product"
-      :style="{backgroundImage:'url('+(homeData.plan.show_image ||$store.state.app.defaultImg3)+')'}"
-      @click="goUrl(homeData.plan.url,homeData.plan.plan_id)"
+      :style="{backgroundImage:'url('+(homeData.new_user.show_image ||$store.state.app.defaultImg3)+')'}"
+      @click="$router.push('/beeTask')"
     />
     <div
       class="bee-product"
@@ -22,6 +22,9 @@ export default {
       default: () => {
         return {
           plan: {
+            show_image: ''
+          },
+          new_user: {
             show_image: ''
           }
         }

@@ -102,6 +102,9 @@ export default {
         plan: {
           show_image: ''
         },
+        new_user: {
+          show_image: ''
+        },
         charity_action: {
           action: {}
         },
