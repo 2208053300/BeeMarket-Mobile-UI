@@ -40,8 +40,6 @@
             </div>
             <van-rate
               v-model="item.score"
-              :icon="beeIcon.product_detail_icon_flower_pressed"
-              :void-icon="beeIcon.product_detail_icon_flower_normat"
               readonly
             />
           </div>
@@ -123,8 +121,6 @@ export default {
       preIndex: 0,
       touchMove: false,
       beeIcon: {
-        product_detail_icon_flower_pressed: require('@/assets/icon/product/product_detail_icon_flower_pressed@2x.png'),
-        product_detail_icon_flower_normat: require('@/assets/icon/product/product_detail_icon_flower_normat@2x.png'),
         product_detail_icon_avatar: require('@/assets/icon/product/product_detail_icon_avatar@2x.png')
       }
     }
@@ -229,7 +225,7 @@ export default {
           .assessment-img-container {
             display: inline-block;
             border-radius: 0.1rem;
-            height:1.7rem;
+            height: 1.7rem;
             overflow: hidden;
           }
         }

@@ -240,7 +240,7 @@ export default {
     doTask(item) {
       switch (item.target_to) {
         case 1:
-          this.$router.push('/discover')
+          this.$router.push({ path: '/discover', query: { active: 1 }})
           break
         case 2:
           window.location.href = item.target_url
@@ -349,13 +349,13 @@ export default {
       border-radius: 0.2rem;
       position: relative;
       .body-title {
-        width: 4rem;
         position: absolute;
         top: -0.24rem;
         left: 20%;
         text-align: center;
         background-color: #ffffff;
         .title-text1 {
+          width: 4rem;
           font-size: 0.38rem;
           color: @Orange3;
           font-weight: bold;
