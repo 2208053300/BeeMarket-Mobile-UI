@@ -26,6 +26,14 @@
           <div class="product-name">
             {{ item.product_name }}
           </div>
+          <div class="product-tag">
+            <div
+              v-if="item.area"
+              class="area-tag"
+            >
+              商品来自：{{ item.area }}
+            </div>
+          </div>
           <div class="product-currentPrice">
             <span style="font-size:0.24rem">￥</span><span>{{ item.selling_price }}</span>
           </div>
@@ -121,6 +129,21 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+        }
+        .product-tag {
+          height: 0.5rem;
+          display: flex;
+          align-items: flex-end;
+          .area-tag {
+            padding: 0.04rem 0.08rem;
+            box-sizing: border-box;
+            font-size: 0.2rem;
+            text-align: center;
+            color: @Red1;
+            border: 0.02rem solid @Red1;
+            margin-right: 0.12rem;
+            border-radius: 0.04rem;
+          }
         }
         .product-currentPrice {
           color: @BeeDefault;
