@@ -99,13 +99,10 @@ export default {
         this.order = false
         this.count = 0
       } else if (type === 2) {
-        console.log(1111111111)
         this.count++
-        // console.log(type, this.nowIndex, this.count)
         // if (this.count > 1) { // this.count == 1 是选中价格，>1 时筛选按价格升序还是降序
         this.count % 2 === 0 ? this.order = 'desc' : this.order = 'asc'
         this.$emit('getFilter', { type, order: this.order })
-        // }
       }
     },
     showListWay() {

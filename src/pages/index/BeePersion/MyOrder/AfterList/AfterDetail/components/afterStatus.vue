@@ -8,8 +8,8 @@
 
     <div class="status-part1">
       <!-- 状态描述 -->
-      <div v-if="[0,1,2,3,-1].includes(afterDetail.status_code) || (afterDetail.status_code===5&& [1,2].includes(afterDetail.closed_type))" class="audit-text">
-        <div class="part1-title">
+      <div v-if=" [0,1,2,3,-1].includes(afterDetail.status_code) || (afterDetail.status_code===5&& [1,2].includes(afterDetail.closed_type))" class="audit-text">
+        <div v-if="afterDetail.status_desc.title" class="part1-title">
           <span>{{ afterDetail.status_desc.title }}</span>
         </div>
         <template v-if="afterDetail.status_desc.directions && afterDetail.status_desc.directions.length>1">
@@ -82,7 +82,7 @@
       </div> -->
     </div>
 
-    <div v-if="afterDetail.closed_type!==3" class="status-part2">
+    <div v-if="afterDetail.closed_type && afterDetail.closed_type!==3" class="status-part2">
       <!-- 拒绝原因 -->
       <div
         v-if="afterDetail.status_code===-1 || (afterDetail.status_code===5&&afterDetail.closed_type===1)"
@@ -139,7 +139,7 @@ export default {
 
 <style scoped lang="less">
 .after-status {
-  margin-bottom: 0.2rem;
+  // margin-bottom: 0.2rem;
   .status-part1 {
     .part1-title {
       padding: 0.3rem 0.16rem;
@@ -183,6 +183,7 @@ export default {
         display: flex;
         justify-content: space-between;
         color: @Grey2;
+        margin-bottom:0.2rem;
         .bee-text {
           color: @BeeDefault;
         }

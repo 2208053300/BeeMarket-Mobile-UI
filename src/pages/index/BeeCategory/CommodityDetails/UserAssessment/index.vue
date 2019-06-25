@@ -186,8 +186,6 @@ export default {
       this.$store.state.app.beeHeader = true
     },
     onChange2(index) {
-      console.log(123)
-
       this.preIndex = index
     }
   }
