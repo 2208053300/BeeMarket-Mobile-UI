@@ -68,7 +68,7 @@ export default {
   height: 2.8rem;
   border-radius: 0.1rem;
   border: 1px solid #ddd;
-  img{width:100%;height:100%;}
+  img{width:100%;height:100%; border-radius: 0.1rem;}
 }
 .info{
   padding: 0.2rem 0;

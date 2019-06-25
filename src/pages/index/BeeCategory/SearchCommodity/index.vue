@@ -18,8 +18,11 @@
           :name="beeIcon.nav_icon_search"
           :color="Grey1"
         />
-        <van-button slot="action" type="default" class="cancel-search" @click="cancelSearch">
+        <van-button v-if="!searchKey" slot="action" type="default" class="cancel-search" @click="cancelSearch">
           取消
+        </van-button>
+        <van-button v-else slot="action" type="default" class="cancel-search" @click="getConfirmWold(searchKey)">
+          搜索
         </van-button>
       </van-search>
     </van-nav-bar>
@@ -68,18 +71,18 @@ export default {
       isShowGuess1: true,
       // 搜索建议数据
       guessData: [
-        {
-          id: 1,
-          name: '男装'
-        },
-        {
-          id: 2,
-          name: '女'
-        },
-        {
-          id: 3,
-          name: '童装'
-        }
+        // {
+        //   id: 1,
+        //   name: '男装'
+        // },
+        // {
+        //   id: 2,
+        //   name: '女'
+        // },
+        // {
+        //   id: 3,
+        //   name: '童装'
+        // }
       ],
       // 是否显示商品列表
       isShowProductList: false,
@@ -129,6 +132,7 @@ export default {
       this.isShowGuess1 = true
       this.isShowProductList = false
       const res = await searchSuggust({ search: this.searchKey })
+      this.guessData = res.data
       console.log('搜索建议：', res)
     },
     // 确认搜索关键词并以此搜索商品
@@ -196,8 +200,9 @@ export default {
   .van-nav-bar__title {
     max-width: 6.24rem;
   }
+
   .van-search {
-    padding: 0.08rem 0 0;
+    padding:  0;
     .van-search__content--round {
       border: 0.02rem solid @Grey6;
       background-color: @Grey5;
@@ -210,9 +215,7 @@ export default {
       color: @Grey1;
       font-size: 0.28rem;
       border: none;
-      padding: 0;
-      margin: 0;
-      height: 0.16rem;
+
     }
     .van-cell {
       align-items: center;
