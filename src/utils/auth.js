@@ -42,6 +42,8 @@ export function checkToken() {
       const uriProp2 = window.location.href.slice(
         window.location.href.indexOf('STATE') + 5
       )
+      // console.log(`${ENV_APPID}`)
+
       // 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
 
       // 只带state后面的参数跳转
