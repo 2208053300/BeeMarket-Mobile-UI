@@ -43,9 +43,9 @@
     <van-button round type="default" @click="contactServer">
       联系客服
     </van-button>
-    <!-- 换货且待买家收货时 可确认收货 -->
+    <!-- 换货且待买家收货时 可确认收货,或者 补寄时待买家收货 -->
     <van-button
-      v-if="afterDetail.type_code === 2 && afterDetail.status_code === 3"
+      v-if="[2,3].includes(afterDetail.type_code) && afterDetail.status_code === 3"
       type="default"
       round
       class="btn-complete"
