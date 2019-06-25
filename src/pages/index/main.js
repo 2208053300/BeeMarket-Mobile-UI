@@ -45,7 +45,8 @@ import {
   Field,
   Uploader,
   NumberKeyboard,
-  PasswordInput
+  PasswordInput,
+  Picker
 } from 'vant'
 
 Vue.use(Icon)
@@ -84,6 +85,7 @@ Vue.use(Icon)
   .use(Uploader)
   .use(NumberKeyboard)
   .use(PasswordInput)
+  .use(Picker)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

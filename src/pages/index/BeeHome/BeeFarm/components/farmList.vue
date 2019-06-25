@@ -244,12 +244,12 @@ export default {
   mounted() {},
   methods: {
     // 获取二级分类下商品列表
-    async getProductListData() {
+    getProductListData() {
       const data = this.filterParams(this.condition)
       setTimeout(async() => {
         const res = await getProductList(data)
         this.commodityList.push(...res.data.products)
-        this.page++
+        this.condition.page++
         this.loading = false
 
         if (res.data.products.length === 0) {
@@ -283,7 +283,7 @@ export default {
 
       // console.log('返回后的condition：', this.condition)
       // 清空已有数据，重置页码，获取新的数据
-      this.goodsList = []
+      this.commodityList = []
       this.condition.page = 1
       this.getProductListData(this.condition)
     },
