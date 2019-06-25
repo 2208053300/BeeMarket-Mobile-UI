@@ -105,7 +105,7 @@ import {
   // joinAction
 } from '@/api/BeeApi/action'
 // 引入微信分享
-// import wxapi from '@/utils/wxapi.js'
+import wxapi from '@/utils/wxapi.js'
 // 引入组件
 import detailCard0 from './components/detailCard0'
 import detailCard1 from './components/detailCard1'
@@ -183,7 +183,7 @@ export default {
     // 获取详情数据
     this.getActionDetailsData()
     // 调用微信分享
-    // wxapi.wxRegister(this.wxRegCallback)
+    wxapi.wxRegister(this.wxRegCallback)
   },
   methods: {
     async getActionDetailsData() {
@@ -202,47 +202,47 @@ export default {
     // 关闭分享弹出层
     closed() {
       this.$store.state.app.beeHeader = true
-    }
+    },
 
     // 分享回调函数
-    // wxRegCallback() {
-    //   // 用于微信JS-SDK回调
-    //   this.wxShareTimeline()
-    //   this.wxShareAppMessage()
-    // },
-    // wxShareTimeline() {
-    //   // 微信自定义分享到朋友圈
-    //   const option = {
-    //     title: this.actionDetails.subtitle, // 分享标题, 请自行替换
-    //     link: window.location.href.split('#')[0], // 分享链接，根据自身项目决定是否需要split
-    //     imgUrl: this.actionDetails.share_image, // 分享图标, 请自行替换，需要绝对路径
-    //     success: () => {
-    //       alert('分享成功')
-    //     },
-    //     error: () => {
-    //       alert('已取消分享')
-    //     }
-    //   }
-    //   // 将配置注入通用方法
-    //   // wxapi.ShareTimeline(option)
-    // },
-    // wxShareAppMessage() {
-    //   // 微信自定义分享给朋友
-    //   const option = {
-    //     title: this.actionDetails.subtitle, // 分享标题, 请自行替换
-    //     desc: this.actionDetails.top_desc, // 分享描述, 请自行替换
-    //     link: window.location.href.split('#')[0], // 分享链接，根据自身项目决定是否需要split
-    //     imgUrl: this.actionDetails.share_image, // 分享图标, 请自行替换，需要绝对路径
-    //     success: () => {
-    //       alert('分享成功')
-    //     },
-    //     error: () => {
-    //       alert('已取消分享')
-    //     }
-    //   }
-    // 将配置注入通用方法
-    // wxapi.ShareAppMessage(option)
-    // }
+    wxRegCallback() {
+      // 用于微信JS-SDK回调
+      this.wxShareTimeline()
+      this.wxShareAppMessage()
+    },
+    wxShareTimeline() {
+      // 微信自定义分享到朋友圈
+      const option = {
+        title: this.actionDetails.subtitle, // 分享标题, 请自行替换
+        link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
+        imgUrl: this.actionDetails.share_image, // 分享图标, 请自行替换，需要绝对路径
+        success: () => {
+          alert('分享成功')
+        },
+        error: () => {
+          alert('已取消分享')
+        }
+      }
+      // 将配置注入通用方法
+      wxapi.ShareTimeline(option)
+    },
+    wxShareAppMessage() {
+      // 微信自定义分享给朋友
+      const option = {
+        title: this.actionDetails.subtitle, // 分享标题, 请自行替换
+        desc: this.actionDetails.top_desc, // 分享描述, 请自行替换
+        link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
+        imgUrl: this.actionDetails.share_image, // 分享图标, 请自行替换，需要绝对路径
+        success: () => {
+          alert('分享成功')
+        },
+        error: () => {
+          alert('已取消分享')
+        }
+      }
+      // 将配置注入通用方法
+      wxapi.ShareAppMessage(option)
+    }
   }
 }
 </script>
