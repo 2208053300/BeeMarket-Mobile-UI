@@ -260,7 +260,7 @@ export default {
           border-radius: 0.04rem;
           border: 0.02rem solid @Grey7;
           box-sizing: border-box;
-          box-shadow: 0 0 0.1rem 0.04rem @Grey7;
+          // box-shadow: 0 0 0.1rem 0.04rem @Grey7;
         }
         .category3-title {
           max-width: 1.68rem;
