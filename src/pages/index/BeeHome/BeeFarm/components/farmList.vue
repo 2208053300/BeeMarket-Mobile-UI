@@ -1,52 +1,5 @@
 <template>
   <div class="farm-list">
-    <!-- 筛选 -->
-    <!-- <div class="content-filter">
-      <van-tabs
-        v-model="activeTab"
-        background="transparent"
-        :color="BeeDefault"
-        :title-active-color="BeeDefault"
-        :line-width="0"
-      >
-        <van-tab>
-          <div slot="title">
-            默认
-          </div>
-        </van-tab>
-        <van-tab>
-          <div slot="title">
-            新品
-          </div>
-        </van-tab>
-        <van-tab>
-          <div slot="title">
-            价格
-            <van-icon :name="beeIcon.low_white" />
-          </div>
-        </van-tab>
-      </van-tabs>
-      <div class="icon-content">
-        <van-icon
-          v-if="gridList"
-          :name="beeIcon.list_icon_horizontal"
-          class="change-list"
-          @click="gridList=false"
-        />
-        <van-icon
-          v-else
-          :name="beeIcon.list_icon_vertical"
-          class="change-list"
-          @click="gridList=true"
-        />
-        <div
-          class="sel-area"
-          @click="showArea=true"
-        >
-          地区
-        </div>
-      </div>
-    </div> -->
     <!-- 筛选排序 -->
     <FilterBox
       @getFilter="getFilter"
@@ -506,12 +459,14 @@ export default {
           display: flex;
           align-items: flex-end;
           .from-area {
+            padding: 0.04rem 0.08rem;
+            box-sizing: border-box;
             font-size: 0.2rem;
+            text-align: center;
             color: @Red1;
-            border-radius: 0.04rem;
             border: 0.02rem solid @Red1;
-            padding: 0.02rem 0.04rem;
             margin-right: 0.12rem;
+            border-radius: 0.04rem;
           }
           .bee-tag {
             display: inline-block;

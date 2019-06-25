@@ -160,6 +160,8 @@ export default {
     align-items: center;
     .header-left {
       flex: 1;
+      display: flex;
+      align-items: center;
       .store-img {
         display: inline-block;
         height: 0.96rem;

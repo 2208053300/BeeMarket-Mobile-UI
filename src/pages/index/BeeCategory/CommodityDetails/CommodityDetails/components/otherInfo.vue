@@ -182,6 +182,7 @@
       :pid="commodityData.pid"
       :props-id.sync="propsId"
       :p-number.sync="pNumber"
+      :limit-num="commodityData.remaining"
       @get-sku-name="getSkuName"
       @get-sku-id="getSkuId"
       @sku-done="$emit('sku-done')"
