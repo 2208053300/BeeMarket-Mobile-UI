@@ -97,7 +97,7 @@
                 正品保证
               </div>
               <div class="promise-desc">
-                商家在售商品均持续加入保险承保范围予以正品保证。
+                集市严查杜绝假冒伪劣商品，上架经营商家承诺加入正品保证计划。
               </div>
             </div>
           </div>
@@ -136,16 +136,32 @@
           <div class="promise-item">
             <div class="promise-img">
               <img
-                :src="beeIcon.product_detail_icon_review"
-                alt="审"
+                :src="beeIcon.product_detail_pic_postage"
+                alt="邮"
               >
             </div>
             <div class="promise-right">
               <div class="promise-title">
-                极速审核
+                全场包邮
               </div>
               <div class="promise-desc">
-                为用户提供的针对售后退换货流程的专项服务，开通后售后服务单会在48小时内审核完毕
+                集市所有商品均无条件包邮（特殊地区及活动除外）
+              </div>
+            </div>
+          </div>
+          <div class="promise-item">
+            <div class="promise-img">
+              <img
+                :src="beeIcon.product_detail_pic_seven"
+                alt="七"
+              >
+            </div>
+            <div class="promise-right">
+              <div class="promise-title">
+                七天退货
+              </div>
+              <div class="promise-desc">
+                集市商家严格执行七天无理由退货制度，确保用户无忧购物（农品及活动除外）。
               </div>
             </div>
           </div>
@@ -217,7 +233,9 @@ export default {
         product_detail_icon_rapidly: require('@/assets/icon/product/product_detail_icon_rapidly@2x.png'),
         product_detail_icon_review: require('@/assets/icon/product/product_detail_icon_review@2x.png'),
         product_detail_icon_welfare: require('@/assets/icon/product/product_detail_icon_welfare@2x.png'),
-        product_detail_pic_hook: require('@/assets/icon/product/product_detail_pic_hook@2x.png')
+        product_detail_pic_hook: require('@/assets/icon/product/product_detail_pic_hook@2x.png'),
+        product_detail_pic_seven: require('@/assets/icon/product/product_detail_icon_seven@2x.png'),
+        product_detail_pic_postage: require('@/assets/icon/product/product_detail_icon_postage@2x.png')
       }
     }
   },
