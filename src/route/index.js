@@ -285,6 +285,12 @@ const router = new Router({
                     import(
                       '@/pages/index/BeeCategory/CommodityDetails/PayOrder/PaySelf'
                     )
+                },
+                {
+                  path: 'payResult',
+                  name: 'payResult',
+                  component: () =>
+                    import('@/pages/index/BeeCategory/CommodityDetails/PayOrder/PayResult')
                 }
               ]
             },
@@ -438,6 +444,12 @@ const router = new Router({
                     import('@/pages/index/BeePersion/Profile/SetPayPw/RemindPw')
                 },
                 {
+                  path: 'getSms',
+                  name: 'setPayPwGetSms',
+                  component: () =>
+                    import('@/pages/index/BeePersion/Profile/SetPayPw/GetSms')
+                },
+                {
                   path: 'inputOldPw',
                   name: 'inputOldPw',
                   component: () =>
@@ -569,7 +581,7 @@ const router = new Router({
             },
             {
               path: 'fillLogisticsInfo',
-              name: '填写物流信息',
+              name: 'fillLogisticsInfo',
               component: () =>
                 import('@/pages/index/BeePersion/MyOrder/FillLogisticsInfo')
             },

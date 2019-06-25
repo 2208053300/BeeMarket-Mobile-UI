@@ -46,13 +46,24 @@
         </ul>
       </div>
     </div>
-    <div style="padding: 0.2rem 0.3rem">
+    <div class="button-container">
+      <div>
+        <van-button class="button" round @click="goFriends">
+          我的蜂友圈
+        </van-button>
+      </div>
+    </div>
+    <div style="padding: 0.72rem 0.3rem 0.2rem;">
       <img :src="beeIcon.classroom_pic_bg">
     </div>
   </div>
 </template>
 
 <script>
+import { getUID } from '@/api/BeeApi/user'
+import { getOs } from '@/utils'
+import { isLogin } from '@/utils/auth'
+
 export default {
   metaInfo: {
     title: '课堂详情'
@@ -84,7 +95,9 @@ export default {
         classroom_pic_triangle: require('@/assets/icon/classroom/classroom_pic_triangle@2x.png'),
         classroom_pic_bg: require('@/assets/icon/classroom/classroom_pic_bg@2x.png')
       },
-      showControls: false
+      showControls: false,
+      uid: '',
+      osObj: getOs()
     }
   },
   computed: {
@@ -105,9 +118,9 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.loadUID()
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare
-
     if (this.osObj.isWx) {
       // this.$router.push({
       //   path: '/category/details',
@@ -177,6 +190,30 @@ export default {
         //   }
         // })
       }
+    },
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+    },
+    // 去蜂友圈
+    goFriends() {
+      if (window.location.pathname === '/') {
+        this.authRoute('/beeFriends')
+      } else {
+        window.location.href = '/beeFriends'
+      }
+    },
+    // 跳转到需要登录的路由
+    async authRoute(path) {
+      if (!(await isLogin())) {
+        this.$router.push('/login')
+      } else {
+        this.$router.push(path)
+      }
+    },
+    // 获取分享链接
+    getShareLink() {
+      return `http://app.fengjishi.com.cn/beeClassroom#/detail/${this.$route.params.id}?uid=${this.uid}`
     }
   },
   // 当前打开另外一个课堂时会调用此方法
@@ -184,10 +221,6 @@ export default {
     // TODO 获取课堂详情 jethro
     console.log('TODO 获取课堂详情:', to.params.id)
     next()
-  },
-  // 获取分享链接
-  getShareLink() {
-    return `http://app.fengjishi.com.cn/beeClassroom#/detail/${this.$route.params.id}`
   }
 }
 </script>
@@ -277,6 +310,22 @@ export default {
           vertical-align: middle;
           margin-right: 0.24rem;
         }
+      }
+    }
+  }
+  .button-container {
+    text-align: center;
+    width: 100%;
+    position: relative;
+    div {
+      width: 100%;
+      position: absolute;
+      top: -22px;
+      .button {
+        width: 4.64rem;
+        font-size: 0.3rem;
+        color: #fff;
+        background: linear-gradient(to right, #ffbd2f, #ffa42f);
       }
     }
   }

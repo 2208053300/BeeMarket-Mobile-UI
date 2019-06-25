@@ -123,6 +123,8 @@ import { repayOrder } from '@/api/BeeApi/user'
 import { orderPay } from '@/api/BeeApi/order'
 import wx from 'weixin-js-sdk'
 import wxApi from '@/utils/wxapi'
+import { getOs } from '@/utils/index'
+
 export default {
   components: {},
   props: {},
@@ -211,22 +213,38 @@ export default {
         this.$toast('请选择支付方式')
       }
       if (this.payMethod === 'wxpay') {
-        this.readWxPay()
+        // this.readWxPay()
+        this.$router.push({
+          name: 'payResult',
+          query: {
+            trade_no: this.order.payInfo.trade_no
+          }
+        })
       }
     },
     // 准备微信支付
     readWxPay() {
-      // 初始化微信api
-      wxApi.wxRegister(this.wxPay)
+      if (getOs().isWx) {
+        // 初始化微信api
+        wxApi.wxRegister(this.wxPay)
+      }
     },
     async wxPay() {
       // 获取微信支付信息
-      await orderPay({
+      const res = await orderPay({
         trade_no: this.order.payInfo.trade_no,
         pay_method: 'wxpay'
       })
+      const params = res.data.params
       wx.chooseWXPay({
-
+        timestamp: params.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+        nonceStr: params.nonceStr, // 支付签名随机串，不长于 32 位
+        package: params.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+        signType: params.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+        paySign: params.paySign, // 支付签名
+        success: function(res) {
+          // 支付成功后的回调函数
+        }
       })
     }
   }

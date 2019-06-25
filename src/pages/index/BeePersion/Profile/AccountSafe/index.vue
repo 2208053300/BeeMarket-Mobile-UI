@@ -100,9 +100,16 @@ export default {
 
     // 设置支付密码
     setPayPw() {
-      // 修改
       if (this.mobile_bind) {
-        this.$router.push('/persion/profile/setPayPw')
+        // 是否设置了密码，设置了就重设
+        if (this.paypwd_set) {
+          this.$router.push('/persion/profile/setPayPw')
+        } else {
+          // 设置
+          this.$router.push({
+            name: 'setPayPwGetSms'
+          })
+        }
       } else {
         this.confirm()
       }

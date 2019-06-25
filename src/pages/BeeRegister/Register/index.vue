@@ -242,6 +242,7 @@ export default {
           mobileNum: this.phone,
           smsCode: this.validNum,
           passwd: this.pw,
+          uid: this.$router.query.uid || '',
           t: Date.parse(new Date())
             .toString()
             .substr(0, 10)
@@ -311,20 +312,8 @@ export default {
       } else {
         this.isPw = false
       }
-    },
-    // 示例
-    goProduct(pid) {
-      // 判断是否来自webApp
-      if (this.$route.query.origin) {
-        window.location.href = `/#/category/details?pid=${pid}`
-      } else {
-        console.log('本地应用')
-        this.$router.push({
-          path: '/category/details',
-          query: { pid }
-        })
-      }
     }
+
   }
 }
 </script>

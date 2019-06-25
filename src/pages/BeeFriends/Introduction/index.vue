@@ -27,7 +27,7 @@
     <!-- {// <img src="../../../assets/icon/joinFriendCicle/teach(new).png" alt=""> } -->
     <img src="../../../assets/icon/joinFriendCicle/gy_part2.png" alt="公益合伙人">
     <img src="../../../assets/icon/joinFriendCicle/gy_part3.png" alt="公益合伙人">
-    <img src="../../../assets/icon/joinFriendCicle/gy_part4.png" alt="公益合伙人">
+    <img src="../../../assets/icon/joinFriendCicle/gy_part4.jpg" alt="公益合伙人">
     <!-- <img src="../../../assets/icon/joinFriendCicle/gy_part5.png" alt="公益合伙人"> -->
     <img src="../../../assets/icon/joinFriendCicle/gy_part6.png" alt="公益合伙人" style="margin-top: 0.6rem;">
     <!-- 根据状态显示不同的按钮 -->
@@ -55,7 +55,7 @@ export default {
       // 获取 os 平台
       osObj: getOs(),
       // video_url: 'https://app.fengjishi.com/static/video/film.mp4',
-      video_url: 'https://img.fengjishi.com.cn/product/video/mi9.mp4',
+      video_url: 'https://img.fengjishi.com.cn/app/videos/education/friendship-course-1.mp4',
       showControls: false,
       beeIcon: {
         title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
@@ -150,7 +150,7 @@ export default {
     img{width: 100%; height:auto; display: block;}
 }
 .public-interest-partner{
-    .action{width: 100%; height: 3.98rem; background: url(../../../assets/icon/joinFriendCicle/background.png) no-repeat; background-size:100% 100% ; padding-top: 0.55rem;
+    .action{width: 100%; height: 3.98rem; background: url(../../../assets/icon/joinFriendCicle/background.jpg) no-repeat; background-size:100% 100% ; padding-top: 0.55rem;
         display: block;
         box-sizing: border-box;
         img{width: 4.3rem; height: 1.1rem; margin: 0 auto;}
