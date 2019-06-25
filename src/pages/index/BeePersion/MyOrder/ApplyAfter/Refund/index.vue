@@ -77,7 +77,7 @@
             :border="borderNone"
           />
           <div class="max-len">
-            <span class="bee-text">{{ questionDesc.length }}</span>/500
+            <span class="bee-text">{{ questionDesc.length }}</span>/140
           </div>
         </div>
         <!-- 图片上传 -->
@@ -282,7 +282,7 @@ export default {
         this.$toast(res.message)
         setTimeout(() => {
           this.$router.push({
-            name: 'AllOrder'
+            name: 'afterList'
           })
         }, 2000)
       } catch (error) {

@@ -24,7 +24,7 @@ export default {
         rzzc6: require('@/assets/icon/joinFactory/rzzc_6.jpg'),
         rzzc7: require('@/assets/icon/joinFactory/rzzc_7.jpg'),
         rzzc8: require('@/assets/icon/joinFactory/rzzc_8.jpg'),
-        rzzc9: require('@/assets/icon/joinFactory/rzzc_9.jpg')
+        rzzc9: require('@/assets/icon/joinFactory/rzzc_9.png')
       }
     }
   },

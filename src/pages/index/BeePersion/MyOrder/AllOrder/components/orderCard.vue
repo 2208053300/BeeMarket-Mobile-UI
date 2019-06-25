@@ -88,7 +88,8 @@
               goComent(
                 card.order_no,
                 card.comment_product_num,
-                card.product_sku_id
+                card.product_sku_id,
+                card.product_list
               )
             "
           >
@@ -199,22 +200,23 @@ export default {
       }, 500)
     },
     // 评论晒单
-    goComent(order_no, num, sku_id) {
-      console.log(order_no, num, sku_id)
+    goComent(order_no, num, sku_id, arrProducts) {
+      console.log(order_no, num, sku_id, arrProducts)
 
       if (num > 1) {
         this.$router.push({
           name: 'waitCommentOrder',
-          qurey: {
+          query: {
             order_no
           }
         })
       } else {
         this.$router.push({
           name: 'CommentProduct',
-          qurey: {
+          query: {
             order_no,
-            sku_id
+            sku_id,
+            thumb_url: arrProducts[0].thumb_url
           }
         })
       }
