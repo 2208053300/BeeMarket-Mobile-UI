@@ -1,6 +1,6 @@
 <template>
   <div class="input-password">
-    <van-popup v-model="isShow" position="bottom" style="height: 73%">
+    <van-popup v-model="isShow" position="bottom" style="height: 73%" @closed="onClosed">
       <div class="title">
         <van-icon class="icon" name="cross" size="0.34rem" @click="isShow=false" />
         <span>输入密码</span>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { orderPay } from '@/api/BeeApi/order'
 export default {
   components: {},
   props: {
@@ -50,6 +51,10 @@ export default {
     pay() {
       this.isShow = true
     },
+    // 弹出框关闭动画结束回调
+    onClosed() {
+      this.password = ''
+    },
     // 密码删除事件
     onDelete() {
       this.password = this.password.slice(0, this.password.length - 1)
@@ -69,6 +74,20 @@ export default {
     // 开始支付
     async startPay() {
       console.log('开始支付')
+      try {
+        const res = await orderPay({
+          trade_no: this.payInfo.trade_no,
+          pay_method: 'blpay',
+          paywd: this.password
+        })
+        if (res.status_code === 200) {
+          this.$emit('success') // 发出支付成功事件
+          this.isShow = false
+        }
+      } catch (e) {
+        this.$toast(e)
+        this.password = ''
+      }
     },
     // 进入重置支付密码页面
     resetPassword() {

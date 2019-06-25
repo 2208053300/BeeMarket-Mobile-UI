@@ -114,7 +114,7 @@
         确认付款
       </van-button>
     </div>
-    <balance-pay ref="balancePay" :pay-info="order.payInfo" />
+    <balance-pay ref="balancePay" :pay-info="order.payInfo" @success="toResult" />
   </div>
 </template>
 
