@@ -36,9 +36,12 @@
 </template>
 
 <script>
+
 import { fillLogisticsInfo, getExpressData } from '@/api/BeeApi/user'
 export default {
-  components: {},
+  components: {
+
+  },
   props: {},
   data() {
     return {

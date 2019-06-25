@@ -47,10 +47,14 @@ import {
   NoticeBar,
   NumberKeyboard,
   PasswordInput,
+<<<<<<< HEAD
   SubmitBar,
   SwitchCell,
   Loading,
   Dialog
+=======
+  Picker
+>>>>>>> dev
 } from 'vant'
 
 Vue.use(Icon)
@@ -94,6 +98,7 @@ Vue.use(Icon)
   .use(SwitchCell)
   .use(Loading)
   .use(Dialog)
+  .use(Picker)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
