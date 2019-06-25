@@ -49,7 +49,7 @@ export default {
   mounted() {},
   methods: {
     pay() {
-      this.isShow = true
+      this.isShow = false
     },
     // 弹出框关闭动画结束回调
     onClosed() {
