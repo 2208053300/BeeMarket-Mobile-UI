@@ -101,7 +101,7 @@
         <div
           v-if="userInfo.bee_class"
           class="cherity-img"
-          :style="{backgroundImage:'url('+userInfo.bee_class.image_url+')'}"
+          :style="[{backgroundImage:'url('+userInfo.bee_class.image_url+')'},{backgroundSize:'contain'}]"
           @click="$router.push('/beeClassroom')"
         />
       </van-row>
@@ -338,8 +338,9 @@ export default {
     }
 
     .persion-op {
-      height: 1.58rem;
+      height: 2rem;
       background-color: #fff;
+      background-size: cover;
     }
     .more-op {
       margin: 0.1rem 0;

@@ -15,13 +15,14 @@
       </div>
       <div
         class="header-text1"
-        @click="$router.push('/persion/BeeCommonweal')"
       >
-        我的公益值：<span class="num">{{ taskData.basic_info.mine_charity_num }}</span> >
+        <!-- @click="$router.push('/persion/BeeCommonweal')" -->
+        <!-- 我的公益值：<span class="num">{{ taskData.basic_info.mine_charity_num }}</span> > -->
+        三重好礼 等你领取
       </div>
-      <div class="header-text2">
+      <!-- <div class="header-text2">
         已通过完成任务获得 <span class="num">{{ taskData.basic_info.task_charity_num }}</span> 公益值
-      </div>
+      </div> -->
     </div>
     <div class="task-card task1-content">
       <div class="task-title">

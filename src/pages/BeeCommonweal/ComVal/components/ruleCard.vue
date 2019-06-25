@@ -37,7 +37,7 @@
           </div>
           <div class="rule-part">
             <p class="rule-tiele2">
-              3.公益值可以通过那些途径获得？
+              3.公益值可以通过哪些途径获得？
             </p>
             <p class="rule-text1">
               1.可以参与蜂任务，完成相应的指标，可获得相应公益值
@@ -47,6 +47,14 @@
             </p>
             <p class="rule-text1">
               3.参与公益行动助力或发起助力成功，可获得相应公益值
+            </p>
+          </div>
+          <div class="rule-part">
+            <p class="rule-tiele2">
+              4.公益值多久到账？
+            </p>
+            <p class="rule-text1">
+              在您购买商品确认收货后，公益值会在七天后自动累积到您的可用公益值之中，即可抵扣商品
             </p>
           </div>
         </div>
