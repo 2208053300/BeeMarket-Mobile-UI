@@ -229,7 +229,7 @@ export default {
 
     // 请求任一接口判断是否登录
     // await this.$store.dispatch('GerUserStatus')
-    // await isLogin()
+    await isLogin()
   },
   methods: {
     // 播放视频
@@ -279,7 +279,7 @@ export default {
           mobileNum: this.phone,
           smsCode: this.validNum,
           passwd: this.pw,
-          uid: this.$router.query.uid || '',
+          uid: this.$route.query.uid || '',
           t: Date.parse(new Date())
             .toString()
             .substr(0, 10)
@@ -292,7 +292,6 @@ export default {
         }
       } catch (error) {
         console.log('fail')
-
         this.$toast.fail(error)
       }
     },

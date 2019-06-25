@@ -81,25 +81,18 @@ export default {
       if (type === 0) {
         // console.log(type, this.nowIndex)
         this.$emit('getFilter', type)
-        this.order = false
+        this.order = 'normal'
         this.count = 0
       } else if (type === 1) {
         // console.log(type, this.nowIndex)
         this.$emit('getFilter', type)
-        this.order = false
+        this.order = 'normal'
         this.count = 0
       } else if (type === 2) {
         this.count++
-        // console.log(type, this.nowIndex, this.count)
-        this.$emit('getFilter', type)
-        if (this.count > 1) {
-          this.count++
-          // console.log(type, this.nowIndex, this.count)
-          // if (this.count > 1) { // this.count == 1 是选中价格，>1 时筛选按价格升序还是降序
-          this.count % 2 === 0 ? this.order = 'desc' : this.order = 'asc'
-          this.$emit('getFilter', { type, order: this.order })
-        // }
-        }
+        // if (this.count > 1) { // this.count == 1 是选中价格，>1 时筛选按价格升序还是降序
+        this.count % 2 === 0 ? this.order = 'desc' : this.order = 'asc'
+        this.$emit('getFilter', { type, order: this.order })
       }
     },
     showListWay() {
