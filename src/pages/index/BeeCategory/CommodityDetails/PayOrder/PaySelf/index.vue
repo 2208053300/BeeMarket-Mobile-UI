@@ -114,6 +114,7 @@
         确认付款
       </van-button>
     </div>
+    <balance-pay ref="balancePay" :pay-info="order.payInfo" />
   </div>
 </template>
 
@@ -124,9 +125,11 @@ import { orderPay } from '@/api/BeeApi/order'
 import wx from 'weixin-js-sdk'
 import wxApi from '@/utils/wxapi'
 import { getOs } from '@/utils/index'
+// 导入余额支付组件
+import BalancePay from './components/balancePay'
 
 export default {
-  components: {},
+  components: { BalancePay },
   props: {},
   data() {
     return {
@@ -214,6 +217,8 @@ export default {
       }
       if (this.payMethod === 'wxpay') {
         this.readWxPay()
+      } else if (this.payMethod === 'blpay') {
+        this.$refs.balancePay.pay()
       }
     },
     // 准备微信支付
