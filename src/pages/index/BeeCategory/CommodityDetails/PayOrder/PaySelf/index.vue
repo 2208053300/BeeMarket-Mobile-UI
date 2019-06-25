@@ -237,6 +237,7 @@ export default {
       })
       const params = res.data.params
       alert(JSON.stringify(params))
+      const _this = this
       wx.chooseWXPay({
         timestamp: params.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
         nonceStr: params.nonceStr, // 支付签名随机串，不长于 32 位
@@ -245,16 +246,16 @@ export default {
         paySign: params.paySign, // 支付签名
         success(res) {
           if (res.errMsg === 'chooseWXPay:ok') {
-            this.toResult()
+            _this.toResult()
           } else {
-            this.$toast('支付失败')
+            _this.$toast(`支付失败：${res}`)
           }
         },
         cancel(res) {
-          this.$toast('用户取消支付~')
+          _this.$toast('用户取消支付~')
         },
         fail(res) {
-          this.$toast('支付失败~')
+          _this.$toast(`支付失败->${res}`)
         }
       })
     },
