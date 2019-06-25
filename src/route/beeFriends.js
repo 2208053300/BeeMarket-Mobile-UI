@@ -52,6 +52,11 @@ const router = new Router({
           path: 'pay',
           name: 'friendPay',
           component: () => import('@/pages/BeeFriends/Pay')
+        },
+        {
+          path: 'rule',
+          name: 'beeFriendRule',
+          component: () => import('@/pages/BeeFriends/Rule')
         }
       ]
     }
