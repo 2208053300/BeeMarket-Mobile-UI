@@ -1,5 +1,8 @@
 <template>
   <div class="after-op">
+    <!-- type_code  售后类型值,1 退货,2 换货,3 补寄 -->
+    <!-- status_code 状态值:-1 已拒绝, 0 待审核,1 待买家发货,2 待商家收货,3 待买家收货,4 已完成,5 已关闭 -->
+
     <!-- 已关闭的时候可以删除售后单 -->
     <van-button
       v-if="[5].indexOf(afterDetail.status_code) !== -1"
@@ -42,7 +45,7 @@
     </van-button>
     <!-- 换货且待买家收货时 可确认收货 -->
     <van-button
-      v-if="afterDetail.type_code === 3 && afterDetail.status_code === 3"
+      v-if="afterDetail.type_code === 2 && afterDetail.status_code === 3"
       type="default"
       round
       class="btn-complete"
