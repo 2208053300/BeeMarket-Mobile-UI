@@ -6,9 +6,7 @@
     <div class="name text-center">
       <div class="app-show">
         <img :src="beeIcon.nameDefaultImg" class="img-default">
-        <p class="text">
-          “我为公益代言”
-        </p>
+        <img src="" alt="">
       </div>
     </div>
   </div>
@@ -40,7 +38,9 @@ export default {
         nameDefaultImg: require('@/assets/icon/discover/confirmorder_pic_avatar_bee@2x.png'),
         initiate: require('@/assets/icon/discover/publicwelfare_icon_initiate@2x.png'),
         participate: require('@/assets/icon/discover/publicwelfare_icon_participate@2x.png'),
-        aim: require('@/assets/icon/discover/publicwelfare_icon_aim@2x.png')
+        aim: require('@/assets/icon/discover/publicwelfare_icon_aim@2x.png'),
+        pic_text: require('@/assets/icon/discover/pic_text@2x.png')
+
       }
     }
   },

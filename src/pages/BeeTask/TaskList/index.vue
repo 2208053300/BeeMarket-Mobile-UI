@@ -77,7 +77,7 @@
                 v-if="item.tid===7"
                 class="invite-num"
               >
-                您已邀请成功 <span class="num">{{ item.invite_friends_num }}</span> 位好友，快去分享吧！
+                您已成功邀请 <span class="num">{{ item.invite_friends_num }}</span> 位好友参与助力
               </div>
             </div>
             <div
