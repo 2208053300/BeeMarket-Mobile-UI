@@ -47,14 +47,11 @@ import {
   NoticeBar,
   NumberKeyboard,
   PasswordInput,
-<<<<<<< HEAD
   SubmitBar,
   SwitchCell,
   Loading,
-  Dialog
-=======
+  Dialog,
   Picker
->>>>>>> dev
 } from 'vant'
 
 Vue.use(Icon)
