@@ -70,6 +70,13 @@ const wxApi = {
         option.error()
       }
     })
+  },
+  // 微信分享
+  wxShare(option) {
+    this.wxRegister(() => {
+      this.ShareAppMessage(option)
+      this.ShareTimeline(option)
+    })
   }
 }
 export default wxApi

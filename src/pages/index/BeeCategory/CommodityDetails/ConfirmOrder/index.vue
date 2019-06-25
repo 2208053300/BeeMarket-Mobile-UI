@@ -48,7 +48,7 @@
           slot="title"
           class="cell-title"
         >
-          蜂公益
+          公益宝贝
         </div>
         <span class="benefit-text">将我的消费计入公益值</span>
         <van-checkbox
