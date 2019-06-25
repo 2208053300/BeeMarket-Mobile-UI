@@ -30,10 +30,9 @@
     <operation-card />
     <bee-product :home-data="homeData" />
     <everyday-product :home-data="homeData" />
+    <bee-product2 :home-data="homeData" />
     <new-product :home-data="homeData" />
-    <public-action :home-data="homeData" />
     <farm-product :home-data="homeData" />
-    <project-selection :home-data="homeData" />
     <action-list :home-data="homeData" />
     <guess-like :guess-data="homeData.random_product" />
     <actionPop />
@@ -47,10 +46,9 @@ import headerBanner from './components/headerBanner'
 import operationCard from './components/operationCard'
 import everydayProduct from './components/everydayProduct'
 import beeProduct from './components/beeProduct'
+import beeProduct2 from './components/beeProduct2'
 import newProduct from './components/newProduct'
-import publicAction from './components/publicAction'
 import farmProduct from './components/farmProduct'
-import projectSelection from './components/projectSelection'
 import actionList from './components/actionList'
 import guessLike from './components/guessLike'
 import actionPop from './components/actionPop'
@@ -66,11 +64,10 @@ export default {
     headerBanner,
     operationCard,
     beeProduct,
+    beeProduct2,
     everydayProduct,
     newProduct,
-    publicAction,
     farmProduct,
-    projectSelection,
     actionList,
     guessLike,
     actionPop

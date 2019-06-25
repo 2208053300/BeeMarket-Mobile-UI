@@ -1,6 +1,12 @@
 <template>
   <div class="new-product">
     <div class="product-title">
+      <div class="bee-icon">
+        <img
+          :src="beeIcon.home_icon_everyday"
+          alt="新品首发"
+        >
+      </div>
       新品首发
     </div>
     <div class="product-list">
@@ -39,12 +45,18 @@ export default {
     homeData: {
       type: Object,
       default: () => {
-        return { new_product: [] }
+        return {
+          new_product: []
+        }
       }
     }
   },
   data() {
-    return {}
+    return {
+      beeIcon: {
+        home_icon_everyday: require('@/assets/icon/home/index/home_icon_everyday@2x.png')
+      }
+    }
   },
   computed: {},
   watch: {},
@@ -71,6 +83,14 @@ export default {
   box-shadow: 0 0 0.2rem @Grey6;
   .product-title {
     font-size: 0.34rem;
+    .bee-icon {
+      width: 0.28rem;
+      height: 0.3rem;
+      display: inline-block;
+      img {
+        vertical-align: inherit;
+      }
+    }
   }
   .product-list {
     display: grid;

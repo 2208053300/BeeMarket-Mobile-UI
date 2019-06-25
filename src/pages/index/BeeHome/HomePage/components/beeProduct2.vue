@@ -2,8 +2,8 @@
   <div class="main-action">
     <div
       class="bee-product"
-      :style="{backgroundImage:'url('+(homeData.new_user.show_image ||$store.state.app.defaultImg3)+')'}"
-      @click="$router.push('/beeTask')"
+      :style="{backgroundImage:'url('+(homeData.plan.show_image ||$store.state.app.defaultImg3)+')'}"
+      @click="goUrl(homeData.plan.url,homeData.plan.plan_id)"
     />
   </div>
 </template>
@@ -42,7 +42,7 @@ export default {
 <style scoped lang="less">
 .main-action {
   .bee-product {
-    margin: 0.2rem 0.16rem;
+    margin: 0.2rem 0.16rem 0;
     height: 2.2rem;
     background-color: #fff;
     border-radius: 0.2rem;
