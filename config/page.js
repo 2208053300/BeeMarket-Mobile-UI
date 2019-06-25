@@ -114,5 +114,10 @@ module.exports = {
   beeTalent: {
     entry: 'src/pages/BeeTalent/main.js',
     title: '成为达人'
+  },
+  // 经营许可
+  beeStoreLicense: {
+    entry: 'src/pages/BeeStoreLicense/main.js',
+    title: '经营许可'
   }
 }
