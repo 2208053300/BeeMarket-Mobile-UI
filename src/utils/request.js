@@ -58,6 +58,7 @@ service.interceptors.request.use(
   error => {
     Toast.clear()
     // FIXME 如果请求是用户为登录请求失败，跳转到登录界面
+    Toast.fail(error)
     console.log(error)
     Promise.reject(error)
   }
@@ -75,14 +76,14 @@ service.interceptors.response.use(
     }
     const res = response.data
     if (res.code !== 1) {
+      if (res.status_code === 400 && res.message === '获取用户信息失败') {
+        checkToken()
+      }
       if (res.status_code === 403) {
         // Toast('登录信息失效')
         // 清理登录信息并跳转到登录页面
         removeToken()
         store.commit('CLEAR_USER_INFO')
-        checkToken()
-      }
-      if (res.status_code === 400 && res.message === '获取用户信息失败') {
         checkToken()
       }
       return Promise.reject(res.message || 'error')
@@ -93,7 +94,7 @@ service.interceptors.response.use(
   },
   error => {
     Toast.clear()
-    // Toast.fail(error)
+    Toast.fail(error)
     return Promise.reject(error)
   }
 )

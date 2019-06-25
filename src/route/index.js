@@ -324,7 +324,7 @@ const router = new Router({
               path: 'license',
               name: 'StoreLicense',
               component: () =>
-                import('@/pages/index/BeeCategory/Store/StoreLicense')
+                import('@/pages/BeeStoreLicense')
             }
           ]
         }

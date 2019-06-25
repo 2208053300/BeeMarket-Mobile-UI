@@ -4,7 +4,7 @@
       <span>根据国家工商总局《网络交易管理办发》要求对网店营业执照信息公示如下：</span>
       <div class="license-img">
         <img
-          :src="licenseUrl"
+          :src="licenseUrl||$store.state.app.defaultImg3"
           alt="经营许可"
         >
       </div>
@@ -48,7 +48,6 @@ export default {
 
 <style scoped lang="less">
 .store-license {
-  padding: 46px 0 60px;
   margin: 0.2rem 0.3rem;
   box-sizing: border-box;
   .license-content {
