@@ -24,6 +24,8 @@
         <van-cell
           v-if="order.payInfo.pay_methods.blpay"
           class="pay-method"
+          clickable
+          @click="payMethod = 'blpay'"
         >
           <div
             slot="title"
@@ -36,12 +38,13 @@
               >
             </div>
             <div class="method-name">
-              余额支付<span>剩余￥{{ order.payInfobalance }}</span>
+              余额支付<span class="balance">￥{{ order.payInfo.balance }}</span>
             </div>
           </div>
           <div class="check-method">
             <div class="check-img">
               <img
+                v-if="payMethod === 'blpay'"
                 :src="beeIcon.confirmorder_pay_icon_select"
                 alt="选中"
               >
@@ -51,6 +54,8 @@
         <van-cell
           v-if="order.payInfo.pay_methods.wxpay"
           class="pay-method"
+          clickable
+          @click="payMethod='wxpay'"
         >
           <div
             slot="title"
@@ -69,33 +74,7 @@
           <div class="check-method">
             <div class="check-img">
               <img
-                :src="beeIcon.confirmorder_pay_icon_select"
-                alt="选中"
-              >
-            </div>
-          </div>
-        </van-cell>
-        <van-cell
-          v-if="order.payInfo.pay_methods.alipay"
-          class="pay-method"
-        >
-          <div
-            slot="title"
-            class="method-title"
-          >
-            <div class="method-img">
-              <img
-                :src="beeIcon.confirmorder_pay_icon_alipay"
-                alt="支付宝支付"
-              >
-            </div>
-            <div class="method-name">
-              支付宝支付
-            </div>
-          </div>
-          <div class="check-method">
-            <div class="check-img">
-              <img
+                v-if="payMethod === 'wxpay'"
                 :src="beeIcon.confirmorder_pay_icon_select"
                 alt="选中"
               >
@@ -131,7 +110,7 @@
       </van-cell-group>
     </div>
     <div class="pay-done">
-      <van-button class="doneBtn">
+      <van-button class="doneBtn" round @click="pay">
         确认付款
       </van-button>
     </div>
@@ -141,6 +120,9 @@
 <script>
 import { mapState } from 'vuex'
 import { repayOrder } from '@/api/BeeApi/user'
+import { orderPay } from '@/api/BeeApi/order'
+import wx from 'weixin-js-sdk'
+import wxApi from '@/utils/wxapi'
 export default {
   components: {},
   props: {},
@@ -153,7 +135,8 @@ export default {
         confirmorder_pay_icon_overage_normat: require('@/assets/icon/order/confirmorder_pay_icon_overage_normat@2x.png'),
         confirmorder_pay_icon_overage_disabled: require('@/assets/icon/order/confirmorder_pay_icon_overage_disabled@2x.png')
       },
-      timer: ''
+      timer: '',
+      payMethod: ''
     }
   },
   computed: {
@@ -168,23 +151,36 @@ export default {
     if (orderNo) {
       this.getPayInfo(orderNo)
     }
+    if (this.order.payInfo.pay_methods) {
+      this.setTimer()
+    }
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
   },
   methods: {
-    // TODO 切分时间，样式每个数字切分,countUp.js
-    getTime() {},
     // 获取支付信息
     async getPayInfo(orderNo) {
       const res = await repayOrder({ order_no: orderNo })
       this.order.payInfo = res.data
+      this.setTimer()
+    },
+    // 设置倒计时
+    setTimer() {
       clearInterval(this.timer)
       this.timer = setInterval(() => {
         this.order.payInfo.count_down--
         if (this.order.payInfo.count_down === 0) {
           clearInterval(this.timer)
-          // TODO:提示超时未支付
+          this.$dialog.alert({
+            message: '订单超时未支付，已自动关闭'
+          }).then(() => {
+            this.$router.back()
+          })
         }
       }, 1000)
     },
+    // 获取时分秒
     getTimes(value) {
       var theTime = parseInt(value) // 秒
       var theTime1 = 0 // 分
@@ -203,9 +199,35 @@ export default {
         this.prefixInteger(theTime1),
         this.prefixInteger(theTime)]
     },
+    // 数字自动补0，2位
     prefixInteger(num) {
       num = parseInt(num)
       return (Array(2).join('0') + num).slice(-2)
+    },
+    // 开始支付
+    pay() {
+      // 检查是否选择支付方式
+      if (!this.payMethod) {
+        this.$toast('请选择支付方式')
+      }
+      if (this.payMethod === 'wxpay') {
+        this.readWxPay()
+      }
+    },
+    // 准备微信支付
+    readWxPay() {
+      // 初始化微信api
+      wxApi.wxRegister(this.wxPay)
+    },
+    async wxPay() {
+      // 获取微信支付信息
+      await orderPay({
+        trade_no: this.order.payInfo.trade_no,
+        pay_method: 'wxpay'
+      })
+      wx.chooseWXPay({
+
+      })
     }
   }
 }
@@ -258,6 +280,8 @@ export default {
         display: flex;
         align-items: center;
         .method-name {
+          display: flex;
+          align-items: center;
           font-size: 0.32rem;
           .overage {
             color: @Grey1;
@@ -265,6 +289,10 @@ export default {
               display: block;
               font-size: 0.22rem;
             }
+          }
+          .balance {
+            color: @Grey1;
+            font-size: 0.22rem;
           }
         }
         .method-img {
@@ -284,10 +312,16 @@ export default {
     }
   }
   .pay-done{
+    position: fixed;
+    bottom: 0.3rem;
+    text-align: center;
+    width: 100%;
     .doneBtn{
+      width: 6rem;
       font-size: 0.3rem;
       color: #fff;
       background-color: @BeeDefault;
+      box-shadow: 0 5px 10px #e2e2e2;
     }
   }
 }

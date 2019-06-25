@@ -1,17 +1,20 @@
 <template>
-  <div class="classroom-list">
-    <div v-for="item in list" :key="item.id" class="card" @click="goDetail(item.id)">
-      <div class="card-head">
-        <img :src="logo">
-        <span>集市课堂</span>
+  <div>
+    <img :src="headImg">
+    <div class="classroom-list">
+      <div v-for="item in list" :key="item.id" class="card" @click="goDetail(item.id)">
+        <div class="card-head">
+          <img :src="logo">
+          <span>集市课堂</span>
+        </div>
+        <p class="card-title">
+          {{ item.title }}
+        </p>
+        <img :src="item.img" class="card-body">
+        <p class="card-footer">
+          {{ item.date }}
+        </p>
       </div>
-      <p class="card-title">
-        {{ item.title }}
-      </p>
-      <img :src="item.img" class="card-body">
-      <p class="card-footer">
-        {{ item.date }}
-      </p>
     </div>
   </div>
 </template>
@@ -26,6 +29,7 @@ export default {
   data() {
     return {
       logo: require('@/assets/icon/classroom/classroom_pic_avatar@3x.png'),
+      headImg: require('@/assets/icon/classroom/marketclass_pic.png'),
       list: [
         {
           id: 1,
