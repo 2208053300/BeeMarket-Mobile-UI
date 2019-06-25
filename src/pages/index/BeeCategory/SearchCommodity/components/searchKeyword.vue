@@ -18,7 +18,8 @@
         </div>
       </div>
     </div>
-    <div class="recommend-foryou">
+    <!-- 推荐先隐藏 ，暂无接口 -->
+    <!-- <div class="recommend-foryou">
       <div class="recommend-title">
         <span>为你推荐</span>
       </div>
@@ -32,7 +33,7 @@
           {{ item }}
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
