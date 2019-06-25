@@ -183,12 +183,18 @@ export default {
     // 获取详情数据
     this.getActionDetailsData()
     // 调用微信分享
-    wxapi.wxRegister(this.wxRegCallback)
+    // wxapi.wxRegister(this.wxRegCallback)
   },
   methods: {
     async getActionDetailsData() {
       const res = await getActionDetail({ id: this.id })
       this.actionDetails = res.data
+      wxapi.wxShare({
+        title: this.actionDetails.subtitle, // 分享标题, 请自行替换
+        desc: this.actionDetails.top_desc, // 分享描述, 请自行替换
+        link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
+        imgUrl: this.actionDetails.share_image // 分享图标, 请自行替换，需要绝对路径
+      })
     },
     // 参与助力 分享成功后跳转页面到助力成功页面 /joinSuccess
     async goHelp() {
