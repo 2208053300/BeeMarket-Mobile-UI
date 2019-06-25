@@ -172,7 +172,7 @@ export default {
           text1 = '待发货'
           break
         case 3:
-          text1 = '已发货'
+          text1 = '待收货'
           break
         case 4:
           text1 = '待评价'

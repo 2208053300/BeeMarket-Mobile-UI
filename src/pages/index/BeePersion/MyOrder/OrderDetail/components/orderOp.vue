@@ -5,13 +5,17 @@
         返回订单列表
       </van-button>
     </div> -->
+
+    <!-- orderDetail.s_order!==-1 -->
+    <!-- v-if="orderDetail.s_pay===0 || orderDetail.s_order!==-1" -->
     <van-button
-      v-if="orderDetail.s_pay===0 && orderDetail.s_order!==-1"
+      v-if="orderDetail.s_pay===0 ||(orderDetail.s_pay===1 && orderDetail.s_order===1)"
       round
       @click="cancelPop=true"
     >
       取消订单
     </van-button>
+
     <van-button
       v-if="[12,13].indexOf(orderDetail.status)!==-1"
       round
@@ -19,6 +23,7 @@
     >
       自己接收
     </van-button>
+
     <van-button
       v-if="orderDetail.s_pay===0 && orderDetail.s_order!==-1"
       round
@@ -27,6 +32,7 @@
     >
       去支付
     </van-button>
+
     <van-button
       v-if="orderDetail.s_pay===1&&[1].indexOf(orderDetail.s_order)!==-1"
       round
@@ -34,6 +40,7 @@
     >
       提醒发货
     </van-button>
+
     <van-button
       v-if="orderDetail.take_apart>1||[4,5,-1].includes(orderDetail.s_order)"
       round
@@ -43,12 +50,13 @@
     </van-button>
 
     <van-button
-      v-if="orderDetail.s_pay===1&&[3,4].includes(orderDetail.s_order)"
+      v-if="orderDetail.s_pay===1&&[3,4,5].includes(orderDetail.s_order)"
       round
       @click="showLogistics(orderDetail)"
     >
       查看物流
     </van-button>
+
     <van-button
       v-if="[5,-1].includes(orderDetail.s_order)"
       round
@@ -57,6 +65,7 @@
     >
       再次购买
     </van-button>
+
     <van-button
       v-if="[4].includes(orderDetail.s_order)"
       round
@@ -130,7 +139,7 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 import { addShopcartProduct, remindOrder } from '@/api/BeeApi/user'
-import { closeOrder, deleteOrder, completeOrder } from '@/api/BeeApi/order'
+import { closeOrder, deleteOrder, completeOrder, reBuy } from '@/api/BeeApi/order'
 
 export default {
   components: {},
@@ -162,16 +171,18 @@ export default {
   mounted() {},
   methods: {
     // 再次购买
-    buyAgain(order) {
-      order.products.map(async item => {
-        await addShopcartProduct({
-          sid: item.sku_id,
-          number: item.number,
-          product_source: order.t_order
+    async buyAgain(order) {
+      try {
+        const res = await reBuy({
+          order_no: order.order_no
         })
-      })
-      this.$toast('已加入购物车')
-      this.$router.push('/cart')
+        if (res.status_code === 200) {
+          this.$toast('已加入购物车')
+          this.$router.push('/cart')
+        }
+      } catch (error) {
+        this.$toast(error)
+      }
     },
     // 提醒发货
     async remindDelivery() {
@@ -209,7 +220,8 @@ export default {
       const res = await completeOrder({ order_no: this.$route.query.order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
-        this.$router.back()
+        window.location.reload
+        // this.$router.back()
       }
     },
     // 查看物流
