@@ -69,6 +69,13 @@ export default {
     position: relative;
     &:first-child {
       color: @BeeDefault;
+      .bee-cir{background-color: @BeeDefault;}
+    }
+    &:last-child {
+     .bee-line{height: 0;}
+     .status-text{
+       border-bottom: none;
+     }
     }
     &:not(:last-child) {
       margin-bottom: 0.3rem;
@@ -77,7 +84,7 @@ export default {
       width: 0.4rem;
       height: 0.4rem;
       border-radius: 50%;
-      background-color: @BeeDefault;
+      background-color: #999;
       margin-right: 0.44rem;
     }
     .status-text {

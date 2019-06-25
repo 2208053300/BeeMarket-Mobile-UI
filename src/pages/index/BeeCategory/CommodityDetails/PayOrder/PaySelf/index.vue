@@ -5,10 +5,13 @@
         <span>剩余支付时间</span>
         <div class="countDown">
           <div class="time-text">
-            {{ order.payInfo.count_down }}
+            {{ getTimes(order.payInfo.count_down)[0] }}
+          </div>时
+          <div class="time-text">
+            {{ getTimes(order.payInfo.count_down)[1] }}
           </div>分
           <div class="time-text">
-            {{ order.payInfo.count_down }}
+            {{ getTimes(order.payInfo.count_down)[2] }}
           </div>秒
         </div>
       </div>
@@ -16,7 +19,7 @@
         ￥ {{ order.payInfo.pay_amount }}
       </div>
     </div>
-    <div class="pay-methods">
+    <div v-if="order.payInfo.pay_methods" class="pay-methods">
       <van-cell-group>
         <van-cell
           v-if="order.payInfo.pay_methods.blpay"
@@ -128,15 +131,16 @@
       </van-cell-group>
     </div>
     <div class="pay-done">
-      <van-buttom class="doneBtn">
+      <van-button class="doneBtn">
         确认付款
-      </van-buttom>
+      </van-button>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import { repayOrder } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {},
@@ -148,7 +152,8 @@ export default {
         confirmorder_pay_icon_alipay: require('@/assets/icon/order/confirmorder_pay_icon_alipay@2x.png'),
         confirmorder_pay_icon_overage_normat: require('@/assets/icon/order/confirmorder_pay_icon_overage_normat@2x.png'),
         confirmorder_pay_icon_overage_disabled: require('@/assets/icon/order/confirmorder_pay_icon_overage_disabled@2x.png')
-      }
+      },
+      timer: ''
     }
   },
   computed: {
@@ -159,11 +164,49 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    console.log(this.order.payInfo)
+    const orderNo = this.$route.query.orderNo
+    if (orderNo) {
+      this.getPayInfo(orderNo)
+    }
   },
   methods: {
     // TODO 切分时间，样式每个数字切分,countUp.js
-    getTime() {}
+    getTime() {},
+    // 获取支付信息
+    async getPayInfo(orderNo) {
+      const res = await repayOrder({ order_no: orderNo })
+      this.order.payInfo = res.data
+      clearInterval(this.timer)
+      this.timer = setInterval(() => {
+        this.order.payInfo.count_down--
+        if (this.order.payInfo.count_down === 0) {
+          clearInterval(this.timer)
+          // TODO:提示超时未支付
+        }
+      }, 1000)
+    },
+    getTimes(value) {
+      var theTime = parseInt(value) // 秒
+      var theTime1 = 0 // 分
+      var theTime2 = 0 // 小时
+      if (theTime > 60) {
+        theTime1 = parseInt(theTime / 60)
+        theTime = parseInt(theTime % 60)
+        // alert(theTime1+"-"+theTime);
+        if (theTime1 > 60) {
+          theTime2 = parseInt(theTime1 / 60)
+          theTime1 = parseInt(theTime1 % 60)
+        }
+      }
+      return [
+        this.prefixInteger(theTime2),
+        this.prefixInteger(theTime1),
+        this.prefixInteger(theTime)]
+    },
+    prefixInteger(num) {
+      num = parseInt(num)
+      return (Array(2).join('0') + num).slice(-2)
+    }
   }
 }
 </script>
@@ -184,11 +227,17 @@ export default {
       padding-bottom: 0.28rem;
       border-bottom: 0.02rem solid @Grey7;
       .countDown {
+        display: flex;
+        align-items: flex-end;
         font-size: 0.2rem;
         .time-text {
+          margin-left: 0.05rem;
+          margin-right: 0.08rem;
+          border-radius: 0.08rem;
           display: inline-block;
           background-color: @BeeDefault;
-          font-size: 0.28rem;
+          font-size: 0.4rem;
+          padding: 0.1rem;
           color: #fff;
         }
       }
