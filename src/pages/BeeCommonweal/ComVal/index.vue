@@ -34,13 +34,20 @@
           <p class="com-val">
             {{ comVal.available_charity_value }}
           </p>
-          <span
+          <!-- <span
             class="time"
             @click="goDetail"
           >本期分值 {{ comVal.begin_time }} - {{ comVal.end_time }} ></span>
           <p class="rank">
             在好友排名第{{ comVal.ranking }}名
-          </p>
+          </p> -->
+          <van-button
+            class="com-text2"
+            round
+          >
+            <span class="com-text3">海量商品</span>
+            <span>畅享免单</span>
+          </van-button>
         </div>
         <div class="com-detail2">
           <div class="detail2-item">
@@ -51,15 +58,15 @@
           </div>
           <div class="detail2-item">
             <div class="detail2-title">
-              公益值在路上
+              途中公益值
             </div>
             <span class="num">{{ comVal.not_arrived_charity_value }}</span>
           </div>
         </div>
-        <help-chart
+        <!-- <help-chart
           v-if="comVal.novice_data"
           :com-val="comVal"
-        />
+        /> -->
       </div>
     </div>
     <below-content :com-val="comVal" />
@@ -69,14 +76,14 @@
 
 <script>
 import { mineCharityValue } from '@/api/BeeApi/user'
-import helpChart from './components/helpChart'
+// import helpChart from './components/helpChart'
 import belowContent from './components/belowContent'
 import ruleCard from './components/ruleCard'
 import { getOs } from '@/utils'
 
 export default {
   components: {
-    helpChart,
+    // helpChart,
     belowContent,
     ruleCard
   },
@@ -126,11 +133,11 @@ export default {
 <style scoped lang="less">
 .com-val {
   .com-content {
-    height: 9rem;
+    height: 6.06rem;
     padding: 0.3rem;
     background-color: @BeeDefault;
     color: #ffffff;
-    background-size: contain;
+    background-size: cover;
     .con-header {
       height: 0.8rem;
       display: flex;
@@ -166,6 +173,19 @@ export default {
         .com-text1 {
           font-size: 0.32rem;
         }
+        .com-text2 {
+          width: 2.9rem;
+          height: 0.46rem;
+          border: 0.02rem solid #ffffff;
+          font-size: 0.24rem;
+          color: #ffffff;
+          line-height: 0.46rem;
+          background-color: transparent;
+          margin-top: 0.2rem;
+          .com-text3{
+            margin-right: 0.26rem;
+          }
+        }
         .com-val {
           font-size: 1.1rem;
           padding: 0;
@@ -185,7 +205,7 @@ export default {
       }
     }
     .com-detail2 {
-      margin-top: 0.4rem;
+      margin-top: 0.6rem;
       display: flex;
       justify-content: space-around;
       .detail2-item {

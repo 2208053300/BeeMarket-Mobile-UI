@@ -42,7 +42,7 @@
         <div class="task-list">
           <div
             v-for="(item,index) in taskData.task_list[0].child_task"
-            v-show="index<=2||showAll"
+            v-show="index===0||showAll"
             :key="index"
             class="task-detail"
             :style="{backgroundImage:'url('+getBg1(item.tid,item.task_status)+')'}"
