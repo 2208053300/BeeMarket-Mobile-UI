@@ -78,8 +78,10 @@ export default {
   methods: {
     // 获取数据
     getData() {
+      alert('加载数据')
       setTimeout(async() => {
         try {
+          alert('请求数据')
           const res = await getSortList({ type_id: this.$route.query.id })
           this.list.push(...res.data)
           console.log(this.list, this.page)
