@@ -55,7 +55,7 @@ export default {
       // 获取 os 平台
       osObj: getOs(),
       // video_url: 'https://app.fengjishi.com/static/video/film.mp4',
-      video_url: 'https://img.fengjishi.com.cn/product/video/mi9.mp4',
+      video_url: 'https://img.fengjishi.com.cn/app/videos/education/friendship-course-1.mp4',
       showControls: false,
       beeIcon: {
         title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
