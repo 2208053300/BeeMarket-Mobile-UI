@@ -57,6 +57,7 @@
 <script>
 import { getArticleDetail } from '@/api/BeeApi/action'
 import { getOs } from '@/utils'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo: {
     title: '文章详情'
@@ -89,28 +90,10 @@ export default {
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare
 
-    if (this.osObj.isWx) {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
-
-    } else if (this.osObj.isIphone && this.osObj.isApp) {
+    if (this.osObj.isIphone && this.osObj.isApp) {
       window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
     } else if (this.osObj.isAndroid && this.osObj.isApp) {
       window.beeMarket.showShareIcon(true)
-    } else {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
-
     }
   },
   methods: {
@@ -118,6 +101,15 @@ export default {
       const res = await getArticleDetail({ id: this.$route.params.id })
       this.article = res.data
       this.$store.state.app.beeFooter.show = false
+      if (this.osObj.isWx) {
+        wxapi.wxShare({
+          title: this.article.share_data.title,
+          desc: this.article.share_data.desc,
+          imgUrl: this.article.share_data.img,
+          // 地址应该放 web 站 网页
+          link: this.article.share_data.link
+        })
+      }
     },
     // 网页跳转
     webPush(pid, target) {
@@ -148,15 +140,7 @@ export default {
     },
     // 分享
     appShare() {
-      if (this.osObj.isWx) {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
-      } else if (this.osObj.isIphone && this.osObj.isApp) {
+      if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToShare.postMessage({
           title: this.article.share_data.title,
           desc: this.article.share_data.desc,
