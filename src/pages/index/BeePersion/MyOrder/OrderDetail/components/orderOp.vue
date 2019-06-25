@@ -138,7 +138,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
-import { addShopcartProduct, remindOrder } from '@/api/BeeApi/user'
+import { remindOrder } from '@/api/BeeApi/user'
 import { closeOrder, deleteOrder, completeOrder, reBuy } from '@/api/BeeApi/order'
 
 export default {

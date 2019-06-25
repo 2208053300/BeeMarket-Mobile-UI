@@ -56,3 +56,11 @@ export function reBuy(data) {
     data
   })
 }
+// 订单 订单支付结果
+export function payResult(data) {
+  return request({
+    url: '/order/result',
+    method: 'post',
+    data
+  })
+}
