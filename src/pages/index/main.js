@@ -43,7 +43,9 @@ import {
   GoodsActionIcon,
   GoodsActionButton,
   Field,
-  Uploader
+  Uploader,
+  NumberKeyboard,
+  PasswordInput
 } from 'vant'
 
 Vue.use(Icon)
@@ -80,6 +82,8 @@ Vue.use(Icon)
   .use(GoodsActionButton)
   .use(Field)
   .use(Uploader)
+  .use(NumberKeyboard)
+  .use(PasswordInput)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

@@ -2,7 +2,7 @@
   <div class="input-password">
     <van-popup v-model="isShow" position="bottom" style="height: 73%">
       <div class="title">
-        <van-icon class="icon" name="cross" size="0.34rem" />
+        <van-icon class="icon" name="cross" size="0.34rem" @click="isShow=false" />
         <span>输入密码</span>
       </div>
       <div class="money">
@@ -56,7 +56,7 @@ export default {
     },
     // 密码键盘输入事件
     async onInput(key) {
-      this.password = this.password + key
+      this.password = this.password = (this.password + key).slice(0, 6)
       if (this.password.length === 6) {
         try {
           await this.startPay()
