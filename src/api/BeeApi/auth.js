@@ -68,7 +68,7 @@ export function forgot(data) {
 // 获取微信签名
 export function getWechatSign(data) {
   return request({
-    url: '/wechat/getSign',
+    url: '/wechat/getsign',
     method: 'post',
     data
   })
