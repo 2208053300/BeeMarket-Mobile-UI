@@ -132,7 +132,7 @@ export default {
           const res = await cancelAfterOrder({ aid: this.aid })
           this.$toast.success(res.message)
           setTimeout(() => {
-            window.location.reload
+            window.location.reload()
           }, 1500)
         })
         .catch(() => {
@@ -159,7 +159,7 @@ export default {
           const res = await cancelAfterOrder({ aid: this.aid })
           this.$toast.success(res.message)
           setTimeout(() => {
-            window.location.reload
+            window.location.reload()
           }, 1500)
         })
         .catch(() => {

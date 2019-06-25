@@ -210,13 +210,15 @@ export default {
       }
     },
     async remindLoginData(id) {
-      const res = await remindLogin({ remind_user_id: id })
-      if (res.status_code === 200) {
-        this.$toast({
-          type: 'success',
-          message: res.message
-        })
-      } else {
+      try {
+        const res = await remindLogin({ remind_user_id: id })
+        if (res.status_code === 200) {
+          this.$toast({
+            type: 'success',
+            message: res.message
+          })
+        }
+      } catch (error) {
         this.$toast({
           type: 'waring',
           message: '帐号列表推送全部失败,请稍后重试!'
@@ -225,6 +227,7 @@ export default {
     },
     // 快速邀请
     async fastInvite() {
+      // TODO 改为直接分享
       const res = await remindAll()
       if (res.status_code === 200) {
         this.$toast({

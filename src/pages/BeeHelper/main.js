@@ -5,15 +5,23 @@ import store from '@/store'
 import Meta from 'vue-meta'
 import '@/styles/normalize.min.css'
 import '@/styles/index/index.less'
+import '@/main'
 // NOTE 定义rem基准
 import '@/utils/flexiable'
-// NOTE 全局引入vant所有组件
-import Vant from 'vant'
-import 'vant/lib/index.css'
+
+import { Row, Col, Cell, CellGroup, Button, Popup, Icon } from 'vant'
+
+Vue.use(Row)
+  .use(Col)
+  .use(Cell)
+  .use(CellGroup)
+  .use(Button)
+  .use(Popup)
+  .use(Icon)
+
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
 FastClick.attach(document.body)
-Vue.use(Vant)
 // NOTE 修改页面meta数据
 Vue.use(Meta)
 Vue.config.productionTip = false

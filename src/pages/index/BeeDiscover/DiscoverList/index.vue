@@ -5,6 +5,7 @@
       :color="BeeDefault"
       :title-active-color="BeeDefault"
       :line-width="60"
+      swipeable
       background="transparent"
     >
       <van-tab>
