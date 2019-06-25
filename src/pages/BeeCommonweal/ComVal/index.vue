@@ -44,6 +44,7 @@
           <van-button
             class="com-text2"
             round
+            @click="$router.push('/category')"
           >
             <span class="com-text3">海量商品</span>
             <span>畅享免单</span>
@@ -182,7 +183,7 @@ export default {
           line-height: 0.46rem;
           background-color: transparent;
           margin-top: 0.2rem;
-          .com-text3{
+          .com-text3 {
             margin-right: 0.26rem;
           }
         }

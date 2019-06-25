@@ -123,6 +123,7 @@ export default {
   background: url(../../../assets/icon/noviceGuide/00-新手教培_改_02.png);
   background-size: cover;
   padding: 0.52rem 0.54rem;
+  box-sizing: border-box;
   .video {
     width: @videoWidth;
     height: @videoHeight;
