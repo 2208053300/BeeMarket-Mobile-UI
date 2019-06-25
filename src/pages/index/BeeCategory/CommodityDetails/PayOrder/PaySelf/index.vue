@@ -248,14 +248,14 @@ export default {
           if (res.errMsg === 'chooseWXPay:ok') {
             _this.toResult()
           } else {
-            _this.$toast('支付失败')
+            _this.$toast(`支付失败：${res}`)
           }
         },
         cancel(res) {
           _this.$toast('用户取消支付~')
         },
         fail(res) {
-          _this.$toast('支付失败~')
+          _this.$toast(`支付失败->${res}`)
         }
       })
     },
