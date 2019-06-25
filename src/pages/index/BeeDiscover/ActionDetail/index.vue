@@ -49,35 +49,7 @@
         </van-button>
       </div>
     </div>
-    <!--  <van-popup v-model="helpSuccess" class="success-content">
-      <div class="help-success">
-        <span class="success-text">
-          助力成功
-        </span>
-        <div class="success-text2">
-          恭喜你获得以下奖励
-        </div>
-        <div
-          class="success-value"
-          :style="{ backgroundImage: 'url(' + beeIcon.pop_ups_pic_value + ')' }"
-        >
-          <div class="get-benefit">
-            <span class="benefit-num">{{}}</span>公益值
-          </div>
-        </div>
-        <div class="success-text3">
-          分享给更多好友，一起来为项目助力吧！
-        </div>
-        <van-button class="success-share">
-          发起助力
-        </van-button>
-      </div>
-      <van-icon
-        :name="beeIcon.pop_ups_icon_delete"
-        class="closePop"
-        @click="helpSuccess = false"
-      />
-    </van-popup>-->
+
     <van-popup
       v-model="helpSuccess"
       class="share-modal"
@@ -119,8 +91,8 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力api
 import {
-  getActionDetail
-  // joinAction
+  getActionDetail,
+  launchAction
 } from '@/api/BeeApi/action'
 // 引入微信分享
 import wxapi from '@/utils/wxapi.js'
@@ -217,8 +189,8 @@ export default {
     },
     // 参与助力 分享成功后跳转页面到助力成功页面 /joinSuccess
     async goHelp() {
-      // aid 行动id share_id 分享人 id
-      // const res = await joinAction({ aid: this.id,share_id })
+      // aid 行动id
+      await launchAction({ id: this.id })
       // console.log(res)
       // TODO 生成二维码海报
       // this.$store.state.app.beeHeader = false
