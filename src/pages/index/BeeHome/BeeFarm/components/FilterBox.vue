@@ -23,16 +23,19 @@
         >
           <span class="name">价格</span>
           <img
-            v-show="order === 'asc'"
+            v-show="order==='normal'"
             class="price-icon"
-            src="@/assets/category/list_icon_price_low.png"
-            alt=""
+            src="@/assets/category/shop_icon_price_gray_normat@2x.png"
           >
           <img
-            v-show="order === 'desc'"
+            v-show="order==='asc'"
             class="price-icon"
             src="@/assets/category/list_icon_price_high.png"
-            alt=""
+          >
+          <img
+            v-show="order==='desc'"
+            class="price-icon"
+            src="@/assets/category/list_icon_price_low.png"
           >
         </li>
       </ul>
@@ -60,7 +63,7 @@ export default {
   data() {
     return {
       nowIndex: 0, // 筛选条件
-      order: 'asc', // 价格升降序 asc 顺序  desc 倒序
+      order: 'normal', // 价格升降序 asc 顺序  desc 倒序
       isVertical: false,
       // 点击价格次数
       count: 0
@@ -78,22 +81,18 @@ export default {
       if (type === 0) {
         // console.log(type, this.nowIndex)
         this.$emit('getFilter', type)
-        this.order = false
+        this.order = 'normal'
         this.count = 0
       } else if (type === 1) {
         // console.log(type, this.nowIndex)
         this.$emit('getFilter', type)
-        this.order = false
+        this.order = 'normal'
         this.count = 0
       } else if (type === 2) {
         this.count++
-        // console.log(type, this.nowIndex, this.count)
-        this.$emit('getFilter', type)
-        if (this.count > 1) {
-          // this.count == 1 是选中价格，>1 时筛选按价格升序还是降序
-          this.count % 2 === 0 ? (this.order = 'desc') : (this.order = 'asc')
-          this.$emit('getFilter', { type, order: this.order })
-        }
+        // if (this.count > 1) { // this.count == 1 是选中价格，>1 时筛选按价格升序还是降序
+        this.count % 2 === 0 ? this.order = 'desc' : this.order = 'asc'
+        this.$emit('getFilter', { type, order: this.order })
       }
     },
     showListWay() {

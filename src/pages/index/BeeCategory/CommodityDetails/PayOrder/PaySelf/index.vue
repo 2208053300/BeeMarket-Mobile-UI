@@ -114,6 +114,7 @@
         确认付款
       </van-button>
     </div>
+    <balance-pay ref="balancePay" :pay-info="order.payInfo" @success="toResult" />
   </div>
 </template>
 
@@ -122,11 +123,11 @@ import { mapState } from 'vuex'
 import { repayOrder } from '@/api/BeeApi/user'
 import { orderPay } from '@/api/BeeApi/order'
 import wx from 'weixin-js-sdk'
-import wxApi from '@/utils/wxapi'
-import { getOs } from '@/utils/index'
+// 导入余额支付组件
+import BalancePay from './components/balancePay'
 
 export default {
-  components: {},
+  components: { BalancePay },
   props: {},
   data() {
     return {
@@ -213,21 +214,17 @@ export default {
         this.$toast('请选择支付方式')
       }
       if (this.payMethod === 'wxpay') {
-        this.readWxPay()
-      }
-    },
-    // 准备微信支付
-    readWxPay() {
-      if (getOs().isWx) {
-        // 初始化微信api
-        wxApi.wxRegister(this.wxPay)
+        this.wxPay()
+      } else if (this.payMethod === 'blpay') {
+        this.$refs.balancePay.pay()
       }
     },
     async wxPay() {
       // 获取微信支付信息
       const res = await orderPay({
         trade_no: this.order.payInfo.trade_no,
-        pay_method: 'wxpay'
+        pay_method: 'wxpay',
+        pay_type: 'JsApi'
       })
       const params = res.data.params
       wx.chooseWXPay({

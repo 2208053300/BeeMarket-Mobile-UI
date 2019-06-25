@@ -40,10 +40,26 @@
             v-for="(item, index) in afterCommuniInfo.buyer_desc.imgs"
             :key="index"
             :src="item"
+            @click="showPre(index)"
           >
         </div>
       </div>
     </div>
+    <!-- 图片预览 -->
+    <van-image-preview
+      v-model="showImgPre"
+      :images="imgList"
+      :start-position="preIndex"
+      :show-indicators="true"
+      :loop="true"
+      class="previewImg"
+      @close="closePre"
+      @change="onChange2"
+    >
+      <template slot="index">
+        {{ preIndex +1 }}/{{ imgList.length }}
+      </template>
+    </van-image-preview>
   </div>
 </template>
 
@@ -60,7 +76,12 @@ export default {
       afterCommuniInfo: {
         buyer_desc: {},
         merchant_check: {}
-      }
+      },
+      // 图片预览
+      showImgPre: false,
+      imgList: [],
+      preIndex: 0,
+      touchMove: false
     }
   },
   computed: {},
@@ -77,6 +98,23 @@ export default {
       const res = await getAftercommunicationDetail({ aid: this.$route.query.aid })
       console.log('物流详情：', res)
       this.afterCommuniInfo = res.data
+    },
+    // 预览图片
+    showPre(index) {
+      if (this.touchMove) {
+        this.touchMove = false
+        return
+      }
+      this.preIndex = index
+      this.imgList = this.afterCommuniInfo.buyer_desc.imgs
+      this.showImgPre = true
+      this.$store.state.app.beeHeader = false
+    },
+    closePre() {
+      this.$store.state.app.beeHeader = true
+    },
+    onChange2(index) {
+      this.preIndex = index
     }
   }
 }

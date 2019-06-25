@@ -43,9 +43,9 @@
     <van-button round type="default" @click="contactServer">
       联系客服
     </van-button>
-    <!-- 换货且待买家收货时 可确认收货 -->
+    <!-- 换货且待买家收货时 可确认收货,或者 补寄时待买家收货 -->
     <van-button
-      v-if="afterDetail.type_code === 2 && afterDetail.status_code === 3"
+      v-if="[2,3].includes(afterDetail.type_code) && afterDetail.status_code === 3"
       type="default"
       round
       class="btn-complete"
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { delAfterOrder, cancelAfterOrder } from '@/api/BeeApi/user'
+import { delAfterOrder, cancelAfterOrder, comfirmCom } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {
@@ -156,11 +156,15 @@ export default {
         })
         .then(async() => {
           // on confirm
-          const res = await cancelAfterOrder({ aid: this.aid })
-          this.$toast.success(res.message)
-          setTimeout(() => {
-            window.location.reload()
-          }, 1500)
+          try {
+            const res = await comfirmCom({ aid: this.aid })
+            this.$toast.success(res.message)
+            setTimeout(() => {
+              window.location.reload()
+            }, 1500)
+          } catch (error) {
+            this.$toast(error)
+          }
         })
         .catch(() => {
           this.$toast('已取消')

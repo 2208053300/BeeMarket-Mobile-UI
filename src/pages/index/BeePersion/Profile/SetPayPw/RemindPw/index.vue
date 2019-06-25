@@ -1,7 +1,7 @@
 <template>
   <div class="remind-pw bg-white">
     <p class="tip text-center">
-      您是否记得当前账户：{{ phone }}的支付密码
+      您是否记得当前账户的支付密码
     </p>
     <div class="group flex flex-column  align-center">
       <van-button round class="btn remind-btn" @click="$router.push('/persion/profile/setPayPw/inputOldPw')">
