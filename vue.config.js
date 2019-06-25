@@ -1,6 +1,7 @@
 const path = require('path')
 const pageList = require('./config/page')
 module.exports = {
+  productionSourceMap: false,
   lintOnSave: true,
   pages: pageList,
   // FIXME 注入全局环境变量BASE_API
