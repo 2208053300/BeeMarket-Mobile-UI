@@ -40,8 +40,14 @@
             class="null-img"
             :style="{backgroundImage:'url('+beeIcon.shopping_cart_pic_no+')'}"
           />
-          <span v-if="authStatus === 1" class="null-text">购物车空空如也</span>
-          <span v-if="authStatus === 2" class="null-text">您还未登录~</span>
+          <span
+            v-if="authStatus === 1"
+            class="null-text"
+          >购物车空空如也</span>
+          <span
+            v-if="authStatus === 2"
+            class="null-text"
+          >您还未登录~</span>
           <van-button
             v-if="authStatus === 1"
             type="default"
@@ -209,6 +215,8 @@ export default {
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
+        this.$store.state.order.source = 'shopcart'
+        this.$store.state.order.target = 'general'
         this.$router.push('/category/details/confirmOrder')
       }
     },

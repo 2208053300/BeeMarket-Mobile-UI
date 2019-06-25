@@ -165,7 +165,7 @@ export default {
           stores: storeData,
           charity_used: this.charity_used,
           anonymous: this.anonymous,
-          ot: this.orderTypeText,
+          ot: this.order.target,
           os: this.order.source
         })
       )

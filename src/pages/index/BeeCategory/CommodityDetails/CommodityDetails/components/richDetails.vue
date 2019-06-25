@@ -15,6 +15,12 @@
       >
       暂无商品详情
     </div>
+    <div class="explain-img">
+      <img
+        :src="beeIcon.priceExplain"
+        alt="价格说明"
+      >
+    </div>
   </div>
 </template>
 
@@ -34,7 +40,8 @@ export default {
   data() {
     return {
       beeIcon: {
-        product_detail_pic_nodetails: require('@/assets/icon/product/product_detail_pic_nodetails@2x.png')
+        product_detail_pic_nodetails: require('@/assets/icon/product/product_detail_pic_nodetails@2x.png'),
+        priceExplain: require('@/assets/icon/product/priceExplain.png')
       },
       iHeight: 0,
       descHtml: '',
@@ -67,7 +74,10 @@ export default {
         imgs.forEach(img => {
           img.setAttribute('alt', `loading`)
           img.setAttribute('data-src', img.src)
-          img.setAttribute('src', 'https://api2.fengjishi.com.cn/assets/images/loading.gif')
+          img.setAttribute(
+            'src',
+            'https://api2.fengjishi.com.cn/assets/images/loading.gif'
+          )
         })
         // 将处理好的html设置到div
         this.$refs['productDesc'].innerHTML = dom.innerHTML
@@ -92,8 +102,10 @@ export default {
             inView = true
           } else {
             const coords = el.getBoundingClientRect()
-            inView = (coords.top >= 0 && coords.left >= 0 && coords.top) <=
-              (window.innerHeight || document.documentElement.clientHeight) + parseInt(offset)
+            inView =
+              (coords.top >= 0 && coords.left >= 0 && coords.top) <=
+              (window.innerHeight || document.documentElement.clientHeight) +
+                parseInt(offset)
           }
           return inView
         }
@@ -170,6 +182,9 @@ export default {
     p {
       margin: 0;
     }
+  }
+  .explain-img {
+    height: 3rem;
   }
 }
 </style>

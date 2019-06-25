@@ -8,10 +8,12 @@
         v-if="order.addrDetail"
         class="default-address"
       >
-        <van-icon
-          :name="beeIcon.confirmorder_icon_address"
-          size="0.40rem"
-        />
+        <div class="img-content">
+          <img
+            :src="beeIcon.confirmorder_icon_address"
+            alt=""
+          >
+        </div>
         <div class="address-details">
           <div class="user-details">
             <span class="name">{{ order.addrDetail.name }}</span>
@@ -49,10 +51,12 @@
         class="no-default-address"
       >
         <div class="no-left">
-          <van-icon
-            :name="beeIcon.confirmorder_icon_address"
-            size="0.40rem"
-          />
+          <div class="img-content">
+            <img
+              :src="beeIcon.confirmorder_icon_address"
+              alt=""
+            >
+          </div>
           <span class="no-text">请选择收货地址</span>
         </div>
         <div class="no-right">
@@ -216,9 +220,11 @@ export default {
       align-items: center;
       .no-left {
         color: #ffffff;
-        .van-icon {
-          vertical-align: middle;
+        .img-content {
+          width: 0.29rem;
+          height: 0.38rem;
           margin-right: 0.16rem;
+          display: inline-block;
         }
         .no-text {
           font-size: 0.28rem;
@@ -233,7 +239,12 @@ export default {
       height: 1.48rem;
       align-items: center;
       color: #ffffff;
+      .img-content {
+        width: 0.29rem;
+        height: 0.38rem;
+      }
       .address-details {
+        flex: 1;
         margin-left: 0.3rem;
         .user-details {
           font-size: 0.28rem;
