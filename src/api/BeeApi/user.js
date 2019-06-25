@@ -637,3 +637,11 @@ export function repayOrder(data) {
     data
   })
 }
+// 个人中心-获取uid
+export function getUID(data) {
+  return request({
+    url: '/user/getUid',
+    method: 'post',
+    data
+  })
+}
