@@ -49,42 +49,13 @@
         </van-button>
       </div>
     </div>
-    <!--  <van-popup v-model="helpSuccess" class="success-content">
-      <div class="help-success">
-        <span class="success-text">
-          助力成功
-        </span>
-        <div class="success-text2">
-          恭喜你获得以下奖励
-        </div>
-        <div
-          class="success-value"
-          :style="{ backgroundImage: 'url(' + beeIcon.pop_ups_pic_value + ')' }"
-        >
-          <div class="get-benefit">
-            <span class="benefit-num">{{}}</span>公益值
-          </div>
-        </div>
-        <div class="success-text3">
-          分享给更多好友，一起来为项目助力吧！
-        </div>
-        <van-button class="success-share">
-          发起助力
-        </van-button>
-      </div>
-      <van-icon
-        :name="beeIcon.pop_ups_icon_delete"
-        class="closePop"
-        @click="helpSuccess = false"
-      />
-    </van-popup>-->
+
     <van-popup
       v-model="helpSuccess"
-      position="top"
       class="share-modal"
       @closed="closed"
     >
-      <div
+      <!-- <div
         class="text-right"
         style="padding:0.2rem 0.2rem 0 0"
       >
@@ -92,6 +63,25 @@
           :src="beeIcon.shareTip"
           class="shareTip"
         >
+      </div> -->
+      <div class="share-bg">
+        <div
+          class="share-content"
+          :style="{backgroundImage:'url('+actionDetails.share_image+')'}"
+        >
+          <div class="share-info">
+            123
+          </div>
+        </div>
+        <div class="save-img">
+          <div class="img-content">
+            <img
+              :src="beeIcon.publicwelfare_detail_popup_icon_download"
+              alt=""
+            >
+          </div>
+          <span>保存图片</span>
+        </div>
       </div>
     </van-popup>
   </div>
@@ -101,8 +91,8 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力api
 import {
-  getActionDetail
-  // joinAction
+  getActionDetail,
+  launchAction
 } from '@/api/BeeApi/action'
 // 引入微信分享
 import wxapi from '@/utils/wxapi.js'
@@ -168,7 +158,8 @@ export default {
       beeIcon: {
         pop_ups_pic_value: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_pic_value_app@2x.png'),
         pop_ups_icon_delete: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_icon_delete@2x.png'),
-        shareTip: require('@/assets/icon/share/guide1.png')
+        shareTip: require('@/assets/icon/share/guide1.png'),
+        publicwelfare_detail_popup_icon_download: require('@/assets/icon/discover/publicwelfare_detail_popup_icon_download@2x.png')
       },
       // 参与助力获得公益值
       pwv_number: 0
@@ -198,10 +189,11 @@ export default {
     },
     // 参与助力 分享成功后跳转页面到助力成功页面 /joinSuccess
     async goHelp() {
-      // aid 行动id share_id 分享人 id
-      // const res = await joinAction({ aid: this.id,share_id })
+      // aid 行动id
+      await launchAction({ id: this.id })
       // console.log(res)
-      this.$store.state.app.beeHeader = false
+      // TODO 生成二维码海报
+      // this.$store.state.app.beeHeader = false
       this.helpSuccess = true
       // this.actionDetails.is_join = true
     },
@@ -377,6 +369,32 @@ export default {
 
   .share-modal {
     background: rgba(0, 0, 0, 0);
+    .share-bg {
+      width: 5.34rem;
+      height: 7.96rem;
+      border-radius: 0.16rem;
+      background-color: #fff;
+      padding: 0.16rem 0.16rem 0;
+      box-sizing: border-box;
+      .share-content {
+        border-radius: 0.16rem;
+        height: 6.92rem;
+        background-size: cover;
+      }
+      .save-img{
+        font-size: 0.28rem;
+        text-align: center;
+        .img-content{
+          width: 0.18rem;
+          height: 0.24rem;
+          margin-right: 0.12rem;
+          display: inline-block;
+          img{
+            vertical-align: initial;
+          }
+        }
+      }
+    }
   }
   .shareTip {
     width: 3.3rem;

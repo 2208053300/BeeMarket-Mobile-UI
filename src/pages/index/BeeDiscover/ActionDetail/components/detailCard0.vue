@@ -6,9 +6,7 @@
     <div class="name text-center">
       <div class="app-show">
         <img :src="beeIcon.nameDefaultImg" class="img-default">
-        <p class="text">
-          “我为公益代言”
-        </p>
+        <img :src="beeIcon.picText" class="pic-text">
       </div>
     </div>
   </div>
@@ -40,7 +38,8 @@ export default {
         nameDefaultImg: require('@/assets/icon/discover/confirmorder_pic_avatar_bee@2x.png'),
         initiate: require('@/assets/icon/discover/publicwelfare_icon_initiate@2x.png'),
         participate: require('@/assets/icon/discover/publicwelfare_icon_participate@2x.png'),
-        aim: require('@/assets/icon/discover/publicwelfare_icon_aim@2x.png')
+        aim: require('@/assets/icon/discover/publicwelfare_icon_aim@2x.png'),
+        picText: require('@/assets/icon/discover/pic_text@2x.png')
       }
     }
   },
@@ -60,6 +59,7 @@ export default {
   padding: 0.4rem 0.2rem 0.2rem ;
   background-size:100% 100%;
   .top-img{width:3.58rem;height: 0.98rem; margin: 0 auto;}
+  .pic-text{width:3.2.85rem;height: 0.43rem; margin: 0 auto;}
   .name{
     position: relative;
     background: rgba(255, 255, 255, .7);

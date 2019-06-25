@@ -148,6 +148,8 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
+    this.$store.state.app.beeFooter.show = false
     this.loadUID()
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare

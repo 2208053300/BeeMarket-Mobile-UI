@@ -25,6 +25,8 @@
 <script>
 import BeeHeader from '@/components/index/BeeHeader'
 import BeeFooter from '@/components/index/BeeFooter'
+import { getOs } from '@/utils'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo: {
     title: '蜂集市'
@@ -32,6 +34,21 @@ export default {
   components: {
     BeeHeader,
     BeeFooter
+  },
+  data() {
+    return {
+      osObj: getOs()
+    }
+  },
+  mounted() {
+    if (this.osObj.isWx) {
+      wxapi.wxShare({
+        title: '蜂集市',
+        desc: '集市购，公益行，我们与您一起向往更好的生活。',
+        imgUrl: 'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+        link: 'http://app.fengjishi.com.cn'
+      })
+    }
   }
 }
 </script>

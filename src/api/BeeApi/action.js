@@ -24,6 +24,14 @@ export function joinAction(data) {
     params: data
   })
 }
+// 公益行动 发起助力
+export function launchAction(data) {
+  return request({
+    url: '/action/launch',
+    method: 'get',
+    params: data
+  })
+}
 
 // 集市动态列表
 export function getArticleList(data) {
