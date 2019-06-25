@@ -51,7 +51,8 @@ import {
   SwitchCell,
   Loading,
   Dialog,
-  Picker
+  Picker,
+  Rate
 } from 'vant'
 
 Vue.use(Icon)
@@ -96,6 +97,7 @@ Vue.use(Icon)
   .use(Loading)
   .use(Dialog)
   .use(Picker)
+  .use(Rate)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

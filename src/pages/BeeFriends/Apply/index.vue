@@ -6,12 +6,9 @@
         class="top-img"
       >
       <div class="info">
-        <p>共创共享，</p>
-        <p>我们一起成就事业！</p>
-        <p>普惠四方，</p>
-        <p>我们一起回馈社会！</p>
-        <p>蜂集市，</p>
-        <p>与您携手共建理想！</p>
+        <p>共创共享，我们一起成就事业！</p>
+        <p>普惠四方，我们一起回馈社会！</p>
+        <p>蜂集市，让生活蜂富起来！</p>
 
         <img
           src="../../../assets/icon/joinFactory/factory_img1.png"
