@@ -171,8 +171,9 @@ export default {
       align-items: center;
       position: relative;
       &:first-child {
-        color: @BeeDefault;
-      }
+      color: @BeeDefault;
+      .bee-cir{background-color: @BeeDefault;}
+    }
       &:not(:last-child) {
         margin-bottom: 0.3rem;
       }
@@ -180,7 +181,7 @@ export default {
         width: 0.36rem;
         height: 0.36rem;
         border-radius: 50%;
-        background-color: @BeeDefault;
+        background-color: #999;
         margin-right: 0.4rem;
       }
       .status-text {

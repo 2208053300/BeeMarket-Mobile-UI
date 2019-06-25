@@ -7,29 +7,24 @@
         info="*请输入新的支付密码"
         @focus="showKeyboard = true"
       />
-      <!-- 数字键盘 -->
-      <van-number-keyboard
-        :show="showKeyboard"
-        @input="onInput"
-        @delete="onDelete"
-        @blur="showKeyboard = false"
-      />
     </div>
+
     <div v-else class="confirm-new">
       <!-- 密码输入框 -->
       <van-password-input
         :value="value1"
-        info="*请输入新的支付密码"
+        info="*请再次输入新的支付密码"
         @focus="showKeyboard = true"
       />
-      <!-- 数字键盘 -->
-      <van-number-keyboard
-        :show="showKeyboard"
-        @input="onInput1"
-        @delete="onDelete1"
-        @blur="showKeyboard1 = false"
-      />
     </div>
+
+    <!-- 数字键盘 -->
+    <van-number-keyboard
+      :show="showKeyboard"
+      @input="onInput"
+      @delete="onDelete"
+      @blur="showKeyboard = false"
+    />
   </div>
 </template>
 
@@ -47,11 +42,10 @@ export default {
       // 签名
       sign: this.$route.query.sign,
       // 新的支付密码
-      value: '123',
+      value: '',
       showKeyboard: true,
       // 确认再次输入新的支付密码
-      value1: '123',
-      showKeyboard1: true,
+      value1: '',
       // 是否是确认
       isConfirm: false
     }
@@ -71,43 +65,52 @@ export default {
   },
   methods: {
     // 新密码
-    onInput(key) {
-      this.value = (this.value + key).slice(0, 6)
-      if (this.value.length === 6) {
-        this.isConfirm = true
+    async onInput(key) {
+      // 第一遍
+      if (!this.isConfirm) {
+        this.value = (this.value + key).slice(0, 6)
+        console.log(this.value)
+        console.log('1密码：', this.value)
+        // return
+        if (this.value.length === 6) {
+          this.isConfirm = true
+        }
+        // 第二遍
+      } else {
+        this.value1 = (this.value1 + key).slice(0, 6)
+        console.log(this.value1)
+        console.log('2密码：', this.value1)
+        if (this.value1.length === 6) {
+          if (this.value !== this.value1) {
+            this.isConfirm = false
+            this.value = ''
+            this.value1 = ''
+            this.$toast('两次密码不一致，请重新输入')
+            return
+          }
+          try {
+            const res = await setPayPw({
+              paypwd: this.value1,
+              sign: this.sign
+            })
+            if (res.status_code === 200) {
+              this.$toast(res.message)
+              setTimeout(() => {
+                this.$router.push({
+                  path: '/persion/profile/accountSafe'
+                })
+              }, 1500)
+            }
+          } catch (error) {
+            this.$toast(error)
+          }
+        }
       }
     },
     onDelete() {
       this.value = this.value.slice(0, this.value.length - 1)
-    },
-    // 确认新密码
-    async onInput1(key) {
-      this.value1 = (this.value1 + key).slice(0, 6)
-      if (this.value1.length === 6 && this.value1 === this.value) {
-        try {
-          const res = await setPayPw({
-            paypwd: this.value1,
-            sign: this.sign
-          })
-          if (res.status_code === 200) {
-            this.$toast(res.message)
-            this.$router.push({
-              path: '/persion/profile/accountSafe'
-            })
-          }
-        } catch (error) {
-          this.$toast(error)
-        }
-      } else {
-        this.isConfirm = false
-        this.value = ''
-        this.value1 = ''
-        this.$toast('两次密码不一致，请重新输入')
-      }
-    },
-    onDelete1() {
-      this.value1 = this.value.slice(0, this.value1.length - 1)
     }
+
   },
   meteInfo() {
     return {

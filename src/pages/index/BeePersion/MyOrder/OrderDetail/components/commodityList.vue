@@ -44,8 +44,15 @@
             v-if="[3,4,5].indexOf(orderDetail.s_order)!==-1"
             class="apply-after"
           >
+            <!-- cs_status
+               0 隐藏售后按钮
+               1 售后按钮不可点击
+               2 售后按钮正常
+           -->
             <van-button
+              v-if="product.cs_status!==0"
               class="apply-button"
+              :class="{applying:product.cs_status===1}"
               @click="$router.push({path:'/persion/order/applyAfter',query:{order_product_id:product.opid}})"
             >
               申请售后
@@ -140,6 +147,7 @@ export default {
             line-height: 0.6rem;
             border-radius: 0.1rem;
             border-color: @Grey2;
+            &.applying{ opacity: 0.5; pointer-events: none;}
           }
         }
         .commodity-details {

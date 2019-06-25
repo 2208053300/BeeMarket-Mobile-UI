@@ -110,7 +110,7 @@ export default {
     // 填写物流单号
     fillLogisticsNumber() {
       this.$router.push({
-        path: '/persion/order/applyAfter',
+        name: 'fillLogisticsInfo',
         query: {
           aid: this.aid
         }

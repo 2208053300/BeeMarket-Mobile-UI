@@ -48,3 +48,11 @@ export function orderPay(data) {
     data
   })
 }
+// 再次购买（订单）
+export function reBuy(data) {
+  return request({
+    url: '/user/order/repurchase',
+    method: 'post',
+    data
+  })
+}

@@ -9,7 +9,7 @@
           {{ afterDetail.product_info.store_name }}
           <van-icon name="arrow" />
         </div>
-        <span class="aftre-type">{{ afterDetail.product_info.type_name }}</span>
+        <span class="aftre-type"/>
       </div>
       <div class="commodity-details">
         <div class="commodity-img">

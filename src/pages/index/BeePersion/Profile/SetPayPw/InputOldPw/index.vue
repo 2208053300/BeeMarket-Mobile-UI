@@ -48,14 +48,18 @@ export default {
     async onInput(key) {
       this.value = (this.value + key).slice(0, 6)
       if (this.value.length === 6) {
-        const res = await verifyOldPayPw({ orig: this.value })
-        if (res.status_code === 200) {
-          this.$router.push({
-            path: '/persion/profile/setPayPw/setPw',
-            query: {
-              sign: res.data.sign
-            }
-          })
+        try {
+          const res = await verifyOldPayPw({ orig: this.value })
+          if (res.status_code === 200) {
+            this.$router.push({
+              path: '/persion/profile/setPayPw/setPw',
+              query: {
+                sign: res.data.sign
+              }
+            })
+          }
+        } catch (error) {
+          this.$toast(error)
         }
       }
     },
