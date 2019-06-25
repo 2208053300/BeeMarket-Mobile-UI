@@ -65,3 +65,11 @@ export function forgot(data) {
     data
   })
 }
+// 获取微信签名
+export function getWechatSign(data) {
+  return request({
+    url: '/wechat/getSign',
+    method: 'post',
+    data
+  })
+}

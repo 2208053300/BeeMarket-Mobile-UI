@@ -2,22 +2,24 @@
  * 微信js-sdk
  */
 import wx from 'weixin-js-sdk'
-import { auditWechat } from '@/api/BeeApi/auth'
+import { getWechatSign } from '@/api/BeeApi/auth'
 const wxApi = {
   /**
    * [wxRegister 微信Api初始化]
    * @param  {Function} callback [ready回调函数]
    */
   async wxRegister(callback) {
-    const res = await auditWechat({ reqUrl: window.location.href })
-    const data = JSON.parse(res.data.data) // PS: 这里根据你接口的返回值来使用
+    const res = await getWechatSign({
+      url: window.location.href.split('#')[0]
+    })
+    const data = res.data // PS: 这里根据你接口的返回值来使用
     wx.config({
       debug: false, // 开启调试模式
       appId: data.appId, // 必填，公众号的唯一标识
       timestamp: data.timestamp, // 必填，生成签名的时间戳
       nonceStr: data.noncestr, // 必填，生成签名的随机串
       signature: data.signature, // 必填，签名，见附录1
-      jsApiList: data.jsApiList // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+      jsApiList: ['chooseWXPay', 'updateAppMessageShareData', 'updateTimelineShareData', 'openAddress'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     })
     wx.ready(res => {
       // 如果需要定制ready回调方法
