@@ -78,10 +78,10 @@
         本协议的最终解释权归蜂集市所有，一经发布即生效，若相关政策变更，则自动适用变更后的政策。
       </p>
       <p>
-    &nbsp;
+        &nbsp;
       </p>
       <p>
-        <br >
+        <br>
       </p>
     </div>
   </div>
@@ -89,36 +89,21 @@
 
 <script>
 export default {
-  components: {
-
-  },
-  props: {
-
-  },
+  components: {},
+  props: {},
   data() {
-    return {
-
-    }
+    return {}
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
-  created() {
-
-  },
+  computed: {},
+  watch: {},
+  created() {},
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
   },
-  methods: {
-
-  },
+  methods: {},
   meteInfo() {
     return {
-
       title: '合伙人共创协议'
     }
   }
@@ -132,20 +117,47 @@ b {
 .indent {
   text-indent: 2em;
 }
-.help{
+.help {
   margin-top: 0.2rem;
 
   padding: 0 0.2rem;
-   -webkit-user-select:none;
-     -moz-user-select:none;
-     -ms-user-select:none;
-     user-select:none;
-    .content{padding: 0.2rem;  margin-bottom: 0.2rem;    border-radius: 0.1rem;}
-    h4{margin-bottom: 0.25rem; text-indent: 2em; margin-top: 0.3rem; font-size: 0.34rem;}
-    h4.toph4{margin-top: 0;}
-    h5{margin-bottom: 0.2rem; text-indent: 2em; font-size: 0.3rem; font-weight: 600;}
-    h6{margin-bottom: 0.2rem; text-indent: 2em; font-size: 0.3rem; font-weight: 600; color: #666;}
-    p{font-size: 0.3rem; margin-bottom: 0.2rem; color: #666; line-height: 1.5; text-indent: 2em;}
-
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  .content {
+    padding: 0.2rem;
+    margin-bottom: 0.2rem;
+    border-radius: 0.1rem;
+  }
+  h4 {
+    margin-bottom: 0.25rem;
+    text-indent: 2em;
+    margin-top: 0.3rem;
+    font-size: 0.34rem;
+  }
+  h4.toph4 {
+    margin-top: 0;
+  }
+  h5 {
+    margin-bottom: 0.2rem;
+    text-indent: 2em;
+    font-size: 0.3rem;
+    font-weight: 600;
+  }
+  h6 {
+    margin-bottom: 0.2rem;
+    text-indent: 2em;
+    font-size: 0.3rem;
+    font-weight: 600;
+    color: #666;
+  }
+  p {
+    font-size: 0.3rem;
+    margin-bottom: 0.2rem;
+    color: #666;
+    line-height: 1.5;
+    text-indent: 2em;
+  }
 }
 </style>
