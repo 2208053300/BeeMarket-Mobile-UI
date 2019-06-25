@@ -2,6 +2,12 @@
   <div class="farm-card">
     <div class="card-title">
       <span class="title">
+        <div class="bee-icon">
+          <img
+            :src="beeIcon.home_icon_everyday"
+            alt="新品首发"
+          >
+        </div>
         农副产品
       </span>
       <div
@@ -53,7 +59,11 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      beeIcon: {
+        home_icon_everyday: require('@/assets/icon/home/index/home_icon_everyday@2x.png')
+      }
+    }
   },
   computed: {},
   watch: {},
@@ -83,6 +93,14 @@ export default {
     align-items: center;
     .title {
       font-size: 0.34rem;
+      .bee-icon {
+        width: 0.28rem;
+        height: 0.3rem;
+        display: inline-block;
+        img {
+          vertical-align: inherit;
+        }
+      }
     }
     .more {
       font-size: 0.26rem;

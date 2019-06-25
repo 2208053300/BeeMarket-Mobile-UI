@@ -25,7 +25,8 @@ service.interceptors.request.use(
     Toast.loading({
       mask: false,
       forbidClick: true,
-      duration: 0
+      duration: 0,
+      className: 'loadingPop'
     })
     console.log('请求参数：', config.data)
     // 强制设置 token 在 getToken 函数中设置
@@ -57,9 +58,7 @@ service.interceptors.request.use(
   },
   error => {
     Toast.clear()
-    // FIXME 如果请求是用户为登录请求失败，跳转到登录界面
-    Toast.fail(error)
-    console.log(error)
+    Toast.fail('服务器错误！')
     Promise.reject(error)
   }
 )

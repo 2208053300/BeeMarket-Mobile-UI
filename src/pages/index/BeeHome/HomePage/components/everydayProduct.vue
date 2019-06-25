@@ -133,12 +133,13 @@ export default {
       }
     }
     .product-list {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-column-gap: 0.44rem;
       margin-top: 0.2rem;
+      overflow-x: scroll;
+      white-space: nowrap;
       .product-content {
         text-align: center;
+        margin-right: 0.44rem;
+        display: inline-block;
         .product-img {
           height: 1.4rem;
           width: 1.4rem;
