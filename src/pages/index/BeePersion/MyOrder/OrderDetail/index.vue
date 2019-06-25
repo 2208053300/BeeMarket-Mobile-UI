@@ -140,6 +140,9 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.getOrderDetailData()
   },
+  beforeDestroy() {
+    clearInterval(this.timer)
+  },
   methods: {
     async getOrderDetailData() {
       const res = await getOrderDetail({
@@ -149,9 +152,9 @@ export default {
       clearInterval(this.timer)
       this.timer = setInterval(() => {
         this.orderDetail.count_down--
-        if (this.orderDetail.count_down === 0) {
+        if (this.orderDetail.count_down <= 0) {
           clearInterval(this.timer)
-          window.location.reload()
+          // window.location.reload()
         }
       }, 1000)
     },

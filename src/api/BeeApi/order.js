@@ -40,3 +40,11 @@ export function completeOrder(data) {
     data
   })
 }
+// 订单 订单支付
+export function orderPay(data) {
+  return request({
+    url: '/order/pay',
+    method: 'post',
+    data
+  })
+}

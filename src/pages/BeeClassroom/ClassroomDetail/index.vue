@@ -104,7 +104,32 @@ export default {
   },
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    // app 调用本地 方法，需将该方法挂载到window
+    window.appShare = this.appShare
+
+    if (this.osObj.isWx) {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(true)
+    } else {
+      // this.$router.push({
+      //   path: '/category/details',
+      //   query: {
+      //     pid,
+      //     target
+      //   }
+      // })
+    }
+  },
   methods: {
     // 播放视频
     play() {
@@ -117,6 +142,41 @@ export default {
         name: 'classroomDetail',
         params: { id }
       })
+    },
+    // 分享
+    appShare() {
+      if (this.osObj.isWx) {
+        // this.$router.push({
+        //   path: '/category/details',
+        //   query: {
+        //     pid,
+        //     target
+        //   }
+        // })
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToShare.postMessage({
+          title: '集市课堂 - 蜂集市',
+          desc: '零风险、轻创业、大财富，你准备好了吗？',
+          img_path: '',
+          // 地址应该放 web 站 网页
+          url: this.getShareLink()
+        })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToShare(
+          '集市课堂 - 蜂集市',
+          '零风险、轻创业、大财富，你准备好了吗？',
+          '',
+          this.getShareLink()
+        )
+      } else {
+        // this.$router.push({
+        //   path: '/category/details',
+        //   query: {
+        //     pid,
+        //     target
+        //   }
+        // })
+      }
     }
   },
   // 当前打开另外一个课堂时会调用此方法
@@ -124,6 +184,10 @@ export default {
     // TODO 获取课堂详情 jethro
     console.log('TODO 获取课堂详情:', to.params.id)
     next()
+  },
+  // 获取分享链接
+  getShareLink() {
+    return `http://app.fengjishi.com.cn/beeClassroom#/detail/${this.$route.params.id}`
   }
 }
 </script>
