@@ -96,9 +96,7 @@ export default {
             if (res.status_code === 200) {
               this.$toast(res.message)
               setTimeout(() => {
-                this.$router.push({
-                  path: '/persion/profile/accountSafe'
-                })
+                this.$router.go(-2)
               }, 1500)
             }
           } catch (error) {
