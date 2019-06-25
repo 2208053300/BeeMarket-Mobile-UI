@@ -1,26 +1,21 @@
 <template>
   <div class="after-detail">
+    <!-- type_code  售后类型值,1 退货,2 换货,3 补寄 -->
+    <!-- status_code 状态值:-1 已拒绝, 0 待审核,1 待买家发货,2 待商家收货,3 待买家收货,4 已完成,5 已关闭 -->
+
     <!-- 状态内容 -->
     <div class="after-title">
       <div class="flex align-center flex-between">
         <div>
           <div class="after-text">
-            <!-- <span v-if="afterDetail.status_code===0">已关闭</span>
-          <span v-if="afterDetail.status_code===1">审核中</span>
-          <span v-if="afterDetail.status_code===2">处理中（待买家发货）</span>
-          <span v-if="afterDetail.status_code===3">处理中（待商家收货）</span>
-          <span v-if="afterDetail.status_code===4">已完成</span> -->
             <span>{{ afterDetail.status_content.status_name }}</span>
           </div>
-          <!-- <span
-          v-if="[1,2,3].indexOf(afterDetail.status_code)!==-1"
-          class="status-text2"
-        > -->
+
           <span v-if="afterDetail.status_content.remain_time>0" class="status-text2">
             <!-- TODO 这里是时分秒倒计时？ -->
             剩余时间: {{ remain_time_sec }}
           </span>
-
+          <!-- 描述 -->
           <span v-if="afterDetail.status_content.content_desc" class="status-text2">
             {{ afterDetail.status_content.content_desc }}
           </span>
@@ -28,6 +23,7 @@
         <img :src="refundImg" alt="" class="refund-img">
       </div>
     </div>
+
     <div class="detail-content">
       <!-- 收货状态描述 -->
       <after-status :after-detail="afterDetail" class="details-card" />

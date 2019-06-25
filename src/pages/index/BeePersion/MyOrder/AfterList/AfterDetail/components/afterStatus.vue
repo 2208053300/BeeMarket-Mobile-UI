@@ -1,33 +1,28 @@
 <template>
   <div class="after-status">
+    <!-- type_code  售后类型值,1 退货,2 换货,3 补寄 -->
+
+    <!-- status_code 状态值:-1 已拒绝, 0 待审核,1 待买家发货,2 待商家收货,3 待买家收货,4 已完成,5 已关闭 -->
+
+    <!-- closed_type 关闭类型,1 超时未申请,2 超时未填单号,3 撤销 -->
+
     <div class="status-part1">
       <!-- 状态描述 -->
       <div v-if="[0,1,2,3,-1].includes(afterDetail.status_code) || (afterDetail.status_code===5&& [1,2].includes(afterDetail.closed_type))" class="audit-text">
         <div class="part1-title">
           <span>{{ afterDetail.status_desc.title }}</span>
         </div>
-        <div v-for="(item, index) in afterDetail.status_desc.directions" :key="index" class="part1-text">
-          <span>{{ index+1 }}、{{ item }}</span>
-        </div>
+        <template v-if="afterDetail.status_desc.directions.length>1">
+          <div v-for="(item, index) in afterDetail.status_desc.directions" :key="index" class="part1-text">
+            <span>{{ index+1 }}、{{ item }}</span>
+          </div>
+        </template>
+        <template v-else>
+          <div v-for="(item, index) in afterDetail.status_desc.directions" :key="index" class="part1-text">
+            <span>{{ item }}</span>
+          </div>
+        </template>
       </div>
-      <!-- 待审核 -->
-      <!-- <div v-if="afterDetail.status_code===0" class="close-reason">
-        <div class="part1-title">
-          <span>您已成功发起退款申请，商家正在紧急处理中</span>
-        </div>
-        <div class="part1-text">
-          <span>1.审核通过后，请您在7日内按照给出的退货信息进行退货，填写回寄的物流单号，逾期则此次申请失效</span>
-        </div>
-        <div class="part1-text">
-          <span>2.由商家确认收到的商品符合退货标准后，确认退款</span>
-        </div>
-        <div class="part1-text">
-          <span>3.如果审核拒绝，您可以修改申请后重新发起</span>
-        </div>
-        <div class="part1-text">
-          <span>4.如果审核超时未处理，申请将自动通过</span>
-        </div>
-      </div> -->
 
       <!-- 1 待买家发货 -->
       <!-- <div v-if="afterDetail.status_code===1" class="audit-text">
@@ -88,6 +83,7 @@
     </div>
 
     <div v-if="afterDetail.closed_type!==3" class="status-part2">
+      <!-- 拒绝原因 -->
       <div
         v-if="afterDetail.status_code===-1 || (afterDetail.status_code===5&&afterDetail.closed_type===1)"
         class="reject-reason"
@@ -99,8 +95,9 @@
           (详细备注可点击沟通记录查看)
         </div>
       </div>
+      <!-- 退货地址 -->
       <div
-        v-if="[1,2,3].indexOf(afterDetail.status_code)!==-1 && afterDetail.return_addr"
+        v-if="[1,2,3,4].indexOf(afterDetail.status_code)!==-1 && afterDetail.return_addr"
         class="refund-address"
       >
         <div class="address-text">
