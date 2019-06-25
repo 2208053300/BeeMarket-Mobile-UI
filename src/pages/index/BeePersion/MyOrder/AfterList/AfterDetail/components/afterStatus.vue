@@ -12,7 +12,7 @@
         <div class="part1-title">
           <span>{{ afterDetail.status_desc.title }}</span>
         </div>
-        <template v-if="afterDetail.status_desc.directions.length>1">
+        <template v-if="afterDetail.status_desc.directions && afterDetail.status_desc.directions.length>1">
           <div v-for="(item, index) in afterDetail.status_desc.directions" :key="index" class="part1-text">
             <span>{{ index+1 }}、{{ item }}</span>
           </div>
