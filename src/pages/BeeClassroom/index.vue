@@ -1,18 +1,32 @@
 <template>
   <div>
-    <router-view />
+    <bee-header v-show="$store.state.app.beeHeader" />
+    <router-view :class="{showHeader:$store.state.app.beeHeader}" />
   </div>
 </template>
 <script>
+import BeeHeader from '@/components/index/BeeHeader'
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '集市课堂'
   },
+  components: {
+    BeeHeader
+  },
   mounted() {
-    if (this.$store) {
+    const osObj = getOs()
+    if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
+      this.$store.state.app.beeHeader = false
+    } else {
       this.$store.state.app.beeHeader = true
-      this.$store.state.app.beeFooter.show = false
     }
   }
 }
 </script>
+<style lang="less" scoped>
+.showHeader {
+  padding-top: 46px;
+  box-sizing: border-box;
+}
+</style>

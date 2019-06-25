@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './index.vue'
 import router from '@/route/beeClassroom'
+import store from '@/store'
 import Meta from 'vue-meta'
 import '@/styles/normalize.min.css'
 import '@/styles/index/index.less'
@@ -22,5 +23,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
