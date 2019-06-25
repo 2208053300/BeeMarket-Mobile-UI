@@ -44,7 +44,11 @@
             v-if="honeyType!==1&&detailItem.is_partner"
             class="user-grade"
           >
-            <van-icon :name="beeIcon.bee_firends_basic_icon_star" />
+            <van-icon
+              v-for="(item,index) in detailItem.is_partner"
+              :key="index"
+              :name="beeIcon.bee_firends_basic_icon_star"
+            />
             <span class="name">合伙人</span>
           </div>
           <div
@@ -232,7 +236,7 @@ export default {
           color: #fff;
           font-size: 0.2rem;
           .van-icon {
-            vertical-align: middle;
+            vertical-align: text-top;
           }
           .name {
             margin-left: 0.08rem;
