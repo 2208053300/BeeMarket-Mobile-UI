@@ -9,9 +9,9 @@ import '@/main'
 // NOTE 定义rem基准
 import '@/utils/flexiable'
 
-import { NavBar, Icon } from 'vant'
+import { NavBar, Icon, Button } from 'vant'
 
-Vue.use(NavBar).use(Icon)
+Vue.use(NavBar).use(Icon).use(Button)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

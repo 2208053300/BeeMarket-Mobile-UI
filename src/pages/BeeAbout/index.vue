@@ -19,8 +19,6 @@ export default {
   data() {
     return {
       icon: [
-        require('@/assets/icon/aboutBeeMarket/关于集市_改_01.jpg'),
-        require('@/assets/icon/aboutBeeMarket/关于集市_改_02.jpg'),
         require('@/assets/icon/aboutBeeMarket/关于集市_改_03.jpg'),
         require('@/assets/icon/aboutBeeMarket/关于集市_改_04.jpg'),
         require('@/assets/icon/aboutBeeMarket/关于集市_改_05.jpg'),
@@ -28,11 +26,7 @@ export default {
         require('@/assets/icon/aboutBeeMarket/关于集市_改_07.jpg'),
         require('@/assets/icon/aboutBeeMarket/关于集市_改_08.jpg'),
         require('@/assets/icon/aboutBeeMarket/关于集市_改_09.jpg'),
-        require('@/assets/icon/aboutBeeMarket/关于集市_改_10.jpg'),
-        require('@/assets/icon/aboutBeeMarket/关于集市_改_11.jpg'),
-        require('@/assets/icon/aboutBeeMarket/关于集市_改_12.jpg'),
-        require('@/assets/icon/aboutBeeMarket/关于集市_改_13.jpg'),
-        require('@/assets/icon/aboutBeeMarket/关于集市_改_14.jpg')
+        require('@/assets/icon/aboutBeeMarket/关于集市_改_10.png')
       ]
     }
   },

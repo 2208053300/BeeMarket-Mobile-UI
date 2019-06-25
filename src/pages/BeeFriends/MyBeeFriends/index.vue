@@ -149,7 +149,6 @@
         </div>
         <div class="img-content">
           <img
-            v-lazy="beeIcon.bee_firends_img_rule"
             :src="beeIcon.bee_firends_img_rule"
             alt=""
           >
@@ -503,7 +502,7 @@ export default {
     border-radius: 0.3rem 0.3rem 0 0;
     overflow: hidden;
     .rule-content {
-      height: 12rem;
+      height: 10rem;
       overflow: scroll;
       position: relative;
       .rule-header {

@@ -233,7 +233,7 @@ export default {
       const res = await orderPay({
         trade_no: this.order.payInfo.trade_no,
         pay_method: 'wxpay',
-        pay_type: 'JsApi'
+        pay_type: 'JSAPI'
       })
       const params = res.data.params
       wx.chooseWXPay({
