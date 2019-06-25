@@ -285,6 +285,12 @@ const router = new Router({
                     import(
                       '@/pages/index/BeeCategory/CommodityDetails/PayOrder/PaySelf'
                     )
+                },
+                {
+                  path: 'payResult',
+                  name: 'payResult',
+                  component: () =>
+                    import('@/pages/index/BeeCategory/CommodityDetails/PayOrder/PayResult')
                 }
               ]
             },
