@@ -1,6 +1,6 @@
 <template>
   <div class="public-interest-partner text-center">
-    <img src="../../../assets/icon/joinFriendCicle/gy_part1.png" alt="公益合伙人">
+    <img src="../../../assets/icon/joinFriendCicle/gy_part1.png" alt="公益合伙人" style="background: white">
     <!-- <video controls="controls" autoplay poster="../../../assets/icon/register/vedio_bg.png" style="width: 100%">
       <source src="https://app.fengjishi.com/static/video/film.mp4" type="video/mp4">
     </video> -->
@@ -27,9 +27,9 @@
     <!-- {// <img src="../../../assets/icon/joinFriendCicle/teach(new).png" alt=""> } -->
     <img src="../../../assets/icon/joinFriendCicle/gy_part2.png" alt="公益合伙人">
     <img src="../../../assets/icon/joinFriendCicle/gy_part3.png" alt="公益合伙人">
-    <img src="../../../assets/icon/joinFriendCicle/gy_part4.jpg" alt="公益合伙人">
+    <img src="../../../assets/icon/joinFriendCicle/gy_part4.png" alt="公益合伙人">
     <!-- <img src="../../../assets/icon/joinFriendCicle/gy_part5.png" alt="公益合伙人"> -->
-    <img src="../../../assets/icon/joinFriendCicle/gy_part6.png" alt="公益合伙人" style="margin-top: 0.6rem;">
+    <!--  <img src="../../../assets/icon/joinFriendCicle/gy_part6.png" alt="公益合伙人" style="margin-top: 0.6rem;">-->
     <!-- 根据状态显示不同的按钮 -->
     <!-- 注册按钮 -->
     <a v-if="false" class="action2 no-tap-highlight" @click="goRegister">
@@ -46,7 +46,7 @@
 import { getOs } from '@/utils'
 export default {
   metaInfo: {
-    title: '公益合伙人'
+    title: '蜂友圈'
   },
   components: {},
   props: {},
@@ -115,7 +115,7 @@ export default {
 }
 </script>
 
-<style scoped  lang="less">
+<style scoped lang="less">
 //inPartner.html earnedRouter.html
 @videoWidth: 6.4rem;
 @videoHeight: 3.3rem;

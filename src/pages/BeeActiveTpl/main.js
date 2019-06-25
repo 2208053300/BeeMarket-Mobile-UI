@@ -9,9 +9,15 @@ import '@/main'
 // NOTE 定义rem基准
 import '@/utils/flexiable'
 
-import { Tab, Tabs } from 'vant'
+import {
+  Tab,
+  Tabs,
+  Button
+} from 'vant'
 
-Vue.use(Tab).use(Tabs)
+Vue.use(Tab)
+  .use(Tabs)
+  .use(Button)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
