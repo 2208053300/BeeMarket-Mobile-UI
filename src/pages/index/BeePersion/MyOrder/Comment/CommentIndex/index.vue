@@ -4,16 +4,15 @@
       <div class="comment-rate">
         <div class="product-img">
           <img
-            src=""
-            alt=""
+            :src="thumb_url"
           >
         </div>
         <span class="rate-text">总体评价</span>
         <van-rate
           v-model="score"
           :size="size"
-          :icon="beeIcon.product_detail_icon_flower_pressed"
-          :void-icon="beeIcon.product_detail_icon_flower_normat"
+          icon="like"
+          void-icon="like-o"
           :color="BeeDefault"
           :allow-half="allowHalf"
         />
@@ -115,7 +114,8 @@ export default {
       isAnonymity: false,
       commentImgs: [],
       order_no: this.$route.query.order_no,
-      sku_id: this.$route.query.sku_id
+      sku_id: this.$route.query.sku_id,
+      thumb_url: this.$route.query.thumb_url
     }
   },
   computed: {},
@@ -148,14 +148,22 @@ export default {
       formData.set('order_no', this.order_no)
       formData.set('sku_id', this.sku_id)
       formData.set('score', this.score)
-      formData.set('content', this.content)
-      formData.set('anonymous', this.anonymous)
-      const res = await addComment(formData)
-      if (res.status_code === 200) {
-        this.$toast.success(res.message)
-        setTimeout(() => {
-          this.$router.go(-1)
-        }, 2000)
+      formData.set('content', this.commentText)
+      formData.set('anonymous', this.isAnonymity ? 1 : 0)
+      console.log(typeof formData.get('anonymous'))
+
+      try {
+        const res = await addComment(formData)
+        if (res.status_code === 200) {
+          this.loading = false
+          this.$toast.success(res.message)
+          setTimeout(() => {
+            this.$router.go(-1)
+          }, 2000)
+        }
+      } catch (error) {
+        this.loading = false
+        this.$toast(error)
       }
     },
     // 是否匿名

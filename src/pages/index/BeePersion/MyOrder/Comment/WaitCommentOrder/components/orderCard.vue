@@ -79,7 +79,7 @@
               <van-button v-if="product.commented" class="btn commented">
                 已评价
               </van-button>
-              <van-button v-else class="btn" @click="goComment(product.sku_id)">
+              <van-button v-else class="btn" @click="goComment(product.sku_id,product.tUrl)">
                 去评价
               </van-button>
             </div>
@@ -121,12 +121,13 @@ export default {
       this.store_name = res.data.store_name
     },
     // 去评价
-    goComment(sku_id) {
+    goComment(sku_id, thumb_url) {
       this.$router.push({
         name: 'CommentProduct',
         query: {
           sku_id,
-          order_no: this.order_no
+          order_no: this.order_no,
+          thumb_url
         }
       })
     }

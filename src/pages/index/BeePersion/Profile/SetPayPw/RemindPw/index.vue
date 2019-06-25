@@ -7,33 +7,14 @@
       <van-button round class="btn remind-btn" @click="$router.push('/persion/profile/setPayPw/inputOldPw')">
         记得
       </van-button>
-      <van-button round class="btn not-remind-btn" @click="getSms">
+      <van-button round class="btn not-remind-btn" @click="$router.push('/persion/profile/setPayPw/getSms')">
         不记得
       </van-button>
     </div>
-
-    <!-- 遮罩 -->
-    <van-popup v-model="show" @closed="closed">
-      <div class="sms bg-white">
-        <p class="sms-tip text-center">
-          请输入{{ phone }}的短信验证码
-        </p>
-        <van-field v-model="sms" placeholder="请输入短信验证码" class="input" />
-        <div class="btn-group flex flex-column  align-center">
-          <van-button round class="btn comfirm-btn" @click="submit">
-            确定
-          </van-button>
-          <van-button round class="btn cancel" @click="show=false">
-            取消
-          </van-button>
-        </div>
-      </div>
-    </van-popup>
   </div>
 </template>
 
 <script>
-import { getMobile, sendSms, smsVerify } from '@/api/BeeApi/user'
 export default {
   components: {
 
@@ -43,8 +24,7 @@ export default {
   },
   data() {
     return {
-      // 是否显示遮罩
-      show: false,
+
       // 验证码
       sms: '',
       phone: ''
@@ -62,48 +42,9 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-
-    this.getMobileNum()
   },
   methods: {
-    // 提交短信验证码
-    async submit() {
-      console.log('tijiao')
-      if (this.sms.length === 6) {
-        const res = await smsVerify({
-          smsCode: this.sms,
-          type: 'paypwd',
-          t: Date.parse(new Date()).toString().substr(0, 10)
-        })
-        if (res.status_code === 200) {
-          // NOTE 请求接口，成功跳转到设置密码页面
-          this.$router.push({
-            path: '/persion/profile/setPayPw/setPw',
-            query: {
-              sign: res.data.sign
-            }
-          })
-        }
-      }
-    },
-    // 获取短信验证码
-    async getSms() {
-      this.show = true
-      const res = await sendSms({
-        type: 'paypwd'
-      })
-      this.$toast(res.message)
-    },
-    // 获取手机号码
-    async getMobileNum() {
-      const res = await getMobile()
-      console.log('获取手机号码：', res)
-      this.phone = res.data.mobileNum
-    },
-    // 关闭弹出
-    closed() {
-      this.sms = ''
-    }
+
   },
   meteInfo() {
     return {

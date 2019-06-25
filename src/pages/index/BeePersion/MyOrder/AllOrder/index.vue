@@ -86,7 +86,7 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    if (this.$route.query.s_status) {
+    if (this.$route.query) {
       this.changeTab(this.$route.query.s_status)
     } else {
       this.changeOrder()
@@ -106,8 +106,13 @@ export default {
     changeTab(s_status) {
       if ([0, 1, 2, 4].indexOf(s_status) !== -1) {
         this.changeOrder(s_status)
+        // 鬼知道3跑哪里去了
+        if (s_status === 4) {
+          this.active = s_status
+        } else {
+          this.active = s_status + 1
+        }
         // 更改活动标签栏
-        this.active = s_status + 1
       } else {
         this.changeOrder()
       }

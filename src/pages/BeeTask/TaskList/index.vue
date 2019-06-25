@@ -351,16 +351,17 @@ export default {
       .body-title {
         position: absolute;
         top: -0.24rem;
-        left: 20%;
         text-align: center;
-        background-color: #ffffff;
+        width: 5.9rem;
         .title-text1 {
           width: 4rem;
           font-size: 0.38rem;
           color: @Orange3;
           font-weight: bold;
+          margin: auto;
           display: flex;
           justify-content: space-between;
+          background-color: #ffffff;
           align-items: center;
           .circle {
             width: 0.2rem;
