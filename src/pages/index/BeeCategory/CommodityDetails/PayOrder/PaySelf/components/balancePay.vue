@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      isShow: true,
+      isShow: false,
       password: ''
     }
   },
@@ -49,7 +49,7 @@ export default {
   mounted() {},
   methods: {
     pay() {
-      this.isShow = false
+      this.isShow = true
     },
     // 弹出框关闭动画结束回调
     onClosed() {
