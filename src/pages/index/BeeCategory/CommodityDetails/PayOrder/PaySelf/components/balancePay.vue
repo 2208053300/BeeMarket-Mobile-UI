@@ -27,6 +27,7 @@
 
 <script>
 import { orderPay } from '@/api/BeeApi/order'
+import { isSetPw } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {
@@ -48,8 +49,24 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    pay() {
-      this.isShow = true
+    async pay() {
+      // 检查是否设置支付密码
+      const res = await isSetPw()
+      if (res.data.set) {
+        this.isShow = true
+      } else {
+        try {
+          await this.$dialog.confirm({
+            title: '暂未设置支付密码',
+            message: '未设置支付密码将无法完成支付',
+            confirmButtonText: '去设置',
+            confirmButtonColor: '#f49822'
+          })
+          this.$router.push('/persion/profile/setPayPw/getSms')
+        } catch (e) {
+          console.log('取消设置支付密码')
+        }
+      }
     },
     // 弹出框关闭动画结束回调
     onClosed() {
@@ -77,7 +94,7 @@ export default {
         const res = await orderPay({
           trade_no: this.payInfo.trade_no,
           pay_method: 'blpay',
-          paywd: this.password
+          paypwd: this.password
         })
         if (res.status_code === 200) {
           this.$emit('success') // 发出支付成功事件
