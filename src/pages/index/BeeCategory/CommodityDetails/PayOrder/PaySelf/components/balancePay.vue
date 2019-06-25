@@ -73,7 +73,6 @@ export default {
     },
     // 开始支付
     async startPay() {
-      console.log('开始支付')
       try {
         const res = await orderPay({
           trade_no: this.payInfo.trade_no,

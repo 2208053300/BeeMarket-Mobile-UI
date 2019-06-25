@@ -232,7 +232,8 @@ export default {
       // 获取微信支付信息
       const res = await orderPay({
         trade_no: this.order.payInfo.trade_no,
-        pay_method: 'wxpay'
+        pay_method: 'wxpay',
+        pay_type: 'JsApi'
       })
       const params = res.data.params
       wx.chooseWXPay({
