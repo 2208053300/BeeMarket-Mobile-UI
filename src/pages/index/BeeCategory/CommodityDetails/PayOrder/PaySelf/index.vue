@@ -123,8 +123,6 @@ import { mapState } from 'vuex'
 import { repayOrder } from '@/api/BeeApi/user'
 import { orderPay } from '@/api/BeeApi/order'
 import wx from 'weixin-js-sdk'
-import wxApi from '@/utils/wxapi'
-import { getOs } from '@/utils/index'
 // 导入余额支付组件
 import BalancePay from './components/balancePay'
 
@@ -216,16 +214,9 @@ export default {
         this.$toast('请选择支付方式')
       }
       if (this.payMethod === 'wxpay') {
-        this.readWxPay()
+        this.wxPay()
       } else if (this.payMethod === 'blpay') {
         this.$refs.balancePay.pay()
-      }
-    },
-    // 准备微信支付
-    readWxPay() {
-      if (getOs().isWx) {
-        // 初始化微信api
-        wxApi.wxRegister(this.wxPay)
       }
     },
     async wxPay() {
