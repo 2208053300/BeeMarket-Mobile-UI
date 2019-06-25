@@ -34,7 +34,7 @@ export function getOs() {
   }
 }
 export function goHome() {
-  window.location.href = 'http://app.fengjishi.com.cn'
+  window.location.href = 'http://app.fengjishi.com'
 }
 export function GetRequest(parameName) {
   // / 获取地址栏指定参数的值
