@@ -42,16 +42,18 @@ export function checkToken() {
       const uriProp2 = window.location.href.slice(
         window.location.href.indexOf('STATE') + 5
       )
+      // 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+
       // 只带state后面的参数跳转
       window.location.href =
-        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
         encodeURIComponent(
           window.location.origin + window.location.pathname + uriProp2
         ) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     } else {
       window.location.href =
-        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
         encodeURIComponent(window.location.href) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     }
