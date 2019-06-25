@@ -40,7 +40,7 @@
                   可提现：<span class="num">{{ withdrawNum }}</span>元
                 </div>
                 <div class="text2">
-                  兑换率：1:1
+                  兑换率：1：1
                 </div>
               </div>
               <div class="action-btn">

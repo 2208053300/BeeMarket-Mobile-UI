@@ -19,6 +19,7 @@
               <van-button
                 type="default"
                 class="add-btn"
+                @click="$router.push('/category')"
               >
                 逛逛分类
               </van-button>
@@ -142,35 +143,40 @@ export default {
         {
           store_id: 1,
           store_name: '刊菲服饰',
-          store_logo: 'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
+          store_logo:
+            'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
           is_upper: true,
           new_upper: 36
         },
         {
           store_id: 2,
           store_name: '完美世界',
-          store_logo: 'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
+          store_logo:
+            'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
           is_upper: false,
           new_upper: 10
         },
         {
           store_id: 3,
           store_name: '蒸汽动力',
-          store_logo: 'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
+          store_logo:
+            'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
           is_upper: true,
           new_upper: 12
         },
         {
           store_id: 4,
           store_name: '这家店铺名字有点长',
-          store_logo: 'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
+          store_logo:
+            'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
           is_upper: true,
           new_upper: 32
         },
         {
           store_id: 5,
           store_name: '蒸汽动力',
-          store_logo: 'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
+          store_logo:
+            'https://img.fengjishi.com.cn/product/album/2019/05/21161350WT7PDophpem7cPw.jpeg',
           is_upper: true,
           new_upper: 92
         }
@@ -191,7 +197,7 @@ export default {
       }
 
       // 判断是否还有下一页
-      if ((this.storeNum - (this.storePage * this.pageSize)) > 0) {
+      if (this.storeNum - this.storePage * this.pageSize > 0) {
         this.storeFinished = false
         this.storePage += 1
       } else {
@@ -226,7 +232,7 @@ export default {
         this.productList = res.data.product_list
       }
       // 判断是否还有下一页
-      if ((this.productNum - (this.productPage * this.pageSize)) > 0) {
+      if (this.productNum - this.productPage * this.pageSize > 0) {
         this.productFinished = false
         this.productPage += 1
       } else {

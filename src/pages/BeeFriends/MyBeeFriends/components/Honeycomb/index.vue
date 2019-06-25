@@ -23,7 +23,7 @@
           <div class="box2">
             <div class="img-content">
               <img
-                :src="item2.head_image_url"
+                :src="item2.head_image_url||$store.state.app.head_detault"
                 alt=""
               >
             </div>

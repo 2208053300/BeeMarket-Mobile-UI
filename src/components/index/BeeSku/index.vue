@@ -66,6 +66,8 @@
             <van-stepper
               v-model="productNum"
               class="product-num"
+              min="1"
+              :max="limitNum||99"
             />
           </div>
         </div>
@@ -109,6 +111,10 @@ export default {
     pNumber: {
       type: Number,
       default: 1
+    },
+    limitNum: {
+      type: Number,
+      default: 99
     }
   },
   data() {

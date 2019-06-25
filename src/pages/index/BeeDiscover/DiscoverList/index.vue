@@ -9,15 +9,15 @@
     >
       <van-tab>
         <div slot="title">
-          公益行动
-        </div>
-        <action-list />
-      </van-tab>
-      <van-tab>
-        <div slot="title">
           集市动态
         </div>
         <article-list />
+      </van-tab>
+      <van-tab>
+        <div slot="title">
+          公益动态
+        </div>
+        <action-list />
       </van-tab>
     </van-tabs>
   </div>

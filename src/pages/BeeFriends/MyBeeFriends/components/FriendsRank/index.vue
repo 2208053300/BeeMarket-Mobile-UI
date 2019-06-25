@@ -34,7 +34,7 @@
               class="tab-img"
             />
             <div class="type-num">
-              厂商：<span class="num">{{ friendsData.relation_friends_num||0 }} </span>个
+              厂商：<span class="num">{{ friendsData.business_num||0 }} </span>个
             </div>
           </div>
           <div
@@ -97,7 +97,7 @@
                     :style="{borderColor:getColor(index)}"
                   >
                     <img
-                      :src="item.head_image_url"
+                      :src="item.head_image_url||$store.state.app.head_detault"
                       alt="头像"
                     >
                   </div>
@@ -106,7 +106,7 @@
                     class="partner-tag"
                   >
                     <img
-                      :src="beeIcon.bee_firends_invite_icon_firenf"
+                      :src="beeIcon.bee_firends_invite_icon_firenf||$store.state.app.head_detault"
                       alt="合伙人"
                     >
                   </div>

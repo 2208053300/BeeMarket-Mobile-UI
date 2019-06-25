@@ -13,21 +13,42 @@
         </p>
         <div class="tags-price">
           <div class="tags">
-            <van-button
-              v-if="item.is_hot"
-              round
-              size="mini"
-            >
-              热销
-            </van-button>
-            <van-button
-              v-for="(tag, index) in item.tags"
-              :key="index"
-              round
-              size="mini"
-            >
-              {{ tag }}
-            </van-button>
+            <template v-if="item.area">
+              <div class="from-area">
+                商品来自：{{ item.area }}
+              </div>
+              <van-button
+                v-if="item.is_hot"
+                round
+                size="mini"
+              >
+                热销
+              </van-button>
+              <!-- <van-button
+                v-else
+                round
+                size="mini"
+              >
+                {{ item.tags[0] }}
+              </van-button> -->
+            </template>
+            <template>
+              <van-button
+                v-if="item.is_hot"
+                round
+                size="mini"
+              >
+                热销
+              </van-button>
+              <van-button
+                v-for="(tag, index) in item.tags"
+                :key="index"
+                round
+                size="mini"
+              >
+                {{ tag }}
+              </van-button>
+            </template>
             <!-- <van-button round size="mini">
               活动
             </van-button>
@@ -108,6 +129,17 @@ export default {
 }
 .tags {
   margin-bottom: 0.2rem;
+  .from-area {
+    padding: 0.04rem 0.08rem;
+    box-sizing: border-box;
+    font-size: 0.2rem;
+    text-align: center;
+    color: @Red1;
+    border: 0.02rem solid @Red1;
+    margin-right: 0.12rem;
+    border-radius: 0.04rem;
+    display: inline-block;
+  }
 }
 .van-button {
   border-color: @BeeDefault;
