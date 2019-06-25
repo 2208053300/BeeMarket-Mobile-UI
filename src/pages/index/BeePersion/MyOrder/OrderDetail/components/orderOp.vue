@@ -220,7 +220,10 @@ export default {
       const res = await completeOrder({ order_no: this.$route.query.order_no })
       if (res.status_code === 200) {
         this.$toast(res.message)
-        window.location.reload
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500)
+
         // this.$router.back()
       }
     },

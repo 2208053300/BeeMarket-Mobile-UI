@@ -39,7 +39,7 @@
     </div>
     <div class="logistics-status2">
       <div
-        v-if="logisticsInfo.detail===[]"
+        v-if="!logisticsInfo.express_details"
         class="status-content"
       >
         <div class="bee-cir" />
@@ -47,14 +47,14 @@
       </div>
       <!-- TODO 最后一个不加线 -->
       <div
-        v-for="(item, index) in logisticsInfo.detail"
+        v-for="(item, index) in logisticsInfo.express_details"
         :key="index"
         class="status-content"
-        :class="{noBottom:(logisticsInfo.detail.length-1)===index}"
+        :class="{noBottom:(logisticsInfo.express_details.length-1)===index}"
       >
         <div class="bee-cir" />
         <div
-          v-if="(logisticsInfo.detail.length-1)!==index"
+          v-if="(logisticsInfo.express_details.length-1)!==index"
           class="bee-line"
         />
         <div class="status-text">
