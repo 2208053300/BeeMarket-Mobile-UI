@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '集市课堂'
@@ -50,7 +51,8 @@ export default {
           img: require('@/assets/icon/classroom/classroom_pic_friend@2x.png'),
           date: '2019.06.22'
         }
-      ]
+      ],
+      osObj: getOs()
     }
   },
   computed: {},
@@ -59,6 +61,11 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(false)
+    }
   },
   methods: {
     goDetail(id) {

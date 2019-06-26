@@ -7,7 +7,7 @@
       </div>
       <div class="money">
         <span>￥</span>
-        <span>124</span>
+        <span>{{ payInfo.pay_amount }}</span>
       </div>
       <van-password-input
         :value="password"
