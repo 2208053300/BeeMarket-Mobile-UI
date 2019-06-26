@@ -1,9 +1,11 @@
 import axios from 'axios'
 import qs from 'qs'
 import { Toast } from 'vant'
+import store from 'vuex'
 import {
   setToken,
   getToken,
+  removeToken,
   isLogin,
   checkToken,
   getVerify,

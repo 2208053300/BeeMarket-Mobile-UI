@@ -154,7 +154,7 @@ export default {
           title: '蜂集市',
           desc: '集市购，公益行，我们与您一起向往更好的生活。',
           imgUrl:
-            'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+            'https://img.fengjishi.com/app/images/share_logo.png',
           link: this.getShareLink()
         })
       }
