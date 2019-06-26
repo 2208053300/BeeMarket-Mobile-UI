@@ -260,6 +260,7 @@ export default {
       })
       const params = res.data.params
       alert(JSON.stringify(params))
+      alert(window.location.pathname)
       const _this = this
       wx.chooseWXPay({
         timestamp: params.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
