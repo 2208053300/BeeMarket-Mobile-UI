@@ -281,10 +281,10 @@ export default {
             _this.toResult()
           } else {
             // 支付失败，重新加载本页面
-            if (this.$route.query.orderNo) {
-              goPayFromOrder(this.$route.query.orderNo)
+            if (_this.$route.query.orderNo) {
+              goPayFromOrder(_this.$route.query.orderNo)
             } else {
-              goPayFromPayInfo(this.order.payInfo)
+              goPayFromPayInfo(_this.order.payInfo)
             }
           }
         }
