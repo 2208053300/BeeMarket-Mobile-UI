@@ -31,7 +31,7 @@
         class="join-help2"
         @click="arouseApp()"
       >
-        进入商城
+        关注领取
       </van-button>
     </div>
   </div>
