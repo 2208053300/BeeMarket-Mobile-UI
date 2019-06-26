@@ -131,6 +131,7 @@ import { BeeDefault } from '@/styles/index/variables.less'
 import { getActionDetail, launchAction } from '@/api/BeeApi/action'
 // 引入微信分享
 import wxapi from '@/utils/wxapi.js'
+
 // 引入组件
 import detailCard0 from './components/detailCard0'
 import detailCard1 from './components/detailCard1'
@@ -216,6 +217,7 @@ export default {
     // wxapi.wxRegister(this.wxRegCallback)
   },
   methods: {
+
     async getActionDetailsData() {
       const res = await getActionDetail({ id: this.id })
       this.actionDetails = res.data
@@ -223,7 +225,7 @@ export default {
         title: this.actionDetails.subtitle, // 分享标题, 请自行替换
         desc: this.actionDetails.top_desc, // 分享描述, 请自行替换
         link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
-        imgUrl: this.actionDetails.share_image // 分享图标, 请自行替换，需要绝对路径
+        imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
       })
     },
     // 参与助力 分享成功后跳转页面到助力成功页面 /joinSuccess

@@ -88,6 +88,7 @@
 import { getUID } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import { isLogin } from '@/utils/auth'
+import wxapi from '@/utils/wxapi'
 
 export default {
   metaInfo: {
@@ -151,6 +152,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.loadUID()
+
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare
     if (this.osObj.isWx) {
@@ -226,6 +228,12 @@ export default {
     async loadUID() {
       const res = await getUID()
       this.uid = res.data.uid
+      wxapi.wxShare({
+        title: '集市课堂 - 蜂集市',
+        desc: '零风险、轻创业、大财富，你准备好了吗？',
+        imgUrl: '',
+        link: this.getShareLink()
+      })
     },
     // 去蜂友圈
     downVideo() {},

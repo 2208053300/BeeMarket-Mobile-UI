@@ -184,7 +184,8 @@
 
 <script>
 import { getTaskList, getTaskAward } from '@/api/BeeApi/task'
-
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo() {
     return {
@@ -214,7 +215,8 @@ export default {
       },
       showAll: false,
       showSuccess: false,
-      getNum: 100
+      getNum: 100,
+      uid: 0
     }
   },
   computed: {},
@@ -224,8 +226,21 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getTaskListData()
+    this.loadUID()
   },
   methods: {
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+
+      wxapi.wxShare({
+        title: '新手专享·好礼各种送',
+        desc: '更多优惠，更多公益值等你来赚赚赚！',
+        imgUrl: 'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+        link: `https://app.fengjishi.com/#/beeTask?uid=${this.uid}`
+      })
+    },
+
     async getTaskListData() {
       const res = await getTaskList({ way: 'H5' })
       this.taskData = res.data

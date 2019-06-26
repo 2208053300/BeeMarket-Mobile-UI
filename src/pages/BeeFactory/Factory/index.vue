@@ -229,7 +229,8 @@
 import { entering } from '@/api/BeeApi/store'
 import { zipImg } from '@/utils/imgUp'
 import { getCategory1 } from '@/api/BeeApi/product'
-
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo: {
     title: '商家入驻'
@@ -281,7 +282,8 @@ export default {
           text: '没有过运营经验'
         }
       ],
-      showJy: false
+      showJy: false,
+      uid: 0
     }
   },
   computed: {},
@@ -300,8 +302,22 @@ export default {
     this.$store.state.app.beeFooter.show = false
 
     this.getCategory1Data()
+
+    this.loadUID()
   },
   methods: {
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+
+      wxapi.wxShare({
+        title: '蜂集市，等你一起轻创业',
+        desc: '零风险轻创业大财富的蜂集市，邀请您成为蜂集市合伙人！',
+        imgUrl: 'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+        link: `https://app.fengjishi.com/#/beeFactory?uid=${this.uid}`
+      })
+    },
+
     // 跳转到入驻政策
     goEnterPolicty() {
       this.$router.push({
