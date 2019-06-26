@@ -187,7 +187,7 @@ export default {
       window.location.href =
         'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
         encodeURIComponent(
-          '/#/category/details/payOrder?trade_no=' + trade_no
+          window.location.origin + '/#/category/details/payOrder?trade_no=' + trade_no
         ) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     },
