@@ -7,6 +7,7 @@ import { GetRequest, getQueryString } from '@/utils/index'
 // SECTION 获取Token
 export async function getToken() {
   const osObj = getOs()
+
   if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
     return Cookies.get('token')
   }

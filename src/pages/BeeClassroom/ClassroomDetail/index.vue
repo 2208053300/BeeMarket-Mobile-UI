@@ -247,7 +247,7 @@ export default {
     },
     // 获取分享链接
     getShareLink() {
-      return `http://app.fengjishi.com.cn/beeClassroom#/detail/${
+      return `http://app.fengjishi.com/beeClassroom#/detail/${
         this.$route.params.id
       }?uid=${this.uid}`
     }
