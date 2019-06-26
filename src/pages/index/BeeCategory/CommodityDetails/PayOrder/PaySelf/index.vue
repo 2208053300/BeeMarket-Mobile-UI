@@ -139,7 +139,7 @@ import { GetRequest } from '@/utils/index'
 // 导入余额支付组件
 import BalancePay from './components/balancePay'
 import { goPayFromOrder, goPayFromPayInfo } from '@/utils/wxPay'
-
+import { orderVerify } from '@/api/BeeApi/order'
 export default {
   components: { BalancePay },
   props: {},
@@ -316,7 +316,11 @@ export default {
     },
     // 查看付款结果
     toResult() {
-      this.$router.push({
+      orderVerify({
+        pay_method: this.payMethod,
+        trade_no: this.order.payInfo.trade_no
+      })
+      this.$router.replace({
         name: 'payResult',
         query: {
           trade_no: this.order.payInfo.trade_no
