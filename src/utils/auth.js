@@ -15,7 +15,7 @@ export async function getToken() {
     const token = sessionStorage.getItem('BM-App-Token')
     const uriProp = GetRequest('code')
     const uid = getQueryString('uid')
-    if (!uriProp && !token) {
+    if (!uriProp && token === null) {
       await checkToken()
     }
     if (token && token !== 'waiting') {
