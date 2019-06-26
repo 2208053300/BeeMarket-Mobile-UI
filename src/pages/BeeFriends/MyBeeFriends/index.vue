@@ -266,12 +266,7 @@ export default {
     // 清除历史
     clearHistory() {
       if (this.osObj.isWx) {
-        // this.$router.push({
-        //   path: '/category/details',
-        //   query: {
-        //     pid,
-        //   }
-        // })
+      //
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.clearHistory.postMessage({
           url: window.location.href
@@ -279,13 +274,7 @@ export default {
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.clearHistory()
       } else {
-        // this.$router.push({
-        //   path: '/category/details',
-        //   query: {
-        //     pid,
-        //     target
-        //   }
-        // })
+        //
       }
     },
     // 播放视频
