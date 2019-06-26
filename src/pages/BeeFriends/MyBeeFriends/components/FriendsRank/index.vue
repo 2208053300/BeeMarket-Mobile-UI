@@ -193,7 +193,8 @@ export default {
       loading: false,
       finished: false,
       page: 1,
-      osObj: getOs()
+      osObj: getOs(),
+      uid: 0
     }
   },
   computed: {},
@@ -271,26 +272,23 @@ export default {
     appShare() {
       if (this.friendsType === 2) {
         if (this.osObj.isWx) {
-          // this.$router.push({
-          //   path: '/category/details',
-          //   query: {
-          //     pid,
-          //     target
-          //   }
-          // })
+        // 微信
+
+        // ios
         } else if (this.osObj.isIphone && this.osObj.isApp) {
           window.webkit.messageHandlers.ToShare.postMessage({
             title: '蜂集市-蜂友圈',
             desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
             imgUrl:
-              'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+              'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
             link: this.getShareLink()
           })
+          // android
         } else if (this.osObj.isAndroid && this.osObj.isApp) {
           window.beeMarket.ToShare(
             '蜂集市-蜂友圈',
             '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-            'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+            'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
             this.getShareLink()
           )
         } else {
@@ -304,13 +302,7 @@ export default {
         }
       } else {
         if (this.osObj.isWx) {
-          // this.$router.push({
-          //   path: '/category/details',
-          //   query: {
-          //     pid,
-          //     target
-          //   }
-          // })
+        //
         } else if (this.osObj.isIphone && this.osObj.isApp) {
           window.webkit.messageHandlers.ToShare.postMessage({
             title: '蜂集市-蜂友圈',
@@ -327,13 +319,7 @@ export default {
             `http://app.fengjishi.com/beeFactory#/?uid=${this.uid}`
           )
         } else {
-          // this.$router.push({
-          //   path: '/category/details',
-          //   query: {
-          //     pid,
-          //     target
-          //   }
-          // })
+          //
         }
       }
     },
