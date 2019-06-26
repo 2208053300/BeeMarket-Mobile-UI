@@ -19,7 +19,10 @@
         ￥ {{ order.payInfo.pay_amount }}
       </div>
     </div>
-    <div v-if="order.payInfo.pay_methods" class="pay-methods">
+    <div
+      v-if="order.payInfo.pay_methods"
+      class="pay-methods"
+    >
       <van-cell-group>
         <van-cell
           v-if="order.payInfo.pay_methods.blpay"
@@ -110,11 +113,19 @@
       </van-cell-group>
     </div>
     <div class="pay-done">
-      <van-button class="doneBtn" round @click="pay">
+      <van-button
+        class="doneBtn"
+        round
+        @click="pay"
+      >
         确认付款
       </van-button>
     </div>
-    <balance-pay ref="balancePay" :pay-info="order.payInfo" @success="toResult" />
+    <balance-pay
+      ref="balancePay"
+      :pay-info="order.payInfo"
+      @success="toResult"
+    />
   </div>
 </template>
 
@@ -124,7 +135,7 @@ import { repayOrder } from '@/api/BeeApi/user'
 import { orderPay } from '@/api/BeeApi/order'
 import wx from 'weixin-js-sdk'
 import wxApi from '@/utils/wxapi'
-import { getOs } from '@/utils/index'
+import { getOs, GetRequest } from '@/utils/index'
 // 导入余额支付组件
 import BalancePay from './components/balancePay'
 
@@ -177,11 +188,13 @@ export default {
         this.order.payInfo.count_down--
         if (this.order.payInfo.count_down === 0) {
           clearInterval(this.timer)
-          this.$dialog.alert({
-            message: '订单超时未支付，已自动关闭'
-          }).then(() => {
-            this.$router.back()
-          })
+          this.$dialog
+            .alert({
+              message: '订单超时未支付，已自动关闭'
+            })
+            .then(() => {
+              this.$router.back()
+            })
         }
       }, 1000)
     },
@@ -202,7 +215,8 @@ export default {
       return [
         this.prefixInteger(theTime2),
         this.prefixInteger(theTime1),
-        this.prefixInteger(theTime)]
+        this.prefixInteger(theTime)
+      ]
     },
     // 数字自动补0，2位
     prefixInteger(num) {
@@ -211,29 +225,38 @@ export default {
     },
     // 开始支付
     pay() {
-      // 检查是否选择支付方式
-      if (!this.payMethod) {
-        this.$toast('请选择支付方式')
-      }
-      if (this.payMethod === 'wxpay') {
-        this.readWxPay()
-      } else if (this.payMethod === 'blpay') {
-        this.$refs.balancePay.pay()
+      // 判断是否有CODE
+      if (!GetRequest('code')) {
+        window.location.href =
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
+          encodeURIComponent(window.location.href) +
+          '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+      } else {
+        // 检查是否选择支付方式
+        if (!this.payMethod) {
+          this.$toast('请选择支付方式')
+        }
+        if (this.payMethod === 'wxpay') {
+          this.readWxPay(GetRequest('code'))
+        } else if (this.payMethod === 'blpay') {
+          this.$refs.balancePay.pay()
+        }
       }
     },
     // 准备微信支付
-    readWxPay() {
+    readWxPay(code) {
       if (getOs().isWx) {
         // 初始化微信api
-        wxApi.wxRegister(this.wxPay)
+        wxApi.wxRegister(this.wxPay(code))
       }
     },
-    async wxPay() {
+    async wxPay(code) {
       // 获取微信支付信息
       const res = await orderPay({
         trade_no: this.order.payInfo.trade_no,
         pay_method: 'wxpay',
-        pay_type: 'JSAPI'
+        pay_type: 'JSAPI',
+        code: code
       })
       const params = res.data.params
       alert(JSON.stringify(params))
@@ -350,12 +373,12 @@ export default {
       }
     }
   }
-  .pay-done{
+  .pay-done {
     position: fixed;
     bottom: 0.3rem;
     text-align: center;
     width: 100%;
-    .doneBtn{
+    .doneBtn {
       width: 6rem;
       font-size: 0.3rem;
       color: #fff;
