@@ -11,11 +11,11 @@
         <p>每一次的公益捐赠都是对社会的回馈！</p>
         <p>在这里，我们很年轻，</p>
         <p>每一次的尝试都代表着一颗不服输的心！</p>
-        <p>如果正好您是一个敢于尝试且富有责任心的人，</p>
-        <p>请留下联系方式，让我们找到您！</p>
+
         <br>
         <p>共创共享，我们一起成就事业！</p>
         <p>普惠四方，我们一起回馈社会！</p>
+        <p>理想，蜂集市与您携手同行！</p>
 
         <div class="text-left join">
           <a
@@ -190,21 +190,37 @@
     <!-- 选择运营经验 -->
     <van-popup
       v-model="showJy"
+
       position="bottom"
       :overlay="true"
       class="reason-pop"
     >
-      <van-picker :columns="jyList" title="运营经验" @change="onChangeJy" />
+      <van-picker
+        show-toolbar
+        :columns="jyList"
+        title="运营经验"
+        @change="onChangeJy"
+        @cancel="onCancelJy"
+        @confirm="onConfirmJy"
+      />
     </van-popup>
 
     <!-- 选择产品分类 -->
     <van-popup
       v-model="showCat"
       position="bottom"
+      show-toolbar
       :overlay="true"
       class="reason-pop"
     >
-      <van-picker :columns="catList" title="运营经验" @change="onChangeCat" />
+      <van-picker
+        show-toolbar
+        :columns="catList"
+        title="产品类型"
+        @change="onChangeCat"
+        @cancel="onCancelCat"
+        @confirm="onConfirmCat"
+      />
     </van-popup>
   </div>
 </template>
@@ -292,19 +308,7 @@ export default {
         name: 'enterPolicty'
       })
     },
-    // 示例
-    goProduct(pid) {
-      // 判断是否来自webApp
-      if (this.$route.query.origin) {
-        window.location.href = `/#/category/details?pid=${pid}`
-      } else {
-        console.log('本地应用')
-        this.$router.push({
-          path: '/category/details',
-          query: { pid }
-        })
-      }
-    },
+
     // 获取分类类别
     async getCategory1Data() {
       const res = await getCategory1()
@@ -381,12 +385,34 @@ export default {
       this.factory.jy_id = value.id
       this.factory.jy_name = value.text
     },
+    onCancelJy() {
+      this.showJy = false
+      this.$toast('取消')
+    },
+    onConfirmJy(value, index) {
+      console.log(value, index)
+
+      this.factory.jy_id = value.id
+      this.factory.jy_name = value.text
+      this.showJy = false
+    },
+
     // 产品类型选择
     onChangeCat(picker, value, index) {
       console.log('产品类型:', value)
 
       this.factory.cat_id = value.cat_id
       this.factory.cat_name = value.text
+    },
+    onCancelCat() {
+      this.showCat = false
+      this.$toast('取消')
+    },
+    onConfirmCat(value, index) {
+      console.log(value, index)
+      this.factory.cat_id = value.cat_id
+      this.factory.cat_name = value.text
+      this.showCat = false
     },
 
     // 验证方法
