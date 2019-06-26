@@ -52,7 +52,8 @@ import {
   Loading,
   Dialog,
   Picker,
-  Rate
+  Rate,
+  Switch
 } from 'vant'
 
 Vue.use(Icon)
@@ -93,6 +94,7 @@ Vue.use(Icon)
   .use(NumberKeyboard)
   .use(PasswordInput)
   .use(SubmitBar)
+  .use(Switch)
   .use(SwitchCell)
   .use(Loading)
   .use(Dialog)

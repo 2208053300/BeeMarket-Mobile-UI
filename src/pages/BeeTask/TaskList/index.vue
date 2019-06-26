@@ -9,7 +9,7 @@
       </div>
       <div class="head-img">
         <img
-          :src="taskData.basic_info.head_img"
+          :src="taskData.basic_info.head_img||$store.state.app.head_detault"
           alt=""
         >
       </div>
@@ -468,10 +468,6 @@ export default {
         }
         .helpBg {
           height: 2.84rem;
-          .task-action {
-            position: relative;
-            left: -0.24rem;
-          }
         }
         .endBg {
           .left-info {
@@ -512,7 +508,7 @@ export default {
   }
   .task2-content {
     .task-detail {
-      margin-top: 0.74rem;
+      margin-top: 1rem;
       .step-list {
         width: 4.88rem;
         height: 1.66rem;

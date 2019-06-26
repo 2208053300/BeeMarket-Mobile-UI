@@ -78,13 +78,13 @@ service.interceptors.response.use(
       if (res.status_code === 400 && res.message === '获取用户信息失败') {
         checkToken()
       }
-      // if (res.status_code === 403) {
-      //   // Toast('登录信息失效')
-      //   // 清理登录信息并跳转到登录页面
-      //   removeToken()
-      //   store.commit('CLEAR_USER_INFO')
-      //   checkToken()
-      // }
+      if (res.status_code === 403) {
+        // Toast('登录信息失效')
+        // 清理登录信息并跳转到登录页面
+        removeToken()
+        store.commit('CLEAR_USER_INFO')
+        checkToken()
+      }
       return Promise.reject(res.message || 'error')
     } else {
       // Toast.success(res.message)

@@ -52,10 +52,11 @@
 
     <van-popup
       v-model="helpSuccess"
+      position="top"
       class="share-modal"
       @closed="closed"
     >
-      <!-- <div
+      <div
         class="text-right"
         style="padding:0.2rem 0.2rem 0 0"
       >
@@ -63,8 +64,8 @@
           :src="beeIcon.shareTip"
           class="shareTip"
         >
-      </div> -->
-      <div class="share-bg">
+      </div>
+      <!-- <div class="share-bg">
         <div
           class="share-content"
           :style="{backgroundImage:'url('+actionDetails.share_image+')'}"
@@ -120,7 +121,7 @@
             >
           </div>
         </div>
-      </div>
+      </div> -->
     </van-popup>
   </div>
 </template>
@@ -217,7 +218,6 @@ export default {
     // wxapi.wxRegister(this.wxRegCallback)
   },
   methods: {
-
     async getActionDetailsData() {
       const res = await getActionDetail({ id: this.id })
       this.actionDetails = res.data
@@ -234,7 +234,7 @@ export default {
       await launchAction({ id: this.id })
       // console.log(res)
       // TODO 生成二维码海报
-      // this.$store.state.app.beeHeader = false
+      this.$store.state.app.beeHeader = false
       this.helpSuccess = true
       // this.actionDetails.is_join = true
     },

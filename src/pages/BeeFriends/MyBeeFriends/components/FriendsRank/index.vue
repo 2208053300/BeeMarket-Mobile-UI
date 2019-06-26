@@ -164,6 +164,7 @@
 
 <script>
 import { getFriends, remindLogin, remindAll } from '@/api/BeeApi/user'
+import { getUID } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 export default {
@@ -193,7 +194,6 @@ export default {
       finished: false,
       page: 1,
       osObj: getOs()
-
     }
   },
   computed: {},
@@ -201,13 +201,11 @@ export default {
   created() {},
   mounted() {
     if (this.osObj.isWx) {
-      wxapi.wxShare({
-        title: '蜂集市-蜂友圈',
-        desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-        imgUrl:
-          'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
-        link: 'https://app.fengjishi.com/beeFriends'
-      })
+      this.loadUID()
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(true)
     }
   },
   methods: {
@@ -233,7 +231,7 @@ export default {
       } catch (error) {
         this.$toast({
           type: 'waring',
-          message: '帐号列表推送全部失败,请稍后重试!'
+          message: '推送失败,请稍后重试!'
         })
       }
     },
@@ -246,6 +244,96 @@ export default {
           type: 'success',
           message: res.message
         })
+      }
+      this.appShare()
+    },
+    async loadUID() {
+      try {
+        const res = await getUID()
+        this.uid = res.data.uid
+        wxapi.wxShare({
+          title: '蜂集市-蜂友圈',
+          desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
+          imgUrl:
+            'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+          link: this.getShareLink()
+        })
+      } catch (error) {
+        this.$toast(error)
+      }
+    },
+    // 获取分享链接
+    getShareLink() {
+      return `https://app.fengjishi.com/beeFriends#/?uid=${this.uid}`
+    },
+    // 分享
+    appShare() {
+      if (this.friendsType === 2) {
+        if (this.osObj.isWx) {
+          // this.$router.push({
+          //   path: '/category/details',
+          //   query: {
+          //     pid,
+          //     target
+          //   }
+          // })
+        } else if (this.osObj.isIphone && this.osObj.isApp) {
+          window.webkit.messageHandlers.ToShare.postMessage({
+            title: '蜂集市-蜂友圈',
+            desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
+            imgUrl:
+              'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+            link: this.getShareLink()
+          })
+        } else if (this.osObj.isAndroid && this.osObj.isApp) {
+          window.beeMarket.ToShare(
+            '蜂集市-蜂友圈',
+            '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
+            'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+            this.getShareLink()
+          )
+        } else {
+          // this.$router.push({
+          //   path: '/category/details',
+          //   query: {
+          //     pid,
+          //     target
+          //   }
+          // })
+        }
+      } else {
+        if (this.osObj.isWx) {
+          // this.$router.push({
+          //   path: '/category/details',
+          //   query: {
+          //     pid,
+          //     target
+          //   }
+          // })
+        } else if (this.osObj.isIphone && this.osObj.isApp) {
+          window.webkit.messageHandlers.ToShare.postMessage({
+            title: '蜂集市-蜂友圈',
+            desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
+            imgUrl:
+              'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+            link: `http://app.fengjishi.com.cn/beeFactory#/?uid=${this.uid}`
+          })
+        } else if (this.osObj.isAndroid && this.osObj.isApp) {
+          window.beeMarket.ToShare(
+            '蜂集市-蜂友圈',
+            '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
+            'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+            `http://app.fengjishi.com.cn/beeFactory#/?uid=${this.uid}`
+          )
+        } else {
+          // this.$router.push({
+          //   path: '/category/details',
+          //   query: {
+          //     pid,
+          //     target
+          //   }
+          // })
+        }
       }
     },
     onLoad() {

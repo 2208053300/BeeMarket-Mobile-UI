@@ -18,7 +18,7 @@
         class="success-text2"
       >
         <van-icon :name="beeIcon.smile" />
-        为感谢您的参与，蜂集市送您 <span class="bee-text">100</span> 公益值
+        为感谢您的参与，蜂集市送您 <span class="bee-text">{{ $route.query.charity_value||10 }}</span> 公益值
       </p>
       <p
         v-if="charity_value"
@@ -92,11 +92,11 @@ export default {
     font-weight: bold;
     color: @BeeDefault;
   }
-  .tip{
+  .tip {
     font-size: 0.36rem;
     color: #333;
     font-weight: 600;
-    margin-bottom:1rem;
+    margin-bottom: 1rem;
   }
   .success-text2 {
     font-size: 0.26rem;

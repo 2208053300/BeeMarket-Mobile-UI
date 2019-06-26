@@ -10,7 +10,7 @@ const user = {
     addressData: {},
     have_no_read: false,
     userStatus: 0,
-    is_new_user: false,
+    is_new_user: true,
     uid: 0
   },
   mutations: {
