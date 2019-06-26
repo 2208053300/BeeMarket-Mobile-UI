@@ -225,32 +225,54 @@ export default {
     },
     // 开始支付
     pay() {
-      // 判断是否有CODE
-      if (!GetRequest('code')) {
-        window.location.href =
-          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
-          encodeURIComponent(window.location.href) +
-          '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
-      } else {
-        // 检查是否选择支付方式
-        if (!this.payMethod) {
-          this.$toast('请选择支付方式')
-        }
-        if (this.payMethod === 'wxpay') {
-          this.wxPay(GetRequest('code'))
-        } else if (this.payMethod === 'blpay') {
-          this.$refs.balancePay.pay()
-        }
+
+      if (!this.payMethod) {
+        this.$toast('请选择支付方式')
       }
+      if (this.payMethod === 'wxpay') {
+        this.wxPay(GetRequest('code'))
+      } else if (this.payMethod === 'blpay') {
+        this.$refs.balancePay.pay()
+      }
+      // // 判断是否有CODE
+      // if (!GetRequest('code')) {
+      //   window.location.href =
+      //     'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
+      //     encodeURIComponent(window.location.href) +
+      //     '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+      // } else {
+      //   // 检查是否选择支付方式
+      //   if (!this.payMethod) {
+      //     this.$toast('请选择支付方式')
+      //   }
+      //   if (this.payMethod === 'wxpay') {
+      //     this.wxPay(GetRequest('code'))
+      //   } else if (this.payMethod === 'blpay') {
+      //     this.$refs.balancePay.pay()
+      //   }
+      // }
     },
     async wxPay(code) {
       // 获取微信支付信息
-      const res = await orderPay({
-        trade_no: this.order.payInfo.trade_no,
-        pay_method: 'wxpay',
-        pay_type: 'JSAPI',
-        code: code
-      })
+      let res
+      try {
+        res = await orderPay({
+          trade_no: this.order.payInfo.trade_no,
+          pay_method: 'wxpay',
+          pay_type: 'JSAPI',
+          code: code
+        })
+      } catch (e) {
+        const uriProp2 = window.location.href.slice(
+          window.location.href.indexOf('STATE') + 5
+        )
+        window.location.href =
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
+          encodeURIComponent(
+            window.location.origin + window.location.pathname + uriProp2
+          ) +
+          '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+      }
       const params = res.data.params
       const _this = this
       // eslint-disable-next-line
