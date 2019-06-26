@@ -319,7 +319,7 @@ export default {
       orderVerify({
         pay_method: this.payMethod,
         trade_no: this.order.payInfo.trade_no
-      })
+      }).then(res => {})
       this.$router.replace({
         name: 'payResult',
         query: {
