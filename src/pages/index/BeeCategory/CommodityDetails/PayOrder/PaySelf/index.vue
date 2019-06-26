@@ -225,7 +225,6 @@ export default {
     },
     // 开始支付
     pay() {
-
       if (!this.payMethod) {
         this.$toast('请选择支付方式')
       }
@@ -263,6 +262,7 @@ export default {
           code: code
         })
       } catch (e) {
+        alert(JSON.stringify(e))
         const uriProp2 = window.location.href.slice(
           window.location.href.indexOf('STATE') + 5
         )
