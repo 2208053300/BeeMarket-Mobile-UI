@@ -164,8 +164,8 @@ export default {
       border-left: 0.02rem solid @Grey4;
       font-size: 0.28rem;
       color: @Grey11;
-      height: 0.27rem;
-      line-height: 0.27rem;
+      // height: 0.27rem;
+      // line-height: 0.27rem;
       padding: 0;
       padding-left: 0.18rem;
       .text2 {
