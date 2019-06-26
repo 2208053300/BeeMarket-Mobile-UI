@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getAddressList } from '@/api/BeeApi/user'
+import { getAddressList, security } from '@/api/BeeApi/user'
 import AddressList from './components/AddressList'
 export default {
   metaInfo: {
@@ -51,11 +51,18 @@ export default {
     this.getAddressListData()
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    this.securityData()
   },
   methods: {
     async getAddressListData() {
       const res = await getAddressList()
       this.addressList = res.data
+    },
+    async securityData() {
+      const res = await security()
+      if (!res.data.mobile_bind) {
+        this.$router.replace('/persion/profile/accountBind')
+      }
     }
   }
 }

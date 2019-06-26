@@ -165,7 +165,7 @@
 <script>
 import { getFriends, remindLogin, remindAll } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
-
+import wxapi from '@/utils/wxapi'
 export default {
   components: {},
   props: {
@@ -191,13 +191,25 @@ export default {
       friendsList: [],
       loading: false,
       finished: false,
-      page: 1
+      page: 1,
+      osObj: getOs()
+
     }
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    if (this.osObj.isWx) {
+      wxapi.wxShare({
+        title: '蜂集市-蜂友圈',
+        desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
+        imgUrl:
+          'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+        link: 'https://app.fengjishi.com/beeFriends'
+      })
+    }
+  },
   methods: {
     async getFriendsData() {
       const res = await getFriends({ type: this.friendsType })

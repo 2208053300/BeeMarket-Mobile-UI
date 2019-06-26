@@ -151,11 +151,12 @@ export default {
   position: relative;
   top: -0.8rem;
   .rookie-enjoy {
+    height: 4.11rem;
     background-color: #fff;
     border-radius: 0.16rem;
     padding: 0.3rem 0 0 0.26rem;
     box-sizing: border-box;
-    margin: 0 0.16rem 0.6rem;
+    margin: 0 0.16rem 0.2rem;
     position: relative;
     .enjoy-title {
       font-size: 0.32rem;
