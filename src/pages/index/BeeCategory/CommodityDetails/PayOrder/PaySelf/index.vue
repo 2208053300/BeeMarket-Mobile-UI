@@ -237,17 +237,10 @@ export default {
           this.$toast('请选择支付方式')
         }
         if (this.payMethod === 'wxpay') {
-          this.readWxPay(GetRequest('code'))
+          this.wxPay(GetRequest('code'))
         } else if (this.payMethod === 'blpay') {
           this.$refs.balancePay.pay()
         }
-      }
-    },
-    // 准备微信支付
-    readWxPay(code) {
-      if (getOs().isWx) {
-        // 初始化微信api
-        wxApi.wxRegister(this.wxPay(code))
       }
     },
     async wxPay(code) {
