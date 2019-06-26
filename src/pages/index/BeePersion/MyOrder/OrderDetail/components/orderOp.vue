@@ -28,7 +28,7 @@
       v-if="orderDetail.s_pay===0 && orderDetail.s_order!==-1"
       round
       class="bee-button"
-      @click="$router.push('/category/details/payOrder?orderNo='+orderDetail.order_no)"
+      @click="goPay(orderDetail.order_no)"
     >
       去支付
     </van-button>
@@ -140,6 +140,7 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 import { remindOrder } from '@/api/BeeApi/user'
 import { closeOrder, deleteOrder, completeOrder, reBuy } from '@/api/BeeApi/order'
+import { goPayFromOrder } from '@/utils/wxPay'
 
 export default {
   components: {},
@@ -170,6 +171,10 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    // 去支付
+    goPay(orderNo) {
+      goPayFromOrder(orderNo)
+    },
     // 再次购买
     async buyAgain(order) {
       try {
