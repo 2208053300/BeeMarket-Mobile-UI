@@ -134,8 +134,8 @@ import { mapState } from 'vuex'
 import { repayOrder } from '@/api/BeeApi/user'
 import { orderPay } from '@/api/BeeApi/order'
 // import wx from 'weixin-js-api'
-import wxApi from '@/utils/wxapi'
-import { getOs, GetRequest } from '@/utils/index'
+// import wxApi from '@/utils/wxapi'
+import { GetRequest } from '@/utils/index'
 // 导入余额支付组件
 import BalancePay from './components/balancePay'
 
