@@ -127,7 +127,7 @@ export default {
         icon_download: require('@/assets/icon/classroom/icon_download@2x.png')
       },
       showControls: false,
-      uid: '',
+      uid: 0,
       osObj: getOs()
     }
   },
@@ -247,7 +247,7 @@ export default {
     },
     // 获取分享链接
     getShareLink() {
-      return `http://app.fengjishi.com/beeClassroom#/detail/${
+      return `https://app.fengjishi.com/beeClassroom#/detail/${
         this.$route.params.id
       }?uid=${this.uid}`
     }
