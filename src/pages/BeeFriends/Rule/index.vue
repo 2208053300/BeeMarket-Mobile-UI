@@ -26,8 +26,13 @@
         </div>
       </div>
     </div>
-    <div class="img-content">
-      <img :src="beeIcon.bee_firends_img_rule" alt="">
+    <div>
+      <img :src="beeIcon.rule_1" alt="">
+      <img :src="beeIcon.rule_2" alt="">
+      <img :src="beeIcon.rule_3" alt="">
+      <img :src="beeIcon.rule_4" alt="">
+      <img :src="beeIcon.rule_5" alt="">
+      <img :src="beeIcon.rule_6" alt="">
     </div>
   </div>
 </template>
@@ -44,21 +49,16 @@ export default {
     return {
       showControls: false,
       beeIcon: {
-        bee_firends_img_avatar_bg: require('@/assets/icon/beeFriends/home/bee_firends_img_avatar_bg.png'),
-        bee_firend_icon_gold_top: require('@/assets/icon/beeFriends/home/bee_firend_icon_gold_top.png'),
-        bee_firends_icom_rule: require('@/assets/icon/beeFriends/home/bee_firends_icom_rule.png'),
-        bee_firends_icon_firends: require('@/assets/icon/beeFriends/home/bee_firends_icon_firends.png'),
-        bee_firend_icon_gold: require('@/assets/icon/beeFriends/home/bee_firend_icon_gold.png'),
-        bee_firend_icon_moregold: require('@/assets/icon/beeFriends/home/bee_firend_icon_moregold.png'),
-        bee_firend_icon_bubble: require('@/assets/icon/beeFriends/home/bee_firend_icon_bubble.png'),
-        bee_firend_icon_charge: require('@/assets/icon/beeFriends/home/bee_firend_icon_charge.png'),
-        bee_firends_img_bg: require('@/assets/icon/beeFriends/home/bee_firends_img_bg.png'),
-        bee_firends_img_rule: require('@/assets/icon/beeFriends/home/bee_firends_img_rule.png'),
-        bee_firends_invite_icon_off: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_off.png'),
         title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
         first_screen: require('@/assets/icon/task/talent/first_screen@3x.png'),
         videoBackground: require('@/assets/icon/noviceGuide/00-新手教培_改_02.png'),
-        rule_head: require('@/assets/icon/noviceGuide/00-新手教培_改_01.png')
+        rule_head: require('@/assets/icon/beeFriends/rule/提成规则2_02.jpg'),
+        rule_1: require('@/assets/icon/beeFriends/rule/提成规则2_04.jpg'),
+        rule_2: require('@/assets/icon/beeFriends/rule/提成规则2_05.jpg'),
+        rule_3: require('@/assets/icon/beeFriends/rule/提成规则2_06.jpg'),
+        rule_4: require('@/assets/icon/beeFriends/rule/提成规则2_07.jpg'),
+        rule_5: require('@/assets/icon/beeFriends/rule/提成规则2_08.jpg'),
+        rule_6: require('@/assets/icon/beeFriends/rule/提成规则2_10.jpg')
       }
     }
   },
@@ -141,9 +141,6 @@ export default {
             align-items: center;
           }
         }
-      }
-      .img-content {
-        height: 45.49rem;
       }
     }
 </style>
