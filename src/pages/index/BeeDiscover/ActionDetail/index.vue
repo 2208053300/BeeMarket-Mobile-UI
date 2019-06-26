@@ -235,7 +235,7 @@ export default {
         const res = await joinAction1({ id: this.id })
         if (res.status_code === 200) {
           this.helpSuccess = true
-          this.is_join = true
+          this.actionDetails.is_join = true
         }
       } catch (error) {
         this.$toast(error)
