@@ -107,6 +107,7 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
     this.getHasConsume()
   },
   methods: {
