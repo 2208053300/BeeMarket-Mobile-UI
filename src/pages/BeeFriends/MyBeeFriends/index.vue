@@ -111,6 +111,8 @@ import JoinProject from './components/JoinProject'
 import ListType from './components/ListType'
 import ICountUp from 'vue-countup-v2'
 import { setTimeout } from 'timers'
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
 
 export default {
   metaInfo: {
@@ -171,7 +173,8 @@ export default {
       // 获取 os 平台
       osObj: getOs(),
       showRule: false,
-      showControls: false
+      showControls: false,
+      uid: 0
     }
   },
   async beforeRouteEnter(to, from, next) {
@@ -211,8 +214,21 @@ export default {
     }
     this.getReceiveNumData()
     this.clearHistory()
+    this.loadUID()
   },
   methods: {
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+
+      wxapi.wxShare({
+        title: '蜂集市-蜂友圈',
+        desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益！',
+        imgUrl: 'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+        link: `https://app.fengjishi.com/#/beeFriends?uid=${this.uid}`
+      })
+    },
+
     async getPartnerData() {
       const res = await getPartner({ type: this.honeyType })
       this.partnerData = res.data

@@ -70,6 +70,8 @@
 import storeContent from './components/storeContent'
 import { getStoreDetail } from '@/api/BeeApi/store'
 import { collectProduct, cancelCollect } from '@/api/BeeApi/product'
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo: {
     title: '店铺首页'
@@ -89,7 +91,8 @@ export default {
       formData: {
         page: 1
       },
-      commodityList: []
+      commodityList: [],
+      uid: 0
     }
   },
   computed: {},
@@ -100,8 +103,21 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.formData.mid = this.$route.query.mid
     this.getStoreDetailData()
+    this.loadUID()
   },
   methods: {
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+
+      wxapi.wxShare({
+        title: this.storeDetails.store_name,
+        desc: '我在蜂集市发现了一个惊呆了的商品，赶紧一起来看看吧!',
+        imgUrl: this.storeDetails.store_logo,
+        link: window.location.href + '&uid=' + this.uid
+      })
+    },
+
     async getStoreDetailData() {
       const res = await getStoreDetail(this.formData)
       this.storeDetails = res.data
