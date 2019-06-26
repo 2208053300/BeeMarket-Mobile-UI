@@ -166,6 +166,19 @@ export default {
     const orderNo = this.$route.query.orderNo
     if (orderNo) {
       this.getPayInfo(orderNo)
+    } else {
+      const query = this.$route.query
+      this.order.payInfo = {
+        balance: query.balance,
+        count_down: query.count_down,
+        pay_amount: query.pay_amount,
+        pay_methods: {
+          alipay: query.alipay,
+          blpay: query.blpay,
+          wxpay: query.wxpay
+        },
+        trade_no: query.trade_no
+      }
     }
     if (this.order.payInfo.pay_methods) {
       this.setTimer()
@@ -225,7 +238,6 @@ export default {
     },
     // 开始支付
     pay() {
-
       if (!this.payMethod) {
         this.$toast('请选择支付方式')
       }
@@ -263,6 +275,7 @@ export default {
           code: code
         })
       } catch (e) {
+        alert(JSON.stringify(e))
         const uriProp2 = window.location.href.slice(
           window.location.href.indexOf('STATE') + 5
         )
