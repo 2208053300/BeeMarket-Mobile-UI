@@ -152,7 +152,7 @@ export default {
           desc: '集市购，公益行，我们与您一起向往更好的生活。',
           imgUrl:
             'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
-          link: 'http://app.fengjishi.com.cn'
+          link: 'https://app.fengjishi.com'
         })
       }
     },
