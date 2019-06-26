@@ -31,7 +31,7 @@
       </van-tab>
     </van-tabs>
     <div class="detail-card">
-      <van-cell-group>
+      <van-cell-group v-if="recordData.details!==[]">
         <van-list
           v-model="loading"
           :finished="finished"
@@ -58,6 +58,15 @@
           </van-cell>
         </van-list>
       </van-cell-group>
+      <div class="none-img">
+        <div class="img-content">
+          <img
+            :src="beeIcon.mine_collection_img_default"
+            alt=""
+          >
+        </div>
+        <span>暂无数据</span>
+      </div>
     </div>
   </div>
 </template>
@@ -81,7 +90,10 @@ export default {
       loading: false,
       finished: false,
       page: 1,
-      recordList: []
+      recordList: [],
+      beeIcon: {
+        mine_collection_img_default: require('@/assets/icon/personalCenter/func/mine_collection_img_default@2x.png')
+      }
     }
   },
   computed: {},
@@ -150,6 +162,16 @@ export default {
       .comVal {
         font-size: 0.36rem;
         color: @ProductName;
+      }
+    }
+    .none-img{
+      text-align: center;
+      font-size: 0.28rem;
+      .img-content{
+        margin-top: 3rem;
+        width: 2.88rem;
+        height: 2.68rem;
+        margin-bottom: 0.1rem;
       }
     }
   }
