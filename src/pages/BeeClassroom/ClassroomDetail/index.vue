@@ -226,14 +226,18 @@ export default {
       }
     },
     async loadUID() {
-      const res = await getUID()
-      this.uid = res.data.uid
-      wxapi.wxShare({
-        title: '集市课堂 - 蜂集市',
-        desc: '零风险、轻创业、大财富，你准备好了吗？',
-        imgUrl: '',
-        link: this.getShareLink()
-      })
+      try {
+        const res = await getUID()
+        this.uid = res.data.uid
+        wxapi.wxShare({
+          title: '集市课堂 - 蜂集市',
+          desc: '零风险、轻创业、大财富，你准备好了吗？',
+          imgUrl: 'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+          link: this.getShareLink()
+        })
+      } catch (error) {
+        this.$toast(error)
+      }
     },
     // 去蜂友圈
     downVideo() {},
