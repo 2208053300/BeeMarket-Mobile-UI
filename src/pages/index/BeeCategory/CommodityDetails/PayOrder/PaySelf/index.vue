@@ -166,6 +166,19 @@ export default {
     const orderNo = this.$route.query.orderNo
     if (orderNo) {
       this.getPayInfo(orderNo)
+    } else {
+      const query = this.$route.query
+      this.order.payInfo = {
+        balance: query.balance,
+        count_down: query.count_down,
+        pay_amount: query.pay_amount,
+        pay_methods: {
+          alipay: query.alipay,
+          blpay: query.blpay,
+          wxpay: query.wxpay
+        },
+        trade_no: query.trade_no
+      }
     }
     if (this.order.payInfo.pay_methods) {
       this.setTimer()
