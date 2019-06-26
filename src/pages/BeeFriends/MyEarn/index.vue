@@ -134,13 +134,11 @@ export default {
     this.$store.state.app.beeFooter.show = false
 
     if (this.osObj.isWx) {
-      alert(1)
+
       // this.loadUID()
     } else if (this.osObj.isIphone && this.osObj.isApp) {
-      alert('ios')
       window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
     } else if (this.osObj.isAndroid && this.osObj.isApp) {
-      alert('android')
       window.beeMarket.showShareIcon(false)
     }
 
