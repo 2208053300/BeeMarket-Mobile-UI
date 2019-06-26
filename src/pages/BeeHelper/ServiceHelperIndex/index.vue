@@ -148,7 +148,7 @@ export default {
       this.$router.push({
         name: 'qustionList',
         query: {
-          id: id
+          id
         }
       })
     }

@@ -53,7 +53,8 @@ export default {
       loading: false,
       finished: false,
       page: 1,
-      isShowCoustomer: true
+      isShowCoustomer: true,
+      id: +this.$route.query.id
     }
   },
   computed: {},
@@ -78,11 +79,9 @@ export default {
   methods: {
     // 获取数据
     getData() {
-      alert('加载数据')
       setTimeout(async() => {
         try {
-          alert('请求数据')
-          const res = await getSortList({ type_id: this.$route.query.id })
+          const res = await getSortList({ type_id: this.id })
           this.list.push(...res.data)
           console.log(this.list, this.page)
           this.page++
@@ -91,7 +90,6 @@ export default {
             this.finished = true
           }
         } catch (error) {
-          this.$toast('错误')
           this.$toast(error)
         }
 
