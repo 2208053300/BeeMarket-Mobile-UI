@@ -178,9 +178,18 @@ export default {
         } else if (this.orderTypeText === 'present') {
           this.$router.push('/category/details/giveFirends')
         } else {
-          this.$router.push('/category/details/payOrder')
+          this.toPay(res.data.trade_no)
         }
       }
+    },
+    // 去支付
+    toPay(trade_no) {
+      window.location.href =
+        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
+        encodeURIComponent(
+          '/#/category/details/payOrder?trade_no=' + trade_no
+        ) +
+        '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     },
     changeOt(val) {
       if (val) {
