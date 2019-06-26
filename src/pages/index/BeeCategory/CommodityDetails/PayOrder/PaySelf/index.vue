@@ -133,7 +133,7 @@
 import { mapState } from 'vuex'
 import { repayOrder } from '@/api/BeeApi/user'
 import { orderPay } from '@/api/BeeApi/order'
-import wx from 'weixin-js-sdk'
+// import wx from 'weixin-js-api'
 import wxApi from '@/utils/wxapi'
 import { getOs, GetRequest } from '@/utils/index'
 // 导入余额支付组件
@@ -260,30 +260,49 @@ export default {
       })
       const params = res.data.params
       const _this = this
-      wx.chooseWXPay({
-        timestamp: params.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-        nonceStr: params.nonceStr, // 支付签名随机串，不长于 32 位
-        package: params.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
-        signType: params.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-        paySign: params.paySign, // 支付签名
-        success(res) {
-          console.log(123123)
-
-          if (res.errMsg === 'chooseWXPay:ok') {
+      // eslint-disable-next-line
+      WeixinJSBridge.invoke(
+        'getBrandWCPayRequest',
+        {
+          appId: params.appId, // 公众号名称，由商户传入
+          timeStamp: params.timeStamp, // 时间戳，自1970年以来的秒数
+          nonceStr: params.nonceStr, // 随机串
+          package: params.package,
+          signType: params.signType, // 微信签名方式：
+          paySign: params.paySign // 微信签名
+        },
+        function(res) {
+          if (res.err_msg === 'get_brand_wcpay_request:ok') {
+            // 使用以上方式判断前端返回,微信团队郑重提示：
+            // res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
             _this.toResult()
-          } else {
-            _this.$toast(`支付失败：${JSON.stringify(res)}`)
           }
-        },
-        cancel(res) {
-          console.log(456456)
-          _this.$toast('用户取消支付~')
-        },
-        fail(res) {
-          console.log(789789)
-          _this.$toast(`支付失败->${JSON.stringify(res)}`)
         }
-      })
+      )
+      // wx.WeixinJSBridge({
+      //   appId: params.appId, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+      //   timestamp: params.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+      //   nonceStr: params.nonceStr, // 支付签名随机串，不长于 32 位
+      //   package: params.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+      //   signType: params.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+      //   paySign: params.paySign, // 支付签名
+      //   success(res) {
+      //     console.log(123123)
+
+      //     if (res.errMsg === 'chooseWXPay:ok') {
+      //     } else {
+      //       _this.$toast(`支付失败：${JSON.stringify(res)}`)
+      //     }
+      //   },
+      //   cancel(res) {
+      //     console.log(456456)
+      //     _this.$toast('用户取消支付~')
+      //   },
+      //   fail(res) {
+      //     console.log(789789)
+      //     _this.$toast(`支付失败->${JSON.stringify(res)}`)
+      //   }
+      // })
     },
     // 查看付款结果
     toResult() {
