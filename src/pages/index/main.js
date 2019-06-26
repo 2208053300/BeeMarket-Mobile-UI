@@ -52,7 +52,10 @@ import {
   Loading,
   Dialog,
   Picker,
-  Rate
+  Rate,
+  RadioGroup,
+  Radio,
+  DatetimePicker
 } from 'vant'
 
 Vue.use(Icon)
@@ -98,6 +101,9 @@ Vue.use(Icon)
   .use(Dialog)
   .use(Picker)
   .use(Rate)
+  .use(RadioGroup)
+  .use(Radio)
+  .use(DatetimePicker)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
