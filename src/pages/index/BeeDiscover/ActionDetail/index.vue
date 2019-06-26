@@ -52,10 +52,11 @@
 
     <van-popup
       v-model="helpSuccess"
+      position="top"
       class="share-modal"
       @closed="closed"
     >
-      <!-- <div
+      <div
         class="text-right"
         style="padding:0.2rem 0.2rem 0 0"
       >
@@ -63,8 +64,8 @@
           :src="beeIcon.shareTip"
           class="shareTip"
         >
-      </div> -->
-      <div class="share-bg">
+      </div>
+      <!-- <div class="share-bg">
         <div
           class="share-content"
           :style="{backgroundImage:'url('+actionDetails.share_image+')'}"
@@ -120,7 +121,7 @@
             >
           </div>
         </div>
-      </div>
+      </div> -->
     </van-popup>
   </div>
 </template>
@@ -217,7 +218,6 @@ export default {
     // wxapi.wxRegister(this.wxRegCallback)
   },
   methods: {
-
     async getActionDetailsData() {
       const res = await getActionDetail({ id: this.id })
       this.actionDetails = res.data
@@ -230,12 +230,13 @@ export default {
     },
     // 参与助力
     async goHelp() {
+      this.$store.state.app.beeHeader = false
       // aid 行动id
       try {
         const res = await joinAction1({ id: this.id })
         if (res.status_code === 200) {
           this.helpSuccess = true
-          this.is_join = true
+          this.actionDetails.is_join = true
         }
       } catch (error) {
         this.$toast(error)
