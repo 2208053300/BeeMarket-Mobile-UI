@@ -64,3 +64,11 @@ export function payResult(data) {
     data
   })
 }
+// 订单 支付验证接口，不用等响应
+export function orderVerify(data) {
+  return request({
+    url: '/order/verify',
+    method: 'post',
+    data
+  })
+}

@@ -13,9 +13,9 @@ export function goPayFromPayInfo(payInfo) {
   let query = 'balance=' + payInfo.balance
   query += '&count_down=' + payInfo.count_down
   query += '&pay_amount=' + payInfo.pay_amount
-  query += '&alipay=' + payInfo.alipay
-  query += '&blpay=' + payInfo.blpay
-  query += '&wxpay=' + payInfo.wxpay
+  query += '&alipay=' + payInfo.pay_methods.alipay
+  query += '&blpay=' + payInfo.pay_methods.blpay
+  query += '&wxpay=' + payInfo.pay_methods.wxpay
   query += '&trade_no=' + payInfo.trade_no
   goPay(query)
 }

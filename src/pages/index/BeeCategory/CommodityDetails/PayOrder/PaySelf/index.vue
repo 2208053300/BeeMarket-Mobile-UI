@@ -139,7 +139,7 @@ import { GetRequest } from '@/utils/index'
 // 导入余额支付组件
 import BalancePay from './components/balancePay'
 import { goPayFromOrder, goPayFromPayInfo } from '@/utils/wxPay'
-
+import { orderVerify } from '@/api/BeeApi/order'
 export default {
   components: { BalancePay },
   props: {},
@@ -281,10 +281,10 @@ export default {
             _this.toResult()
           } else {
             // 支付失败，重新加载本页面
-            if (this.$route.query.orderNo) {
-              goPayFromOrder(this.$route.query.orderNo)
+            if (_this.$route.query.orderNo) {
+              goPayFromOrder(_this.$route.query.orderNo)
             } else {
-              goPayFromPayInfo(this.order.payInfo)
+              goPayFromPayInfo(_this.order.payInfo)
             }
           }
         }
@@ -316,7 +316,11 @@ export default {
     },
     // 查看付款结果
     toResult() {
-      this.$router.push({
+      orderVerify({
+        pay_method: this.payMethod,
+        trade_no: this.order.payInfo.trade_no
+      }).then(res => {})
+      this.$router.replace({
         name: 'payResult',
         query: {
           trade_no: this.order.payInfo.trade_no
