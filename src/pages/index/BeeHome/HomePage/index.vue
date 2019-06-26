@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { getUID } from '@/api/BeeApi/user'
 import { Grey1 } from '@/styles/index/variables.less'
 import { getHome } from '@/api/BeeApi/home'
 import headerBanner from './components/headerBanner'
@@ -125,7 +126,8 @@ export default {
           ]
         }
       },
-      osObj: getOs()
+      osObj: getOs(),
+      uid: 0
     }
   },
   computed: {},
@@ -141,6 +143,7 @@ export default {
     if (this.$store.state.user.is_new_user !== 1) {
       this.$store.dispatch('getUserIsNew')
     }
+    this.loadUID()
   },
   methods: {
     async getHomeData() {
@@ -151,8 +154,8 @@ export default {
           title: '蜂集市',
           desc: '集市购，公益行，我们与您一起向往更好的生活。',
           imgUrl:
-            'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
-          link: 'https://app.fengjishi.com'
+            'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+          link: this.getShareLink()
         })
       }
     },
@@ -163,6 +166,15 @@ export default {
       } else {
         this.$router.push(path)
       }
+    },
+    // 获取uid
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+    },
+    // 拼接链接
+    getShareLink() {
+      return `https://app.fengjishi.com/#/?uid=${this.uid}`
     }
   }
 }
