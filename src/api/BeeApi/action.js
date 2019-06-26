@@ -16,7 +16,7 @@ export function getActionDetail(data) {
     params: data
   })
 }
-// 公益行动 参与助力
+// 公益行动 分享打开的页面 参与助力
 export function joinAction(data) {
   return request({
     url: '/action/shareJoinBoost',
@@ -28,6 +28,14 @@ export function joinAction(data) {
 export function launchAction(data) {
   return request({
     url: '/action/launch',
+    method: 'get',
+    params: data
+  })
+}
+// 公益行动 参与助力
+export function joinAction1(data) {
+  return request({
+    url: '/action/join',
     method: 'get',
     params: data
   })
