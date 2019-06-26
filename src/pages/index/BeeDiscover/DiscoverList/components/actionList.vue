@@ -47,7 +47,7 @@
               <van-icon :name="beeIcon.heart_solid" />已有<span class="bee-text">{{ item.participate_num }}</span>人参与助力
             </div>
             <div class="action-need">
-              <van-icon :name="beeIcon.heart_hollow" />需要<span class="bee-text">{{ item.initiate_people_num }}</span>人参与项目
+              <van-icon :name="beeIcon.heart_hollow" />需<span class="bee-text">{{ item.initiate_people_num }}</span>人参与项目
             </div>
           </div>
         </div>

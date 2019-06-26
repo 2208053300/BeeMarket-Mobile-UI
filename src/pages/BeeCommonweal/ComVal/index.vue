@@ -31,7 +31,10 @@
       <div class="com-detail">
         <div class="com-detail1">
           <span class="com-text1">可用公益值</span>
-          <p class="com-val">
+          <p
+            class="com-val"
+            @click="goDetail(0)"
+          >
             {{ comVal.available_charity_value }}
           </p>
           <!-- <span
@@ -51,13 +54,19 @@
           </van-button>
         </div>
         <div class="com-detail2">
-          <div class="detail2-item">
+          <div
+            class="detail2-item"
+            @click="goDetail(1)"
+          >
             <div class="detail2-title">
               累计公益值
             </div>
             <span class="num">{{ comVal.total_charity_value }}</span>
           </div>
-          <div class="detail2-item">
+          <div
+            class="detail2-item"
+            @click="goDetail(2)"
+          >
             <div class="detail2-title">
               途中公益值
             </div>
@@ -115,16 +124,22 @@ export default {
       const res = await mineCharityValue()
       this.comVal = res.data
     },
-    goDetail() {
+    goDetail(active) {
       const osObj = getOs()
       if (osObj.isWx) {
-        this.$router.push({ name: 'CommonwealDetail' })
+        this.$router.push({
+          name: 'CommonwealDetail',
+          query: { active: active }
+        })
       } else if (osObj.isIphone && osObj.isApp) {
-        window.webkit.messageHandlers.ToPWVDetail.postMessage('')
+        window.webkit.messageHandlers.ToPWVDetail.postMessage(active)
       } else if (osObj.isAndroid && osObj.isApp) {
-        window.beeMarket.ToPWVDetail()
+        window.beeMarket.ToPWVDetail(active)
       } else {
-        this.$router.push({ name: 'CommonwealDetail' })
+        this.$router.push({
+          name: 'CommonwealDetail',
+          query: { active: active }
+        })
       }
     }
   }

@@ -2,10 +2,10 @@
   <div class="my-qrcode">
     <div class="header-text">
       <div class="header-text1">
-        邀请好友加入您的蜂友圈共享年度盛宴！
+        邀请好友加入您的蜂友圈
       </div>
       <div class="header-text2">
-        邀请好友扫描二维码，有意外的惊喜哟。各种优惠好礼等你领取，你和Ta共同创造财富把。
+        邀请扫描二维码 - 加入您的蜂友圈和集市一起共享收益
       </div>
       <div
         class="qrcode-content"
@@ -18,9 +18,6 @@
               alt="二维码"
               :onerror="$store.state.app.defaultImg"
             >
-          </div>
-          <div class="text-content">
-            长按识别二维码，各种<span class="bee-text">优惠好礼</span>等你领取
           </div>
         </div>
       </div>

@@ -298,7 +298,7 @@ export default {
       margin-top: 0.2rem;
     }
     .header-text1 {
-      margin-top: 0.16rem;
+      margin: 0.16rem 0;
       font-size: 0.32rem;
       color: @White1;
       .num {

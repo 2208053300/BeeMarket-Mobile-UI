@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { addShopcartProduct } from '@/api/BeeApi/user'
+import { addShopcartProduct, security } from '@/api/BeeApi/user'
 import { confirmOrder } from '@/api/BeeApi/order'
 import { collectProduct, cancelCollect } from '@/api/BeeApi/product'
 
@@ -129,6 +129,11 @@ export default {
     },
     // 立即购买
     async confirmOrderData() {
+      const securityData = await security()
+      if (!securityData.data.mobile_bind) {
+        this.$router.replace('/persion/profile/accountBind')
+        return false
+      }
       this.action = 'buy'
       if (!this.$store.state.cart.skuId) {
         this.$toast('请先选择商品规格')

@@ -90,7 +90,8 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.mineCharityValueDetailData()
+    this.active = this.$route.query.active
+    this.mineCharityValueDetailData({ active: this.active })
   },
   methods: {
     async mineCharityValueDetailData(data) {
