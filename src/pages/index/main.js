@@ -53,6 +53,12 @@ import {
   Dialog,
   Picker,
   Rate,
+<<<<<<< HEAD
+=======
+  RadioGroup,
+  Radio,
+  DatetimePicker,
+>>>>>>> 08c12e163c40aa2bb533acb7007446f2a1087cbc
   Switch
 } from 'vant'
 
@@ -100,6 +106,10 @@ Vue.use(Icon)
   .use(Dialog)
   .use(Picker)
   .use(Rate)
+  .use(RadioGroup)
+  .use(Radio)
+  .use(DatetimePicker)
+  .use(Switch)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

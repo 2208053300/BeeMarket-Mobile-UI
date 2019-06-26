@@ -5,6 +5,7 @@ import Meta from 'vue-meta'
 import '@/styles/normalize.min.css'
 import '@/styles/index/index.less'
 import '@/main'
+import { NavBar, Icon } from 'vant'
 
 // NOTE 定义rem基准
 import '@/utils/flexiable'
@@ -14,7 +15,7 @@ const FastClick = require('fastclick')
 FastClick.attach(document.body)
 
 // NOTE 修改页面meta数据
-Vue.use(Meta)
+Vue.use(Meta).use(NavBar).use(Icon)
 Vue.config.productionTip = false
 
 new Vue({

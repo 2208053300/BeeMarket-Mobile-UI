@@ -43,7 +43,7 @@
         <van-button
           v-else
           class="go-help"
-          @click="goHelp"
+          @click="goHelp1"
         >
           <span>发起助力</span>
         </van-button>
@@ -129,7 +129,7 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力api
-import { getActionDetail, launchAction } from '@/api/BeeApi/action'
+import { getActionDetail, launchAction, joinAction1 } from '@/api/BeeApi/action'
 // 引入微信分享
 import wxapi from '@/utils/wxapi.js'
 
@@ -228,15 +228,33 @@ export default {
         imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
       })
     },
-    // 参与助力 分享成功后跳转页面到助力成功页面 /joinSuccess
+    // 参与助力
     async goHelp() {
-      // aid 行动id
-      await launchAction({ id: this.id })
-      // console.log(res)
-      // TODO 生成二维码海报
       this.$store.state.app.beeHeader = false
-      this.helpSuccess = true
-      // this.actionDetails.is_join = true
+      // aid 行动id
+      try {
+        const res = await joinAction1({ id: this.id })
+        if (res.status_code === 200) {
+          this.helpSuccess = true
+          this.actionDetails.is_join = true
+        }
+      } catch (error) {
+        this.$toast(error)
+      }
+    },
+    // 发起助力
+    async goHelp1() {
+      // aid 行动id
+      try {
+        const res = await launchAction({ id: this.id })
+        if (res.status_code === 200) {
+          // this.$toast(res.message)
+          this.helpSuccess = true
+        }
+      } catch (error) {
+        this.$toast(error)
+      }
+      // this.helpSuccess = true
     },
     // 关闭分享弹出层
     closed() {

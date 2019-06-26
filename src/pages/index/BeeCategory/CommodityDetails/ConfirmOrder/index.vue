@@ -107,6 +107,8 @@ import orderAddress from './components/orderAddress'
 import commodityList from './components/commodityList'
 import { mapState } from 'vuex'
 import { createOrder } from '@/api/BeeApi/order'
+import { goPayFromPayInfo } from '@/utils/wxPay'
+
 export default {
   metaInfo: {
     title: '确认订单'
@@ -178,28 +180,10 @@ export default {
         } else if (this.orderTypeText === 'present') {
           this.$router.push('/category/details/giveFirends')
         } else {
-          this.toPay(res.data.orderNo)
+          // 去支付
+          goPayFromPayInfo(this.order.payInfo)
         }
       }
-    },
-    getQuery(payInfo) {
-      let query = 'balance=' + payInfo.balance
-      query += '&count_down=' + payInfo.count_down
-      query += '&pay_amount=' + payInfo.pay_amount
-      query += '&alipay=' + payInfo.alipay
-      query += '&blpay=' + payInfo.blpay
-      query += '&wxpay=' + payInfo.wxpay
-      query += '&trade_no=' + payInfo.trade_no
-      return query
-    },
-    // 去支付
-    toPay(orderNo) {
-      window.location.href =
-        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
-        encodeURIComponent(
-          window.location.origin + '/#/category/details/payOrder?' + this.getQuery(this.order.payInfo)
-        ) +
-        '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     },
     changeOt(val) {
       if (val) {

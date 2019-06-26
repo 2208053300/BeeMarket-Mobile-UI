@@ -138,7 +138,8 @@ import { orderPay } from '@/api/BeeApi/order'
 import { GetRequest } from '@/utils/index'
 // 导入余额支付组件
 import BalancePay from './components/balancePay'
-
+import { goPayFromOrder, goPayFromPayInfo } from '@/utils/wxPay'
+import { orderVerify } from '@/api/BeeApi/order'
 export default {
   components: { BalancePay },
   props: {},
@@ -169,13 +170,13 @@ export default {
     } else {
       const query = this.$route.query
       this.order.payInfo = {
-        balance: query.balance,
+        balance: parseInt(query.balance),
         count_down: query.count_down,
         pay_amount: query.pay_amount,
         pay_methods: {
-          alipay: query.alipay,
-          blpay: query.blpay,
-          wxpay: query.wxpay
+          alipay: query.alipay === 'true',
+          blpay: query.blpay === 'true',
+          wxpay: query.wxpay === 'true'
         },
         trade_no: query.trade_no
       }
@@ -246,23 +247,6 @@ export default {
       } else if (this.payMethod === 'blpay') {
         this.$refs.balancePay.pay()
       }
-      // // 判断是否有CODE
-      // if (!GetRequest('code')) {
-      //   window.location.href =
-      //     'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
-      //     encodeURIComponent(window.location.href) +
-      //     '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
-      // } else {
-      //   // 检查是否选择支付方式
-      //   if (!this.payMethod) {
-      //     this.$toast('请选择支付方式')
-      //   }
-      //   if (this.payMethod === 'wxpay') {
-      //     this.wxPay(GetRequest('code'))
-      //   } else if (this.payMethod === 'blpay') {
-      //     this.$refs.balancePay.pay()
-      //   }
-      // }
     },
     async wxPay(code) {
       // 获取微信支付信息
@@ -275,16 +259,7 @@ export default {
           code: code
         })
       } catch (e) {
-        alert(JSON.stringify(e))
-        const uriProp2 = window.location.href.slice(
-          window.location.href.indexOf('STATE') + 5
-        )
-        window.location.href =
-          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
-          encodeURIComponent(
-            window.location.origin + window.location.pathname + uriProp2
-          ) +
-          '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+        this.$toast('支付失败:' + JSON.stringify(e))
       }
       const params = res.data.params
       const _this = this
@@ -304,6 +279,13 @@ export default {
             // 使用以上方式判断前端返回,微信团队郑重提示：
             // res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
             _this.toResult()
+          } else {
+            // 支付失败，重新加载本页面
+            if (_this.$route.query.orderNo) {
+              goPayFromOrder(_this.$route.query.orderNo)
+            } else {
+              goPayFromPayInfo(_this.order.payInfo)
+            }
           }
         }
       )
@@ -334,7 +316,11 @@ export default {
     },
     // 查看付款结果
     toResult() {
-      this.$router.push({
+      orderVerify({
+        pay_method: this.payMethod,
+        trade_no: this.order.payInfo.trade_no
+      }).then(res => {})
+      this.$router.replace({
         name: 'payResult',
         query: {
           trade_no: this.order.payInfo.trade_no

@@ -4,14 +4,12 @@ import { Toast } from 'vant'
 import {
   setToken,
   getToken,
-  removeToken,
   isLogin,
   checkToken,
   getVerify,
   setVerify
 } from '@/utils/auth'
 import { isJSON } from '@/utils'
-import store from '@/store'
 import { getOs } from '@/utils'
 
 const service = axios.create({
