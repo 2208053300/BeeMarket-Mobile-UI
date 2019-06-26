@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div class="img-content">
+    <div>
       <img :src="beeIcon.rule_1" alt="">
       <img :src="beeIcon.rule_2" alt="">
       <img :src="beeIcon.rule_3" alt="">
@@ -141,9 +141,6 @@ export default {
             align-items: center;
           }
         }
-      }
-      .img-content {
-        height: 45.49rem;
       }
     }
 </style>
