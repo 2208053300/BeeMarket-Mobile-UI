@@ -52,7 +52,6 @@
 
     <van-popup
       v-model="helpSuccess"
-      position="top"
       class="share-modal"
       @closed="closed"
     >
@@ -65,7 +64,7 @@
           class="shareTip"
         >
       </div>
-      <!-- <div class="share-bg">
+      <div class="share-bg">
         <div
           class="share-content"
           :style="{backgroundImage:'url('+actionDetails.share_image+')'}"
@@ -114,14 +113,14 @@
               alt=""
             >
           </div>
-          <div class="img-content2">
+          <div class="img-content2" @click="saveBtn">
             <img
               :src="beeIcon.publicwelfare_popups_download"
               alt=""
             >
           </div>
         </div>
-      </div> -->
+      </div>
     </van-popup>
   </div>
 </template>
@@ -190,7 +189,7 @@ export default {
         is_join: false
       },
       BeeDefault,
-      helpSuccess: false,
+      helpSuccess: true,
       helped: false,
       beeIcon: {
         pop_ups_pic_value: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_pic_value_app@2x.png'),
@@ -230,12 +229,12 @@ export default {
     },
     // 参与助力
     async goHelp() {
-      this.$store.state.app.beeHeader = false
+      // this.$store.state.app.beeHeader = false
       // aid 行动id
+      this.helpSuccess = true
       try {
         const res = await joinAction1({ id: this.id })
         if (res.status_code === 200) {
-          this.helpSuccess = true
           this.actionDetails.is_join = true
         }
       } catch (error) {
@@ -299,6 +298,9 @@ export default {
       }
       // 将配置注入通用方法
       wxapi.ShareAppMessage(option)
+    },
+    saveBtn() {
+
     }
   }
 }

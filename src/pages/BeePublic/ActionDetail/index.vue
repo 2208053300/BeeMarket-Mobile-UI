@@ -45,7 +45,8 @@ export default {
       actionData: {
         company_info: {
           love_company_logo: ''
-        }
+        },
+        share_data: {}
       },
       user_id: 1
     }
