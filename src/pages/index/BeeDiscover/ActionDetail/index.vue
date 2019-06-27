@@ -66,6 +66,7 @@
       </div>
       <div class="share-bg">
         <div
+          ref="shareImg"
           class="share-content"
           :style="{backgroundImage:'url('+actionDetails.share_image+')'}"
         >
@@ -113,7 +114,10 @@
               alt=""
             >
           </div>
-          <div class="img-content2" @click="saveBtn">
+          <div
+            class="img-content2"
+            @click="saveBtn"
+          >
             <img
               :src="beeIcon.publicwelfare_popups_download"
               alt=""
@@ -126,10 +130,10 @@
 </template>
 
 <script>
-
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力api
 import { getActionDetail, launchAction, joinAction1 } from '@/api/BeeApi/action'
+import html2canvas from 'html2canvas/dist/html2canvas.min.js'
 // 引入微信分享
 import wxapi from '@/utils/wxapi.js'
 
@@ -302,7 +306,9 @@ export default {
       wxapi.ShareAppMessage(option)
     },
     saveBtn() {
-
+      // html2canvas(this.$refs.shareImg).then(canvas => {
+      //   document.body.appendChild(canvas)
+      // })
     }
   }
 }
