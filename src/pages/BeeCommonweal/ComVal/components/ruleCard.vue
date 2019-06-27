@@ -46,14 +46,6 @@
               C. 为公益助力，点点手指关注分享集市相关公益活动，同样可以获赠大量公益值。
             </p>
           </div>
-          <div class="rule-part">
-            <p class="rule-tiele2">
-              4.公益值多久到账？
-            </p>
-            <p class="rule-text1">
-              在您购买商品确认收货后，公益值会在七天后自动累积到您的可用公益值之中，即可抵扣商品
-            </p>
-          </div>
         </div>
       </div>
     </van-popup>
