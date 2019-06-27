@@ -47,7 +47,7 @@
           <van-button
             class="com-text2"
             round
-            @click="$router.push('/category')"
+            @click="goCategory"
           >
             <span class="com-text3">海量商品</span>
             <span>畅享免单</span>
@@ -140,6 +140,18 @@ export default {
           name: 'CommonwealDetail',
           query: { active: active }
         })
+      }
+    },
+    goCategory() {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        this.$router.push('/category')
+      } else if (osObj.isIphone && osObj.isApp) {
+        window.webkit.messageHandlers.ToCatList.postMessage()
+      } else if (osObj.isAndroid && osObj.isApp) {
+        window.beeMarket.ToCatList()
+      } else {
+        this.$router.push('/category')
       }
     }
   }

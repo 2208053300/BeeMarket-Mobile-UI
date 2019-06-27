@@ -52,7 +52,6 @@
 
     <van-popup
       v-model="helpSuccess"
-      position="top"
       class="share-modal"
       @closed="closed"
     >
@@ -65,8 +64,9 @@
           class="shareTip"
         >
       </div>
-      <!-- <div class="share-bg">
+      <div class="share-bg">
         <div
+          ref="shareImg"
           class="share-content"
           :style="{backgroundImage:'url('+actionDetails.share_image+')'}"
         >
@@ -114,14 +114,17 @@
               alt=""
             >
           </div>
-          <div class="img-content2">
+          <div
+            class="img-content2"
+            @click="saveBtn"
+          >
             <img
               :src="beeIcon.publicwelfare_popups_download"
               alt=""
             >
           </div>
         </div>
-      </div> -->
+      </div>
     </van-popup>
   </div>
 </template>
@@ -130,6 +133,7 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力api
 import { getActionDetail, launchAction, joinAction1 } from '@/api/BeeApi/action'
+// import html2canvas from 'html2canvas/dist/html2canvas.min.js'
 // 引入微信分享
 import wxapi from '@/utils/wxapi.js'
 
@@ -187,10 +191,11 @@ export default {
             }
           ]
         },
-        is_join: false
+        is_join: false,
+        uid: 0
       },
       BeeDefault,
-      helpSuccess: false,
+      helpSuccess: true,
       helped: false,
       beeIcon: {
         pop_ups_pic_value: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_pic_value_app@2x.png'),
@@ -222,20 +227,20 @@ export default {
       const res = await getActionDetail({ id: this.id })
       this.actionDetails = res.data
       wxapi.wxShare({
-        title: this.actionDetails.subtitle, // 分享标题, 请自行替换
-        desc: this.actionDetails.top_desc, // 分享描述, 请自行替换
+        title: this.actionDetails.main_title, // 分享标题, 请自行替换
+        desc: '我为公益代言！点点手指，为我助力！', // 分享描述, 请自行替换
         link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
         imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
       })
     },
     // 参与助力
     async goHelp() {
-      this.$store.state.app.beeHeader = false
+      // this.$store.state.app.beeHeader = false
       // aid 行动id
+      this.helpSuccess = true
       try {
         const res = await joinAction1({ id: this.id })
         if (res.status_code === 200) {
-          this.helpSuccess = true
           this.actionDetails.is_join = true
         }
       } catch (error) {
@@ -299,6 +304,11 @@ export default {
       }
       // 将配置注入通用方法
       wxapi.ShareAppMessage(option)
+    },
+    saveBtn() {
+      // html2canvas(this.$refs.shareImg).then(canvas => {
+      //   document.body.appendChild(canvas)
+      // })
     }
   }
 }

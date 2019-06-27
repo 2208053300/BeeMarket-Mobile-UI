@@ -117,11 +117,12 @@ export default {
         this.loading = false
         if (res.data) {
           this.actionList.push(...res.data)
-        }
-        if (res.data.length < this.pageSize) {
-          this.finished = true
+          if (res.data.length < this.pageSize) {
+            this.finished = true
+          }
         }
       } catch (e) {
+        console.log(e)
         this.$toast.fail(e)
       }
     },

@@ -125,7 +125,7 @@
         <div class="body-title">
           <div class="title-text1">
             <div class="circle" />
-            <span>{{ taskData.task_list[1].title }}</span>
+            <span> {{ taskData.task_list[1].title }} </span>
             <div class="circle" />
           </div>
           <div class="title-text2">
@@ -236,7 +236,7 @@ export default {
       wxapi.wxShare({
         title: '新手专享·好礼各种送',
         desc: '更多优惠，更多公益值等你来赚赚赚！',
-        imgUrl: 'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.png',
         link: `https://app.fengjishi.com/#/beeTask?uid=${this.uid}`
       })
     },
@@ -370,12 +370,11 @@ export default {
         text-align: center;
         width: 5.9rem;
         .title-text1 {
-          width: 4rem;
           font-size: 0.38rem;
           color: @Orange3;
           font-weight: bold;
           margin: auto;
-          display: flex;
+          display: inline-flex;
           justify-content: space-between;
           background-color: #ffffff;
           align-items: center;

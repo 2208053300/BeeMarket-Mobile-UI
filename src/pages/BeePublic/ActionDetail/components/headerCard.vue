@@ -19,9 +19,12 @@
       <span class="user-name">
         {{ actionData.nickname }}
       </span>
-      <p class="header-text2">
-        ”{{ actionData.top_desc }}“
-      </p>
+      <div class="img-content">
+        <img
+          :src="beeIcon.picText"
+          class="pic-text"
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -39,7 +42,8 @@ export default {
     return {
       beeIcon: {
         confirmorder_pic_word_top: require('@/assets/icon/discover/confirmorder_pic_word_top@2x.png'),
-        head_default: require('@/assets/icon/personalCenter/head_default.png')
+        head_default: require('@/assets/icon/personalCenter/head_default.png'),
+        picText: require('@/assets/icon/discover/pic_text@2x.png')
       }
     }
   },
@@ -89,6 +93,12 @@ export default {
       margin-top: 0.2rem;
       position: relative;
       top: -0.45rem;
+    }
+    .img-content{
+      display: block;
+      margin: auto;
+      height: 0.43rem;
+      width: 2.85rem;
     }
     .header-text2 {
       font-size: 0.32rem;

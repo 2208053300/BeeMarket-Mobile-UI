@@ -61,21 +61,23 @@
     </div>
     <div class="button-container">
       <div class="bottom-button">
-        <van-button
-          class="button"
-          round
-          download
-          :url="$route.params.id===1?classroom[1].video_url:classroom[2].video_url"
-          @click="downVideo"
-        >
-          <div class="img-content">
-            <img
-              :src="beeIcon.icon_download"
-              alt=""
-            >
-          </div>
-          下载该视频
-        </van-button>
+        <form :action="$route.params.id===1?classroom[1].video_url:classroom[2].video_url">
+          <van-button
+            class="button"
+            round
+            download
+            :url="$route.params.id===1?classroom[1].video_url:classroom[2].video_url"
+            @click="downVideo"
+          >
+            <div class="img-content">
+              <img
+                :src="beeIcon.icon_download"
+                alt=""
+              >
+            </div>
+            下载该视频
+          </van-button>
+        </form>
       </div>
     </div>
     <div style="padding: 0.72rem 0.3rem 0.2rem;">
@@ -193,18 +195,12 @@ export default {
     // 分享
     appShare() {
       if (this.osObj.isWx) {
-        // this.$router.push({
-        //   path: '/category/details',
-        //   query: {
-        //     pid,
-        //     target
-        //   }
-        // })
+        //
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToShare.postMessage({
           title: '集市课堂 - 蜂集市',
           desc: '零风险、轻创业、大财富，你准备好了吗？',
-          img_path: '',
+          img_path: 'https://img.fengjishi.com/app/images/share_logo.png',
           // 地址应该放 web 站 网页
           url: this.getShareLink()
         })
@@ -212,17 +208,11 @@ export default {
         window.beeMarket.ToShare(
           '集市课堂 - 蜂集市',
           '零风险、轻创业、大财富，你准备好了吗？',
-          '',
+          'https://img.fengjishi.com/app/images/share_logo.png',
           this.getShareLink()
         )
       } else {
-        // this.$router.push({
-        //   path: '/category/details',
-        //   query: {
-        //     pid,
-        //     target
-        //   }
-        // })
+        //
       }
     },
     async loadUID() {
@@ -232,7 +222,8 @@ export default {
         wxapi.wxShare({
           title: '集市课堂 - 蜂集市',
           desc: '零风险、轻创业、大财富，你准备好了吗？',
-          imgUrl: 'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+          imgUrl:
+            'https://img.fengjishi.com/app/images/share_logo.png',
           link: this.getShareLink()
         })
       } catch (error) {
