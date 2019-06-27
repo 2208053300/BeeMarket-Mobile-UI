@@ -12,7 +12,7 @@ const app = {
     defaultImg2: require('@/assets/icon/home/ic_default@2x.png'),
     defaultImg3: require('@/assets/icon/home/ic_banner_default@2x.png'),
     head_detault: require('@/assets/icon/personalCenter/head_default.png'),
-    homeUri: 'http://app.fengjishi.com.cn/#',
+    homeUri: 'https://app.fengjishi.com/#',
     // homeUri1: 'http://app.fengjishi.com.cn',
     share_data: {
       desc: '',

@@ -33,7 +33,8 @@ import userAssessment from './components/userAssessment'
 import storeDetails from './components/storeDetails'
 import richDetails from './components/richDetails'
 import BeeGuess from '@/components/index/BeeGuess'
-
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo: {
     title: '商品详情'
@@ -51,7 +52,8 @@ export default {
   props: {},
   data() {
     return {
-      commodityData: {}
+      commodityData: {},
+      uid: 0
     }
   },
   computed: {},
@@ -62,8 +64,20 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getProductDetailData(this.$route.query.pid, this.$route.query.target)
+    this.loadUID()
   },
   methods: {
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+
+      wxapi.wxShare({
+        title: this.commodityData.pname,
+        desc: '我在蜂集市发现了一个惊呆了的商品，赶紧一起来看看吧',
+        imgUrl: this.commodityData.album[0].qUrl,
+        link: window.location.href + '&uid=' + this.uid
+      })
+    },
     // 获取商品详情
     async getProductDetailData(pid, target) {
       const res = await getProductDetail({ pid, target })

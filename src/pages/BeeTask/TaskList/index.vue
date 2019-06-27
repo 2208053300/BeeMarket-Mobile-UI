@@ -9,19 +9,20 @@
       </div>
       <div class="head-img">
         <img
-          :src="taskData.basic_info.head_img"
+          :src="taskData.basic_info.head_img||$store.state.app.head_detault"
           alt=""
         >
       </div>
       <div
         class="header-text1"
-        @click="$router.push('/persion/BeeCommonweal')"
       >
-        我的公益值：<span class="num">{{ taskData.basic_info.mine_charity_num }}</span> >
+        <!-- @click="$router.push('/persion/BeeCommonweal')" -->
+        <!-- 我的公益值：<span class="num">{{ taskData.basic_info.mine_charity_num }}</span> > -->
+        三重好礼 等你领取
       </div>
-      <div class="header-text2">
+      <!-- <div class="header-text2">
         已通过完成任务获得 <span class="num">{{ taskData.basic_info.task_charity_num }}</span> 公益值
-      </div>
+      </div> -->
     </div>
     <div class="task-card task1-content">
       <div class="task-title">
@@ -42,7 +43,7 @@
         <div class="task-list">
           <div
             v-for="(item,index) in taskData.task_list[0].child_task"
-            v-show="index<=2||showAll"
+            v-show="index===0||showAll"
             :key="index"
             class="task-detail"
             :style="{backgroundImage:'url('+getBg1(item.tid,item.task_status)+')'}"
@@ -77,7 +78,7 @@
                 v-if="item.tid===7"
                 class="invite-num"
               >
-                您已邀请成功 <span class="num">{{ item.invite_friends_num }}</span> 位好友，快去分享吧！
+                您已成功邀请 <span class="num">{{ item.invite_friends_num }}</span> 位好友参与助力
               </div>
             </div>
             <div
@@ -124,7 +125,7 @@
         <div class="body-title">
           <div class="title-text1">
             <div class="circle" />
-            <span>{{ taskData.task_list[1].title }}</span>
+            <span> {{ taskData.task_list[1].title }} </span>
             <div class="circle" />
           </div>
           <div class="title-text2">
@@ -183,7 +184,8 @@
 
 <script>
 import { getTaskList, getTaskAward } from '@/api/BeeApi/task'
-
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo() {
     return {
@@ -213,7 +215,8 @@ export default {
       },
       showAll: false,
       showSuccess: false,
-      getNum: 100
+      getNum: 100,
+      uid: 0
     }
   },
   computed: {},
@@ -223,8 +226,21 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getTaskListData()
+    this.loadUID()
   },
   methods: {
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+
+      wxapi.wxShare({
+        title: '新手专享·好礼各种送',
+        desc: '更多优惠，更多公益值等你来赚赚赚！',
+        imgUrl: 'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+        link: `https://app.fengjishi.com/#/beeTask?uid=${this.uid}`
+      })
+    },
+
     async getTaskListData() {
       const res = await getTaskList({ way: 'H5' })
       this.taskData = res.data
@@ -297,7 +313,7 @@ export default {
       margin-top: 0.2rem;
     }
     .header-text1 {
-      margin-top: 0.16rem;
+      margin: 0.16rem 0;
       font-size: 0.32rem;
       color: @White1;
       .num {
@@ -354,12 +370,11 @@ export default {
         text-align: center;
         width: 5.9rem;
         .title-text1 {
-          width: 4rem;
           font-size: 0.38rem;
           color: @Orange3;
           font-weight: bold;
           margin: auto;
-          display: flex;
+          display: inline-flex;
           justify-content: space-between;
           background-color: #ffffff;
           align-items: center;
@@ -452,10 +467,6 @@ export default {
         }
         .helpBg {
           height: 2.84rem;
-          .task-action {
-            position: relative;
-            left: -0.24rem;
-          }
         }
         .endBg {
           .left-info {
@@ -496,7 +507,7 @@ export default {
   }
   .task2-content {
     .task-detail {
-      margin-top: 0.74rem;
+      margin-top: 1rem;
       .step-list {
         width: 4.88rem;
         height: 1.66rem;

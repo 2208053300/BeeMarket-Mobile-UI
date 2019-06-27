@@ -51,7 +51,12 @@ import {
   SwitchCell,
   Loading,
   Dialog,
-  Picker
+  Picker,
+  Rate,
+  RadioGroup,
+  Radio,
+  DatetimePicker,
+  Switch
 } from 'vant'
 
 Vue.use(Icon)
@@ -92,10 +97,16 @@ Vue.use(Icon)
   .use(NumberKeyboard)
   .use(PasswordInput)
   .use(SubmitBar)
+  .use(Switch)
   .use(SwitchCell)
   .use(Loading)
   .use(Dialog)
   .use(Picker)
+  .use(Rate)
+  .use(RadioGroup)
+  .use(Radio)
+  .use(DatetimePicker)
+  .use(Switch)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

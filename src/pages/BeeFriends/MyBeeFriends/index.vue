@@ -37,7 +37,7 @@
     </div>
     <div
       class="rule-fixed"
-      @click="showRule=true"
+      @click="$router.push({name:'beeFriendRule'})"
     >
       <img
         :src="beeIcon.bee_firends_icom_rule"
@@ -98,64 +98,6 @@
         </div>
       </div>
     </transition>
-    <van-popup
-      v-model="showRule"
-      position="bottom"
-      class="rule-pop"
-      :close-on-click-overlay="false"
-      @close="handleCloseRule"
-      @click-overlay="handleCloseRule"
-    >
-      <div class="rule-content">
-        <div
-          class="rule-header"
-          @click="handleCloseRule"
-        >
-          <div class="close-img">
-            <img
-              :src="beeIcon.bee_firends_invite_icon_off"
-              alt=""
-            >
-          </div>
-        </div>
-        <div class="head-img">
-          <img :src="beeIcon.rule_head">
-        </div>
-        <div
-          class="rule-video"
-          :style="{backgroundImage:'url('+beeIcon.videoBackground+')'}"
-        >
-          <div class="video">
-            <video
-              ref="video"
-              src="https://img.fengjishi.com.cn/app/videos/education/friendship-course-1.mp4"
-              :poster="beeIcon.first_screen"
-              class="video-body"
-              :controls="showControls"
-            />
-            <div
-              v-if="!showControls"
-              style="position: relative"
-            >
-              <div class="control">
-                <img
-                  :src="beeIcon.title_icon_stop"
-                  style="width: 1.28rem;height: 1.28rem"
-                  @click="play"
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="img-content">
-          <img
-            v-lazy="beeIcon.bee_firends_img_rule"
-            :src="beeIcon.bee_firends_img_rule"
-            alt=""
-          >
-        </div>
-      </div>
-    </van-popup>
   </div>
 </template>
 
@@ -169,6 +111,8 @@ import JoinProject from './components/JoinProject'
 import ListType from './components/ListType'
 import ICountUp from 'vue-countup-v2'
 import { setTimeout } from 'timers'
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
 
 export default {
   metaInfo: {
@@ -229,7 +173,8 @@ export default {
       // 获取 os 平台
       osObj: getOs(),
       showRule: false,
-      showControls: false
+      showControls: false,
+      uid: 0
     }
   },
   async beforeRouteEnter(to, from, next) {
@@ -269,8 +214,21 @@ export default {
     }
     this.getReceiveNumData()
     this.clearHistory()
+    this.loadUID()
   },
   methods: {
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+
+      wxapi.wxShare({
+        title: '蜂集市-蜂友圈',
+        desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益！',
+        imgUrl: 'https://img.fengjishi.com/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+        link: `https://app.fengjishi.com/#/beeFriends?uid=${this.uid}`
+      })
+    },
+
     async getPartnerData() {
       const res = await getPartner({ type: this.honeyType })
       this.partnerData = res.data
@@ -308,12 +266,7 @@ export default {
     // 清除历史
     clearHistory() {
       if (this.osObj.isWx) {
-        // this.$router.push({
-        //   path: '/category/details',
-        //   query: {
-        //     pid,
-        //   }
-        // })
+      //
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.clearHistory.postMessage({
           url: window.location.href
@@ -321,13 +274,7 @@ export default {
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.clearHistory()
       } else {
-        // this.$router.push({
-        //   path: '/category/details',
-        //   query: {
-        //     pid,
-        //     target
-        //   }
-        // })
+        //
       }
     },
     // 播放视频
@@ -503,7 +450,7 @@ export default {
     border-radius: 0.3rem 0.3rem 0 0;
     overflow: hidden;
     .rule-content {
-      height: 12rem;
+      height: 10rem;
       overflow: scroll;
       position: relative;
       .rule-header {

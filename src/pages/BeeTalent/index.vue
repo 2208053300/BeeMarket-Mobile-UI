@@ -1,6 +1,6 @@
 <template>
   <div class="task-talent" :class="{ 'show-header': isWx }">
-    <bee-header v-if="isWx" />
+    <BeeHeader v-if="isWx" />
     <div class="banner">
       <img :src="beeIcon.talent_pic_banner">
     </div>
@@ -107,6 +107,7 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
     this.getHasConsume()
   },
   methods: {

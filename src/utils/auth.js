@@ -7,6 +7,7 @@ import { GetRequest, getQueryString } from '@/utils/index'
 // SECTION 获取Token
 export async function getToken() {
   const osObj = getOs()
+
   if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
     return Cookies.get('token')
   }
@@ -15,7 +16,7 @@ export async function getToken() {
     const token = sessionStorage.getItem('BM-App-Token')
     const uriProp = GetRequest('code')
     const uid = getQueryString('uid')
-    if (!uriProp && !token) {
+    if (!uriProp && token === null) {
       await checkToken()
     }
     if (token && token !== 'waiting') {
@@ -42,16 +43,20 @@ export function checkToken() {
       const uriProp2 = window.location.href.slice(
         window.location.href.indexOf('STATE') + 5
       )
+      // console.log(`${ENV_APPID}`)
+
+      // 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+
       // 只带state后面的参数跳转
       window.location.href =
-        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
         encodeURIComponent(
           window.location.origin + window.location.pathname + uriProp2
         ) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     } else {
       window.location.href =
-        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
+        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
         encodeURIComponent(window.location.href) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     }

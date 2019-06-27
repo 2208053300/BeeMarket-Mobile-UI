@@ -65,7 +65,6 @@
       </div>
       <div class="waiting-more">
         <span>- 更多优品持续筹备中 -</span>
-        <!-- <span>{{ test1 }}</span> -->
       </div>
     </div>
   </div>
@@ -74,7 +73,6 @@
 <script>
 import { getBeeLimitList } from '@/api/BeeApi/home'
 import { getOs } from '@/utils'
-// import Cookies from 'js-cookie'
 export default {
   metaInfo() {
     return {
@@ -90,7 +88,6 @@ export default {
       loading: false,
       finished: false,
       page: 1
-      // test1: ''
     }
   },
   computed: {},
@@ -100,7 +97,6 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getBeeLimitListData()
-    // this.test1 = Cookies.get()
   },
   methods: {
     async getBeeLimitListData() {
@@ -108,7 +104,6 @@ export default {
       this.productData = res.data
       this.page = 2
       this.commodityList = res.data.product_list
-      this.loading = false
     },
     getProgress(val1, val2) {
       return (val1 / val2) * 100 + '%'
@@ -118,13 +113,19 @@ export default {
       const osObj = getOs()
       if (osObj.isWx) {
         // 微信直接跳转路由
-        this.$router.push({
-          path: '/category/details',
-          query: {
-            pid: pid,
-            target: target
-          }
-        })
+        // this.$router.push({
+        //   path: '/category/details',
+        //   query: {
+        //     pid: pid,
+        //     target: target
+        //   }
+        // })
+        window.location.href =
+          this.$store.state.app.homeUri +
+          '/category/details?pid=' +
+          pid +
+          '&target=' +
+          target
         this.$store.state.order.target = target
       } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({
@@ -152,7 +153,7 @@ export default {
           return
         }
         const res = await getBeeLimitList({ page: this.page })
-        this.commodityList.push(...res.data)
+        this.commodityList.push(...res.data.product_list)
         this.page++
         this.loading = false
         // 数据全部加载完成

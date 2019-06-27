@@ -27,9 +27,11 @@
     <van-popup v-model="showModal" position="bottom" :overlay="true">
       <van-picker
         :columns="logComList"
-
+        show-toolbar
         title="物流公司"
         @change="onChange"
+        @cancel="onCancel"
+        @confirm="onConfirm"
       />
     </van-popup>
   </div>
@@ -104,10 +106,12 @@ export default {
       this.express_id = value.express_id
       this.express_name = value.text
     },
-    onConfirm(picker, value, index) {
+    onConfirm(value, index) {
+      this.express_id = value.express_id
+      this.express_name = value.text
       this.showModal = false
     },
-    onCancel(picker, value, index) {
+    onCancel() {
       this.showModal = false
     }
   },

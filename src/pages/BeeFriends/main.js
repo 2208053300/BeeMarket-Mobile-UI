@@ -9,6 +9,13 @@ import '@/main'
 // NOTE 定义rem基准
 import '@/utils/flexiable'
 
+import { Popup, Icon, List, Button } from 'vant'
+
+Vue.use(Popup)
+  .use(Icon)
+  .use(List)
+  .use(Button)
+
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
 FastClick.attach(document.body)

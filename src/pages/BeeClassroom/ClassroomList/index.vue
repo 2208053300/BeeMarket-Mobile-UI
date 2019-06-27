@@ -15,11 +15,8 @@
       >
         <div class="card-head">
           <img :src="logo">
-          <span>集市课堂</span>
+          <span class="card-title">{{ item.title }}</span>
         </div>
-        <p class="card-title">
-          {{ item.title }}
-        </p>
         <img
           :src="item.img"
           class="card-body"
@@ -30,6 +27,7 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '集市课堂'
@@ -53,12 +51,22 @@ export default {
           img: require('@/assets/icon/classroom/classroom_pic_friend@2x.png'),
           date: '2019.06.22'
         }
-      ]
+      ],
+      osObj: getOs()
     }
   },
   computed: {},
   watch: {},
   created() {},
+  mounted() {
+    this.$store.state.app.beeHeader = true
+    this.$store.state.app.beeFooter.show = false
+    if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(false)
+    }
+  },
   methods: {
     goDetail(id) {
       this.$router.push({
@@ -71,13 +79,13 @@ export default {
 </script>
 
 <style scoped lang="less">
-.classroom-content{
-  .head-bg{
+.classroom-content {
+  .head-bg {
     height: 3.9rem;
   }
   .classroom-list {
     position: relative;
-    top:-0.88rem;
+    top: -0.88rem;
     padding: 0 0.3rem;
     p {
       margin: 0;
@@ -108,8 +116,7 @@ export default {
         }
       }
       .card-title {
-        margin-top: 0.28rem;
-        font-size: 0.36rem;
+        font-size: 0.3rem;
         color: @ProductName;
       }
       .card-body {

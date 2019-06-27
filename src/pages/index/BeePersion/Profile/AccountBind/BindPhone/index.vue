@@ -100,9 +100,13 @@ export default {
       return reg.test(this.phone) && reg2.test(this.verificationCode)
     },
     async sendSmsData() {
-      const res = await sendSms({ mobileNum: this.phone, type: 'bind', at: 'w' })
-      if (res.status_code === 200) {
-        this.changeCountDoen()
+      try {
+        const res = await sendSms({ mobileNum: this.phone, type: 'bind', at: 'w' })
+        if (res.status_code === 200) {
+          this.changeCountDoen()
+        }
+      } catch (error) {
+        this.$toast(error)
       }
     },
     async bindNum() {
@@ -164,8 +168,8 @@ export default {
       border-left: 0.02rem solid @Grey4;
       font-size: 0.28rem;
       color: @Grey11;
-      height: 0.27rem;
-      line-height: 0.27rem;
+      // height: 0.27rem;
+      // line-height: 0.27rem;
       padding: 0;
       padding-left: 0.18rem;
       .text2 {

@@ -131,7 +131,7 @@
             v-if="card.s_pay === 0&&card.s_order !== -1"
             round
             class="order-button"
-            @click.stop="$router.push('/category/details/payOrder?orderNo='+card.order_no)"
+            @click.stop="goPay(card.order_no)"
           >
             去支付
           </van-button>
@@ -161,6 +161,7 @@ import {
   remindOrder
 } from '@/api/BeeApi/user'
 import { deleteOrder, completeOrder } from '@/api/BeeApi/order'
+import { goPayFromOrder } from '@/utils/wxPay'
 
 export default {
   components: {},
@@ -187,6 +188,9 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    goPay(orderNo) {
+      goPayFromOrder(orderNo)
+    },
     onLoad() {
       // 异步更新数据
       setTimeout(async() => {

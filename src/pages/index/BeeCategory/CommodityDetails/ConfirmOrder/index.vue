@@ -48,7 +48,7 @@
           slot="title"
           class="cell-title"
         >
-          蜂公益
+          公益宝贝
         </div>
         <span class="benefit-text">将我的消费计入公益值</span>
         <van-checkbox
@@ -107,6 +107,8 @@ import orderAddress from './components/orderAddress'
 import commodityList from './components/commodityList'
 import { mapState } from 'vuex'
 import { createOrder } from '@/api/BeeApi/order'
+import { goPayFromPayInfo } from '@/utils/wxPay'
+
 export default {
   metaInfo: {
     title: '确认订单'
@@ -165,7 +167,7 @@ export default {
           stores: storeData,
           charity_used: this.charity_used,
           anonymous: this.anonymous,
-          ot: this.order.target,
+          ot: 'general',
           os: this.order.source
         })
       )
@@ -178,7 +180,8 @@ export default {
         } else if (this.orderTypeText === 'present') {
           this.$router.push('/category/details/giveFirends')
         } else {
-          this.$router.push('/category/details/payOrder')
+          // 去支付
+          goPayFromPayInfo(this.order.payInfo)
         }
       }
     },

@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { getUID } from '@/api/BeeApi/user'
 import { Grey1 } from '@/styles/index/variables.less'
 import { getHome } from '@/api/BeeApi/home'
 import headerBanner from './components/headerBanner'
@@ -55,7 +56,8 @@ import actionList from './components/actionList'
 import guessLike from './components/guessLike'
 import actionPop from './components/actionPop'
 import { isLogin } from '@/utils/auth'
-// import wxapi from '@/utils/wxapi'
+import wxapi from '@/utils/wxapi'
+import { getOs } from '@/utils'
 export default {
   metaInfo() {
     return {
@@ -89,7 +91,7 @@ export default {
         banner: [],
         daily_product: {
           products: [],
-          slogan: '集市每天都会为你推荐好货1'
+          slogan: '集市每天都会为你推荐好货'
         },
         limited_plan: {
           left: {
@@ -123,15 +125,15 @@ export default {
             }
           ]
         }
-      }
+      },
+      osObj: getOs(),
+      uid: 0
     }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {
-    console.log(77777)
-
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
     this.getHomeData()
@@ -141,16 +143,21 @@ export default {
     if (this.$store.state.user.is_new_user !== 1) {
       this.$store.dispatch('getUserIsNew')
     }
+    this.loadUID()
   },
   methods: {
     async getHomeData() {
       const res = await getHome()
       this.homeData = res.data
-    },
-    wxRegCallback() {
-      // 用于微信JS-SDK回调
-      // this.wxShareTimeline()
-      // this.wxShareAppMessage()
+      if (this.osObj.isWx) {
+        wxapi.wxShare({
+          title: '蜂集市',
+          desc: '集市购，公益行，我们与您一起向往更好的生活。',
+          imgUrl:
+            'https://img.fengjishi.com/app/images/share_logo.png',
+          link: this.getShareLink()
+        })
+      }
     },
     // 跳转到需要登录的路由
     async authRoute(path) {
@@ -159,6 +166,15 @@ export default {
       } else {
         this.$router.push(path)
       }
+    },
+    // 获取uid
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+    },
+    // 拼接链接
+    getShareLink() {
+      return `https://app.fengjishi.com/#/?uid=${this.uid}`
     }
   }
 }

@@ -19,7 +19,10 @@
         ￥ {{ order.payInfo.pay_amount }}
       </div>
     </div>
-    <div v-if="order.payInfo.pay_methods" class="pay-methods">
+    <div
+      v-if="order.payInfo.pay_methods"
+      class="pay-methods"
+    >
       <van-cell-group>
         <van-cell
           v-if="order.payInfo.pay_methods.blpay"
@@ -110,11 +113,19 @@
       </van-cell-group>
     </div>
     <div class="pay-done">
-      <van-button class="doneBtn" round @click="pay">
+      <van-button
+        class="doneBtn"
+        round
+        @click="pay"
+      >
         确认付款
       </van-button>
     </div>
-    <balance-pay ref="balancePay" :pay-info="order.payInfo" @success="toResult" />
+    <balance-pay
+      ref="balancePay"
+      :pay-info="order.payInfo"
+      @success="toResult"
+    />
   </div>
 </template>
 
@@ -122,12 +133,13 @@
 import { mapState } from 'vuex'
 import { repayOrder } from '@/api/BeeApi/user'
 import { orderPay } from '@/api/BeeApi/order'
-import wx from 'weixin-js-sdk'
-import wxApi from '@/utils/wxapi'
-import { getOs } from '@/utils/index'
+// import wx from 'weixin-js-api'
+// import wxApi from '@/utils/wxapi'
+import { GetRequest } from '@/utils/index'
 // 导入余额支付组件
 import BalancePay from './components/balancePay'
-
+import { goPayFromOrder, goPayFromPayInfo } from '@/utils/wxPay'
+import { orderVerify } from '@/api/BeeApi/order'
 export default {
   components: { BalancePay },
   props: {},
@@ -155,6 +167,19 @@ export default {
     const orderNo = this.$route.query.orderNo
     if (orderNo) {
       this.getPayInfo(orderNo)
+    } else {
+      const query = this.$route.query
+      this.order.payInfo = {
+        balance: parseInt(query.balance),
+        count_down: query.count_down,
+        pay_amount: query.pay_amount,
+        pay_methods: {
+          alipay: query.alipay === 'true',
+          blpay: query.blpay === 'true',
+          wxpay: query.wxpay === 'true'
+        },
+        trade_no: query.trade_no
+      }
     }
     if (this.order.payInfo.pay_methods) {
       this.setTimer()
@@ -177,11 +202,13 @@ export default {
         this.order.payInfo.count_down--
         if (this.order.payInfo.count_down === 0) {
           clearInterval(this.timer)
-          this.$dialog.alert({
-            message: '订单超时未支付，已自动关闭'
-          }).then(() => {
-            this.$router.back()
-          })
+          this.$dialog
+            .alert({
+              message: '订单超时未支付，已自动关闭'
+            })
+            .then(() => {
+              this.$router.back()
+            })
         }
       }, 1000)
     },
@@ -202,7 +229,8 @@ export default {
       return [
         this.prefixInteger(theTime2),
         this.prefixInteger(theTime1),
-        this.prefixInteger(theTime)]
+        this.prefixInteger(theTime)
+      ]
     },
     // 数字自动补0，2位
     prefixInteger(num) {
@@ -211,55 +239,88 @@ export default {
     },
     // 开始支付
     pay() {
-      // 检查是否选择支付方式
       if (!this.payMethod) {
         this.$toast('请选择支付方式')
       }
       if (this.payMethod === 'wxpay') {
-        this.readWxPay()
+        this.wxPay(GetRequest('code'))
       } else if (this.payMethod === 'blpay') {
         this.$refs.balancePay.pay()
       }
     },
-    // 准备微信支付
-    readWxPay() {
-      if (getOs().isWx) {
-        // 初始化微信api
-        wxApi.wxRegister(this.wxPay)
-      }
-    },
-    async wxPay() {
+    async wxPay(code) {
       // 获取微信支付信息
-      const res = await orderPay({
-        trade_no: this.order.payInfo.trade_no,
-        pay_method: 'wxpay',
-        pay_type: 'JsApi'
-      })
+      let res
+      try {
+        res = await orderPay({
+          trade_no: this.order.payInfo.trade_no,
+          pay_method: 'wxpay',
+          pay_type: 'JSAPI',
+          code: code
+        })
+      } catch (e) {
+        this.$toast('支付失败:' + JSON.stringify(e))
+      }
       const params = res.data.params
-      wx.chooseWXPay({
-        timestamp: params.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-        nonceStr: params.nonceStr, // 支付签名随机串，不长于 32 位
-        package: params.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
-        signType: params.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-        paySign: params.paySign, // 支付签名
-        success(res) {
-          if (res.errMsg === 'chooseWXPay:ok') {
-            this.toResult()
+      const _this = this
+      // eslint-disable-next-line
+      WeixinJSBridge.invoke(
+        'getBrandWCPayRequest',
+        {
+          appId: params.appId, // 公众号名称，由商户传入
+          timeStamp: params.timeStamp, // 时间戳，自1970年以来的秒数
+          nonceStr: params.nonceStr, // 随机串
+          package: params.package,
+          signType: params.signType, // 微信签名方式：
+          paySign: params.paySign // 微信签名
+        },
+        function(res) {
+          if (res.err_msg === 'get_brand_wcpay_request:ok') {
+            // 使用以上方式判断前端返回,微信团队郑重提示：
+            // res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+            _this.toResult()
           } else {
-            this.$toast('支付失败')
+            // 支付失败，重新加载本页面
+            if (_this.$route.query.orderNo) {
+              goPayFromOrder(_this.$route.query.orderNo)
+            } else {
+              goPayFromPayInfo(_this.order.payInfo)
+            }
           }
-        },
-        cancel(res) {
-          this.$toast('用户取消支付~')
-        },
-        fail(res) {
-          this.$toast('支付失败~')
         }
-      })
+      )
+      // wx.WeixinJSBridge({
+      //   appId: params.appId, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+      //   timestamp: params.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+      //   nonceStr: params.nonceStr, // 支付签名随机串，不长于 32 位
+      //   package: params.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+      //   signType: params.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+      //   paySign: params.paySign, // 支付签名
+      //   success(res) {
+      //     console.log(123123)
+
+      //     if (res.errMsg === 'chooseWXPay:ok') {
+      //     } else {
+      //       _this.$toast(`支付失败：${JSON.stringify(res)}`)
+      //     }
+      //   },
+      //   cancel(res) {
+      //     console.log(456456)
+      //     _this.$toast('用户取消支付~')
+      //   },
+      //   fail(res) {
+      //     console.log(789789)
+      //     _this.$toast(`支付失败->${JSON.stringify(res)}`)
+      //   }
+      // })
     },
     // 查看付款结果
     toResult() {
-      this.$router.push({
+      orderVerify({
+        pay_method: this.payMethod,
+        trade_no: this.order.payInfo.trade_no
+      }).then(res => {})
+      this.$router.replace({
         name: 'payResult',
         query: {
           trade_no: this.order.payInfo.trade_no
@@ -348,12 +409,12 @@ export default {
       }
     }
   }
-  .pay-done{
+  .pay-done {
     position: fixed;
     bottom: 0.3rem;
     text-align: center;
     width: 100%;
-    .doneBtn{
+    .doneBtn {
       width: 6rem;
       font-size: 0.3rem;
       color: #fff;

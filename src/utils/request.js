@@ -1,6 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import { Toast } from 'vant'
+import store from 'vuex'
 import {
   setToken,
   getToken,
@@ -11,7 +12,6 @@ import {
   setVerify
 } from '@/utils/auth'
 import { isJSON } from '@/utils'
-import store from '@/store'
 import { getOs } from '@/utils'
 
 const service = axios.create({

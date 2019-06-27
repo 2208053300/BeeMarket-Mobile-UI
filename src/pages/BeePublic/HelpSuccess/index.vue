@@ -10,25 +10,28 @@
       <p class="success-text1">
         助力成功
       </p>
+      <p class="tip">
+        请保持关注，我们共同监督！
+      </p>
       <p
         v-if="charity_value"
         class="success-text2"
       >
         <van-icon :name="beeIcon.smile" />
-        为感谢您的参与，蜂集市送您 <span class="bee-text">100</span> 公益值
+        为感谢您的参与，蜂集市送您 <span class="bee-text">{{ $route.query.charity_value||10 }}</span> 公益值
       </p>
       <p
         v-if="charity_value"
         class="success-text3"
       >
-        进入商城即可领取
+        海量商品可任选免单
       </p>
       <van-button
         round
         class="join-help2"
         @click="arouseApp()"
       >
-        进入商城
+        关注领取
       </van-button>
     </div>
   </div>
@@ -83,11 +86,17 @@ export default {
     margin: auto;
   }
   .success-text1 {
-    font-size: 0.36rem;
+    font-size: 0.58rem;
     margin: 0.52rem 0 0.24rem;
     padding: 0;
     font-weight: bold;
     color: @BeeDefault;
+  }
+  .tip {
+    font-size: 0.36rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 1rem;
   }
   .success-text2 {
     font-size: 0.26rem;
@@ -108,7 +117,7 @@ export default {
   }
   .join-help2 {
     height: 0.8rem;
-    width: 4.32rem;
+    width: 5.8rem;
     line-height: 0.8rem;
     font-size: 0.32rem;
     color: #ffffff;

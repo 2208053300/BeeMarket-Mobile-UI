@@ -73,7 +73,7 @@
           </div>
         </div>
       </div>
-      <div class="bottom-btn">
+      <!-- <div class="bottom-btn">
         <van-button
           class="goTask"
           round
@@ -81,7 +81,7 @@
         >
           进入新手专享
         </van-button>
-      </div>
+      </div> -->
     </div>
     <bee-guess :guess-data="comVal.charity_products" />
   </div>
@@ -151,11 +151,12 @@ export default {
   position: relative;
   top: -0.8rem;
   .rookie-enjoy {
+    height: 4.11rem;
     background-color: #fff;
     border-radius: 0.16rem;
     padding: 0.3rem 0 0 0.26rem;
     box-sizing: border-box;
-    margin: 0 0.16rem 0.6rem;
+    margin: 0 0.16rem 0.2rem;
     position: relative;
     .enjoy-title {
       font-size: 0.32rem;

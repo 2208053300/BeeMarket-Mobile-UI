@@ -28,6 +28,8 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 import actionList from './components/actionList'
 import articleList from './components/articleList'
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo() {
     return {
@@ -42,7 +44,8 @@ export default {
   data() {
     return {
       BeeDefault,
-      active: 0
+      active: 0,
+      uid: 0
     }
   },
   computed: {},
@@ -52,8 +55,22 @@ export default {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
     this.active = this.$route.query.active || 0
+    this.loadUID()
   },
-  methods: {}
+  methods: {
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+
+      wxapi.wxShare({
+        title: '蜂公益，关注社会，关注未来',
+        desc: '公益心，公益行，我们等你一起。',
+        imgUrl: 'https://img.fengjishi.com/app/images/action.jpg',
+        link: `https://app.fengjishi.com/#/discover?uid=${this.uid}`
+      })
+    }
+
+  }
 }
 </script>
 

@@ -3,6 +3,8 @@
  */
 import wx from 'weixin-js-sdk'
 import { getWechatSign } from '@/api/BeeApi/auth'
+import { getOs } from '@/utils/index'
+
 const wxApi = {
   /**
    * [wxRegister 微信Api初始化]
@@ -17,9 +19,16 @@ const wxApi = {
       debug: false, // 开启调试模式
       appId: data.appId, // 必填，公众号的唯一标识
       timestamp: data.timestamp, // 必填，生成签名的时间戳
-      nonceStr: data.noncestr, // 必填，生成签名的随机串
+      nonceStr: data.nonceStr, // 必填，生成签名的随机串
       signature: data.signature, // 必填，签名，见附录1
-      jsApiList: ['chooseWXPay', 'updateAppMessageShareData', 'updateTimelineShareData', 'openAddress'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+      jsApiList: [
+        'chooseWXPay',
+        'updateAppMessageShareData',
+        'updateTimelineShareData',
+        'openAddress',
+        'onMenuShareAppMessage',
+        'onMenuShareTimeline'
+      ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     })
     wx.ready(res => {
       // 如果需要定制ready回调方法
@@ -68,6 +77,18 @@ const wxApi = {
       cancel() {
         // 用户取消分享后执行的回调函数
         option.error()
+      }
+    })
+  },
+  // 微信分享
+  wxShare(option) {
+    this.wxRegister(() => {
+      if (getOs().isIphone) {
+        this.ShareAppMessage(option)
+        this.ShareTimeline(option)
+      } else {
+        wx.onMenuShareAppMessage(option)
+        wx.onMenuShareTimeline(option)
       }
     })
   }

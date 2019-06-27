@@ -53,7 +53,8 @@ export default {
       loading: false,
       finished: false,
       page: 1,
-      isShowCoustomer: true
+      isShowCoustomer: true,
+      id: +this.$route.query.id
     }
   },
   computed: {},
@@ -79,15 +80,19 @@ export default {
     // 获取数据
     getData() {
       setTimeout(async() => {
-        const res = await getSortList({ type_id: this.$route.query.id })
-        // this.sortName = res.data.sortName
-        this.list.push(...res.data)
-        console.log(this.list, this.page)
-        this.page++
-        this.loading = false
-        if (this.page > 1) {
-          this.finished = true
+        try {
+          const res = await getSortList({ type_id: this.id })
+          this.list.push(...res.data)
+          console.log(this.list, this.page)
+          this.page++
+          this.loading = false
+          if (this.page > 1) {
+            this.finished = true
+          }
+        } catch (error) {
+          this.$toast(error)
         }
+
         // if (res.data.length === 0) {
         //   this.finished = true
         // }

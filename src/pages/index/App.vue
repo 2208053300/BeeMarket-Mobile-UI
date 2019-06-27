@@ -32,7 +32,11 @@ export default {
   components: {
     BeeHeader,
     BeeFooter
-  }
+  },
+  data() {
+    return {}
+  },
+  mounted() {}
 }
 </script>
 

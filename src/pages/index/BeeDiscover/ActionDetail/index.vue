@@ -43,41 +43,13 @@
         <van-button
           v-else
           class="go-help"
-          @click="goHelp"
+          @click="goHelp1"
         >
           <span>发起助力</span>
         </van-button>
       </div>
     </div>
-    <!--  <van-popup v-model="helpSuccess" class="success-content">
-      <div class="help-success">
-        <span class="success-text">
-          助力成功
-        </span>
-        <div class="success-text2">
-          恭喜你获得以下奖励
-        </div>
-        <div
-          class="success-value"
-          :style="{ backgroundImage: 'url(' + beeIcon.pop_ups_pic_value + ')' }"
-        >
-          <div class="get-benefit">
-            <span class="benefit-num">{{}}</span>公益值
-          </div>
-        </div>
-        <div class="success-text3">
-          分享给更多好友，一起来为项目助力吧！
-        </div>
-        <van-button class="success-share">
-          发起助力
-        </van-button>
-      </div>
-      <van-icon
-        :name="beeIcon.pop_ups_icon_delete"
-        class="closePop"
-        @click="helpSuccess = false"
-      />
-    </van-popup>-->
+
     <van-popup
       v-model="helpSuccess"
       position="top"
@@ -93,6 +65,63 @@
           class="shareTip"
         >
       </div>
+      <!-- <div class="share-bg">
+        <div
+          class="share-content"
+          :style="{backgroundImage:'url('+actionDetails.share_image+')'}"
+        >
+          <div
+            v-if="actionDetails.share_data"
+            class="share-info"
+          >
+            <div class="user-info">
+              <div class="head-img">
+                <img
+                  :src="actionDetails.share_data.head_img"
+                  alt=""
+                >
+              </div>
+              <div class="right-info">
+                <span>{{ actionDetails.share_data.nickname }}</span>
+                <div class="img-content">
+                  <img
+                    :src="beeIcon.pic_text"
+                    alt=""
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="user-code">
+              <div class="img-content">
+                <img
+                  :src="beeIcon.pic_finger"
+                  alt=""
+                >
+              </div>
+              <div class="img-content2">
+                <img
+                  :src="'data:image/jpeg;base64,'+actionDetails.share_data.qr_cord"
+                  alt=""
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="save-img">
+          <div class="img-content">
+            <img
+              :src="beeIcon.publicwelfare_popups_text"
+              alt=""
+            >
+          </div>
+          <div class="img-content2">
+            <img
+              :src="beeIcon.publicwelfare_popups_download"
+              alt=""
+            >
+          </div>
+        </div>
+      </div> -->
     </van-popup>
   </div>
 </template>
@@ -100,12 +129,10 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力api
-import {
-  getActionDetail
-  // joinAction
-} from '@/api/BeeApi/action'
+import { getActionDetail, launchAction, joinAction1 } from '@/api/BeeApi/action'
 // 引入微信分享
-// import wxapi from '@/utils/wxapi.js'
+import wxapi from '@/utils/wxapi.js'
+
 // 引入组件
 import detailCard0 from './components/detailCard0'
 import detailCard1 from './components/detailCard1'
@@ -168,7 +195,12 @@ export default {
       beeIcon: {
         pop_ups_pic_value: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_pic_value_app@2x.png'),
         pop_ups_icon_delete: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_icon_delete@2x.png'),
-        shareTip: require('@/assets/icon/share/guide1.png')
+        shareTip: require('@/assets/icon/share/guide1.png'),
+        publicwelfare_detail_popup_icon_download: require('@/assets/icon/discover/publicwelfare_detail_popup_icon_download@2x.png'),
+        publicwelfare_popups_download: require('@/assets/icon/discover/publicwelfare_popups_download@2x.png'),
+        publicwelfare_popups_text: require('@/assets/icon/discover/publicwelfare_popups_text@2x.png'),
+        pic_text: require('@/assets/icon/discover/pic_text@2x.png'),
+        pic_finger: require('@/assets/icon/discover/pic_finger@2x.png')
       },
       // 参与助力获得公益值
       pwv_number: 0
@@ -189,60 +221,85 @@ export default {
     async getActionDetailsData() {
       const res = await getActionDetail({ id: this.id })
       this.actionDetails = res.data
+      wxapi.wxShare({
+        title: this.actionDetails.subtitle, // 分享标题, 请自行替换
+        desc: this.actionDetails.top_desc, // 分享描述, 请自行替换
+        link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
+        imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
+      })
     },
-    // 参与助力 分享成功后跳转页面到助力成功页面 /joinSuccess
+    // 参与助力
     async goHelp() {
-      // aid 行动id share_id 分享人 id
-      // const res = await joinAction({ aid: this.id,share_id })
-      // console.log(res)
       this.$store.state.app.beeHeader = false
-      this.helpSuccess = true
-      // this.actionDetails.is_join = true
+      // aid 行动id
+      try {
+        const res = await joinAction1({ id: this.id })
+        if (res.status_code === 200) {
+          this.helpSuccess = true
+          this.actionDetails.is_join = true
+        }
+      } catch (error) {
+        this.$toast(error)
+      }
+    },
+    // 发起助力
+    async goHelp1() {
+      // aid 行动id
+      try {
+        const res = await launchAction({ id: this.id })
+        if (res.status_code === 200) {
+          // this.$toast(res.message)
+          this.helpSuccess = true
+        }
+      } catch (error) {
+        this.$toast(error)
+      }
+      // this.helpSuccess = true
     },
     // 关闭分享弹出层
     closed() {
       this.$store.state.app.beeHeader = true
-    }
+    },
 
     // 分享回调函数
-    // wxRegCallback() {
-    //   // 用于微信JS-SDK回调
-    //   this.wxShareTimeline()
-    //   this.wxShareAppMessage()
-    // },
-    // wxShareTimeline() {
-    //   // 微信自定义分享到朋友圈
-    //   const option = {
-    //     title: this.actionDetails.subtitle, // 分享标题, 请自行替换
-    //     link: window.location.href.split('#')[0], // 分享链接，根据自身项目决定是否需要split
-    //     imgUrl: this.actionDetails.share_image, // 分享图标, 请自行替换，需要绝对路径
-    //     success: () => {
-    //       alert('分享成功')
-    //     },
-    //     error: () => {
-    //       alert('已取消分享')
-    //     }
-    //   }
-    //   // 将配置注入通用方法
-    //   // wxapi.ShareTimeline(option)
-    // },
-    // wxShareAppMessage() {
-    //   // 微信自定义分享给朋友
-    //   const option = {
-    //     title: this.actionDetails.subtitle, // 分享标题, 请自行替换
-    //     desc: this.actionDetails.top_desc, // 分享描述, 请自行替换
-    //     link: window.location.href.split('#')[0], // 分享链接，根据自身项目决定是否需要split
-    //     imgUrl: this.actionDetails.share_image, // 分享图标, 请自行替换，需要绝对路径
-    //     success: () => {
-    //       alert('分享成功')
-    //     },
-    //     error: () => {
-    //       alert('已取消分享')
-    //     }
-    //   }
-    // 将配置注入通用方法
-    // wxapi.ShareAppMessage(option)
-    // }
+    wxRegCallback() {
+      // 用于微信JS-SDK回调
+      this.wxShareTimeline()
+      this.wxShareAppMessage()
+    },
+    wxShareTimeline() {
+      // 微信自定义分享到朋友圈
+      const option = {
+        title: this.actionDetails.subtitle, // 分享标题, 请自行替换
+        link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
+        imgUrl: this.actionDetails.share_image, // 分享图标, 请自行替换，需要绝对路径
+        success: () => {
+          alert('分享成功')
+        },
+        error: () => {
+          alert('已取消分享')
+        }
+      }
+      // 将配置注入通用方法
+      wxapi.ShareTimeline(option)
+    },
+    wxShareAppMessage() {
+      // 微信自定义分享给朋友
+      const option = {
+        title: this.actionDetails.subtitle, // 分享标题, 请自行替换
+        desc: this.actionDetails.top_desc, // 分享描述, 请自行替换
+        link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
+        imgUrl: this.actionDetails.share_image, // 分享图标, 请自行替换，需要绝对路径
+        success: () => {
+          alert('分享成功')
+        },
+        error: () => {
+          alert('已取消分享')
+        }
+      }
+      // 将配置注入通用方法
+      wxapi.ShareAppMessage(option)
+    }
   }
 }
 </script>
@@ -371,6 +428,72 @@ export default {
 
   .share-modal {
     background: rgba(0, 0, 0, 0);
+    .share-bg {
+      width: 5.34rem;
+      height: 7.96rem;
+      border-radius: 0.16rem;
+      background-color: #fff;
+      padding: 0.16rem 0.16rem 0;
+      box-sizing: border-box;
+      .share-content {
+        border-radius: 0.16rem;
+        height: 6.92rem;
+        background-size: cover;
+        position: relative;
+        .share-info {
+          position: absolute;
+          bottom: 0.2rem;
+          left: 0.24rem;
+          height: 1.24rem;
+          width: 4.52rem;
+          background-color: rgba(255, 255, 255, 0.8);
+          border-radius: 0.08rem;
+          display: flex;
+          padding: 0.08rem 0.12rem;
+          justify-content: space-between;
+          box-sizing: border-box;
+          .user-info {
+            display: flex;
+            align-items: center;
+            .head-img {
+              width: 0.64rem;
+              height: 0.64rem;
+              margin-right: 0.06rem;
+            }
+            .right-info {
+              .img-content {
+                width: 1.56rem;
+                height: 0.24rem;
+              }
+            }
+          }
+          .user-code {
+            display: flex;
+            align-items: center;
+            .img-content {
+              height: 0.46rem;
+              width: 0.72rem;
+            }
+            .img-content2 {
+              width: 1.08rem;
+              height: 1.08rem;
+            }
+          }
+        }
+      }
+      .save-img {
+        display: flex;
+        justify-content: space-between;
+        .img-content {
+          width: 3.16rem;
+          height: 0.56rem;
+        }
+        .img-content2 {
+          width: 1.76rem;
+          height: 0.88rem;
+        }
+      }
+    }
   }
   .shareTip {
     width: 3.3rem;
