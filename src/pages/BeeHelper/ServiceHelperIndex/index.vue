@@ -106,13 +106,13 @@ export default {
 
     const osObj = getOs()
     if (osObj.isWx) {
-      this.isShowCoustomer = false
+      // this.isShowCoustomer = false
     } else if (osObj.isIphone && osObj.isApp) {
       // window.webkit.messageHandlers.OpenService.postMessage('')
     } else if (osObj.isAndroid && osObj.isApp) {
       // window.beeMarket.OpenService()
     } else {
-      this.isShowCoustomer = false
+      // this.isShowCoustomer = false
     }
   },
   methods: {
