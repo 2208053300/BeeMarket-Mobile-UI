@@ -22,7 +22,7 @@
           size="small"
           class="get-code"
           :disabled="!checkPhoneRight()"
-          @click="checkPhoneData"
+          @click="sendSmsData"
         >
           <!-- TODO 获取短信验证码 -->
           <span
