@@ -130,6 +130,7 @@
 </template>
 
 <script>
+
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力api
 import { getActionDetail, launchAction, joinAction1 } from '@/api/BeeApi/action'
