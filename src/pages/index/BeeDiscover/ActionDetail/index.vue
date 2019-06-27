@@ -127,6 +127,7 @@
 </template>
 
 <script>
+
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力api
 import { getActionDetail, launchAction, joinAction1 } from '@/api/BeeApi/action'
@@ -187,7 +188,8 @@ export default {
             }
           ]
         },
-        is_join: false
+        is_join: false,
+        uid: 0
       },
       BeeDefault,
       helpSuccess: false,
@@ -222,8 +224,8 @@ export default {
       const res = await getActionDetail({ id: this.id })
       this.actionDetails = res.data
       wxapi.wxShare({
-        title: this.actionDetails.subtitle, // 分享标题, 请自行替换
-        desc: this.actionDetails.top_desc, // 分享描述, 请自行替换
+        title: this.actionDetails.main_title, // 分享标题, 请自行替换
+        desc: '新用户参与助力，可领取红包一次', // 分享描述, 请自行替换
         link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
         imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
       })
