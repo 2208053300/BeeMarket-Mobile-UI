@@ -15,7 +15,7 @@
         class="join-help"
         @click="goHome()"
       >
-        进入商城
+        进入集市
       </van-button>
     </div>
   </div>
