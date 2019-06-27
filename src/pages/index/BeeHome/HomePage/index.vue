@@ -152,7 +152,7 @@ export default {
       if (this.osObj.isWx) {
         wxapi.wxShare({
           title: '蜂集市',
-          desc: '集市购，公益行，我们与您一起向往更好的生活。',
+          desc: '蜂集市，让生活蜂富起来！',
           imgUrl:
             'https://img.fengjishi.com/app/images/share_logo.png',
           link: this.getShareLink()

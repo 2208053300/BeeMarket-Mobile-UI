@@ -416,7 +416,7 @@ export default {
     .item{width:3.48rem; margin-bottom: 0.15rem;
       .pro-img{width: 3.48rem; height: 3.48rem; background: #D4BAAB;border-top-left-radius: 0.1rem;border-top-right-radius: 0.1rem;}
       .info{ padding: 0.3rem;background:#fff; border-bottom-left-radius: 0.1rem;border-bottom-right-radius: 0.1rem;}
-      .desc{font-size: 0.2rem;color:#999 ; margin-bottom: 0.1rem;}
+      .desc{font-size: 0.2rem;color:#999 ; margin-bottom: 0.1rem;  height: 0.3rem;line-height: 0.3rem;}
       .name{font-size: 0.28rem;color:#333 ;}
       .price{
         color: @BeeDefault;
