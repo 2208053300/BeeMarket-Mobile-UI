@@ -26,6 +26,8 @@
 </template>
 
 <script>
+// 引入微信分享
+import wxapi from '@/utils/wxapi.js'
 import { getQrcode } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
@@ -53,6 +55,13 @@ export default {
     async getQrcodeData() {
       const res = await getQrcode()
       this.qrcode = 'data:image/jpeg;base64,' + res.data
+
+      wxapi.wxShare({
+        title: '蜂集市', // 分享标题, 请自行替换
+        desc: '蜂集市，让生活蜂富起来！', // 分享描述, 请自行替换
+        link: 'https://app.fengjishi.com/#/persion/myQrcode', // 分享链接，根据自身项目决定是否需要split
+        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.png' // 分享图标, 请自行替换，需要绝对路径
+      })
     }
   }
 }

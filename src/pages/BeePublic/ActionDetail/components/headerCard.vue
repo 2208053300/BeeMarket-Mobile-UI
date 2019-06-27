@@ -95,8 +95,8 @@ export default {
       top: -0.45rem;
     }
     .img-content{
-      display: inline-block;
-      margin: 0.2rem auto 0;
+      display: block;
+      margin: auto;
       height: 0.43rem;
       width: 2.85rem;
     }
