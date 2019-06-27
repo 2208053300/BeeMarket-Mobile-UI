@@ -24,7 +24,6 @@
           :disabled="!checkPhoneRight()"
           @click="sendSmsData"
         >
-          <!-- TODO 获取短信验证码 -->
           <span
             v-if="countDown===0"
             class="text1"
