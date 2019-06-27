@@ -21,6 +21,8 @@
 </template>
 
 <script>
+// 引入微信分享
+import wxapi from '@/utils/wxapi.js'
 import headerCard from './components/headerCard'
 import titleCard from './components/titleCard'
 import detailCard from './components/detailCard'
@@ -63,6 +65,12 @@ export default {
         aid: this.$route.query.aid
       })
       this.actionData = res.data
+      wxapi.wxShare({
+        title: this.actionData.main_title, // 分享标题, 请自行替换
+        desc: '我为公益代言！点点手指，为我助力！', // 分享描述, 请自行替换
+        link: window.location.href, // 分享链接，根据自身项目决定是否需要split
+        imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
+      })
     }
   }
 }

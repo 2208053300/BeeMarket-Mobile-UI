@@ -45,6 +45,7 @@ export default {
     })(window, document, 'ysf')
     this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
     const _this = this
+    // eslint-disable-next-line
     ysf('onready', function() {
       _this.isSdkReady = true
     })
@@ -67,6 +68,7 @@ export default {
     // 打开网易七鱼
     async openService() {
       if (this.isSdkReady) {
+        // eslint-disable-next-line
         ysf('open')
       } else {
         this.$toast.fail('sdk尚未加载成功，请稍后再试')

@@ -225,7 +225,7 @@ export default {
       this.actionDetails = res.data
       wxapi.wxShare({
         title: this.actionDetails.main_title, // 分享标题, 请自行替换
-        desc: '新用户参与助力，可领取红包一次', // 分享描述, 请自行替换
+        desc: '我为公益代言！点点手指，为我助力！', // 分享描述, 请自行替换
         link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
         imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
       })
