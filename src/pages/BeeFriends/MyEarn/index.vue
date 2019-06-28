@@ -146,7 +146,6 @@ export default {
     } else if (this.osObj.isIphone && this.osObj.isApp) {
       // window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
     } else if (this.osObj.isAndroid && this.osObj.isApp) {
-      alert('蜂友圈欢迎您2！')
       window.beeMarket.showShareIcon(false)
     }
   },
