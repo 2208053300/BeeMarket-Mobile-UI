@@ -133,7 +133,7 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力api
 import { getActionDetail, launchAction, joinAction1 } from '@/api/BeeApi/action'
-import html2canvas from 'html2canvas/dist/html2canvas.min.js'
+// import html2canvas from 'html2canvas/dist/html2canvas.min.js'
 // 引入微信分享
 import wxapi from '@/utils/wxapi.js'
 

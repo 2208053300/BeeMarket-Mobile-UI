@@ -137,7 +137,7 @@ export default {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
     this.getHomeData()
-    // wxapi.wxRegister(this.wxRegCallback)
+    wxapi.wxRegister(this.wxRegCallback)
     // 获取用户消息
     this.$store.dispatch('GerUserMsg')
     if (this.$store.state.user.is_new_user !== false) {
