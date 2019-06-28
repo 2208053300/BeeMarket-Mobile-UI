@@ -50,7 +50,7 @@ export default {
   methods: {
     handleClose() {
       this.showPop = false
-      this.$store.state.user.is_new_user = 1
+      this.$store.state.user.is_new_user = 0
     },
     // 去蜂任务
     async goTask() {
