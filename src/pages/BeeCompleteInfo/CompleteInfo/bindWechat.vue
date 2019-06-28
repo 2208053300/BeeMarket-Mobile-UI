@@ -5,7 +5,8 @@
         <img :src="beeIcon.data_icon_smile" style="width: 1rem;height: 1rem">
       </div>
       <div class="head-text">
-        关注公众号+下载APP，可获得100公益值同时享受更多集市福利
+        <span class="unusual">关注</span>公众号+<span class="unusual">下载</span>APP，可<span class="unusual">获得100公益值</span>
+        <br>同时享受更多集市福利
       </div>
     </div>
     <div class="card body">
