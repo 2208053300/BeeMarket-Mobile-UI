@@ -2,19 +2,34 @@
   <div class="card2">
     <van-tabs v-model="active">
       <van-tab title="项目简介">
-        <div class="item-info" :class="{more: showMore===true}">
+        <div
+          class="item-info"
+          :class="{more: showMore===true}"
+        >
           <!-- eslint-disable-next-line  -->
           <div v-html="actionDetails.project_desc" />
-
-          <div v-show="!showMore" class="show-more text-center" @click="showMore=true">
-            更多详情<van-icon name="arrow-down" size="0.26rem" color="#ff8422" />
+          <div
+            v-show="!showMore"
+            class="show-more text-center"
+            @click="showMore=true"
+          >
+            更多详情
+            <van-icon
+              name="arrow-down"
+              size="0.26rem"
+              color="#ff8422"
+            />
           </div>
         </div>
       </van-tab>
       <van-tab title="项目进度">
         <div class="action-content">
           <!-- 项目已完成可查看详情 -->
-          <div v-if="actionDetails.schedule_status===4" class="show-detail text-right" @click="$router.push({path:'/discover/completeDetail',query:{id:actionDetails.id}})">
+          <div
+            v-if="actionDetails.schedule_status===4"
+            class="show-detail text-right"
+            @click="$router.push({path:'/discover/completeDetail',query:{id:actionDetails.id}})"
+          >
             查看详情 》
           </div>
           <div
@@ -72,35 +87,43 @@ export default {
 .card2 {
   // padding:0 0.32rem 0.32rem;
 
-  .van-hairline--top-bottom::after{
+  .van-hairline--top-bottom::after {
     border: none;
   }
-  .van-tabs__line{background-color: @BeeDefault;}
-  .van-tabs__nav{
-    background: rgba(1,1,1,0)
+  .van-tabs__line {
+    background-color: @BeeDefault;
   }
-  .van-tabs__content{
+  .van-tabs__nav {
+    background: rgba(1, 1, 1, 0);
+  }
+  .van-tabs__content {
     background: #fff;
     border-radius: 0.1rem;
-
   }
   .action-title {
     font-size: 0.28rem;
   }
-  .item-info{
+  .item-info {
     padding: 0.3rem;
     position: relative;
-    height: 2.88rem;
-    .show-more{
-      position: absolute; bottom: 0; left: 0;width:100%; height: 0.72rem;line-height:.72rem;
-      color:#ff8422;
+    height: 3rem;
+    .show-more {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0.72rem;
+      line-height: 0.72rem;
+      color: #ff8422;
       font-size: 0.26rem;
-      background-image: linear-gradient(to bottom,rgba(255,255,255,.5),rgba(255,255,255,1))
+      background-color: #fff;
     }
-    &.more{height: auto;}
+    &.more {
+      height: auto;
+    }
   }
-   .action-content {
-     padding: 0.3rem;
+  .action-content {
+    padding: 0.3rem;
     font-size: 0.24rem;
     color: @Grey2;
     .action-progress {
@@ -139,10 +162,9 @@ export default {
       }
     }
   }
-  .show-detail{
+  .show-detail {
     font-size: 0.26rem;
-    color:@BeeDefault;
-
+    color: @BeeDefault;
   }
 }
 </style>

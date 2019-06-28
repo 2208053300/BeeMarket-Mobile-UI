@@ -40,16 +40,18 @@
             alt=""
           >
         </div>
-        <div
-          v-for="(item,index) in actionData.company_info.cooperation_company_list"
-          :key="index"
-          class="institutions-item"
-        >
-          <img
-            :src="item.cooperation_company_logo"
-            alt="Logo"
+        <template v-if="actionData.company_info.cooperation_company_list!==[]">
+          <div
+            v-for="(item,index) in actionData.company_info.cooperation_company_list"
+            :key="index"
+            class="institutions-item"
           >
-        </div>
+            <img
+              :src="item.cooperation_company_logo"
+              alt="Logo"
+            >
+          </div>
+        </template>
       </div>
       <div
         class="institutions-footer"

@@ -102,7 +102,7 @@
 
 <script>
 import { getMyEarning } from '@/api/BeeApi/user'
-
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '我的收益'
@@ -123,6 +123,7 @@ export default {
       },
       detailList: [],
       loading: false,
+      osObj: getOs(),
       finished: false
     }
   },
@@ -132,13 +133,6 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    if (this.osObj.isWx) {
-      // this.loadUID()
-    } else if (this.osObj.isIphone && this.osObj.isApp) {
-      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
-    } else if (this.osObj.isAndroid && this.osObj.isApp) {
-      window.beeMarket.showShareIcon(false)
-    }
     this.getMyEarningData()
     // FIXME ios bug暂时无解
     try {
@@ -146,6 +140,13 @@ export default {
       setTimeout(document.querySelector('.tab-content').click(), 3000)
     } catch (error) {
       //
+    }
+    if (this.osObj.isWx) {
+      // this.loadUID()
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(false)
     }
   },
   methods: {
