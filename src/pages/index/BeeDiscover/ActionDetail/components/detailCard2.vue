@@ -5,7 +5,7 @@
         <div class="item-info" :class="{more: showMore===true}">
           <!-- eslint-disable-next-line  -->
           <div v-html="actionDetails.project_desc" />
-
+          123456464656
           <div v-show="!showMore" class="show-more text-center" @click="showMore=true">
             更多详情<van-icon name="arrow-down" size="0.26rem" color="#ff8422" />
           </div>
