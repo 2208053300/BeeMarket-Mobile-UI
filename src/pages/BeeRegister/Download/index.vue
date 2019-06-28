@@ -13,7 +13,7 @@
         <a href="https://itunes.apple.com/cn/app/%E8%9C%82%E9%9B%86%E5%B8%82/id1382648901?l=zh&ls=1&mt=8">
           <img src="../../../assets/icon/register/download/ipone_img.png" alt=""><span>iPhone 下载</span>
         </a>
-        <a id="android" href="https://dl.fengjishi.com/app/apk/BEEMarket_3.0_20.apk"><img src="../../../assets/icon/register/download/android_img.png" alt=""><span>Android 下载</span></a>
+        <a id="android" href="https://a.app.qq.com/o/simple.jsp?pkgname=com.bee.beemark"><img src="../../../assets/icon/register/download/android_img.png" alt=""><span>Android 下载</span></a>
         <!--<a id="android"><img src="/static/src/Img/android_img.png" alt="" /><span>Android 下载</span></a>-->
       </div>
 

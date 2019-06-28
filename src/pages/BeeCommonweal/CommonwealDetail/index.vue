@@ -58,7 +58,10 @@
           </van-cell>
         </van-list>
       </van-cell-group>
-      <div class="none-img">
+      <div
+        v-if="recordList===[]"
+        class="none-img"
+      >
         <div class="img-content">
           <img
             :src="beeIcon.mine_collection_img_default"
@@ -103,7 +106,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.active = this.$route.query.active
-    this.mineCharityValueDetailData({ active: this.active })
+    this.mineCharityValueDetailData({ status_code: this.active })
   },
   methods: {
     async mineCharityValueDetailData(data) {
@@ -164,10 +167,10 @@ export default {
         color: @ProductName;
       }
     }
-    .none-img{
+    .none-img {
       text-align: center;
       font-size: 0.28rem;
-      .img-content{
+      .img-content {
         margin-top: 3rem;
         width: 2.88rem;
         height: 2.68rem;

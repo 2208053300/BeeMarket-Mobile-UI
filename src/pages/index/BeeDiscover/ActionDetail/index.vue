@@ -64,7 +64,7 @@
           class="shareTip"
         >
       </div>
-      <div class="share-bg">
+      <!-- <div class="share-bg">
         <div
           ref="shareImg"
           class="share-content"
@@ -106,25 +106,27 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="save-img">
-          <div class="img-content">
-            <img
-              :src="beeIcon.publicwelfare_popups_text"
-              alt=""
-            >
-          </div>
-          <div
-            class="img-content2"
-            @click="saveBtn"
-          >
-            <img
-              :src="beeIcon.publicwelfare_popups_download"
-              alt=""
-            >
+          <div class="canvas-img">
+            123456
           </div>
         </div>
-      </div>
+        <form :action="share_img">
+          <div class="save-img">
+            <div class="img-content">
+              <img
+                :src="beeIcon.publicwelfare_popups_text"
+                alt=""
+              >
+            </div>
+            <button class="img-content2">
+              <img
+                :src="beeIcon.publicwelfare_popups_download"
+                alt=""
+              >
+            </button>
+          </div>
+        </form>
+      </div> -->
     </van-popup>
   </div>
 </template>
@@ -133,7 +135,7 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力api
 import { getActionDetail, launchAction, joinAction1 } from '@/api/BeeApi/action'
-// import html2canvas from 'html2canvas/dist/html2canvas.min.js'
+import html2canvas from 'html2canvas/dist/html2canvas.min.js'
 // 引入微信分享
 import wxapi from '@/utils/wxapi.js'
 
@@ -195,7 +197,7 @@ export default {
         uid: 0
       },
       BeeDefault,
-      helpSuccess: true,
+      helpSuccess: false,
       helped: false,
       beeIcon: {
         pop_ups_pic_value: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_pic_value_app@2x.png'),
@@ -208,7 +210,8 @@ export default {
         pic_finger: require('@/assets/icon/discover/pic_finger@2x.png')
       },
       // 参与助力获得公益值
-      pwv_number: 0
+      pwv_number: 0,
+      share_img: ''
     }
   },
   computed: {},
@@ -238,6 +241,17 @@ export default {
       // this.$store.state.app.beeHeader = false
       // aid 行动id
       this.helpSuccess = true
+      html2canvas(this.$refs.shareImg, {
+        useCORS: true
+      }).then(canvas => {
+        document.querySelector('.canvas-img').removeChild()
+        document.querySelector('.canvas-img').appendChild(canvas)
+        console.log(78797)
+
+        this.share_img = document
+          .querySelector('.canvas-img canvas')
+          .toDataURL('image/png')
+      })
       try {
         const res = await joinAction1({ id: this.id })
         if (res.status_code === 200) {
@@ -304,11 +318,6 @@ export default {
       }
       // 将配置注入通用方法
       wxapi.ShareAppMessage(option)
-    },
-    saveBtn() {
-      // html2canvas(this.$refs.shareImg).then(canvas => {
-      //   document.body.appendChild(canvas)
-      // })
     }
   }
 }
@@ -440,14 +449,14 @@ export default {
     background: rgba(0, 0, 0, 0);
     .share-bg {
       width: 5.34rem;
-      height: 7.96rem;
+      height: 6.92rem;
       border-radius: 0.16rem;
       background-color: #fff;
-      padding: 0.16rem 0.16rem 0;
+      padding: 0.16rem;
       box-sizing: border-box;
       .share-content {
         border-radius: 0.16rem;
-        height: 6.92rem;
+        height: 100%;
         background-size: cover;
         position: relative;
         .share-info {
@@ -489,6 +498,13 @@ export default {
               height: 1.08rem;
             }
           }
+        }
+        .canvas-img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
         }
       }
       .save-img {
