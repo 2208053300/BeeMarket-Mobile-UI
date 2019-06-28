@@ -132,17 +132,19 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    alert('蜂友圈欢迎您1！')
+    window.beeMarket.showShareIcon(false)
     try {
-      // if (this.osObj.isWx) {
-      //   // this.loadUID()
-      // } else if (this.osObj.isIphone && this.osObj.isApp) {
-      //   // window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
-      // } else
-      if (this.osObj.isAndroid && this.osObj.isApp) {
-        alert('蜂友圈欢迎您！')
+      if (this.osObj.isWx) {
+        // this.loadUID()
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        // window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        alert('蜂友圈欢迎您2！')
         window.beeMarket.showShareIcon(false)
       }
     } catch (error) {
+      alert('蜂友圈欢迎您3！' + error)
       //
     }
     this.getMyEarningData()
