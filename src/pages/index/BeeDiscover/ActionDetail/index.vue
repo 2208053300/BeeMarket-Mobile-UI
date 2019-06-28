@@ -78,6 +78,7 @@
               <div class="head-img">
                 <img
                   :src="actionDetails.share_data.head_img"
+                  crossorigin="anonymous"
                   alt=""
                 >
               </div>
@@ -86,6 +87,7 @@
                 <div class="img-content">
                   <img
                     :src="beeIcon.pic_text"
+                    crossorigin="anonymous"
                     alt=""
                   >
                 </div>
@@ -95,37 +97,27 @@
               <div class="img-content">
                 <img
                   :src="beeIcon.pic_finger"
+                  crossorigin="anonymous"
                   alt=""
                 >
               </div>
               <div class="img-content2">
                 <img
                   :src="'data:image/jpeg;base64,'+actionDetails.share_data.qr_cord"
+                  crossorigin="anonymous"
                   alt=""
                 >
               </div>
             </div>
           </div>
           <div class="canvas-img">
-            123456
+            <img
+              :src="share_img"
+              crossorigin="anonymous"
+              alt=""
+            >
           </div>
         </div>
-        <form :action="share_img">
-          <div class="save-img">
-            <div class="img-content">
-              <img
-                :src="beeIcon.publicwelfare_popups_text"
-                alt=""
-              >
-            </div>
-            <button class="img-content2">
-              <img
-                :src="beeIcon.publicwelfare_popups_download"
-                alt=""
-              >
-            </button>
-          </div>
-        </form>
       </div> -->
     </van-popup>
   </div>
@@ -135,7 +127,7 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 // 行动详情，参与助力api
 import { getActionDetail, launchAction, joinAction1 } from '@/api/BeeApi/action'
-import html2canvas from 'html2canvas/dist/html2canvas.min.js'
+// import html2canvas from 'html2canvas/dist/html2canvas.min.js'
 // 引入微信分享
 import wxapi from '@/utils/wxapi.js'
 
@@ -222,8 +214,6 @@ export default {
     this.$store.state.app.beeFooter.show = false
     // 获取详情数据
     this.getActionDetailsData()
-    // 调用微信分享
-    // wxapi.wxRegister(this.wxRegCallback)
   },
   methods: {
     async getActionDetailsData() {
@@ -241,17 +231,13 @@ export default {
       // this.$store.state.app.beeHeader = false
       // aid 行动id
       this.helpSuccess = true
-      html2canvas(this.$refs.shareImg, {
-        useCORS: true
-      }).then(canvas => {
-        document.querySelector('.canvas-img').removeChild()
-        document.querySelector('.canvas-img').appendChild(canvas)
-        console.log(78797)
+      // html2canvas(this.$refs.shareImg, {
+      //   useCORS: true
+      // }).then(canvas => {
+      //   console.log(canvas)
 
-        this.share_img = document
-          .querySelector('.canvas-img canvas')
-          .toDataURL('image/png')
-      })
+      //   this.share_img = canvas.toDataURL('image/png')
+      // })
       try {
         const res = await joinAction1({ id: this.id })
         if (res.status_code === 200) {
@@ -353,7 +339,7 @@ export default {
     text-align: center;
     border-top: 0.02rem solid @Grey4;
     .action-button {
-      margin: 0.04rem 0.12rem;
+      margin: 0.1rem 0.12rem;
       box-sizing: border-box;
       border-radius: 0.4rem;
       overflow: hidden;
