@@ -110,12 +110,8 @@
             免费领取
           </van-button>
         </div>
-        <div class="product-detailImg">
-          <img
-            :src="taskData.details_url"
-            alt=""
-          >
-        </div>
+        <!-- eslint-disable-next-line -->
+        <div v-html="taskData.details_url" class="product-detailImg"/>
       </div>
     </div>
   </div>
@@ -410,7 +406,6 @@ export default {
       .product-detailImg {
         margin-top: 0.4rem;
         border-radius: 0.08rem;
-        overflow: hidden;
       }
     }
   }

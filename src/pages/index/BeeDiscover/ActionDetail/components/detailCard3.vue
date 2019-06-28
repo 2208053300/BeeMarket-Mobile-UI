@@ -21,9 +21,11 @@
         <li class="flex flex-center">
           <img :src="qlLogo">
         </li>
-        <li v-for="(item, index) in actionDetails.company_info.cooperation_company_list" :key="index" class="flex flex-center">
-          <img :src="item.cooperation_company_logo">
-        </li>
+        <template v-if="actionDetails.company_info.cooperation_company_list!==[]">
+          <li v-for="(item, index) in actionDetails.company_info.cooperation_company_list" :key="index" class="flex flex-center">
+            <img :src="item.cooperation_company_logo">
+          </li>
+        </template>
       </ul>
       <div class="text-center bottom-img">
         <img :src="bottomImg">
