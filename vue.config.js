@@ -18,7 +18,7 @@ module.exports = {
     } else {
       config.plugin('define').tap(definitions => {
         Object.assign(definitions[0]['process.env'], {
-          BASE_API: '"https://api.fengjishi.com"'
+          BASE_API: '"https://api.fengjishi.com.cn"'
         })
         return definitions
       })
