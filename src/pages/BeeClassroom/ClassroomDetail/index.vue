@@ -238,7 +238,7 @@ export default {
     },
     // 去下载视频
     downVideo() {
-      // 判断是否是苹果，只有苹果app需要下载视频
+      // 判断是否是苹果，只有苹果app需要下载视频。
     },
     // 跳转到需要登录的路由
     async authRoute(path) {
