@@ -47,24 +47,28 @@ export function checkToken() {
   const osObj = getOs()
   if (osObj.isWx) {
     const uriProp = GetRequest('code')
+    const appid =
+      process.env.NODE_ENV !== 'production'
+        ? 'wxb541620e8a98a7c0'
+        : 'wxd0e389ffa2c4f924'
     if (uriProp) {
       const uriProp2 = window.location.href.slice(
         window.location.href.indexOf('STATE') + 5
       )
-      // console.log(`${ENV_APPID}`)
-
-      // 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb541620e8a98a7c0&redirect_uri=' +
-
       // 只带state后面的参数跳转
       window.location.href =
-        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
+        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
+        appid +
+        '&redirect_uri=' +
         encodeURIComponent(
           window.location.origin + window.location.pathname + uriProp2
         ) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     } else {
       window.location.href =
-        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0e389ffa2c4f924&redirect_uri=' +
+        'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
+        appid +
+        '&redirect_uri=' +
         encodeURIComponent(window.location.href) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     }
