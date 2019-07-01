@@ -46,7 +46,11 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    if (this.$store.state.user.is_new_user !== false) {
+      this.$store.dispatch('getUserIsNew')
+    }
+  },
   methods: {
     handleClose() {
       this.showPop = false

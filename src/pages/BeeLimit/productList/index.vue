@@ -18,6 +18,7 @@
             v-for="(item,index) in commodityList"
             :key="index"
             class="commodity-content"
+            @click="goDetail(item.pid,item.target)"
           >
             <div class="commodity-details">
               <div class="commodity-img">
@@ -53,7 +54,7 @@
                   </div>
                   <van-button
                     class="go-buy"
-                    @click="goDetail(item.pid,item.target)"
+                    @click.stop="goDetail(item.pid,item.target)"
                   >
                     马上抢
                   </van-button>
