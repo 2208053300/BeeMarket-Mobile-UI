@@ -9,7 +9,7 @@
     <!-- orderDetail.s_order!==-1 -->
     <!-- v-if="orderDetail.s_pay===0 || orderDetail.s_order!==-1" -->
     <van-button
-      v-if="orderDetail.s_pay===0 ||(orderDetail.s_pay===1 && orderDetail.s_order===1)"
+      v-if="(orderDetail.s_pay===0&&orderDetail.s_order!==-1) ||(orderDetail.s_pay===1 && orderDetail.s_order===1)"
       round
       @click="cancelPop=true"
     >
@@ -139,7 +139,12 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 import { remindOrder } from '@/api/BeeApi/user'
-import { closeOrder, deleteOrder, completeOrder, reBuy } from '@/api/BeeApi/order'
+import {
+  closeOrder,
+  deleteOrder,
+  completeOrder,
+  reBuy
+} from '@/api/BeeApi/order'
 import { goPayFromOrder } from '@/utils/wxPay'
 
 export default {
@@ -317,7 +322,7 @@ export default {
           font-size: 0.26rem;
           color: @Grey1;
         }
-        .van-radio{
+        .van-radio {
           display: inline-block;
         }
       }
