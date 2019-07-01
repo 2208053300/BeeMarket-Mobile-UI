@@ -76,7 +76,7 @@ export default {
           img.setAttribute('data-src', img.src)
           img.setAttribute(
             'src',
-            'https://api2.fengjishi.com.cn/assets/images/loading.gif'
+            'https://api.fengjishi.com/assets/images/loading.gif'
           )
         })
         // 将处理好的html设置到div
