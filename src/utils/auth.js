@@ -14,17 +14,17 @@ export async function getToken() {
   // 微信授权登录
   if (osObj.isWx) {
     const token = localStorage.getItem('BM-App-Token')
+    const uriProp = GetRequest('code')
+    const uid = getQueryString('uid')
+    if (!uriProp && token === null) {
+      await checkToken()
+    }
     // 如果TOKEN超过三天
     const timestamp = new Date().getTime()
     const timestamp2 = localStorage.getItem('BM-Token-Time') || 0
     if (timestamp > timestamp2) {
       localStorage.setItem('BM-Token-Time', timestamp + 259200)
       localStorage.setItem('BM-App-Token', 'waiting')
-      await checkToken()
-    }
-    const uriProp = GetRequest('code')
-    const uid = getQueryString('uid')
-    if (!uriProp && token === null) {
       await checkToken()
     }
     if (token && token !== 'waiting') {
