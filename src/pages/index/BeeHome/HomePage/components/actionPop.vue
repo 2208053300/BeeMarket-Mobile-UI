@@ -40,7 +40,7 @@ export default {
         newuserimage: require('@/assets/icon/home/index/newuserimage@2x.png'),
         icon_cancel: require('@/assets/icon/home/index/icon_cancel@2x.png')
       },
-      showPop: !!this.$store.state.user.is_new_user
+      showPop: false
     }
   },
   computed: {},
@@ -49,6 +49,7 @@ export default {
   mounted() {
     if (this.$store.state.user.is_new_user !== false) {
       this.$store.dispatch('getUserIsNew')
+      this.showPop = !!this.$store.state.user.is_new_user
     }
   },
   methods: {
@@ -58,7 +59,7 @@ export default {
     },
     // 去蜂任务
     async goTask() {
-      if (!await isLogin()) {
+      if (!(await isLogin())) {
         this.$router.push('/login')
       } else {
         this.$router.push('/beeTask')
