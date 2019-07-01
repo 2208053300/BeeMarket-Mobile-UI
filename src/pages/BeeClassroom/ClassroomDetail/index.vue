@@ -222,7 +222,7 @@ export default {
       // 如果是苹果APP则调用APP接口下载
       if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToDownloadVideo.postMessage({
-          url: this.videoUrl
+          url: this.detail.video_url
         })
       }
     },
