@@ -1,5 +1,4 @@
 import { getOs } from '@/utils'
-// import { Base64 } from 'js-base64'
 import Cookies from 'js-cookie'
 import { auditWechat } from '@/api/BeeApi/auth'
 import { GetRequest, getQueryString } from '@/utils/index'
