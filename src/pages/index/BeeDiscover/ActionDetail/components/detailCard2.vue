@@ -106,7 +106,7 @@ export default {
   .item-info {
     padding: 0.3rem;
     position: relative;
-    height: 3rem;
+    height: 4rem;
     .show-more {
       position: absolute;
       bottom: 0;

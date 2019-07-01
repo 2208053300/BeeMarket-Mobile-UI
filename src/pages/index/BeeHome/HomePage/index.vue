@@ -140,9 +140,6 @@ export default {
     wxapi.wxRegister(this.wxRegCallback)
     // 获取用户消息
     this.$store.dispatch('GerUserMsg')
-    if (this.$store.state.user.is_new_user !== false) {
-      this.$store.dispatch('getUserIsNew')
-    }
     this.loadUID()
   },
   methods: {
