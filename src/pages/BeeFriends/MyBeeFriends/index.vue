@@ -256,6 +256,8 @@ export default {
         this.showHoney = false
         setTimeout(() => {
           this.showHoney = true
+          this.partnerData.sup_balance += this.can_receive_balance
+          this.can_receive_balance = 0
           this.countUpNum()
         }, 3000)
       }
