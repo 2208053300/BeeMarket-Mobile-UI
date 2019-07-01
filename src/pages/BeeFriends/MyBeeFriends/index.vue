@@ -180,7 +180,11 @@ export default {
   async beforeRouteEnter(to, from, next) {
     await next(async vm => {
       // 通过 `vm` 访问组件实例
-      await vm.$store.dispatch('GerUserStatus')
+      try {
+        await vm.$store.dispatch('GerUserStatus')
+      } catch (error) {
+        console.log(error)
+      }
       // 0 非合伙人 1 合伙人 2 冻结
       if (vm.$store.state.user.userStatus === 0) {
         vm.$router.replace({ name: 'introduction' })
@@ -188,6 +192,10 @@ export default {
         vm.$router.push({ name: 'beeFriends' })
       } else if (vm.$store.state.user.userStatus === 2) {
         vm.$router.replace({ name: 'freeze' })
+      } else {
+        console.log('验证失败')
+        vm.$router.replace({ name: 'introduction' })
+        // vm.$router.go(-1)
       }
     })
   },
@@ -258,7 +266,7 @@ export default {
     // 清除历史
     async clearHistory() {
       if (this.osObj.isWx) {
-      //
+        //
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         await window.webkit.messageHandlers.clearHistory.postMessage({
           url: window.location.href
