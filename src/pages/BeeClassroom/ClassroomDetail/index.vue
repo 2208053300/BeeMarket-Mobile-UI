@@ -61,13 +61,10 @@
     </div>
     <div class="button-container">
       <div class="bottom-button">
-        <form :action="$route.params.id===1?classroom[1].video_url:classroom[2].video_url">
+        <a :href="detail.video_url">
           <van-button
             class="button"
             round
-            download
-            :url="$route.params.id===1?classroom[1].video_url:classroom[2].video_url"
-            @click="downVideo"
           >
             <div class="img-content">
               <img
@@ -77,7 +74,7 @@
             </div>
             下载该视频
           </van-button>
-        </form>
+        </a>
       </div>
     </div>
     <div style="padding: 0.72rem 0.3rem 0.2rem;">
@@ -103,7 +100,7 @@ export default {
       classroom: {
         1: {
           title: '快速玩转蜂集市',
-          author: '集市课堂',
+          author: '蜂集市',
           date: '2019.06.22',
           video_url:
             'https://img.fengjishi.com.cn/app/videos/education/intro.mp4',
@@ -113,7 +110,7 @@ export default {
         },
         2: {
           title: '开启你的蜂友圈',
-          author: '集市课堂',
+          author: '蜂集市',
           date: '2019.06.22',
           video_url:
             'https://img.fengjishi.com.cn/app/videos/education/friendship-course-1.mp4',
