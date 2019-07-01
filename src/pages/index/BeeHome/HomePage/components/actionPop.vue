@@ -31,6 +31,7 @@
 
 <script>
 import { isLogin } from '@/utils/auth'
+import { getUserIsNew } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {},
@@ -47,10 +48,7 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    if (this.$store.state.user.is_new_user !== false) {
-      this.$store.dispatch('getUserIsNew')
-      this.showPop = !!this.$store.state.user.is_new_user
-    }
+    this.getUserIsNewData()
   },
   methods: {
     handleClose() {
@@ -63,6 +61,14 @@ export default {
         this.$router.push('/login')
       } else {
         this.$router.push('/beeTask')
+      }
+    },
+    async getUserIsNewData() {
+      const res = await getUserIsNew()
+      if (this.$store.state.user.is_new_user !== 0) {
+        this.showPop = res.data.is_new_user
+      } else {
+        this.showPop = false
       }
     }
   }

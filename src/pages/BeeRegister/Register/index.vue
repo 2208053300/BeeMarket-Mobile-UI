@@ -1,7 +1,10 @@
 <template>
   <div class="RgsCtn">
     <div class="RegistrtFirst">
-      <img src="../../../assets/icon/register/registerTitle1.jpg" alt="">
+      <img
+        src="../../../assets/icon/register/registerTitle1.jpg"
+        alt=""
+      >
       <!-- <video
         controls="controls"
         poster="/static/src/Img/vedio_bg.png"
@@ -26,7 +29,11 @@
         />
         <!-- <div v-if="!video.showControls" style="position: relative"> -->
 
-        <div v-if="!video.showControls" class="control" @click="play">
+        <div
+          v-if="!video.showControls"
+          class="control"
+          @click="play"
+        >
           <img
             :src="video.title_icon_stop"
             style="width: 1.28rem;height: 1.28rem"
@@ -35,7 +42,10 @@
       </div>
 
       <div class="RNext">
-        <img src="../../../assets/icon/register/registerNext.jpg" alt="">
+        <img
+          src="../../../assets/icon/register/registerNext.jpg"
+          alt=""
+        >
       </div>
       <!--<button>注册</button>-->
     </div>
@@ -47,7 +57,10 @@
         >
       </div>
       <div class="register">
-        <img src="../../../assets/icon/register/logo@2x.png" alt="">
+        <img
+          src="../../../assets/icon/register/logo@2x.png"
+          alt=""
+        >
         <!-- <label>
           <input id="phoneNum" v-model.trim="phone" type="text" placeholder="输入手机号码" class="phoneNum" data-checked="false" @input="inputPhone">
           <img src="../../../assets/icon/register/icon_phone@2x.png" style="width:0.29rem;height:0.46rem;">
@@ -68,7 +81,10 @@
               >
               <img src="../../../assets/icon/register/icon_phone@2x.png">
             </div>
-            <p v-if="isPhone" class="help-text">
+            <p
+              v-if="isPhone"
+              class="help-text"
+            >
               请正确输入手机号码！
             </p>
           </div>
@@ -104,7 +120,10 @@
                 <span>{{ downTime }}</span>s
               </van-button>
             </div>
-            <p v-if="isValidNum" class="help-text">
+            <p
+              v-if="isValidNum"
+              class="help-text"
+            >
               请正确输入验证码！
             </p>
           </div>
@@ -135,7 +154,10 @@
               >
             </div>
 
-            <p v-if="isPw" class="help-text">
+            <p
+              v-if="isPw"
+              class="help-text"
+            >
               请正确输入密码！
             </p>
           </div>
@@ -160,15 +182,24 @@
             </span>
           </p>
         </div>
-        <p v-show="isAgree === false" class="agm">
+        <p
+          v-show="isAgree === false"
+          class="agm"
+        >
           阅读并同意蜂集市用户注册协议
         </p>
         <p class="dowl">
           <a @click="goDownloadPage">已注册用户可点击这里重新下载</a>
         </p>
       </div>
-      <div class="registerClick" @click="submit">
-        <img src="../../../assets/icon/register/anniu@2x.png" alt="">
+      <div
+        class="registerClick"
+        @click="submit"
+      >
+        <img
+          src="../../../assets/icon/register/anniu@2x.png"
+          alt=""
+        >
       </div>
     </div>
   </div>
@@ -203,12 +234,12 @@ export default {
       isShowBtn: true,
       // 视屏
       video: {
-        video_url: 'https://img.fengjishi.com.cn/app/videos/education/intro.mp4',
+        video_url:
+          'https://img.fengjishi.com.cn/app/videos/education/intro.mp4',
         first_screen: require('@/assets/icon/register/vedio_bg.png'),
         title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
         showControls: false
       }
-
     }
   },
   computed: {},
@@ -275,16 +306,21 @@ export default {
         return false
       }
       try {
-        const res = await h5register({
+        const data = {
           mobileNum: this.phone,
           smsCode: this.validNum,
           passwd: this.pw,
-          uid: this.$route.query.uid || '',
+          uid: this.$route.query.uid,
           t: Date.parse(new Date())
             .toString()
             .substr(0, 10)
-        })
+        }
+        if (!this.$route.query.uid) {
+          delete data.uid
+        }
+        const res = await h5register(data)
         if (res.status_code === 200) {
+          this.$toast('注册成功!')
           // 注册成功
           this.$router.push({
             name: 'download'
@@ -351,7 +387,6 @@ export default {
         this.isPw = false
       }
     }
-
   }
 }
 </script>
@@ -359,23 +394,23 @@ export default {
 <style scoped lang="less">
 .video {
   position: relative;
-    .video-body {
-      background-color: black;
-      width: 100%;
-      height: 4.35rem;
-    }
-    .control {
-      width:1.28rem;
-      height: 1.28rem;
-      top: 50%;
-      left: 50%;
-      position: absolute;
-      transform: translate(-50%,-50%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  .video-body {
+    background-color: black;
+    width: 100%;
+    height: 4.35rem;
   }
+  .control {
+    width: 1.28rem;
+    height: 1.28rem;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 .RgsCtn {
   background: rgba(229, 229, 229, 229);
 }
