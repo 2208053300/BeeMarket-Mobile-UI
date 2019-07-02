@@ -108,7 +108,7 @@ export default {
   },
   created() {},
   mounted() {
-    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     const searchHistory = localStorage.getItem('searchHistory')
     if (searchHistory) {
