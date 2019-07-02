@@ -184,7 +184,7 @@ export default {
     }
   }
   .explain-img {
-    height: 3rem;
+    height: 3.85rem;
   }
 }
 </style>
