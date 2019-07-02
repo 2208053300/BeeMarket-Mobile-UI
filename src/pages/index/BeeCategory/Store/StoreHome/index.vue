@@ -103,7 +103,6 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.formData.mid = this.$route.query.mid
     this.getStoreDetailData()
-    this.loadUID()
   },
   methods: {
     async loadUID() {
@@ -112,7 +111,7 @@ export default {
 
       wxapi.wxShare({
         title: this.storeDetails.store_name,
-        desc: '我在蜂集市发现了一个惊呆了的商品，赶紧一起来看看吧!',
+        desc: '刚刚在蜂集市发现一个不错的店铺，赶紧来看看吧。',
         imgUrl: this.storeDetails.store_logo,
         link: window.location.href + '&uid=' + this.uid
       })
@@ -123,6 +122,8 @@ export default {
       this.storeDetails = res.data
       this.commodityList = res.data.products
       this.formData.page = 2
+      // NOTE 获取店铺数据后 调用分享
+      this.loadUID()
     },
     goLicense() {
       this.$router.push({
