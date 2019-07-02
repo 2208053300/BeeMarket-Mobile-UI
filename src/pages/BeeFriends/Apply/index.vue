@@ -91,44 +91,6 @@
                 </p>
               </div>
             </div>
-
-            <div class="form-group">
-              <label for="comName"><span>*</span>微信号码</label>
-              <div class="form-control">
-                <input
-                  id="pwxAccount"
-                  v-model.trim="wx_account"
-                  type="text"
-                  name="wx_account"
-                  placeholder="（必填）"
-                  @input="changeWxAccount"
-                  @blur.prevent="blurScroll"
-                >
-                <p v-if="wx_accountError" class="help-text wx-tip">
-                  请重新输入微信号码！
-                </p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="brandName1"><span>*</span>联络地址</label>
-              <div class="form-control">
-                <textarea
-                  id="brandName1"
-                  v-model.trim="address"
-                  type="text"
-                  class="form-control"
-                  name="address"
-                  placeholder="请填写详细地址"
-                  @input="changeAddress"
-                  @blur.prevent="blurScroll"
-                />
-                <p v-if="addressError" class="help-text address-tip">
-                  地址不能为空!
-                </p>
-              </div>
-            </div>
-            <input id="token" type="hidden" value="{$token}">
-            <input type="hidden" name="type" value="1">
           </form>
         </div>
         <div class="submit">
@@ -192,10 +154,6 @@ export default {
       card_noError: false,
       number: '',
       numberError: false,
-      wx_account: '',
-      wx_accountError: false,
-      address: '',
-      addressError: false,
 
       // 是否同意 合伙人共创协议
       isAgree: true,
@@ -241,11 +199,8 @@ export default {
           this.card_no &&
           !this.card_noError &&
           this.number &&
-          !this.numberError &&
-          this.wx_account &&
-          !this.wx_accountError &&
-          this.address &&
-          !this.addressError
+          !this.numberError
+
       ) {
         // 验证通过
         if (this.isAgree) {
@@ -253,9 +208,8 @@ export default {
           const data = {
             name: this.personalName,
             card_no: this.card_no,
-            number: this.number,
-            wx_account: this.wx_account,
-            address: this.address
+            number: this.number
+
           }
           // 执行提交表单请求
           try {

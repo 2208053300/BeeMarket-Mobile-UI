@@ -274,18 +274,6 @@ export default {
       } else {
         //
       }
-    },
-    // 播放视频
-    play() {
-      this.$refs.video.play()
-      this.showControls = true
-    },
-    pause() {
-      this.$refs.video.pause()
-    },
-    handleCloseRule() {
-      this.showRule = false
-      this.pause()
     }
   }
 }
