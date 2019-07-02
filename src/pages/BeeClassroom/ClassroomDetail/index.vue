@@ -59,9 +59,9 @@
         </ul>
       </div>
     </div>
-    <div class="button-container">
+    <div v-if="showDownload" class="button-container">
       <div class="bottom-button">
-        <a :href="videoUrl">
+        <a :href="videoUrl" download="file.mp4">
           <van-button
             class="button"
             round
@@ -78,7 +78,7 @@
         </a>
       </div>
     </div>
-    <div style="padding: 0.72rem 0.3rem 0.2rem;">
+    <div :class="bottomImg">
       <img :src="beeIcon.classroom_pic_bg">
     </div>
   </div>
@@ -146,10 +146,21 @@ export default {
     },
     // 获取视频链接
     videoUrl() {
-      if (this.osObj.isIphone && this.osObj.isApp) {
+      if (this.osObj.isIphone) {
         return 'javascript:void(0);'
       } else {
         return this.detail.video_url
+      }
+    },
+    // 计算是否显示下载按钮
+    showDownload() {
+      return !(this.osObj.isIphone && !this.osObj.isApp)
+    },
+    // 根据是否显示下载按钮设置class样式
+    bottomImg() {
+      return {
+        'bottom-img': !this.showDownload,
+        'bottom-img-has-btn': this.showDownload
       }
     }
   },
@@ -363,6 +374,12 @@ export default {
         }
       }
     }
+  }
+  .bottom-img {
+    padding: 0.2rem 0.3rem;
+  }
+  .bottom-img-has-btn {
+    padding: 0.72rem 0.3rem 0.2rem;
   }
 }
 </style>
