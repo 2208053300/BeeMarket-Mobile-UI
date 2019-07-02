@@ -156,6 +156,7 @@ export default {
   props: {},
   data() {
     return {
+      title: '身份验证',
       // 姓名
       name: '',
       nameError: false,
@@ -230,6 +231,7 @@ export default {
         })
         if (res.status_code === 200) {
           this.status = 2
+          this.title = '提现'
         }
       } catch (error) {
         this.$toast(error)
@@ -416,7 +418,7 @@ export default {
   },
   meteInfo() {
     return {
-      title: '提现'
+      title: this.title
     }
   }
 }
@@ -600,6 +602,7 @@ export default {
     .input {
       font-size: 0.26rem;
       color: #333;
+
     }
     .get-code {
       border: none;
