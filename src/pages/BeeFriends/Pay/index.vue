@@ -383,7 +383,7 @@ export default {
           this.totalNum <= this.MAX_MONEY
         ) {
           this.isActive = true
-          this.money = this.totalNum
+          // this.money = this.totalNum
 
           this.cashTip = '可以提现！'
         } else if (this.totalNum > this.MAX_MONEY) {
