@@ -62,6 +62,7 @@
       >
     </div>
     <honeycomb
+      v-if="showComb"
       ref="honeycomb"
       :detail-card.sync="detailCard"
       :comb-data="combData"
@@ -177,7 +178,8 @@ export default {
       osObj: getOs(),
       showRule: false,
       showControls: false,
-      uid: 0
+      uid: 0,
+      showComb: false
     }
   },
   async beforeRouteEnter(to, from, next) {
@@ -233,14 +235,16 @@ export default {
     },
 
     async getPartnerData() {
+      this.showComb = false
       const res = await getPartner({ type: this.honeyType })
       this.partnerData = res.data
-      try {
-        await this.$refs.honeycomb.handleAction(50)
-      } catch (error) {
-        setTimeout(await this.$refs.honeycomb.handleAction(50), 3000)
-      }
-      await this.$refs.honeycomb.animateList()
+      this.showComb = true
+      // try {
+      //   await this.$refs.honeycomb.handleAction(50)
+      // } catch (error) {
+      //   setTimeout(await this.$refs.honeycomb.handleAction(50), 3000)
+      // }
+      // await this.$refs.honeycomb.animateList()
     },
     async getReceiveNumData() {
       try {

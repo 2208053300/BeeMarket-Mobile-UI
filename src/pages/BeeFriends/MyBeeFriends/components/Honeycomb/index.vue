@@ -95,6 +95,8 @@ export default {
       this.lastX = this.listX
       this.lastY = this.listY
     })
+    this.handleAction(50)
+    this.animateList()
   },
   methods: {
     // 计算总圈数
