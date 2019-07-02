@@ -6,7 +6,9 @@
   "author": "beeMarket",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build-prod": "vue-cli-service build",
+    "build-dev": "vue-cli-service build --mode development",
+    "test": "vue-cli-service build --development",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -21,6 +23,7 @@
     "js-base64": "^2.5.1",
     "js-cookie": "^2.2.0",
     "qs": "^6.7.0",
+    "serve": "^11.0.2",
     "url-parse": "^1.4.7",
     "vant": "^2.0.0",
     "video.js": "^7.5.4",

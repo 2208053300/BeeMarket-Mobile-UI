@@ -157,7 +157,6 @@ export default {
       },
       combData: [],
       can_receive_balance: 0,
-      countUpBalance: null,
       detailItem: {},
       delay: 1000,
       options: {
@@ -180,7 +179,11 @@ export default {
   async beforeRouteEnter(to, from, next) {
     await next(async vm => {
       // 通过 `vm` 访问组件实例
-      await vm.$store.dispatch('GerUserStatus')
+      try {
+        await vm.$store.dispatch('GerUserStatus')
+      } catch (error) {
+        console.log(error)
+      }
       // 0 非合伙人 1 合伙人 2 冻结
       if (vm.$store.state.user.userStatus === 0) {
         vm.$router.replace({ name: 'introduction' })
@@ -188,6 +191,10 @@ export default {
         vm.$router.push({ name: 'beeFriends' })
       } else if (vm.$store.state.user.userStatus === 2) {
         vm.$router.replace({ name: 'freeze' })
+      } else {
+        console.log('验证失败')
+        vm.$router.replace({ name: 'introduction' })
+        // vm.$router.go(-1)
       }
     })
   },
@@ -195,14 +202,6 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    // if (this.osObj.isIphone && this.osObj.isApp) {
-    //   // window.webkit.messageHandlers.clearHistory.postMessage({
-    //   //   url: window.location.href
-    //   // })
-    // } else if (this.osObj.isAndroid && this.osObj.isApp) {
-    //   window.beeMarket.setTitle('蜂友圈')
-    // }
-
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getPartnerData()
@@ -256,23 +255,22 @@ export default {
         this.showHoney = false
         setTimeout(() => {
           this.showHoney = true
-          this.countUpNum()
+          // this.partnerData.sup_balance += this.can_receive_balance
+          this.partnerData.sup_balance = 100
+          this.can_receive_balance = 0
         }, 3000)
       }
     },
-    countUpNum() {
-      this.countUpBalance.start()
-    },
     // 清除历史
-    clearHistory() {
+    async clearHistory() {
       if (this.osObj.isWx) {
-      //
+        //
       } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.clearHistory.postMessage({
+        await window.webkit.messageHandlers.clearHistory.postMessage({
           url: window.location.href
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
-        window.beeMarket.clearHistory()
+        await window.beeMarket.clearHistory()
       } else {
         //
       }

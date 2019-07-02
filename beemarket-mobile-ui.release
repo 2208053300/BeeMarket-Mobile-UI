@@ -4,7 +4,7 @@
 code.language=node8.x
 
 # 添加 --production 为发布环境
-build.command=yarn config set registry http://registry.npm.taobao.org && yarn install --force && yarn build --fix
+build.command=yarn config set registry http://registry.npm.taobao.org && yarn install --force && yarn ${PACKAGE_LABEL} --fix
 
 # 应用部署脚本
 deploy.appctl.path=deploy.sh

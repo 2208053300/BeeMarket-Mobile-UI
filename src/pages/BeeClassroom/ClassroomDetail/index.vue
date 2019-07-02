@@ -61,10 +61,11 @@
     </div>
     <div class="button-container">
       <div class="bottom-button">
-        <a :href="detail.video_url">
+        <a :href="videoUrl">
           <van-button
             class="button"
             round
+            @click="downVideo"
           >
             <div class="img-content">
               <img
@@ -88,7 +89,6 @@ import { getUID } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import { isLogin } from '@/utils/auth'
 import wxapi from '@/utils/wxapi'
-
 export default {
   metaInfo: {
     title: '课堂详情'
@@ -143,6 +143,14 @@ export default {
       ]
       const id = parseInt(this.$route.params.id)
       return list.filter(item => item.id !== id)
+    },
+    // 获取视频链接
+    videoUrl() {
+      if (this.osObj.isIphone && this.osObj.isApp) {
+        return 'javascript:void(0);'
+      } else {
+        return this.detail.video_url
+      }
     }
   },
   watch: {},
@@ -154,26 +162,10 @@ export default {
 
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare
-    if (this.osObj.isWx) {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
-    } else if (this.osObj.isIphone && this.osObj.isApp) {
+    if (this.osObj.isIphone && this.osObj.isApp) {
       window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
     } else if (this.osObj.isAndroid && this.osObj.isApp) {
       window.beeMarket.showShareIcon(true)
-    } else {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
     }
   },
   methods: {
@@ -208,8 +200,6 @@ export default {
           'https://img.fengjishi.com/app/images/share_logo.png',
           this.getShareLink()
         )
-      } else {
-        //
       }
     },
     async loadUID() {
@@ -227,8 +217,15 @@ export default {
         this.$toast(error)
       }
     },
-    // 去蜂友圈
-    downVideo() {},
+    // 去下载视频
+    downVideo() {
+      // 如果是苹果APP则调用APP接口下载
+      if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToDownloadVideo.postMessage({
+          url: this.detail.video_url
+        })
+      }
+    },
     // 跳转到需要登录的路由
     async authRoute(path) {
       if (!(await isLogin())) {

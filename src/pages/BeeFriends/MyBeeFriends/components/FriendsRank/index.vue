@@ -279,7 +279,7 @@ export default {
           window.webkit.messageHandlers.ToShare.postMessage({
             title: '蜂集市-蜂友圈',
             desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-            imgUrl: 'https://img.fengjishi.com/app/images/share_logo.png',
+            img_path: 'https://img.fengjishi.com/app/images/share_logo.png',
             link: this.getShareLink()
           })
           // android
@@ -312,7 +312,7 @@ export default {
           window.webkit.messageHandlers.ToShare.postMessage({
             title: '蜂集市-蜂友圈',
             desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-            imgUrl: 'https://img.fengjishi.com/app/images/share_logo.png',
+            img_path: 'https://img.fengjishi.com/app/images/share_logo.png',
             link: `http://app.fengjishi.com/beeFactory#/?uid=${this.uid}`
           })
         } else if (this.osObj.isAndroid && this.osObj.isApp) {

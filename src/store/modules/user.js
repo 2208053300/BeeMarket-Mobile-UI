@@ -63,7 +63,9 @@ const user = {
     },
     async GerUserStatus({ commit }) {
       const res = await isPartner()
-      commit('SET_USER_STATUS', res.data.is_partner)
+      if (res.status_code === 200) {
+        commit('SET_USER_STATUS', res.data.is_partner)
+      }
     },
     async GetUid({ commit }) {
       const res = await getUID()

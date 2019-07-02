@@ -64,26 +64,26 @@ service.interceptors.request.use(
 )
 
 service.interceptors.response.use(
-  response => {
+  async response => {
     Toast.clear()
     console.log(response)
     if (response.headers['bm-app-token']) {
-      setToken(response.headers['bm-app-token'])
+      await setToken(response.headers['bm-app-token'])
     }
     if (response.headers['bm-verify-ver']) {
-      setVerify(response.headers['bm-verify-ver'])
+      await setVerify(response.headers['bm-verify-ver'])
     }
     const res = response.data
     if (res.code !== 1) {
       if (res.status_code === 400 && res.message === '获取用户信息失败') {
-        checkToken()
+        await checkToken()
       }
       if (res.status_code === 403) {
         // Toast('登录信息失效')
         // 清理登录信息并跳转到登录页面
-        removeToken()
-        store.commit('CLEAR_USER_INFO')
-        checkToken()
+        await removeToken()
+        await store.commit('CLEAR_USER_INFO')
+        await checkToken()
       }
       return Promise.reject(res.message || 'error')
     } else {
