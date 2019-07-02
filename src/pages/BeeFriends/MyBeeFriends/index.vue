@@ -28,11 +28,14 @@
         :style="{backgroundImage:'url('+beeIcon.bee_firend_icon_gold_top+')'}"
         @click="showProject=true"
       >
-        <ICountUp
-          :delay="delay"
-          :end-val="Number(partnerData.sup_balance)"
-          :options="options"
-        />
+        <template v-if="Number(partnerData.sup_balance)<1000">
+          <ICountUp
+            :delay="delay"
+            :end-val="omitNumber(partnerData.sup_balance)"
+            :options="options"
+          />
+        </template>
+        <span v-else>{{ omitNumber(partnerData.sup_balance) }}</span>
       </div>
     </div>
     <div
@@ -231,7 +234,7 @@ export default {
     async getPartnerData() {
       const res = await getPartner({ type: this.honeyType })
       this.partnerData = res.data
-      await this.$refs.honeycomb.handleAction(res.data.show_users2.length)
+      await this.$refs.honeycomb.handleAction(50)
       await this.$refs.honeycomb.animateList()
     },
     async getReceiveNumData() {
@@ -255,9 +258,10 @@ export default {
         this.showHoney = false
         setTimeout(() => {
           this.showHoney = true
-          // this.partnerData.sup_balance += this.can_receive_balance
-          this.partnerData.sup_balance = 100
-          this.can_receive_balance = 0
+          this.partnerData.sup_balance =
+            Number(this.partnerData.sup_balance) +
+            Number(this.can_receive_balance)
+          this.getReceiveNumData()
         }, 3000)
       }
     },
@@ -273,6 +277,25 @@ export default {
         await window.beeMarket.clearHistory()
       } else {
         //
+      }
+    },
+    // 播放视频
+    play() {
+      this.$refs.video.play()
+      this.showControls = true
+    },
+    pause() {
+      this.$refs.video.pause()
+    },
+    handleCloseRule() {
+      this.showRule = false
+      this.pause()
+    },
+    omitNumber(val) {
+      if (Number(val) > 1000) {
+        return Math.round(Number(val) / 1000) + 'K'
+      } else {
+        return Number(val)
       }
     }
   }

@@ -12,6 +12,7 @@
       >
         <div
           v-for="(item2,index2) in item"
+          :id="'hexagon'+item2.id"
           :key="index2"
           :ref="'hexagon'+item2.id"
           :class="[{showitem:showList.indexOf(item2.id)!==-1&&item2.nickname&&checkOverflow('hexagon'+item2.id)},{firstItem:item2.id===config.center_point.id},{partnerItem:item2.is_partner}]"
@@ -277,12 +278,13 @@ export default {
       }, 100)
     },
     showDetail(item) {
-      this.$emit('update:detailCard', true)
-      this.$emit('update:detailItem', item)
+      if ('user_id' in item) {
+        this.$emit('update:detailCard', true)
+        this.$emit('update:detailItem', item)
+      }
     },
     // REVIEW 判断是否超出屏幕
     checkOverflow(val) {
-      console.log(this.$refs[val][0])
       const hrect = this.$refs[val][0].getBoundingClientRect()
       // 六边形XY轴
       const hTop = hrect.y || hrect.top
