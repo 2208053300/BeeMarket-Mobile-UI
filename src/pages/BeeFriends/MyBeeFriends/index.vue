@@ -208,13 +208,12 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    // this.getPartnerData()
+    this.getPartnerData()
     // FIXME ios bug暂时无解
     try {
-      // setTimeout(this.getPartnerData(), 3000)
-      this.getPartnerData()
+      setTimeout(this.getPartnerData(), 3000)
     } catch (error) {
-      alert(error)
+      //
     }
     this.getReceiveNumData()
     this.clearHistory()
@@ -236,7 +235,11 @@ export default {
     async getPartnerData() {
       const res = await getPartner({ type: this.honeyType })
       this.partnerData = res.data
-      await this.$refs.honeycomb.handleAction(50)
+      try {
+        await this.$refs.honeycomb.handleAction(50)
+      } catch (error) {
+        setTimeout(await this.$refs.honeycomb.handleAction(50), 3000)
+      }
       await this.$refs.honeycomb.animateList()
     },
     async getReceiveNumData() {
