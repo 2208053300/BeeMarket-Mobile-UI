@@ -255,8 +255,8 @@ export default {
         this.showHoney = false
         setTimeout(() => {
           this.showHoney = true
-          this.partnerData.sup_balance += this.can_receive_balance
-          console.log(this.partnerData.sup_balance)
+          // this.partnerData.sup_balance += this.can_receive_balance
+          this.partnerData.sup_balance = 100
           this.can_receive_balance = 0
         }, 3000)
       }
