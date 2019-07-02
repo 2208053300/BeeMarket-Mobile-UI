@@ -53,6 +53,8 @@
 import { getOs } from '@/utils'
 // import Cookies from 'js-cookie'
 import { activityDetail } from '@/api/BeeApi/action'
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
 
 export default {
   metaInfo() {
@@ -165,11 +167,23 @@ export default {
     async getActivityDetailData() {
       const res = await activityDetail({ id: this.$route.query.id })
       this.activity = res.data
+      this.loadUID()
       if (this.activity.navigate_data.length > 1) {
         console.log('需要监听滚动')
-
         document.addEventListener('scroll', this.scrollCallback, false)
       }
+    },
+    // 微信分享
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+
+      wxapi.wxShare({
+        title: this.activity.share_data.title,
+        desc: this.activity.share_data.desc,
+        imgUrl: this.activity.share_data.img,
+        link: this.activity.share_data.link
+      })
     },
     test() {
       console.log('gundnggg')
@@ -330,13 +344,7 @@ export default {
     // 分享
     appShare() {
       if (this.osObj.isWx) {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
+      //
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToShare.postMessage({
           title: this.activity.share_data.title,
@@ -355,13 +363,7 @@ export default {
           // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
         )
       } else {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
+        //
       }
     }
 
