@@ -1,13 +1,9 @@
 <template>
   <div class="bee-category">
-    <van-nav-bar
-      fixed
-      class="search-bar"
-    >
+    <van-nav-bar fixed class="search-bar">
       <van-search
         slot="title"
         v-model="searchKey"
-        v-focus
         :input-align="searchAlign"
         :show-action="searchStatus"
         :class="{ searchIcon: searchStatus && searchKey === '' }"
@@ -77,15 +73,6 @@ export default {
     searchGuess,
     ProductsList
   },
-  directives: {
-    focus: {
-      inserted: function(el, { value }) {
-        if (value) {
-          el.focus()
-        }
-      }
-    }
-  },
   props: {},
   data() {
     return {
@@ -146,6 +133,7 @@ export default {
     if (searchHistory) {
       this.searchHistory = searchHistory.split(',')
     }
+    document.querySelector('.van-field__control').focus()
   },
   methods: {
     // NOTE 当点击搜索栏时，更改样式
@@ -221,6 +209,7 @@ export default {
         }, wait)
       }
     }
+
   }
 }
 </script>
@@ -228,9 +217,7 @@ export default {
 <style  lang="less">
 .bee-category {
   height: 100%;
-  .search-bar {
-    top: 46px;
-  }
+  .search-bar{top: 46px}
   .van-nav-bar__title {
     max-width: 6.24rem;
   }

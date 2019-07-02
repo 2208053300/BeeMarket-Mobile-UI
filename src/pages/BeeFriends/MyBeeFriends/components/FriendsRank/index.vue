@@ -201,8 +201,9 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.loadUID()
     if (this.osObj.isWx) {
-      this.loadUID()
+      // this.loadUID()
     } else if (this.osObj.isIphone && this.osObj.isApp) {
       window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
     } else if (this.osObj.isAndroid && this.osObj.isApp) {
