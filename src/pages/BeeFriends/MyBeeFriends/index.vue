@@ -157,7 +157,6 @@ export default {
       },
       combData: [],
       can_receive_balance: 0,
-      countUpBalance: null,
       detailItem: {},
       delay: 1000,
       options: {
@@ -257,13 +256,10 @@ export default {
         setTimeout(() => {
           this.showHoney = true
           this.partnerData.sup_balance += this.can_receive_balance
+          console.log(this.partnerData.sup_balance)
           this.can_receive_balance = 0
-          this.countUpNum()
         }, 3000)
       }
-    },
-    countUpNum() {
-      this.countUpBalance.start()
     },
     // 清除历史
     async clearHistory() {
