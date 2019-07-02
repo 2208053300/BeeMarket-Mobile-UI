@@ -2,10 +2,10 @@
   <div>
     <van-cell-group>
       <van-cell
-        v-for="item in guessData"
-        :key="item.id"
-        :title="item.name"
-        @click="confirmSearch(item.name)"
+        v-for="(item,index) in guessData"
+        :key="index"
+        :title="item"
+        @click="confirmSearch(item)"
       />
       <!-- :value="item.name" -->
     </van-cell-group>

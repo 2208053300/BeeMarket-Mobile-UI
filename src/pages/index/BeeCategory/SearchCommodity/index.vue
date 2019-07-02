@@ -1,6 +1,6 @@
 <template>
   <div class="bee-category">
-    <van-nav-bar fixed>
+    <van-nav-bar fixed class="search-bar">
       <van-search
         slot="title"
         v-model="searchKey"
@@ -18,17 +18,32 @@
           :name="beeIcon.nav_icon_search"
           :color="Grey1"
         />
-        <van-button v-if="!searchKey" slot="action" type="default" class="cancel-search" @click="cancelSearch">
+        <van-button
+          v-if="!searchKey"
+          slot="action"
+          type="default"
+          class="cancel-search"
+          @click="cancelSearch"
+        >
           取消
         </van-button>
-        <van-button v-else slot="action" type="default" class="cancel-search" @click="getConfirmWold(searchKey)">
+        <van-button
+          v-else
+          slot="action"
+          type="default"
+          class="cancel-search"
+          @click="getConfirmWold(searchKey)"
+        >
           搜索
         </van-button>
       </van-search>
     </van-nav-bar>
     <div class="category-container">
       <!-- 搜索历史 为您推荐 -->
-      <search-keyword v-show="searchStatus && searchKey === ''" :search-history="searchHistory" />
+      <search-keyword
+        v-show="searchStatus && searchKey === ''"
+        :search-history="searchHistory"
+      />
       <!-- 搜索建议 -->
       <search-guess
         v-show="isShowGuess && isShowGuess1 && searchKey !== ''"
@@ -37,7 +52,11 @@
         @getConfirmWold="getConfirmWold"
       />
       <!-- 搜索的商品列表 -->
-      <ProductsList v-show="isShowProductList " ref="ProductsList" class="bg-white" />
+      <ProductsList
+        v-show="isShowProductList"
+        ref="ProductsList"
+        class="bg-white"
+      />
     </div>
   </div>
 </template>
@@ -197,12 +216,13 @@ export default {
 <style  lang="less">
 .bee-category {
   height: 100%;
+  .search-bar{top: 46px}
   .van-nav-bar__title {
     max-width: 6.24rem;
   }
 
   .van-search {
-    padding:  0;
+    padding: 0;
     .van-search__content--round {
       border: 0.02rem solid @Grey6;
       background-color: @Grey5;
@@ -215,7 +235,6 @@ export default {
       color: @Grey1;
       font-size: 0.28rem;
       border: none;
-
     }
     .van-cell {
       align-items: center;
