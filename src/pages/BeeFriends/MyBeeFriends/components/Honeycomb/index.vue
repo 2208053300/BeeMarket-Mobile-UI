@@ -282,6 +282,7 @@ export default {
     },
     // REVIEW 判断是否超出屏幕
     checkOverflow(val) {
+      console.log(this.$refs[val][0])
       const hrect = this.$refs[val][0].getBoundingClientRect()
       // 六边形XY轴
       const hTop = hrect.y || hrect.top

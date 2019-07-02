@@ -1,5 +1,4 @@
 import { getOs } from '@/utils'
-// import { Base64 } from 'js-base64'
 import Cookies from 'js-cookie'
 import { auditWechat } from '@/api/BeeApi/auth'
 import { GetRequest, getQueryString } from '@/utils/index'
@@ -14,21 +13,29 @@ export async function getToken() {
   // 微信授权登录
   if (osObj.isWx) {
     const token = localStorage.getItem('BM-App-Token')
+    // 如果微信链接带CODE
     const uriProp = GetRequest('code')
     const uid = getQueryString('uid')
     if (!uriProp && token === null) {
       await checkToken()
     }
     // 如果TOKEN超过三天
-    const timestamp = new Date().getTime()
+    const timestamp = Math.round(new Date().getTime() / 1000)
     const timestamp2 = localStorage.getItem('BM-Token-Time') || 0
     if (timestamp > timestamp2) {
       localStorage.setItem('BM-Token-Time', timestamp + 259200)
       localStorage.setItem('BM-App-Token', 'waiting')
-      await checkToken()
+      await auditWechat({ code: uriProp, uid: uid })
+      // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
+      if (localStorage.getItem('BM-App-Token') === 'waiting') {
+        console.log('微信授权失败，code')
+        await checkToken()
+      }
     }
+    // 正常流程，直接返回token
     if (token && token !== 'waiting') {
       return token
+      // 正常授权流程，直接跳转获取token
     } else if (uriProp && token !== 'waiting') {
       localStorage.setItem('BM-App-Token', 'waiting')
       await auditWechat({ code: uriProp, uid: uid })
@@ -82,7 +89,7 @@ export function checkToken() {
 // 设置Token
 // REVIEW sessionStorage才会在关闭浏览器的时候被清除
 export function setToken(Token) {
-  const timestamp = new Date().getTime()
+  const timestamp = Math.round(new Date().getTime() / 1000)
   localStorage.setItem('BM-Token-Time', timestamp + 259200)
   return localStorage.setItem('BM-App-Token', Token)
 }
