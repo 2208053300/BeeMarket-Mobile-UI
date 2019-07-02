@@ -38,7 +38,8 @@ export default {
   },
   data() {
     return {
-      osObj: getOs()
+      osObj: getOs(),
+      uid: 0
     }
   },
   mounted() {
