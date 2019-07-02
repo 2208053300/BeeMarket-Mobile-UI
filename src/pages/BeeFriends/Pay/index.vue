@@ -378,7 +378,6 @@ export default {
       if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
         this.isActive = true
       } else {
-        this.$toast('每天只能提现一次，一次至少100元，最多1000元!')
         this.isActive = false
       }
 
