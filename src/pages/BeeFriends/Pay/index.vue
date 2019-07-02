@@ -200,7 +200,7 @@ export default {
         this.adjustMoney()
         // this.money = parseInt(this.money)
         // console.log(this.money)
-      }, 300)
+      }, 500)
     }
   },
   created() {},
@@ -375,6 +375,9 @@ export default {
       // 只判断是否在最大最小范围内
       if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
         this.isActive = true
+      } else {
+        this.$toast('每天只能提现一次，一次至少100元，最多1000元!')
+        this.isActive = false
       }
 
       // 判断金额是否在范围内
