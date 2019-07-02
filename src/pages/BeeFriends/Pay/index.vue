@@ -372,38 +372,43 @@ export default {
         }
         this.money = +value
       }
-      // 判断金额是否在范围内
-      if (this.money >= this.totalNum) {
-        this.money = this.totalNum
-        if (this.totalNum < this.MIN_MONEY) {
-          this.isActive = false
-          this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
-        } else if (
-          this.totalNum >= this.MIN_MONEY &&
-          this.totalNum <= this.MAX_MONEY
-        ) {
-          this.isActive = true
-          // this.money = this.totalNum
-
-          this.cashTip = '可以提现！'
-        } else if (this.totalNum > this.MAX_MONEY) {
-          this.isActive = true
-          this.money = this.MAX_MONEY
-          this.cashTip = '可以提现！'
-        }
-      } else {
-        if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
-          this.isActive = true
-          this.cashTip = '可以提现！'
-        } else if (this.money > this.MAX_MONEY) {
-          this.isActive = true
-          this.money = this.MAX_MONEY
-          this.cashTip = '提现金额至多' + this.MAX_MONEY + '!'
-        } else if (this.money < this.MIN_MONEY) {
-          this.isActive = false
-          this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
-        }
+      // 只判断是否在最大最小范围内
+      if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
+        this.isActive = true
       }
+
+      // 判断金额是否在范围内
+      // if (this.money >= this.totalNum) {
+      //   this.money = this.totalNum
+      //   if (this.totalNum < this.MIN_MONEY) {
+      //     this.isActive = false
+      //     this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
+      //   } else if (
+      //     this.totalNum >= this.MIN_MONEY &&
+      //     this.totalNum <= this.MAX_MONEY
+      //   ) {
+      //     this.isActive = true
+      //     // this.money = this.totalNum
+
+      //     this.cashTip = '可以提现！'
+      //   } else if (this.totalNum > this.MAX_MONEY) {
+      //     this.isActive = true
+      //     this.money = this.MAX_MONEY
+      //     this.cashTip = '可以提现！'
+      //   }
+      // } else {
+      //   if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
+      //     this.isActive = true
+      //     this.cashTip = '可以提现！'
+      //   } else if (this.money > this.MAX_MONEY) {
+      //     this.isActive = true
+      //     this.money = this.MAX_MONEY
+      //     this.cashTip = '提现金额至多' + this.MAX_MONEY + '!'
+      //   } else if (this.money < this.MIN_MONEY) {
+      //     this.isActive = false
+      //     this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
+      //   }
+      // }
     }
   },
   meteInfo() {
