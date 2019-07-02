@@ -220,6 +220,7 @@ export default {
       } else {
         this.finished = false
       }
+      this.page = 2
     },
     async remindLoginData(id) {
       try {
@@ -455,7 +456,7 @@ export default {
         overflow-y: scroll;
         height: 6.5rem;
         .friends-cell {
-          border-top: 0.02rem solid @Grey6;
+          border-bottom: 0.02rem solid @Grey6;
           height: 1.32rem;
           box-sizing: border-box;
           padding: 0.2rem 0.4rem 0.18rem 0.54rem;

@@ -93,7 +93,7 @@ service.interceptors.response.use(
   },
   error => {
     Toast.clear()
-    Toast.fail(error)
+    Toast.fail('服务器错误！')
     return Promise.reject(error)
   }
 )
