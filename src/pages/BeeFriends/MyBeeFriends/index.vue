@@ -18,6 +18,7 @@
             <img
               :src="partnerData.user_head||$store.state.app.head_detault"
               alt="头像"
+              :onerror="$store.state.app.head_detault"
             >
           </div>
         </div>
@@ -207,12 +208,13 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getPartnerData()
+    // this.getPartnerData()
     // FIXME ios bug暂时无解
     try {
-      setTimeout(this.getPartnerData(), 3000)
+      // setTimeout(this.getPartnerData(), 3000)
+      this.getPartnerData()
     } catch (error) {
-      //
+      alert(error)
     }
     this.getReceiveNumData()
     this.clearHistory()

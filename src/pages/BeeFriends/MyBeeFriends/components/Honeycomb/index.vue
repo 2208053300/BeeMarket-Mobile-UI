@@ -26,6 +26,7 @@
               <img
                 :src="item2.head_image_url||$store.state.app.head_detault"
                 alt=""
+                :onerror="$store.state.app.head_detault"
               >
             </div>
           </div>
