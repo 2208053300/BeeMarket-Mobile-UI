@@ -293,7 +293,7 @@ export default {
     },
     omitNumber(val) {
       if (Number(val) > 1000) {
-        return Math.round(Number(val) / 1000) + 'K'
+        return Math.floor(Number(val) / 10) / 100 + 'K'
       } else {
         return Number(val)
       }

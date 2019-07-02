@@ -22,7 +22,7 @@ export async function getToken() {
     // 如果TOKEN超过三天
     const timestamp = Math.round(new Date().getTime() / 1000)
     const timestamp2 = localStorage.getItem('BM-Token-Time') || 0
-    if (timestamp > timestamp2 && uriProp) {
+    if (timestamp > timestamp2 && uriProp && timestamp2) {
       localStorage.setItem('BM-Token-Time', timestamp + 259200)
       localStorage.setItem('BM-App-Token', 'waiting')
       await auditWechat({ code: uriProp, uid: uid })
