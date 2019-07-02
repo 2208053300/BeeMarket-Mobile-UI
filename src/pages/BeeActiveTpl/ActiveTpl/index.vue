@@ -139,27 +139,13 @@ export default {
     window.appShare = this.appShare
 
     if (this.osObj.isWx) {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
-
+    //
     } else if (this.osObj.isIphone && this.osObj.isApp) {
       window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
     } else if (this.osObj.isAndroid && this.osObj.isApp) {
       window.beeMarket.showShareIcon(true)
     } else {
-      // this.$router.push({
-      //   path: '/category/details',
-      //   query: {
-      //     pid,
-      //     target
-      //   }
-      // })
-
+      //
     }
   },
   methods: {
