@@ -23,6 +23,9 @@
   </div>
 </template>
 <script>
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
+import { getOs } from '@/utils'
 import BeeHeader from '@/components/index/BeeHeader'
 import BeeFooter from '@/components/index/BeeFooter'
 export default {
@@ -34,9 +37,33 @@ export default {
     BeeFooter
   },
   data() {
-    return {}
+    return {
+      osObj: getOs()
+    }
   },
-  mounted() {}
+  mounted() {
+    this.loadUID()
+  },
+  methods: {
+    // 获取uid
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+      if (this.osObj.isWx) {
+        wxapi.wxShare({
+          title: '蜂集市',
+          desc: '蜂集市，让生活蜂富起来！',
+          imgUrl:
+            'https://img.fengjishi.com/app/images/share_logo.png',
+          link: this.getShareLink()
+        })
+      }
+    },
+    // 拼接链接
+    getShareLink() {
+      return `https://app.fengjishi.com/#/?uid=${this.uid}`
+    }
+  }
 }
 </script>
 
