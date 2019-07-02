@@ -565,6 +565,9 @@ export default {
   .van-cell__title, .van-cell__value {
     flex:auto
 }
+  .van-cell__title{
+    span{width: 100%}
+  }
   .van-field__control {
     border-radius: 0.05rem;
     width: 3.8rem;
@@ -807,6 +810,9 @@ export default {
     color: red;
     margin-top: 0.1rem;
     display: none;
+  }
+  .van-uploader{
+    width: 4rem
   }
 }
 </style>
