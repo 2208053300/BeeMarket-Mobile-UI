@@ -179,7 +179,7 @@ export default {
       }
     }
   },
-  meteInfo() {
+  metaInfo() {
     return {
       title: '蜂友圈已冻结'
     }

@@ -43,7 +43,7 @@ export default {
       })
     }
   },
-  meteInfo() {
+  metaInfo() {
     return {
       title: '助力成功'
     }

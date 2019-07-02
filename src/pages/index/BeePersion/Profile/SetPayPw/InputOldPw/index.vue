@@ -67,7 +67,7 @@ export default {
       this.value = this.value.slice(0, this.value.length - 1)
     }
   },
-  meteInfo() {
+  metaInfo() {
     return {
 
       title: '设置支付密码'

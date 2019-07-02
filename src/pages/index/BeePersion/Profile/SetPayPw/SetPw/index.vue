@@ -110,7 +110,7 @@ export default {
     }
 
   },
-  meteInfo() {
+  metaInfo() {
     return {
 
       title: '设置支付密码'

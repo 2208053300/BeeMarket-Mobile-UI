@@ -164,7 +164,7 @@ export default {
       })
     }
   },
-  meteInfo() {
+  metaInfo() {
     return {
       title: this.title
     }

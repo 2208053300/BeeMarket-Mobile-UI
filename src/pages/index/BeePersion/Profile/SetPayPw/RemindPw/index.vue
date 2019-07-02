@@ -46,7 +46,7 @@ export default {
   methods: {
 
   },
-  meteInfo() {
+  metaInfo() {
     return {
 
       title: '设置支付密码'

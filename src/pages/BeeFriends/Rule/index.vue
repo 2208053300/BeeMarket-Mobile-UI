@@ -96,7 +96,7 @@ export default {
       this.$refs.video.pause()
     }
   },
-  meteInfo() {
+  metaInfo() {
     return {
 
       title: '蜂友圈'

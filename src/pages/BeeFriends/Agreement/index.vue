@@ -84,7 +84,7 @@ export default {
     this.$store.state.app.beeFooter.show = false
   },
   methods: {},
-  meteInfo() {
+  metaInfo() {
     return {
       title: '合伙人共创协议'
     }

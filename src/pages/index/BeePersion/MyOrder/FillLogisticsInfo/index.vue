@@ -115,7 +115,7 @@ export default {
       this.showModal = false
     }
   },
-  meteInfo() {
+  metaInfo() {
     return {
       title: '填写物流信息'
     }

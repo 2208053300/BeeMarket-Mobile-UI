@@ -152,6 +152,11 @@ import {
 } from '@/api/BeeApi/user'
 
 export default {
+  metaInfo() {
+    return {
+      title: this.title
+    }
+  },
   components: {},
   props: {},
   data() {
@@ -357,6 +362,7 @@ export default {
     // 关闭弹出
     closed() {
       this.sms = ''
+      this.countDown = 0
     },
     // 调整金额
     adjustMoney() {
@@ -414,12 +420,8 @@ export default {
       //   }
       // }
     }
-  },
-  meteInfo() {
-    return {
-      title: this.title
-    }
   }
+
 }
 </script>
 
