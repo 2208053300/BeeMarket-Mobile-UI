@@ -1,11 +1,17 @@
 <template>
   <div class="pay">
     <!-- 身份认证 -->
-    <div v-if="status === 1" class="auth">
+    <div
+      v-if="status === 1"
+      class="auth"
+    >
       <p class="title">
         请填写真实的个人信息
       </p>
-      <form id="formInfo" class="auth-form">
+      <form
+        id="formInfo"
+        class="auth-form"
+      >
         <div class="form-box bg-white">
           <div class="form-group">
             <label for="user_name">用户姓名</label>
@@ -17,7 +23,10 @@
                 placeholder="请填写真实姓名"
                 @input="valiName()"
               >
-              <p v-show="nameError" class="error name-error">
+              <p
+                v-show="nameError"
+                class="error name-error"
+              >
                 请正确输入姓名！
               </p>
             </div>
@@ -33,7 +42,10 @@
                 value=""
                 @input="valiIdNo()"
               >
-              <p v-show="idNoError" class="error id-error">
+              <p
+                v-show="idNoError"
+                class="error id-error"
+              >
                 请正确输入身份证号码！
               </p>
               <!--<img src="/static/src/Img/icon_close.png" class="clear-img"/>-->
@@ -47,14 +59,21 @@
       </form>
       <div class="text-center">
         <!-- <van-button type="buttom" class="submit-btn active" :disabled="!valiName() && !valiIdNo()"> -->
-        <van-button type="buttom" class="submit-btn active" @click="submitFir">
+        <van-button
+          type="buttom"
+          class="submit-btn active"
+          @click="submitFir"
+        >
           下一步
         </van-button>
       </div>
     </div>
 
     <!-- 提现到微信 -->
-    <div v-else class="to-cash">
+    <div
+      v-else
+      class="to-cash"
+    >
       <div class="info">
         <div class="to-wx">
           <span>提现到微信</span>
@@ -81,7 +100,10 @@
               <span>最多可提现余额<span id="num">{{ totalNum }}</span>元</span>
               <span class="error to-cash-error">{{ cashTip }}</span>
             </p>
-            <span class="all-to-cash" @click="money = totalNum">全部提现</span>
+            <span
+              class="all-to-cash"
+              @click="money = totalNum"
+            >全部提现</span>
           </div>
         </div>
       </div>
@@ -102,7 +124,10 @@
     </div>
 
     <!-- 短信验证码 -->
-    <van-popup v-model="show" @closed="closed">
+    <van-popup
+      v-model="show"
+      @closed="closed"
+    >
       <div class="sms bg-white">
         <p class="sms-tip text-center">
           请输入{{ phone }}的短信验证码
@@ -126,14 +151,25 @@
               class="text1"
               :class="{ text2: checkPhoneRight() }"
             >获取验证码</span>
-            <span v-else class="text3">({{ countDown }}s)</span>
+            <span
+              v-else
+              class="text3"
+            >({{ countDown }}s)</span>
           </van-button>
         </div>
         <div class="btn-group flex flex-column  align-center">
-          <van-button round class="btn comfirm-btn" @click="confirmSubmit">
+          <van-button
+            round
+            class="btn comfirm-btn"
+            @click="confirmSubmit"
+          >
             确定
           </van-button>
-          <van-button round class="btn cancel" @click="show = false">
+          <van-button
+            round
+            class="btn cancel"
+            @click="show = false"
+          >
             取消
           </van-button>
         </div>
@@ -144,15 +180,13 @@
 
 <script>
 import { getOs } from '@/utils'
-
-import {
-  getWithdrawNum,
-  toCash,
-  getMobile
-} from '@/api/BeeApi/user'
+import vueTencentCaptcha from '@carpenter/vue-tencent-captcha'
+import { getWithdrawNum, toCash, getMobile } from '@/api/BeeApi/user'
 
 export default {
-  components: {},
+  components: {
+    vueTencentCaptcha
+  },
   props: {},
   data() {
     return {
@@ -254,7 +288,11 @@ export default {
           })
           if (res1.status_code === 200) {
             this.show = true
-            this.getSms()
+            if (this.isActive) {
+              this.getSms()
+            } else {
+              this.$toast('提现金额不规范！')
+            }
           }
         } catch (error) {
           this.$toast(error)
@@ -264,12 +302,14 @@ export default {
     // 第三步 获取短信验证码
     async getSms() {
       try {
-        const res = await toCash({
-          status: 3
-        })
-        if (res.status_code === 200) {
-          this.$toast(res.message)
-          this.changeCountDoen()
+        if (this.countDown <= 0) {
+          const res = await toCash({
+            status: 3
+          })
+          if (res.status_code === 200) {
+            this.$toast(res.message)
+            this.changeCountDoen()
+          }
         }
       } catch (error) {
         this.$toast(error)
@@ -358,57 +398,12 @@ export default {
     },
     // 调整金额
     adjustMoney() {
-      let value = this.money.toString()
-      console.log(value, typeof value)
-
-      // 是小数
-      if (value.indexOf('.') !== -1) {
-        var str = value.split('.')
-        var intNum = str[0]
-        var floatNum = str[1]
-        if (floatNum.length > 2) {
-          floatNum = floatNum.substr(0, 2)
-          value = intNum + '.' + floatNum
-        }
-        this.money = +value
-      }
+      const value = this.money.toString()
+      this.money = Number(Number(this.money).toFixed())
       // 只判断是否在最大最小范围内
       if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
         this.isActive = true
       }
-
-      // 判断金额是否在范围内
-      // if (this.money >= this.totalNum) {
-      //   this.money = this.totalNum
-      //   if (this.totalNum < this.MIN_MONEY) {
-      //     this.isActive = false
-      //     this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
-      //   } else if (
-      //     this.totalNum >= this.MIN_MONEY &&
-      //     this.totalNum <= this.MAX_MONEY
-      //   ) {
-      //     this.isActive = true
-      //     // this.money = this.totalNum
-
-      //     this.cashTip = '可以提现！'
-      //   } else if (this.totalNum > this.MAX_MONEY) {
-      //     this.isActive = true
-      //     this.money = this.MAX_MONEY
-      //     this.cashTip = '可以提现！'
-      //   }
-      // } else {
-      //   if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
-      //     this.isActive = true
-      //     this.cashTip = '可以提现！'
-      //   } else if (this.money > this.MAX_MONEY) {
-      //     this.isActive = true
-      //     this.money = this.MAX_MONEY
-      //     this.cashTip = '提现金额至多' + this.MAX_MONEY + '!'
-      //   } else if (this.money < this.MIN_MONEY) {
-      //     this.isActive = false
-      //     this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
-      //   }
-      // }
     }
   },
   meteInfo() {
@@ -597,7 +592,7 @@ export default {
     .input {
       font-size: 0.26rem;
       color: #333;
-      flex:1;
+      flex: 1;
     }
     .get-code {
       border: none;
