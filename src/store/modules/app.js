@@ -5,6 +5,7 @@ const app = {
       show: false,
       active: 0
     },
+    backTop: false,
     pushName: '',
     // 图片错误时加载默认图片填充
     defaultImg:
@@ -27,6 +28,9 @@ const app = {
     },
     SET_BEEHEADER: (state, beeHeader) => {
       state.beeHeader = beeHeader
+    },
+    SET_BACKTOP: (state, backTop) => {
+      state.backTop = backTop
     }
   },
   actions: {

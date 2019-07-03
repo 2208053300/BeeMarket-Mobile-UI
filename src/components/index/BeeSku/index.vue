@@ -297,7 +297,7 @@ export default {
               color: #c5c5c5;
             }
             .van-stepper__input {
-              height: 0.4rem;
+              height: 0.43rem;
               background-color: #fff;
               margin: 0;
               border: 0.01rem solid rgb(156, 156, 156);
