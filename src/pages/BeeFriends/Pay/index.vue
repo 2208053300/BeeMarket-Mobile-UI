@@ -406,7 +406,6 @@ export default {
     },
     // 调整金额
     adjustMoney() {
-      const value = this.money.toString()
       this.money = Number(Number(this.money).toFixed())
       // 只判断是否在最大最小范围内
       if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
