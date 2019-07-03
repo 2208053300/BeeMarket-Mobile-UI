@@ -313,7 +313,7 @@ export default {
       wxapi.wxShare({
         title: '蜂集市，等你一起轻创业',
         desc: '零风险轻创业大财富的蜂集市，邀请您成为蜂集市合伙人！',
-        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.png',
+        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
         link: `https://app.fengjishi.com/#/beeFactory?uid=${this.uid}`
       })
     },

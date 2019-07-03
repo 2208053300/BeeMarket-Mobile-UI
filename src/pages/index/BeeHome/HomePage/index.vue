@@ -152,7 +152,7 @@ export default {
           title: '蜂集市',
           desc: '蜂集市，让生活蜂富起来！',
           imgUrl:
-            'https://img.fengjishi.com/app/images/share_logo.png',
+            'https://img.fengjishi.com/app/images/share_logo.jpg',
           link: this.getShareLink()
         })
       }

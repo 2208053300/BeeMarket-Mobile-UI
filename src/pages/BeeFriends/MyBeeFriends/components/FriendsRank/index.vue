@@ -281,7 +281,7 @@ export default {
           window.webkit.messageHandlers.ToShare.postMessage({
             title: '蜂集市-蜂友圈',
             desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-            img_path: 'https://img.fengjishi.com/app/images/share_logo.png',
+            img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
             url: this.getShareLink()
           })
           // android
@@ -289,7 +289,7 @@ export default {
           window.beeMarket.ToShare(
             '蜂集市-蜂友圈',
             '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-            'https://img.fengjishi.com/app/images/share_logo.png',
+            'https://img.fengjishi.com/app/images/share_logo.jpg',
             this.getShareLink()
           )
         } else {
@@ -314,14 +314,14 @@ export default {
           window.webkit.messageHandlers.ToShare.postMessage({
             title: '蜂集市-蜂友圈',
             desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-            img_path: 'https://img.fengjishi.com/app/images/share_logo.png',
+            img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
             url: `http://app.fengjishi.com/beeFactory#/?uid=${this.uid}`
           })
         } else if (this.osObj.isAndroid && this.osObj.isApp) {
           window.beeMarket.ToShare(
             '蜂集市-蜂友圈',
             '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-            'https://img.fengjishi.com/app/images/share_logo.png',
+            'https://img.fengjishi.com/app/images/share_logo.jpg',
             `http://app.fengjishi.com/beeFactory#/?uid=${this.uid}`
           )
         } else {
