@@ -598,11 +598,7 @@ export default {
     .input {
       font-size: 0.26rem;
       color: #333;
-<<<<<<< HEAD
-
-=======
       flex: 1;
->>>>>>> dev
     }
     .get-code {
       border: none;
