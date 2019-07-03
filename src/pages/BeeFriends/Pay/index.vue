@@ -324,8 +324,9 @@ export default {
       this.countDown = 60
       const clock = window.setInterval(() => {
         this.countDown--
-        if (this.countDown === 0) {
+        if (this.countDown <= 0) {
           window.clearInterval(clock)
+          this.countDown = 0
         }
       }, 1000)
     },
