@@ -360,11 +360,9 @@ export default {
         //   })
         // )
 
-        // const fileImg = this.img.file
-        // const res = await zipImg(fileImg)
-        // console.log(res)
-
-        formData.set('licence_img', this.img.content)
+        const fileImg = this.img.file
+        const res = await zipImg(fileImg)
+        formData.set('licence_img', res)
 
         formData.set('company_name', this.factory.firm)
         formData.set('contacts', this.factory.contacter)
@@ -548,27 +546,19 @@ export default {
     justify-content: space-between;
     border-radius:0.1rem;
   }
-
   .van-field__label {
     display: flex;
     align-items: center;
-    // justify-content: flex-end;
+    justify-content: flex-end;
     margin-right: 0.3rem;
     font-size: 0.3rem;
     color: #333;
     font-weight: 800;
     width: 2rem;
-    flex:auto;
     text-align: right;
     .required {
       color: #ff4918;
     }
-  }
-  .van-cell__title, .van-cell__value {
-    flex:auto
-}
-  .van-cell__title{
-    span{width: 100%}
   }
   .van-field__control {
     border-radius: 0.05rem;
@@ -812,9 +802,6 @@ export default {
     color: red;
     margin-top: 0.1rem;
     display: none;
-  }
-  .van-uploader{
-    width: 4rem
   }
 }
 </style>

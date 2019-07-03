@@ -173,6 +173,7 @@ export default {
 
         this.isShowProductList = true
         this.$refs.ProductsList.condition.search = val
+        this.$refs.ProductsList.goodsList = []
         this.$refs.ProductsList.getGoodsList()
       }, 400)
     },
