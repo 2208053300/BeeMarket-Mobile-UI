@@ -19,6 +19,9 @@
     >
       <!-- 这里是不被缓存的视图组件 -->
     </router-view>
+    <transition name="van-slide-right">
+      <back-top v-show="$store.state.app.backTop" />
+    </transition>
     <bee-footer v-show="$store.state.app.beeFooter.show" />
   </div>
 </template>
@@ -28,13 +31,15 @@ import wxapi from '@/utils/wxapi'
 import { getOs } from '@/utils'
 import BeeHeader from '@/components/index/BeeHeader'
 import BeeFooter from '@/components/index/BeeFooter'
+import backTop from '@/components/backTop'
 export default {
   metaInfo: {
     title: '蜂集市'
   },
   components: {
     BeeHeader,
-    BeeFooter
+    BeeFooter,
+    backTop
   },
   data() {
     return {
@@ -54,8 +59,7 @@ export default {
         wxapi.wxShare({
           title: '蜂集市',
           desc: '蜂集市，让生活蜂富起来！',
-          imgUrl:
-            'https://img.fengjishi.com/app/images/share_logo.png',
+          imgUrl: 'https://img.fengjishi.com/app/images/share_logo.png',
           link: this.getShareLink()
         })
       }

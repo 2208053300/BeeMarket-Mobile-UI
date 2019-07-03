@@ -360,9 +360,11 @@ export default {
         //   })
         // )
 
-        const fileImg = this.img.file
-        const res = await zipImg(fileImg)
-        formData.set('licence_img', res)
+        // const fileImg = this.img.file
+        // const res = await zipImg(fileImg)
+        // console.log(res)
+
+        formData.set('licence_img', this.img.content)
 
         formData.set('company_name', this.factory.firm)
         formData.set('contacts', this.factory.contacter)
