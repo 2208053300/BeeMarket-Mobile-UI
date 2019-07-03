@@ -180,7 +180,6 @@
 
 <script>
 import { getOs } from '@/utils'
-import vueTencentCaptcha from '@carpenter/vue-tencent-captcha'
 import { getWithdrawNum, toCash, getMobile } from '@/api/BeeApi/user'
 
 export default {
@@ -189,9 +188,7 @@ export default {
       title: this.title
     }
   },
-  components: {
-    vueTencentCaptcha
-  },
+  components: {},
   props: {},
   data() {
     return {
@@ -415,7 +412,6 @@ export default {
       }
     }
   }
-
 }
 </script>
 

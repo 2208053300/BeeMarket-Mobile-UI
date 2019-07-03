@@ -21,6 +21,8 @@ Vue.use(Popup)
 const FastClick = require('fastclick')
 FastClick.attach(document.body)
 
+import vueTencentCaptcha from '@carpenter/vue-tencent-captcha'
+Vue.use(vueTencentCaptcha)
 // NOTE 修改页面meta数据
 Vue.use(Meta)
 Vue.config.productionTip = false
