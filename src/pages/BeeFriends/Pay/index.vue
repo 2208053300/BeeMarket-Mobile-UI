@@ -70,7 +70,7 @@
             <input
               id="inputNum"
               v-model.trim="money"
-              type="number"
+              type="Number"
               min="1"
               placeholder="金额"
             >
@@ -597,6 +597,7 @@ export default {
     .input {
       font-size: 0.26rem;
       color: #333;
+      flex:1;
     }
     .get-code {
       border: none;
@@ -607,7 +608,6 @@ export default {
       line-height: 0.27rem;
       padding: 0;
       padding-left: 0.18rem;
-      width: 2.5rem;
       .text2 {
         color: @ProductName;
       }

@@ -47,7 +47,7 @@ export default {
     background-color: #fff;
     border-radius: 0.2rem;
     box-shadow: 0 0 0.2rem @Grey6;
-    background-size: cover;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
   }
 }

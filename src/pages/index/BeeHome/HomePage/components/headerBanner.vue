@@ -1,5 +1,8 @@
 <template>
-  <div class="header-banner">
+  <div
+    class="header-banner"
+    :style="{backgroundImage:'url('+$store.state.app.defaultImg3+')'}"
+  >
     <van-swipe
       :autoplay="3000"
       indicator-color="white"
@@ -101,13 +104,14 @@ export default {
 <style lang="less">
 .header-banner {
   margin: 0.2rem 0.3rem 0;
-  border-radius: 0.2rem;
+  border-radius: 0.16rem;
   overflow: hidden;
-  height: 3.1rem;
+  height: 2.8rem;
+  background-size: 100% 100%;
   .van-swipe {
     .van-swipe-item {
       background-color: @Grey2;
-      height: 3.1rem!important;
+      height: 2.8rem !important;
     }
     .van-swipe__indicators {
       .van-swipe__indicator {
