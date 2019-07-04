@@ -410,12 +410,17 @@ export default {
     },
     // 调整金额
     adjustMoney() {
-      this.money = Number(Number(this.money).toFixed())
-      // 只判断是否在最大最小范围内
-      if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
-        this.isActive = true
-      } else {
+      if (!this.money) {
+        this.money === null
         this.isActive = false
+      } else {
+        this.money = Math.floor(this.money)
+        // 只判断是否在最大最小范围内
+        if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
+          this.isActive = true
+        } else {
+          this.isActive = false
+        }
       }
     }
   }

@@ -39,99 +39,49 @@
           >
             <img :src="icon.halfCircle" alt="" class="half-circle left">
             <img :src="icon.halfCircle" class="half-circle right">
-            <div class="form-group">
-              <label for="personalName"><span>*</span>本人姓名</label>
-              <div class="form-control">
-                <input
-                  id="personalName"
-                  v-model.trim="personalName"
-                  type="text"
-                  name="name"
-                  placeholder="（必填）"
-                  @input="changePersonalName"
-                  @blur.prevent="blurScroll"
-                >
-                <p v-if="personalNameError" class="help-text name-tip">
-                  请重新输入姓名！
-                </p>
-              </div>
-            </div>
-            <!-- <div class="form-group">
-              <label for="personalCard"><span>*</span>身份证号</label>
-              <div class="form-control">
-                <input
-                  id="personalCard"
-                  v-model.trim="card_no"
-                  type="text"
-                  name="card_no"
-                  placeholder="（必填）"
-                  @input="changePersonalCard"
-                  @blur.prevent="blurScroll"
-                >
-                <p v-if="card_noError" class="help-text card-tip">
-                  请重新输入身份证号！
-                </p>
-              </div>
-            </div> -->
-            <div class="form-group">
-              <label for="personTell"><span>*</span>联系电话</label>
-              <div class="form-control">
-                <input
-                  id="personTell"
-                  v-model.trim="number"
-                  type="tel"
-                  class="form-control"
-                  name="number"
-                  placeholder="（请输入注册号码）"
-                  @input="changePersonTell"
-                  @blur.prevent="blurScroll"
-                >
-                <p v-if="numberError" class="help-text tel-tip">
-                  请重新输入手机号码！
-                </p>
-              </div>
-            </div>
           </form>
         </div>
-        <div class="submit">
-          <div class="btn-box active">
-            <div class="agreement">
-              <div class="check-action">
-                <img
-                  v-show="isAgree"
-                  :src="icon.agreeImg"
-                  class="check-img js-agreement"
-                  @click="isAgree = !isAgree"
-                >
-                <img
-                  v-show="!isAgree"
-                  :src="icon.notAgreeImg"
-                  class="check-img js-agreement"
-                  @click="isAgree = !isAgree"
-                >
-                <span
-                  class="text"
-                >已阅读并同意<a
-                  href="javascript:;"
-                  @click="goAgreement"
-                >合伙人共创协议</a></span>
-              </div>
-              <p class="help-text agreement-tip">
-                请阅读并同意蜂集市合伙人共创协议
-              </p>
+        </form>
+      </div>
+      <div class="submit">
+        <div class="btn-box active">
+          <div class="agreement">
+            <div class="check-action">
+              <img
+                v-show="isAgree"
+                :src="icon.agreeImg"
+                class="check-img js-agreement"
+                @click="isAgree = !isAgree"
+              >
+              <img
+                v-show="!isAgree"
+                :src="icon.notAgreeImg"
+                class="check-img js-agreement"
+                @click="isAgree = !isAgree"
+              >
+              <span
+                class="text"
+              >已阅读并同意<a
+                href="javascript:;"
+                @click="goAgreement"
+              >合伙人共创协议</a></span>
             </div>
-            <button
-              id="submitP"
-              type="button"
-              class="btn no-select"
-              @click="submit"
-            >
-              提交资料
-            </button>
+            <p class="help-text agreement-tip">
+              请阅读并同意蜂集市合伙人共创协议
+            </p>
           </div>
+          <button
+            id="submitP"
+            type="button"
+            class="btn no-select"
+            @click="submit"
+          >
+            去体验
+          </button>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
