@@ -19,11 +19,13 @@
 export default {
   components: {},
   props: {
-    actionDetails: {
+    companyInfo: {
       type: Object,
-      default: () => {
-        return {}
-      }
+      default: () => {}
+    },
+    showDetail: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -35,14 +37,17 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+
+  }
 }
 </script>
 
 <style scoped lang="less">
 .card3 {
+  margin-top: 0.2rem;
   padding: 0.32rem;
-   background: url(../../../../../assets/icon/discover/confirmorder_pic_description@2x.png) no-repeat right top;
+   background: url(../../../../assets/icon/discover/confirmorder_pic_description@2x.png) no-repeat right top;
    background-size: 1.32rem 1.09rem;
    background-color: #fff;
  .action-explain{

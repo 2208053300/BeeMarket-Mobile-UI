@@ -53,7 +53,7 @@
         </div>
       </van-tab>
     </van-tabs>
-</div>
+  </div>
 </template>
 
 <script>
@@ -116,7 +116,8 @@ export default {
       line-height: 0.72rem;
       color: #ff8422;
       font-size: 0.26rem;
-      background-image: linear-gradient(to bottom,rgba(255,255,255,.5),#fff);
+      // background-image: linear-gradient(to bottom,rgba(255,255,255,.5),#fff);
+      background-color: #fff;
     }
     &.more {
       height: auto;
