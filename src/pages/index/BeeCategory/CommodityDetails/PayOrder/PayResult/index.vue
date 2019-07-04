@@ -82,7 +82,7 @@
         <van-button
           class="btn1 btn2"
           round
-          @click="$router.push('/beeFriends/apply')"
+          @click="$router.push({path:'/beeFriends/apply',query:{trade_no:$route.query.trade_no}})"
         >
           立即开启
         </van-button>

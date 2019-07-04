@@ -2,7 +2,7 @@
   <div class="factory-body">
     <div class="factory to-partner">
       <img
-        src="../../../assets/icon/joinFactory/partner_form_top.png"
+        src="../../../assets/icon/beeFriends/noQualified/qualified_title.png"
         class="top-img"
       >
       <div class="info">
@@ -23,12 +23,6 @@
       </div>
 
       <div class="form-box">
-        <span
-          class="form-title"
-          :class="{ active: isPersonal === true }"
-          @click="isPersonal = true"
-        >个人资料填写</span>
-
         <div class="form-tab">
           <!-- 个人申请表单 -->
           <form
@@ -39,36 +33,23 @@
           >
             <img :src="icon.halfCircle" alt="" class="half-circle left">
             <img :src="icon.halfCircle" class="half-circle right">
+            <img :src="icon.img" class="house-img">
+            <div class="title-box text-center">
+              <p class="main-title">
+                您尚不具备申请条件
+              </p>
+              <p class="sub-title">
+                需完成购物体验,即可申请开启合伙人
+              </p>
+            </div>
+            <div class="content">
+              <p>在蜂集市海量商品中，任选商品完成一次消费体验，即刻获得开启<br>蜂友圈资格。</p>
+            </div>
           </form>
         </div>
       </div>
       <div class="submit">
         <div class="btn-box active">
-          <div class="agreement">
-            <div class="check-action">
-              <img
-                v-show="isAgree"
-                :src="icon.agreeImg"
-                class="check-img js-agreement"
-                @click="isAgree = !isAgree"
-              >
-              <img
-                v-show="!isAgree"
-                :src="icon.notAgreeImg"
-                class="check-img js-agreement"
-                @click="isAgree = !isAgree"
-              >
-              <span
-                class="text"
-              >已阅读并同意<a
-                href="javascript:;"
-                @click="goAgreement"
-              >合伙人共创协议</a></span>
-            </div>
-            <p class="help-text agreement-tip">
-              请阅读并同意蜂集市合伙人共创协议
-            </p>
-          </div>
           <button
             id="submitP"
             type="button"
@@ -84,10 +65,9 @@
 </template>
 
 <script>
-import { applyBeeFriend } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
-    title: '申请合伙人'
+    title: '去逛逛'
   },
   components: {},
   props: {},
@@ -106,8 +86,8 @@ export default {
 
       icon: {
         halfCircle: require('@/assets/icon/joinFactory/factory_img_circle.png'),
-        agreeImg: require('@/assets/icon/joinFactory/checked_red.png'),
-        notAgreeImg: require('@/assets/icon/joinFactory/unchecked_red.png')
+        img: require('@/assets/icon/beeFriends/noQualified/img.png')
+
       }
     }
   },
@@ -130,117 +110,7 @@ export default {
   methods: {
     // 提交
     async submit() {
-      // 个人申请
-      // console.log(
-      //   this.personalNameError,
-      //   this.card_noError,
-      //   this.numberError,
-      //   this.wx_accountError,
-      //   this.addressError
-      // )
-
-      if (
-        this.personalName &&
-          !this.personalNameError &&
-          this.number &&
-          !this.numberError
-
-      ) {
-        // 验证通过
-        if (this.isAgree) {
-          // console.log('可以提交！')
-          const data = {
-            name: this.personalName,
-            // card_no: this.card_no,
-            number: this.number,
-            trade_no: this.$route.query.trade_no || ''
-          }
-          // 执行提交表单请求
-          try {
-            const res2 = await applyBeeFriend(data)
-            this.$toast(res2.message)
-            if (res2.status_code === 200) {
-              await this.$store.dispatch('GerUserStatus')
-              this.$router.replace({ name: 'beeFriends' })
-            }
-          } catch (error) {
-            this.$toast(error)
-          }
-        } else {
-          this.$toast('请同意合伙人共创协议')
-        }
-      } else {
-        // 验证失败
-        this.$toast('请正确填写个人资料表单！')
-      }
-    },
-    // 合伙人协议
-    goAgreement() {
-      this.$router.push({
-        name: 'partnerAgreement'
-      })
-    },
-    // 个人资料验证
-    changePersonalName() {
-      if (!/^[\u4e00-\u9fa5_a-zA-Z0-9]{2,10}$/.test(this.personalName)) {
-        this.personalNameError = true
-      } else {
-        this.personalNameError = false
-      }
-    },
-    changePersonalCard() {
-      if (!/^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/.test(
-        this.card_no
-      )) {
-        this.card_noError = true
-      } else {
-        this.card_noError = false
-      }
-    },
-    changePersonTell() {
-      if (!/^1[3456789]\d{9}$/.test(this.number)) {
-        this.numberError = true
-      } else {
-        this.numberError = false
-      }
-    },
-    changeWxAccount() {
-      var preg = /^[a-zA-Z]([-_a-zA-Z0-9]{5,19})$/
-      var preg1 = /^((13[0-9])|(14[5|7])|(15[0-3|5-9])|(166)|(17[0|1|3|5-8])|(18[0-9])|(19[0-9])|(147))\d{8}$/
-      var preg2 = /^[1-9][0-9]{4,14}$/
-      if (!preg.test(this.wx_account) && !preg1.test(this.wx_account) && !preg2.test(this.wx_account)) {
-        this.wx_accountError = true
-      } else {
-        this.wx_accountError = false
-      }
-    },
-    changeAddress() {
-      if (!this.address) {
-        this.addressError = true
-      } else {
-        this.addressError = false
-      }
-    },
-
-    // 防抖
-    debounce(func, wait) {
-      let timeout = ''
-      return v => {
-        if (timeout) {
-          clearTimeout(timeout)
-        }
-        timeout = setTimeout(() => {
-          func(v)
-        }, wait)
-      }
-    },
-    // ios 12 解决键盘顶起页面问题
-    blurScroll() {
-      setTimeout(function() {
-        var scrollHeight =
-          document.documentElement.scrollTop || document.body.scrollTop || 0
-        window.scrollTo(0, Math.max(scrollHeight - 1, 0))
-      }, 100)
+      window.location.href = this.$store.state.app.homeUri
     }
 
   }
@@ -251,66 +121,7 @@ export default {
 .factory-body {
   background: #fed559 !important;
   height: auto !important;
-  .van-cell:not(:last-child)::after {
-    content: " ";
-    position: absolute;
-    pointer-events: none;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    left: 15px;
-    right: 0;
-    bottom: 0;
-    -webkit-transform: scaleY(0.5);
-    transform: scaleY(0.5);
-    border-bottom: none;
-  }
-  .van-cell {
-    display: flex;
-    justify-content: space-between;
-    border-radius: 0.1rem;
-  }
-  .van-field__label {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-right: 0.3rem;
-    font-size: 0.3rem;
-    color: #333;
-    font-weight: 800;
-    width: 2rem;
-    text-align: right;
-    .required {
-      color: #ff4918;
-    }
-  }
-  .van-field__control {
-    border-radius: 0.05rem;
-    width: 3.8rem;
-    height: 0.74rem;
-    line-height: 0.74rem;
-    background: #eee;
-    border: none;
-    font-size: 0.28rem;
-    color: #333;
-    padding: 0 0.2rem;
-  }
-  .comment-img {
-    width: 1.6rem;
-    height: 1.6rem;
-    position: relative;
-    img {
-      border-radius: 0.05rem;
-    }
-    .del-img {
-      position: absolute;
-      top: -0.1rem;
-      right: -0.1rem;
-    }
-  }
-  .add-shop-pic {
-    width: 1.6rem;
-    height: 1.6rem;
-  }
+  padding-bottom:0.8rem;
 }
 .factory {
   width: 6.8rem;
@@ -334,16 +145,6 @@ export default {
   }
   .join {
     margin-top: 0.4rem;
-  }
-  .join-btn {
-    margin-right: 1.5rem;
-    font-size: 0.28rem;
-    background: none;
-    display: inline-block;
-    color: #444;
-    padding: 0.2rem;
-    background: #fed559;
-    border-radius: 0.1rem;
   }
 
   .jt {
@@ -383,79 +184,17 @@ export default {
     // background: url(../../../assets/icon/joinFactory/factory_form_bg.png)
     //   no-repeat;
     // background-size: 100% 100%;
-    padding: 0.4rem 0.2rem 0.1rem;
-  }
-  .form-group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.3rem;
-    label {
-      font-size: 0.3rem;
-      color: #333;
-      font-weight: 800;
-      width: 2rem;
-      text-align: right;
-      span {
-        color: #ff4918;
-      }
-    }
-    input,
-    select {
-      width: 3.8rem;
-      height: 0.74rem;
-      line-height: 0.74rem;
-      background: #eee;
-      border: none;
-      font-size: 0.28rem;
-      color: #333;
-      padding: 0 0.2rem;
-    }
-    textarea {
-      width: 4.2rem;
-      background: #eee;
-      border: none;
-      font-size: 0.28rem;
-      color: #333;
-      padding: 0.2rem;
-    }
-  }
-  .pic-box {
-    width: 3.8rem;
-    height: 1.6rem;
-    position: relative;
-    margin: 0.2rem auto;
-    // overflow: hidden;
-    text-align: left;
-    .preview {
-      width: 1.6rem;
-      height: 100%;
-      background: url(../../../assets/icon/joinFactory/add_shop_pic.png)
-        no-repeat;
-      background-size: cover;
-    }
-    img {
-      width: 100%;
-      height: 100%;
-    }
-    input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      height: 100%;
-      width: 100%;
-    }
+    padding: 0 0.2rem 0.1rem;
   }
 
   .submit {
-    height: 1.5rem;
+    // height: 1.5rem;
     width: 100%;
     background: url(../../../assets/icon/joinFactory/factory_bottom_img.png)
       no-repeat;
     background-size: 100% 100%;
     text-align: center;
-    margin-top: 0.5rem;
+    margin-top: 0.7rem;
     .btn {
       font-size: 0.48rem;
       color: #fed559;
@@ -469,50 +208,6 @@ export default {
     }
   }
 
-  .sel_mask {
-    position: relative;
-    width: 4.2rem;
-    height: 0.74rem;
-    line-height: 0.74rem;
-    background: #eee;
-    border-radius: 5px;
-    font-size: 0.28rem;
-    color: #333;
-    padding: 0 0.2rem;
-    //              box-shadow:1px 1px 5px #169BD5;
-    display: inline-block;
-    text-decoration: none;
-    .icon {
-      position: absolute;
-      top: 0;
-      right: 0;
-      display: flex;
-      background: #ffe084;
-      width: 0.76rem;
-      height: 100%;
-    }
-    img {
-      width: 0.29rem;
-      margin: auto;
-    }
-    select {
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-    }
-
-    select option {
-      border-bottom: 1px solid red;
-    }
-  }
-  .help-text {
-    font-size: 0.24rem;
-    color: red;
-    margin-top: 0.1rem;
-    margin-bottom: 0;
-    // display: none;
-  }
 }
 //partnerForm.html
 .to-partner {
@@ -531,11 +226,15 @@ export default {
     border-radius: 0.1rem;
     display: none;
     position: relative;
+    background-image: url(../../../assets/icon/beeFriends/noQualified/bg1.png),url(../../../assets/icon/beeFriends/noQualified/bg2.png);
+    background-position:  left top,right bottom;
+    background-repeat: no-repeat, no-repeat;
+    background-size: contain, contain;
     .half-circle{
       position: absolute;
       width: 0.16rem;
       height: 0.44rem;
-      top: 40%;
+      top: 37%;
       z-index: 9;
     }
     .left{
@@ -545,94 +244,39 @@ export default {
     .right{
       right:0;
     }
+    .house-img{
+        position: absolute;
+        width: 2.44rem;
+        height: 2rem;
+        bottom:-1rem;
+        right: 0;
+        z-index: 9;
+    }
   }
   .form.active {
     display: block;
   }
-  .form {
-    label {
-      width: 1.62rem;
-      text-align: right;
-    }
-    textarea {
-      width: 3.8rem;
-    }
-  }
 
-  .form-pic {
-    display: flex;
-    justify-content: space-around;
-    label {
-      font-size: 0.3rem;
-      color: #333;
-      font-weight: 800;
-      span {
-        color: red;
-      }
-    }
-    .pic-box {
-      width: 1.6rem;
-      height: 1.6rem;
-      position: relative;
-      margin: 0.2rem auto;
-      // overflow: hidden;
-      .preview {
-        width: 100%;
-        height: 100%;
-        background: url(../../../assets/icon/joinFactory/add_shop_pic.png)
-          no-repeat;
-        background-size: cover;
-      }
-      img {
-        width: 100%;
-        height: 100%;
-      }
-      input {
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        height: 100%;
-        width: 100%;
-      }
-    }
-  }
-  .agreement {
-    display: flex;
-    //       display: none;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 0.2rem;
-    .help-text {
-      font-size: 0.24rem;
-      color: red;
-      margin-top: 0.1rem;
-      display: none;
-    }
-  }
-  .check-action {
-    display: flex;
-    align-items: center;
-    .check-img {
-      width: 0.26rem;
-      height: 0.26rem;
-      margin-right: 0.1rem;
-    }
-    .text {
-      font-size: 0.28rem;
-    }
-    a {
-      color: red;
-    }
-  }
-  .btn-box {
-    display: none;
-  }
   .btn-box.active {
     display: block;
   }
   .btn {
     margin: 0.3rem auto;
+  }
+
+  .title-box{
+    border-bottom: 1px dashed #ddd;
+    padding: 0.4rem;
+    p{margin: 0}
+    .main-title{font-size:0.36rem; font-weight: 600; color: #333; margin-bottom: 0.2rem;}
+    .sub-title{font-size:0.34rem; font-weight: 400; color: @BeeDefault;}
+  }
+  .content{
+    font-size: 0.28rem;
+    color:#333;
+    font-weight: 500;
+    padding: 0.2rem 0.4rem;
+    line-height: 1.7;
   }
 }
 </style>

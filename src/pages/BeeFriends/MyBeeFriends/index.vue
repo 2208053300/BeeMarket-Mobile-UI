@@ -188,18 +188,24 @@ export default {
       try {
         await vm.$store.dispatch('GerUserStatus')
       } catch (error) {
-        console.log(error)
+        vm.$toast('获取合伙人身份失败，请重试！')
       }
       // 0 非合伙人 1 合伙人 2 冻结
       if (vm.$store.state.user.userStatus === 0) {
-        vm.$router.replace({ name: 'introduction' })
+        // 当 is_partner = 0 时，该字段有效；1表示满足申请条件，0表示不满足
+        if (vm.$store.state.user.applyCondition === 0) {
+          vm.$router.replace({ name: 'noQualified' })
+        } else if (vm.$store.state.user.applyCondition === 1) {
+          vm.$router.replace({ name: 'introduction' })
+        }
       } else if (vm.$store.state.user.userStatus === 1) {
         vm.$router.push({ name: 'beeFriends' })
       } else if (vm.$store.state.user.userStatus === 2) {
         vm.$router.replace({ name: 'freeze' })
       } else {
-        console.log('验证失败')
-        vm.$router.replace({ name: 'introduction' })
+        vm.$toast('获取合伙人身份失败，请重试！')
+        // vm.$router.push({ name: 'beeFriends' })
+        // vm.$router.replace({ name: 'introduction' })
         // vm.$router.go(-1)
       }
     })
