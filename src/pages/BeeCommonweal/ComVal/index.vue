@@ -121,8 +121,12 @@ export default {
   },
   methods: {
     async mineCharityValueData() {
-      const res = await mineCharityValue()
-      this.comVal = res.data
+      try {
+        const res = await mineCharityValue()
+        this.comVal = res.data
+      } catch (error) {
+        this.$toast('获取公益值数据失败！')
+      }
     },
     goDetail(active) {
       const osObj = getOs()

@@ -202,14 +202,14 @@ export default {
   created() {},
   mounted() {
     this.loadUID()
-    if (this.osObj.isWx) {
-      // this.loadUID()
-    } else if (this.osObj.isIphone && this.osObj.isApp) {
-      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
-    } else if (this.osObj.isAndroid && this.osObj.isApp) {
-      window.beeMarket.showShareIcon(true)
-    }
-    window.appShare = this.appShare
+    // if (this.osObj.isWx) {
+    //   // this.loadUID()
+    // } else if (this.osObj.isIphone && this.osObj.isApp) {
+    //   window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
+    // } else if (this.osObj.isAndroid && this.osObj.isApp) {
+    //   window.beeMarket.showShareIcon(true)
+    // }
+    // window.appShare = this.appShare
   },
   methods: {
     async getFriendsData() {

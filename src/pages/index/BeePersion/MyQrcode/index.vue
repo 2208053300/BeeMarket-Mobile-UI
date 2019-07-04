@@ -97,7 +97,7 @@ export default {
           width: 2.4rem;
           margin: auto;
           margin-bottom: 0.2rem;
-          background-color: #000000;
+          background-color: #fff;
         }
         .text-content {
           font-size: 0.22rem;
