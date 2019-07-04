@@ -342,7 +342,7 @@ export function delHistoryItem(data) {
   return request({
     url: '/user/history/delete',
     method: 'post',
-    data
+    data: JSON.stringify(data)
   })
 }
 // NOTE 取消用户已收藏商品/店铺

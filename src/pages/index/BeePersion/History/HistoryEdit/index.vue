@@ -1,9 +1,10 @@
 <template>
   <div class="history-edit">
     <!-- 内容 -->
-    <div class="wrapper container bg-gray hitory-index">
-      <p>{{ historySelected }}</p>
+    <div class="operation-bar">
       <span @click="$router.push('/persion/history')">完成</span>
+    </div>
+    <div class="wrapper container bg-gray hitory-index">
       <van-row
         v-for="(item, index) in historyInfo"
         :key="index"
@@ -22,7 +23,6 @@
             :name="pro"
             :checked-color="BeeDefault"
             class="checkbox"
-            @click="changeAll(index2,item.product_list,allSelectedBox[index2])"
           >
             <div class="goodsItem">
               <img
@@ -96,7 +96,11 @@ export default {
   computed: {
     ...mapState(['app'])
   },
-  watch: {},
+  watch: {
+    historySelected() {
+      this.allSelec = this.historySelected.length === this.allSelectedData.length
+    }
+  },
   created() {},
   mounted() {
     this.getList()
@@ -126,13 +130,10 @@ export default {
 
     // NOTE 全选
     allSelected1() {
-      console.log(this.allSelec)
       if (this.allSelec) {
-        console.log(this.allSelectedData)
-        this.historySelected = this.allSelectedData
-      } else {
-        console.log(2)
         this.historySelected = []
+      } else {
+        this.historySelected = this.allSelectedData
       }
     },
     // // FIXME 有点小问题，选中子类全选可能出错
@@ -152,39 +153,65 @@ export default {
 
     // 提交删除
     onSubmitDel() {
-      delHistoryItem({ fid: this.allSelectedDataIds }).then(res => {
+      delHistoryItem({ fids: this.allSelectedDataIds }).then(res => {
         this.$toast(res.message)
-        // this.$notify({
-        //   message: res.message,
-        //   duration: 1000,
-        //   background: '#1989fa'
-        // })
         this.getList()
-        // 删除本地对应数据
-        // for (let index = 0; index < this.historyInfo.length; index++) {
-        //   for (let i = 0; i < this.historyInfo[index].dayData.length; i++) {
-        //     if (this.historySelected.includes(this.historyInfo[index].dayData[i])) {
-        //       console.log(this.historySelected, this.historyInfo[index].dayData[i])
-        //       console.log(index, i)
-        //       this.historyInfo[index].dayData.splice(i, 1)
-        //     }
-        //   }
-        // }
         this.allSelec = false
-      })
+      }).catch(e => this.$toast.fail(e))
     }
   }
 }
 </script>
 
 <style lang="less">
-
 .history-edit {
+  .wrapper {
+    padding: 0 0.2rem;
+    box-sizing: border-box;
+  }
+
+  .operation-bar {
+    background: #fafafa;
+    padding:0.2rem 0.3rem;
+    text-align: right;
+    margin-bottom: 0.3rem
+  }
+
+  .history-list {
+    border-radius: 0.1rem;
+  }
+  .date {
+    padding: 0.2rem;
+    margin: 0;
+    font-size: 0.26rem;
+    color: #999;
+  }
+  .goodsItem {
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 0.1rem;
+    .img {
+      width: 100%;
+      height: 2rem;
+      border-radius: 0.1rem;
+    }
+    .title {
+      font-size: 0.24rem;
+      color: #333;
+      margin: 0.1rem 0;
+    }
+    .price {
+      font-size: 0.28rem;
+      margin: 0;
+      color: @BeeDefault;
+    }
+  }
   .van-checkbox {
     width: 100%;
   }
   .van-checkbox__label {
     margin-left: 0;
+    line-height: 1;
   }
   .checkbox {
     width: 33%;
@@ -201,8 +228,5 @@ export default {
     background: @BeeDefault;
     border-color: @BeeDefault;
   }
-}
-.wrapper {
-  padding: 0 0.2rem;
 }
 </style>

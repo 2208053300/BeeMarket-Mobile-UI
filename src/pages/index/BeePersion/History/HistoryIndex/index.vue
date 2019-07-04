@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <!-- 内容 -->
-    <div class="wrapper container bg-gray hitory-index">
+  <div class="history-list">
+    <div :class="{hide:historyList.length === 0}" class="operation-bar">
       <span @click="$router.push('/persion/history/historyEdit')">编辑</span>
+    </div>
+    <!-- 内容 -->
+    <div v-if="historyList.length > 0" class="wrapper container bg-gray hitory-index">
       <van-list
         v-model="loading"
         :finished="finished"
@@ -51,6 +53,14 @@
         </van-row>
       </van-list>
     </div>
+    <div v-if="historyList.length === 0 && finished" class="null-data">
+      <div
+        class="null-img"
+        style="margin-top:2.8rem;"
+        :style="{backgroundImage:'url('+beeIcon.mine_collection_img_default+')'}"
+      />
+      <span class="null-text">暂无足迹</span>
+    </div>
 
     <!-- popup -->
     <van-popup
@@ -97,12 +107,15 @@ export default {
       loading: false,
       // 是否全部加载完毕
       finished: false,
-      // page: 1,
-      pageSize: 2,
+      page: 1,
+      pageSize: 20,
       immediate: false,
       offset: 300,
       // 历史足迹数据
-      historyList: []
+      historyList: [],
+      beeIcon: {
+        mine_collection_img_default: require('@/assets/icon/personalCenter/func/mine_collection_img_default@2x.png')
+      }
     }
   },
   computed: {
@@ -113,10 +126,6 @@ export default {
   mounted() {
     this.getList()
     this.hideNavBar()
-
-    // for (let index = 0; index < this.history.historyInfo.length; index++) {
-    //   this.$set(this.allSelectedBox, index, false)
-    // }
   },
   methods: {
     ...mapActions(['GetHistoryInfo']),
@@ -125,25 +134,30 @@ export default {
       this.$store.state.app.beeHeader = true
       this.$store.state.app.beeFooter.show = false
     },
+    // 刷新数据列表
+    async refresh() {
+      this.page = 1
+    },
     // 获取历史足迹数据
     async getList() {
-      setTimeout(async() => {
-        const res = getHistoryList({ page: this.page, pageSize: this.pageSize })
-        // this.GetHistoryInfo(res.data)
+      const res = await getHistoryList({ page: this.page, pageSize: this.pageSize })
+      if (this.page === 1) {
+        this.historyList = res.data
+      } else {
         this.historyList.push(...res.data)
-        this.GetHistoryInfo(this.historyList)
-        this.page++
-        this.loading = false
+      }
+      this.GetHistoryInfo(this.historyList)
+      this.page++
+      this.loading = false
 
-        if (res.data.length === 0) {
-          this.finished = true
-        }
-      }, 500)
+      if (res.data.length < this.pageSize) {
+        this.finished = true
+      }
     },
     // 查看商品详情 pid 商品id target 目标 general limited
     goProductDetail(pid, target) {
       this.$router.push({
-        path: '',
+        path: '/category/details',
         query: {
           pid,
           target
@@ -167,25 +181,17 @@ export default {
       collectProduct({ contentId: this.nowPid, type: 1 }).then(res => {
         this.showPopup = false
         this.$toast.success(res.message)
-        // this.$notify({
-        //   message: res.message,
-        //   duration: 1000,
-        //   background: '#1989fa'
-        // })
       })
     },
     // 删除 "fids":[ 1,3,4]
     del() {
-      delHistoryItem({ fids: this.nowFid }).then(res => {
-        this.showPopup = false
-        this.$toast.success(res.message)
-        // this.$notify({
-        //   message: res.data.message,
-        //   duration: 1000,
-        //   background: '#1989fa'
-        // })
-      })
-      this.getList()
+      delHistoryItem({ fids: this.nowFid })
+        .then(res => {
+          this.showPopup = false
+          this.$toast.success(res.message)
+        })
+        .catch(e => this.$toast.fail(e))
+        .finally(() => this.refresh())
     },
     // 取消
     cancel() {
@@ -195,50 +201,74 @@ export default {
 }
 </script>
 
-<style  lang="less">
-.wrapper {
-  padding: 0 0.2rem;
-  box-sizing: border-box;
-}
-
+<style lang="less">
 .history-list {
-  border-radius: 0.1rem;
-}
-.date {
-  padding: 0.2rem;
-  margin: 0;
-  font-size: 0.26rem;
-  color: #999;
-}
-.goodsItem {
-  width: 90%;
-  margin: 0 auto;
-  border-radius: 0.1rem;
-  .img {
-    width: 100%;
-    height: 2rem;
+  .hide {
+    visibility: hidden;
+  }
+  .null-data {
+    text-align: center;
+    .null-img {
+      width: 4rem;
+      height: 3.6rem;
+      margin: 0.82rem auto 0.3rem;
+      background-size: 100% 100%;
+    }
+    .null-text {
+      font-size: 0.28rem;
+      color: rgb(122, 122, 122);
+      display: block;
+    }
+  }
+  .wrapper {
+    padding: 0 0.2rem;
+    box-sizing: border-box;
+  }
+  .operation-bar {
+    background: #fafafa;
+    padding:0.2rem 0.3rem;
+    text-align: right;
+    margin-bottom: 0.3rem
+  }
+  .history-list {
     border-radius: 0.1rem;
   }
-  .title {
-    font-size: 0.24rem;
-    color: #333;
-    margin: 0.1rem 0;
-  }
-  .price {
-    font-size: 0.28rem;
+  .date {
+    padding: 0.2rem;
     margin: 0;
-    color: @BeeDefault;
+    font-size: 0.26rem;
+    color: #999;
   }
-}
-.collect,
-.del {
-  color: @BeeDefault;
-  font-size: 0.3rem;
-  margin: 0.34rem 0;
-}
-.cancel {
-  color: #999;
-  font-size: 0.3rem;
-  margin: 0.34rem 0;
+  .goodsItem {
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 0.1rem;
+    .img {
+      width: 100%;
+      height: 2rem;
+      border-radius: 0.1rem;
+    }
+    .title {
+      font-size: 0.24rem;
+      color: #333;
+      margin: 0.1rem 0;
+    }
+    .price {
+      font-size: 0.28rem;
+      margin: 0;
+      color: @BeeDefault;
+    }
+  }
+  .collect,
+  .del {
+    color: @BeeDefault;
+    font-size: 0.3rem;
+    margin: 0.34rem 0;
+  }
+  .cancel {
+    color: #999;
+    font-size: 0.3rem;
+    margin: 0.34rem 0;
+  }
 }
 </style>
