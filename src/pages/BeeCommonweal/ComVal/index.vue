@@ -126,6 +126,7 @@ export default {
         this.comVal = res.data
       } catch (error) {
         this.$toast('获取公益值数据失败！')
+        this.mineCharityValueData()
       }
     },
     goDetail(active) {
