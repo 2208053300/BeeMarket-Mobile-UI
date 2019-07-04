@@ -41,7 +41,6 @@
             <img :src="icon.halfCircle" class="half-circle right">
           </form>
         </div>
-        </form>
       </div>
       <div class="submit">
         <div class="btn-box active">
@@ -81,7 +80,6 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 

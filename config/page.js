@@ -119,5 +119,10 @@ module.exports = {
   beeStoreLicense: {
     entry: 'src/pages/BeeStoreLicense/main.js',
     title: '经营许可'
+  },
+  // 免费送礼活动
+  beeFreeGift: {
+    entry: 'src/pages/BeeFreeGift/main.js',
+    title: '免费送礼'
   }
 }
