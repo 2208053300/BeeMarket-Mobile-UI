@@ -53,7 +53,7 @@ export function collectProduct(data) {
   return request({
     url: '/product/collect',
     method: 'post',
-    data
+    data: JSON.stringify(data)
   })
 }
 // 取消收藏
