@@ -16,6 +16,10 @@
         class="details-card"
         :action-details="actionDetails"
       />
+      <detail-card4
+        class="details-card"
+        :action-details="actionDetails"
+      />
       <detail-card3
         class="details-card"
         :action-details="actionDetails"
@@ -136,6 +140,7 @@ import detailCard0 from './components/detailCard0'
 import detailCard1 from './components/detailCard1'
 import detailCard2 from './components/detailCard2'
 import detailCard3 from './components/detailCard3'
+import detailCard4 from './components/detailCard4'
 export default {
   metaInfo: {
     title: '项目详情'
@@ -144,7 +149,8 @@ export default {
     detailCard0,
     detailCard1,
     detailCard2,
-    detailCard3
+    detailCard3,
+    detailCard4
   },
 
   props: {},
