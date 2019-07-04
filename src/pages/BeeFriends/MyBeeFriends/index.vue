@@ -229,7 +229,7 @@ export default {
       wxapi.wxShare({
         title: '蜂集市-蜂友圈',
         desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益！',
-        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.png',
+        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
         link: `https://app.fengjishi.com/#/beeFriends?uid=${this.uid}`
       })
     },

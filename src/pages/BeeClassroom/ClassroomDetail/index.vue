@@ -200,7 +200,7 @@ export default {
         window.webkit.messageHandlers.ToShare.postMessage({
           title: '集市课堂 - 蜂集市',
           desc: '零风险、轻创业、大财富，你准备好了吗？',
-          img_path: 'https://img.fengjishi.com/app/images/share_logo.png',
+          img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
           // 地址应该放 web 站 网页
           url: this.getShareLink()
         })
@@ -208,7 +208,7 @@ export default {
         window.beeMarket.ToShare(
           '集市课堂 - 蜂集市',
           '零风险、轻创业、大财富，你准备好了吗？',
-          'https://img.fengjishi.com/app/images/share_logo.png',
+          'https://img.fengjishi.com/app/images/share_logo.jpg',
           this.getShareLink()
         )
       }
@@ -221,7 +221,7 @@ export default {
           title: '集市课堂 - 蜂集市',
           desc: '零风险、轻创业、大财富，你准备好了吗？',
           imgUrl:
-            'https://img.fengjishi.com/app/images/share_logo.png',
+            'https://img.fengjishi.com/app/images/share_logo.jpg',
           link: this.getShareLink()
         })
       } catch (error) {

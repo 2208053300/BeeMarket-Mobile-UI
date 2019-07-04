@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './index.vue'
-import router from '@/route/beeFriends'
+import router from '@/route/beeLimit'
 import store from '@/store'
 import Meta from 'vue-meta'
 import '@/styles/normalize.min.css'
@@ -9,20 +9,14 @@ import '@/main'
 // NOTE 定义rem基准
 import '@/utils/flexiable'
 
-import { Popup, Icon, List, Button, Field } from 'vant'
+import { List, Button } from 'vant'
 
-Vue.use(Popup)
-  .use(Icon)
-  .use(List)
-  .use(Button)
-  .use(Field)
+Vue.use(List).use(Button)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
 FastClick.attach(document.body)
 
-import vueTencentCaptcha from '@carpenter/vue-tencent-captcha'
-Vue.use(vueTencentCaptcha)
 // NOTE 修改页面meta数据
 Vue.use(Meta)
 Vue.config.productionTip = false

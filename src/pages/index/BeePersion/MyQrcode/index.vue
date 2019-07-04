@@ -60,7 +60,7 @@ export default {
         title: '蜂集市', // 分享标题, 请自行替换
         desc: '蜂集市，让生活蜂富起来！', // 分享描述, 请自行替换
         link: 'https://app.fengjishi.com/#/persion/myQrcode', // 分享链接，根据自身项目决定是否需要split
-        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.png' // 分享图标, 请自行替换，需要绝对路径
+        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg' // 分享图标, 请自行替换，需要绝对路径
       })
     }
   }

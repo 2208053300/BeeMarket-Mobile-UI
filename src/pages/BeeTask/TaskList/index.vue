@@ -236,7 +236,7 @@ export default {
       wxapi.wxShare({
         title: '新手专享·好礼各种送',
         desc: '更多优惠，更多公益值等你来赚赚赚！',
-        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.png',
+        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
         link: `https://app.fengjishi.com/#/beeTask?uid=${this.uid}`
       })
     },

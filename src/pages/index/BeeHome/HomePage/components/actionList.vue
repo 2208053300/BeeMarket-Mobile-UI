@@ -7,13 +7,9 @@
     >
       <div
         class="action-img"
+        :style="{backgroundImage:'url('+action.show_img+')'}"
         @click="goDetail1(action)"
-      >
-        <img
-          :src="action.show_img"
-          alt="展示图"
-        >
-      </div>
+      />
       <div class="product-list">
         <div
           v-for="product in action.products"
@@ -116,6 +112,8 @@ export default {
       height: 2.6rem;
       border-radius: 0.16rem;
       overflow: hidden;
+      background-size: cover;
+      background-position: center;
     }
     .product-list {
       display: grid;

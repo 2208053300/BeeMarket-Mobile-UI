@@ -313,7 +313,7 @@ export default {
       wxapi.wxShare({
         title: '蜂集市，等你一起轻创业',
         desc: '零风险轻创业大财富的蜂集市，邀请您成为蜂集市合伙人！',
-        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.png',
+        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
         link: `https://app.fengjishi.com/#/beeFactory?uid=${this.uid}`
       })
     },
@@ -546,27 +546,19 @@ export default {
     justify-content: space-between;
     border-radius:0.1rem;
   }
-
   .van-field__label {
     display: flex;
     align-items: center;
-    // justify-content: flex-end;
+    justify-content: flex-end;
     margin-right: 0.3rem;
     font-size: 0.3rem;
     color: #333;
     font-weight: 800;
     width: 2rem;
-    flex:auto;
     text-align: right;
     .required {
       color: #ff4918;
     }
-  }
-  .van-cell__title, .van-cell__value {
-    flex:auto
-}
-  .van-cell__title{
-    span{width: 100%}
   }
   .van-field__control {
     border-radius: 0.05rem;
@@ -810,9 +802,6 @@ export default {
     color: red;
     margin-top: 0.1rem;
     display: none;
-  }
-  .van-uploader{
-    width: 4rem
   }
 }
 </style>

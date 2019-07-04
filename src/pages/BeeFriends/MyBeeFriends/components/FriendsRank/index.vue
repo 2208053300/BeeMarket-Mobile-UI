@@ -163,7 +163,7 @@
 </template>
 
 <script>
-import { getFriends, remindLogin, remindAll } from '@/api/BeeApi/user'
+import { getFriends, remindLogin } from '@/api/BeeApi/user'
 import { getUID } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
@@ -242,13 +242,13 @@ export default {
     // 快速邀请
     async fastInvite() {
       // TODO 改为直接分享
-      const res = await remindAll()
-      if (res.status_code === 200) {
-        this.$toast({
-          type: 'success',
-          message: res.message
-        })
-      }
+      // const res = await remindAll()
+      // if (res.status_code === 200) {
+      //   this.$toast({
+      //     type: 'success',
+      //     message: res.message
+      //   })
+      // }
       this.appShare()
     },
     async loadUID() {
@@ -268,7 +268,7 @@ export default {
     },
     // 获取分享链接
     getShareLink() {
-      return `https://app.fengjishi.com/beeFriends#/?uid=${this.uid}`
+      return `https://app.fengjishi.com/#/beeFriends?uid=${this.uid}`
     },
     // 分享
     appShare() {
@@ -281,7 +281,7 @@ export default {
           window.webkit.messageHandlers.ToShare.postMessage({
             title: '蜂集市-蜂友圈',
             desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-            img_path: 'https://img.fengjishi.com/app/images/share_logo.png',
+            img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
             url: this.getShareLink()
           })
           // android
@@ -289,7 +289,7 @@ export default {
           window.beeMarket.ToShare(
             '蜂集市-蜂友圈',
             '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-            'https://img.fengjishi.com/app/images/share_logo.png',
+            'https://img.fengjishi.com/app/images/share_logo.jpg',
             this.getShareLink()
           )
         } else {
@@ -314,14 +314,14 @@ export default {
           window.webkit.messageHandlers.ToShare.postMessage({
             title: '蜂集市-蜂友圈',
             desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-            img_path: 'https://img.fengjishi.com/app/images/share_logo.png',
+            img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
             url: `http://app.fengjishi.com/beeFactory#/?uid=${this.uid}`
           })
         } else if (this.osObj.isAndroid && this.osObj.isApp) {
           window.beeMarket.ToShare(
             '蜂集市-蜂友圈',
             '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-            'https://img.fengjishi.com/app/images/share_logo.png',
+            'https://img.fengjishi.com/app/images/share_logo.jpg',
             `http://app.fengjishi.com/beeFactory#/?uid=${this.uid}`
           )
         } else {
