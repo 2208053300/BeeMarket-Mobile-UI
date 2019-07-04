@@ -501,7 +501,7 @@ export default {
   }
 
   .submit {
-    height: 1.5rem;
+    // height: 1.5rem;
     width: 100%;
     background: url(../../../assets/icon/joinFactory/factory_bottom_img.png)
       no-repeat;
