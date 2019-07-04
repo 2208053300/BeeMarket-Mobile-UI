@@ -161,7 +161,7 @@ export default {
   props: {},
   data() {
     return {
-      title: '身份验证',
+      title: '提现',
       // 姓名
       name: '',
       nameError: false,

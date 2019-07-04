@@ -111,7 +111,7 @@ export default {
 
       wxapi.wxShare({
         title: this.storeDetails.store_name,
-        desc: '刚刚在蜂集市发现一个不错的店铺，赶紧来看看吧。',
+        desc: '刚刚在蜂集市发现一个不错的店铺，赶紧来看看吧~',
         imgUrl: this.storeDetails.store_logo,
         link: window.location.href + '&uid=' + this.uid
       })
