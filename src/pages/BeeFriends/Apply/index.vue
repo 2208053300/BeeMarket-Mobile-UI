@@ -150,8 +150,6 @@ export default {
       // 个人申请字段验证
       personalName: '',
       personalNameError: false,
-      // card_no: '',
-      // card_noError: false,
       number: '',
       numberError: false,
 
@@ -196,8 +194,6 @@ export default {
       if (
         this.personalName &&
           !this.personalNameError &&
-          // this.card_no &&
-          // !this.card_noError &&
           this.number &&
           !this.numberError
 
