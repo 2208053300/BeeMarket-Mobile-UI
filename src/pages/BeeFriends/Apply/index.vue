@@ -501,13 +501,14 @@ export default {
   }
 
   .submit {
-    height: 1.5rem;
+    // height: 1.5rem;
     width: 100%;
     background: url(../../../assets/icon/joinFactory/factory_bottom_img.png)
       no-repeat;
     background-size: 100% 100%;
     text-align: center;
     margin-top: 0.5rem;
+    margin-bottom: .8rem;
     .btn {
       font-size: 0.48rem;
       color: #fed559;
