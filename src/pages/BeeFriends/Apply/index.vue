@@ -508,6 +508,7 @@ export default {
     background-size: 100% 100%;
     text-align: center;
     margin-top: 0.5rem;
+    margin-bottom: .5rem;
     .btn {
       font-size: 0.48rem;
       color: #fed559;
