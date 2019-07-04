@@ -1,8 +1,10 @@
 <template>
   <div>
+    <div style="background: #fafafa;padding:0.2rem 0.3rem;text-align: right">
+      <span @click="$router.push('/persion/history/historyEdit')">编辑</span>
+    </div>
     <!-- 内容 -->
     <div class="wrapper container bg-gray hitory-index">
-      <span @click="$router.push('/persion/history/historyEdit')">编辑</span>
       <van-list
         v-model="loading"
         :finished="finished"
@@ -128,7 +130,7 @@ export default {
     // 获取历史足迹数据
     async getList() {
       setTimeout(async() => {
-        const res = getHistoryList({ page: this.page, pageSize: this.pageSize })
+        const res = await getHistoryList({ page: this.page, pageSize: this.pageSize })
         // this.GetHistoryInfo(res.data)
         this.historyList.push(...res.data)
         this.GetHistoryInfo(this.historyList)

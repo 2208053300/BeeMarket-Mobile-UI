@@ -1,9 +1,10 @@
 <template>
   <div class="history-edit">
     <!-- 内容 -->
-    <div class="wrapper container bg-gray hitory-index">
-      <p>{{ historySelected }}</p>
+    <div style="background: #fafafa;padding:0.2rem 0.3rem;text-align: right">
       <span @click="$router.push('/persion/history')">完成</span>
+    </div>
+    <div class="wrapper container bg-gray hitory-index">
       <van-row
         v-for="(item, index) in historyInfo"
         :key="index"
