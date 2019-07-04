@@ -9,7 +9,10 @@ const user = {
     },
     addressData: {},
     have_no_read: false,
+    // 1是合伙人，2冻结合伙人，0非合伙人
     userStatus: 0,
+    // 当 is_partner = -1 时，该字段有效；1表示满足申请条件，0表示不满足
+    applyCondition: 0,
     is_new_user: false,
     uid: 0
   },
@@ -39,6 +42,9 @@ const user = {
     SET_USER_STATUS: (state, userStatus) => {
       state.userStatus = userStatus
     },
+    SET_USER_APPLY_CONFITION: (state, applyCondition) => {
+      state.applyCondition = applyCondition
+    },
     SET_IS_NEW_USER: (state, is_new_user) => {
       state.is_new_user = is_new_user
     },
@@ -65,6 +71,7 @@ const user = {
       const res = await isPartner()
       if (res.status_code === 200) {
         commit('SET_USER_STATUS', res.data.is_partner)
+        commit('SET_USER_APPLY_CONFITION', res.data.apply_condition)
       }
     },
     async GetUid({ commit }) {
