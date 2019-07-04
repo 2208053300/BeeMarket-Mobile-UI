@@ -56,7 +56,7 @@
                 </p>
               </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="personalCard"><span>*</span>身份证号</label>
               <div class="form-control">
                 <input
@@ -72,7 +72,7 @@
                   请重新输入身份证号！
                 </p>
               </div>
-            </div>
+            </div> -->
             <div class="form-group">
               <label for="personTell"><span>*</span>联系电话</label>
               <div class="form-control">
@@ -150,8 +150,6 @@ export default {
       // 个人申请字段验证
       personalName: '',
       personalNameError: false,
-      card_no: '',
-      card_noError: false,
       number: '',
       numberError: false,
 
@@ -185,19 +183,17 @@ export default {
     // 提交
     async submit() {
       // 个人申请
-      console.log(
-        this.personalNameError,
-        this.card_noError,
-        this.numberError,
-        this.wx_accountError,
-        this.addressError
-      )
+      // console.log(
+      //   this.personalNameError,
+      //   this.card_noError,
+      //   this.numberError,
+      //   this.wx_accountError,
+      //   this.addressError
+      // )
 
       if (
         this.personalName &&
           !this.personalNameError &&
-          this.card_no &&
-          !this.card_noError &&
           this.number &&
           !this.numberError
 
@@ -207,8 +203,9 @@ export default {
           this.$toast('可以提交！')
           const data = {
             name: this.personalName,
-            card_no: this.card_no,
-            number: this.number
+            // card_no: this.card_no,
+            number: this.number,
+            trade_no: this.$router.query.trade_no || ''
 
           }
           // 执行提交表单请求

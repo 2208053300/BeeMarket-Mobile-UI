@@ -1,5 +1,6 @@
 <template>
   <div class="card3 bg-white">
+    <!-- 爱心企业 -->
     <div class="enterprise text-center">
       <p class="mark">
         - 爱心企业 -

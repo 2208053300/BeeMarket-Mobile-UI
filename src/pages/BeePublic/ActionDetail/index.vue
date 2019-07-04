@@ -14,6 +14,7 @@
       <header-card :action-data="actionData" />
       <title-card :action-data="actionData" />
       <detail-card :action-data="actionData" />
+      <actionExplain />
       <caring-enterprise :action-data="actionData" />
     </div>
     <footer-op :action-data="actionData" />
@@ -27,6 +28,7 @@ import headerCard from './components/headerCard'
 import titleCard from './components/titleCard'
 import detailCard from './components/detailCard'
 import caringEnterprise from './components/caringEnterprise'
+import actionExplain from './components/actionExplain'
 import footerOp from './components/footerOp'
 import { getShareDetail } from '@/api/BeeApi/action'
 
@@ -36,7 +38,8 @@ export default {
     titleCard,
     detailCard,
     caringEnterprise,
-    footerOp
+    footerOp,
+    actionExplain
   },
   props: {},
   data() {
