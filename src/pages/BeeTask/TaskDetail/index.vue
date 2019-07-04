@@ -90,28 +90,28 @@
               {{ taskData.desc }}
             </div>
             <div class="goods-price">
-              ￥{{ taskData.price }}
+              <span>￥{{ taskData.price }}</span>
+              <div class="get-gift">
+                <!-- 剩余数量：<span class="num">{{ taskData.remain_qty }}</span> -->
+                <van-button
+                  v-if="taskData.proportion===100"
+                  class="get-button"
+                  @click="getGift"
+                >
+                  免费领取
+                </van-button>
+                <van-button
+                  v-else
+                  class="get-button getButton2"
+                >
+                  免费领取
+                </van-button>
+              </div>
             </div>
           </div>
         </div>
-        <div class="get-gift">
-          剩余数量：<span class="num">{{ taskData.remain_qty }}</span>
-          <van-button
-            v-if="taskData.proportion===100"
-            class="get-button"
-            @click="getGift"
-          >
-            免费领取
-          </van-button>
-          <van-button
-            v-else
-            class="get-button getButton2"
-          >
-            免费领取
-          </van-button>
-        </div>
         <!-- eslint-disable-next-line -->
-        <div v-html="taskData.details_url" class="product-detailImg"/>
+        <div class="product-detailImg" v-html="taskData.details_url" />
       </div>
     </div>
   </div>
@@ -376,33 +376,37 @@ export default {
           }
           .goods-price {
             font-size: 0.28rem;
-            margin-top: 0.4rem;
+            margin-top: 0.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            .get-gift {
+              font-size: 0.26rem;
+              color: @Grey1;
+              text-align: right;
+              .num {
+                color: @BeeDefault;
+              }
+              .get-button {
+                margin-left: 0.16rem;
+                border-radius: 0.08rem;
+                background-color: @BeeDefault;
+                color: #fff;
+                font-size: 0.28rem;
+                width: 1.52rem;
+                height: 0.6rem;
+                line-height: 0.6rem;
+                padding: 0;
+                border: none;
+              }
+              .getButton2 {
+                background-color: rgba(255, 164, 47, 0.2);
+              }
+            }
           }
         }
       }
-      .get-gift {
-        font-size: 0.26rem;
-        color: @Grey1;
-        text-align: right;
-        .num {
-          color: @BeeDefault;
-        }
-        .get-button {
-          margin-left: 0.16rem;
-          border-radius: 0.08rem;
-          background-color: @BeeDefault;
-          color: #fff;
-          font-size: 0.28rem;
-          width: 1.52rem;
-          height: 0.6rem;
-          line-height: 0.6rem;
-          padding: 0;
-          border: none;
-        }
-        .getButton2 {
-          background-color: rgba(255, 164, 47, 0.2);
-        }
-      }
+
       .product-detailImg {
         margin-top: 0.4rem;
         border-radius: 0.08rem;

@@ -10,9 +10,6 @@
     >
       <van-tab title="项目简介">
         <div class="card-content">
-          <div class="card-title">
-            项目简介
-          </div>
           <!--eslint-disable-->
           <div
             class="card-content2 cardDesc"
@@ -31,9 +28,6 @@
       </van-tab>
       <van-tab title="项目进度">
         <div class="card-content">
-          <div class="card-title">
-            项目进度
-          </div>
           <div class="card-content2">
             <div
               v-for="(item,index) in actionData.project_progress"
