@@ -200,13 +200,12 @@ export default {
       ) {
         // 验证通过
         if (this.isAgree) {
-          this.$toast('可以提交！')
+          // this.$toast('可以提交！')
           const data = {
             name: this.personalName,
             // card_no: this.card_no,
             number: this.number,
-            trade_no: this.$router.query.trade_no || ''
-
+            trade_no: this.$route.query.trade_no || ''
           }
           // 执行提交表单请求
           try {
