@@ -13,7 +13,7 @@
         class="auth-form"
       >
         <div class="form-box bg-white">
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="user_name">用户姓名</label>
             <div class="input-box">
               <input
@@ -30,7 +30,7 @@
                 请正确输入姓名！
               </p>
             </div>
-          </div>
+          </div> -->
           <div class="form-group">
             <label for="user_ID">身份证号</label>
             <div class="input-box">
@@ -53,8 +53,10 @@
           </div>
         </div>
         <p class="tip">
-          身份信息对应关联的提现微信账户，请务必填写本人真实姓名，
-          以及真实身份证号，否则将无法提现金额！
+          身份信息对应关联的提现微信账户，
+          请务必填写本人
+          <!-- 真实姓名， 以及 -->
+          真实身份证号，否则将无法提现金额！
         </p>
       </form>
       <div class="text-center">
@@ -255,14 +257,18 @@ export default {
   methods: {
     // 提交第一步
     async submitFir() {
-      if (!this.valiName() && !this.valiIdNo()) {
-        this.$toast('请正确填写姓名、身份证号码')
+      // if (!this.valiName() && !this.valiIdNo()) {
+      //   this.$toast('请正确填写姓名、身份证号码')
+      //   return false
+      // }
+      if (!this.valiIdNo()) {
+        this.$toast('请正确填写身份证号码')
         return false
       }
       try {
         const res = await toCash({
           status: this.status,
-          name: this.name,
+          // name: this.name,
           idNo: this.idNo
         })
         if (res.status_code === 200) {
