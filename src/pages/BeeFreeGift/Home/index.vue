@@ -114,7 +114,7 @@ export default {
       showWxTip: false,
       // 显示sku
       showSku: false,
-      pid: 0,
+      pid: 24746,
       propsId: [],
       pNumber: 0,
       limitNum: 0,

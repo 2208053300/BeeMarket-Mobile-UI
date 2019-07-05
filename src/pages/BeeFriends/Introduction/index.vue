@@ -91,14 +91,14 @@ export default {
     // 跳转到申请页面
     goApply() {
       // 当 is_partner = 0 时，该字段有效；1表示满足申请条件，0表示不满足
-      if (this.$store.state.user.applyCondition === 0) {
-        this.$router.replace({ name: 'noQualified' })
-      } else if (this.$store.state.user.applyCondition === 1) {
-        this.$router.replace({ name: 'apply' })
-      }
-      // this.$router.push({
-      //   name: 'apply'
-      // })
+      // if (this.$store.state.user.applyCondition === 0) {
+      //   this.$router.replace({ name: 'noQualified' })
+      // } else if (this.$store.state.user.applyCondition === 1) {
+      //   this.$router.replace({ name: 'apply' })
+      // }
+      this.$router.push({
+        name: 'apply'
+      })
     },
     // 清除历史
     clearHistory() {

@@ -90,6 +90,10 @@ export default {
     },
     // 去提现
     toCash() {
+      if (this.withdrawNum < 100) {
+        this.$toast('可提现余额不足100元！')
+        return
+      }
       this.$router.push({
         name: 'friendPay'
       })
