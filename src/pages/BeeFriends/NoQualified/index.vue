@@ -27,7 +27,6 @@
           <!-- 个人申请表单 -->
           <form
             id="formP"
-            action=""
             class="form personal bg-white"
             :class="{ active: isPersonal === true }"
           >
@@ -115,7 +114,7 @@ export default {
       if (this.osObj.isWx) {
         window.location.href = this.$store.state.app.homeUri + '/category'
       } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.ToCatList.postMessage()
+        window.webkit.messageHandlers.ToCatList.postMessage(1)
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToCatList()
       } else {
@@ -269,6 +268,7 @@ export default {
 
   .btn-box.active {
     display: block;
+    margin-top: 0.9rem;
   }
   .btn {
     margin: 0.3rem auto;
