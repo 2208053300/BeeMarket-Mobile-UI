@@ -239,25 +239,37 @@ export default {
     },
     // 删除订单
     async deleteOrderData(order_no) {
-      const res = await deleteOrder({ order_no: order_no })
-      if (res.status_code === 200) {
-        this.$toast(res.message)
-        this.$parent.changeOrder()
+      try {
+        const res = await deleteOrder({ order_no: order_no })
+        if (res.status_code === 200) {
+          this.$toast(res.message)
+          this.$parent.changeOrder()
+        }
+      } catch (e) {
+        this.$toast(e)
       }
     },
     // 确认收货
     async completeOrderData(order_no) {
-      const res = await completeOrder({ order_no: order_no })
-      if (res.status_code === 200) {
-        this.$toast(res.message)
-        this.$parent.changeOrder()
+      try {
+        const res = await completeOrder({ order_no: order_no })
+        if (res.status_code === 200) {
+          this.$toast(res.message)
+          this.$parent.changeOrder()
+        }
+      } catch (e) {
+        this.$toast(e)
       }
     },
     // 提醒发货
     async remindDelivery(order_no) {
-      const res = await remindOrder({ order_no: order_no })
-      if (res.status_code === 200) {
-        this.$toast(res.message)
+      try {
+        const res = await remindOrder({ order_no: order_no })
+        if (res.status_code === 200) {
+          this.$toast(res.message)
+        }
+      } catch (e) {
+        this.$toast(e)
       }
     },
     // 物流追踪
