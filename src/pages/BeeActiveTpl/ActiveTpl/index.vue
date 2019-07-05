@@ -51,10 +51,10 @@
 
 <script>
 import { getOs } from '@/utils'
+import wxapi from '@/utils/wxapi'
+import { getUID } from '@/api/BeeApi/user'
 // import Cookies from 'js-cookie'
 import { activityDetail } from '@/api/BeeApi/action'
-import { getUID } from '@/api/BeeApi/user'
-import wxapi from '@/utils/wxapi'
 
 export default {
   metaInfo() {
