@@ -59,7 +59,7 @@
               </div>
             </div>
           </div>
-          <div class="prop-content">
+          <!-- <div class="prop-content">
             <div class="prop-title">
               数量
             </div>
@@ -69,7 +69,7 @@
               min="1"
               :max="limitNum||99"
             />
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="done-btn">
@@ -77,7 +77,7 @@
           class="done"
           @click="handleDone()"
         >
-          确定
+          免费送礼
         </van-button>
       </div>
       <van-image-preview
@@ -202,8 +202,13 @@ export default {
       this.$emit('update:showSku', false)
     },
     handleDone() {
-      this.$emit('update:propsId', this.selProps)
+      console.log('确定')
       this.$emit('update:showSku', false)
+
+      this.$parent.showSku = false
+      this.$parent.showGift = true
+
+      this.$emit('update:propsId', this.selProps)
       this.$emit('update:pNumber', this.productNum)
       // FIXME 此处注意方法顺序
       this.$emit('get-sku-name', this.skuName)

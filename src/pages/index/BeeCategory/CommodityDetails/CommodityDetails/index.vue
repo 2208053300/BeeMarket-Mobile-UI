@@ -74,7 +74,8 @@ export default {
         title: this.commodityData.pname,
         desc: '我在蜂集市发现了一个惊呆了的商品，赶紧一起来看看吧。',
         imgUrl: this.commodityData.album[0].qUrl,
-        link: window.location.href + '&uid=' + this.uid
+        // link: window.location.href + '&uid=' + this.uid
+        link: this.commodityData.share.link
       })
     },
     // 获取商品详情
