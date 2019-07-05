@@ -190,9 +190,6 @@ export default {
     display: inline-block;
   }
   .form {
-    // background: url(../../../assets/icon/joinFactory/factory_form_bg.png)
-    //   no-repeat;
-    // background-size: 100% 100%;
     padding: 0 0.2rem 0.1rem;
     background-color:#fff;
   }

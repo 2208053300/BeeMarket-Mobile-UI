@@ -193,11 +193,12 @@ export default {
       // 0 非合伙人 1 合伙人 2 冻结
       if (vm.$store.state.user.userStatus === 0) {
         // 当 is_partner = 0 时，该字段有效；1表示满足申请条件，0表示不满足
-        if (vm.$store.state.user.applyCondition === 0) {
-          vm.$router.replace({ name: 'noQualified' })
-        } else if (vm.$store.state.user.applyCondition === 1) {
-          vm.$router.replace({ name: 'introduction' })
-        }
+        // if (vm.$store.state.user.applyCondition === 0) {
+        //   vm.$router.replace({ name: 'noQualified' })
+        // } else if (vm.$store.state.user.applyCondition === 1) {
+        //   vm.$router.replace({ name: 'introduction' })
+        // }
+        vm.$router.replace({ name: 'introduction' })
       } else if (vm.$store.state.user.userStatus === 1) {
         vm.$router.push({ name: 'beeFriends' })
       } else if (vm.$store.state.user.userStatus === 2) {

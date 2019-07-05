@@ -83,7 +83,7 @@
     </van-popup>
 
     <!-- sku -->
-    <Sku />
+    <Sku :show-sku="showSku" :pid="pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" />
   </div>
 </template>
 
@@ -112,6 +112,12 @@ export default {
       showGift: false,
       // 微信分享提示
       showWxTip: false,
+      // 显示sku
+      showSku: false,
+      pid: 0,
+      propsId: [],
+      pNumber: 0,
+      limitNum: 0,
 
       head_msg: '',
       loading: false,
@@ -154,7 +160,8 @@ export default {
 
     // NOTE 点击立即送礼,选择sku
     giveGift() {
-      this.showGift = true
+      this.showSku = true
+      // this.showGift = true
       console.log('立即送礼')
     },
 
