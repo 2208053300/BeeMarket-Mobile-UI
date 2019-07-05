@@ -16,7 +16,19 @@ const router = new Router({
       children: [
         {
           path: '',
-          component: () => import('@/pages/BeeFreeGift/GiftHome')
+          component: () => import('@/pages/BeeFreeGift/Home')
+        },
+        {
+          path: 'history',
+          component: () => import('@/pages/BeeFreeGift/History')
+        },
+        {
+          path: 'history/detail',
+          component: () => import('@/pages/BeeFreeGift/History/detail')
+        },
+        {
+          path: 'prizeDraw',
+          component: () => import('@/pages/BeeFreeGift/PrizeDraw')
         }
       ]
     }
