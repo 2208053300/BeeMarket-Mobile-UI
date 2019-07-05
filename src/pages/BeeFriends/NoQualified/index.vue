@@ -27,8 +27,7 @@
           <!-- 个人申请表单 -->
           <form
             id="formP"
-            class="form personal bg-white"
-            :class="{ active: isPersonal === true }"
+            class="form personal bg-white active"
           >
             <img :src="icon.halfCircle" alt="" class="half-circle left">
             <img :src="icon.halfCircle" class="half-circle right">
@@ -194,6 +193,7 @@ export default {
     //   no-repeat;
     // background-size: 100% 100%;
     padding: 0 0.2rem 0.1rem;
+    background-color:#fff;
   }
 
   .submit {
@@ -239,6 +239,8 @@ export default {
     background-position:  left top,right bottom;
     background-repeat: no-repeat, no-repeat;
     background-size: contain, contain;
+     background-color:#fff;
+     margin-top: 0.9rem;
     .half-circle{
       position: absolute;
       width: 0.16rem;
@@ -268,7 +270,7 @@ export default {
 
   .btn-box.active {
     display: block;
-    margin-top: 0.9rem;
+
   }
   .btn {
     margin: 0.3rem auto;
