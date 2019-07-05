@@ -20,8 +20,20 @@
         finished-text="我也是有底线的 o(´^｀)o"
         @load="getIndexData"
       >
-        <div>
-          商品
+        <div v-for="(product, index) in products" :key="index" class="product">
+          <img :src="product.tUrl" class="product-img">
+          <div class="product-info">
+            <p class="product-name">
+              {{ product.name }}
+            </p>
+            <p class="product-desc">
+              {{ product.desc }}
+            </p>
+            <p class="product-price">
+              <span>￥</span><span>{{ product.sell_price }}</span>
+              <span>￥</span><span>{{ product.line_price }}</span>
+            </p>
+          </div>
         </div>
       </van-list>
     </div>
@@ -108,6 +120,30 @@ export default {
   }
   .product-list {
     padding: 15px;
+    .product {
+      background-color: white;
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      margin-bottom: 10px;
+      .product-img {
+        width: 50px;
+        height: 50px;
+      }
+      .product-info {
+        flex-grow: 1;
+        .product-name {
+          margin-top: 10px;
+        }
+        .product-desc {
+          color: #999999;
+          margin-top: 10px;
+        }
+        .product-price {
+          margin-top: 10px;
+        }
+      }
+    }
   }
 }
 </style>
