@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '去逛逛'
@@ -83,7 +84,8 @@ export default {
 
       // 是否同意 合伙人共创协议
       isAgree: true,
-
+      // 获取 os 平台
+      osObj: getOs(),
       icon: {
         halfCircle: require('@/assets/icon/joinFactory/factory_img_circle.png'),
         img: require('@/assets/icon/beeFriends/noQualified/img.png')
@@ -110,7 +112,15 @@ export default {
   methods: {
     // 提交
     async submit() {
-      window.location.href = this.$store.state.app.homeUri
+      if (this.osObj.isWx) {
+        window.location.href = this.$store.state.app.homeUri + '/category'
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToCatList.postMessage()
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToCatList()
+      } else {
+        window.location.href = this.$store.state.app.homeUri + '/category'
+      }
     }
 
   }
