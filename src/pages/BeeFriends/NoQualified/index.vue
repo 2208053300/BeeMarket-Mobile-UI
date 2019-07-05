@@ -140,6 +140,7 @@ export default {
     width: 100%;
     margin: 0 auto 0.3rem;
     display: block;
+    pointer-events: none;
   }
 
   .info {
@@ -262,6 +263,7 @@ export default {
         bottom:-1rem;
         right: 0;
         z-index: 9;
+        pointer-events: none;
     }
   }
   .form.active {
@@ -290,5 +292,6 @@ export default {
     padding: 0.2rem 0.4rem;
     line-height: 1.7;
   }
+  img{pointer-events: none;}
 }
 </style>
