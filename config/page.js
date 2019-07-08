@@ -124,5 +124,10 @@ module.exports = {
   beeFreeGift: {
     entry: 'src/pages/BeeFreeGift/main.js',
     title: '免费送礼'
+  },
+  // 农礼包
+  beeGiftPackage: {
+    entry: 'src/pages/BeeGiftPackage/main.js',
+    title: '农礼包'
   }
 }
