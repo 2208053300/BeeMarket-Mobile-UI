@@ -5,6 +5,7 @@ import user from './modules/user'
 import cart from './modules/cart'
 import history from './modules/history'
 import order from './modules/order'
+import giftPackage from './modules/giftPackage'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
     user,
     cart,
     history,
-    order
+    order,
+    giftPackage
   }
 })
 export default store

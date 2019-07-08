@@ -19,18 +19,20 @@
         </div>
       </van-list>
     </div>
+    <gift-package-bar />
   </div>
 </template>
 
 <script>
+import { getIndexData } from '@/api/BeeApi/giftPackage'
 import BeeHeader from './components/header'
 import ProductItem from './components/productItem'
-import { getIndexData } from '@/api/BeeApi/giftPackage'
+import GiftPackageBar from '../components/giftPackageBar'
 export default {
   metaInfo: {
     title: ''
   },
-  components: { BeeHeader, ProductItem },
+  components: { BeeHeader, ProductItem, GiftPackageBar },
   props: {},
   data() {
     return {
@@ -82,6 +84,6 @@ export default {
   text-align: center;
 }
 .product-list {
-  padding: 0 0.28rem;
+  padding: 0 0.28rem 1.6rem 0.28rem;
 }
 </style>
