@@ -1,6 +1,13 @@
 <template>
   <div>
-    抽奖页面
+    <div class="title">
+      <p class="tip">
+        参与成功，等待开奖
+      </p>
+      <div class="shared-man">
+        <img :src="icon.avatar" class="share-avatar">
+      </div>
+    </div>
   </div>
 </template>
 
@@ -12,7 +19,11 @@ export default {
   components: {},
   props: {},
   data() {
-    return {}
+    return {
+      icon: {
+        avatar: require('@/assets/icon/freeGift/freegift_wechat_popup.png')
+      }
+    }
   },
   computed: {},
   watch: {},
