@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import { helpAction } from '@/api/BeeApi/action'
 import { goHome } from '@/utils'
 
 export default {

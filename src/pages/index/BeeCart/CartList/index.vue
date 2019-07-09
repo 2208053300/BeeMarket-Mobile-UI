@@ -215,9 +215,12 @@ export default {
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
-        this.$store.state.order.source = 'shopcart'
-        this.$store.state.order.target = 'general'
-        this.$router.push('/category/details/confirmOrder')
+        this.$router.push({
+          path: '/category/details/confirmOrder',
+          query: {
+            target: 'shopcart'
+          }
+        })
       }
     },
     // 跳转到购物车分享页面

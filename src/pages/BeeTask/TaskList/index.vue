@@ -13,9 +13,7 @@
           alt=""
         >
       </div>
-      <div
-        class="header-text1"
-      >
+      <div class="header-text1">
         <!-- @click="$router.push('/persion/BeeCommonweal')" -->
         <!-- 我的公益值：<span class="num">{{ taskData.basic_info.mine_charity_num }}</span> > -->
         三重好礼 等你领取
@@ -184,7 +182,7 @@
 
 <script>
 import { getTaskList, getTaskAward } from '@/api/BeeApi/task'
-import { getUID } from '@/api/BeeApi/user'
+import { getUID, security } from '@/api/BeeApi/user'
 import wxapi from '@/utils/wxapi'
 export default {
   metaInfo() {
@@ -227,6 +225,7 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.getTaskListData()
     this.loadUID()
+    this.securityData()
   },
   methods: {
     async loadUID() {
@@ -240,12 +239,19 @@ export default {
         link: `https://app.fengjishi.com/#/beeTask?uid=${this.uid}`
       })
     },
-
     async getTaskListData() {
       const res = await getTaskList({ way: 'H5' })
       this.taskData = res.data
     },
+    async securityData() {
+      const res = await security()
+      this.$store.state.user.hasPhone = res.data.mobile_bind
+    },
     async getAward(item) {
+      if (!this.$store.state.user.hasPhone) {
+        this.$router.push('/persion/profile/accountBind/bindPhone')
+        return
+      }
       const res = await getTaskAward({ tid: item.tid })
       if (res.status_code === 200) {
         this.getNum = item.available_charity_value

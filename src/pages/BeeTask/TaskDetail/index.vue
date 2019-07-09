@@ -190,16 +190,22 @@ export default {
       }
     },
     async getGift() {
+      this.$toast('敬请等待！')
       // TODO 跳转下单
       // const res = await confirmOrder(
       //   JSON.stringify({
-      //     ctids: ctids
+      //     source: 'task'
       //   })
       // )
       // if (res.status_code === 200) {
       //   this.$store.state.order.orderDetail = res.data
       //   this.$store.state.order.addrDetail = res.data.addr
-      //   this.$router.push('/category/details/confirmOrder')
+      //   this.$router.push({
+      //     path: '/category/details/confirmOrder',
+      //     query: {
+      //       target: 'task'
+      //     }
+      //   })
       // }
     },
     arouseApp() {

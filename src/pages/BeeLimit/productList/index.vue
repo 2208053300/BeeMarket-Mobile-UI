@@ -127,7 +127,7 @@ export default {
           pid +
           '&target=' +
           target
-        this.$store.state.order.target = target
+        this.$store.state.order.source = 'limited'
       } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({
           pid: pid,
@@ -142,7 +142,7 @@ export default {
           pid +
           '&target=' +
           target
-        this.$store.state.order.target = target
+        this.$store.state.order.source = 'limited'
       }
     },
     onLoad() {

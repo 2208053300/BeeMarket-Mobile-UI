@@ -90,6 +90,10 @@ export default {
     },
     // 去提现
     toCash() {
+      if (!this.$store.state.user.isActiveUser) {
+        this.$toast('用户合伙人身份未激活！')
+        return
+      }
       if (this.withdrawNum < 100) {
         this.$toast('可提现余额不足100元！')
         return

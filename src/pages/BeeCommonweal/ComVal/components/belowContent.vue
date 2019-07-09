@@ -151,7 +151,7 @@ export default {
   position: relative;
   top: -0.8rem;
   .rookie-enjoy {
-    height: 4.11rem;
+    min-height: 4.11rem;
     background-color: #fff;
     border-radius: 0.16rem;
     padding: 0.3rem 0 0 0.26rem;
