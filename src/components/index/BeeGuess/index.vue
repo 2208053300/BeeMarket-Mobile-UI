@@ -131,9 +131,11 @@ export default {
         this.$router.push({
           path: '/category/details',
           query: {
-            pid: pid
+            pid: pid,
+            target: target
           }
         })
+        this.$store.state.order.source = 'produce'
       } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({
           pid: pid,
@@ -145,9 +147,11 @@ export default {
         this.$router.push({
           path: '/category/details',
           query: {
-            pid: pid
+            pid: pid,
+            target: target
           }
         })
+        this.$store.state.order.source = 'produce'
       }
     }
   }

@@ -167,8 +167,9 @@ export default {
           stores: storeData,
           charity_used: this.charity_used,
           anonymous: this.anonymous,
-          ot: 'general',
-          os: this.order.source
+          os: this.$route.query.target || 'general',
+          // 此处暂时无赠送好友ot不变
+          ot: 'general'
         })
       )
       if (res.status_code === 200) {

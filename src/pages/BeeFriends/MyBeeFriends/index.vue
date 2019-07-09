@@ -5,6 +5,13 @@
     :style="{backgroundImage:'url('+beeIcon.bee_firends_img_bg+')'}"
     :class="{hasHeader:$store.state.app.beeHeader&&!osObj.isApp}"
   >
+    <!-- <van-notice-bar
+      color="#1989fa"
+      background="transparent"
+      left-icon="info-o"
+    >
+      通知内容
+    </van-notice-bar> -->
     <div
       class="user-fixed"
       :style="{backgroundImage:'url('+beeIcon.bee_firends_img_avatar_bg+')'}"

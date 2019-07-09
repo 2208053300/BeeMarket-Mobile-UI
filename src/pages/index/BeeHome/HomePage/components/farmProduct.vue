@@ -75,7 +75,7 @@ export default {
         path: '/category/details',
         query: { pid: pid, target: target }
       })
-      this.$store.state.order.target = target
+      this.$store.state.order.source = 'produce'
     }
   }
 }
