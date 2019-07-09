@@ -2,53 +2,63 @@
   <div class="bee-index">
     <bee-header @on-rule="onRule" />
     <img :src="beeIcon.headImg">
-    <div class="product-container">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        finished-text="我也是有底线的 o(´^｀)o"
-        class="product-list"
-        @load="getList"
-      >
-        <div class="item flex flex-wrap">
-          <product-item
-            v-for="(item, index) in products"
-            :key="index"
-            :item="item"
-          />
-        </div>
-      </van-list>
+    <div class="product-list">
+      <div class="item flex flex-wrap">
+        <product-item
+          v-for="(item, index) in products"
+          :key="index"
+          :item="item"
+          @plus="beforeAddProduct"
+          @minus="removeProduct"
+        />
+      </div>
     </div>
-    <gift-package-bar />
+    <gift-package-bar ref="giftBar" @open-list="openGiftList" />
+    <sku
+      :show-sku.sync="showSku"
+      :pid="pid"
+      :p-number.sync="pNumber"
+      @get-sku-id="addProduct"
+    />
+    <gift-package-list
+      ref="giftList"
+      :visible.sync="giftListVisible"
+      @close="packageListClose"
+    />
   </div>
 </template>
 
 <script>
-import { getIndexData } from '@/api/BeeApi/giftPackage'
+import { getIndexData, packageAdd } from '@/api/BeeApi/giftPackage'
+import { mapState } from 'vuex'
 import BeeHeader from './components/header'
 import ProductItem from './components/productItem'
 import GiftPackageBar from '../components/giftPackageBar'
+import sku from '../components/Sku'
+import GiftPackageList from '../components/giftPackageList'
 export default {
   metaInfo: {
     title: ''
   },
-  components: { BeeHeader, ProductItem, GiftPackageBar },
+  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku },
   props: {},
   data() {
     return {
-      loading: false,
-      finished: false,
       beeIcon: {
         headImg: require('@/assets/icon/giftPackage/farm_pic_banner@2x.png')
       },
-      query: {
-        page: 1,
-        pageSize: 10
-      },
-      products: []
+      products: [],
+      showSku: false,
+      skuProduct: {},
+      pNumber: 1,
+      pid: 0,
+      giftListVisible: false,
+      zIndex: 2500
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['giftPackage'])
+  },
   watch: {},
   beforeCreate() {
     // 创建之前把背景色强制设置为白色
@@ -59,20 +69,55 @@ export default {
     document.querySelector('body').style.background = ''
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.getList()
+    this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
+  },
   methods: {
     onRule() {
       console.log('弹出规则弹窗')
     },
     async getList() {
-      const res = await getIndexData(this.query)
-      this.query.page++
-      this.products.push(...res.data.product_list)
-      this.products[0].selected_qty = 1
-      this.loading = false
-      if (res.data.product_list.length < this.query.pageSize) {
-        this.finished = true
+      const res = await getIndexData()
+      this.products = res.data.product_list
+    },
+    // 获取添加商品相关信息
+    async beforeAddProduct(product) {
+      this.$refs.giftBar.$el.style.zIndex = 2000
+      this.pid = product.pid
+      this.skuProduct = product
+      this.pNumber = 1
+      this.showSku = true
+    },
+    // 添加商品到我的礼包
+    async addProduct(skuId) {
+      try {
+        await packageAdd({
+          sid: skuId,
+          number: this.pNumber
+        })
+        await this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
+        this.skuProduct.selected_qty += this.pNumber
+      } catch (e) {
+        this.$toast.fail(e)
       }
+    },
+    async removeProduct(product) {
+      this.openGiftList()
+    },
+    // 我的礼包列表关闭
+    packageListClose() {
+      this.getList()
+      this.$store.commit('SET_SHOW_TIP', true)
+    },
+    openGiftList() {
+      if (this.giftPackage.selectedTotalNum === 0) {
+        return
+      }
+      this.$store.commit('SET_SHOW_TIP', false)
+      this.$refs.giftBar.$el.style.zIndex = this.zIndex
+      this.zIndex += 4
+      this.giftListVisible = true
     }
   }
 }
@@ -84,6 +129,6 @@ export default {
   text-align: center;
 }
 .product-list {
-  padding: 0 0.28rem 1.6rem 0.28rem;
+  padding: 0 0.28rem 2rem 0.28rem;
 }
 </style>

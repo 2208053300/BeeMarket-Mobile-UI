@@ -1,7 +1,13 @@
 <template>
-  <div class="gift-bar flex flex-column align-center">
+  <div class="gift-bar flex flex-column align-center" @click="$emit('open-list')">
     <div v-if="giftPackage.showTip" class="tips">
-      {{ tipStatusText }}<span class="money-text">{{ tipMoneyText }}元</span>，生成礼包，一口价！
+      <span v-if="giftPackage.selectedTotalAmount===0">
+        任意搭配满<span class="money-text"> {{ maxMoney }} 元</span>，自动生成礼包！
+      </span>
+      <span v-if="giftPackage.selectedTotalAmount>0 && giftPackage.selectedTotalAmount < maxMoney">
+        还差 <span class="money-text"> {{ tipMoneyText }} 元</span>，自动生成礼包！
+      </span>
+      <span v-if="giftPackage.selectedTotalAmount >= maxMoney">礼包已生成</span>
     </div>
     <div class="bar-body">
       <!-- 礼包图标 -->
@@ -21,7 +27,11 @@
           未选购商品
         </span>
       </div>
-      <div class="go-settlement" :class="{'can-settlement':canSettlement}">
+      <div
+        class="go-settlement"
+        :class="{'can-settlement':canSettlement}"
+        @click.stop="goSettlement"
+      >
         去结算
       </div>
     </div>
@@ -50,29 +60,17 @@ export default {
     canSettlement() {
       return this.giftPackage.selectedTotalAmount >= this.maxMoney
     },
-    tipStatusText() {
-      if (this.giftPackage.selectedTotalAmount === 0) {
-        return '任满'
-      } else if (this.giftPackage.selectedTotalAmount < this.maxMoney) {
-        return '还差'
-      } else {
-        return '已满'
-      }
-    },
     tipMoneyText() {
-      if (this.giftPackage.selectedTotalAmount === 0) {
-        return this.maxMoney
-      } else if (this.giftPackage.selectedTotalAmount < this.maxMoney) {
-        return (this.maxMoney - this.giftPackage.selectedTotalAmount).toFixed(2)
-      } else {
-        return this.maxMoney
-      }
+      return (this.maxMoney - this.giftPackage.selectedTotalAmount).toFixed(2)
     }
   },
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    // 去结算
+    goSettlement() {}
+  }
 }
 </script>
 

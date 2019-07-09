@@ -28,7 +28,7 @@
         <div
           v-else
           class="add-to-pack-btn"
-          @click.stop="addToPack"
+          @click.stop="plus"
         >
           <van-icon name="plus" />
           加入礼包
@@ -67,11 +67,12 @@ export default {
       })
       this.$store.state.order.target = target
     },
-    async addToPack() {
-      // 添加商品
+    minus() {
+      this.$emit('minus', this.item)
     },
-    async minus() {},
-    async plus() {}
+    plus() {
+      this.$emit('plus', this.item)
+    }
   }
 }
 </script>
@@ -93,7 +94,6 @@ export default {
   .img {
     width: 3.4rem;
     height: 3.4rem;
-    background: #f4f4f4;
     img {
       border-top-left-radius: 0.16rem;
       border-top-right-radius: 0.16rem;

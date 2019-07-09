@@ -27,8 +27,22 @@ const router = new Router({
           component: () => import('@/pages/BeeFreeGift/History/detail')
         },
         {
+          path: 'detail',
+          component: () => import('@/pages/BeeFreeGift/CommodityDetails')
+        },
+        {
           path: 'prizeDraw',
           component: () => import('@/pages/BeeFreeGift/PrizeDraw')
+        },
+        {
+          path: 'fillAddress',
+          name: 'fillAddress',
+          component: () => import('@/pages/BeeFreeGift/AddAddress')
+        },
+        {
+          path: 'success',
+          name: 'success',
+          component: () => import('@/pages/BeeFreeGift/Success')
         }
       ]
     }

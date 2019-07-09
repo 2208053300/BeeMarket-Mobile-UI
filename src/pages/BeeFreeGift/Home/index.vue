@@ -31,22 +31,22 @@
         @load="getIndexData"
       >
         <div v-for="(product, index) in products" :key="index" class="product flex flex-between">
-          <img :src="product.tUrl" class="product-img">
+          <img :src="product.tUrl" class="product-img" @click="showDetail()">
           <div class="product-info flex flex-column flex-between">
             <div>
-              <p class="product-name no-wrap">
-                {{ product.name }}
+              <p class="product-name no-wrap" @click="showDetail()">
+                {{ product.pname }}
               </p>
               <p class="product-desc no-wrap">
-                {{ product.desc }}
+                {{ product.intro }}
               </p>
               <p class="product-price">
-                <span class="sell-price">￥{{ product.sell_price }}</span>
+                <span class="sell-price">￥{{ product.section_price }}</span>
                 <span class="line-price">￥{{ product.line_price }}</span>
               </p>
             </div>
-            <div class="action flex flex-between">
-              <span class="num">满5个人开奖</span>
+            <div class="action flex flex-between align-center">
+              <span class="num">满{{ product.men }}个人开奖</span>
               <van-button round size="mini" @click="showSkuPopup(index)">
                 立即送礼
               </van-button>
@@ -111,10 +111,11 @@ export default {
       products: [
         {
           tUrl: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
-          name: '这是商品的名称',
-          desc: '这是商品描述',
-          sell_price: 20,
-          line_price: 50
+          pname: '这是商品的名称',
+          intro: '这是商品描述',
+          section_price: 20,
+          line_price: 50,
+          men: 15
         }
       ],
       page: 1,
@@ -134,6 +135,8 @@ export default {
     // 获取商品数据
     async getIndexData() {
       const res = await getIndexData()
+      console.log('首页res：', res)
+
       this.page++
       this.loading = false
       this.head_msg = res.data.head_msg
@@ -146,12 +149,20 @@ export default {
     // NOTE 点击立即送礼,选择sku,sku 确定获取分享数据
     showSkuPopup(index) {
       console.log(index, 456456456)
-
       this.showSku = true
-
       this.nowProduct = this.products[index]
       // this.showGift = true
       console.log('立即送礼')
+    },
+    // 商品详情
+    showDetail() {
+      this.$router.push({
+        path: '/detail',
+        query: {
+          pid: 16934,
+          target: 'general'
+        }
+      })
     }
 
   }

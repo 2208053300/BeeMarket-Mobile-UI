@@ -59,7 +59,7 @@
               </div>
             </div>
           </div>
-          <!-- <div class="prop-content">
+          <div class="prop-content">
             <div class="prop-title">
               数量
             </div>
@@ -69,15 +69,16 @@
               min="1"
               :max="limitNum||99"
             />
-          </div> -->
+          </div>
         </div>
       </div>
       <div class="done-btn">
         <van-button
           class="done"
+          icon="plus"
           @click="handleDone()"
         >
-          免费送礼
+          加入礼包
         </van-button>
       </div>
       <van-image-preview
@@ -105,7 +106,7 @@ export default {
     propsId: {
       type: Array,
       default: () => {
-        return {}
+        return []
       }
     },
     pNumber: {
@@ -202,12 +203,7 @@ export default {
       this.$emit('update:showSku', false)
     },
     handleDone() {
-      console.log('确定')
       this.$emit('update:showSku', false)
-
-      this.$parent.showSku = false
-      this.$parent.showGift = true
-
       this.$emit('update:propsId', this.selProps)
       this.$emit('update:pNumber', this.productNum)
       // FIXME 此处注意方法顺序
@@ -222,6 +218,15 @@ export default {
 
 <style lang="less">
 .bee-sku {
+  * {
+    text-align: left;
+  }
+  .van-stepper__input {
+    text-align: center;
+  }
+  .van-button {
+    text-align: center;
+  }
   .skuPop {
     border-top-right-radius: 0.2rem;
     border-top-left-radius: 0.2rem;
@@ -325,6 +330,7 @@ export default {
       }
     }
     .done-btn {
+      text-align: center;
       .done {
         width: 100%;
         height: 0.9rem;

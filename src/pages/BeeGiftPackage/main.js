@@ -9,7 +9,7 @@ import '@/main'
 // NOTE 定义rem基准
 import '@/utils/flexiable'
 
-import { List, Button, Swipe, SwipeItem, Popup, ImagePreview, NavBar, Icon } from 'vant'
+import { List, Button, Swipe, SwipeItem, Popup, ImagePreview, NavBar, Icon, Stepper } from 'vant'
 
 Vue
   .use(List)
@@ -20,6 +20,7 @@ Vue
   .use(ImagePreview)
   .use(NavBar)
   .use(Icon)
+  .use(Stepper)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
