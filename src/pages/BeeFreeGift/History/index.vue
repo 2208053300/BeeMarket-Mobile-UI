@@ -2,14 +2,8 @@
   <div class="free-gift-history">
     <div class="head-msg">
       <van-swipe :autoplay="3000" :show-indicators="showIndicators" vertical class="swiper">
-        <van-swipe-item class="no-wrap">
-          {{ head_msg }}
-        </van-swipe-item>
-        <van-swipe-item class="no-wrap">
-          {{ head_msg }}
-        </van-swipe-item>
-        <van-swipe-item class="no-wrap">
-          {{ head_msg }}
+        <van-swipe-item v-for="(item, index) in head_msg" :key="index" class="no-wrap">
+          {{ item.desc }}
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -28,46 +22,46 @@
           <div class="product-info flex flex-column flex-between">
             <div>
               <p class="product-name">
-                {{ product.name }}
+                {{ product.pname }}
               </p>
             </div>
             <!-- 开奖提示 -->
             <div class="result-tip">
               <!-- fail -->
-              <!-- <p class="fail-tip text-right">
+              <p v-if="product.result==='fail'" class="fail-tip text-right">
                 未达到开奖人数
-              </p> -->
+              </p>
               <!-- ing -->
-              <div class="ing-tip flex flex-between">
+              <div v-if="product.result==='ing'" class="ing-tip flex flex-between">
                 <p>
-                  <span><DownTime :time="time" /></span>后送礼失败
+                  <span><DownTime :time="product.remain_time" /></span>后送礼失败
                 </p>
-                <span>还差15人开奖</span>
+                <span>还差{{ product.men }}人开奖</span>
               </div>
               <!-- success -->
-              <!-- <div class="success-tip flex flex-between">
+              <div v-if="product.result==='success'" class="success-tip flex flex-between">
                 <p class="flex align-center">
                   领取礼物好友 <img class="success-friend-img" :src="icon.defaultAvatar">
                 </p>
                 <span>送礼成功</span>
-              </div> -->
+              </div>
             </div>
             <!-- 操作按钮 -->
             <div class="action flex flex-between">
               <van-button class="detail-btn" size="mini">
                 送礼详情
               </van-button>
-              <!-- <van-button class="re-btn" size="mini">
+              <van-button v-if="['success','fail'].includes(product.result)" class="re-btn" size="mini">
                 再次送礼
-              </van-button> -->
-              <van-button class="share-btn" size="mini">
+              </van-button>
+              <van-button v-if="product.result==='ing'" class="share-btn" size="mini">
                 送给更多朋友
               </van-button>
             </div>
           </div>
           <!-- 结果标志 -->
-          <img class="result-img" :src="icon.successImg" alt="">
-          <!-- <img class="result-img" :src="icon.failImg" alt=""> -->
+          <img v-if="product.result==='success'" class="result-img" :src="icon.successImg" alt="">
+          <img v-if="product.result==='fail'" class="result-img" :src="icon.failImg" alt="">
         </div>
       </van-list>
     </div>
@@ -78,7 +72,7 @@
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 import { getUID } from '@/api/BeeApi/user'
-import { getIndexData } from '@/api/BeeApi/freeGift'
+import { getHistoryData } from '@/api/BeeApi/freeGift'
 import DownTime from './components/DownTime'
 export default {
   metaInfo: {
@@ -92,7 +86,7 @@ export default {
     return {
       // 不显示顶部轮播导航
       showIndicators: false,
-      head_msg: '',
+      head_msg: [],
       loading: false,
       finished: false,
       products: [],
@@ -135,7 +129,7 @@ export default {
   methods: {
     // 获取商品数据
     async getIndexData() {
-      const res = await getIndexData()
+      const res = await getHistoryData()
       this.page++
       this.loading = false
       this.head_msg = res.data.head_msg

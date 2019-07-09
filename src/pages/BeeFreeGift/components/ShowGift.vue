@@ -10,15 +10,15 @@
           <div class="product-info flex flex-column flex-between">
             <div>
               <p class="product-name no-wrap">
-                {{ product.name }}
+                {{ product.pname }}
               </p>
               <p class="product-desc no-wrap">
-                {{ product.desc }}
+                {{ product.intro }}
               </p>
             </div>
             <div class="action">
               <p class="product-price">
-                <span class="sell-price"><span style="font-size:.35rem;">￥</span>{{ product.sell_price }}</span>
+                <span class="sell-price"><span style="font-size:.35rem;">￥</span>{{ product.section_price }}</span>
               </p>
               <span class="num">满5人参与，立即开奖</span>
             </div>

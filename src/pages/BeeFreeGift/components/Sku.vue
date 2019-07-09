@@ -199,7 +199,8 @@ export default {
       })
     },
     handleClose() {
-      this.$emit('update:showSku', false)
+      // this.$emit('update:showSku', false)
+      this.$parent.showSku = false
     },
     handleDone() {
       console.log('确定')
