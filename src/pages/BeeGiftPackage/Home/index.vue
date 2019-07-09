@@ -25,6 +25,7 @@
       :visible.sync="giftListVisible"
       @close="packageListClose"
     />
+    <rule :visible.sync="ruleVisible" />
   </div>
 </template>
 
@@ -36,11 +37,12 @@ import ProductItem from './components/productItem'
 import GiftPackageBar from '../components/giftPackageBar'
 import sku from '../components/Sku'
 import GiftPackageList from '../components/giftPackageList'
+import Rule from './components/rule'
 export default {
   metaInfo: {
-    title: ''
+    title: '农礼包产品'
   },
-  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku },
+  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku, Rule },
   props: {},
   data() {
     return {
@@ -53,6 +55,7 @@ export default {
       pNumber: 1,
       pid: 0,
       giftListVisible: false,
+      ruleVisible: false,
       zIndex: 2500
     }
   },
@@ -75,7 +78,8 @@ export default {
   },
   methods: {
     onRule() {
-      console.log('弹出规则弹窗')
+      this.$refs.giftBar.$el.style.zIndex = 2000
+      this.ruleVisible = true
     },
     async getList() {
       const res = await getIndexData()

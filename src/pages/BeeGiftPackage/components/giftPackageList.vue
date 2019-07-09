@@ -159,7 +159,7 @@ export default {
     color: #484848;
     background: #fff4e5;
     text-align: center;
-    line-height: 0.56rem;
+    line-height: 0.6rem;
     border-top-right-radius: 0.2rem;
     border-top-left-radius: 0.2rem;
     .money-text {
