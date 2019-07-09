@@ -3,15 +3,20 @@
     v-if="$store.state.user.userStatus===1"
     class="my-friends"
     :style="{backgroundImage:'url('+beeIcon.bee_firends_img_bg+')'}"
-    :class="{hasHeader:$store.state.app.beeHeader&&!osObj.isApp}"
+    :class="[{hasHeader:$store.state.app.beeHeader&&!osObj.isApp},{hasNotice:!$store.state.user.isActiveUser}]"
   >
-    <!-- <van-notice-bar
-      color="#1989fa"
-      background="transparent"
-      left-icon="info-o"
+    <div
+      v-if="!$store.state.user.isActiveUser"
+      class="active-notice"
     >
-      通知内容
-    </van-notice-bar> -->
+      <div class="notice-content">
+        <van-icon
+          name="volume-o"
+          class="notice-icon"
+        />
+        <span class="notice-text">您的合伙人身份还未激活哟！</span>
+      </div>
+    </div>
     <div
       class="user-fixed"
       :style="{backgroundImage:'url('+beeIcon.bee_firends_img_avatar_bg+')'}"
@@ -533,6 +538,32 @@ export default {
       }
     }
   }
+  .active-notice {
+    position: fixed;
+    width: 100%;
+    top: 1.5rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    z-index: 80;
+    .notice-content {
+      max-width: 5rem;
+      border-radius: 0.4rem;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
+      padding: 0 0.1rem;
+      margin: auto;
+    }
+    .notice-icon {
+      vertical-align: text-top;
+      color: @Red1;
+      margin-right: 0.2rem;
+    }
+    .notice-text {
+      font-size: 0.26rem;
+      color: #fff;
+    }
+  }
 }
 .hasHeader {
   .user-fixed {
@@ -542,6 +573,9 @@ export default {
     top: 1.2rem;
   }
   .rule-fixed {
+    top: 2.5rem;
+  }
+  .active-notice {
     top: 2.5rem;
   }
 }

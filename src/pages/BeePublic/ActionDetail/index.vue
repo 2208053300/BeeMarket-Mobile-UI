@@ -17,7 +17,7 @@
       <actionExplain />
       <caring-enterprise :action-data="actionData" />
     </div>
-    <footer-op :action-data="actionData" />
+    <!-- <footer-op :action-data="actionData" /> -->
   </div>
 </template>
 
@@ -29,8 +29,9 @@ import titleCard from './components/titleCard'
 import detailCard from './components/detailCard'
 import caringEnterprise from './components/caringEnterprise'
 import actionExplain from './components/actionExplain'
-import footerOp from './components/footerOp'
+// import footerOp from './components/footerOp'
 import { getShareDetail } from '@/api/BeeApi/action'
+import { helpAction } from '@/api/BeeApi/action'
 
 export default {
   components: {
@@ -38,7 +39,7 @@ export default {
     titleCard,
     detailCard,
     caringEnterprise,
-    footerOp,
+    // footerOp,
     actionExplain
   },
   props: {},
@@ -61,6 +62,7 @@ export default {
   created() {},
   mounted() {
     this.getShareDetailData()
+    this.helpActionData()
   },
   methods: {
     async getShareDetailData() {
@@ -75,6 +77,15 @@ export default {
         link: window.location.href, // 分享链接，根据自身项目决定是否需要split
         imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
       })
+    },
+    async helpActionData() {
+      const res = await helpAction({
+        aid: this.$route.query.aid,
+        share_id: this.$route.query.uid
+      })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+      }
     }
   }
 }

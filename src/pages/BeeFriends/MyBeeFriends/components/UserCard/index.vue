@@ -31,7 +31,7 @@
             <div class="header-img2">
               <div class="header-img3">
                 <img
-                  :src="detailItem.head_image_url"
+                  :src="detailItem.head_image_url||$store.state.app.head_detault"
                   alt="头像"
                 >
               </div>

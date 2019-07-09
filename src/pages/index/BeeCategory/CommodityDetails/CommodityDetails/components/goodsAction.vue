@@ -131,7 +131,7 @@ export default {
     async confirmOrderData() {
       const securityData = await security()
       if (!securityData.data.mobile_bind) {
-        this.$router.replace('/persion/profile/accountBind')
+        this.$router.replace('/persion/profile/accountBind/bindPhone')
         return false
       }
       this.action = 'buy'
