@@ -41,9 +41,6 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  metaInfo: {
-    title: ''
-  },
   components: {},
   props: {},
   data() {

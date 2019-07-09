@@ -58,9 +58,6 @@
 
 <script>
 export default {
-  metaInfo: {
-    title: ''
-  },
   components: {},
   props: {
     visible: {

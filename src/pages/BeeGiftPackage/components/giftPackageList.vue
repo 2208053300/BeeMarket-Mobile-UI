@@ -56,9 +56,6 @@
 import { mapState } from 'vuex'
 import { packageEdit, packageEmpty } from '@/api/BeeApi/giftPackage'
 export default {
-  metaInfo: {
-    title: ''
-  },
   components: {},
   props: {
     visible: {
