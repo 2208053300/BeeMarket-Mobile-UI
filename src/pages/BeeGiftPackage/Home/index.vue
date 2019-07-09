@@ -26,6 +26,7 @@
       @close="packageListClose"
     />
     <rule :visible.sync="ruleVisible" />
+    <package-build :visible.sync="packageVisible" />
   </div>
 </template>
 
@@ -38,11 +39,12 @@ import GiftPackageBar from '../components/giftPackageBar'
 import sku from '../components/Sku'
 import GiftPackageList from '../components/giftPackageList'
 import Rule from './components/rule'
+import PackageBuild from '../components/packageBuild'
 export default {
   metaInfo: {
     title: '农礼包产品'
   },
-  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku, Rule },
+  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku, Rule, PackageBuild },
   props: {},
   data() {
     return {
@@ -56,13 +58,24 @@ export default {
       pid: 0,
       giftListVisible: false,
       ruleVisible: false,
-      zIndex: 2500
+      packageVisible: false,
+      zIndex: 2500,
+      maxMoney: 599
     }
   },
   computed: {
-    ...mapState(['giftPackage'])
+    ...mapState(['giftPackage']),
+    canSettlement() {
+      return this.giftPackage.selectedTotalAmount >= this.maxMoney
+    }
   },
-  watch: {},
+  watch: {
+    canSettlement() {
+      if (this.giftPackage.selectedTotalAmount >= this.maxMoney) {
+        this.packageVisible = true
+      }
+    }
+  },
   beforeCreate() {
     // 创建之前把背景色强制设置为白色
     document.querySelector('body').style.background = '#ffe1ba'

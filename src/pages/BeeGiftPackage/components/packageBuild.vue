@@ -1,0 +1,86 @@
+<template>
+  <div>
+    <van-popup
+      v-model="visible"
+      position="center"
+      class="package-build"
+      :close-on-click-overlay="false"
+      @close="handleClose()"
+      @click-overlay="handleClose()"
+    >
+      <div style="position: relative">
+        <img :src="beeIcon.background" style="width: 5.78rem;height: 7.5rem"/>
+        <div class="btns">
+          <div class="btn-1" @click="handleClose">
+            继续逛逛
+          </div>
+          <div class="btn-2" @click="goSettlement">
+            去结算
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center;padding-top: 0.6rem">
+        <img :src="beeIcon.close" style="width: 0.5rem" @click="handleClose">
+      </div>
+    </van-popup>
+  </div>
+</template>
+
+<script>
+export default {
+  components: {},
+  props: {
+    visible: {
+      type: Boolean,
+      required: true
+    }
+  },
+  data() {
+    return {
+      beeIcon: {
+        background: require('@/assets/icon/giftPackage/farm_popups_pic_content@2x.png'),
+        close: require('@/assets/icon/giftPackage/farm_popups_icon_cancel@2x.png')
+      }
+    }
+  },
+  computed: {},
+  watch: {},
+  created() {},
+  mounted() {},
+  methods: {
+    handleClose() {
+      this.$emit('update:visible', false)
+    },
+    goSettlement() {}
+  }
+}
+</script>
+
+<style scoped lang="less">
+.package-build {
+  background: transparent;
+  .btns {
+    position: absolute;
+    bottom: 0.76rem;
+    display: flex;
+    padding: 0 0.34rem;
+    .btn-1 {
+      margin-right: 0.3rem;
+      width: 2.4rem;
+      line-height: 0.68rem;
+      background: white;
+      color: @Grey12;
+      border-radius: 5rem;
+      box-shadow: 0 0.15rem 0 @BeeDefault3;
+    }
+    .btn-2 {
+      color: white;
+      width: 2.4rem;
+      line-height: 0.68rem;
+      background: @BeeDefault;
+      border-radius: 5rem;
+      box-shadow: 0 0.15rem 0 @BeeDefault3;
+    }
+  }
+}
+</style>
