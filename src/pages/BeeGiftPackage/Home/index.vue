@@ -13,12 +13,17 @@
         />
       </div>
     </div>
-    <gift-package-bar />
+    <gift-package-bar ref="giftBar" @open-list="openGiftList" />
     <sku
       :show-sku.sync="showSku"
       :pid="pid"
       :p-number.sync="pNumber"
       @get-sku-id="addProduct"
+    />
+    <gift-package-list
+      ref="giftList"
+      :visible.sync="giftListVisible"
+      @close="packageListClose"
     />
   </div>
 </template>
@@ -30,11 +35,12 @@ import BeeHeader from './components/header'
 import ProductItem from './components/productItem'
 import GiftPackageBar from '../components/giftPackageBar'
 import sku from '../components/Sku'
+import GiftPackageList from '../components/giftPackageList'
 export default {
   metaInfo: {
     title: ''
   },
-  components: { BeeHeader, ProductItem, GiftPackageBar, sku },
+  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku },
   props: {},
   data() {
     return {
@@ -45,7 +51,9 @@ export default {
       showSku: false,
       skuProduct: {},
       pNumber: 1,
-      pid: 0
+      pid: 0,
+      giftListVisible: false,
+      zIndex: 2500
     }
   },
   computed: {
@@ -75,6 +83,7 @@ export default {
     },
     // 获取添加商品相关信息
     async beforeAddProduct(product) {
+      this.$refs.giftBar.$el.style.zIndex = 2000
       this.pid = product.pid
       this.skuProduct = product
       this.pNumber = 1
@@ -93,7 +102,23 @@ export default {
         this.$toast.fail(e)
       }
     },
-    async removeProduct(product) {}
+    async removeProduct(product) {
+      this.openGiftList()
+    },
+    // 我的礼包列表关闭
+    packageListClose() {
+      this.getList()
+      this.$store.commit('SET_SHOW_TIP', true)
+    },
+    openGiftList() {
+      if (this.giftPackage.selectedTotalNum === 0) {
+        return
+      }
+      this.$store.commit('SET_SHOW_TIP', false)
+      this.$refs.giftBar.$el.style.zIndex = this.zIndex
+      this.zIndex += 4
+      this.giftListVisible = true
+    }
   }
 }
 </script>

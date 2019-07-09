@@ -27,3 +27,21 @@ export function packageMine(data) {
     data
   })
 }
+
+// NOTE 编辑我的礼包
+export function packageEdit(data) {
+  return request({
+    url: '/package/edit',
+    method: 'post',
+    data
+  })
+}
+
+// NOTE 清空我的礼包
+export function packageEmpty(data) {
+  return request({
+    url: '/package/empty',
+    method: 'post',
+    data
+  })
+}
