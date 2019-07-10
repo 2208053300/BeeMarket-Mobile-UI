@@ -130,8 +130,18 @@
               <div class="van-cell-value">
                 <div class="van-field__body">
                   <input
+                    v-if="factory.referrer_number"
                     v-model.trim="factory.referrer_number"
-                    :disabled="disabled"
+                    disabled
+                    type="tel"
+                    placeholder="请输入推荐人电话"
+                    class="van-field__control  van-field__control--left"
+                    @blur.prevent="blurScroll"
+                  >
+                  <input
+                    v-else
+                    v-model.trim="factory.referrer_number"
+
                     type="tel"
                     placeholder="请输入推荐人电话"
                     class="van-field__control  van-field__control--left"
@@ -306,10 +316,6 @@ export default {
       // } else if (this.$route.query.phone) {
       //   this.factory.referrer_number = this.$route.query.phone
       // }
-
-      if (this.factory.referrer_number) {
-        this.disabled = true
-      }
     },
 
     // 获取用户id
