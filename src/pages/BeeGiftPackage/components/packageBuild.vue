@@ -9,7 +9,7 @@
       @click-overlay="handleClose()"
     >
       <div style="position: relative">
-        <img :src="beeIcon.background" style="width: 5.78rem;height: 7.5rem"/>
+        <img :src="beeIcon.background" style="width: 5.78rem;height: 7.5rem">
         <div class="btns">
           <div class="btn-1" @click="handleClose">
             继续逛逛
@@ -51,13 +51,21 @@ export default {
     handleClose() {
       this.$emit('update:visible', false)
     },
-    goSettlement() {}
+    goSettlement() {
+      this.handleClose()
+      if (window.location.href === '/') {
+        this.$router.push('/category/details/confirmOrder?res=giftPackage')
+      } else {
+        window.location.href = '/#/category/details/confirmOrder?res=giftPackage'
+      }
+    }
   }
 }
 </script>
 
 <style scoped lang="less">
 .package-build {
+  text-align: center;
   background: transparent;
   .btns {
     position: absolute;
@@ -68,18 +76,20 @@ export default {
       margin-right: 0.3rem;
       width: 2.4rem;
       line-height: 0.68rem;
-      background: white;
+      padding-bottom: 0.12rem;
+      background: url('../../../assets/icon/giftPackage/farm_popups_button_goon@2x.png');
+      background-size: contain;
       color: @Grey12;
       border-radius: 5rem;
-      box-shadow: 0 0.15rem 0 @BeeDefault3;
     }
     .btn-2 {
       color: white;
       width: 2.4rem;
+      padding-bottom: 0.12rem;
       line-height: 0.68rem;
-      background: @BeeDefault;
+      background: url('../../../assets/icon/giftPackage/farm_popups_button_settlement@2x.png');
+      background-size: contain;
       border-radius: 5rem;
-      box-shadow: 0 0.15rem 0 @BeeDefault3;
     }
   }
 }

@@ -772,6 +772,22 @@ const router = new Router({
       component: () => import('@/pages/BeeLogin')
     },
     {
+      path: '/beeGiftPackage',
+      name: 'beeGiftPackage',
+      component: () => import('@/pages/BeeGiftPackage'),
+      children: [
+        {
+          path: '',
+          component: () => import('@/pages/BeeGiftPackage/Home')
+        },
+        {
+          path: 'detail',
+          name: 'giftPackagePDetail',
+          component: () => import('@/pages/BeeGiftPackage/CommodityDetails')
+        }
+      ]
+    },
+    {
       path: '*',
       redirect: '/404'
     }

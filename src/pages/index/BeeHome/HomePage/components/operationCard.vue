@@ -13,16 +13,16 @@
     </div>
     <div
       class="op-item"
-      @click="authRoute('beeTask')"
+      @click="$router.push('/beeGiftPackage')"
     >
       <div class="img-content">
         <img
           :src="beeIcon.home_icon_task"
-          alt="新手专享"
+          alt="农礼包"
         >
       </div>
       <p class="op-text">
-        新手专享
+        农礼包
       </p>
     </div>
     <div

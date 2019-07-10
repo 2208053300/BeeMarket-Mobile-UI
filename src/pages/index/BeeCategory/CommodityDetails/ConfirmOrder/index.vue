@@ -108,6 +108,7 @@ import commodityList from './components/commodityList'
 import { mapState } from 'vuex'
 import { createOrder } from '@/api/BeeApi/order'
 import { goPayFromPayInfo } from '@/utils/wxPay'
+import { confirmOrder } from '@/api/BeeApi/order'
 
 export default {
   metaInfo: {
@@ -136,12 +137,26 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    console.log(JSON.stringify(this.order.orderDetail))
-    if (JSON.stringify(this.order.orderDetail) === '{}') {
-      this.$router.go(-1)
+    if (this.$route.query.res === 'giftPackage') {
+      this.confirmGiftPackageOrder()
+    } else {
+      if (JSON.stringify(this.order.orderDetail) === '{}') {
+        this.$router.go(-1)
+      }
     }
   },
   methods: {
+    // 确认礼包订单信息
+    async confirmGiftPackageOrder() {
+      // 获取确认订单
+      const res = await confirmOrder(JSON.stringify({
+        os: 'pgpackage'
+      }))
+      if (res.status_code === 200) {
+        this.$store.state.order.orderDetail = res.data
+        this.$store.state.order.addrDetail = res.data.addr
+      }
+    },
     async createOrderData() {
       if (!this.order.addrDetail) {
         this.$toast('请选择收货地址')

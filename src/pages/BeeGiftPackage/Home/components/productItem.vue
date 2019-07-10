@@ -62,7 +62,7 @@ export default {
   methods: {
     goDetail(pid, target) {
       this.$router.push({
-        path: '/detail',
+        name: 'giftPackagePDetail',
         query: { pid: pid, target: target }
       })
       this.$store.state.order.target = target

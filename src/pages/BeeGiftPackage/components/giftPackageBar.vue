@@ -66,13 +66,22 @@ export default {
   mounted() {},
   methods: {
     // 去结算
-    goSettlement() {}
+    goSettlement() {
+      if (this.canSettlement) {
+        if (window.location.href === '/') {
+          this.$router.push('/category/details/confirmOrder?res=giftPackage')
+        } else {
+          window.location.href = '/#/category/details/confirmOrder?res=giftPackage'
+        }
+      }
+    }
   }
 }
 </script>
 
 <style scoped lang="less">
 .gift-bar {
+  text-align: center;
   position: fixed;
   bottom: 0;
   width: 100%;
