@@ -557,7 +557,8 @@ export default {
 
   .van-field__control {
     border-radius: 0.05rem;
-    width: 100%;
+    width: 90%;
+    // width: 3.8rem;
     height: 0.74rem;
     line-height: 0.74rem;
     background: #eee;
