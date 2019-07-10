@@ -69,9 +69,9 @@ export default {
     goSettlement() {
       if (this.canSettlement) {
         if (window.location.href === '/') {
-          this.$router.push('/category/details/confirmOrder?res=giftPackage')
+          this.$router.push('/category/details/confirmOrder?target=pgpackage')
         } else {
-          window.location.href = '/#/category/details/confirmOrder?res=giftPackage'
+          window.location.href = '/#/category/details/confirmOrder?target=pgpackage'
         }
       }
     }
