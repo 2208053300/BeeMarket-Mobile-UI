@@ -581,7 +581,7 @@ export default {
       color: #ff4918;
     }
   }
-  .van-cell-value{ flex:1;}
+  .van-cell-value{width: 3.8rem;}
   // .van-field__label {
   //   display: flex;
   //   align-items: center;
@@ -598,7 +598,7 @@ export default {
   // }
   .van-field__control {
     border-radius: 0.05rem;
-    width: 3.8rem;
+    // width: 3.8rem;
     height: 0.74rem;
     line-height: 0.74rem;
     background: #eee;
