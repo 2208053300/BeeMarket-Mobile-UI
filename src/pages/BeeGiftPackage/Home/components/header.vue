@@ -31,7 +31,7 @@ export default {
       },
       showTitle: false,
       maxX: 50,
-      leftColor: 'ffffffee'
+      leftColor: 'rgba(255,255,255,0.5)'
     }
   },
   computed: {},
@@ -70,7 +70,7 @@ export default {
           this.leftColor = 'rgba(0,0,0,0.7)'
           this.$refs.header.style.color = 'black'
         } else {
-          this.leftColor = 'rgba(255,255,255,0.7)'
+          this.leftColor = 'rgba(255,255,255,0.5)'
           this.$refs.header.style.color = 'white'
         }
       } else {
