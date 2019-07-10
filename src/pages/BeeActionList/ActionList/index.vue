@@ -121,6 +121,7 @@ export default {
 <style scoped lang="less">
 .action-list {
   margin-top: 0.04rem;
+  padding: 0.1rem 0.3rem 60px;
   .action-content {
     margin-top: 0.2rem;
     background-color: #fff;
