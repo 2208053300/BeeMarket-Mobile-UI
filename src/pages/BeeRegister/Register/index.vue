@@ -50,7 +50,7 @@
 
 <script>
 import { getToken } from '@/utils/auth'
-
+import { GetRequest } from '@/utils/index'
 export default {
   metaInfo: {
     title: '注册'
@@ -98,7 +98,8 @@ export default {
     // 请求任一接口判断是否登录
     // await this.$store.dispatch('GerUserStatus')
     // await isLogin()
-    if (window.localStorage.getItem('BM-App-Token')) {
+
+    if (!GetRequest('code')) {
       window.localStorage.removeItem('BM-App-Token')
       await getToken()
     }
