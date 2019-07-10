@@ -52,7 +52,12 @@ export default {
       this.$emit('update:visible', false)
     },
     goSettlement() {
-      window.location.href = '/#/category/details/confirmOrder?res=giftPackage'
+      this.handleClose()
+      if (window.location.href === '/') {
+        this.$router.push('/category/details/confirmOrder?res=giftPackage')
+      } else {
+        window.location.href = '/#/category/details/confirmOrder?res=giftPackage'
+      }
     }
   }
 }

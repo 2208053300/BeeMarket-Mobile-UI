@@ -134,7 +134,6 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    console.log('加载首页1')
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
     this.getHomeData()

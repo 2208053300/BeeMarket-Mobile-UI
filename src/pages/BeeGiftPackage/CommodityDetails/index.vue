@@ -102,7 +102,7 @@ export default {
   created() {},
   mounted() {
     this.$store.state.cart.skuId = 0
-    this.$store.state.app.beeHeader = true
+    this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = false
     this.getProductDetailData(this.$route.query.pid, this.$route.query.target)
     this.$store.dispatch('GET_GIFT_PACKAGE_INFO')

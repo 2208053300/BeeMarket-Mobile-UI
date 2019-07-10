@@ -67,7 +67,13 @@ export default {
   methods: {
     // 去结算
     goSettlement() {
-      window.location.href = '/#/category/details/confirmOrder?res=giftPackage'
+      if (this.canSettlement) {
+        if (window.location.href === '/') {
+          this.$router.push('/category/details/confirmOrder?res=giftPackage')
+        } else {
+          window.location.href = '/#/category/details/confirmOrder?res=giftPackage'
+        }
+      }
     }
   }
 }

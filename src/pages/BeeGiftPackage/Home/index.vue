@@ -86,6 +86,8 @@ export default {
   },
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = false
     this.getList()
     this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
   },
@@ -142,6 +144,7 @@ export default {
 
 <style scoped lang="less">
 .bee-index {
+  background: #ffe1ba;
   padding-top: 46px;
   text-align: center;
 }
