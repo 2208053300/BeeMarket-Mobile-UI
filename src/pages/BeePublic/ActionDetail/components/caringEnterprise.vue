@@ -118,8 +118,8 @@ export default {
     }
     .enterprise-img {
       margin: 0.28rem auto 0.4rem;
-      width: 2.44rem;
-      height: 1.04rem;
+      width: 6.26rem;
+      height: 0.52rem;
     }
     .show-desc {
       text-align: center;
@@ -152,7 +152,7 @@ export default {
       grid-template-columns: repeat(2, 1fr);
       text-align: center;
       align-items: center;
-      grid-template-rows: repeat(2, 0.8rem);
+      grid-template-rows: 0.8rem;
       grid-row-gap: 0.4rem;
       .institutions-item {
         height: 0.8rem;

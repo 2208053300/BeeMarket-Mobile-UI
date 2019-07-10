@@ -15,10 +15,13 @@
           公司信息
         </div>
         <div class="enterprise-logo">
-          <img
+          <!-- <img
             :src="companyInfo.love_company_logo"
             alt="Logo"
-          >
+          > -->
+          <span class="company-name">
+            {{ companyInfo.company_name }}
+          </span>
         </div>
         <div class="desc-content">
           {{ companyInfo.company_desc }}
@@ -87,9 +90,12 @@ export default {
       .enterprise-logo {
         padding: 0.92rem 0 0.24rem;
         margin: auto;
-        width: 2.36rem;
         height: 1.04rem;
+        line-height: 1.04rem;
         border-radius: 0.04rem;
+        text-align: center;
+        font-size: 0.36rem;
+        color: @BeeDefault;
       }
       .desc-content {
         border-top-left-radius: 0.8rem;
