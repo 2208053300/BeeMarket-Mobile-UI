@@ -17,7 +17,7 @@
     >
       <div class="img-content">
         <img
-          :src="beeIcon.home_icon_task"
+          :src="beeIcon.home_icon_gift_package"
           alt="农礼包"
         >
       </div>
@@ -77,7 +77,7 @@ export default {
     return {
       beeIcon: {
         home_icon_classroom: require('@/assets/icon/home/index/home_icon_classroom@2x.png'),
-        home_icon_task: require('@/assets/icon/home/index/home_icon_task@2x.png'),
+        home_icon_gift_package: require('@/assets/icon/home/index/home_icon_farm@2x.png'),
         home_icon_circle: require('@/assets/icon/home/index/home_icon_circle@2x.png'),
         home_icon_paction: require('@/assets/icon/home/index/home_icon_paction@2x.png'),
         home_icon_settled: require('@/assets/icon/home/index/home_icon_settled@2x.png')
@@ -107,6 +107,8 @@ export default {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   align-items: center;
+  background: white;
+  padding: 0.28rem 0.2rem;
   .op-item {
     text-align: center;
     .img-content {
