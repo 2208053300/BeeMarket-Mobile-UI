@@ -122,23 +122,8 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="van-cell   van-field">
-              <div class="van-cell-title">
-                <span>推荐人</span>
-              </div>
-              <div class="van-cell-value">
-                <div class="van-field__body">
-                  <input
-                    v-model.trim="factory.referrer_name"
-                    type="text"
-                    placeholder="请输入推荐人姓名"
-                    class="van-field__control  van-field__control--left"
-                    @blur.prevent="blurScroll"
-                  >
-                </div>
-              </div>
-            </div> -->
-            <div class="van-cell   van-field">
+
+            <div class="van-cell  van-field">
               <div class="van-cell-title">
                 <span>推荐人电话</span>
               </div>
@@ -579,7 +564,7 @@ export default {
       color: #ff4918;
     }
   }
-  .van-cell-value{width: 3.8rem;}
+  // .van-cell-value{width: 3.8rem;}
 
   .van-field__control {
     border-radius: 0.05rem;
