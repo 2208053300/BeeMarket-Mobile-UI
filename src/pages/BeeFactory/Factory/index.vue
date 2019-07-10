@@ -259,7 +259,7 @@ export default {
         jy_id: '',
         jy_name: '',
         referrer_name: '',
-        referrer_number: this.$route.query.phone || '',
+        referrer_number: '',
         thumb_url: ''
       },
       // 上传图片
@@ -315,6 +315,11 @@ export default {
       const res = await isPartner()
       //  console.log('用户是否合伙人身份：', res)
       this.userPhone = res.data.user_phone
+      if (this.userPhone) {
+        this.factory.referrer_number = this.userPhone
+      } else if (this.$route.query.phone) {
+        this.factory.referrer_number = this.$route.query.phone
+      }
     },
 
     // 获取用户id
