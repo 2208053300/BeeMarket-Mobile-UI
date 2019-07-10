@@ -59,6 +59,7 @@
       class="share-modal"
       @closed="closed"
     >
+      <!-- position="top" -->
       <div
         class="text-right"
         style="padding:0.2rem 0.2rem 0 0"
@@ -260,6 +261,7 @@ export default {
         const res = await launchAction({ id: this.id })
         if (res.status_code === 200) {
           // this.$toast(res.message)
+          // this.$store.state.app.beeHeader = false
           this.helpSuccess = true
         }
       } catch (error) {
@@ -267,6 +269,7 @@ export default {
       }
       // this.helpSuccess = true
     },
+
     // 关闭分享弹出层
     closed() {
       this.$store.state.app.beeHeader = true
