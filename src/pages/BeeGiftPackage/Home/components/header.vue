@@ -2,10 +2,9 @@
   <div ref="header" class="bee-header">
     <van-icon
       slot="left"
-      name="arrow-left"
+      :name="beeIcon.tab_icon_home_s"
       size="0.5rem"
       style="margin-left: 15px"
-      :color="leftColor"
       @click="goHome"
     />
     <span v-show="showTitle">
@@ -29,7 +28,7 @@ export default {
       beeIcon: {
         tab_icon_home_s: require('@/assets/icon/footer/tab_icon_home_s.png')
       },
-      showTitle: false,
+      showTitle: true,
       maxX: 50,
       leftColor: 'rgba(255,255,255,0.5)'
     }
@@ -37,12 +36,6 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {
-    window.addEventListener('scroll', this.onScroll)
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.onScroll)
-  },
   methods: {
     goHome() {
       if (window.location.pathname === '/') {
@@ -94,8 +87,8 @@ export default {
   display: flex;
   justify-content: space-between;
   position: fixed;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-  color: white;
+  background: white;
+  color: black;
 }
 .white-back {
   background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(255, 255, 255));
