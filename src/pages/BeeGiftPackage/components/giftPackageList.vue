@@ -91,6 +91,7 @@ export default {
     async clearPackage() {
       await packageEmpty()
       await this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
+      this.$emit('gift-change')
       this.handleClose()
     },
     // 减少数量
@@ -114,6 +115,7 @@ export default {
     },
     // 编辑数量
     async edit(product) {
+      this.$emit('gift-change')
       await packageEdit({
         gid: product.gid,
         number: product.number

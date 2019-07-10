@@ -19,7 +19,7 @@ const router = new Router({
         },
         {
           path: 'detail',
-          component: () => import('@/pages/BeeGiftPackage/ProductDetail')
+          component: () => import('@/pages/BeeGiftPackage/CommodityDetails')
         }
       ]
     }
