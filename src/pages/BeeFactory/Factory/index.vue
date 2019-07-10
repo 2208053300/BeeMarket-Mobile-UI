@@ -40,15 +40,13 @@
                 <span><span class="required">*</span>厂商名称</span>
               </div>
               <div class="van-cell-value">
-                <div class="van-field__body">
-                  <input
-                    v-model.trim="factory.firm"
-                    type="text"
-                    placeholder="请输入厂商名称"
-                    class="van-field__control  van-field__control--left"
-                    @blur.prevent="blurScroll"
-                  >
-                </div>
+                <input
+                  v-model.trim="factory.firm"
+                  type="text"
+                  placeholder="请输入厂商名称"
+                  class="van-field__control  van-field__control--left"
+                  @blur.prevent="blurScroll"
+                >
               </div>
             </div>
 
@@ -57,15 +55,13 @@
                 <span><span class="required">*</span>联系人</span>
               </div>
               <div class="van-cell-value">
-                <div class="van-field__body">
-                  <input
-                    v-model.trim="factory.contacter"
-                    type="text"
-                    placeholder="请输入联系人姓名"
-                    class="van-field__control  van-field__control--left"
-                    @blur.prevent="blurScroll"
-                  >
-                </div>
+                <input
+                  v-model.trim="factory.contacter"
+                  type="text"
+                  placeholder="请输入联系人姓名"
+                  class="van-field__control  van-field__control--left"
+                  @blur.prevent="blurScroll"
+                >
               </div>
             </div>
             <div class="van-cell   van-field">
@@ -73,53 +69,41 @@
                 <span><span class="required">*</span>联系电话</span>
               </div>
               <div class="van-cell-value">
-                <div class="van-field__body">
-                  <input
-                    v-model.trim="factory.contact_phone"
-                    type="tel"
-                    placeholder="请输入联系人电话"
-                    class="van-field__control  van-field__control--left"
-                    @blur.prevent="blurScroll"
-                  >
-                </div>
+                <input
+                  v-model.trim="factory.contact_phone"
+                  type="tel"
+                  placeholder="请输入联系人电话"
+                  class="van-field__control  van-field__control--left"
+                  @blur.prevent="blurScroll"
+                >
               </div>
             </div>
             <div class="van-cell   van-field">
               <div class="van-cell-title">
                 <span><span class="required">*</span>产品类型</span>
               </div>
-              <div class="van-cell-value">
-                <div class="van-field__body" @click="showCat = true">
-                  <input
-                    v-model.trim="factory.cat_name"
-                    disabled
-                    type="text"
-                    placeholder="请选择"
-                    class="van-field__control  van-field__control--left"
-                  >
-                  <div class="van-field__right-icon">
-                    <!-- <i class="van-icon van-icon-arrow"></i> -->
-                  </div>
-                </div>
+              <div class="van-cell-value" @click="showCat = true">
+                <input
+                  v-model.trim="factory.cat_name"
+                  disabled
+                  type="text"
+                  placeholder="请选择"
+                  class="van-field__control  van-field__control--left"
+                >
               </div>
             </div>
             <div class="van-cell   van-field">
               <div class="van-cell-title">
                 <span><span class="required">*</span>运营经验</span>
               </div>
-              <div class="van-cell-value">
-                <div class="van-field__body" @click="showJy = true">
-                  <input
-                    v-model.trim="factory.jy_name"
-                    disabled
-                    type="text"
-                    placeholder="请选择"
-                    class="van-field__control  van-field__control--left"
-                  >
-                  <div class="van-field__right-icon">
-                    <!-- <i class="van-icon van-icon-arrow"></i> -->
-                  </div>
-                </div>
+              <div class="van-cell-value" @click="showJy = true">
+                <input
+                  v-model.trim="factory.jy_name"
+                  disabled
+                  type="text"
+                  placeholder="请选择"
+                  class="van-field__control  van-field__control--left"
+                >
               </div>
             </div>
 
@@ -128,26 +112,24 @@
                 <span>推荐人电话</span>
               </div>
               <div class="van-cell-value">
-                <div class="van-field__body">
-                  <input
-                    v-if="factory.referrer_number"
-                    v-model.trim="factory.referrer_number"
-                    disabled
-                    type="tel"
-                    placeholder="请输入推荐人电话"
-                    class="van-field__control  van-field__control--left"
-                    @blur.prevent="blurScroll"
-                  >
-                  <input
-                    v-else
-                    v-model.trim="factory.referrer_number"
+                <input
+                  v-if="factory.referrer_number"
+                  v-model.trim="factory.referrer_number"
+                  disabled
+                  type="tel"
+                  placeholder="请输入推荐人电话"
+                  class="van-field__control  van-field__control--left"
+                  @blur.prevent="blurScroll"
+                >
+                <input
+                  v-else
+                  v-model.trim="factory.referrer_number"
 
-                    type="tel"
-                    placeholder="请输入推荐人电话"
-                    class="van-field__control  van-field__control--left"
-                    @blur.prevent="blurScroll"
-                  >
-                </div>
+                  type="tel"
+                  placeholder="请输入推荐人电话"
+                  class="van-field__control  van-field__control--left"
+                  @blur.prevent="blurScroll"
+                >
               </div>
             </div>
             <div class="van-cell   van-field">
