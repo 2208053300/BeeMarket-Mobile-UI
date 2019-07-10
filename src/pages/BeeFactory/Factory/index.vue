@@ -583,6 +583,7 @@ export default {
     height: 1.6rem;
     margin-right: 0.2rem;
     position: relative;
+    float: left;
     img {
       border-radius: 0.05rem;
     }
