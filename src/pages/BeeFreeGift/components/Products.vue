@@ -11,10 +11,10 @@
     >
       <div class="flex flex-between flex-wrap">
         <div v-for="(product, index) in products" :key="index" class="product flex flex-column">
-          <img :src="product.tUrl" class="product-img">
+          <img :src="product.tUrl" class="product-img" @click="showDetail()">
           <div class="product-info flex flex-column flex-between">
             <div>
-              <p class="product-name no-wrap">
+              <p class="product-name no-wrap" @click="showDetail()">
                 {{ product.pname }}
               </p>
             </div>
@@ -108,6 +108,17 @@ export default {
       this.nowProduct = this.products[index]
       // this.showGift = true
       console.log('立即送礼')
+    },
+
+    // NOTE 跳转到商品详情
+    showDetail() {
+      this.$router.push({
+        path: '/detail',
+        query: {
+          pid: 16934,
+          target: 'general'
+        }
+      })
     }
 
   }

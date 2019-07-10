@@ -163,7 +163,7 @@
 </template>
 
 <script>
-import { getFriends, remindLogin } from '@/api/BeeApi/user'
+import { getFriends, remindLogin, isPartner } from '@/api/BeeApi/user'
 import { getUID } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
@@ -267,8 +267,9 @@ export default {
       }
     },
     // 获取分享链接
-    getShareLink() {
-      return `https://app.fengjishi.com/#/beeFriends?uid=${this.uid}`
+    async getShareLink() {
+      const res = await isPartner()
+      return `https://app.fengjishi.com/#/beeFriends?uid=${this.uid}&phone=${res.data.user_phone}`
     },
     // 分享
     appShare() {

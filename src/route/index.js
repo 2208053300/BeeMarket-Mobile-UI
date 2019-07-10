@@ -495,6 +495,7 @@ const router = new Router({
             },
             {
               path: 'accountBind',
+              name: 'accountBind',
               component: () =>
                 import('@/pages/index/BeePersion/Profile/AccountBind'),
               children: [
