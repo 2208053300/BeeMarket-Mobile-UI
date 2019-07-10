@@ -76,10 +76,10 @@ export default {
 .farm-gift {
   .farm-card {
     border-radius: 0.1rem;
+    background-color: transparent;
     .farm-content {
       height: 6.99rem;
       width: 6.06rem;
-      background-color: #ffc619;
       background-size: contain;
       position: relative;
       .action-button {
