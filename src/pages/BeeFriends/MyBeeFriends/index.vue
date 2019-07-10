@@ -252,17 +252,6 @@ export default {
     this.getReceiveNumData()
     this.clearHistory()
     this.loadUID()
-    try {
-      // 如果是一星合伙人
-      if (
-        this.$store.state.user.showFarmPop &&
-        this.partnerData.show_users2[0].is_partner === 1
-      ) {
-        this.showGift = true
-      }
-    } catch (error) {
-      //
-    }
   },
   methods: {
     async loadUID() {
@@ -282,6 +271,14 @@ export default {
       const res = await getPartner({ type: this.honeyType })
       this.partnerData = res.data
       this.showComb = true
+      // 如果是一星合伙人
+      if (
+        this.$store.state.user.showFarmPop &&
+        this.partnerData.show_users2[0].is_partner === 1
+      ) {
+        this.showGift = true
+        this.$store.state.user.showFarmPop = false
+      }
     },
     async getReceiveNumData() {
       try {
