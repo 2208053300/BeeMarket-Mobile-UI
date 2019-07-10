@@ -149,7 +149,7 @@
                   <div v-else class="comment-img">
                     <img :src="img.content">
                     <div class="del-img" @click="delImg">
-                      <van-icon name="clear" />
+                      <van-icon name="clear" class="clear-img" />
                     </div>
                   </div>
                 </div>
@@ -579,6 +579,7 @@ export default {
       top: -0.1rem;
       right: -0.1rem;
     }
+    .clear-img{font-size: 0.26rem;}
   }
   .add-shop-pic {
     width: 1.6rem;
