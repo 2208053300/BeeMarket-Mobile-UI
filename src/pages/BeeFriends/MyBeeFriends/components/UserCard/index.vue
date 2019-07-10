@@ -236,7 +236,7 @@ export default {
           color: #fff;
           font-size: 0.2rem;
           .van-icon {
-            vertical-align: text-top;
+            vertical-align: middle;
           }
           .name {
             margin-left: 0.08rem;
