@@ -5,16 +5,7 @@
         src="../../../assets/icon/register/registerTitle1.jpg"
         alt=""
       >
-      <!-- <video
-        controls="controls"
-        poster="/static/src/Img/vedio_bg.png"
-        style="width: 100%;pointer-events: auto;"
-      >
-        <source
-          src="https://img.fengjishi.com.cn/app/videos/education/intro.mp4"
-          type="video/mp4"
-        >
-      </video> -->
+
       <div class="video">
         <video
           ref="video"
@@ -206,7 +197,7 @@
 </template>
 
 <script>
-import { isLogin } from '@/utils/auth'
+import { isLogin, getToken } from '@/utils/auth'
 import { sendSms, h5register } from '@/api/BeeApi/auth'
 
 export default {
@@ -244,6 +235,12 @@ export default {
   },
   computed: {},
   watch: {},
+  // beforeRouteEnter(to, from, next) {
+  //   if (window.localStorage.removeItem('BM-App-Token')) {
+  //     window.localStorage.removeItem('BM-App-Token')
+  //     window.location.reload
+  //   }
+  // },
   beforeCreate() {
     // 创建之前把背景色强制设置为白色
     document.querySelector('body').style.background = 'white'
@@ -260,7 +257,8 @@ export default {
 
     // 请求任一接口判断是否登录
     // await this.$store.dispatch('GerUserStatus')
-    await isLogin()
+    // await isLogin()
+    await getToken()
   },
   methods: {
     // 播放视频
@@ -451,11 +449,12 @@ export default {
   margin-top: 0.1rem;
   margin-left: 5px;
   color: red;
-  font-size: 12px;
+  font-size: 0.24rem;
   // display: none;
 }
 
 .register .agm {
+   font-size: 0.24rem;
   text-align: center;
   padding-bottom: 10px;
 }
@@ -474,7 +473,7 @@ export default {
 }
 
 .register > div {
-  font-size: 12px;
+  font-size: 0.24rem;
   // text-align: center;
   overflow: hidden;
   float: left;
@@ -556,7 +555,7 @@ export default {
 
 /*默认显示字体*/
 .register ::-webkit-input-placeholder {
-  font-size: 12px;
+  font-size: 0.28rem;
 }
 
 input[type="button"],
