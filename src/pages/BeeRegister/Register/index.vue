@@ -197,7 +197,7 @@
 </template>
 
 <script>
-import { isLogin, getToken } from '@/utils/auth'
+import { getToken } from '@/utils/auth'
 import { sendSms, h5register } from '@/api/BeeApi/auth'
 
 export default {
