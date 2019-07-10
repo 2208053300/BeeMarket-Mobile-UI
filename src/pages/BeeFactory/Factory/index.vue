@@ -316,6 +316,7 @@ export default {
       //  console.log('用户是否合伙人身份：', res)
 
       this.userPhone = res.data.user_phone
+      this.factory.referrer_number = res.data.user_phone
       // if (this.userPhone) {
       //   this.factory.referrer_number = this.userPhone
       // } else if (this.$route.query.phone) {
@@ -580,7 +581,7 @@ export default {
       color: #ff4918;
     }
   }
-  .van-cell-value{width: 3.8rem;}
+  .van-cell-value{ flex:1;}
   // .van-field__label {
   //   display: flex;
   //   align-items: center;
