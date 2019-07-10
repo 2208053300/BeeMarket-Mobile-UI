@@ -9,7 +9,7 @@
     <!-- orderDetail.s_order!==-1 -->
     <!-- v-if="orderDetail.s_pay===0 || orderDetail.s_order!==-1" -->
     <van-button
-      v-if="(orderDetail.s_pay===0&&orderDetail.s_order!==-1) ||(orderDetail.s_pay===1 && orderDetail.s_order===1)"
+      v-if="cancelable"
       round
       @click="cancelPop=true"
     >
@@ -171,7 +171,16 @@ export default {
       ]
     }
   },
-  computed: {},
+  computed: {
+    cancelable() {
+      if (this.orderDetail.cancelable === false) {
+        return false
+      } else {
+        const orderDetail = this.orderDetail
+        return (orderDetail.s_pay === 0 && orderDetail.s_order !== -1) || (orderDetail.s_pay === 1 && orderDetail.s_order === 1)
+      }
+    }
+  },
   watch: {},
   created() {},
   mounted() {},
