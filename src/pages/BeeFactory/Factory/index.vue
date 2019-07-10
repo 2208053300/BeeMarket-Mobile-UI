@@ -706,6 +706,9 @@ export default {
       color: #333;
       padding: 0 0.2rem;
     }
+    input:disabled{
+      color: #333;
+    }
     textarea {
       width: 4.2rem;
       background: #eee;
