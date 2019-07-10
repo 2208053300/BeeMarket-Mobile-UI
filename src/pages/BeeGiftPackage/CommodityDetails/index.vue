@@ -133,6 +133,13 @@ export default {
     skuDone() {
       this.$refs['goodsAction'].skuDone()
     },
+    async updateGid() {
+      const res = await getProductDetail({
+        pid: this.$route.query.pid,
+        target: this.$route.query.target
+      })
+      this.commodityData.gid = res.data.gid
+    },
     // 添加商品到我的礼包
     async addProduct(skuId) {
       try {
@@ -140,6 +147,7 @@ export default {
           sid: skuId,
           number: this.pNumber
         })
+        this.updateGid()
         await this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
         this.commodityData.g_selected_qty = parseInt(this.commodityData.g_selected_qty) + this.pNumber
       } catch (e) {

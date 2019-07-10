@@ -1,15 +1,21 @@
 <template>
-  <div>
-    <van-nav-bar fixed>
-      <van-icon
-        slot="left"
-        :name="beeIcon.tab_icon_home_s"
-        size="0.5rem"
-        @click="goHome"
-      />
-      <span slot="title">农产品礼包</span>
-      <span slot="right" @click="$emit('on-rule')">规则</span>
-    </van-nav-bar>
+  <div class="bee-header white-back">
+    <van-icon
+      slot="left"
+      :name="beeIcon.tab_icon_home_s"
+      size="0.5rem"
+      @click="goHome"
+      style="margin-left: 15px"
+    />
+    <span v-show="showTitle">
+      农产品礼包
+    </span>
+    <span
+      style="font-size: 0.24rem;margin-right: 15px"
+      @click="$emit('on-rule')"
+    >
+      规则
+    </span>
   </div>
 </template>
 
@@ -21,7 +27,8 @@ export default {
     return {
       beeIcon: {
         tab_icon_home_s: require('@/assets/icon/footer/tab_icon_home_s.png')
-      }
+      },
+      showTitle: true
     }
   },
   computed: {},
@@ -46,4 +53,21 @@ export default {
 </script>
 
 <style  lang="less">
+.bee-header {
+  width: 100%;
+  height: 46px;
+  top: 0;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+}
+.white-back {
+  background: white;
+  color: black;
+}
+.transparent-back {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  color: white;
+}
 </style>
