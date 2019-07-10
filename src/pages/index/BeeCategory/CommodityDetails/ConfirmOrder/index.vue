@@ -137,7 +137,7 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    if (this.$route.query.res === 'giftPackage') {
+    if (this.$route.query.target === 'pgpackage') {
       this.confirmGiftPackageOrder()
     } else {
       if (JSON.stringify(this.order.orderDetail) === '{}') {

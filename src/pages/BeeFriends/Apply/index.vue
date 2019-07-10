@@ -589,6 +589,7 @@ export default {
     display: block;
   }
   .form {
+    background-color:#fff;
     label {
       width: 1.62rem;
       text-align: right;

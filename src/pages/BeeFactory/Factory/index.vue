@@ -568,6 +568,7 @@ export default {
     justify-content: space-between;
     border-radius:0.1rem;
   }
+  .van-cell__value{width: 4rem;}
   .van-field__label {
     display: flex;
     align-items: center;
@@ -576,7 +577,7 @@ export default {
     font-size: 0.3rem;
     color: #333;
     font-weight: 800;
-    width: 2rem;
+    // width: 2rem;
     text-align: right;
     .required {
       color: #ff4918;
@@ -615,7 +616,6 @@ export default {
   width: 6.8rem;
   margin: 0 auto;
   padding-top: 0.6rem;
-  //      font-family: 'qnhg';
   .top-img {
     width: 100%;
     margin: 0 auto 0.3rem;
@@ -629,7 +629,6 @@ export default {
     position: relative;
     border-radius: 0.1rem;
     padding: 0.4rem;
-    // p{line-height: 1.7;}
   }
   .join {
     margin-top: 0.4rem;
@@ -678,10 +677,7 @@ export default {
     display: inline-block;
   }
   .form {
-    // background: url(../../../assets/icon/joinFactory/factory_form_bg.png)
-    //   no-repeat;
-    // background-size: 100% 100%;
-    // padding: 0.4rem 0.2rem 0.1rem;
+
     position: relative;
     .half-circle{
       position: absolute;
