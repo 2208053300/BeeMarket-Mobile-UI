@@ -553,11 +553,11 @@ export default {
       color: #ff4918;
     }
   }
-  .van-cell-value{flex: 1;border: 1px solid red;}
+  .van-cell-value{flex: 1;}
 
   .van-field__control {
     border-radius: 0.05rem;
-    // width: 3.8rem;
+    width: 100%;
     height: 0.74rem;
     line-height: 0.74rem;
     background: #eee;
