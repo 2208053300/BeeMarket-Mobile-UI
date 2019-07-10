@@ -568,23 +568,33 @@ export default {
     display: flex;
     justify-content: space-between;
     border-radius:0.1rem;
-  }
-  .van-cell-title{}
-  .van-cell-value{width: 4rem; border: 1px solid red;}
-  .van-field__label {
-    display: flex;
     align-items: center;
-    justify-content: flex-end;
-    margin-right: 0.3rem;
+  }
+  .van-cell-title{
     font-size: 0.3rem;
     color: #333;
     font-weight: 800;
-    // width: 2rem;
+    width: 1.6rem;
     text-align: right;
     .required {
       color: #ff4918;
     }
   }
+  .van-cell-value{width: 4rem; border: 1px solid red;}
+  // .van-field__label {
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: flex-end;
+  //   margin-right: 0.3rem;
+  //   font-size: 0.3rem;
+  //   color: #333;
+  //   font-weight: 800;
+  //   // width: 2rem;
+  //   text-align: right;
+  //   .required {
+  //     color: #ff4918;
+  //   }
+  // }
   .van-field__control {
     border-radius: 0.05rem;
     width: 3.8rem;
