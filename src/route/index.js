@@ -352,7 +352,7 @@ const router = new Router({
         {
           path: 'action',
           name: 'ActionDetail',
-          component: () => import('@/pages/index/BeeDiscover/ActionDetail')
+          component: () => import('@/pages/BeeActionList/ActionDetail')
         },
         {
           path: 'completeDetail',
