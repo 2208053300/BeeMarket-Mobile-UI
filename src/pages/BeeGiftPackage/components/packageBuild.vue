@@ -51,7 +51,9 @@ export default {
     handleClose() {
       this.$emit('update:visible', false)
     },
-    goSettlement() {}
+    goSettlement() {
+      window.location.href = '/#/category/details/confirmOrder?res=giftPackage'
+    }
   }
 }
 </script>

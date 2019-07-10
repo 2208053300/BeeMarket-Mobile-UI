@@ -66,7 +66,9 @@ export default {
   mounted() {},
   methods: {
     // 去结算
-    goSettlement() {}
+    goSettlement() {
+      window.location.href = '/#/category/details/confirmOrder?res=giftPackage'
+    }
   }
 }
 </script>
