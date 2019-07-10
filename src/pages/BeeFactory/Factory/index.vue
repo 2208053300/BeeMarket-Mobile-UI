@@ -36,10 +36,10 @@
           <img :src="icon.halfCircle" class="half-circle right">
           <van-cell-group>
             <div class="van-cell van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>厂商名称</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <input
                     v-model.trim="factory.firm"
@@ -53,10 +53,10 @@
             </div>
 
             <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>联系人</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <input
                     v-model.trim="factory.contacter"
@@ -69,10 +69,10 @@
               </div>
             </div>
             <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>联系电话</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <input
                     v-model.trim="factory.contact_phone"
@@ -85,10 +85,10 @@
               </div>
             </div>
             <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>产品类型</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body" @click="showCat = true">
                   <input
                     v-model.trim="factory.cat_name"
@@ -104,10 +104,10 @@
               </div>
             </div>
             <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>运营经验</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body" @click="showJy = true">
                   <input
                     v-model.trim="factory.jy_name"
@@ -123,10 +123,10 @@
               </div>
             </div>
             <!-- <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span>推荐人</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <input
                     v-model.trim="factory.referrer_name"
@@ -139,10 +139,10 @@
               </div>
             </div> -->
             <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span>推荐人电话</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <input
                     v-model.trim="factory.referrer_number"
@@ -156,10 +156,10 @@
               </div>
             </div>
             <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>营业执照</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <van-uploader
                     v-if="Object.keys(img).length === 0"
@@ -569,7 +569,8 @@ export default {
     justify-content: space-between;
     border-radius:0.1rem;
   }
-  .van-cell__value{width: 4rem; border: 1px solid red;}
+  .van-cell-title{}
+  .van-cell-value{width: 4rem; border: 1px solid red;}
   .van-field__label {
     display: flex;
     align-items: center;
