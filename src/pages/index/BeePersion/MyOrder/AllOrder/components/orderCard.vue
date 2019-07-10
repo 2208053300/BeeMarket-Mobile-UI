@@ -151,6 +151,20 @@
         </div>
       </div>
     </van-list>
+
+    <van-dialog
+      v-model="askExit"
+      show-cancel-button
+      cancel-button-text="取消"
+      confirm-button-text="确认收货"
+      confirm-button-color="#fff"
+      class="text-center"
+      @confirm="confirmComplete()"
+    >
+      <van-icon name="warning-o" color="#FFA431" size="1rem" style="margin-top: 0.2rem" />
+      <p>请确认商品完好</p>
+      <p>确认收货后，不支持7天无理由退货</p>
+    </van-dialog>
   </div>
 </template>
 
@@ -180,7 +194,9 @@ export default {
   data() {
     return {
       loading: false,
-      finished: false
+      finished: false,
+      askExit: false,
+      orderNo: null
     }
   },
   computed: {},
@@ -251,8 +267,12 @@ export default {
     },
     // 确认收货
     async completeOrderData(order_no) {
+      this.askExit = true
+      this.orderNo = order_no
+    },
+    async confirmComplete() {
       try {
-        const res = await completeOrder({ order_no: order_no })
+        const res = await completeOrder({ order_no: this.orderNo })
         if (res.status_code === 200) {
           this.$toast(res.message)
           this.$parent.changeOrder()
@@ -290,7 +310,7 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style  lang="less">
 .order-content {
   margin: 0.32rem 0.12rem;
   background-color: @GreyBg;
@@ -400,5 +420,8 @@ export default {
       }
     }
   }
+  .van-dialog__confirm{
+    color: #fff;
+    background: #FFA431;}
 }
 </style>

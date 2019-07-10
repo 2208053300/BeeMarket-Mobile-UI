@@ -56,23 +56,7 @@
                 </p>
               </div>
             </div>
-            <!-- <div class="form-group">
-              <label for="personalCard"><span>*</span>身份证号</label>
-              <div class="form-control">
-                <input
-                  id="personalCard"
-                  v-model.trim="card_no"
-                  type="text"
-                  name="card_no"
-                  placeholder="（必填）"
-                  @input="changePersonalCard"
-                  @blur.prevent="blurScroll"
-                >
-                <p v-if="card_noError" class="help-text card-tip">
-                  请重新输入身份证号！
-                </p>
-              </div>
-            </div> -->
+
             <div class="form-group">
               <label for="personTell"><span>*</span>联系电话</label>
               <div class="form-control">
@@ -329,7 +313,7 @@ export default {
     font-size: 0.3rem;
     color: #333;
     font-weight: 800;
-    width: 2rem;
+    // width: 2rem;
     text-align: right;
     .required {
       color: #ff4918;
@@ -436,6 +420,7 @@ export default {
     //   no-repeat;
     // background-size: 100% 100%;
     padding: 0.4rem 0.2rem 0.1rem;
+    background-color:#fff;
   }
   .form-group {
     display: flex;
@@ -584,6 +569,7 @@ export default {
     border-radius: 0.1rem;
     display: none;
     position: relative;
+    background-color:#fff;
     .half-circle{
       position: absolute;
       width: 0.16rem;
