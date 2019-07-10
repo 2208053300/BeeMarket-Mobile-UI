@@ -16,7 +16,8 @@ const user = {
     applyCondition: 0,
     is_new_user: false,
     uid: 0,
-    hasPhone: false
+    hasPhone: false,
+    showFarmPop: false
   },
   mutations: {
     SET_USER_INFO: (state, userInfo) => {

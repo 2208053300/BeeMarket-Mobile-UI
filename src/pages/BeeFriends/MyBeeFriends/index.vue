@@ -90,6 +90,7 @@
     />
     <friends-rank :show-rank.sync="showRank" />
     <join-project :show-project.sync="showProject" />
+    <go-farm-gift :show-gift.sync="showGift" />
     <transition name="fade1">
       <div
         v-if="showHoney"
@@ -128,6 +129,7 @@ import UserCard from './components/UserCard'
 import FriendsRank from './components/FriendsRank'
 import JoinProject from './components/JoinProject'
 import ListType from './components/ListType'
+import GoFarmGift from './components/GoFarmGift'
 import ICountUp from 'vue-countup-v2'
 import { setTimeout } from 'timers'
 import { getUID } from '@/api/BeeApi/user'
@@ -143,7 +145,8 @@ export default {
     FriendsRank,
     JoinProject,
     ListType,
-    ICountUp
+    ICountUp,
+    GoFarmGift
   },
   props: {},
   data() {
@@ -151,6 +154,8 @@ export default {
       detailCard: false,
       showRank: false,
       showProject: false,
+      showGift: false,
+      fromRoute: false,
       beeIcon: {
         bee_firends_img_avatar_bg: require('@/assets/icon/beeFriends/home/bee_firends_img_avatar_bg.png'),
         bee_firend_icon_gold_top: require('@/assets/icon/beeFriends/home/bee_firend_icon_gold_top.png'),
@@ -198,6 +203,11 @@ export default {
   },
   async beforeRouteEnter(to, from, next) {
     await next(async vm => {
+      if (from.fullPath.indexOf('beeFriends') === -1) {
+        vm.$store.state.user.showFarmPop = true
+      } else {
+        vm.$store.state.user.showFarmPop = false
+      }
       // 通过 `vm` 访问组件实例
       try {
         await vm.$store.dispatch('GerUserStatus')
@@ -261,12 +271,13 @@ export default {
       const res = await getPartner({ type: this.honeyType })
       this.partnerData = res.data
       this.showComb = true
-      // try {
-      //   await this.$refs.honeycomb.handleAction(50)
-      // } catch (error) {
-      //   setTimeout(await this.$refs.honeycomb.handleAction(50), 3000)
-      // }
-      // await this.$refs.honeycomb.animateList()
+      // 如果是一星合伙人
+      if (
+        this.$store.state.user.showFarmPop &&
+        this.partnerData.show_users2[0].is_partner === 1
+      ) {
+        this.showGift = true
+      }
     },
     async getReceiveNumData() {
       try {
@@ -555,7 +566,7 @@ export default {
       background-color: rgba(0, 0, 0, 0.2);
       box-sizing: border-box;
       margin: auto;
-      .van-notice-bar{
+      .van-notice-bar {
         position: relative;
         top: -0.16rem;
       }
