@@ -6,7 +6,7 @@
           <img :src="head_image" alt="" class="avatar">
           <van-uploader
             :after-read="onRead"
-            accept="image/png, image/jpeg"
+            accept="image/*"
             multiple
             class="change-avatar1"
           >

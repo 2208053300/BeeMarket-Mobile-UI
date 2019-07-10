@@ -56,9 +56,6 @@
 import { mapState } from 'vuex'
 import { packageEdit, packageEmpty } from '@/api/BeeApi/giftPackage'
 export default {
-  metaInfo: {
-    title: ''
-  },
   components: {},
   props: {
     visible: {
@@ -94,6 +91,7 @@ export default {
     async clearPackage() {
       await packageEmpty()
       await this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
+      this.$emit('gift-change')
       this.handleClose()
     },
     // 减少数量
@@ -117,6 +115,7 @@ export default {
     },
     // 编辑数量
     async edit(product) {
+      this.$emit('gift-change')
       await packageEdit({
         gid: product.gid,
         number: product.number
@@ -159,7 +158,7 @@ export default {
     color: #484848;
     background: #fff4e5;
     text-align: center;
-    line-height: 0.56rem;
+    line-height: 0.6rem;
     border-top-right-radius: 0.2rem;
     border-top-left-radius: 0.2rem;
     .money-text {

@@ -31,12 +31,21 @@ const app = {
     },
     SET_BACKTOP: (state, backTop) => {
       state.backTop = backTop
+    },
+    SET_PUSHNAME: (state, pushName) => {
+      state.pushName = pushName
     }
   },
   actions: {
     ChangeBeeFooter({ commit }, beeFooter) {
       return new Promise(resolve => {
         commit('SET_BEEFOOTER', beeFooter)
+        resolve()
+      })
+    },
+    ChangePushName({ commit }, pushName) {
+      return new Promise(resolve => {
+        commit('SET_PUSHNAME', pushName)
         resolve()
       })
     }

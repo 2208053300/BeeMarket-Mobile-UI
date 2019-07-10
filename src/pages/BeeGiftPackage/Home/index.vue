@@ -25,6 +25,8 @@
       :visible.sync="giftListVisible"
       @close="packageListClose"
     />
+    <rule :visible.sync="ruleVisible" />
+    <package-build :visible.sync="packageVisible" />
   </div>
 </template>
 
@@ -36,11 +38,13 @@ import ProductItem from './components/productItem'
 import GiftPackageBar from '../components/giftPackageBar'
 import sku from '../components/Sku'
 import GiftPackageList from '../components/giftPackageList'
+import Rule from './components/rule'
+import PackageBuild from '../components/packageBuild'
 export default {
   metaInfo: {
-    title: ''
+    title: '农礼包产品'
   },
-  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku },
+  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku, Rule, PackageBuild },
   props: {},
   data() {
     return {
@@ -53,13 +57,25 @@ export default {
       pNumber: 1,
       pid: 0,
       giftListVisible: false,
-      zIndex: 2500
+      ruleVisible: false,
+      packageVisible: false,
+      zIndex: 2500,
+      maxMoney: 599
     }
   },
   computed: {
-    ...mapState(['giftPackage'])
+    ...mapState(['giftPackage']),
+    canSettlement() {
+      return this.giftPackage.selectedTotalAmount >= this.maxMoney
+    }
   },
-  watch: {},
+  watch: {
+    canSettlement() {
+      if (this.giftPackage.selectedTotalAmount >= this.maxMoney) {
+        this.packageVisible = true
+      }
+    }
+  },
   beforeCreate() {
     // 创建之前把背景色强制设置为白色
     document.querySelector('body').style.background = '#ffe1ba'
@@ -70,12 +86,15 @@ export default {
   },
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = false
     this.getList()
     this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
   },
   methods: {
     onRule() {
-      console.log('弹出规则弹窗')
+      this.$refs.giftBar.$el.style.zIndex = 2000
+      this.ruleVisible = true
     },
     async getList() {
       const res = await getIndexData()
@@ -97,7 +116,7 @@ export default {
           number: this.pNumber
         })
         await this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
-        this.skuProduct.selected_qty += this.pNumber
+        this.skuProduct.selected_qty = parseInt(this.skuProduct.selected_qty) + this.pNumber
       } catch (e) {
         this.$toast.fail(e)
       }
@@ -125,6 +144,7 @@ export default {
 
 <style scoped lang="less">
 .bee-index {
+  background: #ffe1ba;
   padding-top: 46px;
   text-align: center;
 }

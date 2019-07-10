@@ -1,5 +1,6 @@
 <template>
   <div class="home-page">
+    <img :src="beeIcon.home_img_top_bg_under" class="top-bg">
     <div class="header-content">
       <div class="home-header">
         <div class="logo-content">
@@ -84,8 +85,9 @@ export default {
       beeIcon: {
         nav_icon_search: require('@/assets/icon/category/nav_icon_search@2x.png'),
         home_img_logo: require('@/assets/icon/home/index/home_img_logo@2x.png'),
-        home_icon_message: require('@/assets/icon/home/index/home_icon_message_n@2x.png'),
-        home_icon_message_prompt: require('@/assets/icon/home/index/home_icon_message_prompt@2x.png')
+        home_icon_message: require('@/assets/icon/home/index/home_icon_new@2x.png'),
+        home_icon_message_prompt: require('@/assets/icon/home/index/home_icon_message_prompt@2x.png'),
+        home_img_top_bg_under: require('@/assets/icon/home/index/home_img_top_bg_under@2x.png')
       },
       homeData: {
         banner: [],
@@ -134,7 +136,6 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    console.log('加载首页1')
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
     this.getHomeData()
@@ -181,14 +182,20 @@ export default {
 <style scoped lang="less">
 .home-page {
   margin-bottom: 60px;
+  .top-bg {
+    width: 100%;
+    height: 3.7rem;
+    position: absolute;
+    top: 0;
+  }
   .header-content {
+    position: relative;
     background-size: contain;
     .home-header {
       height: 0.64rem;
       padding: 0.18rem 0.24rem;
       display: flex;
       align-items: center;
-      background-color: #fff;
       .logo-content {
         height: 0.4rem;
         width: 1.16rem;

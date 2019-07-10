@@ -128,6 +128,7 @@ export default {
         title: '提示',
         message: '请先绑定手机号码！'
       }).then(() => {
+        // this.$store.dispatch('ChangePushName', 'accountSafe')
         this.$router.push({
           path: '/persion/profile/accountBind/bindPhone',
           query: {
