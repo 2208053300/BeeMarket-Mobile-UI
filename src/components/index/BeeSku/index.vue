@@ -75,6 +75,7 @@
       <div class="done-btn">
         <van-button
           class="done"
+          :disabled="btnDisabled"
           @click="handleDone()"
         >
           确定
@@ -127,7 +128,8 @@ export default {
       beeIcon: {
         shopping_cart_icon_cancel: require('@/assets/icon/cart/shopping_cart_icon_cancel@2x.png')
       },
-      showPreview: false
+      showPreview: false,
+      btnDisabled: true
     }
   },
   computed: {},
@@ -135,6 +137,10 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    // 检查按钮是否应该禁用
+    checkBtnDisabled() {
+      this.btnDisabled = !this.propsData.sku_id
+    },
     // 第一次打开时，获取基础选项
     async getProductPropsData() {
       // 如果已经选过了，传入sku信息
@@ -156,6 +162,7 @@ export default {
         )
         this.propsData = res.data
       }
+      this.checkBtnDisabled()
       // sku数量
       this.productNum = this.pNumber ? this.pNumber : 1
     },
@@ -187,6 +194,7 @@ export default {
         })
       )
       this.propsData = res.data
+      this.checkBtnDisabled()
       this.getSkuName(this.propsData.props)
     },
     getSkuName(props) {
