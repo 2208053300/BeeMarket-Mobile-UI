@@ -138,11 +138,10 @@
               </div>
               <div class="van-cell-value">
                 <div class="van-field__body">
-                  <van-uploader
+                  <!-- <van-uploader
                     v-if="Object.keys(img).length === 0"
                     :after-read="onRead"
-                    accept="image/png, image/jpeg"
-                    multiple
+                    accept="image/*"
                   >
                     <img :src="icon.add_shop_pic" class="add-shop-pic">
                   </van-uploader>
@@ -151,7 +150,19 @@
                     <div class="del-img" @click="delImg">
                       <van-icon name="clear" class="clear-img" />
                     </div>
+                  </div> -->
+                  <div v-if="img.content" class="comment-img">
+                    <img :src="img.content">
+                    <!-- <div class="del-img" @click="delImg">
+                      <van-icon name="clear" class="clear-img" />
+                    </div> -->
                   </div>
+                  <van-uploader
+                    :after-read="onRead"
+                    accept="image/*"
+                  >
+                    <img :src="icon.add_shop_pic" class="add-shop-pic">
+                  </van-uploader>
                 </div>
               </div>
             </div>
@@ -570,7 +581,9 @@ export default {
   .comment-img {
     width: 1.6rem;
     height: 1.6rem;
+    margin-right: 0.2rem;
     position: relative;
+    float: left;
     img {
       border-radius: 0.05rem;
     }
@@ -693,6 +706,9 @@ export default {
       font-size: 0.28rem;
       color: #333;
       padding: 0 0.2rem;
+    }
+    input:disabled{
+      color: #333;
     }
     textarea {
       width: 4.2rem;
