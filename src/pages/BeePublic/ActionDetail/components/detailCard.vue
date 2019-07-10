@@ -142,7 +142,7 @@ export default {
     .cardDesc {
       font-size: 0.26rem;
       color: @Grey2;
-      height: 2.5rem;
+      height: 4rem;
       overflow: hidden;
     }
     .cardDesc2 {
@@ -151,12 +151,15 @@ export default {
     }
     .show-all {
       color: #ffa530;
-      font-size: 0.28rem;
-      width: 6rem;
+      font-size: 0.26rem;
+      width: 6.2rem;
       text-align: center;
       position: absolute;
       bottom: 0.36rem;
-      background: linear-gradient(transparent, #ffffff);
+      // background: linear-gradient(transparent, #ffffff);
+      background-color: #fff;
+      height: 0.72rem;
+      line-height: 0.72rem;
       .van-icon {
         vertical-align: middle;
       }
