@@ -553,7 +553,7 @@ export default {
       color: #ff4918;
     }
   }
-  .van-cell-value{flex: 1}
+  .van-cell-value{flex: 1;border: 1px solid red;}
 
   .van-field__control {
     border-radius: 0.05rem;
