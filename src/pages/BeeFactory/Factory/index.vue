@@ -151,7 +151,7 @@
                       <van-icon name="clear" class="clear-img" />
                     </div>
                   </div> -->
-                  <div class="comment-img">
+                  <div v-if="img.content" class="comment-img">
                     <img :src="img.content">
                     <!-- <div class="del-img" @click="delImg">
                       <van-icon name="clear" class="clear-img" />
