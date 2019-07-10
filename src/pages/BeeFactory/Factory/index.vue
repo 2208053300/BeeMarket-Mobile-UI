@@ -36,10 +36,10 @@
           <img :src="icon.halfCircle" class="half-circle right">
           <van-cell-group>
             <div class="van-cell van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>厂商名称</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <input
                     v-model.trim="factory.firm"
@@ -53,10 +53,10 @@
             </div>
 
             <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>联系人</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <input
                     v-model.trim="factory.contacter"
@@ -69,10 +69,10 @@
               </div>
             </div>
             <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>联系电话</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <input
                     v-model.trim="factory.contact_phone"
@@ -85,10 +85,10 @@
               </div>
             </div>
             <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>产品类型</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body" @click="showCat = true">
                   <input
                     v-model.trim="factory.cat_name"
@@ -104,10 +104,10 @@
               </div>
             </div>
             <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>运营经验</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body" @click="showJy = true">
                   <input
                     v-model.trim="factory.jy_name"
@@ -123,10 +123,10 @@
               </div>
             </div>
             <!-- <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span>推荐人</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <input
                     v-model.trim="factory.referrer_name"
@@ -138,15 +138,15 @@
                 </div>
               </div>
             </div> -->
-            <div v-if="factory.referrer_number" class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+            <div class="van-cell   van-field">
+              <div class="van-cell-title">
                 <span>推荐人电话</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <input
                     v-model.trim="factory.referrer_number"
-                    disabled
+                    :disabled="disabled"
                     type="tel"
                     placeholder="请输入推荐人电话"
                     class="van-field__control  van-field__control--left"
@@ -156,10 +156,10 @@
               </div>
             </div>
             <div class="van-cell   van-field">
-              <div class="van-cell__title van-field__label">
+              <div class="van-cell-title">
                 <span><span class="required">*</span>营业执照</span>
               </div>
-              <div class="van-cell__value">
+              <div class="van-cell-value">
                 <div class="van-field__body">
                   <van-uploader
                     v-if="Object.keys(img).length === 0"
@@ -285,7 +285,8 @@ export default {
       ],
       showJy: false,
       uid: 0,
-      userPhone: null
+      userPhone: null,
+      disabled: false
     }
   },
   computed: {},
@@ -306,6 +307,7 @@ export default {
     this.getCategory1Data()
 
     this.isPartner()
+    this.loadUID()
   },
   methods: {
     // 判断该用户是否是合伙人
@@ -314,6 +316,7 @@ export default {
       //  console.log('用户是否合伙人身份：', res)
 
       this.userPhone = res.data.user_phone
+      this.factory.referrer_number = res.data.user_phone
       // if (this.userPhone) {
       //   this.factory.referrer_number = this.userPhone
       // } else if (this.$route.query.phone) {
@@ -322,9 +325,8 @@ export default {
 
       if (this.$route.query.phone) {
         this.factory.referrer_number = this.$route.query.phone
+        this.disabled = true
       }
-
-      this.loadUID()
     },
 
     // 获取用户id
@@ -567,22 +569,33 @@ export default {
     display: flex;
     justify-content: space-between;
     border-radius:0.1rem;
-  }
-  .van-cell__value{width: 4rem;}
-  .van-field__label {
-    display: flex;
     align-items: center;
-    justify-content: flex-end;
-    margin-right: 0.3rem;
+  }
+  .van-cell-title{
     font-size: 0.3rem;
     color: #333;
     font-weight: 800;
-    // width: 2rem;
+    width: 1.6rem;
     text-align: right;
     .required {
       color: #ff4918;
     }
   }
+  .van-cell-value{ flex:1;}
+  // .van-field__label {
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: flex-end;
+  //   margin-right: 0.3rem;
+  //   font-size: 0.3rem;
+  //   color: #333;
+  //   font-weight: 800;
+  //   // width: 2rem;
+  //   text-align: right;
+  //   .required {
+  //     color: #ff4918;
+  //   }
+  // }
   .van-field__control {
     border-radius: 0.05rem;
     width: 3.8rem;
