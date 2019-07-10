@@ -84,7 +84,7 @@ export default {
           gid: this.commodityData.gid,
           number: this.commodityData.g_selected_qty - 1
         }).then(() => {
-          this.item.g_selected_qty--
+          this.commodityData.g_selected_qty--
           this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
         }).catch((e) => {
           this.$toast.fail(e)

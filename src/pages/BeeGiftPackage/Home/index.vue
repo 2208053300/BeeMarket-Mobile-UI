@@ -115,6 +115,7 @@ export default {
           sid: skuId,
           number: this.pNumber
         })
+        this.getList()
         await this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
         this.skuProduct.selected_qty = parseInt(this.skuProduct.selected_qty) + this.pNumber
       } catch (e) {
