@@ -570,7 +570,7 @@ export default {
       color: #ff4918;
     }
   }
-  .van-cell-value{width: 4rem;}
+  .van-cell-value{width: 4.5rem;}
 
   .van-field__control {
     border-radius: 0.05rem;
