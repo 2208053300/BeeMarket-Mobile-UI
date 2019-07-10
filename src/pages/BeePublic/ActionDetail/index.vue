@@ -16,6 +16,14 @@
       <detail-card :action-data="actionData" />
       <actionExplain />
       <caring-enterprise :action-data="actionData" />
+      <div class="qrcode-content">
+        <div class="img-content">
+          <img
+            :src="beeIcon.publicwelfare_qrcode_all"
+            alt="关注公众号"
+          >
+        </div>
+      </div>
     </div>
     <!-- <footer-op :action-data="actionData" /> -->
   </div>
@@ -46,7 +54,8 @@ export default {
   data() {
     return {
       beeIcon: {
-        confirmorder_send_icon_presentation: require('@/assets/icon/order/confirmorder_send_icon_presentation@2x.png')
+        confirmorder_send_icon_presentation: require('@/assets/icon/order/confirmorder_send_icon_presentation@2x.png'),
+        publicwelfare_qrcode_all: require('@/assets/icon/discover/publicwelfare_qrcode_all@2x.png')
       },
       actionData: {
         company_info: {
@@ -109,6 +118,18 @@ export default {
       color: @Grey2;
       text-align: center;
       padding: 0.24rem 0;
+    }
+    .qrcode-content {
+      margin-top: 0.2rem;
+      background-color: #fff;
+      box-shadow: 0 0 0.2rem @Grey6;
+      padding: 0.4rem;
+      border-radius: 0.08rem;
+      position: relative;
+      height:5.68rem;
+      .img-content {
+        margin: auto;
+      }
     }
   }
 }

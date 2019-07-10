@@ -546,16 +546,16 @@ export default {
     line-height: 0.4rem;
     z-index: 80;
     .notice-content {
-      max-width: 5rem;
+      max-width: 4.5rem;
       border-radius: 0.4rem;
       overflow: hidden;
       background-color: rgba(0, 0, 0, 0.2);
       box-sizing: border-box;
-      padding: 0 0.1rem;
+      padding: 0 0.2rem;
       margin: auto;
     }
     .notice-icon {
-      vertical-align: text-top;
+      vertical-align: middle;
       color: @Red1;
       margin-right: 0.2rem;
     }

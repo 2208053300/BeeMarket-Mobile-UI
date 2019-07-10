@@ -74,6 +74,8 @@
 <script>
 import { getBeeLimitList } from '@/api/BeeApi/home'
 import { getOs } from '@/utils'
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo() {
     return {
@@ -88,7 +90,8 @@ export default {
       productData: {},
       loading: false,
       finished: false,
-      page: 1
+      page: 1,
+      uid: 0
     }
   },
   computed: {},
@@ -98,6 +101,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getBeeLimitListData()
+    this.loadUID()
   },
   methods: {
     async getBeeLimitListData() {
@@ -105,6 +109,17 @@ export default {
       this.productData = res.data
       this.page = 2
       this.commodityList = res.data.product_list
+    },
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+
+      wxapi.wxShare({
+        title: '蜂集市-限量蜂抢',
+        desc: '蜂集市，让生活蜂富起来！',
+        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
+        link: `https://app.fengjishi.com/#/beeLimit?uid=${this.uid}`
+      })
     },
     getProgress(val1, val2) {
       return (val1 / val2) * 100 + '%'

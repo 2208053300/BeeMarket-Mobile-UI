@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { packageEdit } from '@/api/BeeApi/giftPackage'
 export default {
   components: {},
   props: {
@@ -78,7 +79,19 @@ export default {
   mounted() {},
   methods: {
     minus() {
-      this.$emit('minus')
+      if (this.commodityData.gid) {
+        packageEdit({
+          gid: this.commodityData.gid,
+          number: this.commodityData.g_selected_qty - 1
+        }).then(() => {
+          this.item.g_selected_qty--
+          this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
+        }).catch((e) => {
+          this.$toast.fail(e)
+        })
+      } else {
+        this.$emit('minus', this.item)
+      }
     },
     plus() {
       this.$emit('plus')
