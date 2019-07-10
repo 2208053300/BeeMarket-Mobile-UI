@@ -315,7 +315,6 @@ export default {
       const res = await isPartner()
       //  console.log('用户是否合伙人身份：', res)
 
-      this.userPhone = res.data.user_phone
       this.factory.referrer_number = res.data.user_phone
       // if (this.userPhone) {
       //   this.factory.referrer_number = this.userPhone
@@ -323,8 +322,7 @@ export default {
       //   this.factory.referrer_number = this.$route.query.phone
       // }
 
-      if (this.$route.query.phone) {
-        this.factory.referrer_number = this.$route.query.phone
+      if (this.factory.referrer_number) {
         this.disabled = true
       }
     },
@@ -338,7 +336,7 @@ export default {
         title: '蜂集市，等你一起轻创业',
         desc: '零风险轻创业大财富的蜂集市，邀请您成为蜂集市合伙人！',
         imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
-        link: `https://app.fengjishi.com/beeFactory#/?uid=${this.uid}&phone=${this.userPhone}`
+        link: `https://app.fengjishi.com/beeFactory#/?uid=${this.uid}`
       })
     },
 
@@ -582,20 +580,7 @@ export default {
     }
   }
   .van-cell-value{width: 3.8rem;}
-  // .van-field__label {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: flex-end;
-  //   margin-right: 0.3rem;
-  //   font-size: 0.3rem;
-  //   color: #333;
-  //   font-weight: 800;
-  //   // width: 2rem;
-  //   text-align: right;
-  //   .required {
-  //     color: #ff4918;
-  //   }
-  // }
+
   .van-field__control {
     border-radius: 0.05rem;
     // width: 3.8rem;
