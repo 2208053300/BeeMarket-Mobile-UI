@@ -116,7 +116,7 @@ export default {
           number: this.pNumber
         })
         await this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
-        this.skuProduct.selected_qty += this.pNumber
+        this.skuProduct.selected_qty = parseInt(this.skuProduct.selected_qty) + this.pNumber
       } catch (e) {
         this.$toast.fail(e)
       }
