@@ -141,7 +141,7 @@
                   <van-uploader
                     v-if="Object.keys(img).length === 0"
                     :after-read="onRead"
-                    accept="image/png, image/jpeg"
+                    accept="image/*"
                   >
                     <img :src="icon.add_shop_pic" class="add-shop-pic">
                   </van-uploader>
