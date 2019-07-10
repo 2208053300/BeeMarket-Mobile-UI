@@ -580,7 +580,7 @@ export default {
       color: #ff4918;
     }
   }
-  .van-cell-value{width: 4rem; border: 1px solid red;}
+  .van-cell-value{width: 3.8rem;}
   // .van-field__label {
   //   display: flex;
   //   align-items: center;
