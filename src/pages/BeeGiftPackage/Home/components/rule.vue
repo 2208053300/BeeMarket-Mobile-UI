@@ -112,7 +112,7 @@ export default {
           position: absolute;
           left: 0.17rem;
           top: 0.35rem;
-          font-size: 0.12rem;
+          font-size: 0.24rem;
         }
       }
       .text {
