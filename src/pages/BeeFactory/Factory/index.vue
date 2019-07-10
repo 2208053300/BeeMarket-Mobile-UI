@@ -548,11 +548,12 @@ export default {
     font-weight: 800;
     width: 1.6rem;
     text-align: right;
+    margin-right: 0.2rem;
     .required {
       color: #ff4918;
     }
   }
-  .van-cell-value{width: 3.8rem;}
+  .van-cell-value{flex: 1}
 
   .van-field__control {
     border-radius: 0.05rem;
