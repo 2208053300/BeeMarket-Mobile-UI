@@ -56,7 +56,7 @@
       </div>
     </div>
     <div
-      v-else
+      v-if="$store.state.user.userStatus===0"
       class="pay-result0"
     >
       <div class="first-pay">

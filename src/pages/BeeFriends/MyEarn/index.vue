@@ -263,6 +263,7 @@ export default {
       padding: 0.38rem 0 0 0.32rem;
       margin-left: 0.25rem;
       border-left: 0.02rem solid #ebebeb;
+      margin-bottom: 0.3rem;
       .detail-card {
         background-color: #fff8ec;
         padding: 0.23rem 0.64rem 0.2rem 0.46rem;
