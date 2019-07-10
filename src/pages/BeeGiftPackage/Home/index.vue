@@ -144,7 +144,7 @@ export default {
 
 <style scoped lang="less">
 .bee-index {
-  padding-top: 46px;
+  /*padding-top: 46px;*/
   background: #ffe1ba;
   text-align: center;
 }
