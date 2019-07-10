@@ -41,7 +41,7 @@
     </div>
     <div
       class="op-item"
-      @click="$router.push({ path: '/discover', query: { active: 1 }})"
+      @click="$router.push('/discover/actionList')"
     >
       <div class="img-content">
         <img

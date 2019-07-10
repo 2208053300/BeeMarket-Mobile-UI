@@ -129,5 +129,10 @@ module.exports = {
   beeGiftPackage: {
     entry: 'src/pages/BeeGiftPackage/main.js',
     title: '农礼包'
+  },
+  // 公益动态
+  beeActionList: {
+    entry: 'src/pages/BeeActionList/main.js',
+    title: '公益动态'
   }
 }
