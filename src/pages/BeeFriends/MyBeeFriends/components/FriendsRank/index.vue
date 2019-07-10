@@ -299,6 +299,7 @@ export default {
           `http://app.fengjishi.com/beeRegister#/?uid=${this.uid}`
         )
       } else {
+        this.$toast('请使用微信访问后分享！')
         //
       }
     },
