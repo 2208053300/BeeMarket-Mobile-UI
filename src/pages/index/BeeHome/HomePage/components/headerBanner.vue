@@ -57,7 +57,8 @@ export default {
         2: this.goArticle,
         3: this.goWebPage,
         4: this.goProduct,
-        5: this.goPublicWelfareAction
+        5: this.goPublicWelfareAction,
+        6: this.goGiftPackage
       }
       bannerHandlers[banner.type](banner)
     },
@@ -96,6 +97,10 @@ export default {
           id: banner.action_id
         }
       })
+    },
+    // 打开农礼包
+    goGiftPackage(banner) {
+      this.$router.push('/beeGiftPackage')
     }
   }
 }
