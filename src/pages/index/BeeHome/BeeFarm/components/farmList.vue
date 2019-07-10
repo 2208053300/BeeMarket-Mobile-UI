@@ -234,7 +234,8 @@ export default {
         // 页码
         page: 1,
         target: 'produce',
-        area: ''
+        area: '',
+        r: Math.floor(new Date().getTime() / 100)
       }
     }
   },

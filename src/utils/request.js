@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import { Toast } from 'vant'
-import store from 'vuex'
+import store from '@/store'
 import {
   setToken,
   getToken,
@@ -82,7 +82,7 @@ service.interceptors.response.use(
         // Toast('登录信息失效')
         // 清理登录信息并跳转到登录页面
         await removeToken()
-        await store.commit('CLEAR_USER_INFO')
+        await store.dispatch('ClearUserInfo')
         await checkToken()
       }
       return Promise.reject(res.message || 'error')

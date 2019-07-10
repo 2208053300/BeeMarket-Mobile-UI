@@ -39,7 +39,10 @@
           >
         </li>
       </ul>
-      <div class="change-show" @click="showListWay">
+      <div
+        class="change-show"
+        @click="showListWay"
+      >
         <img
           v-show="isVertical"
           src="@/assets/category/list_icon_vertical.png"
@@ -55,12 +58,8 @@
 
 <script>
 export default {
-  components: {
-
-  },
-  props: {
-
-  },
+  components: {},
+  props: {},
   data() {
     return {
       nowIndex: 0, // 筛选条件
@@ -71,18 +70,10 @@ export default {
       count: 0
     }
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
-  created() {
-
-  },
-  mounted() {
-
-  },
+  computed: {},
+  watch: {},
+  created() {},
+  mounted() {},
   methods: {
     getList(type) {
       this.nowIndex = type
@@ -100,7 +91,7 @@ export default {
       } else if (type === 2) {
         this.count++
         // if (this.count > 1) { // this.count == 1 是选中价格，>1 时筛选按价格升序还是降序
-        this.count % 2 === 0 ? this.order = 'desc' : this.order = 'asc'
+        this.count % 2 === 0 ? (this.order = 'desc') : (this.order = 'asc')
         this.$emit('getFilter', { type, order: this.order })
       }
     },
@@ -109,7 +100,6 @@ export default {
       this.$emit('showWay', this.isVertical)
     }
   }
-
 }
 </script>
 

@@ -15,7 +15,7 @@ const cart = {
     }
   },
   actions: {
-    GetCartInfo(commit, uid) {
+    GetCartInfo({ commit }, uid) {
       return new Promise(resolve => {
         commit('SET_CartINFO')
         resolve()

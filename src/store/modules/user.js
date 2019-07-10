@@ -22,14 +22,22 @@ const user = {
   mutations: {
     SET_USER_INFO: (state, userInfo) => {
       state.userInfo = userInfo
-      localStorage.setItem('nickname', userInfo.nickname)
-      localStorage.setItem('head_image', userInfo.head_image)
-      localStorage.setItem('mobileAstr', userInfo.mobileAstr)
+      try {
+        localStorage.setItem('nickname', userInfo.nickname)
+        localStorage.setItem('head_image', userInfo.head_image)
+        localStorage.setItem('mobileAstr', userInfo.mobileAstr)
+      } catch (error) {
+        //
+      }
     },
     CLEAR_USER_INFO: state => {
-      localStorage.removeItem('nickname')
-      localStorage.removeItem('head_image')
-      localStorage.removeItem('mobileAstr')
+      try {
+        localStorage.removeItem('nickname')
+        localStorage.removeItem('head_image')
+        localStorage.removeItem('mobileAstr')
+      } catch (error) {
+        //
+      }
       state.userInfo = {
         nickname: '',
         head_image: '',
@@ -59,7 +67,13 @@ const user = {
     }
   },
   actions: {
-    GetUserInfo(commit, uid) {
+    ClearUserInfo({ commit }) {
+      return new Promise(resolve => {
+        commit('CLEAR_USER_INFO')
+        resolve()
+      })
+    },
+    GetUserInfo({ commit }, uid) {
       return new Promise(resolve => {
         commit('SET_USER_INFO')
         resolve()

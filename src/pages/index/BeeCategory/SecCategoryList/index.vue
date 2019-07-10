@@ -128,8 +128,15 @@ export default {
       const res = await getSecondCategory(cateData)
       this.categoryThirdList = res.data.cats
       // this.condition.cid = this.categoryThirdList[0].cid
-
-      this.$refs.ProductsList.condition.cid = this.categoryThirdList[0].cid
+      if (this.$route.query.target) {
+        this.$refs.ProductsList.condition.cid = this.$route.query.cid
+        const catList = this.categoryThirdList.map(item => {
+          return item.cid
+        })
+        this.nowThirdIndex = catList.indexOf(this.$route.query.cid)
+      } else {
+        this.$refs.ProductsList.condition.cid = this.categoryThirdList[0].cid
+      }
       this.$refs.ProductsList.getGoodsList()
     },
     // 获取商品列表

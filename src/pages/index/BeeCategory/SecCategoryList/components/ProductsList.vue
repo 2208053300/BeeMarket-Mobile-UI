@@ -67,13 +67,14 @@ export default {
       // 请求数据条件
       condition: {
         // 当前选中分类id
-        cid: 0,
+        cid: this.$route.query.cid,
         // 筛选条件  sell_price 售价，sold 销量
         sort: '',
         // asc 顺序 还是 desc 倒序
         order: '',
         // 页码
-        page: 1
+        page: 1,
+        r: Math.floor(new Date().getTime() / 100)
       },
       // 三级分类下的商品列表
       goodsList: [],
@@ -101,6 +102,8 @@ export default {
       if (this.$route.query.target) {
         data = { ...data, target: 'produce' }
       }
+      console.log(data)
+
       setTimeout(async() => {
         const res = await getProductList(data)
 
