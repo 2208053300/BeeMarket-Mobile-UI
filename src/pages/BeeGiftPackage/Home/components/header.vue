@@ -4,8 +4,8 @@
       slot="left"
       :name="beeIcon.tab_icon_home_s"
       size="0.5rem"
-      @click="goHome"
       style="margin-left: 15px"
+      @click="goHome"
     />
     <span v-show="showTitle">
       农产品礼包
