@@ -368,6 +368,11 @@ const router = new Router({
           path: 'article/:id',
           name: 'ArticleDetail',
           component: () => import('@/pages/BeeArticle/ArticleDetail')
+        },
+        {
+          path: 'actionList',
+          name: 'beeActionList',
+          component: () => import('@/pages/BeeActionList/ActionList')
         }
       ]
     },

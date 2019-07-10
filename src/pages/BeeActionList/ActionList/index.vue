@@ -16,7 +16,7 @@
           v-for="(item,index) in actionList"
           :key="index"
           class="action-content"
-          @click="$router.push({path:'/action',query:{id:item.id}})"
+          @click="$router.push({name:'ActionDetail',query:{id:item.id}})"
         >
           <div class="action-img">
             <img
@@ -86,6 +86,8 @@ export default {
   watch: {},
   created() {},
   mounted() {
+    this.$store.state.app.beeHeader = true
+    this.$store.state.app.beeFooter.show = false
     this.getActionListData()
   },
   methods: {
