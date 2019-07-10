@@ -40,15 +40,13 @@
                 <span><span class="required">*</span>厂商名称</span>
               </div>
               <div class="van-cell-value">
-                <div class="van-field__body">
-                  <input
-                    v-model.trim="factory.firm"
-                    type="text"
-                    placeholder="请输入厂商名称"
-                    class="van-field__control  van-field__control--left"
-                    @blur.prevent="blurScroll"
-                  >
-                </div>
+                <input
+                  v-model.trim="factory.firm"
+                  type="text"
+                  placeholder="请输入厂商名称"
+                  class="van-field__control  van-field__control--left"
+                  @blur.prevent="blurScroll"
+                >
               </div>
             </div>
 
@@ -57,15 +55,13 @@
                 <span><span class="required">*</span>联系人</span>
               </div>
               <div class="van-cell-value">
-                <div class="van-field__body">
-                  <input
-                    v-model.trim="factory.contacter"
-                    type="text"
-                    placeholder="请输入联系人姓名"
-                    class="van-field__control  van-field__control--left"
-                    @blur.prevent="blurScroll"
-                  >
-                </div>
+                <input
+                  v-model.trim="factory.contacter"
+                  type="text"
+                  placeholder="请输入联系人姓名"
+                  class="van-field__control  van-field__control--left"
+                  @blur.prevent="blurScroll"
+                >
               </div>
             </div>
             <div class="van-cell   van-field">
@@ -73,86 +69,67 @@
                 <span><span class="required">*</span>联系电话</span>
               </div>
               <div class="van-cell-value">
-                <div class="van-field__body">
-                  <input
-                    v-model.trim="factory.contact_phone"
-                    type="tel"
-                    placeholder="请输入联系人电话"
-                    class="van-field__control  van-field__control--left"
-                    @blur.prevent="blurScroll"
-                  >
-                </div>
+                <input
+                  v-model.trim="factory.contact_phone"
+                  type="tel"
+                  placeholder="请输入联系人电话"
+                  class="van-field__control  van-field__control--left"
+                  @blur.prevent="blurScroll"
+                >
               </div>
             </div>
             <div class="van-cell   van-field">
               <div class="van-cell-title">
                 <span><span class="required">*</span>产品类型</span>
               </div>
-              <div class="van-cell-value">
-                <div class="van-field__body" @click="showCat = true">
-                  <input
-                    v-model.trim="factory.cat_name"
-                    disabled
-                    type="text"
-                    placeholder="请选择"
-                    class="van-field__control  van-field__control--left"
-                  >
-                  <div class="van-field__right-icon">
-                    <!-- <i class="van-icon van-icon-arrow"></i> -->
-                  </div>
-                </div>
+              <div class="van-cell-value" @click="showCat = true">
+                <input
+                  v-model.trim="factory.cat_name"
+                  disabled
+                  type="text"
+                  placeholder="请选择"
+                  class="van-field__control  van-field__control--left"
+                >
               </div>
             </div>
             <div class="van-cell   van-field">
               <div class="van-cell-title">
                 <span><span class="required">*</span>运营经验</span>
               </div>
-              <div class="van-cell-value">
-                <div class="van-field__body" @click="showJy = true">
-                  <input
-                    v-model.trim="factory.jy_name"
-                    disabled
-                    type="text"
-                    placeholder="请选择"
-                    class="van-field__control  van-field__control--left"
-                  >
-                  <div class="van-field__right-icon">
-                    <!-- <i class="van-icon van-icon-arrow"></i> -->
-                  </div>
-                </div>
+              <div class="van-cell-value" @click="showJy = true">
+                <input
+                  v-model.trim="factory.jy_name"
+                  disabled
+                  type="text"
+                  placeholder="请选择"
+                  class="van-field__control  van-field__control--left"
+                >
               </div>
             </div>
-            <!-- <div class="van-cell   van-field">
-              <div class="van-cell-title">
-                <span>推荐人</span>
-              </div>
-              <div class="van-cell-value">
-                <div class="van-field__body">
-                  <input
-                    v-model.trim="factory.referrer_name"
-                    type="text"
-                    placeholder="请输入推荐人姓名"
-                    class="van-field__control  van-field__control--left"
-                    @blur.prevent="blurScroll"
-                  >
-                </div>
-              </div>
-            </div> -->
-            <div class="van-cell   van-field">
+
+            <div class="van-cell  van-field">
               <div class="van-cell-title">
                 <span>推荐人电话</span>
               </div>
               <div class="van-cell-value">
-                <div class="van-field__body">
-                  <input
-                    v-model.trim="factory.referrer_number"
-                    :disabled="disabled"
-                    type="tel"
-                    placeholder="请输入推荐人电话"
-                    class="van-field__control  van-field__control--left"
-                    @blur.prevent="blurScroll"
-                  >
-                </div>
+                <input
+                  v-if="factory.referrer_number"
+                  v-model.trim="factory.referrer_number"
+                  disabled
+                  type="tel"
+                  placeholder="请输入推荐人电话"
+                  class="van-field__control  van-field__control--left"
+                  @blur.prevent="blurScroll"
+                >
+                <input
+                  v-else
+                  v-model.trim="factory.referrer_number"
+
+                  type="tel"
+                  placeholder="请输入推荐人电话"
+                  class="van-field__control  van-field__control--left"
+                  @blur.prevent="blurScroll"
+                >
               </div>
             </div>
             <div class="van-cell   van-field">
@@ -315,18 +292,12 @@ export default {
       const res = await isPartner()
       //  console.log('用户是否合伙人身份：', res)
 
-      this.userPhone = res.data.user_phone
       this.factory.referrer_number = res.data.user_phone
       // if (this.userPhone) {
       //   this.factory.referrer_number = this.userPhone
       // } else if (this.$route.query.phone) {
       //   this.factory.referrer_number = this.$route.query.phone
       // }
-
-      if (this.$route.query.phone) {
-        this.factory.referrer_number = this.$route.query.phone
-        this.disabled = true
-      }
     },
 
     // 获取用户id
@@ -338,7 +309,7 @@ export default {
         title: '蜂集市，等你一起轻创业',
         desc: '零风险轻创业大财富的蜂集市，邀请您成为蜂集市合伙人！',
         imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
-        link: `https://app.fengjishi.com/beeFactory#/?uid=${this.uid}&phone=${this.userPhone}`
+        link: `https://app.fengjishi.com/beeFactory#/?uid=${this.uid}`
       })
     },
 
@@ -577,28 +548,16 @@ export default {
     font-weight: 800;
     width: 1.6rem;
     text-align: right;
+    margin-right: 0.2rem;
     .required {
       color: #ff4918;
     }
   }
-  .van-cell-value{ flex:1;}
-  // .van-field__label {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: flex-end;
-  //   margin-right: 0.3rem;
-  //   font-size: 0.3rem;
-  //   color: #333;
-  //   font-weight: 800;
-  //   // width: 2rem;
-  //   text-align: right;
-  //   .required {
-  //     color: #ff4918;
-  //   }
-  // }
+  .van-cell-value{flex: 1;}
+
   .van-field__control {
     border-radius: 0.05rem;
-    width: 3.8rem;
+    width: 100%;
     height: 0.74rem;
     line-height: 0.74rem;
     background: #eee;
