@@ -53,7 +53,7 @@ import { getToken } from '@/utils/auth'
 import { GetRequest } from '@/utils/index'
 export default {
   metaInfo: {
-    title: '注册'
+    title: '蜂集市'
   },
   components: {},
   props: {},
