@@ -45,7 +45,7 @@
         </div>
       </div>
     </transition>
-    <transition name="bee-slide-down3">
+    <!-- <transition name="bee-slide-down3">
       <div
         v-if="honeyType!==3&&showType"
         class="rt-item"
@@ -58,7 +58,7 @@
           >
         </div>
       </div>
-    </transition>
+    </transition> -->
   </div>
 </template>
 

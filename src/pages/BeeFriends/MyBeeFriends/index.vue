@@ -10,11 +10,13 @@
       class="active-notice"
     >
       <div class="notice-content">
-        <van-icon
-          name="volume-o"
-          class="notice-icon"
-        />
-        <span class="notice-text">您的合伙人身份还未激活哟！</span>
+        <van-notice-bar
+          left-icon="volume-o"
+          background="transparent"
+          color="#ff3f3f"
+        >
+          <span class="notice-text">您的蜂友圈尚未激活，任购商品即可激活蜂友圈～</span>
+        </van-notice-bar>
       </div>
     </div>
     <div
@@ -546,13 +548,17 @@ export default {
     line-height: 0.4rem;
     z-index: 80;
     .notice-content {
-      max-width: 4.5rem;
+      max-width: 5rem;
+      height: 0.4rem;
       border-radius: 0.4rem;
       overflow: hidden;
       background-color: rgba(0, 0, 0, 0.2);
       box-sizing: border-box;
-      padding: 0 0.2rem;
       margin: auto;
+      .van-notice-bar{
+        position: relative;
+        top: -0.16rem;
+      }
     }
     .notice-icon {
       vertical-align: middle;
