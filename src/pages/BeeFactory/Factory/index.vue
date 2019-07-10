@@ -138,7 +138,7 @@
                 </div>
               </div>
             </div> -->
-            <div v-if="factory.referrer_number" class="van-cell   van-field">
+            <div class="van-cell   van-field">
               <div class="van-cell__title van-field__label">
                 <span>推荐人电话</span>
               </div>
@@ -146,7 +146,7 @@
                 <div class="van-field__body">
                   <input
                     v-model.trim="factory.referrer_number"
-                    disabled
+                    :disabled="disabled"
                     type="tel"
                     placeholder="请输入推荐人电话"
                     class="van-field__control  van-field__control--left"
@@ -285,7 +285,8 @@ export default {
       ],
       showJy: false,
       uid: 0,
-      userPhone: null
+      userPhone: null,
+      disabled: false
     }
   },
   computed: {},
@@ -306,6 +307,7 @@ export default {
     this.getCategory1Data()
 
     this.isPartner()
+    this.loadUID()
   },
   methods: {
     // 判断该用户是否是合伙人
@@ -322,9 +324,8 @@ export default {
 
       if (this.$route.query.phone) {
         this.factory.referrer_number = this.$route.query.phone
+        this.disabled = true
       }
-
-      this.loadUID()
     },
 
     // 获取用户id
@@ -568,7 +569,7 @@ export default {
     justify-content: space-between;
     border-radius:0.1rem;
   }
-  .van-cell__value{width: 4rem;}
+  .van-cell__value{width: 4rem; border: 1px solid red;}
   .van-field__label {
     display: flex;
     align-items: center;
