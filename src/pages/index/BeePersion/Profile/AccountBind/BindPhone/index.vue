@@ -121,7 +121,9 @@ export default {
         this.$toast(res.message)
         if (res.status_code === 200) {
           setTimeout(() => {
-            this.$router.push({ path: '/persion/profile/accountBind' })
+            // this.$router.push({ path: '/persion/profile/accountBind' })
+            // this.$router.push({ name: this.$store.state.app.pushName })
+            this.$router.go(-1)
           }, 2000)
         }
       } catch (error) {

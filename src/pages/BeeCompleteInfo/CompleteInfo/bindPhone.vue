@@ -68,6 +68,7 @@ export default {
   methods: {
     bindPhone() {
       if (!this.mobile_bind) {
+        // this.$store.dispatch('',)
         window.location.href = '/#/persion/profile/accountBind/bindPhone'
       }
     },
