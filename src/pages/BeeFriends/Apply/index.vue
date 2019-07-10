@@ -313,7 +313,7 @@ export default {
     font-size: 0.3rem;
     color: #333;
     font-weight: 800;
-    width: 2rem;
+    // width: 2rem;
     text-align: right;
     .required {
       color: #ff4918;
