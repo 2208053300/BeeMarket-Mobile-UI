@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>token:{{ token }}</p>
     <!-- 用户信息 -->
     <div class="container">
       <div class="user-info flex align-center bg-white">
@@ -93,7 +94,8 @@ export default {
       ],
       problem_type: [
 
-      ]
+      ],
+      token: window.localStorage.getItem('BM-App-Token')
     }
   },
   computed: {},
