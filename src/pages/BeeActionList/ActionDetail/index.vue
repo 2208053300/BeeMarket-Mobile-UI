@@ -347,6 +347,7 @@ export default {
     background-color: #fff;
     text-align: center;
     border-top: 0.02rem solid @Grey4;
+    z-index: 100;
     .action-button {
       margin: 0.1rem 0.12rem;
       box-sizing: border-box;
