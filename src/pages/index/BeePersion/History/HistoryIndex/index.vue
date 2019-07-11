@@ -34,8 +34,17 @@
             <!-- pro.is_collect 是否已收藏 true false -->
             <!-- pro.target 目标 general|limited -->
             <div class="goodsItem">
-              <img :src="pro.thumb_url" alt="" class="img" @click="goProductDetail(pro.pid,pro.target)">
-              <p class="title no-wrap" @click="goProductDetail(pro.pid,pro.target)">
+              <div class="product-img">
+                <img :src="pro.thumb_url" alt="" class="img" @click="goProductDetail(pro)">
+                <div
+                  v-if="pro.is_obtained||!pro.is_stock"
+                  class="product-masking"
+                >
+                  <span v-if="pro.is_obtained">已下架</span>
+                  <span v-if="!pro.is_stock">售罄</span>
+                </div>
+              </div>
+              <p class="title no-wrap" @click="goProductDetail(pro)">
                 {{ pro.product_name }}
               </p>
               <div class="flex flex-between">
@@ -155,12 +164,15 @@ export default {
       }
     },
     // 查看商品详情 pid 商品id target 目标 general limited
-    goProductDetail(pid, target) {
+    goProductDetail(pro) {
+      if (pro.is_obtained) {
+        return
+      }
       this.$router.push({
         path: '/category/details',
         query: {
-          pid,
-          target
+          pid: pro.pid,
+          target: pro.target
         }
       })
     },
@@ -243,10 +255,29 @@ export default {
     width: 90%;
     margin: 0 auto;
     border-radius: 0.1rem;
-    .img {
-      width: 100%;
-      height: 2rem;
-      border-radius: 0.1rem;
+    .product-img {
+      position: relative;
+      display: inline-block;
+      .img {
+        width: 100%;
+        height: 2rem;
+        border-radius: 0.1rem;
+      }
+      .product-masking {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #ffffff;
+        font-size: 0.26rem;
+        display: flex;
+        align-items: center;
+        span {
+          margin: auto;
+        }
+      }
     }
     .title {
       font-size: 0.24rem;
