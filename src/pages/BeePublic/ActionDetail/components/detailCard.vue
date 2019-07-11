@@ -108,7 +108,6 @@ export default {
       font-weight: bold;
     }
     .card-content2 {
-      margin-top: 0.3rem;
       .time-content {
         font-size: 0.22rem;
         color: @Grey2;
