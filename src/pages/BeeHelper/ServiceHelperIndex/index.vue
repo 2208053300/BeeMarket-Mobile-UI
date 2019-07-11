@@ -1,6 +1,7 @@
 <template>
   <div>
     <p>token:{{ token }}</p>
+    <p>token1:{{ token1 }}</p>
     <!-- 用户信息 -->
     <div class="container">
       <div class="user-info flex align-center bg-white">
@@ -65,6 +66,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 import { getOs } from '@/utils'
 // 引入帮助客服api
 import { getServiceIndex } from '@/api/BeeApi/user'
@@ -95,7 +97,8 @@ export default {
       problem_type: [
 
       ],
-      token: window.localStorage.getItem('BM-App-Token')
+      token: window.localStorage.getItem('BM-App-Token'),
+      token1: Cookies.get('token')
     }
   },
   computed: {},

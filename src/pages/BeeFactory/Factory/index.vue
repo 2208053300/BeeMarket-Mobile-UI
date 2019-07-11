@@ -304,13 +304,10 @@ export default {
       const res = await isPartner()
       //  console.log('用户是否合伙人身份：', res)
       this.factory.referrer_number = res.data.user_phone
-      // const phoneInput = document.querySelector('.input-phone')
       if (res.data.user_phone) {
         this.status = false
-        // phoneInput.setAttribute('readonly', 'readonly')
       } else {
         this.status = true
-        // phoneInput.removeAttribute('readonly')
       }
     },
 
