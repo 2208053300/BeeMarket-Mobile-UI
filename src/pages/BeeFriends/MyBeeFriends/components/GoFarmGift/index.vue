@@ -61,7 +61,6 @@ export default {
       if (this.osObj.isWx) {
         this.$router.push('/beeGiftPackage')
       } else if (this.osObj.isIphone && this.osObj.isApp) {
-        alert('ios')
         window.webkit.messageHandlers.ToProducePackage.postMessage('')
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToPackage()

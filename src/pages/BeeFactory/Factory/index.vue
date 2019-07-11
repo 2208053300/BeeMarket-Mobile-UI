@@ -85,7 +85,7 @@
               <div class="van-cell-value" @click="showCat = true">
                 <input
                   v-model.trim="factory.cat_name"
-                  disabled
+                  readonly
                   type="text"
                   placeholder="请选择"
                   class="van-field__control  van-field__control--left"
@@ -99,7 +99,7 @@
               <div class="van-cell-value" @click="showJy = true">
                 <input
                   v-model.trim="factory.jy_name"
-                  disabled
+                  readonly
                   type="text"
                   placeholder="请选择"
                   class="van-field__control  van-field__control--left"
@@ -112,24 +112,24 @@
                 <span>推荐人电话</span>
               </div>
               <div class="van-cell-value">
+                <!-- v-if="factory.referrer_number" -->
                 <input
-                  v-if="factory.referrer_number"
-                  v-model.trim="factory.referrer_number"
-                  disabled
-                  type="tel"
-                  placeholder="请输入推荐人电话"
-                  class="van-field__control  van-field__control--left"
-                  @blur.prevent="blurScroll"
-                >
-                <input
-                  v-else
                   v-model.trim="factory.referrer_number"
 
+                  :readonly="status ? false : 'readonly'"
                   type="tel"
+                  placeholder="请输入推荐人电话"
+                  class="van-field__control  van-field__control--left input-phone"
+                  @blur.prevent="blurScroll"
+                >
+                <!-- <input
+                  v-else
+                  v-model.trim="factory.referrer_number"
+                  type="number"
                   placeholder="请输入推荐人电话"
                   class="van-field__control  van-field__control--left"
                   @blur.prevent="blurScroll"
-                >
+                > -->
               </div>
             </div>
             <div class="van-cell   van-field">
@@ -274,7 +274,8 @@ export default {
       showJy: false,
       uid: 0,
       userPhone: null,
-      disabled: false
+      disabled: false,
+      status: true
     }
   },
   computed: {},
@@ -302,13 +303,15 @@ export default {
     async isPartner() {
       const res = await isPartner()
       //  console.log('用户是否合伙人身份：', res)
-
       this.factory.referrer_number = res.data.user_phone
-      // if (this.userPhone) {
-      //   this.factory.referrer_number = this.userPhone
-      // } else if (this.$route.query.phone) {
-      //   this.factory.referrer_number = this.$route.query.phone
-      // }
+      // const phoneInput = document.querySelector('.input-phone')
+      if (res.data.user_phone) {
+        this.status = false
+        // phoneInput.setAttribute('readonly', 'readonly')
+      } else {
+        this.status = true
+        // phoneInput.removeAttribute('readonly')
+      }
     },
 
     // 获取用户id
