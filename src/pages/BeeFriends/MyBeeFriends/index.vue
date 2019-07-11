@@ -212,7 +212,7 @@ export default {
       try {
         await vm.$store.dispatch('GerUserStatus')
       } catch (error) {
-        vm.$toast('获取合伙人身份失败，请重试！')
+        vm.$toast('获取合伙人身份失败，请重试！' + error)
       }
       // 0 非合伙人 1 合伙人 2 冻结
       if (vm.$store.state.user.userStatus === 0) {
@@ -229,7 +229,9 @@ export default {
       } else if (vm.$store.state.user.userStatus === 2) {
         vm.$router.replace({ name: 'freeze' })
       } else {
-        vm.$toast('获取合伙人身份失败，请重试！')
+        vm.$toast(
+          '获取合伙人身份失败，请重试！' + vm.$store.state.user.userStatus
+        )
         // vm.$router.push({ name: 'beeFriends' })
         // vm.$router.replace({ name: 'introduction' })
         // vm.$router.go(-1)
