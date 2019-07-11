@@ -57,14 +57,19 @@ export default {
       this.$emit('update:showGift', false)
     },
     goFarm() {
+      alert(1)
       this.$emit('update:showGift', false)
       if (this.osObj.isWx) {
+        alert('wx')
         this.$router.push('/beeGiftPackage')
       } else if (this.osObj.isIphone && this.osObj.isApp) {
+        alert('ios')
         window.webkit.messageHandlers.ToProducePackage.postMessage('')
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        alert('isAndroid')
         window.beeMarket.ToPackage()
       } else {
+        alert('other')
         this.$router.push('/beeGiftPackage')
       }
     }
