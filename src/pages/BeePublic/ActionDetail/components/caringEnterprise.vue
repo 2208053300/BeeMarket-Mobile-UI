@@ -28,7 +28,7 @@
         - 协作机构 -
       </div>
       <div class="institutions-content2">
-        <div class="institutions-item">
+        <!-- <div class="institutions-item">
           <img
             :src="beeIcon.confirmorder_pic_bee"
             alt=""
@@ -39,7 +39,7 @@
             :src="beeIcon.confirmorder_pic_qilin"
             alt=""
           >
-        </div>
+        </div> -->
         <template v-if="actionData.company_info.cooperation_company_list!==[]">
           <div
             v-for="(item,index) in actionData.company_info.cooperation_company_list"
@@ -88,8 +88,8 @@ export default {
     return {
       beeIcon: {
         confirmorder_pic_parting: require('@/assets/icon/discover/confirmorder_pic_parting@2x.png'),
-        confirmorder_pic_bee: require('@/assets/icon/discover/confirmorder_pic_bee@2x.png'),
-        confirmorder_pic_qilin: require('@/assets/icon/discover/confirmorder_pic_qilin@2x.png'),
+        // confirmorder_pic_bee: require('@/assets/icon/discover/confirmorder_pic_bee@2x.png'),
+        // confirmorder_pic_qilin: require('@/assets/icon/discover/confirmorder_pic_qilin@2x.png'),
         confirmorder_pic_word: require('@/assets/icon/discover/confirmorder_pic_word@2x.png')
       },
       showDetail: false
@@ -155,10 +155,12 @@ export default {
       grid-template-rows: 0.8rem;
       grid-row-gap: 0.4rem;
       .institutions-item {
-        height: 0.8rem;
-        width: 2.16rem;
-        margin: auto;
-        &:nth-child(n + 2) {
+        text-align: center;
+        img {
+          height: 0.8rem;
+          width: 2.16rem;
+        }
+        &:nth-child(odd) {
           border-right: 0.02rem solid @Grey4;
         }
       }
