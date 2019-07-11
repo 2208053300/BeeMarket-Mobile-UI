@@ -24,12 +24,12 @@
         - 协作企业 -
       </p>
       <ul class="logo-list flex flex-wrap">
-        <li class="flex flex-center">
+        <!-- <li class="flex flex-center">
           <img :src="beeLogo">
         </li>
         <li class="flex flex-center">
           <img :src="qlLogo">
-        </li>
+        </li> -->
         <template v-if="actionDetails.company_info.cooperation_company_list!==[]">
           <li
             v-for="(item, index) in actionDetails.company_info.cooperation_company_list"
@@ -93,8 +93,8 @@ export default {
       infoBg: require('@/assets/icon/discover/confirmorder_popups_pic_shading@2x.png'),
       closeImg: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_icon_delete@2x.png'),
       // 协作企业前两个固定logo
-      beeLogo: require('@/assets/icon/discover/confirmorder_pic_bee@2x.png'),
-      qlLogo: require('@/assets/icon/discover/confirmorder_pic_qilin@2x.png'),
+      // beeLogo: require('@/assets/icon/discover/confirmorder_pic_bee@2x.png'),
+      // qlLogo: require('@/assets/icon/discover/confirmorder_pic_qilin@2x.png'),
       // 是否显示爱心企业信息弹框
       show: false
     }
