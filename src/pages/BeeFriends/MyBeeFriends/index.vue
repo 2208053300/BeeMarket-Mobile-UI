@@ -229,9 +229,9 @@ export default {
       } else if (vm.$store.state.user.userStatus === 2) {
         vm.$router.replace({ name: 'freeze' })
       } else {
-        vm.$toast(
-          '获取合伙人身份失败，请重试！' + vm.$store.state.user.userStatus
-        )
+        // vm.$toast(
+        //   '获取合伙人身份失败，请重试！' + vm.$store.state.user.userStatus
+        // )
         // vm.$router.push({ name: 'beeFriends' })
         // vm.$router.replace({ name: 'introduction' })
         // vm.$router.go(-1)
