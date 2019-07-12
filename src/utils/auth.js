@@ -101,9 +101,7 @@ export function removeToken() {
 // SECTION 获取多端登陆
 export function getVerify() {
   const osObj = getOs()
-  if (osObj.isWx) {
-    return localStorage.getItem('BM-Verify-Ver')
-  } else if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
+  if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
     return Cookies.get('BM-Verify-Ver')
   } else {
     return localStorage.getItem('BM-Verify-Ver')
