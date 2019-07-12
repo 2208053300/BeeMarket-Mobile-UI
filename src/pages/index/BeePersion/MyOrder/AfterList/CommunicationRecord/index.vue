@@ -178,11 +178,11 @@ export default {
       }
     }
     .desc-img {
-      display: grid;
-      grid-template-columns: repeat(3, 2rem);
-      grid-template-rows: 2rem;
-      grid-gap: 0.3rem;
       .img-content {
+        display: grid;
+        grid-template-columns: repeat(3, 2rem);
+        grid-template-rows: 2rem;
+        grid-gap: 0.3rem;
         border-radius: 0.2rem;
         overflow: hidden;
       }
