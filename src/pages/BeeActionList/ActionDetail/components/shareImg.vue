@@ -3,15 +3,13 @@
     <van-popup
       v-model="helpSuccess"
       class="share-modal"
+      transition="van-fade"
       :close-on-click-overlay="false"
       @opened="drawImg"
       @close="closed"
       @click-overlay="closed"
     >
-      <div
-        class="text-right"
-        style="padding:0.2rem 0.2rem 0 0"
-      >
+      <div class="text-right">
         <img
           :src="beeIcon.shareTip"
           class="shareTip"
@@ -74,6 +72,9 @@
             >
           </div>
         </div>
+      </div>
+      <div class="text-tip">
+        <span>长按保存图片到本地</span>
       </div>
     </van-popup>
   </div>
@@ -150,10 +151,7 @@ export default {
       this.$emit('update:helpSuccess', false)
     },
     async drawImg() {
-      // this.getBase64(this.actionDetails.share_image)
       const imgList = document.querySelectorAll('.share-content img')
-      console.log(imgList)
-
       for (let index = 0; index < imgList.length; index++) {
         const element = imgList[index]
         element.setAttribute('crossorigin', 'anonymous')
@@ -162,28 +160,9 @@ export default {
         allowTaint: true,
         useCORS: true
       }).then(canvas => {
-        console.log(canvas)
         this.$refs.shareImgPre.setAttribute('src', canvas.toDataURL())
         this.share_img = canvas.toDataURL('image/png')
       })
-    },
-    getBase64(img) {
-      function getBase64Image(img) {
-        var canvas = document.createElement('canvas')
-        canvas.width = img.width
-        canvas.height = img.height
-        var ctx = canvas.getContext('2d')
-        ctx.drawImage(img, 0, 0, img.width, img.height)
-        var ext = img.src.substring(img.src.lastIndexOf('.') + 1).toLowerCase()
-        var dataURL = canvas.toDataURL('image/' + ext)
-        return dataURL
-      }
-
-      var image = new Image()
-      image.src = img
-      image.onload = function() {
-        this.bgBase64 = getBase64Image(image)
-      }
     }
   }
 }
@@ -193,6 +172,12 @@ export default {
 .share-container {
   .share-modal {
     background: rgba(0, 0, 0, 0);
+    .text-tip {
+      color: #ffffff;
+      font-size: 0.28rem;
+      padding: 0.1rem;
+      text-align: center;
+    }
     .share-bg {
       width: 5.34rem;
       height: 6.92rem;
@@ -201,9 +186,7 @@ export default {
       padding: 0.16rem;
       box-sizing: border-box;
       .share-content {
-        border-radius: 0.16rem;
         height: 100%;
-        overflow: hidden;
         position: relative;
         .share-info-content {
           position: absolute;

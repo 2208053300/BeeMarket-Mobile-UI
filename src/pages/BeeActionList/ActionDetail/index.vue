@@ -169,7 +169,6 @@ export default {
       try {
         const res = await joinAction1({ id: this.id })
         if (res.status_code === 200) {
-          this.$toast(res.message)
           this.actionDetails.is_join = true
         }
       } catch (error) {
@@ -182,7 +181,6 @@ export default {
       try {
         const res = await launchAction({ id: this.id })
         if (res.status_code === 200) {
-          this.$toast(res.message)
           this.helpSuccess = true
         }
       } catch (error) {

@@ -17,7 +17,8 @@ import {
   Tab,
   Tabs,
   Button,
-  Popup
+  Popup,
+  Toast
 } from 'vant'
 
 Vue.use(List)
@@ -28,6 +29,7 @@ Vue.use(List)
   .use(Tabs)
   .use(Button)
   .use(Popup)
+  .use(Toast)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
