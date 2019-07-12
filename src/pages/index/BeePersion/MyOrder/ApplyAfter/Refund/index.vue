@@ -315,7 +315,7 @@ export default {
           this.$toast('评论图片最多上传6个！')
         }
       } catch (error) {
-        this.$toast('error')
+        this.$toast('加载图片失败！')
       }
     },
     delImg(index) {
