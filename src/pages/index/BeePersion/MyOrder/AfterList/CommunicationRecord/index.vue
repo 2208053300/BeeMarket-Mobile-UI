@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="desc-img">
-        <div class="img-content">
+        <div class="img-content flex flex-wrap">
           <img
             v-for="(item, index) in afterCommuniInfo.buyer_desc.imgs"
             :key="index"
@@ -179,12 +179,15 @@ export default {
     }
     .desc-img {
       .img-content {
-        display: grid;
-        grid-template-columns: repeat(3, 2rem);
-        grid-template-rows: 2rem 2rem;
-        grid-gap: 0.3rem;
+        // display: grid;
+        // grid-template-columns: repeat(3, 2rem);
+        // grid-template-rows: 2rem 2rem;
+        // grid-gap: 0.3rem;
         border-radius: 0.2rem;
         overflow: hidden;
+        img{width: 2rem; height: 2rem;margin-right: 0.25rem; margin-bottom: 0.2rem;
+          &:nth-child(3n){margin-right:0 }
+        }
       }
     }
   }
