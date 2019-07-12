@@ -41,7 +41,7 @@
                   >
                 </div>
                 <div class="right-info">
-                  <span>{{ actionDetails.share_data.nickname }}</span>
+                  <span class="user-name">{{ actionDetails.share_data.nickname }}</span>
                   <div class="img-content">
                     <img
                       :src="beeIcon.pic_text"
@@ -152,6 +152,8 @@ export default {
     async drawImg() {
       // this.getBase64(this.actionDetails.share_image)
       const imgList = document.querySelectorAll('.share-content img')
+      console.log(imgList)
+
       for (let index = 0; index < imgList.length; index++) {
         const element = imgList[index]
         element.setAttribute('crossorigin', 'anonymous')
@@ -161,7 +163,7 @@ export default {
         useCORS: true
       }).then(canvas => {
         console.log(canvas)
-        // this.$refs.shareImgPre.setAttribute('src', canvas.toDataURL())
+        this.$refs.shareImgPre.setAttribute('src', canvas.toDataURL())
         this.share_img = canvas.toDataURL('image/png')
       })
     },
@@ -224,11 +226,19 @@ export default {
                 width: 0.64rem;
                 height: 0.64rem;
                 margin-right: 0.06rem;
+                border-radius: 50%;
+                overflow: hidden;
               }
               .right-info {
+                font-size: 0.2rem;
+                overflow: hidden;
+                .user-name {
+                  white-space: nowrap;
+                }
                 .img-content {
                   width: 1.56rem;
                   height: 0.24rem;
+                  margin-top: 0.06rem;
                 }
               }
             }
