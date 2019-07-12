@@ -99,7 +99,7 @@
             <div v-if="commentImgs.length < 6" class="upload-img">
               <van-uploader
                 :after-read="onRead"
-                accept="image/png, image/jpeg"
+                accept="image/*"
                 multiple
               >
                 <van-icon name="photograph" />
