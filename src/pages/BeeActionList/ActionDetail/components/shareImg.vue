@@ -27,40 +27,42 @@
             alt=""
             class="bg-img"
           >
-          <div
-            v-if="actionDetails.share_data"
-            class="share-info"
-          >
-            <div class="user-info">
-              <div class="head-img">
-                <img
-                  v-once
-                  :src="actionDetails.share_data.head_img"
-                  alt=""
-                >
-              </div>
-              <div class="right-info">
-                <span>{{ actionDetails.share_data.nickname }}</span>
-                <div class="img-content">
+          <div class="share-info-content">
+            <div
+              v-if="actionDetails.share_data"
+              class="share-info"
+            >
+              <div class="user-info">
+                <div class="head-img">
                   <img
-                    :src="beeIcon.pic_text"
+                    v-once
+                    :src="actionDetails.share_data.head_img"
                     alt=""
                   >
                 </div>
+                <div class="right-info">
+                  <span>{{ actionDetails.share_data.nickname }}</span>
+                  <div class="img-content">
+                    <img
+                      :src="beeIcon.pic_text"
+                      alt=""
+                    >
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="user-code">
-              <div class="img-content">
-                <img
-                  :src="beeIcon.pic_finger"
-                  alt=""
-                >
-              </div>
-              <div class="img-content2">
-                <img
-                  :src="'data:image/jpeg;base64,'+actionDetails.share_data.qr_cord"
-                  alt=""
-                >
+              <div class="user-code">
+                <div class="img-content">
+                  <img
+                    :src="beeIcon.pic_finger"
+                    alt=""
+                  >
+                </div>
+                <div class="img-content2">
+                  <img
+                    :src="'data:image/jpeg;base64,'+actionDetails.share_data.qr_cord"
+                    alt=""
+                  >
+                </div>
               </div>
             </div>
           </div>
@@ -147,7 +149,7 @@ export default {
     closed() {
       this.$emit('update:helpSuccess', false)
     },
-    drawImg() {
+    async drawImg() {
       // this.getBase64(this.actionDetails.share_image)
       const imgList = document.querySelectorAll('.share-content img')
       for (let index = 0; index < imgList.length; index++) {
@@ -159,7 +161,7 @@ export default {
         useCORS: true
       }).then(canvas => {
         console.log(canvas)
-        this.$refs.shareImgPre.setAttribute('src', canvas.toDataURL())
+        // this.$refs.shareImgPre.setAttribute('src', canvas.toDataURL())
         this.share_img = canvas.toDataURL('image/png')
       })
     },
@@ -201,44 +203,47 @@ export default {
         height: 100%;
         overflow: hidden;
         position: relative;
-        .share-info {
+        .share-info-content {
           position: absolute;
           bottom: 0.2rem;
-          left: 0.4rem;
-          height: 1.24rem;
-          width: 4.52rem;
-          background-color: rgba(255, 255, 255, 0.8);
-          border-radius: 0.08rem;
-          display: flex;
-          padding: 0.08rem 0.12rem;
-          justify-content: space-between;
-          box-sizing: border-box;
-          .user-info {
+          width: 100%;
+          .share-info {
+            height: 1.24rem;
+            width: 4.52rem;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 0.08rem;
             display: flex;
-            align-items: center;
-            .head-img {
-              width: 0.64rem;
-              height: 0.64rem;
-              margin-right: 0.06rem;
-            }
-            .right-info {
-              .img-content {
-                width: 1.56rem;
-                height: 0.24rem;
+            padding: 0.08rem 0.12rem;
+            justify-content: space-between;
+            box-sizing: border-box;
+            .user-info {
+              display: flex;
+              align-items: center;
+              .head-img {
+                width: 0.64rem;
+                height: 0.64rem;
+                margin-right: 0.06rem;
+              }
+              .right-info {
+                .img-content {
+                  width: 1.56rem;
+                  height: 0.24rem;
+                }
               }
             }
-          }
-          .user-code {
-            display: flex;
-            align-items: center;
-            .img-content {
-              height: 0.46rem;
-              width: 0.72rem;
-              margin-right: 0.06rem;
-            }
-            .img-content2 {
-              width: 1.08rem;
-              height: 1.08rem;
+            .user-code {
+              display: flex;
+              align-items: center;
+              .img-content {
+                height: 0.46rem;
+                width: 0.72rem;
+                margin-right: 0.06rem;
+              }
+              .img-content2 {
+                width: 1.08rem;
+                height: 1.08rem;
+              }
             }
           }
         }
