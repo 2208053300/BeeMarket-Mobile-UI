@@ -181,7 +181,7 @@ export default {
       .img-content {
         display: grid;
         grid-template-columns: repeat(3, 2rem);
-        grid-template-rows: 2rem;
+        grid-template-rows: 2rem 2rem;
         grid-gap: 0.3rem;
         border-radius: 0.2rem;
         overflow: hidden;
