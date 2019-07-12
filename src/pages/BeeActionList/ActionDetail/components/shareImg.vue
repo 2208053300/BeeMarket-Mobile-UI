@@ -23,7 +23,7 @@
           class="share-content"
         >
           <img
-            :src="bgBase64"
+            :src="actionDetails.share_image"
             alt=""
             class="bg-img"
           >
@@ -148,7 +148,7 @@ export default {
       this.$emit('update:helpSuccess', false)
     },
     drawImg() {
-      this.getBase64(this.actionDetails.share_image)
+      // this.getBase64(this.actionDetails.share_image)
       const imgList = document.querySelectorAll('.share-content img')
       for (let index = 0; index < imgList.length; index++) {
         const element = imgList[index]
