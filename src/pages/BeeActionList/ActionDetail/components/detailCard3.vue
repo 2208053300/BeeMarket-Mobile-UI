@@ -52,7 +52,7 @@
         :style="{ backgroundImage: 'url(' + infoBg + ')' }"
       >
         <div class="tag text-center">
-          公司信息
+          企业简介
         </div>
         <div class="logo text-center">
           <!-- <img :src="actionDetails.company_info.love_company_logo"> -->
