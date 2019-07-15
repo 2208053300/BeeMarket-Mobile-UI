@@ -99,7 +99,7 @@
             <div v-if="commentImgs.length < 6" class="upload-img">
               <van-uploader
                 :after-read="onRead"
-                accept="image/png, image/jpeg"
+                accept="image/*"
                 multiple
               >
                 <van-icon name="photograph" />
@@ -303,15 +303,19 @@ export default {
     },
     // 上传图片
     async onRead(file) {
-      console.log(file)
-      if (Array.isArray(file)) {
-        this.commentImgs.push(...file)
-      } else {
-        this.commentImgs.push(file)
-      }
-      if (this.commentImgs.length >= 6) {
-        this.commentImgs.length = 6
-        this.$toast('评论图片最多上传6个！')
+      try {
+        console.log(file)
+        if (Array.isArray(file)) {
+          this.commentImgs.push(...file)
+        } else {
+          this.commentImgs.push(file)
+        }
+        if (this.commentImgs.length >= 6) {
+          this.commentImgs.length = 6
+          this.$toast('评论图片最多上传6个！')
+        }
+      } catch (error) {
+        this.$toast('加载图片失败！')
       }
     },
     delImg(index) {
