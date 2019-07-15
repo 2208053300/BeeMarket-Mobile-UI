@@ -11,7 +11,6 @@ const router = new Router({
   routes: [
     {
       path: '',
-      name: 'beeRegister',
       component: () => import('@/pages/BeeRegister'),
       children: [
         {
