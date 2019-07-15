@@ -100,8 +100,8 @@
       >
         <div
           v-if="userInfo.bee_class"
-          class="cherity-img"
-          :style="[{backgroundImage:'url('+userInfo.bee_class.image_url+')'},{backgroundSize:'contain'}]"
+          class="cherity-img beeClassroom"
+          :style="{backgroundImage:'url('+userInfo.bee_class.image_url+')'}"
           @click="$router.push('/beeClassroom')"
         />
       </van-row>
@@ -330,6 +330,9 @@ export default {
       height: 100%;
       width: 100%;
       background-size: cover;
+    }
+    .beeClassroom{
+      background-position: center;
     }
     .van-row {
       margin: 0.1rem 0;

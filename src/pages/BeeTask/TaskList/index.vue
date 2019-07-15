@@ -105,6 +105,14 @@
           </div>
         </div>
         <div
+          v-if="showAll"
+          class="show-all"
+          @click="showAll=false"
+        >
+          收起更多任务
+          <van-icon name="arrow-up" />
+        </div>
+        <div
           v-if="!showAll"
           class="show-all"
           @click="showAll=true"
