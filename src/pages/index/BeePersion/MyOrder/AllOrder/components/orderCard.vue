@@ -364,6 +364,7 @@ export default {
               line-clamp: 2;
               -webkit-box-orient: vertical;
               margin-right: 0.5rem;
+              flex: 1;
             }
           }
           .sku-num {

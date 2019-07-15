@@ -61,7 +61,10 @@
           <div class="status-text1">
             {{ item.context }}
           </div>
-          <div class="status-time">
+          <div
+            v-if="item.time"
+            class="status-time"
+          >
             {{ item.time }}
           </div>
         </div>
@@ -171,9 +174,11 @@ export default {
       align-items: center;
       position: relative;
       &:first-child {
-      color: @BeeDefault;
-      .bee-cir{background-color: @BeeDefault;}
-    }
+        color: @BeeDefault;
+        .bee-cir {
+          background-color: @BeeDefault;
+        }
+      }
       &:not(:last-child) {
         margin-bottom: 0.3rem;
       }
@@ -208,8 +213,8 @@ export default {
         top: 70%;
       }
     }
-    .noBottom{
-      .status-text{
+    .noBottom {
+      .status-text {
         border-bottom: none;
       }
     }
