@@ -159,8 +159,6 @@ export default {
       html2canvas(this.$refs.shareImg, {
         allowTaint: true,
         useCORS: true,
-        width: window.screen.availWidth,
-        height: window.screen.availHeight,
         windowHeight: document.body.scrollHeight,
         widowWidth: document.body.scrollWidth,
         x: 0,
