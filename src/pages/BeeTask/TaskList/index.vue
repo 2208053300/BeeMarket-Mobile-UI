@@ -404,7 +404,7 @@ export default {
   .task1-content {
     .task-body {
       .task-list {
-        margin-top: 1rem;
+        margin: 1rem 0;
         .task-detail {
           height: 2.3rem;
           width: 100%;
@@ -502,10 +502,17 @@ export default {
         }
       }
       .show-all {
+        position: absolute;
+        width: 100%;
+        height: 0.7rem;
+        line-height: 0.7rem;
+        background-color: @BeeDefault;
+        border-radius: 0 0 0.16rem 0.16rem;
+        bottom: -0.02rem;
+        left: 0;
         font-size: 0.28rem;
-        color: @BeeDefault;
+        color: #fff;
         text-align: center;
-        margin-top: 0.24rem;
         .van-icon {
           vertical-align: middle;
         }
