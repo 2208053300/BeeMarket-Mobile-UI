@@ -57,6 +57,7 @@ export default {
       this.$emit('update:showGift', false)
     },
     goFarmRule() {
+      this.$emit('update:showGift', false)
       if (this.osObj.isWx) {
         this.$router.push({
           path: '/beeGiftPackage',
@@ -65,7 +66,9 @@ export default {
           }
         })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.ToProducePackage.postMessage({ alertRule: true })
+        window.webkit.messageHandlers.ToProducePackage.postMessage({
+          alertRule: true
+        })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToPackage(true)
       } else {
