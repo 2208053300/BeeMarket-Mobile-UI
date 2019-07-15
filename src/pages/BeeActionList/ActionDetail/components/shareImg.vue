@@ -159,10 +159,8 @@ export default {
       html2canvas(this.$refs.shareImg, {
         allowTaint: true,
         useCORS: true,
-        windowHeight: document.body.scrollHeight,
-        widowWidth: document.body.scrollWidth,
         x: 0,
-        y: window.pageYOffset
+        y: this.$refs.shareImg.offsetTop
       }).then(canvas => {
         this.$refs.shareImgPre.setAttribute('src', canvas.toDataURL())
         this.share_img = canvas.toDataURL('image/png')
