@@ -123,10 +123,9 @@ export default {
       margin-top: 0.2rem;
       background-color: #fff;
       box-shadow: 0 0 0.2rem @Grey6;
-      padding: 0.4rem;
+      padding: 0.4rem 0.4rem 1rem;
       border-radius: 0.08rem;
       position: relative;
-      height:5.68rem;
       .img-content {
         margin: auto;
       }
