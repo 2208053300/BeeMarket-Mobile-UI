@@ -15,7 +15,7 @@
             <div>1</div>
           </div>
           <div class="text">
-            蜂集市注册用户可任意自由组合商品。
+            选购完成助农礼包，可立即升成2星合伙人。
           </div>
         </div>
 
@@ -25,7 +25,7 @@
             <div>2</div>
           </div>
           <div class="text">
-            礼包中商品金额达到 ¥599（包含）时，即可生成礼包。
+            农礼包生成标准为￥599以上，以实际订单金额为准。
           </div>
         </div>
 
@@ -35,7 +35,7 @@
             <div>3</div>
           </div>
           <div class="text">
-            礼包最终结算价按照实际选购商品金额为准。
+            分享蜂友选购农礼，可立得“助农补贴”，由各贫困县乡及供应单位发放，由第三方律师事务所监管支付，随时提现上不封顶。
           </div>
         </div>
 
@@ -45,7 +45,17 @@
             <div>4</div>
           </div>
           <div class="text">
-            为保证商品质量，订单会被拆分成多个包裹在48小时内从该商品原产地寄出。
+            “助农补贴”发放标准为：69/100/120（直接蜂友）+20/50/60（间接蜂友），分别对应1星/2星/3星合伙人身份。
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <div class="number">
+            <img :src="beeIcon.number">
+            <div>5</div>
+          </div>
+          <div class="text">
+            因农副产品生鲜易腐且来自不同贫困县乡，选购后将以多个包裹发出，请注意查收，同时为保产品质量助农礼包不支持无理由退换。
           </div>
         </div>
         <div class="btn" @click="handleClose">
@@ -91,11 +101,13 @@ export default {
   }
   border-top-right-radius: 0.24rem;
   border-top-left-radius: 0.24rem;
-  min-height: 50vh;
   background: url('../../../../assets/icon/giftPackage/farm_rule_bg@2x.png') top;
   background-size: cover;
   .rule-container {
-    padding: 1.32rem 0.88rem 0.48rem 0.8rem;
+    margin-top: 1.32rem;
+    height: 6rem;
+    overflow: scroll;
+    padding: 0 0.88rem 0.48rem 0.8rem;
     .rule-item {
       margin-top: 0.28rem;
       display: flex;
