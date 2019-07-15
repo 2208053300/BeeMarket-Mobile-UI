@@ -82,6 +82,7 @@ export default {
       width: 6.06rem;
       background-size: contain;
       position: relative;
+      background-repeat: no-repeat;
       .action-button {
         position: absolute;
         bottom: 0.6rem;

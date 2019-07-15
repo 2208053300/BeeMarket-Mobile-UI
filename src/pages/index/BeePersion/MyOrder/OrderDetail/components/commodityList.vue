@@ -13,7 +13,10 @@
           :key="index"
           class="commodity-content2"
         >
-          <div class="commodity-details">
+          <div
+            class="commodity-details"
+            @click="$router.push({path:'/category/details',query: { pid: product.pid, target: product.target }})"
+          >
             <div class="commodity-img">
               <img
                 :src="product.tUrl"
@@ -147,7 +150,10 @@ export default {
             line-height: 0.6rem;
             border-radius: 0.1rem;
             border-color: @Grey2;
-            &.applying{ opacity: 0.5; pointer-events: none;}
+            &.applying {
+              opacity: 0.5;
+              pointer-events: none;
+            }
           }
         }
         .commodity-details {
