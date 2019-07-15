@@ -14,7 +14,7 @@
         <div class="action-button">
           <div
             class="btn1"
-            @click="handleClose"
+            @click="goFarmRule"
           />
           <div
             class="btn1 btn2"
@@ -55,6 +55,27 @@ export default {
   methods: {
     handleClose() {
       this.$emit('update:showGift', false)
+    },
+    goFarmRule() {
+      if (this.osObj.isWx) {
+        this.$router.push({
+          path: '/beeGiftPackage',
+          query: {
+            showRule: 1
+          }
+        })
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToProducePackage.postMessage({ alertRule: true })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToPackage(true)
+      } else {
+        this.$router.push({
+          path: '/beeGiftPackage',
+          query: {
+            showRule: 1
+          }
+        })
+      }
     },
     goFarm() {
       this.$emit('update:showGift', false)
