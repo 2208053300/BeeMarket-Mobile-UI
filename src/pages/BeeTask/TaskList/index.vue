@@ -4,9 +4,9 @@
     :style="{backgroundImage:'url('+beeIcon.task_bg_bee+')'}"
   >
     <div class="task-header">
-      <div class="header-title">
+      <!-- <div class="header-title">
         新手专享
-      </div>
+      </div> -->
       <div class="head-img">
         <img
           :src="taskData.basic_info.head_img||$store.state.app.head_detault"
@@ -16,7 +16,7 @@
       <div class="header-text1">
         <!-- @click="$router.push('/persion/BeeCommonweal')" -->
         <!-- 我的公益值：<span class="num">{{ taskData.basic_info.mine_charity_num }}</span> > -->
-        三重好礼 等你领取
+        三重豪礼 等您领取
       </div>
       <!-- <div class="header-text2">
         已通过完成任务获得 <span class="num">{{ taskData.basic_info.task_charity_num }}</span> 公益值
@@ -103,6 +103,14 @@
               <span>已完成</span>
             </div>
           </div>
+        </div>
+        <div
+          v-if="showAll"
+          class="show-all"
+          @click="showAll=false"
+        >
+          收起更多任务
+          <van-icon name="arrow-up" />
         </div>
         <div
           v-if="!showAll"
@@ -302,6 +310,7 @@ export default {
   background-repeat: no-repeat;
   .task-header {
     text-align: center;
+    padding-top: 0.4rem;
     .header-title {
       font-size: 0.36rem;
       color: #ffffff;
@@ -403,7 +412,7 @@ export default {
   .task1-content {
     .task-body {
       .task-list {
-        margin-top: 1rem;
+        margin: 1rem 0;
         .task-detail {
           height: 2.3rem;
           width: 100%;
@@ -501,10 +510,17 @@ export default {
         }
       }
       .show-all {
+        position: absolute;
+        width: 100%;
+        height: 0.7rem;
+        line-height: 0.7rem;
+        background-color: @BeeDefault;
+        border-radius: 0 0 0.16rem 0.16rem;
+        bottom: -0.02rem;
+        left: 0;
         font-size: 0.28rem;
-        color: @BeeDefault;
+        color: #fff;
         text-align: center;
-        margin-top: 0.24rem;
         .van-icon {
           vertical-align: middle;
         }

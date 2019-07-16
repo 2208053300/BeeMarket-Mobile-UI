@@ -203,7 +203,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(async vm => {
-      if (from.fullPath.indexOf('beeFriends') === -1) {
+      if (['myEarn', 'rule'].indexOf(from.name) === -1) {
         vm.$store.state.user.showFarmPop = true
       } else {
         vm.$store.state.user.showFarmPop = false

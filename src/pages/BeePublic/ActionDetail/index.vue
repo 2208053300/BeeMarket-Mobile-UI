@@ -1,6 +1,6 @@
 <template>
   <div class="action-detail">
-    <van-notice-bar
+    <!-- <van-notice-bar
       :left-icon="beeIcon.confirmorder_send_icon_presentation"
       background="#E2E2E2"
       color="#666666"
@@ -9,7 +9,7 @@
       <div class="notice-text">
         您已成功助力该公益行动，进入活动中心领取更多好礼！
       </div>
-    </van-notice-bar>
+    </van-notice-bar> -->
     <div class="detail-content">
       <header-card :action-data="actionData" />
       <title-card :action-data="actionData" />
@@ -123,10 +123,9 @@ export default {
       margin-top: 0.2rem;
       background-color: #fff;
       box-shadow: 0 0 0.2rem @Grey6;
-      padding: 0.4rem;
+      padding: 0.4rem 0.4rem 1rem;
       border-radius: 0.08rem;
       position: relative;
-      height:5.68rem;
       .img-content {
         margin: auto;
       }

@@ -9,7 +9,7 @@
       @close="closed"
       @click-overlay="closed"
     >
-      <div class="text-right">
+      <div class="text-right tipImg">
         <img
           :src="beeIcon.shareTip"
           class="shareTip"
@@ -158,7 +158,9 @@ export default {
       }
       html2canvas(this.$refs.shareImg, {
         allowTaint: true,
-        useCORS: true
+        useCORS: true,
+        scrollX: 0,
+        scrollY: 0
       }).then(canvas => {
         this.$refs.shareImgPre.setAttribute('src', canvas.toDataURL())
         this.share_img = canvas.toDataURL('image/png')
@@ -172,6 +174,12 @@ export default {
 .share-container {
   .share-modal {
     background: rgba(0, 0, 0, 0);
+    .tipImg {
+      .shareTip {
+        width: 3.3rem;
+        height: 2.28rem;
+      }
+    }
     .text-tip {
       color: #ffffff;
       font-size: 0.28rem;
@@ -188,6 +196,10 @@ export default {
       .share-content {
         height: 100%;
         position: relative;
+        .bg-img {
+          width: 5.02rem;
+          height: 6.6rem;
+        }
         .share-info-content {
           position: absolute;
           bottom: 0.2rem;
@@ -261,10 +273,6 @@ export default {
         }
       }
     }
-  }
-  .shareTip {
-    width: 3.3rem;
-    height: 2.28rem;
   }
 }
 </style>

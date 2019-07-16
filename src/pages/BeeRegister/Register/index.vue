@@ -1,10 +1,7 @@
 <template>
   <div class="RgsCtn bg-white">
     <div class="RegistrtFirst">
-      <img
-        src="../../../assets/icon/register/registerTitle1.jpg"
-        alt=""
-      >
+      <img src="../../../assets/icon/register/registerTitle1.jpg" alt="">
 
       <div class="video">
         <video
@@ -20,11 +17,7 @@
         />
         <!-- <div v-if="!video.showControls" style="position: relative"> -->
 
-        <div
-          v-if="!video.showControls"
-          class="control"
-          @click="play"
-        >
+        <div v-if="!video.showControls" class="control" @click="play">
           <img
             :src="video.title_icon_stop"
             style="width: 1.28rem;height: 1.28rem"
@@ -34,16 +27,29 @@
 
       <div class="RNext">
         <img :src="img.img1">
-        <img :src="img.img2">
+        <div class="down-box">
+          <img :src="img.img2">
+          <div class="download-link bg-white">
+            <a
+              href="https://itunes.apple.com/cn/app/%E8%9C%82%E9%9B%86%E5%B8%82/id1382648901?l=zh&ls=1&mt=8"
+            >
+              <img
+                src="../../../assets/icon/register/download/ipone_img.png"
+                alt=""
+              ><span>iPhone 下载</span>
+            </a>
+            <a
+              id="android"
+              href="https://a.app.qq.com/o/simple.jsp?pkgname=com.bee.beemark"
+            ><img
+              src="../../../assets/icon/register/download/android_img.png"
+              alt=""
+            ><span>Android 下载</span></a>
+          </div>
+        </div>
       </div>
-      <div class="download-link bg-white">
-        <a href="https://itunes.apple.com/cn/app/%E8%9C%82%E9%9B%86%E5%B8%82/id1382648901?l=zh&ls=1&mt=8">
-          <img src="../../../assets/icon/register/download/ipone_img.png" alt=""><span>iPhone 下载</span>
-        </a>
-        <a id="android" href="https://a.app.qq.com/o/simple.jsp?pkgname=com.bee.beemark"><img src="../../../assets/icon/register/download/android_img.png" alt=""><span>Android 下载</span></a>
-        <!--<a id="android"><img src="/static/src/Img/android_img.png" alt="" /><span>Android 下载</span></a>-->
-      </div>
-      <img :src="img.img3">
+
+      <!-- <img :src="img.img3"> -->
     </div>
   </div>
 </template>
@@ -68,9 +74,8 @@ export default {
         showControls: false
       },
       img: {
-        img1: require('@/assets/icon/register/1@2x.png'),
-        img2: require('@/assets/icon/register/2-1@2x.png'),
-        img3: require('@/assets/icon/register/3@2x.png')
+        img1: require('@/assets/icon/register/1@2x.jpg'),
+        img2: require('@/assets/icon/register/2-1@2x.png')
       }
     }
   },
@@ -112,7 +117,6 @@ export default {
       this.$refs.video.play()
       this.video.showControls = true
     }
-
   }
 }
 </script>
@@ -159,11 +163,37 @@ export default {
   display: block;
   width: 100%;
 }
-   .download-link{ display: flex; justify-content: space-between; margin: 0.5rem auto ;padding: 0 0.5rem;
-        a{display: flex; border: 0.04rem solid #f5bf52; color: #f5bf52; font-size: 0.28rem; justify-content: space-around;align-items: center;
-            border-radius: 0.3rem; width: 2.68rem; padding: 0.1rem;
-            &:nth-of-type(1) img{width:0.41rem ; }
-            &:nth-of-type(2) img{width:0.38rem ; }
-        }
+.down-box {
+  position: relative;
+  margin-bottom: 0.5rem;
+  .download-link {
+    position: absolute;
+    bottom:1.55rem;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem auto;
+    padding: 0 0.7rem;
+    width: 100%;
+    box-sizing: border-box;
+    opacity: 0;
+    a {
+      display: flex;
+      border: 0.04rem solid #f5bf52;
+      color: #f5bf52;
+      font-size: 0.28rem;
+      justify-content: space-around;
+      align-items: center;
+      border-radius: 0.3rem;
+      width: 2.68rem;
+      padding: 0.1rem;
+      &:nth-of-type(1) img {
+        width: 0.41rem;
+      }
+      &:nth-of-type(2) img {
+        width: 0.38rem;
+      }
     }
+  }
+}
 </style>

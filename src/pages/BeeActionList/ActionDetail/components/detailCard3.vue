@@ -52,7 +52,7 @@
         :style="{ backgroundImage: 'url(' + infoBg + ')' }"
       >
         <div class="tag text-center">
-          公司信息
+          企业简介
         </div>
         <div class="logo text-center">
           <!-- <img :src="actionDetails.company_info.love_company_logo"> -->
@@ -165,7 +165,7 @@ export default {
       width: 1.56rem;
       height: 0.48rem;
       line-height: 0.48rem;
-      font-size: 0.28rem;
+      font-size: 0.32rem;
       color: #fff;
       background: @BeeDefault;
       border-top-right-radius: 0.5rem;

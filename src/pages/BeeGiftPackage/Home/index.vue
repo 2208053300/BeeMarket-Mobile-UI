@@ -90,6 +90,10 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.getList()
     this.$store.dispatch('GET_GIFT_PACKAGE_INFO')
+
+    if (+this.$route.query.showRule === 1) {
+      this.onRule()
+    }
   },
   methods: {
     onRule() {

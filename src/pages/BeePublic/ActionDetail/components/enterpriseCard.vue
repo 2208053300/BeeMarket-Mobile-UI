@@ -12,7 +12,7 @@
         :style="{backgroundImage:'url('+beeIcon.confirmorder_popups_pic_shading+')'}"
       >
         <div class="info-card">
-          公司信息
+          企业信息
         </div>
         <div class="enterprise-logo">
           <!-- <img
@@ -76,6 +76,7 @@ export default {
       position: relative;
       box-sizing: border-box;
       .info-card {
+        font-size: 0.32rem;
         width: 1.56rem;
         height: 0.48rem;
         border-radius: 0 0.3rem 0.3rem 0;

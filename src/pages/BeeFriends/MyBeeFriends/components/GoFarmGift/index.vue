@@ -14,7 +14,7 @@
         <div class="action-button">
           <div
             class="btn1"
-            @click="handleClose"
+            @click="goFarmRule"
           />
           <div
             class="btn1 btn2"
@@ -56,14 +56,38 @@ export default {
     handleClose() {
       this.$emit('update:showGift', false)
     },
+    goFarmRule() {
+      this.$emit('update:showGift', false)
+      if (this.osObj.isWx) {
+        this.$router.push({
+          path: '/beeGiftPackage',
+          query: {
+            showRule: 1
+          }
+        })
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToProducePackage.postMessage({
+          alertRule: true
+        })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToPackage(true)
+      } else {
+        this.$router.push({
+          path: '/beeGiftPackage',
+          query: {
+            showRule: 1
+          }
+        })
+      }
+    },
     goFarm() {
       this.$emit('update:showGift', false)
       if (this.osObj.isWx) {
         this.$router.push('/beeGiftPackage')
       } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.ToProducePackage.postMessage('')
+        window.webkit.messageHandlers.ToProducePackage.postMessage({ alertRule: false })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
-        window.beeMarket.ToPackage()
+        window.beeMarket.ToPackage(false)
       } else {
         this.$router.push('/beeGiftPackage')
       }
@@ -82,6 +106,7 @@ export default {
       width: 6.06rem;
       background-size: contain;
       position: relative;
+      background-repeat: no-repeat;
       .action-button {
         position: absolute;
         bottom: 0.6rem;
