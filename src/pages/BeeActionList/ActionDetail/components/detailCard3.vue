@@ -60,9 +60,8 @@
             {{ actionDetails.company_info.company_name }}
           </span>
         </div>
-        <div class="info">
-          {{ actionDetails.company_info.company_desc }}
-        </div>
+        <!-- eslint-disable-next-line -->
+        <div class="info" v-html="changeText(actionDetails.company_info.company_desc)" />
       </div>
       <!-- 关闭图片 -->
       <img
@@ -103,7 +102,14 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    changeText(val) {
+      const c = /[ ]/g
+      val = val.replace(c, '&nbsp;')
+      const n = /[\r\n]/g
+      return val.replace(n, '<br/>')
+    }
+  }
 }
 </script>
 
@@ -188,6 +194,7 @@ export default {
       box-sizing: border-box;
       font-size: 0.28rem;
       color: #fff;
+        text-indent: 2em;
     }
   }
   .close-img {
