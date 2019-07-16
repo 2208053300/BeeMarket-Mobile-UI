@@ -104,6 +104,8 @@ export default {
         background-color: @BeeDefault;
         box-sizing: border-box;
         padding: 0.52rem;
+        text-indent: 2em;
+        overflow-y: scroll;
       }
     }
   }
