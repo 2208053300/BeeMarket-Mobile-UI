@@ -111,6 +111,7 @@ export default {
         padding: 0.52rem;
         text-indent: 2em;
         overflow-y: scroll;
+        color: #fff;
       }
     }
   }
