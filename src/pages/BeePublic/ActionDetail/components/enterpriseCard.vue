@@ -23,9 +23,8 @@
             {{ companyInfo.company_name }}
           </span>
         </div>
-        <div class="desc-content">
-          {{ companyInfo.company_desc }}
-        </div>
+        <!-- eslint-disable-next-line -->
+        <div class="desc-content" v-html="changeText(companyInfo.company_desc)"/>
       </div>
     </van-popup>
   </div>
@@ -58,6 +57,12 @@ export default {
   methods: {
     handleClose() {
       this.$emit('update:showDetail', false)
+    },
+    changeText(val) {
+      const c = /[ ]/g
+      val = val.replace(c, '&nbsp;')
+      const n = /[\r\n]/g
+      return val.replace(n, '<br/>')
     }
   }
 }
