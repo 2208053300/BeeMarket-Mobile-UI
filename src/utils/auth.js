@@ -19,18 +19,6 @@ export async function getToken() {
     if (!uriProp && (token === null || token === undefined)) {
       await checkToken()
     }
-    // 如果TOKEN超过三天
-    // const timestamp = Math.round(new Date().getTime() / 1000)
-    // const timestamp2 = localStorage.getItem('BM-Token-Time') || 0
-    // if (timestamp > timestamp2 && uriProp && timestamp2) {
-    //   Cookies.set('BM-App-Token', 'waiting')
-    //   await auditWechat({ code: uriProp, uid: uid })
-    //   // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
-    //   if (localStorage.getItem('BM-App-Token') === 'waiting') {
-    //     console.log('微信授权失败，code')
-    //     await checkToken()
-    //   }
-    // }
     // 正常流程，直接返回token
     if (token && token !== 'waiting') {
       return token
@@ -45,8 +33,6 @@ export async function getToken() {
       }
     }
   }
-  console.log(Cookies.get('BM-App-Token'))
-
   return Cookies.get('BM-App-Token')
 }
 // REVIEW 此处判断用户登录情况
@@ -89,6 +75,7 @@ export function checkToken() {
 }
 // 设置Token
 export function setToken(Token) {
+  // 如果TOKEN超过三天
   return Cookies.set('BM-App-Token', Token, { expires: 3 })
 }
 // 清除登录信息
