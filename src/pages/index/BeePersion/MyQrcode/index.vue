@@ -54,13 +54,13 @@ export default {
   methods: {
     async getQrcodeData() {
       const res = await getQrcode()
-      this.qrcode = 'data:image/jpeg;base64,' + res.data
+      this.qrcode = 'data:image/jpeg;base64,' + res.data.qr_code
 
       wxapi.wxShare({
-        title: '蜂集市', // 分享标题, 请自行替换
-        desc: '蜂集市，让生活蜂富起来！', // 分享描述, 请自行替换
-        link: 'https://app.fengjishi.com/#/persion/myQrcode', // 分享链接，根据自身项目决定是否需要split
-        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg' // 分享图标, 请自行替换，需要绝对路径
+        title: res.data.title, // 分享标题, 请自行替换
+        desc: res.data.desc, // 分享描述, 请自行替换
+        link: res.data.link, // 分享链接，根据自身项目决定是否需要split
+        imgUrl: res.data.img // 分享图标, 请自行替换，需要绝对路径
       })
     }
   }
