@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-popup v-model="showGift" class="gift-box">
+    <van-popup v-model="showGift" class="gift-box" @close="closeShowGift">
       <div class="bg-white">
         <p class="title text-center">
           蜂集市送礼新方式
@@ -18,9 +18,9 @@
             </div>
             <div class="action">
               <p class="product-price">
-                <span class="sell-price"><span style="font-size:.35rem;">￥</span>{{ product.section_price }}</span>
+                <span class="sell-price"><span style="font-size:.35rem;">￥</span>{{ product.line_price }}</span>
               </p>
-              <span class="num">满5人参与，立即开奖</span>
+              <span class="num">满{{ product.lottery_num }}人参与，立即开奖</span>
             </div>
           </div>
         </div>
@@ -31,13 +31,13 @@
           <p class="tip1">
             传达心意，送句祝福
           </p>
-          <input type="text" placeholder="我从蜂集市上选了一件礼物送大家!">
+          <input v-model.trim="remark" type="text" placeholder="我从蜂集市上选了一件礼物送大家!">
         </div>
       </div>
-      <van-button class="share-btn" size="large" @click="appShare">
+      <van-button class="share-btn" size="large" @click="getShareData">
         邀请好友抢礼物
       </van-button>
-      <img :src="icon.closeImg" class="close-img" @click="showGift = false">
+      <img :src="icon.closeImg" class="close-img" @click="closeShowGift">
     </van-popup>
 
     <!-- 微信分享提示遮罩 -->
@@ -51,6 +51,7 @@
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 import { getUID } from '@/api/BeeApi/user'
+import { getShareData } from '@/api/BeeApi/freeGift'
 export default {
   components: {
 
@@ -83,7 +84,11 @@ export default {
         desc: '',
         img_path: '',
         url: ''
-      }
+      },
+
+      // 传达心意，送句祝福
+      remark: '',
+      nowShowGift: false
     }
   },
   computed: {
@@ -100,10 +105,25 @@ export default {
     window.appShare = this.appShare
   },
   methods: {
+    // 关闭弹窗
+    closeShowGift() {
+      this.$parent.showGift = false
+    },
+    // 点击邀请好友抢礼物
+    async getShareData() {
+      try {
+        const res = await getShareData()
+        if (res.status_code === 200) {
+          this.appShare()
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
     // NOTE 邀请好友抢礼物 调用app、微信分享
     appShare() {
       this.$parent.showGift = false
-      console.log(45645456456)
+      this.$parent.showSku = false
       if (this.osObj.isWx) {
         this.loadUID()
         this.showWxTip = true

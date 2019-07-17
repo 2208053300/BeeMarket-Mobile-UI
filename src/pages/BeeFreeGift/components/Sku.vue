@@ -91,6 +91,8 @@
 
 <script>
 import { getProductSku } from '@/api/BeeApi/product'
+
+import { postSku } from '@/api/BeeApi/freeGift'
 export default {
   components: {},
   props: {
@@ -127,7 +129,8 @@ export default {
       beeIcon: {
         shopping_cart_icon_cancel: require('@/assets/icon/cart/shopping_cart_icon_cancel@2x.png')
       },
-      showPreview: false
+      showPreview: false,
+      sid: 0
     }
   },
   computed: {},
@@ -146,6 +149,9 @@ export default {
           })
         )
         this.propsData = res.data
+        // sku_id
+        this.sid = res.data.sku_id
+
         this.skuName = []
         this.getSkuName(this.propsData.props)
       } else {
@@ -155,6 +161,8 @@ export default {
           })
         )
         this.propsData = res.data
+        // sku_id
+        this.sid = res.data.sku_id
       }
       // sku数量
       this.productNum = this.pNumber ? this.pNumber : 1
@@ -202,20 +210,28 @@ export default {
       // this.$emit('update:showSku', false)
       this.$parent.showSku = false
     },
-    handleDone() {
-      console.log('确定')
-      this.$emit('update:showSku', false)
+    async handleDone() {
+      console.log('免费送礼')
+      try {
+        const res = await postSku({ sid: this.sid })
+        if (res.status_code === 200) {
+          // this.$emit('update:showSku', false)
+          // this.$emit('update:showGift', true)
+          this.$parent.showSku = false
+          this.$parent.showGift = true
+          // this.$parent.nowProduct = res.data
 
-      this.$parent.showSku = false
-      this.$parent.showGift = true
-
-      this.$emit('update:propsId', this.selProps)
-      this.$emit('update:pNumber', this.productNum)
-      // FIXME 此处注意方法顺序
-      this.$emit('get-sku-name', this.skuName)
-      this.$emit('get-sku-id', this.propsData.sku_id)
-      this.$emit('sku-done') // SKU选择完成
-      // return this.propsData.sku_id
+          // this.$emit('update:propsId', this.selProps)
+          // this.$emit('update:pNumber', this.productNum)
+          // FIXME 此处注意方法顺序
+          // this.$emit('get-sku-name', this.skuName)
+          // this.$emit('get-sku-id', this.propsData.sku_id)
+          // this.$emit('sku-done') // SKU选择完成
+          // return this.propsData.sku_id
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

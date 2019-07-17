@@ -1,6 +1,7 @@
 <template>
   <div class="free-gift-index">
-    <div class="head-msg">
+    <!-- 暂时不要顶部滚动消息 -->
+    <div v-if="false" class="head-msg">
       <van-swipe :autoplay="3000" :show-indicators="showIndicators" vertical class="swiper">
         <van-swipe-item class="no-wrap">
           {{ head_msg }}
@@ -23,31 +24,33 @@
         </van-button>
       </div>
     </div>
+    <!-- 商品列表 -->
     <div class="product-list">
       <van-list
         v-model="loading"
         :finished="finished"
+        :immediate-check="false"
         finished-text="我也是有底线的 o(´^｀)o"
         @load="getIndexData"
       >
         <div v-for="(product, index) in products" :key="index" class="product flex flex-between">
-          <img :src="product.tUrl" class="product-img" @click="showDetail()">
+          <img :src="product.tUrl" class="product-img" @click="showDetail(product.pid,product.target)">
           <div class="product-info flex flex-column flex-between">
             <div>
               <p class="product-name no-wrap" @click="showDetail()">
                 {{ product.pname }}
               </p>
               <p class="product-desc no-wrap">
-                {{ product.intro }}
+                {{ product.product_desc }}
               </p>
               <p class="product-price">
-                <span class="sell-price">￥{{ product.section_price }}</span>
+                <span class="sell-price">￥{{ product.sell_price }}</span>
                 <span class="line-price">￥{{ product.line_price }}</span>
               </p>
             </div>
             <div class="action flex flex-between align-center">
-              <span class="num">满{{ product.men }}个人开奖</span>
-              <van-button round size="mini" @click="showSkuPopup(index)">
+              <span class="num">满{{ product.lottery_num }}个人开奖</span>
+              <van-button round size="mini" @click="showSkuPopup(index,product.pid)">
                 立即送礼
               </van-button>
             </div>
@@ -100,7 +103,7 @@ export default {
 
       // 显示sku
       showSku: false,
-      pid: 24746,
+      pid: 0,
       propsId: [],
       pNumber: 0,
       limitNum: 0,
@@ -109,14 +112,6 @@ export default {
       loading: false,
       finished: false,
       products: [
-        {
-          tUrl: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
-          pname: '这是商品的名称',
-          intro: '这是商品描述',
-          section_price: 20,
-          line_price: 50,
-          men: 15
-        }
       ],
       page: 1,
       pageSize: 10
@@ -134,33 +129,32 @@ export default {
   methods: {
     // 获取商品数据
     async getIndexData() {
-      const res = await getIndexData()
+      const res = await getIndexData({ page: this.page, pageSize: this.pageSize })
       console.log('首页res：', res)
-
       this.page++
       this.loading = false
-      this.head_msg = res.data.head_msg
-      this.products.push(...res.data.products)
-      if (res.data.products.length < this.pageSize) {
+      // this.head_msg = res.data.head_msg
+      this.products.push(...res.data)
+      if (res.data.length < this.pageSize) {
         this.finished = true
       }
     },
 
     // NOTE 点击立即送礼,选择sku,sku 确定获取分享数据
-    showSkuPopup(index) {
-      console.log(index, 456456456)
+    showSkuPopup(index, pid) {
+      this.pid = pid
       this.showSku = true
       this.nowProduct = this.products[index]
       // this.showGift = true
       console.log('立即送礼')
     },
     // 商品详情
-    showDetail() {
+    showDetail(pid, target) {
       this.$router.push({
         path: '/detail',
         query: {
-          pid: 16934,
-          target: 'general'
+          pid,
+          target
         }
       })
     }
