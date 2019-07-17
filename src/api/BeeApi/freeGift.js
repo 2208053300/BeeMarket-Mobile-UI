@@ -13,7 +13,23 @@ const baseUrl = 'http://localhost:7310/mock/5d24313e04717440c4e50ad9'
 // NOTE 获取免费送礼首页数据
 export function getIndexData(data) {
   return request({
-    url: baseUrl + '/home',
+    url: '/present/list',
+    method: 'post',
+    data
+  })
+}
+// NOTE 选择sku后点击免费送礼
+export function postSku(data) {
+  return request({
+    url: '/present/giveData ',
+    method: 'post',
+    data
+  })
+}
+// NOTE 获取分享数据
+export function getShareData(data) {
+  return request({
+    url: '/present/giveData',
     method: 'post',
     data
   })
