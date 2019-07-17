@@ -16,7 +16,7 @@ export async function getToken() {
     // 如果微信链接带CODE
     const uriProp = GetRequest('code')
     const uid = getQueryString('uid')
-    if (!uriProp && token === null) {
+    if (!uriProp && (token === null || token === undefined)) {
       await checkToken()
     }
     // 如果TOKEN超过三天
@@ -45,6 +45,8 @@ export async function getToken() {
       }
     }
   }
+  console.log(Cookies.get('BM-App-Token'))
+
   return Cookies.get('BM-App-Token')
 }
 // REVIEW 此处判断用户登录情况
