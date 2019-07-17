@@ -19,12 +19,13 @@
         <div
           ref="shareImg"
           class="share-content"
+          :style="{backgroundImage:'url('+actionDetails.share_image+')'}"
         >
-          <img
+          <!-- <img
             :src="actionDetails.share_image"
             alt=""
             class="bg-img"
-          >
+          > -->
           <div class="share-info-content">
             <div
               v-if="actionDetails.share_data"
@@ -151,20 +152,26 @@ export default {
       this.$emit('update:helpSuccess', false)
     },
     async drawImg() {
-      const imgList = document.querySelectorAll('.share-content img')
-      for (let index = 0; index < imgList.length; index++) {
-        const element = imgList[index]
-        element.setAttribute('crossorigin', 'anonymous')
-      }
+      // const imgList = document.querySelectorAll('.share-content img')
+      // for (let index = 0; index < imgList.length; index++) {
+      //   const element = imgList[index]
+      //   element.setAttribute('crossorigin', 'anonymous')
+      // }
       html2canvas(this.$refs.shareImg, {
         allowTaint: true,
         useCORS: true,
         scrollX: 0,
         scrollY: 0
-      }).then(canvas => {
-        this.$refs.shareImgPre.setAttribute('src', canvas.toDataURL())
-        this.share_img = canvas.toDataURL('image/png')
       })
+        .then(canvas => {
+          this.$refs.shareImgPre.setAttribute('src', canvas.toDataURL())
+          this.share_img = canvas.toDataURL('image/png')
+        })
+        .catch(error => {
+          console.log('生成海报失败！' + error)
+
+          this.$toast('生成海报失败！')
+        })
     }
   }
 }
@@ -196,6 +203,10 @@ export default {
       .share-content {
         height: 100%;
         position: relative;
+        width: 5.02rem;
+        height: 6.6rem;
+        background-size: cover;
+        background-repeat: no-repeat;
         .bg-img {
           width: 5.02rem;
           height: 6.6rem;
