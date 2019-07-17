@@ -8,3 +8,11 @@ export function classRoomList(data) {
     data
   })
 }
+// NOTE 课堂详情
+export function classRoomDetail(data) {
+  return request({
+    url: '/fair_class/detail',
+    method: 'post',
+    data
+  })
+}
