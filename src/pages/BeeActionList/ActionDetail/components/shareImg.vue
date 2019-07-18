@@ -22,7 +22,7 @@
         >
           <!-- :style="{backgroundImage:'url('+actionDetails.share_image+')'}" -->
           <img
-            :src="actionDetails.share_image"
+            :src="bgBase64||actionDetails.share_image"
             alt=""
             class="bg-img"
           >
@@ -34,7 +34,7 @@
               <div class="user-info">
                 <div class="head-img">
                   <img
-                    :src="actionDetails.share_data.head_img"
+                    :src="headBase64||actionDetails.share_data.head_img"
                     alt=""
                   >
                 </div>
@@ -82,6 +82,8 @@
 
 <script>
 import html2canvas from 'html2canvas/dist/html2canvas.min.js'
+import Axios from 'axios'
+import { Base64 } from 'js-base64'
 export default {
   components: {},
   props: {
@@ -138,7 +140,9 @@ export default {
         shareTip: require('@/assets/icon/share/guide1.png'),
         pic_text: require('@/assets/icon/discover/pic_text@2x.png'),
         pic_finger: require('@/assets/icon/discover/pic_finger@2x.png')
-      }
+      },
+      bgBase64: '',
+      headBase64: ''
     }
   },
   computed: {},
@@ -151,43 +155,49 @@ export default {
       this.$emit('update:helpSuccess', false)
     },
     async drawImg() {
-      const imgList = document.querySelectorAll('.share-content img')
-      for (let index = 0; index < imgList.length; index++) {
-        const element = imgList[index]
-        element.setAttribute('crossorigin', 'anonymous')
-      }
+      // const imgList = document.querySelectorAll('.share-content img')
+      // for (let index = 0; index < imgList.length; index++) {
+      //   const element = imgList[index]
+      //   element.setAttribute('crossOrigin', 'Anonymous')
+      // }
       // 防止加载错误，每个链接加上时间戳，没用
       // const time = Math.floor(new Date().getTime() / 100)
       // this.actionDetails.share_image =
       //   this.actionDetails.share_image + '?' + time
       // this.actionDetails.share_data.head_img =
       //   this.actionDetails.share_data.head_img + '?' + time
-      function getBase64Image(img) {
-        var canvas = document.createElement('canvas')
-        canvas.width = img.width
-        canvas.height = img.height
-        var ctx = canvas.getContext('2d')
-        ctx.drawImage(img, 0, 0, img.width, img.height)
-        var dataURL = canvas.toDataURL('image/png')
-        console.log(dataURL)
+      // function getBase64Image(img) {
+      //   var canvas = document.createElement('canvas')
+      //   canvas.width = img.width
+      //   canvas.height = img.height
+      //   var ctx = canvas.getContext('2d')
+      //   ctx.drawImage(img, 0, 0, img.width, img.height)
+      //   var dataURL = canvas.toDataURL('image/png')
+      //   return dataURL
+      // }
 
-        return dataURL
+      // function getImg(img) {
+      //   var image = new Image()
+      //   image.src = img
+      //   image.setAttribute('crossOrigin', 'anonymous')
+      //   console.log(image)
+
+      //   image.onload = function() {
+      //     img = getBase64Image(image)
+      //     console.log(img)
+      //   }
+      // }
+      // this.bgBase64 = getImg(this.actionDetails.share_image)
+      // this.headBase64 = getImg(this.actionDetails.share_data.head_img)
+      // this.bgBase64 = await Axios(this.actionDetails.share_image)
+      const res = await Axios.get(this.actionDetails.share_data.head_img, {
+        responseType: 'blob'
+      })
+      const reader = new FileReader()
+      reader.onload = e => {
+        this.headBase64 = e.target.result
       }
-      function getImg(img) {
-        console.log(img)
-        var image = new Image()
-        image.src = img
-        image.onload = function() {
-          img = getBase64Image(image)
-          console.log(img)
-        }
-      }
-      this.actionDetails.share_image = getImg(
-        this.actionDetails.share_image
-      )
-      this.actionDetails.share_data.head_img = getImg(
-        this.actionDetails.share_data.head_img
-      )
+      reader.readAsDataURL(res.data)
 
       const canvasImg = await html2canvas(this.$refs.shareImg, {
         allowTaint: true,
