@@ -158,7 +158,7 @@ export default {
       //   element.setAttribute('crossorigin', 'anonymous')
       // }
       html2canvas(this.$refs.shareImg, {
-        allowTaint: true,
+        allowTaint: false,
         useCORS: true,
         scrollX: 0,
         scrollY: 0
