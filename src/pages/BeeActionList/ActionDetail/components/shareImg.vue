@@ -83,7 +83,6 @@
 <script>
 import html2canvas from 'html2canvas/dist/html2canvas.min.js'
 import Axios from 'axios'
-import { Base64 } from 'js-base64'
 export default {
   components: {},
   props: {
