@@ -18,7 +18,7 @@
           <span class="card-title">{{ item.title }}</span>
         </div>
         <img
-          :src="item.page_image"
+          :src="item.img"
           class="card-body"
         >
       </div>
@@ -28,7 +28,6 @@
 
 <script>
 import { getOs } from '@/utils'
-import { classRoomList } from '@/api/BeeApi/classRoom'
 export default {
   metaInfo: {
     title: '集市课堂'
@@ -38,8 +37,21 @@ export default {
   data() {
     return {
       logo: require('@/assets/icon/classroom/classroom_pic_avatar@3x.png'),
-      headImg: '',
-      list: [],
+      headImg: require('@/assets/icon/classroom/marketclass_pic.png'),
+      list: [
+        {
+          id: 1,
+          title: '快速玩转蜂集市',
+          img: require('@/assets/icon/classroom/classroom_pic_market@2x.png'),
+          date: '2019.06.22'
+        },
+        {
+          id: 2,
+          title: '开启你的蜂友圈',
+          img: require('@/assets/icon/classroom/classroom_pic_friend@2x.png'),
+          date: '2019.06.22'
+        }
+      ],
       osObj: getOs()
     }
   },
@@ -54,7 +66,6 @@ export default {
     } else if (this.osObj.isAndroid && this.osObj.isApp) {
       window.beeMarket.showShareIcon(false)
     }
-    this.getList()
   },
   methods: {
     goDetail(id) {
@@ -62,11 +73,6 @@ export default {
         name: 'classroomDetail',
         params: { id }
       })
-    },
-    async getList() {
-      const res = await classRoomList()
-      this.list = res.data.list
-      this.headImg = res.data.bg_img
     }
   }
 }
