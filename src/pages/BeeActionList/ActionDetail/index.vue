@@ -74,7 +74,7 @@ import detailCard2 from './components/detailCard2'
 import detailCard3 from './components/detailCard3'
 import detailCard4 from './components/detailCard4'
 import shareImg from './components/shareImg'
-import Axios from 'axios'
+// import Axios from 'axios'
 
 export default {
   metaInfo: {
