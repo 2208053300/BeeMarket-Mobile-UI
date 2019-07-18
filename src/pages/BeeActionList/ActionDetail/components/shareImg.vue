@@ -187,14 +187,22 @@ export default {
       // this.bgBase64 = getImg(this.actionDetails.share_image)
       // this.headBase64 = getImg(this.actionDetails.share_data.head_img)
       // this.bgBase64 = await Axios(this.actionDetails.share_image)
-      const canvasImg = await html2canvas(this.$refs.shareImg, {
-        allowTaint: false,
-        useCORS: true,
-        scrollX: 0,
-        scrollY: 0
-      })
-      this.$refs.shareImgPre.setAttribute('src', canvasImg.toDataURL())
-      this.share_img = canvasImg.toDataURL('image/png')
+      const imgDom = document.querySelectorAll('.share-content')[0]
+      try {
+        const canvasImg = await html2canvas(this.$refs.shareImg, {
+          allowTaint: true,
+          tainttest: true,
+          useCORS: true,
+          // scrollX: 0,
+          // scrollY: 0,
+          width: imgDom.scrollWidth,
+          height: imgDom.scrollHeight
+        })
+        this.$refs.shareImgPre.setAttribute('src', canvasImg.toDataURL())
+        this.share_img = canvasImg.toDataURL('image/png')
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
