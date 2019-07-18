@@ -113,7 +113,7 @@ export default {
       //   this.actionDetails.share_image + '?' + time
       // this.actionDetails.share_data.head_img =
       //   this.actionDetails.share_data.head_img + '?' + time
-      const imgDom = document.querySelectorAll('.share-content')[0]
+      const imgDom = document.querySelector('.share-content')
       try {
         const canvasImg = await html2canvas(imgDom, {
           // allowTaint: true,

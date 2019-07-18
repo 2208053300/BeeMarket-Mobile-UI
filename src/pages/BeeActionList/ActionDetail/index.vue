@@ -127,6 +127,7 @@ import detailCard3 from './components/detailCard3'
 import detailCard4 from './components/detailCard4'
 import shareImg from './components/shareImg'
 import Axios from 'axios'
+import { setTimeout } from 'timers'
 
 export default {
   metaInfo: {
@@ -208,6 +209,9 @@ export default {
     this.$store.state.app.beeFooter.show = false
     // 获取详情数据
     this.getActionDetailsData()
+    setTimeout(() => {
+      this.startDraw()
+    }, 2000)
   },
   methods: {
     async getActionDetailsData() {
@@ -219,9 +223,11 @@ export default {
         link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
         imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
       })
+      this.actionDetails.share_data.qr_cord =
+        'data:image/jpeg;base64,' + this.actionDetails.share_data.qr_cord
+    },
+    async startDraw() {
       try {
-        this.actionDetails.share_data.qr_cord =
-          'data:image/jpeg;base64,' + this.actionDetails.share_data.qr_cord
         const res2 = await Axios.get(this.actionDetails.share_data.head_img, {
           responseType: 'blob'
         })
