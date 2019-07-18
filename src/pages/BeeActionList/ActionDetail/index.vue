@@ -219,25 +219,30 @@ export default {
         link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
         imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
       })
-      this.actionDetails.share_data.qr_cord =
-        'data:image/jpeg;base64,' + this.actionDetails.share_data.qr_cord
-      const res2 = await Axios.get(this.actionDetails.share_data.head_img, {
-        responseType: 'blob'
-      })
-      const reader = new FileReader()
-      reader.onload = e => {
-        this.actionDetails.share_data.head_img = e.target.result
+      try {
+        this.actionDetails.share_data.qr_cord =
+          'data:image/jpeg;base64,' + this.actionDetails.share_data.qr_cord
+        const res2 = await Axios.get(this.actionDetails.share_data.head_img, {
+          responseType: 'blob'
+        })
+        const reader = new FileReader()
+        reader.onload = e => {
+          this.actionDetails.share_data.head_img = e.target.result
+        }
+        reader.readAsDataURL(res2.data)
+        const res3 = await Axios.get(this.actionDetails.share_image, {
+          responseType: 'blob'
+        })
+        const reader2 = new FileReader()
+        reader2.onload = e => {
+          this.actionDetails.share_image = e.target.result
+        }
+        reader2.readAsDataURL(res3.data)
+        await this.$refs.shareImg.drawImg()
+      } catch (error) {
+        console.log(error)
       }
-      reader.readAsDataURL(res2.data)
-      const res3 = await Axios.get(this.actionDetails.share_image, {
-        responseType: 'blob'
-      })
-      const reader2 = new FileReader()
-      reader2.onload = e => {
-        this.actionDetails.share_image = e.target.result
-      }
-      reader2.readAsDataURL(res3.data)
-      this.$refs.shareImg.drawImg()
+      this.showImg = false
     },
     // 参与助力
     async goHelp() {

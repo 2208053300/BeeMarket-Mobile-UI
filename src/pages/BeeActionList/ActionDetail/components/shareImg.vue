@@ -32,7 +32,6 @@
 
 <script>
 import html2canvas from 'html2canvas/dist/html2canvas.min.js'
-// import { setTimeout } from 'timers'
 export default {
   components: {},
   props: {
@@ -103,11 +102,11 @@ export default {
     },
     async drawImg() {
       this.$parent.showImg = true
-      const imgList = document.querySelectorAll('.share-content img')
-      for (let index = 0; index < imgList.length; index++) {
-        const element = imgList[index]
-        element.setAttribute('crossOrigin', 'Anonymous')
-      }
+      // const imgList = document.querySelectorAll('.share-content img')
+      // for (let index = 0; index < imgList.length; index++) {
+      //   const element = imgList[index]
+      //   element.setAttribute('crossOrigin', 'Anonymous')
+      // }
       // 防止加载错误，每个链接加上时间戳，没用
       // const time = Math.floor(new Date().getTime() / 100)
       // this.actionDetails.share_image =
@@ -131,9 +130,6 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      this.$parent.showImg = false
-      // setTimeout(async() => {
-      // }, 1000)
     }
   }
 }
