@@ -155,9 +155,6 @@ export default {
           })
           this.$parent.showImg = false
           const img = canvasImg.toDataURL('image/png')
-          console.log(img)
-
-          // this.$refs.shareImgPre.setAttribute('src', img)
           this.share_img = img
         } catch (error) {
           console.log(error)
