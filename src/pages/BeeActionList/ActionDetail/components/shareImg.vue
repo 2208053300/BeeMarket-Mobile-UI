@@ -32,7 +32,7 @@
 
 <script>
 import html2canvas from 'html2canvas/dist/html2canvas.min.js'
-import { setTimeout } from 'timers'
+// import { setTimeout } from 'timers'
 export default {
   components: {},
   props: {
@@ -104,8 +104,6 @@ export default {
     async drawImg() {
       this.$parent.showImg = true
       const imgList = document.querySelectorAll('.share-content img')
-      console.log(imgList)
-
       for (let index = 0; index < imgList.length; index++) {
         const element = imgList[index]
         element.setAttribute('crossOrigin', 'Anonymous')
@@ -116,50 +114,26 @@ export default {
       //   this.actionDetails.share_image + '?' + time
       // this.actionDetails.share_data.head_img =
       //   this.actionDetails.share_data.head_img + '?' + time
-      // function getBase64Image(img) {
-      //   var canvas = document.createElement('canvas')
-      //   canvas.width = img.width
-      //   canvas.height = img.height
-      //   var ctx = canvas.getContext('2d')
-      //   ctx.drawImage(img, 0, 0, img.width, img.height)
-      //   var dataURL = canvas.toDataURL('image/png')
-      //   return dataURL
-      // }
-
-      // function getImg(img) {
-      //   var image = new Image()
-      //   image.src = img
-      //   image.setAttribute('crossOrigin', 'anonymous')
-      //   console.log(image)
-
-      //   image.onload = function() {
-      //     img = getBase64Image(image)
-      //     console.log(img)
-      //   }
-      // }
-      // this.bgBase64 = getImg(this.actionDetails.share_image)
-      // this.headBase64 = getImg(this.actionDetails.share_data.head_img)
-      // this.bgBase64 = await Axios(this.actionDetails.share_image)
-      setTimeout(async() => {
-        const imgDom = document.querySelectorAll('.share-content')[0]
-        try {
-          const canvasImg = await html2canvas(imgDom, {
-            // allowTaint: true,
-            useCORS: true
-            // scrollX: 0,
-            // scrollY: 0,
-            // width: imgDom.scrollWidth,
-            // height: imgDom.scrollHeight,
-            // windowWidth: imgDom.scrollWidth,
-            // windowHeight: imgDom.scrollHeight
-          })
-          this.$parent.showImg = false
-          const img = canvasImg.toDataURL('image/png')
-          this.share_img = img
-        } catch (error) {
-          console.log(error)
-        }
-      }, 1000)
+      const imgDom = document.querySelectorAll('.share-content')[0]
+      try {
+        const canvasImg = await html2canvas(imgDom, {
+          // allowTaint: true,
+          useCORS: true,
+          scrollX: 0,
+          scrollY: 0
+          // width: imgDom.scrollWidth,
+          // height: imgDom.scrollHeight,
+          // windowWidth: imgDom.scrollWidth,
+          // windowHeight: imgDom.scrollHeight
+        })
+        const img = canvasImg.toDataURL('image/png')
+        this.share_img = img
+      } catch (error) {
+        console.log(error)
+      }
+      this.$parent.showImg = false
+      // setTimeout(async() => {
+      // }, 1000)
     }
   }
 }
