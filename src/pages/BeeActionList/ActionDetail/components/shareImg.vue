@@ -197,9 +197,16 @@ export default {
         this.headBase64 = e.target.result
       }
       reader.readAsDataURL(res.data)
-
+      const res2 = await Axios.get(this.actionDetails.share_image, {
+        responseType: 'blob'
+      })
+      const reader2 = new FileReader()
+      reader2.onload = e => {
+        this.bgBase64 = e.target.result
+      }
+      reader2.readAsDataURL(res2.data)
       const canvasImg = await html2canvas(this.$refs.shareImg, {
-        allowTaint: true,
+        allowTaint: false,
         useCORS: true,
         scrollX: 0,
         scrollY: 0
