@@ -55,6 +55,7 @@
     </div>
     <share-img
       :action-details="actionDetails"
+      ref="shareImg"
       :help-success.sync="helpSuccess"
     />
   </div>
@@ -182,6 +183,7 @@ export default {
       //   this.actionDetails.share_image = e.target.result
       // }
       // reader2.readAsDataURL(res3.data)
+      this.$refs.shareImg.drawImg()
     },
     // 参与助力
     async goHelp() {
