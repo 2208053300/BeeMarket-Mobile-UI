@@ -156,13 +156,14 @@ export default {
         const element = imgList[index]
         element.setAttribute('crossorigin', 'anonymous')
       }
+      // 防止加载错误，每个链接加上时间戳
       const time = Math.floor(new Date().getTime() / 100)
       this.actionDetails.share_image =
         this.actionDetails.share_image + '?' + time
       this.actionDetails.share_data.head_img =
         this.actionDetails.share_data.head_img + '?' + time
       const canvasImg = await html2canvas(this.$refs.shareImg, {
-        allowTaint: true,
+        allowTaint: false,
         useCORS: true,
         scrollX: 0,
         scrollY: 0
