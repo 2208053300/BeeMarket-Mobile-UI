@@ -22,7 +22,7 @@
         >
           <!-- :style="{backgroundImage:'url('+actionDetails.share_image+')'}" -->
           <img
-            :src="bgBase64||actionDetails.share_image"
+            :src="actionDetails.share_image"
             alt=""
             class="bg-img"
           >
@@ -34,7 +34,7 @@
               <div class="user-info">
                 <div class="head-img">
                   <img
-                    :src="headBase64||actionDetails.share_data.head_img"
+                    :src="actionDetails.share_data.head_img"
                     alt=""
                   >
                 </div>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="img-content2">
                   <img
-                    :src="'data:image/jpeg;base64,'+actionDetails.share_data.qr_cord"
+                    :src="actionDetails.share_data.qr_cord"
                     alt=""
                   >
                 </div>
@@ -67,7 +67,6 @@
           <div class="canvas-img">
             <img
               ref="shareImgPre"
-              crossorigin="anonymous"
               alt=""
             >
           </div>
@@ -82,7 +81,6 @@
 
 <script>
 import html2canvas from 'html2canvas/dist/html2canvas.min.js'
-import Axios from 'axios'
 export default {
   components: {},
   props: {
@@ -160,11 +158,11 @@ export default {
       //   element.setAttribute('crossOrigin', 'Anonymous')
       // }
       // 防止加载错误，每个链接加上时间戳，没用
-      // const time = Math.floor(new Date().getTime() / 100)
-      // this.actionDetails.share_image =
-      //   this.actionDetails.share_image + '?' + time
-      // this.actionDetails.share_data.head_img =
-      //   this.actionDetails.share_data.head_img + '?' + time
+      const time = Math.floor(new Date().getTime() / 100)
+      this.actionDetails.share_image =
+        this.actionDetails.share_image + '?' + time
+      this.actionDetails.share_data.head_img =
+        this.actionDetails.share_data.head_img + '?' + time
       // function getBase64Image(img) {
       //   var canvas = document.createElement('canvas')
       //   canvas.width = img.width
@@ -189,22 +187,6 @@ export default {
       // this.bgBase64 = getImg(this.actionDetails.share_image)
       // this.headBase64 = getImg(this.actionDetails.share_data.head_img)
       // this.bgBase64 = await Axios(this.actionDetails.share_image)
-      const res = await Axios.get(this.actionDetails.share_data.head_img, {
-        responseType: 'blob'
-      })
-      const reader = new FileReader()
-      reader.onload = e => {
-        this.headBase64 = e.target.result
-      }
-      reader.readAsDataURL(res.data)
-      const res2 = await Axios.get(this.actionDetails.share_image, {
-        responseType: 'blob'
-      })
-      const reader2 = new FileReader()
-      reader2.onload = e => {
-        this.bgBase64 = e.target.result
-      }
-      reader2.readAsDataURL(res2.data)
       const canvasImg = await html2canvas(this.$refs.shareImg, {
         allowTaint: false,
         useCORS: true,
