@@ -156,14 +156,41 @@ export default {
         const element = imgList[index]
         element.setAttribute('crossorigin', 'anonymous')
       }
-      // 防止加载错误，每个链接加上时间戳
-      const time = Math.floor(new Date().getTime() / 100)
-      this.actionDetails.share_image =
-        this.actionDetails.share_image + '?' + time
-      this.actionDetails.share_data.head_img =
-        this.actionDetails.share_data.head_img + '?' + time
+      // 防止加载错误，每个链接加上时间戳，没用
+      // const time = Math.floor(new Date().getTime() / 100)
+      // this.actionDetails.share_image =
+      //   this.actionDetails.share_image + '?' + time
+      // this.actionDetails.share_data.head_img =
+      //   this.actionDetails.share_data.head_img + '?' + time
+      function getBase64Image(img) {
+        var canvas = document.createElement('canvas')
+        canvas.width = img.width
+        canvas.height = img.height
+        var ctx = canvas.getContext('2d')
+        ctx.drawImage(img, 0, 0, img.width, img.height)
+        var dataURL = canvas.toDataURL('image/png')
+        console.log(dataURL)
+
+        return dataURL
+      }
+      function getImg(img) {
+        console.log(img)
+        var image = new Image()
+        image.src = img
+        image.onload = function() {
+          img = getBase64Image(image)
+          console.log(img)
+        }
+      }
+      this.actionDetails.share_image = getImg(
+        this.actionDetails.share_image
+      )
+      this.actionDetails.share_data.head_img = getImg(
+        this.actionDetails.share_data.head_img
+      )
+
       const canvasImg = await html2canvas(this.$refs.shareImg, {
-        allowTaint: false,
+        allowTaint: true,
         useCORS: true,
         scrollX: 0,
         scrollY: 0
