@@ -19,13 +19,13 @@
         <div
           ref="shareImg"
           class="share-content"
-          :style="{backgroundImage:'url('+actionDetails.share_image+')'}"
         >
-          <!-- <img
+          <!-- :style="{backgroundImage:'url('+actionDetails.share_image+')'}" -->
+          <img
             :src="actionDetails.share_image"
             alt=""
             class="bg-img"
-          > -->
+          >
           <div class="share-info-content">
             <div
               v-if="actionDetails.share_data"
@@ -34,7 +34,6 @@
               <div class="user-info">
                 <div class="head-img">
                   <img
-                    v-once
                     :src="actionDetails.share_data.head_img"
                     alt=""
                   >
@@ -126,7 +125,8 @@ export default {
             ]
           },
           is_join: false,
-          uid: 0
+          uid: 0,
+          share_data: {}
         }
       }
     }
@@ -138,8 +138,7 @@ export default {
         shareTip: require('@/assets/icon/share/guide1.png'),
         pic_text: require('@/assets/icon/discover/pic_text@2x.png'),
         pic_finger: require('@/assets/icon/discover/pic_finger@2x.png')
-      },
-      bgBase64: ''
+      }
     }
   },
   computed: {},
@@ -152,26 +151,24 @@ export default {
       this.$emit('update:helpSuccess', false)
     },
     async drawImg() {
-      // const imgList = document.querySelectorAll('.share-content img')
-      // for (let index = 0; index < imgList.length; index++) {
-      //   const element = imgList[index]
-      //   element.setAttribute('crossorigin', 'anonymous')
-      // }
-      html2canvas(this.$refs.shareImg, {
-        allowTaint: false,
+      const imgList = document.querySelectorAll('.share-content img')
+      for (let index = 0; index < imgList.length; index++) {
+        const element = imgList[index]
+        element.setAttribute('crossorigin', 'anonymous')
+      }
+      const time = Math.floor(new Date().getTime() / 100)
+      this.actionDetails.share_image =
+        this.actionDetails.share_image + '?' + time
+      this.actionDetails.share_data.head_img =
+        this.actionDetails.share_data.head_img + '?' + time
+      const canvasImg = await html2canvas(this.$refs.shareImg, {
+        allowTaint: true,
         useCORS: true,
         scrollX: 0,
         scrollY: 0
       })
-        .then(canvas => {
-          this.$refs.shareImgPre.setAttribute('src', canvas.toDataURL())
-          this.share_img = canvas.toDataURL('image/png')
-        })
-        .catch(error => {
-          console.log('生成海报失败！' + error)
-
-          this.$toast('生成海报失败！')
-        })
+      this.$refs.shareImgPre.setAttribute('src', canvasImg.toDataURL())
+      this.share_img = canvasImg.toDataURL('image/png')
     }
   }
 }
