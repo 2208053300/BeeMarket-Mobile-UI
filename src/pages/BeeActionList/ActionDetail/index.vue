@@ -166,22 +166,22 @@ export default {
       })
       this.actionDetails.share_data.qr_cord =
         'data:image/jpeg;base64,' + this.actionDetails.share_data.qr_cord
-      const res2 = await Axios.get(this.actionDetails.share_data.head_img, {
-        responseType: 'blob'
-      })
-      const reader = new FileReader()
-      reader.onload = e => {
-        this.actionDetails.share_data.head_img = e.target.result
-      }
-      reader.readAsDataURL(res2.data)
-      const res3 = await Axios.get(this.actionDetails.share_image, {
-        responseType: 'blob'
-      })
-      const reader2 = new FileReader()
-      reader2.onload = e => {
-        this.actionDetails.share_image = e.target.result
-      }
-      reader2.readAsDataURL(res3.data)
+      // const res2 = await Axios.get(this.actionDetails.share_data.head_img, {
+      //   responseType: 'blob'
+      // })
+      // const reader = new FileReader()
+      // reader.onload = e => {
+      //   this.actionDetails.share_data.head_img = e.target.result
+      // }
+      // reader.readAsDataURL(res2.data)
+      // const res3 = await Axios.get(this.actionDetails.share_image, {
+      //   responseType: 'blob'
+      // })
+      // const reader2 = new FileReader()
+      // reader2.onload = e => {
+      //   this.actionDetails.share_image = e.target.result
+      // }
+      // reader2.readAsDataURL(res3.data)
     },
     // 参与助力
     async goHelp() {

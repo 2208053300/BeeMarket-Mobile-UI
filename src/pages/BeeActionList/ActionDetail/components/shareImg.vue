@@ -5,7 +5,7 @@
       class="share-modal"
       transition="van-fade"
       :close-on-click-overlay="false"
-      @opened="drawImg"
+      @opened="drawImg()"
       @close="closed"
       @click-overlay="closed"
     >
@@ -81,6 +81,7 @@
 
 <script>
 import html2canvas from 'html2canvas/dist/html2canvas.min.js'
+import { setTimeout } from 'timers'
 export default {
   components: {},
   props: {
@@ -152,11 +153,11 @@ export default {
       this.$emit('update:helpSuccess', false)
     },
     async drawImg() {
-      // const imgList = document.querySelectorAll('.share-content img')
-      // for (let index = 0; index < imgList.length; index++) {
-      //   const element = imgList[index]
-      //   element.setAttribute('crossOrigin', 'Anonymous')
-      // }
+      const imgList = document.querySelectorAll('.share-content img')
+      for (let index = 0; index < imgList.length; index++) {
+        const element = imgList[index]
+        element.setAttribute('crossOrigin', 'Anonymous')
+      }
       // 防止加载错误，每个链接加上时间戳，没用
       const time = Math.floor(new Date().getTime() / 100)
       this.actionDetails.share_image =
@@ -187,22 +188,23 @@ export default {
       // this.bgBase64 = getImg(this.actionDetails.share_image)
       // this.headBase64 = getImg(this.actionDetails.share_data.head_img)
       // this.bgBase64 = await Axios(this.actionDetails.share_image)
-      const imgDom = document.querySelectorAll('.share-content')[0]
-      try {
-        const canvasImg = await html2canvas(this.$refs.shareImg, {
-          allowTaint: true,
-          tainttest: true,
-          useCORS: true,
-          // scrollX: 0,
-          // scrollY: 0,
-          width: imgDom.scrollWidth,
-          height: imgDom.scrollHeight
-        })
-        this.$refs.shareImgPre.setAttribute('src', canvasImg.toDataURL())
-        this.share_img = canvasImg.toDataURL('image/png')
-      } catch (error) {
-        console.log(error)
-      }
+      setTimeout(async() => {
+        const imgDom = document.querySelectorAll('.share-content')[0]
+        try {
+          const canvasImg = await html2canvas(this.$refs.shareImg, {
+            // allowTaint: true,
+            useCORS: true,
+            // scrollX: 0,
+            // scrollY: 0,
+            width: imgDom.scrollWidth,
+            height: imgDom.scrollHeight
+          })
+          this.$refs.shareImgPre.setAttribute('src', canvasImg.toDataURL())
+          this.share_img = canvasImg.toDataURL('image/png')
+        } catch (error) {
+          console.log(error)
+        }
+      }, 1000)
     }
   }
 }
