@@ -54,9 +54,62 @@
       </div>
     </div>
     <share-img
+      ref="shareImg"
       :action-details="actionDetails"
       :help-success.sync="helpSuccess"
     />
+    <div
+      v-show="showImg"
+      class="share-bg"
+    >
+      <div class="share-content">
+        <!-- :style="{backgroundImage:'url('+actionDetails.share_image+')'}" -->
+        <img
+          :src="actionDetails.share_image"
+          alt=""
+          class="bg-img"
+        >
+        <div class="share-info-content">
+          <div
+            v-if="actionDetails.share_data"
+            class="share-info"
+          >
+            <div class="user-info">
+              <div class="head-img">
+                <img
+                  :src="actionDetails.share_data.head_img"
+                  crossOrigin="anonymous"
+                  alt=""
+                >
+              </div>
+              <div class="right-info">
+                <span class="user-name">{{ actionDetails.share_data.nickname }}</span>
+                <div class="img-content">
+                  <img
+                    :src="beeIcon.pic_text"
+                    alt=""
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="user-code">
+              <div class="img-content">
+                <img
+                  :src="beeIcon.pic_finger"
+                  alt=""
+                >
+              </div>
+              <div class="img-content2">
+                <img
+                  :src="actionDetails.share_data.qr_cord"
+                  alt=""
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -74,6 +127,8 @@ import detailCard2 from './components/detailCard2'
 import detailCard3 from './components/detailCard3'
 import detailCard4 from './components/detailCard4'
 import shareImg from './components/shareImg'
+// import Axios from 'axios'
+import { setTimeout } from 'timers'
 
 export default {
   metaInfo: {
@@ -92,6 +147,7 @@ export default {
   data() {
     return {
       // 公益行动id
+      showImg: true,
       id: this.$route.query.id,
       showPercent: false,
       actionDetails: {
@@ -138,7 +194,9 @@ export default {
         pop_ups_icon_delete: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_icon_delete@2x.png'),
         publicwelfare_detail_popup_icon_download: require('@/assets/icon/discover/publicwelfare_detail_popup_icon_download@2x.png'),
         publicwelfare_popups_download: require('@/assets/icon/discover/publicwelfare_popups_download@2x.png'),
-        publicwelfare_popups_text: require('@/assets/icon/discover/publicwelfare_popups_text@2x.png')
+        publicwelfare_popups_text: require('@/assets/icon/discover/publicwelfare_popups_text@2x.png'),
+        pic_text: require('@/assets/icon/discover/pic_text@2x.png'),
+        pic_finger: require('@/assets/icon/discover/pic_finger@2x.png')
       },
       // 参与助力获得公益值
       pwv_number: 0
@@ -152,6 +210,9 @@ export default {
     this.$store.state.app.beeFooter.show = false
     // 获取详情数据
     this.getActionDetailsData()
+    setTimeout(() => {
+      this.startDraw()
+    }, 2000)
   },
   methods: {
     async getActionDetailsData() {
@@ -163,6 +224,32 @@ export default {
         link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
         imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
       })
+      this.actionDetails.share_data.qr_cord =
+        'data:image/jpeg;base64,' + this.actionDetails.share_data.qr_cord
+    },
+    async startDraw() {
+      try {
+        // const res2 = await Axios.get(this.actionDetails.share_data.head_img, {
+        //   responseType: 'blob'
+        // })
+        // const reader = new FileReader()
+        // reader.onload = e => {
+        //   this.actionDetails.share_data.head_img = e.target.result
+        // }
+        // reader.readAsDataURL(res2.data)
+        // const res3 = await Axios.get(this.actionDetails.share_image, {
+        //   responseType: 'blob'
+        // })
+        // const reader2 = new FileReader()
+        // reader2.onload = e => {
+        //   this.actionDetails.share_image = e.target.result
+        // }
+        // reader2.readAsDataURL(res3.data)
+        await this.$refs.shareImg.drawImg()
+      } catch (error) {
+        this.$toast('截图失败！')
+      }
+      this.showImg = false
     },
     // 参与助力
     async goHelp() {
@@ -253,6 +340,78 @@ export default {
       font-size: 0.22rem;
       background-color: @Red3;
       line-height: 0.52rem;
+    }
+  }
+  .share-bg {
+    width: 5.34rem;
+    height: 6.92rem;
+    border-radius: 0.16rem;
+    background-color: #fff;
+    padding: 0.16rem;
+    box-sizing: border-box;
+    .share-content {
+      height: 100%;
+      position: relative;
+      width: 5.02rem;
+      height: 6.6rem;
+      background-size: cover;
+      background-repeat: no-repeat;
+      .bg-img {
+        width: 5.02rem;
+        height: 6.6rem;
+      }
+      .share-info-content {
+        position: absolute;
+        bottom: 0.2rem;
+        width: 100%;
+        .share-info {
+          height: 1.24rem;
+          width: 4.52rem;
+          margin: auto;
+          background-color: rgba(255, 255, 255, 0.8);
+          border-radius: 0.08rem;
+          display: flex;
+          padding: 0.08rem 0.12rem;
+          justify-content: space-between;
+          box-sizing: border-box;
+          .user-info {
+            display: flex;
+            align-items: center;
+            .head-img {
+              width: 0.64rem;
+              height: 0.64rem;
+              margin-right: 0.06rem;
+              border-radius: 50%;
+              overflow: hidden;
+            }
+            .right-info {
+              font-size: 0.2rem;
+              overflow: hidden;
+              .user-name {
+                white-space: nowrap;
+              }
+              .img-content {
+                width: 1.56rem;
+                height: 0.24rem;
+                margin-top: 0.06rem;
+              }
+            }
+          }
+          .user-code {
+            display: flex;
+            align-items: center;
+            .img-content {
+              height: 0.46rem;
+              width: 0.72rem;
+              margin-right: 0.06rem;
+            }
+            .img-content2 {
+              width: 1.08rem;
+              height: 1.08rem;
+            }
+          }
+        }
+      }
     }
   }
 }
