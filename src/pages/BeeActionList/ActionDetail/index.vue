@@ -126,7 +126,7 @@ import detailCard2 from './components/detailCard2'
 import detailCard3 from './components/detailCard3'
 import detailCard4 from './components/detailCard4'
 import shareImg from './components/shareImg'
-import Axios from 'axios'
+// import Axios from 'axios'
 import { setTimeout } from 'timers'
 
 export default {
@@ -228,25 +228,25 @@ export default {
     },
     async startDraw() {
       try {
-        const res2 = await Axios.get(this.actionDetails.share_data.head_img, {
-          responseType: 'blob'
-        })
-        const reader = new FileReader()
-        reader.onload = e => {
-          this.actionDetails.share_data.head_img = e.target.result
-        }
-        reader.readAsDataURL(res2.data)
-        const res3 = await Axios.get(this.actionDetails.share_image, {
-          responseType: 'blob'
-        })
-        const reader2 = new FileReader()
-        reader2.onload = e => {
-          this.actionDetails.share_image = e.target.result
-        }
-        reader2.readAsDataURL(res3.data)
+        // const res2 = await Axios.get(this.actionDetails.share_data.head_img, {
+        //   responseType: 'blob'
+        // })
+        // const reader = new FileReader()
+        // reader.onload = e => {
+        //   this.actionDetails.share_data.head_img = e.target.result
+        // }
+        // reader.readAsDataURL(res2.data)
+        // const res3 = await Axios.get(this.actionDetails.share_image, {
+        //   responseType: 'blob'
+        // })
+        // const reader2 = new FileReader()
+        // reader2.onload = e => {
+        //   this.actionDetails.share_image = e.target.result
+        // }
+        // reader2.readAsDataURL(res3.data)
         await this.$refs.shareImg.drawImg()
       } catch (error) {
-        console.log(error)
+        this.$toast('截图失败！')
       }
       this.showImg = false
     },
