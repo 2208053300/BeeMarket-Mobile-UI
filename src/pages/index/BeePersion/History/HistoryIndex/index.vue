@@ -40,8 +40,8 @@
                   v-if="pro.is_obtained||!pro.is_stock"
                   class="product-masking"
                 >
-                  <span v-if="pro.is_obtained">已下架</span>
-                  <span v-if="!pro.is_stock">售罄</span>
+                  <span v-if="pro.is_obtained">下架</span>
+                  <span v-else-if="!pro.is_stock">售罄</span>
                 </div>
               </div>
               <p class="title no-wrap" @click="goProductDetail(pro)">

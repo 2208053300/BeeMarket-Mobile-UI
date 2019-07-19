@@ -151,7 +151,7 @@ export default {
         this.propsData = res.data
         // sku_id
         this.sid = res.data.sku_id
-
+        this.$parent.sid = this.sid
         this.skuName = []
         this.getSkuName(this.propsData.props)
       } else {
@@ -163,6 +163,7 @@ export default {
         this.propsData = res.data
         // sku_id
         this.sid = res.data.sku_id
+        this.$parent.sid = this.sid
       }
       // sku数量
       this.productNum = this.pNumber ? this.pNumber : 1
@@ -195,6 +196,10 @@ export default {
         })
       )
       this.propsData = res.data
+      // sku_id
+      this.sid = res.data.sku_id
+      this.$parent.sid = this.sid
+
       this.getSkuName(this.propsData.props)
     },
     getSkuName(props) {
@@ -212,6 +217,10 @@ export default {
     },
     async handleDone() {
       console.log('免费送礼')
+      if (!this.sid) {
+        this.$toast('请先选择规格！')
+        return
+      }
       try {
         const res = await postSku({ sid: this.sid })
         if (res.status_code === 200) {
@@ -219,6 +228,7 @@ export default {
           // this.$emit('update:showGift', true)
           this.$parent.showSku = false
           this.$parent.showGift = true
+          this.$parent.nowProduct = res.data
           // this.$parent.nowProduct = res.data
 
           // this.$emit('update:propsId', this.selProps)
