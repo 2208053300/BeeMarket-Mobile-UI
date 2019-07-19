@@ -116,7 +116,7 @@ export default {
       const imgDom = document.querySelector('.share-content')
       try {
         const canvasImg = await html2canvas(imgDom, {
-          // allowTaint: true,
+          allowTaint: false,
           useCORS: true,
           scrollX: 0,
           scrollY: 0

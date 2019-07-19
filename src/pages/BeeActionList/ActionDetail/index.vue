@@ -78,6 +78,7 @@
               <div class="head-img">
                 <img
                   :src="actionDetails.share_data.head_img"
+                  crossOrigin="anonymous"
                   alt=""
                 >
               </div>
