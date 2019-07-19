@@ -165,6 +165,15 @@ export default {
     .logistics-text {
       flex: 1;
       margin-left: 0.3rem;
+      .logistics-text2 {
+        text-overflow: -o-ellipsis-lastline;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
       .logistics-time {
         margin-top: 0.2rem;
       }
