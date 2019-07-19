@@ -127,7 +127,8 @@ export default {
           ]
         },
         is_join: false,
-        uid: 0
+        uid: 0,
+        share_data: {}
       },
       BeeDefault,
       helpSuccess: false,
