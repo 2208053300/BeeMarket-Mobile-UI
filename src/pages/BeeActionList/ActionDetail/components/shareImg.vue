@@ -116,10 +116,10 @@ export default {
       const imgDom = document.querySelector('.share-content')
       try {
         const canvasImg = await html2canvas(imgDom, {
-          allowTaint: false,
           useCORS: true,
           scrollX: 0,
-          scrollY: 0
+          scrollY: 0,
+          y: imgDom.offsetTop
           // width: imgDom.scrollWidth,
           // height: imgDom.scrollHeight,
           // windowWidth: imgDom.scrollWidth,
