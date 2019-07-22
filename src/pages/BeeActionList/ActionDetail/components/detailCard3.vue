@@ -123,8 +123,6 @@ export default {
   .enterprise {
     border-bottom: 1px dashed @BeeDefault;
     .love-logo {
-      width: 6.26rem;
-      height: 0.52rem;
       margin: 0 auto 0.4rem;
       display: block;
     }

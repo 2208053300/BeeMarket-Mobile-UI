@@ -118,8 +118,6 @@ export default {
     }
     .enterprise-img {
       margin: 0.28rem auto 0.4rem;
-      width: 6.26rem;
-      height: 0.52rem;
     }
     .show-desc {
       text-align: center;

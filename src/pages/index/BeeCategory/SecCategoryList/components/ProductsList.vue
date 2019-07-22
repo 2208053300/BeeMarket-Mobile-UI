@@ -85,7 +85,8 @@ export default {
       // page: 1,
       pageSize: 2,
       immediate: false,
-      offset: 300
+      offset: 300,
+      waitLoad: false
     }
   },
   computed: {},
@@ -102,15 +103,17 @@ export default {
       if (this.$route.query.target) {
         data = { ...data, target: 'produce' }
       }
-      console.log(data)
-
+      if (this.waitLoad) {
+        return
+      }
+      this.waitLoad = true
       setTimeout(async() => {
         const res = await getProductList(data)
 
         this.goodsList.push(...res.data.products)
         this.condition.page++
         this.loading = false
-
+        this.waitLoad = false
         if (res.data.products.length === 0) {
           this.finished = true
         }
@@ -130,7 +133,6 @@ export default {
         this.condition.sort = 'price'
         this.condition.order = type.order
       }
-      console.log('返回后的condition：', this.condition)
       // 清空已有数据，重置页码，获取新的数据
       this.goodsList = []
       this.condition.page = 1
@@ -140,7 +142,6 @@ export default {
     // 布局方式
     showWay(isVertical) {
       this.isVertical = isVertical
-      console.log(isVertical)
     },
     // 对象属性过滤函数，去掉属性值为空的属性
     filterParams(obj) {
