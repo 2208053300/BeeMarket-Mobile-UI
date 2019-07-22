@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable -->
   <div class="task-detail">
     <van-notice-bar
       :left-icon="beeIcon.confirmorder_send_icon_presentation"
@@ -11,70 +12,27 @@
       </div>
     </van-notice-bar>
     <div class="task-content">
-      <div
-        class="task-header"
-        :class="{headerPadding:taskData.proportion===100}"
-      >
-        <div class="header-part1">
-          <div class="header-left">
-            <div class="left-text1">
-              我的累计消费<span class="unit">(元)</span>
-            </div>
-            <div class="left-text2">
-              {{ taskData.mine_consume_amount }}
-            </div>
-            <div class="left-text3">
-              <van-icon :name="beeIcon.task_icon_sigh" />需完成累计消费{{ taskData.condition_amount }}元
-            </div>
-          </div>
-          <div class="header-right">
-            <div class="right-chart">
-              <div
-                v-if="taskData.proportion!==100"
-                class="pie-bg"
-              >
-                <div
-                  ref="pieChart"
-                  class="pieChart"
-                />
-              </div>
-              <div
-                v-else
-                class="success-pie"
-              >
-                <div class="pie-success">
-                  100%
-                </div>
-              </div>
-            </div>
-            <div class="right-scale">
-              <div class="scale-content">
-                <div class="scale1" />
-                <span class="scale-text">已消费</span>
-              </div>
-              <div class="scale-content">
-                <div class="scale2" />
-                <span class="scale-text">剩余消费</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          v-if="taskData.proportion!==100"
-          class="header-part2"
-        >
-          <div class="part2-content">
-            <span>您暂未完成累计消费，再去看看商品吧!</span>
-            <van-button
-              class="go-shopping"
-              @click="arouseApp"
-            >
-              去逛逛
-            </van-button>
-          </div>
-        </div>
-      </div>
+      <task-header
+        ref="taskHeader"
+        :task-data="taskData"
+      />
       <div class="task-detail2">
+        <div
+          class="active-header"
+          :style="{backgroundImage:'url('+getBg()+')'}"
+          :class="[{leftTab:tid === '2'},{rightTab:tid === '10'}]"
+        >
+          <div
+            class="disableTab"
+            :class="{activeTab:tid === '2'}"
+            @click="changeTab"
+          >贵宾陈酿</div>
+          <div
+            class="disableTab"
+            :class="{activeTab:tid === '10'}"
+            @click="changeTab"
+          >燕阳良品</div>
+        </div>
         <div class="goods-card">
           <div class="goods-img">
             <img
@@ -110,8 +68,10 @@
             </div>
           </div>
         </div>
-        <!-- eslint-disable-next-line -->
-        <div class="product-detailImg" v-html="taskData.details_url" />
+        <div
+          class="product-detailImg"
+          v-html="taskData.details_url"
+        />
       </div>
     </div>
   </div>
@@ -120,23 +80,25 @@
 <script>
 // import { confirmOrder } from '@/api/BeeApi/order'
 import { getTaskDetail } from '@/api/BeeApi/task'
-import echarts from 'echarts/dist/echarts.simple.min.js'
-import { goHome, getOs } from '@/utils'
+import taskHeader from './components/taskHeader'
 
 export default {
   metaInfo: {
     title: '任务详情'
   },
-  components: {},
+  components: {
+    taskHeader
+  },
   props: {},
   data() {
     return {
       beeIcon: {
         confirmorder_send_icon_presentation: require('@/assets/icon/order/confirmorder_send_icon_presentation@2x.png'),
-        task_icon_sigh: require('@/assets/icon/task/task_icon_sigh@2x.png'),
-        task_icon_smile_white: require('@/assets/icon/task/task_icon_smile_white@2x.png')
+        task_details_nav_bg_bird: require('@/assets/icon/task/task_details_nav_bg_bird.png'),
+        task_details_nav_bg_liquor: require('@/assets/icon/task/task_details_nav_bg_liquor.png')
       },
-      taskData: {}
+      taskData: {},
+      tid: '2'
     }
   },
   computed: {},
@@ -146,47 +108,15 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     // TODO 如果已经成功，则不执行渲染，否则报错
+    this.tid = String(this.$route.query.tid)
     this.getTaskDetailData()
   },
   methods: {
-    initPie() {
-      const pie1 = echarts.init(this.$refs.pieChart)
-      const option = {
-        series: [
-          {
-            name: '销量',
-            type: 'pie',
-            radius: '100%',
-            center: ['50%', '50%'],
-            data: [
-              this.taskData.mine_consume_amount,
-              this.taskData.condition_amount - this.taskData.mine_consume_amount
-            ],
-            hoverAnimation: false,
-            label: {
-              normal: {
-                position: 'inside',
-                formatter: '{d}%',
-                textStyle: {
-                  color: '#ffa42f',
-                  fontSize: 12
-                }
-              }
-            },
-            labelLine: {
-              show: false
-            }
-          }
-        ],
-        color: ['#fff', 'rgba(255,255,255,0.1)']
-      }
-      pie1.setOption(option)
-    },
     async getTaskDetailData() {
-      const res = await getTaskDetail({ tid: this.$route.query.tid })
+      const res = await getTaskDetail({ tid: this.tid })
       this.taskData = res.data
       if (this.taskData.proportion < 100) {
-        this.initPie()
+        this.$refs.taskHeader.initPie()
       }
     },
     async getGift() {
@@ -208,18 +138,18 @@ export default {
       //   })
       // }
     },
-    arouseApp() {
-      const osObj = getOs()
-      if (osObj.isWx) {
-        // 微信直接跳转路由
-        goHome()
-      } else if (osObj.isIphone && osObj.isApp) {
-        window.webkit.messageHandlers.ToCatList.postMessage(1)
-      } else if (osObj.isAndroid && osObj.isApp) {
-        window.beeMarket.ToCatList()
+    getBg() {
+      return this.tid === '2'
+        ? this.beeIcon.task_details_nav_bg_liquor
+        : this.beeIcon.task_details_nav_bg_bird
+    },
+    changeTab() {
+      if (this.tid === '2') {
+        this.tid = '10'
       } else {
-        goHome()
+        this.tid = '2'
       }
+      this.getTaskDetailData()
     }
   }
 }
@@ -236,132 +166,46 @@ export default {
     }
   }
   .task-content {
-    background-color: #fff;
+    background-color: @GreyBg;
     padding: 0.32rem 0.3rem;
     .headerPadding {
       padding-bottom: 0.4rem;
     }
-    .task-header {
-      background: linear-gradient(to right, #ffab38, #f9a247);
-      border-radius: 0.16rem;
-      box-shadow: 0 0.1rem 0.2rem rgba(255, 164, 47, 0.4);
-      .header-part1 {
-        display: flex;
-        padding: 0.4rem 0.3rem 0 0.4rem;
-        color: #fff;
-        justify-content: space-between;
-        .header-left {
-          .left-text1 {
-            font-size: 0.34rem;
-            .unit {
-              font-size: 0.28rem;
-            }
-          }
-          .left-text2 {
-            font-size: 0.5rem;
-            margin-top: 0.12rem;
-          }
-          .left-text3 {
-            font-size: 0.24rem;
-            margin-top: 0.64rem;
-            .van-icon {
-              font-size: 0.34rem;
-              vertical-align: middle;
-              margin-right: 0.08rem;
-            }
-          }
-        }
-        .header-right {
-          display: flex;
-          align-items: center;
-          .right-chart {
-            margin-right: 0.32rem;
-            .pie-bg {
-              width: 1.52rem;
-              height: 1.52rem;
-              background-color: rgba(255, 255, 255, 0.4);
-              border-radius: 50%;
-              .pieChart {
-                width: 1.68rem;
-                height: 1.68rem;
-                position: relative;
-                left: -0.08rem;
-                top: -0.08rem;
-              }
-            }
-            .success-pie {
-              width: 1.68rem;
-              height: 1.68rem;
-              background-color: #fff;
-              border-radius: 50%;
-              .pie-success {
-                width: 1.52rem;
-                height: 1.52rem;
-                border-radius: 50%;
-                background-color: rgba(255, 255, 255, 0.4);
-                border-radius: 50%;
-                font-size: 0.2rem;
-                color: @BeeDefault;
-                box-shadow: 0 0 0.3rem rgba(255, 164, 47, 0.9);
-                text-align: center;
-                line-height: 1.52rem;
-                position: relative;
-                left: 0.08rem;
-                top: 0.08rem;
-              }
-            }
-          }
-          .right-scale {
-            .scale-content {
-              font-size: 0.22rem;
-              .scale1 {
-                width: 0.24rem;
-                height: 0.06rem;
-                background-color: #fff;
-                margin-bottom: 0.08rem;
-              }
-              .scale2 {
-                width: 0.24rem;
-                height: 0.06rem;
-                background-color: rgba(255, 255, 255, 0.4);
-                margin: 0.16rem 0 0.08rem;
-              }
-            }
-          }
-        }
-      }
-      .header-part2 {
-        padding: 0.2rem 0.12rem 0.12rem;
-        .part2-content {
-          background-color: @Yellow2;
-          height: 0.8rem;
-          padding: 0 0.12rem;
-          border-bottom-left-radius: 0.12rem;
-          border-bottom-right-radius: 0.12rem;
-          color: @BeeDefault3;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          font-size: 0.26rem;
-          .go-shopping {
-            padding: 0;
-            width: 1.32rem;
-            height: 0.6rem;
-            line-height: 0.6rem;
-            background-color: @BeeDefault;
-            color: #fff;
-            font-size: 0.28rem;
-            border: none;
-            border-radius: 0.08rem;
-          }
-        }
-      }
-    }
+
     .task-detail2 {
       margin-top: 0.6rem;
+      .active-header {
+        height: 0.8rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+        box-sizing: border-box;
+        background-size: contain;
+        align-items: center;
+        background-repeat: no-repeat;
+        .disableTab {
+          font-size: 0.28rem;
+          color: @Grey2;
+          text-align: center;
+          position: relative;
+          top: 0.06rem;
+        }
+        .activeTab {
+          font-size: 0.32rem;
+          color: @ProductName;
+          top: 0;
+        }
+      }
+      .leftTab {
+        margin-right: 0.16rem;
+      }
+      .rightTab {
+        margin-left: 0.16rem;
+      }
       .goods-card {
         display: flex;
-        margin-bottom: 0.28rem;
+        padding: 0.2rem;
+        background-color: #fff;
         .goods-img {
           height: 1.48rem;
           width: 1.48rem;

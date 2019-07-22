@@ -174,7 +174,7 @@
           </div>
         </div>
         <div class="task-detail">
-          <div class="step-list">
+          <div class="step-list step-list2">
             <img
               :src="beeIcon.task_pic_bird"
               alt="任务步骤"
@@ -186,8 +186,8 @@
               round
               @click="$router.push({name:'taskDetail',query:{tid:taskData.task_list[2].tid}})"
             >
-              <!-- TODO 去完成判断 -->
-              领取任务
+              <span v-if="taskData.task_list[2].is_receive===0">领取任务</span>
+              <span v-else>去完成</span>
             </van-button>
           </div>
         </div>
@@ -240,7 +240,7 @@ export default {
     return {
       taskData: {
         basic_info: {},
-        task_list: [{}, {}]
+        task_list: [{}, {}, {}]
       },
       beeIcon: {
         task_bg_bee: require('@/assets/icon/task/task_bg_bee@2x.png'),
@@ -575,6 +575,10 @@ export default {
         width: 4.88rem;
         height: 1.66rem;
         margin: auto;
+      }
+      .step-list {
+        width: 4.75rem;
+        height: 1.51rem;
       }
       .task-action {
         text-align: center;
