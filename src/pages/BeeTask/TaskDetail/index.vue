@@ -3,12 +3,12 @@
   <div class="task-detail">
     <van-notice-bar
       :left-icon="beeIcon.confirmorder_send_icon_presentation"
-      background="transparent"
+      background="#e2e2e2"
       color="#666666"
       mode="closeable"
     >
       <div class="notice-text">
-        完成累计消费即可免费领取1箱价值3600元的茅台贵宾陈酿
+        完成累计消费即可免费领取豪礼！
       </div>
     </van-notice-bar>
     <div class="task-content">
@@ -33,7 +33,10 @@
             @click="changeTab"
           >燕阳良品</div>
         </div>
-        <div class="goods-card">
+        <div
+          class="goods-card"
+          :class="[{leftRadio:tid === '10'},{rightRadio:tid === '2'}]"
+        >
           <div class="goods-img">
             <img
               :src="taskData.thumb_url"
@@ -52,15 +55,9 @@
               <div class="get-gift">
                 <!-- 剩余数量：<span class="num">{{ taskData.remain_qty }}</span> -->
                 <van-button
-                  v-if="taskData.proportion===100"
                   class="get-button"
                   @click="getGift"
-                >
-                  免费领取
-                </van-button>
-                <van-button
-                  v-else
-                  class="get-button getButton2"
+                  :class="{getButton2:!checkStatus()}"
                 >
                   免费领取
                 </van-button>
@@ -79,7 +76,7 @@
 
 <script>
 // import { confirmOrder } from '@/api/BeeApi/order'
-import { getTaskDetail } from '@/api/BeeApi/task'
+import { getTaskDetail, getTaskPrompt } from '@/api/BeeApi/task'
 import taskHeader from './components/taskHeader'
 
 export default {
@@ -115,11 +112,82 @@ export default {
     async getTaskDetailData() {
       const res = await getTaskDetail({ tid: this.tid })
       this.taskData = res.data
+      // 判断是否弹出弹窗
+      this.getTaskPromptData(this.tid)
       if (this.taskData.proportion < 100) {
-        this.$refs.taskHeader.initPie()
+        this.$refs.taskHeader.initPie(this.taskData.proportion)
       }
     },
+    async getTaskPromptData(tid) {
+      if (this.taskData.mine_consume_amount >= 3600) {
+        if (
+          this.taskData.mine_consume_amount >= 4480 &&
+          !this.taskData.is_prompt &&
+          !this.taskData.is_other_prompt
+        ) {
+          this.$refs.taskHeader.showGift = true
+          this.$refs.taskHeader.tid = '2'
+          await getTaskPrompt({ tid: '2' })
+          await getTaskPrompt({ tid: '10' })
+        } else if (this.tid === '2' && !this.taskData.is_prompt) {
+          this.$refs.taskHeader.showGift = true
+          this.$refs.taskHeader.tid = '2'
+          await getTaskPrompt({ tid: '2' })
+        } else if (this.tid === '10' && !this.taskData.is_other_prompt) {
+          this.$refs.taskHeader.showGift = true
+          this.$refs.taskHeader.tid = '2'
+          await getTaskPrompt({ tid: '2' })
+        }
+      } else if (this.taskData.mine_consume_amount >= 880) {
+        if (this.tid === '2' && !this.taskData.is_other_prompt) {
+          this.$refs.taskHeader.showGift = true
+          this.$refs.taskHeader.tid = '10'
+          await getTaskPrompt({ tid: '10' })
+        } else if (this.tid === '10' && !this.taskData.is_prompt) {
+          this.$refs.taskHeader.showGift = true
+          this.$refs.taskHeader.tid = '10'
+          await getTaskPrompt({ tid: '10' })
+        }
+      }
+    },
+    // 判断是否满足领取条件
+    checkStatus() {
+      let status = true
+      if (
+        this.taskData.mine_consume_amount >= 4880 &&
+        !this.taskData.is_current_finish
+      ) {
+        status = true
+      } else {
+        if (this.tid === '2') {
+          if (
+            this.taskData.mine_consume_amount >= 3600 &&
+            !this.taskData.is_current_finish &&
+            !this.taskData.is_other_finish
+          ) {
+            status = true
+          } else {
+            status = false
+          }
+        } else if (this.tid === '10') {
+          if (
+            this.taskData.mine_consume_amount >= 880 &&
+            !this.taskData.is_current_finish &&
+            !this.taskData.is_other_finish
+          ) {
+            status = true
+          } else {
+            status = false
+          }
+        }
+      }
+      return status
+    },
     async getGift() {
+      // 如果已经领取过
+      if (!this.checkStatus()) {
+        return
+      }
       this.$toast('敬请等待！')
       // TODO 跳转下单
       // const res = await confirmOrder(
@@ -164,6 +232,10 @@ export default {
     .notice-text {
       margin-left: 0.2rem;
     }
+    .van-icon__image {
+      width: 0.34rem;
+      height: 0.17rem;
+    }
   }
   .task-content {
     background-color: @GreyBg;
@@ -197,15 +269,16 @@ export default {
         }
       }
       .leftTab {
-        margin-right: 0.16rem;
+        background-position: left;
       }
       .rightTab {
-        margin-left: 0.16rem;
+        background-position: right;
       }
       .goods-card {
         display: flex;
         padding: 0.2rem;
         background-color: #fff;
+        border-radius: 0.08rem;
         .goods-img {
           height: 1.48rem;
           width: 1.48rem;
@@ -256,10 +329,19 @@ export default {
           }
         }
       }
-
+      .leftRadio {
+        border-top-left-radius: none;
+      }
+      .rightRadio {
+        border-top-right-radius: none;
+      }
       .product-detailImg {
-        margin-top: 0.4rem;
+        margin-top: -0.2rem;
         border-radius: 0.08rem;
+        p {
+          margin: 0;
+          padding: 0;
+        }
       }
     }
   }

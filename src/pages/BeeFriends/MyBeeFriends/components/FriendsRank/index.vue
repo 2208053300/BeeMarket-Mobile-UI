@@ -51,10 +51,17 @@
           :title-active-color="BeeDefault"
           :title-inactive-color="Grey2"
           line-height="1px"
+          class="list-filter"
         >
           <van-tab>
             <div slot="title">
               用户状态
+              <div class="sort-img">
+                <img
+                  :src="beeIcon.beefriends_friend_icon_n"
+                  alt=""
+                >
+              </div>
             </div>
           </van-tab>
           <van-tab>
@@ -213,7 +220,6 @@ export default {
         beefriends_friend_icon_n: require('@/assets/icon/beeFriends/rank/beefriends_friend_icon_n.png'),
         beefriends_friend_icon_top: require('@/assets/icon/beeFriends/rank/beefriends_friend_icon_top.png'),
         beefriends_friend_icon_down: require('@/assets/icon/beeFriends/rank/beefriends_friend_icon_down.png')
-
       },
       friendsType: 2,
       friendsData: {},
@@ -447,6 +453,13 @@ export default {
           height: 1.76rem;
           top: -0.88rem;
           left: 2.9rem;
+        }
+      }
+      .list-filter{
+        .sort-img{
+          display: inline-block;
+          width: 0.1rem;
+          height: 0.12rem;
         }
       }
       .rank-list {

@@ -14,7 +14,7 @@
       <header-card :action-data="actionData" />
       <title-card :action-data="actionData" />
       <detail-card :action-data="actionData" />
-      <actionExplain />
+      <actionExplain :action-data="actionData" />
       <caring-enterprise :action-data="actionData" />
       <div class="qrcode-content">
         <div class="img-content">

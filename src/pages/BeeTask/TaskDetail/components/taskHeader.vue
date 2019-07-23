@@ -61,6 +61,37 @@
         </van-button>
       </div>
     </div>
+    <van-dialog
+      v-model="showGift"
+      show-cancel-button
+      cancel-button-text="继续购物"
+      confirm-button-text="马上领取"
+      confirm-button-color="#ffa42f"
+      class="text-center"
+      @confirm="getNow()"
+    >
+      <van-icon
+        name="passed"
+        color="#FFA431"
+        size="1rem"
+        style="margin-top: 0.2rem"
+      />
+      <p
+        v-if="tid === '10'"
+        style="font-size:0.3rem;"
+      >
+        燕窝领取条件已达标
+      </p>
+      <p
+        v-if="tid === '2'"
+        style="font-size:0.3rem;"
+      >
+        贵宾陈酿领取条件已达标
+      </p>
+      <p style="font-size:0.24rem;">
+        请及时领取！
+      </p>
+    </van-dialog>
   </div>
 </template>
 
@@ -80,7 +111,9 @@ export default {
     return {
       beeIcon: {
         task_icon_sigh: require('@/assets/icon/task/task_icon_sigh@2x.png')
-      }
+      },
+      showGift: false,
+      tid: '2'
     }
   },
   computed: {},
@@ -88,30 +121,27 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    initPie() {
+    initPie(proportion) {
       const pie1 = echarts.init(this.$refs.pieChart)
       const option = {
         series: [
           {
-            name: '销量',
+            name: '消费',
             type: 'pie',
             radius: '100%',
             center: ['50%', '50%'],
-            data: [
-              this.taskData.mine_consume_amount,
-              this.taskData.condition_amount - this.taskData.mine_consume_amount
-            ],
+            data: [proportion, 100 - proportion],
             hoverAnimation: false,
-            label: {
-              normal: {
-                position: 'inside',
-                formatter: '{d}%',
-                textStyle: {
-                  color: '#ffa42f',
-                  fontSize: 12
-                }
-              }
-            },
+            // label: {
+            //   normal: {
+            //     position: 'center',
+            //     formatter: '{d}%',
+            //     textStyle: {
+            //       color: '#ffa42f',
+            //       fontSize: 12
+            //     }
+            //   }
+            // },
             labelLine: {
               show: false
             }
@@ -133,6 +163,9 @@ export default {
       } else {
         goHome()
       }
+    },
+    getNow() {
+      this.$parent.getGift()
     }
   }
 }
@@ -145,7 +178,7 @@ export default {
   box-shadow: 0 0.1rem 0.2rem rgba(255, 164, 47, 0.4);
   .header-part1 {
     display: flex;
-    padding: 0.4rem 0.3rem 0 0.4rem;
+    padding: 0.4rem 0.3rem 0;
     color: #fff;
     justify-content: space-between;
     .header-left {
