@@ -15,7 +15,7 @@
         class="join-help"
         @click="goHome()"
       >
-        进入集市
+        进入商城
       </van-button>
     </div>
   </div>
@@ -23,7 +23,7 @@
 
 <script>
 import { goHome } from '@/utils'
-
+import { helpAction } from '@/api/BeeApi/action'
 export default {
   components: {},
   props: {
