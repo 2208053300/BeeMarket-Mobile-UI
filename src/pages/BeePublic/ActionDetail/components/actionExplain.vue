@@ -51,7 +51,6 @@ export default {
    background-size: 1.32rem 1.09rem;
    background-color: #fff;
  .action-explain{
-
    p{margin: 0;}
    .title{font-size: .28rem; color:#333; font-weight: 600; margin-bottom: .2rem}
    .info{font-size: .24rem; color:#333;}
