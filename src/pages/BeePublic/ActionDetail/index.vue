@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <!-- <footer-op :action-data="actionData" /> -->
+    <footer-op :action-data="actionData" />
   </div>
 </template>
 
@@ -37,7 +37,7 @@ import titleCard from './components/titleCard'
 import detailCard from './components/detailCard'
 import caringEnterprise from './components/caringEnterprise'
 import actionExplain from './components/actionExplain'
-// import footerOp from './components/footerOp'
+import footerOp from './components/footerOp'
 import { getShareDetail } from '@/api/BeeApi/action'
 import { helpAction } from '@/api/BeeApi/action'
 
@@ -47,7 +47,7 @@ export default {
     titleCard,
     detailCard,
     caringEnterprise,
-    // footerOp,
+    footerOp,
     actionExplain
   },
   props: {},
