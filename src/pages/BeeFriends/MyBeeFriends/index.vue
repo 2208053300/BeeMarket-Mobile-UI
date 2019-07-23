@@ -37,20 +37,23 @@
           </div>
         </div>
       </div>
-      <div
-        ref="countItem"
-        class="my-grade"
-        :style="{backgroundImage:'url('+beeIcon.bee_firend_icon_gold_top+')'}"
-        @click="showProject=true"
-      >
-        <template v-if="Number(partnerData.sup_balance)<1000">
-          <ICountUp
-            :delay="delay"
-            :end-val="omitNumber(partnerData.sup_balance)"
-            :options="options"
-          />
-        </template>
-        <span v-else>{{ omitNumber(partnerData.sup_balance) }}</span>
+      <div class="right-header">
+        <div
+          ref="countItem"
+          class="my-grade"
+          :style="{backgroundImage:'url('+beeIcon.bee_firend_icon_gold_top+')'}"
+          @click="showProject=true"
+        >
+          <template v-if="Number(partnerData.sup_balance)<1000">
+            <ICountUp
+              :delay="delay"
+              :end-val="omitNumber(partnerData.sup_balance)"
+              :options="options"
+            />
+          </template>
+          <span v-else>{{ omitNumber(partnerData.sup_balance) }}</span>
+        </div>
+        <span class="grade-text">我的收益</span>
       </div>
     </div>
     <div
@@ -62,10 +65,10 @@
         alt="规则"
       >
     </div>
-    <list-type
+    <!-- <list-type
       ref="listType"
       :honey-type.sync="honeyType"
-    />
+    /> -->
     <div
       class="bottom-fixed1"
       @click="showRank=true"
@@ -73,6 +76,15 @@
       <img
         :src="beeIcon.bee_firends_icon_firends"
         alt="蜂友排行"
+      >
+    </div>
+    <div
+      class="bottom-fixed2"
+      @click="showRank2=true"
+    >
+      <img
+        :src="beeIcon.bee_firends_home_icon_vendor"
+        alt="厂商排行"
       >
     </div>
     <honeycomb
@@ -89,6 +101,7 @@
       :center-point="centerPoint"
     />
     <friends-rank :show-rank.sync="showRank" />
+    <factory-rank :show-rank2.sync="showRank2" />
     <join-project :show-project.sync="showProject" />
     <go-farm-gift :show-gift.sync="showGift" />
     <transition name="fade1">
@@ -127,8 +140,9 @@ import { getPartner, getReceiveNum, harvestBalance } from '@/api/BeeApi/user'
 import Honeycomb from './components/Honeycomb'
 import UserCard from './components/UserCard'
 import FriendsRank from './components/FriendsRank'
+import FactoryRank from './components/FactoryRank'
 import JoinProject from './components/JoinProject'
-import ListType from './components/ListType'
+// import ListType from './components/ListType'
 import GoFarmGift from './components/GoFarmGift'
 import ICountUp from 'vue-countup-v2'
 import { setTimeout } from 'timers'
@@ -143,8 +157,9 @@ export default {
     Honeycomb,
     UserCard,
     FriendsRank,
+    FactoryRank,
     JoinProject,
-    ListType,
+    // ListType,
     ICountUp,
     GoFarmGift
   },
@@ -153,6 +168,7 @@ export default {
     return {
       detailCard: false,
       showRank: false,
+      showRank2: false,
       showProject: false,
       showGift: false,
       fromRoute: false,
@@ -161,6 +177,7 @@ export default {
         bee_firend_icon_gold_top: require('@/assets/icon/beeFriends/home/bee_firend_icon_gold_top.png'),
         bee_firends_icom_rule: require('@/assets/icon/beeFriends/home/bee_firends_icom_rule.png'),
         bee_firends_icon_firends: require('@/assets/icon/beeFriends/home/bee_firends_icon_firends.png'),
+        bee_firends_home_icon_vendor: require('@/assets/icon/beeFriends/home/bee_firends_home_icon_vendor.png'),
         bee_firend_icon_gold: require('@/assets/icon/beeFriends/home/bee_firend_icon_gold.png'),
         bee_firend_icon_moregold: require('@/assets/icon/beeFriends/home/bee_firend_icon_moregold.png'),
         bee_firend_icon_bubble: require('@/assets/icon/beeFriends/home/bee_firend_icon_bubble.png'),
@@ -365,7 +382,7 @@ export default {
       border: 0.02rem solid @BeeDefault;
       box-sizing: border-box;
       padding: 0.02rem;
-      margin-right: 0.2rem;
+      margin-right: 0.14rem;
       .header-img2 {
         width: 100%;
         height: 100%;
@@ -384,25 +401,32 @@ export default {
         }
       }
     }
-    .my-grade {
-      width: 0.74rem;
-      height: 0.85rem;
+    .right-header {
       text-align: center;
-      line-height: 0.85rem;
-      background-size: contain;
-      background-repeat: no-repeat;
-      color: #fff;
-      -webkit-text-stroke: 0.02rem #9d6232;
-      text-stroke: 0.02rem #9d6232;
-      font-weight: bold;
-      font-size: 0.32rem;
-      // font-family: PingFang-SC-Heavy, sans-serif;
+      .my-grade {
+        height: 0.56rem;
+        line-height: 0.56rem;
+        text-align: center;
+        background-size: 0.47rem 0.56rem;
+        background-repeat: no-repeat;
+        background-position: center;
+        color: #fff;
+        -webkit-text-stroke: 0.02rem #9d6232;
+        text-stroke: 0.02rem #9d6232;
+        font-weight: bold;
+        font-size: 0.28rem;
+        // font-family: PingFang-SC-Heavy, sans-serif;
+      }
+      .grade-text {
+        font-size: 0.2rem;
+        color: #9D6232;
+      }
     }
   }
   .rule-fixed {
     position: fixed;
-    top: 1.5rem;
-    left: 0.22rem;
+    top: 0.32rem;
+    right: 0.3rem;
     height: 0.92rem;
     width: 0.75rem;
     z-index: 100;
@@ -411,6 +435,14 @@ export default {
     position: fixed;
     bottom: 0.6rem;
     left: 0.4rem;
+    height: 1.14rem;
+    width: 1.01rem;
+    z-index: 100;
+  }
+  .bottom-fixed2 {
+    position: fixed;
+    bottom: 0.6rem;
+    left: 1.8rem;
     height: 1.14rem;
     width: 1.01rem;
     z-index: 100;
@@ -490,60 +522,6 @@ export default {
     bottom: 6rem;
     opacity: 0;
   }
-  .rule-pop {
-    border-radius: 0.3rem 0.3rem 0 0;
-    overflow: hidden;
-    .rule-content {
-      height: 10rem;
-      overflow: scroll;
-      position: relative;
-      .rule-header {
-        position: fixed;
-        width: 100%;
-        height: 0.6rem;
-        background-color: #fff;
-        z-index: 100;
-        .close-img {
-          position: absolute;
-          top: 0.16rem;
-          right: 0.16rem;
-          width: 0.4rem;
-          height: 0.4rem;
-        }
-      }
-      .head-img {
-        margin-top: 0.6rem;
-      }
-      @videoWidth: 6.4rem;
-      @videoHeight: 3.28rem;
-      .rule-video {
-        background-size: cover;
-        .video {
-          padding: 0.52rem 0.54rem;
-          border-radius: 0.08rem;
-          .video-body {
-            background-color: black;
-            width: @videoWidth;
-            height: @videoHeight;
-            border-radius: 0.08rem;
-          }
-          .control {
-            width: @videoWidth;
-            height: @videoHeight;
-            top: -@videoHeight;
-            left: 0;
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-        }
-      }
-      .img-content {
-        height: 45.49rem;
-      }
-    }
-  }
   .active-notice {
     position: fixed;
     width: 100%;
@@ -583,7 +561,7 @@ export default {
     top: 1.2rem;
   }
   .rule-fixed {
-    top: 2.5rem;
+    top: 1.2rem;
   }
   .active-notice {
     top: 2.5rem;
