@@ -201,9 +201,10 @@ export default {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
         this.$router.push({
-          path: '/confirmOrder',
+          name: 'confirmOrder',
           query: {
-            target: 'task'
+            target: os,
+            tid: this.tid
           }
         })
       }
@@ -293,6 +294,7 @@ export default {
           flex: 1;
           .goods-name {
             font-size: 0.28rem;
+            min-height: 0.6rem;
           }
           .goods-desc {
             font-size: 0.22rem;
