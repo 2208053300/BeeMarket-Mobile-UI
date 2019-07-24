@@ -36,6 +36,13 @@
           </div> -->
           <div class="card-content2">
             <div
+              v-if="actionData.schedule_status===4"
+              class="show-detail text-right"
+              @click="goDetail(actionData.aid)"
+            >
+              查看详情 》
+            </div>
+            <div
               v-for="(item,index) in actionData.project_progress"
               :key="index"
               class="time-content"
@@ -81,7 +88,16 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    goDetail(aid) {
+      this.$router.push({
+        name: 'completeDetail',
+        query: {
+          aid
+        }
+      })
+    }
+  }
 }
 </script>
 
@@ -103,12 +119,19 @@ export default {
     padding: 0.4rem;
     border-radius: 0.08rem;
     position: relative;
+    .show-detail {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.3rem;
+      font-size: 0.26rem;
+      color: @BeeDefault;
+    }
     .card-title {
       font-size: 0.3rem;
       font-weight: bold;
     }
     .card-content2 {
-      .time-content {
+       .time-content {
         font-size: 0.22rem;
         color: @Grey2;
         &:not(:last-child) .title-content2 {
@@ -163,6 +186,10 @@ export default {
         vertical-align: middle;
       }
     }
+  }
+    .show-detail {
+    font-size: 0.26rem;
+    color: @BeeDefault;
   }
 }
 </style>

@@ -22,6 +22,11 @@ const router = new Router({
           path: 'action',
           name: 'ActionDetail',
           component: () => import('@/pages/BeeActionList/ActionDetail')
+        },
+        {
+          path: 'completeDetail',
+          name: 'completeDetail',
+          component: () => import('@/pages/BeeActionList/CompleteDetail')
         }
       ]
     }

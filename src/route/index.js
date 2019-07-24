@@ -357,7 +357,7 @@ const router = new Router({
         {
           path: 'completeDetail',
           name: 'completeDetail',
-          component: () => import('@/pages/index/BeeDiscover/CompleteDetail')
+          component: () => import('@/pages/BeeActionList/CompleteDetail')
         },
         {
           path: 'joinSuccess',

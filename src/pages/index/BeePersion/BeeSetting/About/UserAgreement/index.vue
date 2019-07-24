@@ -212,7 +212,7 @@
 </template>
 
 <script>
-import BeeHeader from '@/components/index/BeeHeader'
+import BeeHeader from '@/components/BeeHeader'
 export default {
   components: { BeeHeader },
   props: {},

@@ -6,19 +6,12 @@
         活动说明
       </p>
       <p
-        v-if="actionData.is_schedule"
-        class="info first"
+        v-for="(item, index) in actionData.activity_directions"
+        :key="index"
+        class="info"
+        :class="{first: index===0}"
       >
-        助力人数达成立即启动捐赠 <span> (可通过“项目进度”共同监督) </span>
-      </p>
-      <p
-        v-else
-        class="info first"
-      >
-        本次公益项目已经启动运行 <span> (可通过“项目进度”共同监督) </span>
-      </p>
-      <p class="info">
-        首次参与助力获赠公益红包 <span>(可用于海量商品的任选抵扣)</span>
+        {{ item.content }} <span>{{ item.desc }}</span>
       </p>
     </div>
   </div>

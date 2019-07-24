@@ -2,39 +2,13 @@
   <div class="my-earn">
     <div class="earn-header">
       <div class="head-img">
-        <div class="img-content flex flex-between align-center">
-          <!-- 左边头像 星级 规则 -->
-          <div class="avatar flex align-center">
-            <img
-              :src="detailData.basic.head_image_url||$store.state.app.head_detault"
-              alt="头像"
-              class="avatar-img"
-            >
-            <div class="info">
-              <div class="level flex align-center">
-                <!-- <div class="star-imgs"> -->
-                <img :src="beeIcon.level_star_img" alt="" class="star">
-                <!-- </div> -->
-                <span class="partner-mark">合伙人</span>
-              </div>
-              <van-button class="rule-button">
-                升星规则
-              </van-button>
-            </div>
-          </div>
-          <!-- 右边收益数值 -->
-          <div class="earning-num">
-            <p class="total-num">
-              <span class="label">累计收益</span>
-              <span class="num">￥123123</span>
-            </p>
-            <p class="month-num">
-              <span class="label">本月收益</span>
-              <span class="num">￥123123</span>
-            </p>
-          </div>
+        <div class="img-content">
+          <img
+            :src="detailData.basic.head_image_url||$store.state.app.head_detault"
+            alt="头像"
+          >
         </div>
-        <!-- <span class="user-name">{{ detailData.basic.nickname }}</span> -->
+        <span class="user-name">{{ detailData.basic.nickname }}</span>
       </div>
       <div class="earn-tab">
         <div
@@ -138,7 +112,6 @@ export default {
   data() {
     return {
       beeIcon: {
-        level_star_img: require('@/assets/icon/beeFriends/info/bee_firends_basic_icon_star.png'),
         bee_firends_income_icon_growingup: require('@/assets/icon/beeFriends/info/bee_firends_income_icon_growingup.png'),
         bee_firends_income_icon_gold: require('@/assets/icon/beeFriends/info/bee_firends_income_icon_gold.png')
       },
@@ -226,33 +199,16 @@ export default {
     height: 4.3rem;
     background-color: @BeeDefault;
     .head-img {
-      padding-top: 1rem;
-      // text-align: center;
+      padding-top: 1.3rem;
+      text-align: center;
       .img-content {
-        // margin: 0 auto 0.18rem;
-        padding: 0 0.3rem;
-        .avatar-img{
-          width: 1.2rem;
-          height: 1.2rem;
-          overflow: hidden;
-          border-radius: 50%;
-          box-sizing: border-box;
-          border: 0.04rem solid rgba(255, 255, 255, 0.2);
-          margin-right:.2rem;
-        }
-        .star-imgs{margin-right: 0.1rem;}
-        .level{margin-bottom: 0.1rem;}
-        .star{width:.24rem; height: .23rem;margin-right: 0.05rem;}
-        .partner-mark{font-size:.26rem ;color: #fff;}
-        .rule-button{width:1.56rem; height: 0.52rem; line-height: .5rem; font-size: .26rem; color:#fefefe;
-          border-color: #fefefe; background-color: transparent; border-radius: 0.1rem; padding: 0;
-        }
-        .earning-num{font-size: 0.24rem; color: #fff;
-          p{margin: 0;}
-          .total-num{margin-bottom: 0.2rem;}
-          .label{margin-right: 0.2rem;}
-        }
-
+        margin: 0 auto 0.18rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        overflow: hidden;
+        border-radius: 50%;
+        box-sizing: border-box;
+        border: 0.04rem solid rgba(255, 255, 255, 0.2);
       }
       .user-name {
         font-size: 0.3rem;
@@ -260,7 +216,7 @@ export default {
       }
     }
     .earn-tab {
-      margin-top: 0.6rem;
+      margin-top: 0.2rem;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       .tab-content {

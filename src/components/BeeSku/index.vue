@@ -72,13 +72,35 @@
           </div>
         </div>
       </div>
-      <div class="done-btn">
+      <div
+        v-if="selectType===0"
+        class="done-btn"
+      >
         <van-button
           class="done"
           :disabled="btnDisabled"
           @click="handleDone()"
         >
           确定
+        </van-button>
+      </div>
+      <div
+        v-if="selectType===1"
+        class="done-btn done-btn2"
+      >
+        <van-button
+          class="btn1 add-cart"
+          :disabled="btnDisabled"
+          @click="handleAdd()"
+        >
+          加入购物车
+        </van-button>
+        <van-button
+          class="btn1 buy-now"
+          :disabled="btnDisabled"
+          @click="handleDone()"
+        >
+          立即购买
         </van-button>
       </div>
       <van-image-preview
@@ -116,6 +138,10 @@ export default {
     limitNum: {
       type: Number,
       default: 99
+    },
+    selectType: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -207,10 +233,13 @@ export default {
       })
     },
     handleClose() {
+      this.$emit('update:selectType', 0)
       this.$emit('update:showSku', false)
     },
+    // 确定选项，跳转下单
     handleDone() {
       this.$emit('update:propsId', this.selProps)
+      this.$emit('update:selectType', 0)
       this.$emit('update:showSku', false)
       this.$emit('update:pNumber', this.productNum)
       // FIXME 此处注意方法顺序
@@ -218,6 +247,13 @@ export default {
       this.$emit('get-sku-id', this.propsData.sku_id)
       this.$emit('sku-done') // SKU选择完成
       // return this.propsData.sku_id
+    },
+    // 确定选项，加入购物车
+    handleAdd() {
+      this.$emit('update:selectType', 0)
+      this.$emit('update:showSku', false)
+      this.$emit('get-sku-id', this.propsData.sku_id)
+      this.$emit('sku-add')
     }
   }
 }
@@ -336,6 +372,23 @@ export default {
         border: none;
         color: #ffffff;
         font-size: 0.3rem;
+      }
+    }
+    .done-btn2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      .btn1 {
+        height: 0.9rem;
+        line-height: 0.9rem;
+        color: #ffffff;
+      }
+      .add-cart {
+        background: linear-gradient(to right, #ffbd2f, #ffa42f);
+        border-color: #ffa42f;
+      }
+      .buy-now {
+        background: linear-gradient(to right, #ff8c2f, #f15b26);
+        border-color: #ff8c2f;
       }
     }
   }

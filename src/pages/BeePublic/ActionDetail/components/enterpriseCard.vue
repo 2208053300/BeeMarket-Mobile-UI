@@ -73,7 +73,7 @@ export default {
   .enterprise-card {
     border-radius: 0.08rem;
     .enterprise-content {
-      height: 7.2rem;
+      max-height: 7.2rem;
       width: 5.76rem;
       background-color: #fff;
       background-size: contain;
@@ -112,6 +112,8 @@ export default {
         text-indent: 2em;
         overflow-y: scroll;
         color: #fff;
+        width: 100%;
+        word-wrap:break-word;
       }
     }
   }

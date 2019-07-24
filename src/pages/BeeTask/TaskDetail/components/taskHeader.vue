@@ -12,7 +12,7 @@
           {{ taskData.mine_consume_amount }}
         </div>
         <div class="left-text3">
-          <van-icon :name="beeIcon.task_icon_sigh" />需完成累计消费{{ taskData.condition_amount }}元
+          <van-icon :name="beeIcon.task_icon_sigh" />{{ taskData.detail_desc }}
         </div>
       </div>
       <div class="header-right">
@@ -97,7 +97,7 @@
 
 <script>
 import echarts from 'echarts/dist/echarts.simple.min.js'
-import { goHome, getOs } from '@/utils'
+import { getOs } from '@/utils'
 
 export default {
   components: {},
@@ -155,13 +155,13 @@ export default {
       const osObj = getOs()
       if (osObj.isWx) {
         // 微信直接跳转路由
-        goHome()
+        this.$router.push('/category')
       } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToCatList.postMessage(1)
       } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToCatList()
       } else {
-        goHome()
+        this.$router.push('/category')
       }
     },
     getNow() {

@@ -58,7 +58,7 @@
 import { getOs } from '@/utils'
 import bmHeader from './components/header'
 import { isConsume } from '@/api/BeeApi/task'
-import BeeHeader from '@/components/index/BeeHeader'
+import BeeHeader from '@/components/BeeHeader'
 
 export default {
   metaInfo: {

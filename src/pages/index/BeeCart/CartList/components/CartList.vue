@@ -108,7 +108,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import BeeSku from '@/components/index/BeeSku'
+import BeeSku from '@/components/BeeSku'
 import { BeeDefault } from '@/styles/index/variables.less'
 import {
   updateShopcartProductNum,

@@ -95,7 +95,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
-import BeeArea from '@/components/index/BeeArea'
+import BeeArea from '@/components/BeeArea'
 import { getAddressDetail, addAddress, updateAddress } from '@/api/BeeApi/user'
 export default {
   metaInfo() {

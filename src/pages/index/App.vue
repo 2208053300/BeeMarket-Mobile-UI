@@ -32,8 +32,8 @@
 import { getUID } from '@/api/BeeApi/user'
 import wxapi from '@/utils/wxapi'
 import { getOs } from '@/utils'
-import BeeHeader from '@/components/index/BeeHeader'
-import BeeFooter from '@/components/index/BeeFooter'
+import BeeHeader from '@/components/BeeHeader'
+import BeeFooter from '@/components/BeeFooter'
 import backTop from '@/components/backTop'
 export default {
   metaInfo: {
