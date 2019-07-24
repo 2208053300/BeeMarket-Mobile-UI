@@ -38,7 +38,7 @@
             <div
               v-if="actionData.schedule_status===4"
               class="show-detail text-right"
-              @click="goDetail(actionData.finish_link)"
+              @click="goDetail(actionData.aid)"
             >
               查看详情 》
             </div>
@@ -89,8 +89,13 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    goDetail(url) {
-      window.location.href = url
+    goDetail(aid) {
+      this.$router.push({
+        name: 'completeDetail',
+        query: {
+          aid
+        }
+      })
     }
   }
 }

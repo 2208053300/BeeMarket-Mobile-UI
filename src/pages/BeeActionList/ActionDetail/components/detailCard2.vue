@@ -28,7 +28,7 @@
           <div
             v-if="actionDetails.schedule_status===4"
             class="show-detail text-right"
-            @click="goDetail(actionDetails.finish_link)"
+            @click="goDetail(actionDetails.id)"
           >
             查看详情 》
           </div>
@@ -58,6 +58,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
+
 export default {
   components: {},
   props: {
@@ -82,8 +83,13 @@ export default {
 
   },
   methods: {
-    goDetail(url) {
-      window.location.href = url
+    goDetail(id) {
+      this.$router.push({
+        name: 'completeDetail',
+        query: {
+          id
+        }
+      })
     }
   }
 }
