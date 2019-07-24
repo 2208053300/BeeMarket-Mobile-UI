@@ -147,7 +147,7 @@ export default {
             goPayFromPayInfo(this.order.payInfo)
           }
         } else if (osObj.isIphone && osObj.isApp) {
-          window.webkit.messageHandlers.ToOrderDetail.postMessage({
+          window.webkit.messageHandlers.ToPayOrder.postMessage({
             payOrderJson: JSON.stringify(this.order.payInfo),
             ot: 'general'
           })
