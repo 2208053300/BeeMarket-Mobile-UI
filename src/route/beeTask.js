@@ -54,38 +54,6 @@ const router = new Router({
               component: () => import('@/pages/BeeTask/PayOrder/PaySelf')
             }
           ]
-        },
-        {
-          path: 'setPayPw',
-          component: () =>
-            import('@/pages/BeeTask/SetPayPw'),
-          children: [
-            {
-              path: '',
-              component: () =>
-                import('@/pages/BeeTask/SetPayPw/RemindPw')
-            },
-            {
-              path: 'getSms',
-              name: 'setPayPwGetSms',
-              component: () =>
-                import('@/pages/BeeTask/SetPayPw/GetSms')
-            },
-            {
-              path: 'inputOldPw',
-              name: 'inputOldPw',
-              component: () =>
-                import(
-                  '@/pages/BeeTask/SetPayPw/InputOldPw'
-                )
-            },
-            {
-              path: 'setPw',
-              name: 'setPayPw',
-              component: () =>
-                import('@/pages/BeeTask/SetPayPw/SetPw')
-            }
-          ]
         }
       ]
     }

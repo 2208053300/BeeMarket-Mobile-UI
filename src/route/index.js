@@ -232,6 +232,17 @@ const router = new Router({
                   component: () => import('@/pages/BeeAddress/AddAddress')
                 }
               ]
+            },
+            {
+              path: 'payOrder',
+              component: () => import('@/pages/BeeTask/PayOrder'),
+              children: [
+                {
+                  path: '',
+                  name: 'payOrderTask',
+                  component: () => import('@/pages/BeeTask/PayOrder/PaySelf')
+                }
+              ]
             }
           ]
         },

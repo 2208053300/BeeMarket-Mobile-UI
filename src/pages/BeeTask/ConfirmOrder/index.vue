@@ -52,6 +52,7 @@ import { mapState } from 'vuex'
 import { createOrder } from '@/api/BeeApi/order'
 import { goPayFromPayInfo } from '@/utils/wxPay'
 import { confirmOrder } from '@/api/BeeApi/order'
+import { getOs } from '@/utils'
 
 export default {
   metaInfo: {
@@ -134,16 +135,38 @@ export default {
         })
       )
       if (res.status_code === 200) {
-        console.log(res)
-        this.order.payInfo = res.data
-        console.log('支付信息', res.data)
-        if (this.orderTypeText === 'please') {
-          this.$router.push('/category/details/payForAnother')
-        } else if (this.orderTypeText === 'present') {
-          this.$router.push('/category/details/giveFirends')
+        const osObj = getOs()
+        if (osObj.isWx) {
+          this.order.payInfo = res.data
+          if (this.orderTypeText === 'please') {
+            this.$router.push('/category/details/payForAnother')
+          } else if (this.orderTypeText === 'present') {
+            this.$router.push('/category/details/giveFirends')
+          } else {
+            // 去支付
+            goPayFromPayInfo(this.order.payInfo)
+          }
+        } else if (osObj.isIphone && osObj.isApp) {
+          window.webkit.messageHandlers.ToOrderDetail.postMessage({
+            payOrderJson: JSON.stringify(this.order.payInfo),
+            ot: 'general'
+          })
+        } else if (osObj.isAndroid && osObj.isApp) {
+          window.beeMarket.ToPayOrder(
+            JSON.stringify(this.order.payInfo),
+            'general'
+          )
+          window.beeMarket.CloseThisActivity()
         } else {
-          // 去支付
-          goPayFromPayInfo(this.order.payInfo, 'task')
+          this.order.payInfo = res.data
+          if (this.orderTypeText === 'please') {
+            this.$router.push('/category/details/payForAnother')
+          } else if (this.orderTypeText === 'present') {
+            this.$router.push('/category/details/giveFirends')
+          } else {
+            // 去支付
+            goPayFromPayInfo(this.order.payInfo)
+          }
         }
       }
     },
