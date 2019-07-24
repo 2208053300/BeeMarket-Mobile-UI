@@ -22,6 +22,27 @@ const router = new Router({
           path: 'taskDetail',
           name: 'taskDetail',
           component: () => import('@/pages/BeeTask/TaskDetail')
+        },
+        {
+          path: 'confirmOrder',
+          name: 'confirmOrder',
+          component: () => import('@/pages/BeeTask/ConfirmOrder')
+        },
+        {
+          path: 'addressSetting',
+          component: () => import('@/pages/BeeAddress'),
+          children: [
+            {
+              path: '',
+              name: 'addressManage',
+              component: () => import('@/pages/BeeAddress/AddressManage')
+            },
+            {
+              path: 'addAddress',
+              name: 'addAddress',
+              component: () => import('@/pages/BeeAddress/AddAddress')
+            }
+          ]
         }
       ]
     }

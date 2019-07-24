@@ -153,7 +153,8 @@
               round
               @click="$router.push({name:'taskDetail',query:{tid:taskData.task_list[1].tid}})"
             >
-              去完成
+              <span v-if="taskData.task_list[1].is_receive===0">领取任务</span>
+              <span v-else>去完成</span>
             </van-button>
           </div>
         </div>

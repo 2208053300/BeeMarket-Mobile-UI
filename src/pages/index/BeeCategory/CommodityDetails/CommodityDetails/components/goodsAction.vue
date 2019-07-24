@@ -146,7 +146,7 @@ export default {
             sid: this.$store.state.cart.skuId,
             number: this.$store.state.cart.pNumber
           },
-          source: this.$route.query.target || 'general'
+          os: this.$route.query.target || 'general'
         })
       )
       if (res.status_code === 200) {

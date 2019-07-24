@@ -211,6 +211,27 @@ const router = new Router({
               path: 'taskDetail',
               name: 'taskDetail',
               component: () => import('@/pages/BeeTask/TaskDetail')
+            },
+            {
+              path: 'confirmOrder',
+              name: 'confirmOrder',
+              component: () => import('@/pages/BeeTask/ConfirmOrder')
+            },
+            {
+              path: 'addressSetting',
+              component: () => import('@/pages/BeeAddress'),
+              children: [
+                {
+                  path: '',
+                  name: 'addressManage',
+                  component: () => import('@/pages/BeeAddress/AddressManage')
+                },
+                {
+                  path: 'addAddress',
+                  name: 'addAddress',
+                  component: () => import('@/pages/BeeAddress/AddAddress')
+                }
+              ]
             }
           ]
         },
@@ -300,7 +321,9 @@ const router = new Router({
                   path: 'payResult',
                   name: 'payResult',
                   component: () =>
-                    import('@/pages/index/BeeCategory/CommodityDetails/PayOrder/PayResult')
+                    import(
+                      '@/pages/index/BeeCategory/CommodityDetails/PayOrder/PayResult'
+                    )
                 }
               ]
             },
@@ -333,8 +356,7 @@ const router = new Router({
             {
               path: 'license',
               name: 'StoreLicense',
-              component: () =>
-                import('@/pages/BeeStoreLicense')
+              component: () => import('@/pages/BeeStoreLicense')
             }
           ]
         }
@@ -725,19 +747,17 @@ const router = new Router({
         },
         {
           path: 'addressSetting',
-          component: () => import('@/pages/index/BeePersion/AddressSetting'),
+          component: () => import('@/pages/BeeAddress'),
           children: [
             {
               path: '',
               name: 'addressManage',
-              component: () =>
-                import('@/pages/index/BeePersion/AddressSetting/AddressManage')
+              component: () => import('@/pages/BeeAddress/AddressManage')
             },
             {
               path: 'addAddress',
               name: 'addAddress',
-              component: () =>
-                import('@/pages/index/BeePersion/AddressSetting/AddAddress')
+              component: () => import('@/pages/BeeAddress/AddAddress')
             }
           ]
         },

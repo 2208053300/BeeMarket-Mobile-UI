@@ -213,6 +213,8 @@ export default {
       height: 6.6rem;
       background-size: cover;
       background-repeat: no-repeat;
+      // border-radius: 0.16rem;
+      // overflow: hidden;
       .bg-img {
         width: 5.02rem;
         height: 6.6rem;

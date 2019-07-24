@@ -26,12 +26,12 @@
             class="disableTab"
             :class="{activeTab:tid === '2'}"
             @click="changeTab"
-          >贵宾陈酿</div>
+          >茅台贵宾陈酿</div>
           <div
             class="disableTab"
             :class="{activeTab:tid === '10'}"
             @click="changeTab"
-          >燕阳良品</div>
+          >木糖醇即食燕窝</div>
         </div>
         <div
           class="goods-card"
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-// import { confirmOrder } from '@/api/BeeApi/order'
+import { confirmOrder } from '@/api/BeeApi/order'
 import { getTaskDetail, getTaskPrompt } from '@/api/BeeApi/task'
 import taskHeader from './components/taskHeader'
 
@@ -122,7 +122,7 @@ export default {
     async getTaskPromptData(tid) {
       if (this.taskData.mine_consume_amount >= 3600) {
         if (
-          this.taskData.mine_consume_amount >= 4480 &&
+          this.taskData.mine_consume_amount >= 4489 &&
           !this.taskData.is_prompt &&
           !this.taskData.is_other_prompt
         ) {
@@ -139,7 +139,7 @@ export default {
           this.$refs.taskHeader.tid = '2'
           await getTaskPrompt({ tid: '2' })
         }
-      } else if (this.taskData.mine_consume_amount >= 880) {
+      } else if (this.taskData.mine_consume_amount >= 889) {
         if (this.tid === '2' && !this.taskData.is_other_prompt) {
           this.$refs.taskHeader.showGift = true
           this.$refs.taskHeader.tid = '10'
@@ -155,7 +155,7 @@ export default {
     checkStatus() {
       let status = true
       if (
-        this.taskData.mine_consume_amount >= 4880 &&
+        this.taskData.mine_consume_amount >= 4489 &&
         !this.taskData.is_current_finish
       ) {
         status = true
@@ -172,7 +172,7 @@ export default {
           }
         } else if (this.tid === '10') {
           if (
-            this.taskData.mine_consume_amount >= 880 &&
+            this.taskData.mine_consume_amount >= 889 &&
             !this.taskData.is_current_finish &&
             !this.taskData.is_other_finish
           ) {
@@ -189,23 +189,24 @@ export default {
       if (!this.checkStatus()) {
         return
       }
-      this.$toast('敬请等待！')
+      const os = this.tid === '2' ? 'task|maotai' : 'task|bns'
       // TODO 跳转下单
-      // const res = await confirmOrder(
-      //   JSON.stringify({
-      //     source: 'task'
-      //   })
-      // )
-      // if (res.status_code === 200) {
-      //   this.$store.state.order.orderDetail = res.data
-      //   this.$store.state.order.addrDetail = res.data.addr
-      //   this.$router.push({
-      //     path: '/category/details/confirmOrder',
-      //     query: {
-      //       target: 'task'
-      //     }
-      //   })
-      // }
+      const res = await confirmOrder(
+        JSON.stringify({
+          os: os,
+          tid: this.tid
+        })
+      )
+      if (res.status_code === 200) {
+        this.$store.state.order.orderDetail = res.data
+        this.$store.state.order.addrDetail = res.data.addr
+        this.$router.push({
+          path: '/confirmOrder',
+          query: {
+            target: 'task'
+          }
+        })
+      }
     },
     getBg() {
       return this.tid === '2'
