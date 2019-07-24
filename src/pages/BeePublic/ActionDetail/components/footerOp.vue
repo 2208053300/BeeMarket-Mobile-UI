@@ -53,12 +53,14 @@ export default {
       })
       if (res.status_code === 200) {
         this.$toast(res.message)
-        this.$router.push({
-          path: '/helpSuccess',
-          query: {
-            charity_value: res.data.charity_value
-          }
-        })
+        setTimeout(() => {
+          this.$router.push({
+            path: '/helpSuccess',
+            query: {
+              charity_value: res.data.charity_value
+            }
+          })
+        }, 1500)
       }
     }
   }
