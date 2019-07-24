@@ -140,6 +140,7 @@ import { GetRequest } from '@/utils/index'
 import BalancePay from './components/balancePay'
 import { goPayFromOrder, goPayFromPayInfo } from '@/utils/wxPay'
 import { orderVerify } from '@/api/BeeApi/order'
+import { getOs } from '@/utils'
 export default {
   components: { BalancePay },
   props: {},
@@ -319,11 +320,25 @@ export default {
       orderVerify({
         pay_method: this.payMethod,
         trade_no: this.order.payInfo.trade_no
-      }).then(res => {})
-      this.$router.replace({
-        name: 'payResult',
-        query: {
-          trade_no: this.order.payInfo.trade_no
+      }).then(res => {
+        const osObj = getOs()
+        if (osObj.isWx) {
+          window.location.href =
+            this.$store.state.app.homeUri +
+            '/persion/order/orderDetail?order_no=' +
+            this.$route.query.orderNo
+        } else if (osObj.isIphone && osObj.isApp) {
+          window.webkit.messageHandlers.ToOrderDetail.postMessage({
+            order_no: this.$route.query.orderNo
+          })
+        } else if (osObj.isAndroid && osObj.isApp) {
+          window.beeMarket.ToOrderDetail(this.$route.query.orderNo)
+          window.beeMarket.CloseThisActivity()
+        } else {
+          window.location.href =
+            this.$store.state.app.homeUri +
+            '/persion/order/orderDetail?order_no=' +
+            this.$route.query.orderNo
         }
       })
     }
