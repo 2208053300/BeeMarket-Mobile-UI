@@ -9,12 +9,12 @@
       @close="closed"
       @click-overlay="closed"
     >
-      <div class="text-right tipImg">
+      <!-- <div class="text-right tipImg">
         <img
           :src="beeIcon.shareTip"
           class="shareTip"
         >
-      </div>
+      </div> -->
       <div class="share-bg">
         <div class="share-content">
           <!-- :style="{backgroundImage:'url('+actionDetails.share_image+')'}" -->
@@ -140,7 +140,7 @@ export default {
     return {
       share_img: '',
       beeIcon: {
-        shareTip: require('@/assets/icon/share/guide1.png'),
+        // shareTip: require('@/assets/icon/share/guide1.png'),
         pic_text: require('@/assets/icon/discover/pic_text@2x.png'),
         pic_finger: require('@/assets/icon/discover/pic_finger@2x.png')
       },

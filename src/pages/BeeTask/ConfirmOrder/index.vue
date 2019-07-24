@@ -25,63 +25,6 @@
           ￥{{ order.orderDetail.freight_amount||0 }}
         </div>
       </van-cell>
-      <van-cell class="deduction-content">
-        <div
-          slot="title"
-          class="cell-title "
-        >
-          抵扣
-          <div class="deduction-num">
-            您共有{{ order.orderDetail.charity_amount }}公益值，可抵扣{{ order.orderDetail.charity_deduction }}元
-          </div>
-        </div>
-        <van-switch
-          v-model="charity_used"
-          :active-color="BeeDefault"
-          @change="deductionMoney"
-        />
-      </van-cell>
-    </van-cell-group>
-    <van-cell-group class="other-info2">
-      <van-cell class="benefit-content">
-        <div
-          slot="title"
-          class="cell-title"
-        >
-          公益宝贝
-        </div>
-        <span class="benefit-text">将我的消费计入公益值</span>
-        <van-checkbox
-          v-model="joinBee"
-          :checked-color="BeeDefault"
-        />
-      </van-cell>
-      <!-- TODO赠送好友取消该选项 -->
-      <!-- <van-cell v-if="orderTypeText!=='present'">
-        <div
-          slot="title"
-          class="cell-title"
-        >
-          朋友代付
-        </div>
-        <van-checkbox
-          v-model="orderType"
-          :checked-color="BeeDefault"
-          @change="changeOt"
-        />
-      </van-cell> -->
-      <van-cell class="deduction-content">
-        <div
-          slot="title"
-          class="cell-title "
-        >
-          匿名购买
-        </div>
-        <van-checkbox
-          v-model="anonymous"
-          :checked-color="BeeDefault"
-        />
-      </van-cell>
     </van-cell-group>
     <div class="submit-order">
       <div class="total-price">
@@ -141,7 +84,7 @@ export default {
       this.confirmGiftPackageOrder()
     } else {
       if (JSON.stringify(this.order.orderDetail) === '{}') {
-        this.$router.replace(-1)
+        this.$router.go(-1)
       }
     }
   },
@@ -149,9 +92,11 @@ export default {
     // 确认礼包订单信息
     async confirmGiftPackageOrder() {
       // 获取确认订单
-      const res = await confirmOrder(JSON.stringify({
-        os: 'pgpackage'
-      }))
+      const res = await confirmOrder(
+        JSON.stringify({
+          os: 'pgpackage'
+        })
+      )
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
@@ -178,6 +123,7 @@ export default {
       // TODO 缺少农副产品和限量蜂抢字段获取
       const res = await createOrder(
         JSON.stringify({
+          tid: this.$route.query.tid,
           addr_id: this.order.addrDetail.addr_id,
           stores: storeData,
           charity_used: this.charity_used,
@@ -197,7 +143,7 @@ export default {
           this.$router.push('/category/details/giveFirends')
         } else {
           // 去支付
-          goPayFromPayInfo(this.order.payInfo)
+          goPayFromPayInfo(this.order.payInfo, 'task')
         }
       }
     },

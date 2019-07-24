@@ -43,6 +43,29 @@ const router = new Router({
               component: () => import('@/pages/BeeAddress/AddAddress')
             }
           ]
+        },
+        {
+          path: 'payOrder',
+          component: () =>
+            import('@/pages/BeeTask/PayOrder'),
+          children: [
+            {
+              path: '',
+              name: 'payOrder',
+              component: () =>
+                import(
+                  '@/pages/BeeTask/PayOrder/PaySelf'
+                )
+            },
+            {
+              path: 'payResult',
+              name: 'payResult',
+              component: () =>
+                import(
+                  '@/pages/BeeTask/PayOrder/PayResult'
+                )
+            }
+          ]
         }
       ]
     }
