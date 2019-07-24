@@ -43,7 +43,7 @@
           @click="goSomething"
         >
           <span v-if="hasFirstConsume === 0">
-            去逛逛
+            去开启
           </span>
           <span v-else>
             进入蜂友圈
