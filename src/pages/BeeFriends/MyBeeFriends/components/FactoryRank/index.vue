@@ -17,7 +17,8 @@
               class="tab-img"
             />
             <div class="type-num">
-              厂商：<span class="num">{{ friendsData.friends_num||0 }} </span>个
+              <!-- 厂商：<span class="num">{{ friendsData.num||0 }} </span>个 -->
+              厂商：<span class="num">0</span>个
             </div>
           </div>
           <div class="type-tab">
