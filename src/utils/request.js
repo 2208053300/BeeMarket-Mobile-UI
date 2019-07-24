@@ -85,7 +85,7 @@ service.interceptors.response.use(
         await store.dispatch('ClearUserInfo')
         await checkToken()
       }
-      Toast.success(res.message)
+      Toast(res.message)
       return Promise.reject(res.message || 'error')
     } else {
       // Toast.success(res.message)
