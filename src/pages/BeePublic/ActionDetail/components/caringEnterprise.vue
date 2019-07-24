@@ -62,6 +62,10 @@
       :show-detail.sync="showDetail"
       :company-info="actionData.company_info"
     />
+    <div
+      class="dotted-img"
+      :style="{backgroundImage:'url('+beeIcon.confirmorder_pic_parting+')'}"
+    />
     <div class="bottom-tip text-center">
       <p>首次助力公益，可领取<span>100</span>公益值红包</p>
       <p>（海量商品，任选免单）</p>
@@ -110,7 +114,7 @@ export default {
     const dom = document.querySelector('.enterprise-content')
     if (getOs().isIphone) {
       this.isIphone = true
-    }else {
+    } else {
       this.isIphone = false
     }
   },
@@ -127,7 +131,12 @@ export default {
   border-radius: 0.08rem;
   position: relative;
   margin-bottom:.3rem;
-
+    .dotted-img {
+      height: 0.05rem;
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin: 0.4rem 0;
+    }
   .caring-content {
     .caring-title {
       font-size: 0.32rem;
@@ -149,12 +158,7 @@ export default {
         font-size: 0.28rem;
       }
     }
-    .dotted-img {
-      height: 0.05rem;
-      background-size: cover;
-      background-repeat: no-repeat;
-      margin: 0.4rem 0;
-    }
+
   }
   .institutions-content {
     .institutions-title {
@@ -197,7 +201,7 @@ export default {
     }
   }
   .bottom-tip{
-    margin-top: 0.6rem;
+    // margin-top: 0.6rem;
     p{font-size: 0.26rem;font-weight: 600; margin: 0;
       span{font-size: 0.4rem; color: @BeeDefault;}
       &:nth-of-type(1){margin-bottom:0.2rem; }
