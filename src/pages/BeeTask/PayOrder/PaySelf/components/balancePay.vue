@@ -1,17 +1,25 @@
 <template>
   <div class="input-password">
-    <van-popup v-model="isShow" position="bottom" style="height: 73%" @closed="onClosed">
+    <van-popup
+      v-model="isShow"
+      position="bottom"
+      style="height: 73%"
+      @closed="onClosed"
+    >
       <div class="title">
-        <van-icon class="icon" name="cross" size="0.34rem" @click="isShow=false" />
+        <van-icon
+          class="icon"
+          name="cross"
+          size="0.34rem"
+          @click="isShow=false"
+        />
         <span>输入密码</span>
       </div>
       <div class="money">
         <span>￥</span>
         <span>{{ payInfo.pay_amount }}</span>
       </div>
-      <van-password-input
-        :value="password"
-      />
+      <van-password-input :value="password" />
       <div class="reset-password">
         <span @click="resetPassword">忘记密码？</span>
       </div>
@@ -62,7 +70,7 @@ export default {
             confirmButtonText: '去设置',
             confirmButtonColor: '#f49822'
           })
-          this.$router.push('/persion/profile/setPayPw/getSms')
+          this.$router.push('/setPayPw/getSms')
         } catch (e) {
           console.log('取消设置支付密码')
         }
@@ -107,7 +115,7 @@ export default {
     },
     // 进入重置支付密码页面
     resetPassword() {
-      this.$router.push('/persion/profile/setPayPw')
+      this.$router.push('/setPayPw')
     }
   }
 }
@@ -148,29 +156,28 @@ export default {
       font-size: 0.24rem;
     }
   }
-  .van-password-input__info{
+  .van-password-input__info {
     text-align: left;
-    font-size: .28rem;
+    font-size: 0.28rem;
   }
-  .van-password-input__security{
+  .van-password-input__security {
     border: 1px solid #999;
     border-radius: 0.1rem;
   }
-  .van-password-input__security li{
+  .van-password-input__security li {
     border-right: 1px solid #999;
     background: none;
   }
-  .van-password-input__security li:first-child{
-
+  .van-password-input__security li:first-child {
     border-top-left-radius: 0.1rem;
     border-bottom-left-radius: 0.1rem;
   }
-  .van-password-input__security li:last-child{
+  .van-password-input__security li:last-child {
     border-right: none;
     border-top-right-radius: 0.1rem;
     border-bottom-right-radius: 0.1rem;
   }
-  [class*=van-hairline]::after{
+  [class*="van-hairline"]::after {
     border: none;
   }
   .van-password-input {
