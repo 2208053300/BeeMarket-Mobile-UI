@@ -185,7 +185,7 @@ export default {
       this.$store.state.app.pushName = 'confirmOrder'
       // TODO 重新选择送货地址
       this.$router.push({
-        name: 'addressSetting',
+        name: 'addressManage',
         query: {
           mode: 'select'
         }

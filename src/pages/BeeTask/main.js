@@ -19,7 +19,8 @@ import {
   CellGroup,
   Switch,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  Field
 } from 'vant'
 
 Vue.use(Icon)
@@ -32,6 +33,7 @@ Vue.use(Icon)
   .use(Switch)
   .use(Checkbox)
   .use(CheckboxGroup)
+  .use(Field)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

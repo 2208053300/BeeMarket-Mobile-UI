@@ -141,7 +141,7 @@ export default {
       this.confirmGiftPackageOrder()
     } else {
       if (JSON.stringify(this.order.orderDetail) === '{}') {
-        this.$router.go(-1)
+        this.$router.replace(-1)
       }
     }
   },
