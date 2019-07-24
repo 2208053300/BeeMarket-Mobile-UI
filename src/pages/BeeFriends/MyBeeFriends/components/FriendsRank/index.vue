@@ -45,7 +45,7 @@
             >
           </div>
         </div>
-        <van-tabs
+        <!-- <van-tabs
           v-model="activeTab"
           :color="BeeDefault"
           :title-active-color="BeeDefault"
@@ -79,7 +79,7 @@
               收益贡献
             </div>
           </van-tab>
-        </van-tabs>
+        </van-tabs> -->
         <div class="rank-list">
           <van-list
             v-model="loading"
