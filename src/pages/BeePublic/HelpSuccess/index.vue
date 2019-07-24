@@ -21,17 +21,26 @@
         为感谢您的参与，蜂集市送您 <span class="bee-text">{{ $route.query.charity_value||10 }}</span> 公益值
       </p>
       <p
-        v-if="charity_value"
+
         class="success-text3"
       >
-        海量商品可任选免单
+        (海量商品可任选免单)
       </p>
       <van-button
+        v-if="charity_value"
+        round
+        class="join-help2"
+        @click="goBeeTask()"
+      >
+        领取使用
+      </van-button>
+      <van-button
+        v-else
         round
         class="join-help2"
         @click="arouseApp()"
       >
-        领取使用
+        <span>进入商城</span>
       </van-button>
     </div>
   </div>
@@ -39,6 +48,7 @@
 
 <script>
 import { goHome, getOs } from '@/utils'
+
 export default {
   components: {},
   props: {},
@@ -58,6 +68,7 @@ export default {
     this.charity_value = this.$route.query.charity_value | 0
   },
   methods: {
+    // 进入商城主页
     arouseApp() {
       const osObj = getOs()
       if (osObj.isWx) {
@@ -69,6 +80,20 @@ export default {
         window.beeMarket.ToCatList()
       } else {
         goHome()
+      }
+    },
+    // 进入新手专享
+    goBeeTask() {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        // 微信直接跳转路由
+        window.location.href = 'http://app.fengjishi.com/#/beeTask'
+      } else if (osObj.isIphone && osObj.isApp) {
+        window.webkit.messageHandlers.ToCatList.postMessage(1)
+      } else if (osObj.isAndroid && osObj.isApp) {
+        window.beeMarket.ToCatList()
+      } else {
+        window.location.href = 'http://app.fengjishi.com/#/beeTask'
       }
     }
   }
@@ -123,6 +148,9 @@ export default {
     color: #ffffff;
     background: linear-gradient(to right, #fe9907, #fec108);
     margin-top: 0.24rem;
+    span{
+      display: block;width: 100%;
+    }
   }
 }
 </style>

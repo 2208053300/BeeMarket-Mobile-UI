@@ -57,6 +57,7 @@ export default {
   margin-top: 20px;
   border-radius: 0.1rem;
   padding: 0.4rem 0.2rem 0.2rem ;
+  box-sizing: border-box;
   background-size:100% 100%;
   .top-img{width:3.58rem;height: 0.98rem; margin: 0 auto;}
   .pic-text{width:3.2.85rem;height: 0.43rem; margin: 0 auto;}

@@ -4,6 +4,9 @@ module.exports = {
   productionSourceMap: false,
   lintOnSave: true,
   pages: pageList,
+  configureWebpack: {
+    devtool: 'source-map'
+  },
   // FIXME 注入全局环境变量BASE_API
   chainWebpack: config => {
     if (process.env.NODE_ENV !== 'production') {

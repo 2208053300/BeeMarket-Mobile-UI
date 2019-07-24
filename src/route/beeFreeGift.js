@@ -11,11 +11,11 @@ const router = new Router({
   routes: [
     {
       path: '',
-      name: 'beeFreeGift',
       component: () => import('@/pages/BeeFreeGift'),
       children: [
         {
           path: '',
+          name: 'beeFreeGift',
           component: () => import('@/pages/BeeFreeGift/Home')
         },
         {

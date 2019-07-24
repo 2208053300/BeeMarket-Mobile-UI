@@ -99,7 +99,7 @@ import { getOrderDetail } from '@/api/BeeApi/user'
 import orderAddress from './components/orderAddress'
 import commodityList from './components/commodityList'
 import orderOp from './components/orderOp'
-import BeeGuess from '@/components/index/BeeGuess'
+import BeeGuess from '@/components/BeeGuess'
 import { formatSeconds } from '@/utils'
 import { clearInterval, setInterval } from 'timers'
 

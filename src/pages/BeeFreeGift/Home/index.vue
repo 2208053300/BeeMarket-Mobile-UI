@@ -37,7 +37,7 @@
           <img :src="product.tUrl" class="product-img" @click="showDetail(product.pid,product.target)">
           <div class="product-info flex flex-column flex-between">
             <div>
-              <p class="product-name no-wrap" @click="showDetail()">
+              <p class="product-name no-wrap" @click="showDetail(product.pid,product.target)">
                 {{ product.pname }}
               </p>
               <p class="product-desc no-wrap">
@@ -69,7 +69,7 @@
       </div>
     </van-popup>
     <!-- 免费送礼弹窗 -->
-    <ShowGift :show-gift="showGift" :product="nowProduct" />
+    <ShowGift :show-gift="showGift" :product="nowProduct" :sid="sid" />
 
     <!-- sku -->
     <Sku :show-sku="showSku" :pid="pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" />
@@ -114,7 +114,10 @@ export default {
       products: [
       ],
       page: 1,
-      pageSize: 10
+      pageSize: 10,
+
+      // sku_id
+      sid: 0
 
     }
   },
@@ -144,7 +147,7 @@ export default {
     showSkuPopup(index, pid) {
       this.pid = pid
       this.showSku = true
-      this.nowProduct = this.products[index]
+      // this.nowProduct = this.products[index]
       // this.showGift = true
       console.log('立即送礼')
     },

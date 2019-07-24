@@ -62,6 +62,10 @@
       :show-detail.sync="showDetail"
       :company-info="actionData.company_info"
     />
+    <div class="bottom-tip text-center">
+      <p>首次助力公益，可领取<span>100</span>公益值红包</p>
+      <p>（海量商品，任选免单）</p>
+    </div>
   </div>
 </template>
 
@@ -111,6 +115,8 @@ export default {
   padding: 0.4rem;
   border-radius: 0.08rem;
   position: relative;
+
+  margin-bottom:1.5rem;
   .caring-content {
     .caring-title {
       font-size: 0.32rem;
@@ -118,8 +124,6 @@ export default {
     }
     .enterprise-img {
       margin: 0.28rem auto 0.4rem;
-      width: 6.26rem;
-      height: 0.52rem;
     }
     .show-desc {
       text-align: center;
@@ -179,6 +183,14 @@ export default {
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
+    }
+  }
+  .bottom-tip{
+    margin-top: 0.6rem;
+    p{font-size: 0.26rem;font-weight: 600; margin: 0;
+      span{font-size: 0.4rem; color: @BeeDefault;}
+      &:nth-of-type(1){margin-bottom:0.2rem; }
+      &:nth-of-type(2){ color: @BeeDefault;}
     }
   }
 }

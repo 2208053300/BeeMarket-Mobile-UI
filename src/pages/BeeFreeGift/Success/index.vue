@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       icon: {
-        successImg: require('@/assets/icon/discover/publicwelfare_detail_pop_ups_pic_value@2x.png')
+        successImg: require('@/assets/icon/common/wechat_order_gift_img_success.png')
       }
     }
   },
@@ -68,7 +68,7 @@ export default {
 <style scoped lang="less">
 .success{
   padding: 0.5rem 1rem;
-  .success-img{width:2.12rem;height: 2.12rem;}
+  .success-img{width:2.91rem;height: 2.15rem;}
   .title{font-size:.34rem ; color:@BeeDefault;}
   .tip{font-size:.3rem ;}
   .van-button{border-radius: 0.1rem;font-size: .32rem;}

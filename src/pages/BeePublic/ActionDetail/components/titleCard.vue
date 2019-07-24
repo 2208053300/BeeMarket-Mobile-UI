@@ -12,7 +12,7 @@
           {{ actionData.main_title }}
         </div>
         <div class="subhead1">
-          {{ actionData.caption }}
+          {{ actionData.subtitle }}
         </div>
         <!-- <div class="address-content">
           <van-icon :name="beeIcon.confirmorder_icon_address_gray" />
@@ -20,7 +20,10 @@
         </div> -->
       </div>
     </div>
-    <div class="people-content">
+    <div
+      v-if="actionData.is_schedule"
+      class="people-content"
+    >
       <div class="card-part">
         <div class="img-content">
           <img
@@ -47,6 +50,25 @@
           <p class="person-num">
             <span class="bee-text">{{ actionData.initiate_people_num }}</span>人
           </p>
+        </div>
+      </div>
+    </div>
+    <div
+      v-else
+      class="join-num"
+    >
+      <div class="help-icon">
+        <img
+          :src="beeIcon.publicwelfare_icon_participate"
+          class="icon"
+        >
+      </div>
+      <div class="help-text">
+        已参与助力
+        <div class="help-time">
+          <span class="bee-text">
+            {{ actionData.participate_num }}
+          </span>人
         </div>
       </div>
     </div>
@@ -138,6 +160,27 @@ export default {
           .bee-text {
             color: @BeeDefault;
           }
+        }
+      }
+    }
+  }
+  .join-num {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.32rem;
+    margin-right: 0.3rem;
+    align-items: center;
+    .help-icon {
+      width: 0.36rem;
+      height: 0.36rem;
+      margin-right: 0.08rem;
+    }
+    .help-text {
+      font-size: 0.22rem;
+      .help-time {
+        display: inline-block;
+        .bee-text {
+          color: @BeeDefault;
         }
       }
     }

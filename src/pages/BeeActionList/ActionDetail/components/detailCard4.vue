@@ -8,11 +8,13 @@
       <p class="title">
         活动说明
       </p>
-      <p class="info first">
-        助力人数达成立即启动捐赠 <span> (可通过“项目进度”共同监督) </span>
-      </p>
-      <p class="info">
-        首次参与助力获赠公益红包 <span>(可用于海量商品的任选抵扣)</span>
+      <p
+        v-for="(item, index) in actionDetails.activity_directions"
+        :key="index"
+        class="info"
+        :class="{first: index===0}"
+      >
+        {{ item.content }} <span>{{ item.desc }}</span>
       </p>
     </div>
   </div>
@@ -63,10 +65,12 @@ export default {
     .info {
       font-size: 0.24rem;
       color: #333;
+
+      &.first{
+        margin-bottom: 0.1rem;
+      }
     }
-    .info.first {
-      margin-bottom: 0.1rem;
-    }
+
     span {
       font-size: 0.22rem;
       color: #999;

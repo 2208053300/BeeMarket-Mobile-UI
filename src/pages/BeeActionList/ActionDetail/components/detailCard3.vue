@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable -->
   <div class="card3 bg-white">
     <!-- 爱心企业 -->
     <div class="enterprise text-center">
@@ -60,8 +61,10 @@
             {{ actionDetails.company_info.company_name }}
           </span>
         </div>
-        <!-- eslint-disable-next-line -->
-        <div class="info" v-html="changeText(actionDetails.company_info.company_desc)" />
+        <div
+          class="info"
+          v-html="changeText(actionDetails.company_info.company_desc)"
+        />
       </div>
       <!-- 关闭图片 -->
       <img
@@ -123,8 +126,6 @@ export default {
   .enterprise {
     border-bottom: 1px dashed @BeeDefault;
     .love-logo {
-      width: 6.26rem;
-      height: 0.52rem;
       margin: 0 auto 0.4rem;
       display: block;
     }
@@ -189,12 +190,14 @@ export default {
       border-bottom-left-radius: 0.1rem;
       border-bottom-right-radius: 0.1rem;
       max-height: 5rem;
-      overflow: scroll;
+      width: 100%;
+      overflow-y: scroll;
       padding: 0.52rem;
       box-sizing: border-box;
       font-size: 0.28rem;
       color: #fff;
-        text-indent: 2em;
+      text-indent: 2em;
+      word-wrap:break-word;
     }
   }
   .close-img {

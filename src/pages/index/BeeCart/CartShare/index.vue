@@ -62,7 +62,7 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 import { mapState } from 'vuex'
-import BeeHeader from '@/components/index/BeeHeader'
+import BeeHeader from '@/components/BeeHeader'
 // import { getShareCartList } from '@/api/cart'
 export default {
   components: {

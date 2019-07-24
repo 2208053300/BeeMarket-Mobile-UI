@@ -11,11 +11,7 @@
     >
       <div class="rank-content">
         <div class="rank-type">
-          <div
-            class="type-tab"
-            :class="{disabledTab1:friendsType!==2}"
-            @click="changeType(2)"
-          >
+          <div class="type-tab">
             <van-icon
               :name="beeIcon.bee_firends_basic_icon_firend"
               class="tab-img"
@@ -24,17 +20,13 @@
               蜂友：<span class="num">{{ friendsData.friends_num||0 }} </span>个
             </div>
           </div>
-          <div
-            class="type-tab"
-            :class="{disabledTab2:friendsType!==1}"
-            @click="changeType(1)"
-          >
+          <div class="type-tab">
             <van-icon
               :name="beeIcon.bee_firends_basic_icon_association"
               class="tab-img"
             />
             <div class="type-num">
-              厂商：<span class="num">{{ friendsData.business_num||0 }} </span>个
+              关联蜂友：<span class="num">{{ friendsData.business_num||0 }} </span>个
             </div>
           </div>
           <div
@@ -53,6 +45,41 @@
             >
           </div>
         </div>
+        <!-- <van-tabs
+          v-model="activeTab"
+          :color="BeeDefault"
+          :title-active-color="BeeDefault"
+          :title-inactive-color="Grey2"
+          line-height="1px"
+          class="list-filter"
+        >
+          <van-tab>
+            <div slot="title">
+              用户状态
+              <div class="sort-img">
+                <img
+                  :src="beeIcon.beefriends_friend_icon_n"
+                  alt=""
+                >
+              </div>
+            </div>
+          </van-tab>
+          <van-tab>
+            <div slot="title">
+              登录时间
+            </div>
+          </van-tab>
+          <van-tab>
+            <div slot="title">
+              蜂友数量
+            </div>
+          </van-tab>
+          <van-tab>
+            <div slot="title">
+              收益贡献
+            </div>
+          </van-tab>
+        </van-tabs> -->
         <div class="rank-list">
           <van-list
             v-model="loading"
@@ -123,6 +150,7 @@
                       v-if="item.current_friends_num"
                       class="firends"
                     >（关联蜂友：<span class="num">{{ item.current_friends_num }}</span>个 ）</span>
+                    <!-- 用户未绑定手机号 -->
                     <div class="honey-num">
                       累计贡献公益值<span class="num"> {{ item.contribution }} </span>个
                     </div>
@@ -167,6 +195,7 @@ import { getFriends, remindLogin, isPartner } from '@/api/BeeApi/user'
 import { getUID } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
+import { BeeDefault, Grey2 } from '@/styles/index/variables.less'
 export default {
   components: {},
   props: {
@@ -177,6 +206,8 @@ export default {
   },
   data() {
     return {
+      BeeDefault,
+      Grey2,
       beeIcon: {
         bee_firends_basic_icon_association: require('@/assets/icon/beeFriends/info/bee_firends_basic_icon_association.png'),
         bee_firends_basic_icon_firend: require('@/assets/icon/beeFriends/info/bee_firends_basic_icon_firend.png'),
@@ -185,7 +216,10 @@ export default {
         bee_firends_invite_icon_bronzeaward: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_bronzeaward.png'),
         bee_firends_invite_icon_off: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_off.png'),
         bee_firends_invite_icon_firends: require('@/assets/icon/beeFriends/rank/bee_firends_invite_icon_firends.png'),
-        bee_firends_invite_icon_firenf: require('@/assets/icon/beeFriends/info/bee_firends_invite_icon_firenf.png')
+        bee_firends_invite_icon_firenf: require('@/assets/icon/beeFriends/info/bee_firends_invite_icon_firenf.png'),
+        beefriends_friend_icon_n: require('@/assets/icon/beeFriends/rank/beefriends_friend_icon_n.png'),
+        beefriends_friend_icon_top: require('@/assets/icon/beeFriends/rank/beefriends_friend_icon_top.png'),
+        beefriends_friend_icon_down: require('@/assets/icon/beeFriends/rank/beefriends_friend_icon_down.png')
       },
       friendsType: 2,
       friendsData: {},
@@ -194,7 +228,8 @@ export default {
       finished: false,
       page: 1,
       osObj: getOs(),
-      uid: 0
+      uid: 0,
+      activeTab: 0
     }
   },
   computed: {},
@@ -380,23 +415,26 @@ export default {
     .rank-content {
       position: relative;
       padding-bottom: 1rem;
+      .van-hairline--top-bottom::after {
+        border-top-width: 0;
+      }
       .rank-type {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: 1.5rem;
+        grid-template-rows: 0.85rem;
         align-items: center;
         .type-tab {
           height: 100%;
-          display: flex;
-          justify-content: center;
-          flex-direction: column;
-          align-items: center;
+          text-align: center;
+          line-height: 0.75rem;
           .tab-img {
-            font-size: 0.5rem;
+            font-size: 0.3rem;
+            vertical-align: middle;
+            margin: 0 0.1rem;
           }
           .type-num {
             font-size: 0.24rem;
-            margin-top: 0.1rem;
+            display: inline-block;
             .num {
               color: @BeeDefault3;
             }
@@ -416,15 +454,12 @@ export default {
           top: -0.88rem;
           left: 2.9rem;
         }
-        .disabledTab1 {
-          background-color: @Grey7;
-          border-top-left-radius: 0.3rem;
-          border-bottom-right-radius: 0.3rem;
-        }
-        .disabledTab2 {
-          background-color: @Grey7;
-          border-top-right-radius: 0.3rem;
-          border-bottom-left-radius: 0.3rem;
+      }
+      .list-filter{
+        .sort-img{
+          display: inline-block;
+          width: 0.1rem;
+          height: 0.12rem;
         }
       }
       .rank-list {

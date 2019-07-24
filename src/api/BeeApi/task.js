@@ -31,3 +31,11 @@ export function getTaskDetail(data) {
     data
   })
 }
+// 消费金额达标 - 提示记录
+export function getTaskPrompt(data) {
+  return request({
+    url: '/task/prompt',
+    method: 'post',
+    data
+  })
+}

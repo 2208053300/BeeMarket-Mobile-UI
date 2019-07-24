@@ -1,13 +1,14 @@
 function goPay(query) {
   const appid =
+    // ? 'wxb541620e8a98a7c0'
     process.env.NODE_ENV !== 'production'
-      ? 'wxb541620e8a98a7c0'
+      ? 'wx55baa3edb8c37fa8'
       : 'wxd0e389ffa2c4f924'
+  // 从新手专享领取任务奖励
+  const route = '/#/category/details/payOrder?'
   window.location.href =
     `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=` +
-    encodeURIComponent(
-      window.location.origin + '/#/category/details/payOrder?' + query
-    ) +
+    encodeURIComponent(window.location.origin + route + query) +
     '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
 }
 export function goPayFromOrder(orderNo) {

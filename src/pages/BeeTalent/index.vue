@@ -43,7 +43,7 @@
           @click="goSomething"
         >
           <span v-if="hasFirstConsume === 0">
-            去逛逛
+            去开启
           </span>
           <span v-else>
             进入蜂友圈
@@ -58,7 +58,7 @@
 import { getOs } from '@/utils'
 import bmHeader from './components/header'
 import { isConsume } from '@/api/BeeApi/task'
-import BeeHeader from '@/components/index/BeeHeader'
+import BeeHeader from '@/components/BeeHeader'
 
 export default {
   metaInfo: {

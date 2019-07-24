@@ -15,7 +15,7 @@
         class="join-help"
         @click="goHome()"
       >
-        进入集市
+        进入商城
       </van-button>
     </div>
   </div>
@@ -23,7 +23,7 @@
 
 <script>
 import { goHome } from '@/utils'
-
+import { helpAction } from '@/api/BeeApi/action'
 export default {
   components: {},
   props: {
@@ -43,7 +43,9 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    // this.helpActionData()
+  },
   methods: {
     goHome,
     async helpActionData() {
@@ -53,12 +55,14 @@ export default {
       })
       if (res.status_code === 200) {
         this.$toast(res.message)
-        this.$router.push({
-          path: '/helpSuccess',
-          query: {
-            charity_value: res.data.charity_value
-          }
-        })
+        setTimeout(() => {
+          this.$router.push({
+            path: '/helpSuccess',
+            query: {
+              charity_value: res.data.charity_value
+            }
+          })
+        }, 1500)
       }
     }
   }

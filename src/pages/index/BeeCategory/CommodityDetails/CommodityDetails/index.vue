@@ -6,7 +6,11 @@
       :class="{limitProduct:1}"
     >
       <commodity-overview :commodity-data="commodityData" />
-      <other-info :commodity-data="commodityData" @sku-done="skuDone" />
+      <other-info
+        :commodity-data="commodityData"
+        @sku-done="skuDone"
+        @sku-add="skuAdd"
+      />
       <!-- <div class="advertisement">
         广告位
         <img
@@ -19,7 +23,10 @@
       <rich-details :commodity-data="commodityData" />
       <bee-guess />
     </div>
-    <goods-action ref="goodsAction" :commodity-data="commodityData" />
+    <goods-action
+      ref="goodsAction"
+      :commodity-data="commodityData"
+    />
   </div>
 </template>
 
@@ -32,7 +39,7 @@ import otherInfo from './components/otherInfo'
 import userAssessment from './components/userAssessment'
 import storeDetails from './components/storeDetails'
 import richDetails from './components/richDetails'
-import BeeGuess from '@/components/index/BeeGuess'
+import BeeGuess from '@/components/BeeGuess'
 import { getUID } from '@/api/BeeApi/user'
 import wxapi from '@/utils/wxapi'
 export default {
@@ -80,16 +87,28 @@ export default {
     },
     // 获取商品详情
     async getProductDetailData(pid, target) {
-      const res = await getProductDetail({ pid, target })
-      this.commodityData = res.data
-      // NOTE 先放这里
+      try {
+        const res = await getProductDetail({ pid, target })
+        this.commodityData = res.data
+        // NOTE 先放这里
 
-      // NOTE 获取商品详情后调用分享
-      this.loadUID()
+        // NOTE 获取商品详情后调用分享
+        this.loadUID()
+      } catch (error) {
+        this.$toast({
+          message: '商品已售罄或已下架！',
+          onClose: () => {
+            this.$router.go(-1)
+          }
+        })
+      }
     },
     // SKU选择完成
     skuDone() {
       this.$refs['goodsAction'].skuDone()
+    },
+    skuAdd() {
+      this.$refs['goodsAction'].addShopcartProductData()
     }
   },
   // 路由更新之前获取商品详情

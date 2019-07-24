@@ -207,7 +207,7 @@
 </template>
 
 <script>
-import BeeSku from '@/components/index/BeeSku'
+import BeeSku from '@/components/BeeSku'
 export default {
   components: {
     BeeSku
