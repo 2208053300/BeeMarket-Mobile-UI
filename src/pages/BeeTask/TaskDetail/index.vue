@@ -59,7 +59,8 @@
                   @click="getGift"
                   :class="{getButton2:!checkStatus()}"
                 >
-                  免费领取
+                  <span v-if="!taskData.is_current_finish">免费领取</span>
+                  <span v-else>已领取</span>
                 </van-button>
               </div>
             </div>

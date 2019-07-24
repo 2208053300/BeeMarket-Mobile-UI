@@ -2,23 +2,26 @@
   <div id="app">
     <!-- header组件有大部分页面存在 -->
     <bee-header v-show="$store.state.app.beeHeader" />
-    <keep-alive>
+    <transition :name="transitionName">
+      <keep-alive>
+        <router-view
+          v-if="$route.meta.keepAlive"
+          style="height:100%"
+          :class="{showHeader:$store.state.app.beeHeader}"
+        >
+          <!-- 这里是会被缓存的视图组件，比如 Home！ -->
+        </router-view>
+      </keep-alive>
+    </transition>
+    <transition :name="transitionName">
       <router-view
-        v-if="$route.meta.keepAlive"
+        v-if="!$route.meta.keepAlive"
         style="height:100%"
         :class="{showHeader:$store.state.app.beeHeader}"
       >
-        <!-- 这里是会被缓存的视图组件，比如 Home！ -->
+        <!-- 这里是不被缓存的视图组件 -->
       </router-view>
-    </keep-alive>
-
-    <router-view
-      v-if="!$route.meta.keepAlive"
-      style="height:100%"
-      :class="{showHeader:$store.state.app.beeHeader}"
-    >
-      <!-- 这里是不被缓存的视图组件 -->
-    </router-view>
+    </transition>
     <transition name="van-slide-right">
       <back-top v-show="$store.state.app.backTop" />
     </transition>
@@ -44,7 +47,21 @@ export default {
   data() {
     return {
       osObj: getOs(),
-      uid: 0
+      uid: 0,
+      transitionName: 'van-slide-left'
+    }
+  },
+  watch: {
+    $route(to, from) {
+      const toDepth = to.path.split('/').length
+      const fromDepth = from.path.split('/').length
+      // 如果同级
+      if (toDepth === fromDepth) {
+        this.transitionName = 'van-fade'
+      } else {
+        this.transitionName =
+          toDepth < fromDepth ? 'van-slide-right' : 'van-slide-left'
+      }
     }
   },
   mounted() {
