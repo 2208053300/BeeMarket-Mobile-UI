@@ -6,7 +6,7 @@ function goPay(query, type) {
       : 'wxd0e389ffa2c4f924'
   // 从新手专享领取任务奖励
   const route =
-    type === 'task' ? '/#/category/details/payOrder?' : '/beeTask#/payOrder'
+    type !== 'task' ? '/#/category/details/payOrder?' : '/beeTask#/payOrder'
   window.location.href =
     `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=` +
     encodeURIComponent(window.location.origin + route + query) +
