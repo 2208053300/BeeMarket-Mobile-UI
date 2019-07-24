@@ -71,7 +71,7 @@ export default {
   created() {},
   mounted() {
     this.getShareDetailData()
-    this.helpActionData()
+    // this.helpActionData()
   },
   methods: {
     async getShareDetailData() {
@@ -105,6 +105,7 @@ export default {
   margin-bottom: 1.4rem;
   .detail-content {
     padding: 0.2rem 0.3rem;
+    margin-bottom: 1rem;
     .van-notice-bar {
       font-size: 0.22rem;
       color: @Grey2;

@@ -43,7 +43,9 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    // this.helpActionData()
+  },
   methods: {
     goHome,
     async helpActionData() {
