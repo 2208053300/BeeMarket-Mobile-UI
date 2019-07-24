@@ -22,6 +22,7 @@
             :src="actionDetails.share_image"
             alt=""
             class="bg-img"
+            :onload="loadEnd2=true"
           >
           <div class="share-info-content">
             <div
@@ -146,7 +147,8 @@ export default {
       },
       bgBase64: '',
       headBase64: '',
-      loadEnd: false
+      loadEnd: false,
+      loadEnd2: false
     }
   },
   computed: {},
@@ -160,7 +162,7 @@ export default {
     },
     async drawImg() {
       // 判断是否图片已经加载成功
-      if (!this.loadEnd) {
+      if (!this.loadEnd || !this.loadEnd2) {
         setTimeout(this.drawImg(), 2000)
       }
       const imgDom = document.querySelector('.share-content')
