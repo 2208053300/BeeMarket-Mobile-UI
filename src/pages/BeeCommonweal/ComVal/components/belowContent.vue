@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import BeeGuess from '@/components/index/BeeGuess'
+import BeeGuess from '@/components/BeeGuess'
 import { getOs } from '@/utils'
 
 export default {

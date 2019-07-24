@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import BeeGuess from '@/components/index/BeeGuess'
+import BeeGuess from '@/components/BeeGuess'
 import { getAfterLogDetail, getLogisticsDetail2 } from '@/api/BeeApi/user'
 export default {
   metaInfo: {

@@ -44,7 +44,7 @@ import { getProductDetail } from '@/api/BeeApi/product'
 import commodityPre from './components/commodityPre'
 import commodityOverview from './components/commodityOverview2'
 import richDetails from './components/richDetails'
-import BeeGuess from '@/components/index/BeeGuess'
+import BeeGuess from '@/components/BeeGuess'
 import { getUID } from '@/api/BeeApi/user'
 import wxapi from '@/utils/wxapi'
 

@@ -199,15 +199,17 @@
       :props-id.sync="propsId"
       :p-number.sync="pNumber"
       :limit-num="commodityData.remaining"
+      :select-type.sync="selectType"
       @get-sku-name="getSkuName"
       @get-sku-id="getSkuId"
       @sku-done="$emit('sku-done')"
+      @sku-add="$emit('sku-add')"
     />
   </div>
 </template>
 
 <script>
-import BeeSku from '@/components/index/BeeSku'
+import BeeSku from '@/components/BeeSku'
 export default {
   components: {
     BeeSku
@@ -223,6 +225,7 @@ export default {
   data() {
     return {
       showPromise: false,
+      selectType: 0,
       skuName: [],
       propsId: [],
       sku_id: 0,
@@ -253,6 +256,7 @@ export default {
       this.skuName = skuName
     },
     handleSku() {
+      this.selectType = 1
       this.$store.state.cart.showSku = true
     }
   }

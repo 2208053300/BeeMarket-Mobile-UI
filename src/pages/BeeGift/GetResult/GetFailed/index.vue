@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import BeeGuess from '@/components/index/BeeGuess'
+import BeeGuess from '@/components/BeeGuess'
 export default {
   components: {
     BeeGuess

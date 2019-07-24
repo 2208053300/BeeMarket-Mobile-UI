@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import BeeHeader from '@/components/index/BeeHeader'
+import BeeHeader from '@/components/BeeHeader'
 import { getOs } from '@/utils/index'
 export default {
   metaInfo: {
