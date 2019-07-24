@@ -16,14 +16,14 @@
       <detail-card :action-data="actionData" />
       <actionExplain :action-data="actionData" />
       <caring-enterprise :action-data="actionData" />
-      <div class="qrcode-content">
+      <!-- <div class="qrcode-content">
         <div class="img-content">
           <img
             :src="beeIcon.publicwelfare_qrcode_all"
             alt="关注公众号"
           >
         </div>
-      </div>
+      </div> -->
     </div>
     <footer-op :action-data="actionData" />
   </div>

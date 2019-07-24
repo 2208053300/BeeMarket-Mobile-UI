@@ -18,7 +18,7 @@
             :name="beeIcon.nav_icon_search"
             :color="Grey1"
           />
-          <span>蜂集市，让生活丰富起来</span>
+          <span>蜂集市，让生活蜂富起来</span>
         </div>
         <van-icon
           :name="$store.state.user.have_no_read?beeIcon.home_icon_message_prompt:beeIcon.home_icon_message"
