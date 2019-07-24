@@ -21,17 +21,26 @@
         为感谢您的参与，蜂集市送您 <span class="bee-text">{{ $route.query.charity_value||10 }}</span> 公益值
       </p>
       <p
-        v-if="charity_value"
+
         class="success-text3"
       >
         (海量商品可任选免单)
       </p>
       <van-button
+        v-if="charity_value"
         round
         class="join-help2"
+        @click="goBeeTask()"
       >
-        <span v-if="charity_value" @click="goBeeTask()">领取使用</span>
-        <span v-else @click="arouseApp()">进入商城</span>
+        领取使用
+      </van-button>
+      <van-button
+        v-else
+        round
+        class="join-help2"
+        @click="arouseApp()"
+      >
+        <span>进入商城</span>
       </van-button>
     </div>
   </div>
