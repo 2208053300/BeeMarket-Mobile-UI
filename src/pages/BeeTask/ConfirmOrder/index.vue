@@ -153,7 +153,7 @@ export default {
           })
         } else if (osObj.isAndroid && osObj.isApp) {
           window.beeMarket.ToPayOrder(
-            JSON.stringify(this.order.payInfo),
+            JSON.stringify(res),
             'general'
           )
           window.beeMarket.CloseThisActivity()
