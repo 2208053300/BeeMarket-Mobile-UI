@@ -136,8 +136,8 @@ export default {
       )
       if (res.status_code === 200) {
         const osObj = getOs()
+        this.order.payInfo = res.data
         if (osObj.isWx) {
-          this.order.payInfo = res.data
           if (this.orderTypeText === 'please') {
             this.$router.push('/category/details/payForAnother')
           } else if (this.orderTypeText === 'present') {
@@ -158,7 +158,6 @@ export default {
           )
           window.beeMarket.CloseThisActivity()
         } else {
-          this.order.payInfo = res.data
           if (this.orderTypeText === 'please') {
             this.$router.push('/category/details/payForAnother')
           } else if (this.orderTypeText === 'present') {
