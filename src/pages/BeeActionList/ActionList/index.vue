@@ -30,7 +30,10 @@
           <div class="action-subhead">
             {{ item.subtitle }}
           </div>
-          <div class="action-progress">
+          <div
+            v-if="item.is_schedule"
+            class="action-progress"
+          >
             <div class="percent">
               {{ item.schedule }}%
             </div>
@@ -42,11 +45,17 @@
               />
             </div>
           </div>
-          <div class="action-status">
+          <div
+            class="action-status"
+            :class="{noSchedule:!item.is_schedule}"
+          >
             <div class="action-help">
               <van-icon :name="beeIcon.heart_solid" />已有<span class="bee-text">{{ item.participate_num }}</span>人参与助力
             </div>
-            <div class="action-need">
+            <div
+              v-if="item.is_schedule"
+              class="action-need"
+            >
               <van-icon :name="beeIcon.heart_hollow" />需<span class="bee-text">{{ item.initiate_people_num }}</span>人参与项目
             </div>
           </div>
@@ -178,6 +187,10 @@ export default {
       .action-need {
         text-align: right;
       }
+    }
+    .noSchedule{
+      margin-top:0.4rem;
+      justify-content: flex-end;
     }
   }
 }

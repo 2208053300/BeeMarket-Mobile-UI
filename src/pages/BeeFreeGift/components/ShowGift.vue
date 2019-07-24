@@ -9,16 +9,19 @@
           <img :src="product.tUrl" class="product-img">
           <div class="product-info flex flex-column flex-between">
             <div>
-              <p class="product-name no-wrap">
+              <p class="product-name">
                 {{ product.pname }}
               </p>
-              <p class="product-desc no-wrap">
+              <!-- <p class="product-desc no-wrap">
                 {{ product.intro }}
+              </p> -->
+              <p class="prop">
+                {{ product.props_name }}
               </p>
             </div>
             <div class="action">
               <p class="product-price">
-                <span class="sell-price"><span style="font-size:.35rem;">￥</span>{{ product.line_price }}</span>
+                <span class="sell-price"><span style="font-size:.35rem;">￥</span>{{ product.sell_price }}</span>
               </p>
               <span class="num">满{{ product.lottery_num }}人参与，立即开奖</span>
             </div>
@@ -51,7 +54,7 @@
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 import { getUID } from '@/api/BeeApi/user'
-import { getShareData } from '@/api/BeeApi/freeGift'
+import { freeGiftInvite } from '@/api/BeeApi/freeGift'
 export default {
   components: {
 
@@ -64,6 +67,10 @@ export default {
     product: {
       type: Object,
       default: () => ({})
+    },
+    sid: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -82,7 +89,7 @@ export default {
       share_data: {
         title: '',
         desc: '',
-        img_path: '',
+        imgUrl: '',
         url: ''
       },
 
@@ -112,8 +119,13 @@ export default {
     // 点击邀请好友抢礼物
     async getShareData() {
       try {
-        const res = await getShareData()
+        const res = await freeGiftInvite({
+          sid: this.sid,
+          target: this.product.target,
+          desc: this.remark
+        })
         if (res.status_code === 200) {
+          this.share_data = res.data
           this.appShare()
         }
       } catch (error) {
@@ -131,7 +143,7 @@ export default {
         window.webkit.messageHandlers.ToShare.postMessage({
           title: this.share_data.title,
           desc: this.share_data.desc,
-          img_path: this.share_data.img,
+          img_path: this.share_data.imgUrl,
           // 地址应该放 web 站 网页
           url: this.share_data.link
           // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
@@ -140,13 +152,11 @@ export default {
         window.beeMarket.ToShare(
           this.share_data.title,
           this.share_data.desc,
-          this.share_data.img,
+          this.share_data.imgUrl,
           this.share_data.link,
           // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
         )
       } else {
-        //
-        console.log(444444444444)
         this.showWxTip = true
       }
     },
@@ -170,6 +180,7 @@ export default {
 
 <style scoped lang="less">
  .gift-box{
+
     width: 6.93rem;
     height: 9.68rem;
     padding: 0.64rem;
@@ -177,11 +188,12 @@ export default {
     overflow-y: visible;
     background:url(../../../assets/icon/freeGift/freegift_popup.png) no-repeat;
     background-size:6.93rem 9.68rem;
+    p{margin: 0}
     .title{margin-bottom: 0.5rem; margin-top: 0.5rem;}
     .product {
       background-color: white;
-      border-radius: 10px;
-      margin-bottom: 10px;
+      border-radius:0.1rem;
+      margin-bottom:0.1rem;
       .product-img {
         width: 2.5rem;
         height: 2.5rem;
@@ -190,16 +202,27 @@ export default {
       .product-info {
         width:2.8rem;
         .product-name {
-          margin-top: 10px;
+          margin-top:0.1rem;
+          margin-bottom:0.2rem;
           font-size: 0.26rem;
+
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
+          -webkit-box-orient: vertical;
+
         }
+        .prop{font-size: 0.24rem; color:#999;}
         .product-desc {
           font-size: 0.2rem;
           color: #999;
-          margin-top: 10px;
+          margin-top:0.1rem;
         }
         .product-price {
-          margin-top: 10px;
+          margin-top:0.1rem;
         }
         .sell-price{ font-size: 0.5rem;color:@BeeDefault; margin-right: .1rem;
         }
@@ -207,6 +230,7 @@ export default {
       }
       .action{
         .num{font-size: .24rem; color: @BeeDefault;}
+
       }
     }
     .tip{font-size: 0.22rem;color:#FF3F3F; background-color:#FFEDD7; text-align: center; height: 0.62rem; line-height: 0.62rem; border-radius: .1rem;

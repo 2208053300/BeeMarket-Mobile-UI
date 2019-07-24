@@ -6,6 +6,7 @@
     <van-list
       v-model="loading"
       :finished="finished"
+      :immediate-check="false"
       finished-text="我也是有底线的 o(´^｀)o"
       @load="getIndexData"
     >
@@ -20,7 +21,7 @@
             </div>
             <div class="action flex flex-between align-center">
               <p class="product-price">
-                <span class="sell-price">￥{{ product.section_price }}</span>
+                <span class="sell-price">￥{{ product.sell_price }}</span>
               </p>
               <van-button round size="mini" @click="showSkuPopup(index)">
                 免费送礼
@@ -92,9 +93,8 @@ export default {
       const res = await getIndexData()
       this.page++
       this.loading = false
-      this.products.push(...res.data.products)
-      // if (res.data.products.length < this.pageSize) {
-      if (this.page > 4) {
+      this.products.push(...res.data)
+      if (res.data.length < this.pageSize) {
         this.finished = true
       }
     },

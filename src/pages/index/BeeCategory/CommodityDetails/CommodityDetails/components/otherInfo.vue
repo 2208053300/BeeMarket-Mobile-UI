@@ -280,6 +280,9 @@ export default {
         color: @Grey1;
         margin-right: 0.36rem;
       }
+      .cell-content{
+        font-size: 0.22rem;
+      }
     }
     .cell-value {
       margin: 0;

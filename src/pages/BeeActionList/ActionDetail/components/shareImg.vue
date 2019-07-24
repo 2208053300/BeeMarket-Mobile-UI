@@ -5,7 +5,6 @@
       class="share-modal"
       transition="van-fade"
       :close-on-click-overlay="false"
-      @opened="drawImg()"
       @close="closed"
       @click-overlay="closed"
     >
@@ -15,61 +14,13 @@
           class="shareTip"
         >
       </div>
-      <div class="share-bg">
-        <div
-          ref="shareImg"
-          class="share-content"
-        >
-          <!-- :style="{backgroundImage:'url('+actionDetails.share_image+')'}" -->
+      <div class="canvas-content">
+        <div class="canvas-img">
           <img
-            :src="actionDetails.share_image"
+            ref="shareImgPre"
             alt=""
-            class="bg-img"
+            :src="share_img"
           >
-          <div class="share-info-content">
-            <div
-              v-if="actionDetails.share_data"
-              class="share-info"
-            >
-              <div class="user-info">
-                <div class="head-img">
-                  <img
-                    :src="actionDetails.share_data.head_img"
-                    alt=""
-                  >
-                </div>
-                <div class="right-info">
-                  <span class="user-name">{{ actionDetails.share_data.nickname }}</span>
-                  <div class="img-content">
-                    <img
-                      :src="beeIcon.pic_text"
-                      alt=""
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="user-code">
-                <div class="img-content">
-                  <img
-                    :src="beeIcon.pic_finger"
-                    alt=""
-                  >
-                </div>
-                <div class="img-content2">
-                  <img
-                    :src="actionDetails.share_data.qr_cord"
-                    alt=""
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="canvas-img">
-            <img
-              ref="shareImgPre"
-              alt=""
-            >
-          </div>
         </div>
       </div>
       <div class="text-tip">
@@ -81,7 +32,6 @@
 
 <script>
 import html2canvas from 'html2canvas/dist/html2canvas.min.js'
-import { setTimeout } from 'timers'
 export default {
   components: {},
   props: {
@@ -135,9 +85,7 @@ export default {
     return {
       share_img: '',
       beeIcon: {
-        shareTip: require('@/assets/icon/share/guide1.png'),
-        pic_text: require('@/assets/icon/discover/pic_text@2x.png'),
-        pic_finger: require('@/assets/icon/discover/pic_finger@2x.png')
+        shareTip: require('@/assets/icon/share/guide1.png')
       },
       bgBase64: '',
       headBase64: ''
@@ -153,58 +101,35 @@ export default {
       this.$emit('update:helpSuccess', false)
     },
     async drawImg() {
-      const imgList = document.querySelectorAll('.share-content img')
-      for (let index = 0; index < imgList.length; index++) {
-        const element = imgList[index]
-        element.setAttribute('crossOrigin', 'Anonymous')
-      }
+      this.$parent.showImg = true
+      // const imgList = document.querySelectorAll('.share-content img')
+      // for (let index = 0; index < imgList.length; index++) {
+      //   const element = imgList[index]
+      //   element.setAttribute('crossOrigin', 'Anonymous')
+      // }
       // 防止加载错误，每个链接加上时间戳，没用
-      const time = Math.floor(new Date().getTime() / 100)
-      this.actionDetails.share_image =
-        this.actionDetails.share_image + '?' + time
-      this.actionDetails.share_data.head_img =
-        this.actionDetails.share_data.head_img + '?' + time
-      // function getBase64Image(img) {
-      //   var canvas = document.createElement('canvas')
-      //   canvas.width = img.width
-      //   canvas.height = img.height
-      //   var ctx = canvas.getContext('2d')
-      //   ctx.drawImage(img, 0, 0, img.width, img.height)
-      //   var dataURL = canvas.toDataURL('image/png')
-      //   return dataURL
-      // }
-
-      // function getImg(img) {
-      //   var image = new Image()
-      //   image.src = img
-      //   image.setAttribute('crossOrigin', 'anonymous')
-      //   console.log(image)
-
-      //   image.onload = function() {
-      //     img = getBase64Image(image)
-      //     console.log(img)
-      //   }
-      // }
-      // this.bgBase64 = getImg(this.actionDetails.share_image)
-      // this.headBase64 = getImg(this.actionDetails.share_data.head_img)
-      // this.bgBase64 = await Axios(this.actionDetails.share_image)
-      setTimeout(async() => {
-        const imgDom = document.querySelectorAll('.share-content')[0]
-        try {
-          const canvasImg = await html2canvas(this.$refs.shareImg, {
-            // allowTaint: true,
-            useCORS: true,
-            // scrollX: 0,
-            // scrollY: 0,
-            width: imgDom.scrollWidth,
-            height: imgDom.scrollHeight
-          })
-          this.$refs.shareImgPre.setAttribute('src', canvasImg.toDataURL())
-          this.share_img = canvasImg.toDataURL('image/png')
-        } catch (error) {
-          console.log(error)
-        }
-      }, 1000)
+      // const time = Math.floor(new Date().getTime() / 100)
+      // this.actionDetails.share_image =
+      //   this.actionDetails.share_image + '?' + time
+      // this.actionDetails.share_data.head_img =
+      //   this.actionDetails.share_data.head_img + '?' + time
+      const imgDom = document.querySelector('.share-content')
+      try {
+        const canvasImg = await html2canvas(imgDom, {
+          useCORS: true,
+          scrollX: 0,
+          scrollY: 0,
+          y: imgDom.offsetTop
+          // width: imgDom.scrollWidth,
+          // height: imgDom.scrollHeight,
+          // windowWidth: imgDom.scrollWidth,
+          // windowHeight: imgDom.scrollHeight
+        })
+        const img = canvasImg.toDataURL('image/png')
+        this.share_img = img
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
@@ -226,96 +151,17 @@ export default {
       padding: 0.1rem;
       text-align: center;
     }
-    .share-bg {
-      width: 5.34rem;
-      height: 6.92rem;
-      border-radius: 0.16rem;
-      background-color: #fff;
-      padding: 0.16rem;
-      box-sizing: border-box;
-      .share-content {
-        height: 100%;
-        position: relative;
-        width: 5.02rem;
-        height: 6.6rem;
-        background-size: cover;
-        background-repeat: no-repeat;
-        .bg-img {
-          width: 5.02rem;
-          height: 6.6rem;
-        }
-        .share-info-content {
-          position: absolute;
-          bottom: 0.2rem;
-          width: 100%;
-          .share-info {
-            height: 1.24rem;
-            width: 4.52rem;
-            margin: auto;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 0.08rem;
-            display: flex;
-            padding: 0.08rem 0.12rem;
-            justify-content: space-between;
-            box-sizing: border-box;
-            .user-info {
-              display: flex;
-              align-items: center;
-              .head-img {
-                width: 0.64rem;
-                height: 0.64rem;
-                margin-right: 0.06rem;
-                border-radius: 50%;
-                overflow: hidden;
-              }
-              .right-info {
-                font-size: 0.2rem;
-                overflow: hidden;
-                .user-name {
-                  white-space: nowrap;
-                }
-                .img-content {
-                  width: 1.56rem;
-                  height: 0.24rem;
-                  margin-top: 0.06rem;
-                }
-              }
-            }
-            .user-code {
-              display: flex;
-              align-items: center;
-              .img-content {
-                height: 0.46rem;
-                width: 0.72rem;
-                margin-right: 0.06rem;
-              }
-              .img-content2 {
-                width: 1.08rem;
-                height: 1.08rem;
-              }
-            }
-          }
-        }
-        .canvas-img {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 100%;
-          width: 100%;
-        }
-      }
-      .save-img {
-        display: flex;
-        justify-content: space-between;
-        .img-content {
-          width: 3.16rem;
-          height: 0.56rem;
-        }
-        .img-content2 {
-          width: 1.76rem;
-          height: 0.88rem;
-        }
-      }
+  }
+  .canvas-content {
+    position: relative;
+    width: 5.34rem;
+    height: 6.92rem;
+    border-radius: 0.16rem;
+    background-color: #fff;
+    padding: 0.16rem;
+    .canvas-img {
+      width: 100%;
+      height: 100%;
     }
   }
 }

@@ -157,6 +157,42 @@
         </div>
       </div>
     </div>
+    <div class="task-card task2-content">
+      <div class="task-title">
+        Task 3
+        <div class="right-angle" />
+      </div>
+      <div class="task-body">
+        <div class="body-title">
+          <div class="title-text1">
+            <div class="circle" />
+            <span> {{ taskData.task_list[2].title }} </span>
+            <div class="circle" />
+          </div>
+          <div class="title-text2">
+            {{ taskData.task_list[2].subtitle }}
+          </div>
+        </div>
+        <div class="task-detail">
+          <div class="step-list step-list2">
+            <img
+              :src="beeIcon.task_pic_bird"
+              alt="任务步骤"
+            >
+          </div>
+          <div class="task-action">
+            <van-button
+              class="go-task"
+              round
+              @click="$router.push({name:'taskDetail',query:{tid:taskData.task_list[2].tid}})"
+            >
+              <span v-if="taskData.task_list[2].is_receive===0">领取任务</span>
+              <span v-else>去完成</span>
+            </van-button>
+          </div>
+        </div>
+      </div>
+    </div>
     <van-popup
       v-model="showSuccess"
       class="award-success"
@@ -204,7 +240,7 @@ export default {
     return {
       taskData: {
         basic_info: {},
-        task_list: [{}, {}]
+        task_list: [{}, {}, {}]
       },
       beeIcon: {
         task_bg_bee: require('@/assets/icon/task/task_bg_bee@2x.png'),
@@ -216,7 +252,9 @@ export default {
         task_btn_n: require('@/assets/icon/task/task_btn_n@2x.png'),
         task_title_s_d: require('@/assets/icon/task/task_title_s_d@2x.png'),
         task_title_s_n: require('@/assets/icon/task/task_title_s_n@2x.png'),
-        task_pic_step: require('@/assets/icon/task/task_pic_step@2x.png'),
+        task_pic_step: require('@/assets/icon/task/task_pic_step.png'),
+        task_pic_bird: require('@/assets/icon/task/task_pic_bird.png'),
+
         task_pic_value: require('@/assets/icon/task/task_pic_value@2x.png')
       },
       showAll: false,
@@ -277,6 +315,9 @@ export default {
           break
         case 3:
           this.$router.push({ path: '/persion/order', query: { s_status: 3 }})
+          break
+        case 4:
+          this.$router.push({ path: '/category' })
           break
         default:
           break
@@ -393,6 +434,9 @@ export default {
           justify-content: space-between;
           background-color: #ffffff;
           align-items: center;
+          span {
+            margin: 0 0.2rem;
+          }
           .circle {
             width: 0.2rem;
             height: 0.2rem;
@@ -534,6 +578,10 @@ export default {
         width: 4.88rem;
         height: 1.66rem;
         margin: auto;
+      }
+      .step-list {
+        width: 4.75rem;
+        height: 1.51rem;
       }
       .task-action {
         text-align: center;
