@@ -5,7 +5,7 @@
       class="share-modal"
       transition="van-fade"
       :close-on-click-overlay="false"
-      @opened="drawImg"
+      @opened="waitDraw"
       @close="closed"
       @click-overlay="closed"
     >
@@ -22,7 +22,6 @@
             :src="actionDetails.share_image"
             alt=""
             class="bg-img"
-            :onload="loadEnd2=true"
           >
           <div class="share-info-content">
             <div
@@ -35,7 +34,6 @@
                     :src="actionDetails.share_data.head_img"
                     crossOrigin="anonymous"
                     alt=""
-                    :onload="loadEnd=true"
                   >
                 </div>
                 <div class="right-info">
@@ -146,9 +144,7 @@ export default {
         pic_finger: require('@/assets/icon/discover/pic_finger@2x.png')
       },
       bgBase64: '',
-      headBase64: '',
-      loadEnd: false,
-      loadEnd2: false
+      headBase64: ''
     }
   },
   computed: {},
@@ -160,11 +156,11 @@ export default {
     closed() {
       this.$emit('update:helpSuccess', false)
     },
+    waitDraw() {
+      setTimeout(this.drawImg(), 3000)
+    },
     async drawImg() {
       // 判断是否图片已经加载成功
-      if (!this.loadEnd || !this.loadEnd2) {
-        setTimeout(this.drawImg(), 2000)
-      }
       const imgDom = document.querySelector('.share-content')
       try {
         const canvasImg = await html2canvas(imgDom, {
