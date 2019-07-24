@@ -13,7 +13,7 @@ import { getActionDetail } from '@/api/BeeApi/action'
 import wxapi from '@/utils/wxapi'
 export default {
   metaInfo: {
-    title: '项目完成详情'
+    title: '完成详情'
   },
   components: {
 

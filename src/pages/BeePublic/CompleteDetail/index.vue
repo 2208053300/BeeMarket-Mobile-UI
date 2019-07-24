@@ -11,7 +11,7 @@ import { getActionDetail } from '@/api/BeeApi/action'
 import wxapi from '@/utils/wxapi'
 export default {
   metaInfo: {
-    title: '项目完成详情'
+    title: '完成详情'
   },
   components: {
 
@@ -46,13 +46,11 @@ export default {
       const res = await getActionDetail({ id: this.aid })
       this.actionDetails = res.data
       wxapi.wxShare({
-        title: this.actionDetails.main_title, // 分享标题, 请自行替换
+        title: this.actionData.main_title, // 分享标题, 请自行替换
         desc: '我为公益代言！点点手指，为我助力！', // 分享描述, 请自行替换
-        link: this.actionDetails.share_data.url, // 分享链接，根据自身项目决定是否需要split
+        link: window.location.href, // 分享链接，根据自身项目决定是否需要split
         imgUrl: 'https://img.fengjishi.com/app/images/action.jpg' // 分享图标, 请自行替换，需要绝对路径
       })
-      this.actionDetails.share_data.qr_cord =
-        'data:image/jpeg;base64,' + this.actionDetails.share_data.qr_cord
     }
   }
 }
