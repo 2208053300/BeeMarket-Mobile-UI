@@ -43,7 +43,8 @@ export function checkToken() {
     const uriProp = GetRequest('code')
     const appid =
       process.env.NODE_ENV !== 'production'
-        ? 'wxb541620e8a98a7c0'
+        // ? 'wxb541620e8a98a7c0'
+        ? 'wx55baa3edb8c37fa8'
         : 'wxd0e389ffa2c4f924'
     if (uriProp) {
       const uriProp2 = window.location.href.slice(
