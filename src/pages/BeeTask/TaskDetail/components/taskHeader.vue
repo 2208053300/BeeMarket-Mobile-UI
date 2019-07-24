@@ -12,7 +12,7 @@
           {{ taskData.mine_consume_amount }}
         </div>
         <div class="left-text3">
-          <van-icon :name="beeIcon.task_icon_sigh" />需完成累计消费{{ taskData.condition_amount }}元
+          <van-icon :name="beeIcon.task_icon_sigh" />{{ taskData.detail_desc }}
         </div>
       </div>
       <div class="header-right">
