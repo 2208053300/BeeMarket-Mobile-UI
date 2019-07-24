@@ -1,5 +1,5 @@
 <template>
-  <div class="enterprise-content">
+  <div class="enterprise-content" :class="{margin1rem: isIphone===true}">
     <div class="caring-content">
       <div class="caring-title">
         - 爱心企业 -
@@ -70,6 +70,9 @@
 </template>
 
 <script>
+
+import { getOs } from '@/utils'
+
 import enterpriseCard from './enterpriseCard'
 
 export default {
@@ -96,13 +99,19 @@ export default {
         // confirmorder_pic_qilin: require('@/assets/icon/discover/confirmorder_pic_qilin@2x.png'),
         confirmorder_pic_word: require('@/assets/icon/discover/confirmorder_pic_word@2x.png')
       },
-      showDetail: false
+      showDetail: false,
+      isIphone: false
     }
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    const dom = document.querySelector('.enterprise-content')
+    if (getOs().isIphone) {
+      this.isIphone = true
+    }
+  },
   methods: {}
 }
 </script>
@@ -115,8 +124,8 @@ export default {
   padding: 0.4rem;
   border-radius: 0.08rem;
   position: relative;
-
   margin-bottom:.3rem;
+
   .caring-content {
     .caring-title {
       font-size: 0.32rem;
@@ -194,4 +203,5 @@ export default {
     }
   }
 }
+.enterprise-content.margin1rem{margin-bottom: 1.2rem}
 </style>
