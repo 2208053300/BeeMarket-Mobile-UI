@@ -27,11 +27,11 @@
     </div>
     <div class="footer-action">
       <div
-        v-if="actionDetails.current_is_join"
+        v-if="actionDetails.bottom_desc"
         class="helped-text"
       >
-        <!-- 您已参与了该项目的助力，分享给更多好友，一起助力吧! -->
-        您已参与了助力，分享给更多好友，一起助力吧!
+        <!-- 您已参与了助力，分享给更多好友，一起助力吧! -->
+        {{ actionDetails.bottom_desc }}
       </div>
       <div class="action-button not-help">
         <!-- <van-button class="share-help">

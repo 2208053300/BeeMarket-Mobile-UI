@@ -1,29 +1,22 @@
 <template>
   <div
-    class="header-card"
+    class="header-card flex flex-column flex-between"
     :style="{backgroundImage:'url('+actionData.background_image_url+')'}"
   >
     <div class="action-img">
       <img
         :src="beeIcon.confirmorder_pic_word_top"
-        alt=""
       >
     </div>
     <div class="header-card2">
       <div class="header-img">
-        <img
-          :src="actionData.head_img||beeIcon.head_default"
-          alt=""
-        >
+        <img :src="actionData.head_img||beeIcon.head_default">
       </div>
       <span class="user-name">
         {{ actionData.nickname }}
       </span>
       <div class="img-content">
-        <img
-          :src="beeIcon.picText"
-          class="pic-text"
-        >
+        <img :src="beeIcon.picText" class="pic-text">
       </div>
     </div>
   </div>
@@ -57,21 +50,23 @@ export default {
 
 <style scoped lang="less">
 .header-card {
+   height: 6.12rem;
+   background-size:100% 100%;
   border-radius: 0.08rem;
-  padding: 0.4rem 0.16rem 0.16rem;
+  padding: 0.4rem 0.2rem 0.2rem ;
+  box-sizing: border-box;
   text-align: center;
   box-shadow: 0 0 0.2rem @Grey6;
-  background-size: cover;
   background-repeat: no-repeat;
   position: relative;
   .action-img {
     height: 0.98rem;
     width: 3.58rem;
     border-radius: 0.08rem;
-    margin: auto;
+    margin:0 auto;
   }
   .header-card2 {
-    margin-top: 1rem;
+    // margin-top: 1rem;
     width: 6.6rem;
     height: 2.2rem;
     background-color: rgba(255, 255, 255, 0.7);

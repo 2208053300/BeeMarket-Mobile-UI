@@ -22,6 +22,11 @@ const router = new Router({
           path: 'helpSuccess',
           name: 'helpSuccess',
           component: () => import('@/pages/BeePublic/HelpSuccess')
+        },
+        {
+          path: 'completeDetail',
+          name: 'completeDetail',
+          component: () => import('@/pages/BeePublic/CompleteDetail')
         }
       ]
     }
