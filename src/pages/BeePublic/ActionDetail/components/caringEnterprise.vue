@@ -116,7 +116,7 @@ export default {
   border-radius: 0.08rem;
   position: relative;
 
-  margin-bottom:1.5rem;
+  margin-bottom:.3rem;
   .caring-content {
     .caring-title {
       font-size: 0.32rem;
