@@ -259,6 +259,7 @@ export default {
         align-items: center;
         background-repeat: no-repeat;
         .disableTab {
+          line-height: 0.8rem;
           font-size: 0.28rem;
           color: @Grey2;
           text-align: center;

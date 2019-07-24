@@ -1,12 +1,11 @@
-function goPay(query, type) {
+function goPay(query) {
   const appid =
     // ? 'wxb541620e8a98a7c0'
     process.env.NODE_ENV !== 'production'
       ? 'wx55baa3edb8c37fa8'
       : 'wxd0e389ffa2c4f924'
   // 从新手专享领取任务奖励
-  const route =
-    type !== 'task' ? '/#/category/details/payOrder?' : '/beeTask#/payOrder'
+  const route = '/#/category/details/payOrder?'
   window.location.href =
     `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=` +
     encodeURIComponent(window.location.origin + route + query) +
@@ -15,7 +14,7 @@ function goPay(query, type) {
 export function goPayFromOrder(orderNo) {
   goPay('orderNo=' + orderNo)
 }
-export function goPayFromPayInfo(payInfo, type) {
+export function goPayFromPayInfo(payInfo) {
   let query = 'balance=' + payInfo.balance
   query += '&count_down=' + payInfo.count_down
   query += '&pay_amount=' + payInfo.pay_amount
@@ -23,5 +22,5 @@ export function goPayFromPayInfo(payInfo, type) {
   query += '&blpay=' + payInfo.pay_methods.blpay
   query += '&wxpay=' + payInfo.pay_methods.wxpay
   query += '&trade_no=' + payInfo.trade_no
-  goPay(query, type)
+  goPay(query)
 }
