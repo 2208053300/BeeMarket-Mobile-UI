@@ -110,6 +110,8 @@ export default {
     const dom = document.querySelector('.enterprise-content')
     if (getOs().isIphone) {
       this.isIphone = true
+    }else {
+      this.isIphone = false
     }
   },
   methods: {}
