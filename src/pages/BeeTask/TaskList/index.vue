@@ -104,21 +104,23 @@
             </div>
           </div>
         </div>
-        <div
-          v-if="showAll"
-          class="show-all"
-          @click="showAll=false"
-        >
-          收起更多任务
-          <van-icon name="arrow-up" />
-        </div>
-        <div
-          v-if="!showAll"
-          class="show-all"
-          @click="showAll=true"
-        >
-          展开更多任务
-          <van-icon name="arrow-down" />
+        <div class="show-all-content">
+          <div
+            v-if="showAll"
+            class="show-all"
+            @click="showAll=false"
+          >
+            收起更多任务
+            <van-icon name="arrow-up" />
+          </div>
+          <div
+            v-if="!showAll"
+            class="show-all"
+            @click="showAll=true"
+          >
+            展开更多任务
+            <van-icon name="arrow-down" />
+          </div>
         </div>
       </div>
     </div>
@@ -553,15 +555,20 @@ export default {
           }
         }
       }
-      .show-all {
-        position: absolute;
+      .show-all-content {
         width: 100%;
-        height: 0.7rem;
-        line-height: 0.7rem;
-        background-color: @BeeDefault;
-        border-radius: 0 0 0.16rem 0.16rem;
-        bottom: -0.02rem;
+        height: 0.8rem;
+        position: absolute;
         left: 0;
+        bottom: 0.2rem;
+      }
+      .show-all {
+        margin: auto;
+        background: linear-gradient(to bottom, #fec108, #fe9907);
+        width: 3.6rem;
+        height: 0.8rem;
+        line-height: 0.8rem;
+        border-radius: 0.4rem;
         font-size: 0.28rem;
         color: #fff;
         text-align: center;
