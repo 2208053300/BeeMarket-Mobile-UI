@@ -12,7 +12,7 @@
           {{ actionData.main_title }}
         </div>
         <div class="subhead1">
-          {{ actionData.caption }}
+          {{ actionData.subtitle }}
         </div>
         <!-- <div class="address-content">
           <van-icon :name="beeIcon.confirmorder_icon_address_gray" />

@@ -28,7 +28,7 @@
           <div
             v-if="actionDetails.schedule_status===4"
             class="show-detail text-right"
-            @click="$router.push({path:'/discover/completeDetail',query:{id:actionDetails.id}})"
+            @click="goDetail(actionDetails.finish_link)"
           >
             查看详情 》
           </div>
@@ -78,8 +78,14 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
-  methods: {}
+  mounted() {
+
+  },
+  methods: {
+    goDetail(url) {
+      window.location.href = url
+    }
+  }
 }
 </script>
 
@@ -127,6 +133,14 @@ export default {
     padding: 0.3rem;
     font-size: 0.24rem;
     color: @Grey2;
+    position: relative;
+    .show-detail {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.3rem;
+      font-size: 0.26rem;
+      color: @BeeDefault;
+    }
     .action-progress {
       &:last-child .progress-content {
         border-color: #ffffff;
@@ -163,9 +177,6 @@ export default {
       }
     }
   }
-  .show-detail {
-    font-size: 0.26rem;
-    color: @BeeDefault;
-  }
+
 }
 </style>
