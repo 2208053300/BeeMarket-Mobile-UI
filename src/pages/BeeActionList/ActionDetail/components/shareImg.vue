@@ -171,7 +171,7 @@ export default {
         const canvas = document.createElement('canvas')
         // 获取元素相对于视窗的偏移量
         console.log(imgDom)
-
+        const scale = window.devicePixelRatio
         const rect = imgDom.getBoundingClientRect()
         canvas.width = width * scaleBy
         canvas.height = height * scaleBy
@@ -182,6 +182,7 @@ export default {
         // 设置context位置, 值为相对于视窗的偏移量的负值, 实现图片复位
         context.translate(-rect.left, -rect.top)
         const canvasImg = await html2canvas(imgDom, {
+          scale: scale,
           useCORS: true,
           canvas: canvas,
           scrollX: 0,
