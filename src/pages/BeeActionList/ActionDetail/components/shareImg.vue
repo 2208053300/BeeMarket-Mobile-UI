@@ -5,7 +5,7 @@
       class="share-modal"
       transition="van-fade"
       :close-on-click-overlay="false"
-      @opened="waitDraw"
+      @opened="drawImg"
       @close="closed"
       @click-overlay="closed"
     >
@@ -34,6 +34,7 @@
                     :src="actionDetails.share_data.head_img"
                     crossOrigin="anonymous"
                     alt=""
+                    :onload="loadEnd=true"
                   >
                 </div>
                 <div class="right-info">
@@ -144,7 +145,8 @@ export default {
         pic_finger: require('@/assets/icon/discover/pic_finger@2x.png')
       },
       bgBase64: '',
-      headBase64: ''
+      headBase64: '',
+      loadEnd: false
     }
   },
   computed: {},
@@ -156,15 +158,32 @@ export default {
     closed() {
       this.$emit('update:helpSuccess', false)
     },
-    waitDraw() {
-      setTimeout(this.drawImg(), 3000)
-    },
     async drawImg() {
       // 判断是否图片已经加载成功
+      if (!this.loadEnd) {
+        setTimeout(this.drawImg(), 2000)
+      }
       const imgDom = document.querySelector('.share-content')
       try {
+        const width = imgDom.clientWidth
+        const height = imgDom.clientHeight
+        const scaleBy = 2 // 缩放比例
+        const canvas = document.createElement('canvas')
+        // 获取元素相对于视窗的偏移量
+        console.log(imgDom)
+
+        const rect = imgDom.getBoundingClientRect()
+        canvas.width = width * scaleBy
+        canvas.height = height * scaleBy
+        canvas.style.width = width * scaleBy + 'px'
+        canvas.style.height = height * scaleBy + 'px'
+        const context = canvas.getContext('2d')
+        context.scale(scaleBy, scaleBy)
+        // 设置context位置, 值为相对于视窗的偏移量的负值, 实现图片复位
+        context.translate(-rect.left, -rect.top)
         const canvasImg = await html2canvas(imgDom, {
           useCORS: true,
+          canvas: canvas,
           scrollX: 0,
           scrollY: 0
           // y: imgDom.offsetTop
