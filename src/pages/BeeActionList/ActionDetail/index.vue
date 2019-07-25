@@ -53,6 +53,10 @@
         </van-button>
       </div>
     </div>
+    <hideBg
+      :bg-opacity="bgOpacity"
+      :action-details="actionDetails"
+    />
     <share-img
       ref="shareImg"
       :action-details="actionDetails"
@@ -75,7 +79,7 @@ import detailCard2 from './components/detailCard2'
 import detailCard3 from './components/detailCard3'
 import detailCard4 from './components/detailCard4'
 import shareImg from './components/shareImg'
-
+import hideBg from './components/hideBg'
 export default {
   metaInfo: {
     title: '项目详情'
@@ -86,14 +90,15 @@ export default {
     detailCard2,
     detailCard3,
     detailCard4,
-    shareImg
+    shareImg,
+    hideBg
   },
 
   props: {},
   data() {
     return {
       // 公益行动id
-      showImg: false,
+      bgOpacity: 0,
       id: this.$route.query.id,
       showPercent: false,
       actionDetails: {
@@ -167,15 +172,15 @@ export default {
       })
       this.actionDetails.share_data.qr_cord =
         'data:image/jpeg;base64,' + this.actionDetails.share_data.qr_cord
-      this.showImg = true
     },
     // 参与助力
     async goHelp() {
-      this.helpSuccess = true
       try {
         const res = await joinAction1({ id: this.id })
         if (res.status_code === 200) {
           this.actionDetails.is_join = true
+          this.$refs.shareImg.drawImg()
+          this.helpSuccess = true
         }
       } catch (error) {
         this.$toast(error)
@@ -183,10 +188,10 @@ export default {
     },
     // 发起助力
     async goHelp1() {
-      this.helpSuccess = true
       try {
         const res = await launchAction({ id: this.id })
         if (res.status_code === 200) {
+          this.$refs.shareImg.drawImg()
           this.helpSuccess = true
         }
       } catch (error) {

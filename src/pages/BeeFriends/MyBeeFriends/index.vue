@@ -220,7 +220,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(async vm => {
-      if (['myEarn', 'rule'].indexOf(from.name) === -1) {
+      if (['myEarn', 'beeFriendRule'].indexOf(from.name) === -1) {
         vm.$store.state.user.showFarmPop = true
       } else {
         vm.$store.state.user.showFarmPop = false
