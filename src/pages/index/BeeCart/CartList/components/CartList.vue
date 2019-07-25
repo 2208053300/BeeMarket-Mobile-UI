@@ -8,21 +8,14 @@
 
  -->
   <div class="cart-list">
-    <div
-      v-for="(store, index) in cart.cartInfo"
-      :key="index"
-      class="bee-store"
-    >
+    <div v-for="(store, index) in cart.cartInfo" :key="index" class="bee-store">
       <van-checkbox
         v-model="store.checked"
         :checked-color="BeeDefault"
         style="margin-top:0"
-        @click="checkProduct(store.products[0].cart_id,'group',store.checked)"
+        @click="checkProduct(store.products[0].cart_id, 'group', store.checked)"
       >
-        <van-icon
-          name="shop-o"
-          style="vertical-align: text-top;"
-        />
+        <van-icon name="shop-o" style="vertical-align: text-top;" />
         {{ store.store_name }}
       </van-checkbox>
       <van-checkbox
@@ -31,43 +24,46 @@
         v-model="item.checked"
         :name="item"
         :checked-color="BeeDefault"
-        @click="checkProduct(item.cart_id,'one',item.checked,item.current_status)"
+        @click="
+          checkProduct(item.cart_id, 'one', item.checked, item.current_status)
+        "
       >
         <van-card @click.stop="">
           <div slot="thumb" class="thumb">
             <img
               :src="item.tUrl"
               alt="商品预览图"
-              @click.stop="goDetail(item.pid,item.target)"
+              @click.stop="goDetail(item.pid, item.target)"
             >
-            <div v-if="[-3,-2].includes(item.current_status)" class="tip">
+            <div v-if="[-3, -2].includes(item.current_status)" class="tip">
               <span v-if="item.current_status === -2">已售罄</span>
-              <span v-if="item.current_status === -3">已下架</span>
+              <span v-else-if="item.current_status === -3">已下架</span>
             </div>
           </div>
           <span
             slot="title"
             class="card-title"
-            @click.stop="goDetail(item.pid,item.target)"
+            @click.stop="goDetail(item.pid, item.target)"
           >{{ item.pname }}</span>
           <div
             slot="desc"
             class="card-sku"
-            @click.stop="showSku(item.pid,item.props,item.number,item.cart_id)"
+            @click.stop="
+              showSku(item.pid, item.props, item.number, item.cart_id)
+            "
           >
             {{ item.props_name }}
             <van-icon name="arrow-down" />
           </div>
-          <span
-            slot="price"
-            class="card-price"
-          >
-            ￥{{ item.sell_price }}
-          </span>
+          <span slot="price" class="card-price"> ￥{{ item.sell_price }} </span>
           <!-- current_status === -2 || -3 售罄或者下架 显示移除按钮 -->
 
-          <div v-if="[-2,-3].includes(item.current_status)" slot="num">
-            <van-button round class="remove-btn" @click="removeItem(item.cart_id)">
+          <div v-if="[-2, -3].includes(item.current_status)" slot="num">
+            <van-button
+              round
+              class="remove-btn"
+              @click="removeItem(item.cart_id)"
+            >
               移除
             </van-button>
           </div>
@@ -79,14 +75,14 @@
               v-model="item.number"
               :max="item.number"
               :integer="true"
-              @change="changeNum(item.number,item.cart_id)"
+              @change="changeNum(item.number, item.cart_id)"
             />
 
             <van-stepper
               v-if="item.current_status !== -1"
               v-model="item.number"
               :integer="true"
-              @change="changeNum(item.number,item.cart_id)"
+              @change="changeNum(item.number, item.cart_id)"
             />
           </div>
         </van-card>
@@ -254,30 +250,42 @@ export default {
         vertical-align: text-top;
       }
     }
-    .van-card__thumb{
-      .thumb{
-        width:90px;
-        height:90px;
+    .van-card__thumb {
+      .thumb {
+        width: 90px;
+        height: 90px;
         position: relative;
-        .tip{
+        .tip {
           position: absolute;
           top: 0;
           left: 0;
-          width:100%;
+          width: 100%;
           height: 100%;
           display: flex;
-          font-size: .26rem;
-          color:#fff;
-          background: rgba(0, 0, 0,.5);
-          span{
-            margin:auto
+          font-size: 0.26rem;
+          color: #fff;
+          background: rgba(0, 0, 0, 0.5);
+          span {
+            margin: auto;
           }
         }
       }
     }
-    .num-change-tip{margin: 0.1rem auto 0; text-align: right; font-size: 0.24rem;color: red;}
+    .num-change-tip {
+      margin: 0.1rem auto 0;
+      text-align: right;
+      font-size: 0.24rem;
+      color: red;
+    }
     .van-card__num {
-      .remove-btn{border: 1px solid @BeeDefault;color:@BeeDefault; font-size: .26rem; height: 0.46rem;line-height:  0.46rem; width: 0.92rem;}
+      .remove-btn {
+        border: 1px solid @BeeDefault;
+        color: @BeeDefault;
+        font-size: 0.26rem;
+        height: 0.46rem;
+        line-height: 0.46rem;
+
+      }
       .van-stepper {
         // NOTE 覆盖步进器样式
         .van-stepper__minus {
