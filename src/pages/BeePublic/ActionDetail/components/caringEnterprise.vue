@@ -111,7 +111,7 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    const dom = document.querySelector('.enterprise-content')
+    // const dom = document.querySelector('.enterprise-content')
     if (getOs().isIphone) {
       this.isIphone = true
     } else {
