@@ -146,9 +146,10 @@ export default {
   methods: {
     async getAssessmentData() {
       const res = await getAssessment(this.formData)
-      this.assessmentData = res.data
-      this.assessmentList.push(...res.data.comments)
-      if (res.data.comments.length === 0) {
+      if (res.data.comments.length !== 0) {
+        this.assessmentData = res.data
+        this.assessmentList.push(...res.data.comments)
+      } else {
         this.finished = true
       }
     },
