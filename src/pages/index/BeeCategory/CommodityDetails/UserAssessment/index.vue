@@ -129,7 +129,8 @@ export default {
       showImgPre: false,
       imgList: [],
       preIndex: 0,
-      touchMove: false
+      touchMove: false,
+      page: 1
     }
   },
   computed: {},
@@ -151,9 +152,9 @@ export default {
         await this.getAssessmentData()
         // 加载状态结束
         this.loading = false
-
+        this.page++
         // 数据全部加载完成
-        if (this.assessmentList.length === this.assessmentData.comments_count) {
+        if (this.assessmentList.length >= this.assessmentData.comments_count) {
           this.finished = true
         }
       }, 500)

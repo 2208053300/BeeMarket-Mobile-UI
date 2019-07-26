@@ -2,7 +2,6 @@ import { getOs } from '@/utils'
 import Cookies from 'js-cookie'
 import { auditWechat } from '@/api/BeeApi/auth'
 import { GetRequest, getQueryString } from '@/utils/index'
-console.log(window)
 
 // SECTION 获取Token
 export async function getToken() {
