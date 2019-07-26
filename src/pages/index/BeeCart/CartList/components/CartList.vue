@@ -8,21 +8,14 @@
 
  -->
   <div class="cart-list">
-    <div
-      v-for="(store, index) in cart.cartInfo"
-      :key="index"
-      class="bee-store"
-    >
+    <div v-for="(store, index) in cart.cartInfo" :key="index" class="bee-store">
       <van-checkbox
         v-model="store.checked"
         :checked-color="BeeDefault"
         style="margin-top:0"
-        @click="checkProduct(store.products[0].cart_id,'group',store.checked)"
+        @click="checkProduct(store.products[0].cart_id, 'group', store.checked)"
       >
-        <van-icon
-          name="shop-o"
-          style="vertical-align: text-top;"
-        />
+        <van-icon name="shop-o" style="vertical-align: text-top;" />
         {{ store.store_name }}
       </van-checkbox>
       <van-checkbox
@@ -31,7 +24,9 @@
         v-model="item.checked"
         :name="item"
         :checked-color="BeeDefault"
-        @click="checkProduct(item.cart_id,'one',item.checked,item.current_status)"
+        @click="
+          checkProduct(item.cart_id, 'one', item.checked, item.current_status)
+        "
       >
         <van-card @click.stop="">
           <div
@@ -48,7 +43,7 @@
               class="tip"
             >
               <span v-if="item.current_status === -2">已售罄</span>
-              <span v-if="item.current_status === -3">已下架</span>
+              <span v-else-if="item.current_status === -3">已下架</span>
             </div>
           </div>
           <span
@@ -64,12 +59,7 @@
             {{ item.props_name }}
             <van-icon name="arrow-down" />
           </div>
-          <span
-            slot="price"
-            class="card-price"
-          >
-            ￥{{ item.sell_price }}
-          </span>
+          <span slot="price" class="card-price"> ￥{{ item.sell_price }} </span>
           <!-- current_status === -2 || -3 售罄或者下架 显示移除按钮 -->
 
           <div
@@ -95,14 +85,14 @@
               v-model="item.number"
               :max="item.number"
               :integer="true"
-              @change="changeNum(item.number,item.cart_id)"
+              @change="changeNum(item.number, item.cart_id)"
             />
 
             <van-stepper
               v-if="item.current_status !== -1"
               v-model="item.number"
               :integer="true"
-              @change="changeNum(item.number,item.cart_id)"
+              @change="changeNum(item.number, item.cart_id)"
             />
           </div>
         </van-card>
