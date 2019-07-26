@@ -111,6 +111,16 @@ export default {
     // })
     this.getSecondCategoryData()
   },
+  beforeRouteLeave(to, from, next) {
+    // 如果是从详情页退回则缓存
+    if (to.name === 'CommodityDetails') {
+      from.meta.keepAlive = true
+    } else {
+      from.meta.keepAlive = false
+      this.$destroy()
+    }
+    next()
+  },
   methods: {
     // 获取二级分类列表
     async getSecondCategoryData() {

@@ -35,7 +35,7 @@
         </div>
         <div
           class="goods-card"
-          :class="[{leftRadio:tid === '10'},{rightRadio:tid === '2'}]"
+          :class="[{rightRadio:tid === '10'},{leftRadio:tid === '2'}]"
         >
           <div class="goods-img">
             <img
@@ -335,10 +335,10 @@ export default {
         }
       }
       .leftRadio {
-        border-top-left-radius: none;
+        border-top-left-radius: 0;
       }
       .rightRadio {
-        border-top-right-radius: none;
+        border-top-right-radius: 0;
       }
       .product-detailImg {
         margin-top: -0.2rem;

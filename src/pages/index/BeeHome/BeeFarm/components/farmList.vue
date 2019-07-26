@@ -70,7 +70,6 @@
       <van-list
         v-model="loading"
         :finished="finished"
-        :immediate-check="false"
         finished-text="我也是有底线的 o(´^｀)o"
         @load="getProductListData(condition)"
       >
@@ -226,7 +225,7 @@ export default {
       // 请求数据条件
       condition: {
         // 当前选中分类id
-        cid: 1,
+        cid: 0,
         // 筛选条件  sell_price 售价，sold 销量
         sort: '',
         // asc 顺序 还是 desc 倒序
