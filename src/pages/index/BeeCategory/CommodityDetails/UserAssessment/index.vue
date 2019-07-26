@@ -148,17 +148,17 @@ export default {
       const res = await getAssessment(this.formData)
       this.assessmentData = res.data
       this.assessmentList.push(...res.data.comments)
+      if (res.data.comments.length === 0) {
+        this.finished = true
+      }
     },
     onLoad() {
       setTimeout(async() => {
         await this.getAssessmentData()
         // 加载状态结束
         this.loading = false
-        this.formData.page++
         // 数据全部加载完成
-        if (this.assessmentList.length >= this.assessmentData.comments_count) {
-          this.finished = true
-        }
+        this.formData.page++
       }, 500)
     },
     getOrderData(filter) {
