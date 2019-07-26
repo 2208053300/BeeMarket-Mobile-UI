@@ -7,12 +7,9 @@ console.log(window)
 // SECTION 获取Token
 export async function getToken() {
   const osObj = getOs()
-
-  if (osObj.isAndroid && osObj.isApp) {
-    return Cookies.get('token')
-  }
-  if (osObj.isIphone && osObj.isApp) {
-    return Cookies.get('BM-App-Token')
+  const appToken = Cookies.get('token') || Cookies.get('BM-App-Token')
+  if ((osObj.isAndroid || osObj.isIphone) && osObj.isApp) {
+    return appToken
   }
   // 微信授权登录
   if (osObj.isWx) {
@@ -47,8 +44,8 @@ export function checkToken() {
     const uriProp = GetRequest('code')
     const appid =
       process.env.NODE_ENV !== 'production'
-        // ? 'wxb541620e8a98a7c0'
-        ? 'wx55baa3edb8c37fa8'
+        ? // ? 'wxb541620e8a98a7c0'
+        'wx55baa3edb8c37fa8'
         : 'wxd0e389ffa2c4f924'
     if (uriProp) {
       const uriProp2 = window.location.href.slice(
