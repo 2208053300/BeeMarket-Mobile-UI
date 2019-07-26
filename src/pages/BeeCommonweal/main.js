@@ -9,11 +9,16 @@ import '@/main'
 // NOTE 定义rem基准
 import '@/utils/flexiable'
 
-import { Icon, Button, Popup } from 'vant'
+import { Icon, Button, Popup, Tab, Tabs, Cell, CellGroup, List } from 'vant'
 
 Vue.use(Icon)
   .use(Button)
   .use(Popup)
+  .use(Tab)
+  .use(Tabs)
+  .use(Cell)
+  .use(CellGroup)
+  .use(List)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

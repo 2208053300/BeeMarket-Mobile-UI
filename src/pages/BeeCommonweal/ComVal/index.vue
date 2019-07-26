@@ -33,7 +33,7 @@
           <span class="com-text1">可用公益值</span>
           <p
             class="com-val"
-            @click="goDetail(0)"
+            @click="goDetail(1)"
           >
             {{ comVal.available_charity_value }}
           </p>
