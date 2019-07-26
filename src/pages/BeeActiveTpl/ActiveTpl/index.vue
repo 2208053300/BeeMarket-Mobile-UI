@@ -53,7 +53,6 @@
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 import { getUID } from '@/api/BeeApi/user'
-// import Cookies from 'js-cookie'
 import { activityDetail } from '@/api/BeeApi/action'
 
 export default {
@@ -113,7 +112,6 @@ export default {
 
     this.getActivityDetailData()
 
-    // this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
     const vanDom = document.querySelector('.van-tabs__wrap')
     // console.log('公共头部：', document.querySelector('.fixed-header'))
     if (document.querySelector('.fixed-header')) {

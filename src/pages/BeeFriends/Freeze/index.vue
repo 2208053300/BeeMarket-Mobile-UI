@@ -110,7 +110,6 @@
 <script>
 import { goHome, getOs } from '@/utils'
 import { getFreezeData } from '@/api/BeeApi/user'
-import Cookies from 'js-cookie'
 export default {
   components: {},
   props: {},
@@ -124,8 +123,6 @@ export default {
         freezeImg2: require('@/assets/icon/task/talent/talent_bg_title2@2x.png'),
         freezeImg3: require('@/assets/icon/task/talent/talent_bg_title3@2x.png')
       },
-      // 获取cookie
-      test1: '',
       // 获取 os 平台
       osObj: getOs(),
       // 冻结数据
@@ -136,7 +133,6 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    this.test1 = 'token: ' + Cookies.get('token') + ',' + Cookies.get()
     this.clearHistory()
     this.getFreeze()
   },

@@ -2,13 +2,17 @@ import { getOs } from '@/utils'
 import Cookies from 'js-cookie'
 import { auditWechat } from '@/api/BeeApi/auth'
 import { GetRequest, getQueryString } from '@/utils/index'
+console.log(window)
 
 // SECTION 获取Token
 export async function getToken() {
   const osObj = getOs()
 
-  if ((osObj.isIphone || osObj.isAndroid) && osObj.isApp) {
+  if (osObj.isAndroid && osObj.isApp) {
     return Cookies.get('token')
+  }
+  if (osObj.isIphone && osObj.isApp) {
+    return Cookies.get('BM-App-Token')
   }
   // 微信授权登录
   if (osObj.isWx) {
