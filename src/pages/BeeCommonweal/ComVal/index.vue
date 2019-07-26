@@ -152,7 +152,7 @@ export default {
       if (osObj.isWx) {
         this.$router.push('/category')
       } else if (osObj.isIphone && osObj.isApp) {
-        window.webkit.messageHandlers.ToCatList.postMessage()
+        window.webkit.messageHandlers.ToCatList.postMessage(1)
       } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToCatList()
       } else {
