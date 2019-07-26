@@ -94,13 +94,23 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.getSecondCategoryData()
   },
+  beforeRouteLeave(to, from, next) {
+    // 如果是从详情页退回则缓存
+    if (to.name === 'CommodityDetails') {
+      from.meta.keepAlive = true
+    } else {
+      from.meta.keepAlive = false
+      this.$destroy()
+    }
+    next()
+  },
   methods: {
     // 获取农副产品分类数据
     async getSecondCategoryData() {
       const res = await getSecondCategory({ target: 'produce' })
       this.farmCategory = res.data.cats
       this.$refs.farmList.condition.cid = this.farmCategory[0].cid
-      this.$refs.farmList.getProductListData()
+      // this.$refs.farmList.getProductListData()
     },
     // 从全部分类点击分类获取分类 id
     getCateIdFromAll(index, title) {

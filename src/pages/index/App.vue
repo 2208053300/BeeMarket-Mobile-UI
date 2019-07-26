@@ -48,7 +48,7 @@ export default {
     return {
       osObj: getOs(),
       uid: 0,
-      transitionName: 'van-slide-left'
+      transitionName: 'van-slide-right'
     }
   },
   watch: {
@@ -60,7 +60,7 @@ export default {
         this.transitionName = 'van-fade'
       } else {
         this.transitionName =
-          toDepth < fromDepth ? 'van-slide-right' : 'van-slide-left'
+          toDepth < fromDepth ? 'van-slide-left' : 'van-slide-right'
       }
     }
   },

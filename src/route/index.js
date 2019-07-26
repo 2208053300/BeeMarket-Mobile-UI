@@ -196,6 +196,7 @@ const router = new Router({
         {
           path: 'beefarm',
           name: 'beefarm',
+          meta: { keepAlive: true },
           component: () => import('@/pages/index/BeeHome/BeeFarm')
         },
         {
@@ -274,6 +275,7 @@ const router = new Router({
         {
           path: 'SecCategoryList',
           name: 'SecCategoryList',
+          meta: { keepAlive: true },
           component: () => import('@/pages/index/BeeCategory/SecCategoryList')
         },
         {
