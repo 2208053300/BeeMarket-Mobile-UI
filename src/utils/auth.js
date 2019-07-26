@@ -42,10 +42,10 @@ export function checkToken() {
   const osObj = getOs()
   if (osObj.isWx) {
     const uriProp = GetRequest('code')
+    // ? 'wxb541620e8a98a7c0'
     const appid =
       process.env.NODE_ENV !== 'production'
-        ? // ? 'wxb541620e8a98a7c0'
-        'wx55baa3edb8c37fa8'
+        ? 'wx55baa3edb8c37fa8'
         : 'wxd0e389ffa2c4f924'
     if (uriProp) {
       const uriProp2 = window.location.href.slice(
