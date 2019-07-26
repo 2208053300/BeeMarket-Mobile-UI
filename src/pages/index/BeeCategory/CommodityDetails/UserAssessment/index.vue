@@ -124,13 +124,15 @@ export default {
       beeIcon: {
         product_detail_icon_avatar: require('@/assets/icon/product/product_detail_icon_avatar@2x.png')
       },
-      formData: {},
+      formData: {
+        pid: this.$route.query.pid,
+        page: 1
+      },
       // 图片预览
       showImgPre: false,
       imgList: [],
       preIndex: 0,
-      touchMove: false,
-      page: 1
+      touchMove: false
     }
   },
   computed: {},
@@ -152,7 +154,7 @@ export default {
         await this.getAssessmentData()
         // 加载状态结束
         this.loading = false
-        this.page++
+        this.formData.page++
         // 数据全部加载完成
         if (this.assessmentList.length >= this.assessmentData.comments_count) {
           this.finished = true
@@ -163,11 +165,13 @@ export default {
       if (filter === 'image') {
         this.formData.filter = 'image'
         this.assessmentList = []
+        this.formData.page = 1
         this.getAssessmentData()
         this.assessmentType = '有图'
       } else {
         delete this.formData.filter
         this.assessmentList = []
+        this.formData.page = 1
         this.getAssessmentData()
         this.assessmentType = '全部'
       }
