@@ -47,6 +47,9 @@
         </div>
       </div>
     </div>
+    <div class="part1-text">
+      (满<span class="bold-text">3600</span>元可领取茅台贵宾陈酿，满<span class="bold-text">889</span>元可领取木糖醇即食燕窝)
+    </div>
     <div
       v-if="taskData.proportion!==100"
       class="header-part2"
@@ -259,6 +262,15 @@ export default {
           }
         }
       }
+    }
+  }
+  .part1-text {
+    font-size: 0.2rem;
+    padding: 0.05rem 0.3rem;
+    color: #fff;
+    white-space: nowrap;
+    .bold-text {
+      font-weight: bold;
     }
   }
   .header-part2 {
