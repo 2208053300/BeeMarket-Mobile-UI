@@ -147,7 +147,9 @@ export default {
     async getAssessmentData() {
       const res = await getAssessment(this.formData)
       if (res.data.comments.length !== 0) {
-        this.assessmentData = res.data
+        if (res.data.good_rate) {
+          this.assessmentData = res.data
+        }
         this.assessmentList.push(...res.data.comments)
       } else {
         this.finished = true
