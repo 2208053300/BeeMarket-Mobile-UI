@@ -30,8 +30,11 @@
         <div class="down-box">
           <img :src="img.img2">
           <div class="download-link bg-white">
-            <a
+            <!-- <a
               href="https://itunes.apple.com/cn/app/%E8%9C%82%E9%9B%86%E5%B8%82/id1382648901?l=zh&ls=1&mt=8"
+            > -->
+            <a
+              href="https://apps.apple.com/cn/app/%E8%9C%82%E9%9B%86%E5%B8%82/id1382648901"
             >
               <img
                 src="../../../assets/icon/register/download/ipone_img.png"
