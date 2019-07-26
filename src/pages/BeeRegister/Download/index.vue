@@ -10,7 +10,7 @@
       </div>
 
       <div class="download-link">
-        <a href="https://itunes.apple.com/cn/app/%E8%9C%82%E9%9B%86%E5%B8%82/id1382648901?l=zh&ls=1&mt=8">
+        <a href="https://apps.apple.com/cn/app/%E8%9C%82%E9%9B%86%E5%B8%82/id1382648901">
           <img src="../../../assets/icon/register/download/ipone_img.png" alt=""><span>iPhone 下载</span>
         </a>
         <a id="android" href="https://a.app.qq.com/o/simple.jsp?pkgname=com.bee.beemark"><img src="../../../assets/icon/register/download/android_img.png" alt=""><span>Android 下载</span></a>
