@@ -11,6 +11,11 @@ const wxApi = {
    * @param  {Function} callback [ready回调函数]
    */
   async wxRegister(callback) {
+    const osObj = getOs()
+    if (!osObj.isWx) {
+      console.log('非微信环境')
+      return
+    }
     const res = await getWechatSign({
       url: window.location.href.split('#')[0]
     })
@@ -82,8 +87,13 @@ const wxApi = {
   },
   // 微信分享
   wxShare(option) {
+    const osObj = getOs()
+    if (!osObj.isWx) {
+      console.log('非微信环境')
+      return
+    }
     this.wxRegister(() => {
-      if (getOs().isIphone) {
+      if (osObj.isIphone) {
         this.ShareAppMessage(option)
         this.ShareTimeline(option)
       } else {

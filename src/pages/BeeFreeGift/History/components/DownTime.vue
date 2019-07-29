@@ -13,6 +13,10 @@ export default {
     time: {
       type: Number,
       default: 0
+    },
+    rid: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -62,6 +66,8 @@ export default {
           this.nowTime = 0
           this.downTime = this.formatSeconds(this.nowTime)
           window.clearInterval(clock)
+
+          this.$emit('changeStatus', this.rid)
         }
       }, 1000)
     },
@@ -84,15 +90,15 @@ export default {
         }
       }
       // 一次 秒 分 小时 天
-      let result = '' + parseInt(theTime) + '秒'
+      let result = '' + parseInt(theTime)
       if (middle > 0) {
-        result = '' + parseInt(middle) + '分' + result
+        result = '' + parseInt(middle) + ':' + result
       }
       if (hour > 0) {
-        result = '' + parseInt(hour) + '时' + result
+        result = '' + parseInt(hour) + ':' + result
       }
       if (day > 0) {
-        result = '' + parseInt(day) + '天' + result
+        result = '' + parseInt(day) + ':' + result
       }
       return result
     }
