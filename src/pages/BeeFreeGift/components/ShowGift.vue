@@ -256,6 +256,6 @@ export default {
     }
 
   }
-   .van-popup.share-tip-box{background-color: rgba(0, 0, 0, 0); text-align: right;}
+  .van-popup.share-tip-box{background-color: rgba(0, 0, 0, 0); text-align: right;}
   .share-tip-img{width:3.3rem;height: 2.28rem; margin-right: 0.2rem;margin-top: 0.2rem;}
 </style>
