@@ -65,7 +65,7 @@ export function getDetail(data) {
 // NOTE 获取免费送礼 送礼历史列表数据
 export function getHistoryData(data) {
   return request({
-    url: baseUrl + '/historyData',
+    url: '/present/record',
     method: 'post',
     data
   })
