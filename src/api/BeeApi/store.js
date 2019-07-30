@@ -19,7 +19,7 @@ export function getStoreLicense(data) {
 // 商家入驻
 export function entering(data) {
   return request({
-    url: '/store/merchant/entering',
+    url: '/merchant/joinus',
     method: 'post',
     data
   })
