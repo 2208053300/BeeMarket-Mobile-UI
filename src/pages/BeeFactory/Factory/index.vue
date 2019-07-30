@@ -353,7 +353,7 @@ export default {
         this.validCat(this.factory.cat_name) &&
         this.validJy(this.factory.jy_name) &&
         this.validImg(this.img.content) &&
-        this.validReferName(this.factory.referrer_name) &&
+        // this.validReferName(this.factory.referrer_name) &&
         this.validReferTel(this.factory.referrer_number)
       ) {
         console.log(1)
@@ -375,7 +375,7 @@ export default {
         formData.set('mobile', this.factory.contact_phone)
         formData.set('cat_id', this.factory.cat_id)
         formData.set('operate_experience', this.factory.jy_name)
-        formData.set('invite_name', this.factory.referrer_name)
+        // formData.set('invite_name', this.factory.referrer_name)
         formData.set('invite_mobile', this.factory.referrer_number)
         // 执行提交表单请求
         try {
@@ -498,7 +498,7 @@ export default {
     },
     // 验证推荐人手机座机号码
     validReferTel(val) {
-      if (val.length > 0) {
+      if (val && val.length > 0) {
         if (!/^((\d{2,4}-\d{7,8})|(1[3456789]\d{9}))$/.test(val)) {
           this.$toast('请正确输入推荐人电话！')
           return false
