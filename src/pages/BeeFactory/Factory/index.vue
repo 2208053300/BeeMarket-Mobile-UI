@@ -376,7 +376,9 @@ export default {
         formData.set('cat_id', this.factory.cat_id)
         formData.set('operate_experience', this.factory.jy_name)
         // formData.set('invite_name', this.factory.referrer_name)
-        formData.set('invite_mobile', this.factory.referrer_number)
+        if (this.factory.referrer_number) {
+          formData.set('invite_mobile', this.factory.referrer_number)
+        }
         // 执行提交表单请求
         try {
           const res1 = await entering(formData)
