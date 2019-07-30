@@ -35,7 +35,7 @@
               <!-- ing -->
               <div v-if="product.status===0" class="ing-tip flex flex-between">
                 <p class="flex">
-                  <span><DownTime :time="product.remain_time" :rid="product.rid" @chageStatus="changeStatus" /></span>后送礼失败
+                  <span><DownTime :time="product.remain_time" :rid="product.rid" @changeStatus="changeStatus" /></span>后送礼失败
                 </p>
                 <span>还差{{ product.still_need_num }}人开奖</span>
               </div>
@@ -52,8 +52,8 @@
               <van-button class="detail-btn" size="mini" @click="goPrizeDraw(product.rid)">
                 送礼详情
               </van-button>
-              <van-button v-if="[1,-1].includes(product.status)" class="re-btn" size="mini">
-                再次送礼
+              <van-button v-if="[1,-1].includes(product.status)" class="re-btn" size="mini" @click="reGift">
+                再次赠礼
               </van-button>
               <van-button v-if="product.status===0" class="share-btn" size="mini" @click="shareMore(product)">
                 送给更多朋友
@@ -204,6 +204,13 @@ export default {
         if (item.rid === rid) {
           item.status = -1
         }
+      })
+    },
+
+    // NOTE 再次赠送
+    reGift() {
+      this.$router.push({
+        name: 'beeFreeGift'
       })
     },
 

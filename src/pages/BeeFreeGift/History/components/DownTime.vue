@@ -62,7 +62,7 @@ export default {
       const clock = setInterval(() => {
         this.nowTime--
         this.downTime = this.formatSeconds(this.nowTime)
-        if (this.nowTime === 0) {
+        if (this.nowTime <= 0) {
           this.nowTime = 0
           this.downTime = this.formatSeconds(this.nowTime)
           window.clearInterval(clock)
