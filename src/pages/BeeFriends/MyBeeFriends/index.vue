@@ -220,6 +220,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(async vm => {
+      // 判断是否弹出农礼包弹框
       if (['myEarn', 'beeFriendRule'].indexOf(from.name) === -1) {
         vm.$store.state.user.showFarmPop = true
       } else {
@@ -234,12 +235,18 @@ export default {
       }
       // 0 非合伙人 1 合伙人 2 冻结
       if (vm.$store.state.user.userStatus === 0) {
+        // 如果不满足，跳转绑定手机号
+        vm.$router.replace({
+          path: '/persion/profile/accountBind/bindPhone',
+          query: { reason: 'beeFriends' }
+        })
         // 当 is_partner = 0 时，该字段有效；1表示满足申请条件，0表示不满足
-        if (vm.$store.state.user.applyCondition === 0) {
-          vm.$router.replace({ name: 'noQualified' })
-        } else if (vm.$store.state.user.applyCondition === 1) {
-          vm.$router.replace({ name: 'introduction' })
-        }
+        // if (vm.$store.state.user.applyCondition === 0) {
+
+        //   vm.$router.replace({ name: 'noQualified' })
+        // } else if (vm.$store.state.user.applyCondition === 1) {
+        //   vm.$router.replace({ name: 'introduction' })
+        // }
       } else if (vm.$store.state.user.userStatus === 2) {
         vm.$router.replace({ name: 'freeze' })
       }
@@ -419,7 +426,7 @@ export default {
       }
       .grade-text {
         font-size: 0.2rem;
-        color: #9D6232;
+        color: #9d6232;
       }
     }
   }
