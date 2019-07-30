@@ -332,8 +332,12 @@ export default {
     // 点击导航
     // navClick(e) {
     navClick(index, title) {
+      console.log('点击的是第几个:', index);
+      
       // 用 class="nav-content" 添加锚点
       const jump = document.querySelectorAll('.nav-content')
+      console.log('所有的.nav-content:', jump);
+      console.log('jump[index]:', jump[index]);
       const total = jump[index].offsetTop
       let distance =
         document.documentElement.scrollTop || document.body.scrollTop
