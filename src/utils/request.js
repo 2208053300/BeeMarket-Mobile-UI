@@ -15,7 +15,11 @@ import { isJSON } from '@/utils'
 import { getOs } from '@/utils'
 
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api 的 base_url
+  // api 的 base_url
+  baseURL:
+    process.env.NODE_ENV === 'production'
+      ? 'https://api.fengjishi.com'
+      : 'https://api.fengjishi.com.cn',
   timeout: 50000 // 请求超时时间(现在是50秒)
 })
 
