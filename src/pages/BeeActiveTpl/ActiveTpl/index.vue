@@ -338,6 +338,8 @@ export default {
           indexNow = index
         }
       })
+      console.log("当前点的是第几个：",indexNow);
+      
       // 用 class="nav-content" 添加锚点
       const jump = document.querySelectorAll('.nav-content')
       const total = jump[indexNow].offsetTop
