@@ -86,8 +86,11 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-
-    document.querySelector('.login-page').style.height = document.body.clientHeight - 44 + 'px'
+    if (this.$route.query.reason === 'beeFriends') {
+      this.$toast('您尚未绑定手机号，绑定成功即可开启蜂友圈！')
+    }
+    document.querySelector('.login-page').style.height =
+      document.body.clientHeight - 44 + 'px'
   },
   methods: {
     checkPhoneRight() {
@@ -101,7 +104,11 @@ export default {
     },
     async sendSmsData() {
       try {
-        const res = await sendSms({ mobileNum: this.phone, type: 'bind', at: 'w' })
+        const res = await sendSms({
+          mobileNum: this.phone,
+          type: 'bind',
+          at: 'w'
+        })
         if (res.status_code === 200) {
           this.changeCountDoen()
         }
