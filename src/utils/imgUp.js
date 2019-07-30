@@ -6,10 +6,10 @@ import { compress } from './compress'
  */
 export function zipImg(file) {
   return new Promise((resolve, reject) => {
-    const isLt5M = file.size / 1024 / 1024 < 5
+    const isLt5M = file.size / 1024 / 1024 < 10
     const isImage = file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/jpeg'
     if (!isLt5M) {
-      reject('上传图片大小不能超过 5M!')
+      reject('上传图片大小不能超过 10M!')
     } else if (!isImage) {
       reject('只能上传图片文件!')
     } else {

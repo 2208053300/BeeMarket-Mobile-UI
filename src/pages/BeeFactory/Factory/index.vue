@@ -356,37 +356,33 @@ export default {
         // this.validReferName(this.factory.referrer_name) &&
         this.validReferTel(this.factory.referrer_number)
       ) {
-        console.log(1)
-        const formData = new FormData()
-        //   const results = await Promise.all(
-        //   files.map(async file => {
-        //     const res = await zipImg(file)
-        //     formData.append('proofs[]', res)
-        //     return res
-        //   })
-        // )
-
-        const fileImg = this.img.file
-        const res = await zipImg(fileImg)
-        formData.set('licence_img', res)
-
-        formData.set('company_name', this.factory.firm)
-        formData.set('contacts', this.factory.contacter)
-        formData.set('mobile', this.factory.contact_phone)
-        formData.set('cat_id', this.factory.cat_id)
-        formData.set('operate_experience', this.factory.jy_name)
-        // formData.set('invite_name', this.factory.referrer_name)
-        if (this.factory.referrer_number) {
-          formData.set('invite_mobile', this.factory.referrer_number)
-        }
-        // 执行提交表单请求
         try {
-          const res1 = await entering(formData)
-          if (res1.code === 1 && res1.status_code === 200) {
-            this.$toast.success(res1.message)
+          const formData = new FormData()
+
+          const fileImg = this.img.file
+          const res = await zipImg(fileImg)
+          formData.set('licence_img', res)
+
+          formData.set('company_name', this.factory.firm)
+          formData.set('contacts', this.factory.contacter)
+          formData.set('mobile', this.factory.contact_phone)
+          formData.set('cat_id', this.factory.cat_id)
+          formData.set('operate_experience', this.factory.jy_name)
+          // formData.set('invite_name', this.factory.referrer_name)
+          if (this.factory.referrer_number) {
+            formData.set('invite_mobile', this.factory.referrer_number)
+          }
+          // 执行提交表单请求
+          try {
+            const res1 = await entering(formData)
+            if (res1.code === 1 && res1.status_code === 200) {
+              this.$toast.success(res1.message)
+            }
+          } catch (error) {
+            this.$toast.fail(error)
           }
         } catch (error) {
-          this.$toast.fail(error)
+          this.$toast(error)
         }
       } else {
         console.log('表单有误')
