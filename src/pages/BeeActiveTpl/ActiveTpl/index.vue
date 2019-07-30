@@ -327,6 +327,8 @@ export default {
         return result
       }
     },
+
+    
     // 点击导航
     // navClick(e) {
     navClick(index, title) {
