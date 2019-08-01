@@ -165,6 +165,7 @@ export default {
       }, 500)
     },
     getOrderData(filter) {
+      this.finished = false
       if (filter === 'image') {
         this.formData.filter = 'image'
         this.assessmentList = []
