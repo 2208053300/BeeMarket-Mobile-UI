@@ -69,7 +69,8 @@ export default {
       phone: null,
       verificationCode: null,
       countDown: 0,
-      redirect: null
+      redirect: null,
+      toastMessage: null
     }
   },
   computed: {},
@@ -87,7 +88,11 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     if (this.$route.query.reason === 'beeFriends') {
-      this.$toast('您尚未绑定手机号，绑定成功即可开启蜂友圈！')
+      this.toastMessage = this.$toast({
+        position: 'bottom',
+        message: '您尚未绑定手机号，绑定成功即可开启蜂友圈！',
+        duration: 0
+      })
     }
     document.querySelector('.login-page').style.height =
       document.body.clientHeight - 44 + 'px'
@@ -103,6 +108,7 @@ export default {
       return reg.test(this.phone) && reg2.test(this.verificationCode)
     },
     async sendSmsData() {
+      this.toastMessage.clear()
       try {
         const res = await sendSms({
           mobileNum: this.phone,
