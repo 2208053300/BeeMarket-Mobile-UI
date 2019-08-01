@@ -7,7 +7,6 @@
         :color="BeeDefault"
         :line-width="30"
         swipeable
-        @click="getCateId"
         @change="getCateId"
       >
         <van-tab

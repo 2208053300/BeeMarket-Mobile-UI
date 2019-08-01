@@ -179,7 +179,7 @@ export default {
       }
       this.$router.push({
         path: '/category/details',
-        query: { pid: product.pid, target: product.target }
+        query: { pid: product.product_id, target: product.target }
       })
     }
   }

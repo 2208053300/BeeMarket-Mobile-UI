@@ -5,6 +5,7 @@
       fixed
     >
       <div
+        v-if="cart.cartInfo.length"
         slot="right"
         class="nav-right"
       >

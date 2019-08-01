@@ -5,7 +5,7 @@
         v-model="activeTab"
         @click="changeTab"
       >
-        <van-tab :title="produce_title">
+        <van-tab :title="produce_title" :name="0">
           <div class="bee-above">
             <div
               v-if="productList.length === 0"
@@ -38,7 +38,7 @@
             </div>
           </div>
         </van-tab>
-        <van-tab :title="store_title">
+        <van-tab :title="store_title" :name="1">
           <div class="bee-above">
             <div
               v-if="storeList.length===0"
@@ -130,9 +130,11 @@ export default {
     }
   },
   methods: {
-    changeTab(index, title) {
+    changeTab(name, title) {
+      console.log(name)
+
       // NOTE 如果切换到店铺列表
-      if (index) {
+      if (name) {
         this.reGetStore()
       } else {
         this.reGetProduct()
