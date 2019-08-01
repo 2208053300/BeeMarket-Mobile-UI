@@ -147,6 +147,7 @@ export default {
     async getAssessmentData() {
       const res = await getAssessment(this.formData)
       if (res.data.comments.length !== 0) {
+        this.finished = false
         if (res.data.good_rate) {
           this.assessmentData = res.data
         }
@@ -165,7 +166,6 @@ export default {
       }, 500)
     },
     getOrderData(filter) {
-      this.finished = false
       if (filter === 'image') {
         this.formData.filter = 'image'
         this.assessmentList = []
