@@ -78,8 +78,7 @@
         </ul>
       </div>
     </div>
-   
-  </div>
+</div>
 </template>
 
 <script>
@@ -180,7 +179,6 @@ export default {
     }
   },
   methods: {
-   
     // 获取活动数据
     async getActivityDetailData() {
       const res = await activityDetail({ id: this.$route.query.id })
@@ -333,13 +331,13 @@ export default {
     // navClick(e) {
     navClick(index, title) {
       let indexNow
-      this.activity.navigate_data.map((item,index)=>{
-        if(item.name===title){
+      this.activity.navigate_data.map((item, index) => {
+        if (item.name === title) {
           indexNow = index
         }
       })
-      console.log("当前点的是第几个：",indexNow);
-      
+      console.log('当前点的是第几个：', indexNow)
+
       // 用 class="nav-content" 添加锚点
       const jump = document.querySelectorAll('.nav-content')
       const total = jump[indexNow].offsetTop

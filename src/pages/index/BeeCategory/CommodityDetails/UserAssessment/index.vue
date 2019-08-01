@@ -36,6 +36,7 @@
       <van-list
         v-model="loading"
         :finished="finished"
+        :immediate-check="false"
         finished-text="我也是有底线的 o(´^｀)o"
         @load="onLoad"
       >
@@ -142,6 +143,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.formData.pid = this.$route.query.pid
+    this.getAssessmentData()
   },
   methods: {
     async getAssessmentData() {
@@ -155,30 +157,31 @@ export default {
       } else {
         this.finished = true
       }
+      this.formData.page++
     },
     onLoad() {
       setTimeout(async() => {
-        await this.getAssessmentData()
+        try {
+          await this.getAssessmentData()
+        } catch (error) {
+          this.loading = false
+        }
         // 加载状态结束
         this.loading = false
         // 数据全部加载完成
-        this.formData.page++
       }, 500)
     },
     getOrderData(filter) {
+      this.formData.page = 1
+      this.assessmentList = []
       if (filter === 'image') {
         this.formData.filter = 'image'
-        this.assessmentList = []
-        this.formData.page = 1
-        this.getAssessmentData()
         this.assessmentType = '有图'
       } else {
         delete this.formData.filter
-        this.assessmentList = []
-        this.formData.page = 1
-        this.getAssessmentData()
         this.assessmentType = '全部'
       }
+      this.getAssessmentData()
     },
     // 预览图片
     showPre(index, images) {
