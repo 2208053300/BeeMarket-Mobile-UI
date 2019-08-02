@@ -26,6 +26,15 @@
         @click="handleFollow"
       />
       <van-goods-action-icon
+        v-if="commodityData.cart_count"
+        :icon="beeIcon.product_detail_icon_shopcart"
+        :info="commodityData.cart_count"
+        text="购物车"
+        :class="{addAnime4:showAnime2}"
+        @click="$router.push('/cart')"
+      />
+      <van-goods-action-icon
+        v-else
         :icon="beeIcon.product_detail_icon_shopcart"
         text="购物车"
         @click="$router.push('/cart')"
@@ -42,6 +51,17 @@
         @click="confirmOrderData"
       />
     </van-goods-action>
+    <div
+      v-show="showAnime"
+      class="add-anime"
+      :class="[{addAnime2:showAnime},{addAnime3:showAnime2}]"
+    >
+      <img
+        v-if="commodityData.album"
+        :src="commodityData.album[0].qUrl"
+        alt="预览图"
+      >
+    </div>
   </div>
 </template>
 
@@ -49,6 +69,7 @@
 import { addShopcartProduct, security } from '@/api/BeeApi/user'
 import { confirmOrder } from '@/api/BeeApi/order'
 import { collectProduct, cancelCollect } from '@/api/BeeApi/product'
+import wait from '@/utils/wait'
 
 export default {
   components: {},
@@ -69,7 +90,9 @@ export default {
         product_detail_icon_shopcart: require('@/assets/icon/product/product_detail_icon_shopcart@2x.png'),
         product_detail_pic_grab: require('@/assets/icon/product/product_detail_pic_grab@2x.png')
       },
-      action: ''
+      action: '',
+      showAnime: false,
+      showAnime2: false
     }
   },
   computed: {},
@@ -125,6 +148,16 @@ export default {
         number: this.$store.state.cart.pNumber,
         product_source: this.$route.query.target || 'general'
       })
+      if (res.status_code === 200) {
+        this.commodityData.cart_count = res.data.cart_count
+        // 抛物线动画
+        this.showAnime = true
+        await wait(600)
+        this.showAnime2 = true
+        await wait(1000)
+        this.showAnime = false
+        this.showAnime2 = false
+      }
       this.$toast(res.message)
     },
     // 立即购买
@@ -213,6 +246,55 @@ export default {
     background: linear-gradient(to right, #ff8c2f, #f15b26);
     border-color: #ff8c2f;
     color: #ffffff;
+  }
+  .add-anime {
+    width: 0.3rem;
+    height: 0.3rem;
+    background-color: @BeeDefault;
+    border-radius: 50%;
+    position: absolute;
+    top: 40%;
+    left: 70%;
+    z-index: 100;
+    opacity: 0;
+    overflow: hidden;
+  }
+  .addAnime2 {
+    transition: all 0.6s cubic-bezier(0.41, -0.31, 0.95, 0.82);
+    opacity: 1;
+    left: 50%;
+    top: 30%;
+  }
+  .addAnime3 {
+    transition: all 1s cubic-bezier(0.41, -0.31, 0.95, 0.82);
+    left: 40%;
+    top: 100%;
+  }
+  .addAnime4 {
+    animation: rubber 0.6s both;
+    @keyframes rubber {
+      0% {
+        transform: scale3d(1, 1, 1);
+      }
+      30% {
+        transform: scale3d(1.25, 0.75, 1);
+      }
+      40% {
+        transform: scale3d(0.75, 1.25, 1);
+      }
+      50% {
+        transform: scale3d(1.15, 0.85, 1);
+      }
+      65% {
+        transform: scale3d(0.95, 1.05, 1);
+      }
+      75% {
+        transform: scale3d(1.05, 0.95, 1);
+      }
+      100% {
+        transform: scale3d(1, 1, 1);
+      }
+    }
   }
 }
 </style>
