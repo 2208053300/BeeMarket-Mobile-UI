@@ -70,6 +70,7 @@ export function checkToken() {
   } else {
     // 如果是网页端，没有token弹出手机号登录界面
     import('../route/index').then(module => {
+      console.log('跳转至登录页面')
       module.default.replace('/login')
     })
   }
