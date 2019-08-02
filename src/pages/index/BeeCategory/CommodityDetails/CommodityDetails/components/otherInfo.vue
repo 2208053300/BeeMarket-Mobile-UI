@@ -256,6 +256,10 @@ export default {
       this.skuName = skuName
     },
     handleSku() {
+      if (this.commodityData.offsale) {
+        this.$toast('商品已下架！')
+        return
+      }
       this.selectType = 1
       this.$store.state.cart.showSku = true
     }

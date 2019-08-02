@@ -136,6 +136,10 @@ export default {
     },
     // 加入购物车
     async addShopcartProductData() {
+      if (this.commodityData.offsale) {
+        this.$toast('商品已下架！')
+        return
+      }
       // TODO 如果未选择，如果初始带着商品属性跳转到商品详情页
       this.action = 'addCart'
       if (!this.$store.state.cart.skuId) {
@@ -162,6 +166,10 @@ export default {
     },
     // 立即购买
     async confirmOrderData() {
+      if (this.commodityData.offsale) {
+        this.$toast('商品已下架！')
+        return
+      }
       const securityData = await security()
       if (!securityData.data.mobile_bind) {
         this.$router.replace('/persion/profile/accountBind/bindPhone')

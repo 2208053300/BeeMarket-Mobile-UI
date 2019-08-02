@@ -140,7 +140,7 @@ export default {
       justify-content: center;
       align-items: flex-end;
       .area-tag {
-        max-width: 2.2rem;
+        max-width: 2.4rem;
         padding: 0.03rem 0.08rem;
         box-sizing: border-box;
         font-size: 0.2rem;
