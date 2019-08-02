@@ -69,7 +69,7 @@ export function checkToken() {
     }
   } else {
     // 如果是网页端，没有token弹出手机号登录界面
-    import('@/route/index').then(module => {
+    import('../route/index').then(module => {
       module.default.replace('/login')
     })
   }
