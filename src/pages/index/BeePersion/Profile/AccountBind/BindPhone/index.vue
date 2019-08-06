@@ -108,7 +108,9 @@ export default {
       return reg.test(this.phone) && reg2.test(this.verificationCode)
     },
     async sendSmsData() {
-      this.toastMessage.clear()
+      if (this.$route.query.reason === 'beeFriends') {
+        this.toastMessage.clear()
+      }
       try {
         const res = await sendSms({
           mobileNum: this.phone,
