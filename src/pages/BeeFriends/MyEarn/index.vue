@@ -2,106 +2,139 @@
   <div class="my-earn">
     <div class="earn-header">
       <div class="head-img">
-        <div class="img-content">
-          <img
-            :src="detailData.basic.head_image_url||$store.state.app.head_detault"
-            alt="头像"
-          >
-        </div>
-        <span class="user-name">{{ detailData.basic.nickname }}</span>
-      </div>
-      <div class="earn-tab">
-        <div
-          class="tab-content"
-          @click="changeEarnType('left')"
-        >
-          <div class="type-img">
+        <div class="img-content flex flex-between align-center">
+          <!-- 左边头像 星级 规则 -->
+          <div class="avatar flex align-center">
             <img
-              :src="beeIcon.bee_firends_income_icon_growingup"
-              alt=""
+              :src="detailData.head_img || $store.state.app.head_detault"
+              alt="头像"
+              class="avatar-img"
             >
+            <div class="info">
+              <div class="level flex align-center">
+                <!-- <div class="star-imgs"> -->
+                <img
+                  v-for="(item, index) in detailData.level"
+                  :key="index"
+                  :src="beeIcon.level_star_img"
+                  class="star"
+                >
+                <!-- </div> -->
+                <span class="partner-mark">{{ detailData.level_text }}</span>
+              </div>
+              <van-button v-if="false" class="rule-button">
+                升星规则
+              </van-button>
+            </div>
           </div>
-          <span class="num">{{ detailData.basic.public_welfare_value }}</span>
-          <p class="type-text">
-            公益值
+          <!-- 右边收益数值 -->
+          <div class="earning-num">
+            <p class="total-num">
+              <span class="label">累计收益</span>
+              <span class="num">￥{{ detailData.all_commission }}</span>
+            </p>
+            <p class="month-num">
+              <span class="label">本月收益</span>
+              <span class="num">￥{{ detailData.month_commission }}</span>
+            </p>
+          </div>
+          <!-- <span class="user-name">{{ detailData.basic.nickname }}</span> -->
+        </div>
+        <div class="earn-tab">
+          <div class="tab-content" @click="changeEarnType('left')">
+            <div class="type-img">
+              <img :src="beeIcon.bee_firends_income_icon_growingup" alt="">
+            </div>
+            <span class="num">{{ detailData.road_commission }}</span>
+            <p class="type-text">
+              在路上
+            </p>
+          </div>
+          <div class="tab-content" @click="changeEarnType('right')">
+            <div class="type-img">
+              <img :src="beeIcon.bee_firends_income_icon_gold" alt="">
+            </div>
+            <span class="num">{{ detailData.get_commission }}</span>
+            <p class="type-text">
+              已到账
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="earn-detail">
+        <div
+          v-if="earnType === 'left' && detailList.length !== 0"
+          class="detail-title"
+        >
+          <div class="title-img">
+            <img :src="beeIcon.bee_firends_gold_add" alt="">
+          </div>
+          <span class="title-text">增长详情</span>
+        </div>
+        <div
+          v-if="earnType === 'right' && detailList.length !== 0"
+          class="detail-title"
+        >
+          <div class="title-img">
+            <img :src="beeIcon.bee_firends_gold_add" alt="">
+          </div>
+          <span class="title-text">增长详情</span>
+        </div>
+
+        <div v-if="detailList.length !== 0" class="detail-content">
+          <van-list
+            v-model="loading"
+            :finished="finished"
+            :immediate-check="false"
+            @load="onLoad"
+          >
+            <!-- <div
+              class="detail-card"
+            >
+              <div class="info-time">
+                2019.20.20
+              </div>
+              <div class="info-text">
+                <img :src="beeIcon.bee_firends_income_icon_growingup" class="list-avatar">
+                fdsff1d21f3d1f3ds
+              </div>
+              <div class="circle" />
+            </div> -->
+            <div
+              v-for="(item, index) in detailList"
+              :key="index"
+              class="detail-card"
+            >
+              <div class="info-time">
+                {{ item.time }}
+              </div>
+              <div class="info-text">
+                {{ item.logo }}{{ item.content }}
+              </div>
+              <div class="circle" />
+            </div>
+          </van-list>
+          <div class="bottom-text">
+            我们只记录自然年的公益值收益
+          </div>
+        </div>
+        <div v-else class="empty-img text-center">
+          <img :src="beeIcon.emptyImg" alt="">
+          <p class="tip">
+            暂无数据
           </p>
         </div>
-        <div
-          class="tab-content"
-          @click="changeEarnType('right')"
-        >
-          <div class="type-img">
-            <img
-              :src="beeIcon.bee_firends_income_icon_gold"
-              alt=""
-            >
-          </div>
-          <span class="num">{{ detailData.basic.balance }}</span>
-          <p class="type-text">
-            余额数
-          </p>
-        </div>
       </div>
-    </div>
-    <div class="earn-detail">
-      <div
-        v-if="earnType==='left'"
-        class="detail-title"
-      >
-        <div class="title-img">
-          <img
-            :src="beeIcon.bee_firends_income_icon_growingup"
-            alt=""
-          >
-        </div>
-        <span class="title-text">增长详情</span>
-      </div>
-      <div
-        v-if="earnType==='right'"
-        class="detail-title"
-      >
-        <div class="title-img">
-          <img
-            :src="beeIcon.bee_firends_income_icon_gold"
-            alt=""
-          >
-        </div>
-        <span class="title-text">增长详情</span>
-      </div>
-      <div
-        v-if="detailList.length!==0"
-        class="detail-content"
-      >
-        <van-list
-          v-model="loading"
-          :finished="finished"
-          :immediate-check="false"
-          @load="onLoad"
-        >
-          <div
-            v-for="(item,index) in detailList"
-            :key="index"
-            class="detail-card"
-          >
-            <div class="info-time">
-              {{ item.time }}
-            </div>
-            <div class="info-text">
-              {{ item.desc }}
-            </div>
-            <div class="circle" />
-          </div>
-        </van-list>
-      </div>
-      <div class="bottom-text">
-        我们只记录自然年的公益值收益
-      </div>
+
+      <van-button block class="cash-btn" @click="toCash">
+        我要提现
+      </van-button>
     </div>
   </div>
 </template>
 
 <script>
-import { getMyEarning } from '@/api/BeeApi/user'
+import { getWithdrawNum, getMyEarning } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 export default {
   metaInfo: {
@@ -112,19 +145,25 @@ export default {
   data() {
     return {
       beeIcon: {
-        bee_firends_income_icon_growingup: require('@/assets/icon/beeFriends/info/bee_firends_income_icon_growingup.png'),
-        bee_firends_income_icon_gold: require('@/assets/icon/beeFriends/info/bee_firends_income_icon_gold.png')
+        level_star_img: require('@/assets/icon/beeFriends/info/bee_firends_basic_icon_star.png'),
+        bee_firends_income_icon_growingup: require('@/assets/icon/beeFriends/info/bee_firends_gold_ontheway.png'),
+        bee_firends_income_icon_gold: require('@/assets/icon/beeFriends/info/bee_firends_gold.png'),
+        bee_firends_gold_add: require('@/assets/icon/beeFriends/info/bee_firends_gold_add.png'),
+        emptyImg: require('@/assets/icon/public/empty.png')
       },
       earnType: 'left',
       page: 1,
-      detailData: {
-        basic: {},
-        record: {}
-      },
+      detailData: {},
       detailList: [],
+      // 在路上的收益
+      roadList: [],
+      // 已获得收益
+      gotList: [],
       loading: false,
       osObj: getOs(),
-      finished: false
+      finished: false,
+      // 余额数量
+      withdrawNum: 0
     }
   },
   computed: {},
@@ -133,7 +172,7 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getMyEarningData()
+    // this.getMyEarningData()
     // FIXME ios bug暂时无解
     try {
       this.page = 1
@@ -155,24 +194,31 @@ export default {
         type: this.earnType,
         page: this.page
       })
+      console.log('我的收益：', res)
+
       this.detailData = res.data
-      this.detailList = res.data.record.list
+      this.roadList = this.detailData.road_record
+      this.gotList = this.detailData.get_record
       if (this.earnType === 'left') {
+        this.detailList = this.roadList
         this.finished = true
       } else {
-        if (this.detailList.length === res.data.record.total_num) {
-          this.finished = true
-        } else {
-          this.finished = false
-        }
+        this.detailList = this.gotList
+        // if (this.detailList.length === res.data.record.total_num) {
+        //   this.finished = true
+        // } else {
+        //   this.finished = false
+        // }
       }
       this.page = 2
     },
+    // 切换在路上 已得到
     changeEarnType(type) {
       this.earnType = type
       this.page = 1
       this.finished = true
       this.getMyEarningData()
+      // this.detailList = this.detailData.get_record
     },
     onLoad() {
       // 异步更新数据
@@ -182,12 +228,34 @@ export default {
           page: this.page
         })
         this.page++
-        this.detailList.push(...res.data.record.list)
+        // this.detailList.push(...res.data.record.list)
+        this.roadList.push(...res.data.road_record)
+        this.gotList.push(...res.data.get_record)
         this.loading = false
-        if (this.detailList.length === res.data.record.total_num) {
-          this.finished = true
-        }
+        // if (this.detailList.length === res.data.record.total_num) {
+        this.finished = true
+        // }
       }, 500)
+    },
+
+    // 我要提现
+    toCash() {
+      if (!this.$store.state.user.isActiveUser) {
+        this.$toast('用户合伙人身份未激活！')
+        return
+      }
+      if (this.withdrawNum < 100) {
+        this.$toast('可提现余额不足100元！')
+        return
+      }
+      this.$router.push({
+        name: 'friendPay'
+      })
+    },
+    // 获取余额数
+    async getWithdrawNumData() {
+      const res = await getWithdrawNum()
+      this.withdrawNum = res.data.sup_balance
     }
   }
 }
@@ -199,16 +267,60 @@ export default {
     height: 4.3rem;
     background-color: @BeeDefault;
     .head-img {
-      padding-top: 1.3rem;
-      text-align: center;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      // text-align: center;
       .img-content {
-        margin: 0 auto 0.18rem;
-        width: 1.2rem;
-        height: 1.2rem;
-        overflow: hidden;
-        border-radius: 50%;
-        box-sizing: border-box;
-        border: 0.04rem solid rgba(255, 255, 255, 0.2);
+        // margin: 0 auto 0.18rem;
+        padding: 0 0.3rem;
+        .avatar-img {
+          width: 1.2rem;
+          height: 1.2rem;
+          overflow: hidden;
+          border-radius: 50%;
+          box-sizing: border-box;
+          border: 0.04rem solid rgba(255, 255, 255, 0.2);
+          margin-right: 0.2rem;
+        }
+        .star-imgs {
+          margin-right: 0.1rem;
+        }
+        .level {
+          margin-bottom: 0.1rem;
+        }
+        .star {
+          width: 0.24rem;
+          height: 0.23rem;
+          margin-right: 0.05rem;
+        }
+        .partner-mark {
+          font-size: 0.26rem;
+          color: #fff;
+        }
+        .rule-button {
+          width: 1.56rem;
+          height: 0.52rem;
+          line-height: 0.5rem;
+          font-size: 0.26rem;
+          color: #fefefe;
+          border-color: #fefefe;
+          background-color: transparent;
+          border-radius: 0.1rem;
+          padding: 0;
+        }
+        .earning-num {
+          font-size: 0.24rem;
+          color: #fff;
+          p {
+            margin: 0;
+          }
+          .total-num {
+            margin-bottom: 0.2rem;
+          }
+          .label {
+            margin-right: 0.2rem;
+          }
+        }
       }
       .user-name {
         font-size: 0.3rem;
@@ -216,14 +328,14 @@ export default {
       }
     }
     .earn-tab {
-      margin-top: 0.2rem;
+      margin-top: 0.5rem;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       .tab-content {
         text-align: center;
         .type-img {
-          width: 0.52rem;
-          height: 0.53rem;
+          width: 0.43rem;
+          height: 0.52rem;
           display: inline-block;
           margin-right: 0.15rem;
         }
@@ -249,8 +361,8 @@ export default {
     position: relative;
     .detail-title {
       .title-img {
-        height: 0.53rem;
-        width: 0.52rem;
+        height: 0.52rem;
+        width: 0.43rem;
         display: inline-block;
         margin-right: 0.1rem;
       }
@@ -263,7 +375,7 @@ export default {
       padding: 0.38rem 0 0 0.32rem;
       margin-left: 0.25rem;
       border-left: 0.02rem solid #ebebeb;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.5rem;
       .detail-card {
         background-color: #fff8ec;
         padding: 0.23rem 0.64rem 0.2rem 0.46rem;
@@ -300,6 +412,33 @@ export default {
       font-size: 0.22rem;
       color: @Grey1;
     }
+  }
+  .list-avatar {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+  }
+  .empty-img {
+    padding-top: 1.5rem;
+    margin-left: -0.6rem;
+    img {
+      width: 2.88rem;
+      height: 2.68rem;
+    }
+    .tip {
+      font-size: 0.24rem;
+      color: #999;
+    }
+  }
+  .cash-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: @BeeDefault;
+    color: #fff;
+    font-size: 0.36rem;
+    border: none;
+    padding: 0 0.35rem;
   }
 }
 </style>
