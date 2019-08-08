@@ -31,7 +31,7 @@
       <img :src="beeIcon.rule_2" alt="">
       <img :src="beeIcon.rule_3" alt="">
       <img :src="beeIcon.rule_4" alt="">
-      <!-- <img :src="beeIcon.rule_5" alt=""> -->
+      <img :src="beeIcon.rule_5" alt="">
       <img :src="beeIcon.rule_6" alt="">
     </div>
   </div>
@@ -59,7 +59,7 @@ export default {
         rule_2: require('@/assets/icon/beeFriends/rule/提成规则2_05.jpg'),
         rule_3: require('@/assets/icon/beeFriends/rule/提成规则2_06.jpg'),
         rule_4: require('@/assets/icon/beeFriends/rule/提成规则2_07.jpg'),
-        // rule_5: require('@/assets/icon/beeFriends/rule/提成规则2_08.jpg'),
+        rule_5: require('@/assets/icon/beeFriends/rule/提成规则2_08.jpg'),
         rule_6: require('@/assets/icon/beeFriends/rule/提成规则2_10.jpg')
       },
       osObj: getOs()
