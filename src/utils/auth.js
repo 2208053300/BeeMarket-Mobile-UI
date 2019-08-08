@@ -68,10 +68,11 @@ export function checkToken() {
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     }
   } else {
+    window.theRouter.replace('/login')
     // 如果是网页端，没有token弹出手机号登录界面
-    import('../route/index').then(module => {
-      module.default.replace('/login')
-    })
+    // import('../route/index').then(module => {
+    //   module.default.replace('/login')
+    // })
   }
 }
 // 设置Token

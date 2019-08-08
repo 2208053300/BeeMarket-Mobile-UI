@@ -830,4 +830,6 @@ router.beforeEach(async(to, from, next) => {
     next()
   }
 })
+// 将router暴露到全局，方便request引用
+window.theRouter = router
 export default router
