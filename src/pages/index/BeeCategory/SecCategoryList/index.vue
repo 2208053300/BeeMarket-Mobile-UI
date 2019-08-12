@@ -159,6 +159,8 @@ export default {
           this.$refs.ProductsList.condition.sort = ''
           this.$refs.ProductsList.condition.order = ''
           this.$refs.ProductsList.condition.page = 1
+          this.$refs.ProductsList.finished = false
+          this.$refs.ProductsList.loading = true
           this.$refs.ProductsList.getGoodsList()
         }
       })
