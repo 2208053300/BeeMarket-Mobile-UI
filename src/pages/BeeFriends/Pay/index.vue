@@ -268,7 +268,7 @@ export default {
       try {
         const res = await toCash({
           status: this.status,
-          // name: this.name,
+          name: this.name,
           idNo: this.idNo
         })
         if (res.status_code === 200) {
