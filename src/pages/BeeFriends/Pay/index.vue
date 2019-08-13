@@ -13,7 +13,7 @@
         class="auth-form"
       >
         <div class="form-box bg-white">
-          <!-- <div class="form-group">
+          <div class="form-group">
             <label for="user_name">用户姓名</label>
             <div class="input-box">
               <input
@@ -30,7 +30,7 @@
                 请正确输入姓名！
               </p>
             </div>
-          </div> -->
+          </div>
           <div class="form-group">
             <label for="user_ID">身份证号</label>
             <div class="input-box">
@@ -257,10 +257,10 @@ export default {
   methods: {
     // 提交第一步
     async submitFir() {
-      // if (!this.valiName() && !this.valiIdNo()) {
-      //   this.$toast('请正确填写姓名、身份证号码')
-      //   return false
-      // }
+      if (!this.valiName() && !this.valiIdNo()) {
+        this.$toast('请正确填写姓名、身份证号码')
+        return false
+      }
       if (!this.valiIdNo()) {
         this.$toast('请正确填写身份证号码')
         return false
