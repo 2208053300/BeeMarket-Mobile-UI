@@ -264,7 +264,12 @@ export default {
       this.earnType = type
       this.page = 1
       this.finished = true
-      this.getMyEarningData()
+      if (this.earnType === 'left') {
+        this.detailList = this.roadList
+      } else {
+        this.detailList = this.gotList
+      }
+      // this.getMyEarningData()
       // this.detailList = this.detailData.get_record
     },
     onLoad() {
