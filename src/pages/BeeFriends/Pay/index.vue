@@ -245,7 +245,7 @@ export default {
   created() {},
   mounted() {
     this.getCanWithdraw()
-    this.getMobileNum()
+    // this.getMobileNum()
     if (this.osObj.isWx) {
       // this.loadUID()
     } else if (this.osObj.isIphone && this.osObj.isApp) {
