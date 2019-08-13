@@ -261,10 +261,10 @@ export default {
         this.$toast('请正确填写姓名、身份证号码')
         return false
       }
-      if (!this.valiIdNo()) {
-        this.$toast('请正确填写身份证号码')
-        return false
-      }
+      // if (!this.valiIdNo()) {
+      //   this.$toast('请正确填写身份证号码')
+      //   return false
+      // }
       try {
         const res = await toCash({
           status: this.status,
