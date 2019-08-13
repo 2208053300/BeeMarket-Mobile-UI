@@ -172,7 +172,7 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    // this.getMyEarningData()
+    this.getMyEarningData()
     // FIXME ios bug暂时无解
     try {
       this.page = 1
@@ -217,7 +217,12 @@ export default {
       this.earnType = type
       this.page = 1
       this.finished = true
-      this.getMyEarningData()
+      if (this.earnType === 'left') {
+        this.detailList = this.roadList
+      } else {
+        this.detailList = this.gotList
+      }
+      // this.getMyEarningData()
       // this.detailList = this.detailData.get_record
     },
     onLoad() {
