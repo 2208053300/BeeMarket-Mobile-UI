@@ -457,10 +457,18 @@ export function harvestBalance(data) {
     data
   })
 }
-// 蜂友圈 - 我的收益
+// 蜂友圈 - 我的收益-黄大林
+// export function getMyEarning(data) {
+//   return request({
+//     url: '/user/partner/profit_record',
+//     method: 'post',
+//     data
+//   })
+// }
+// 蜂友圈 - 我的收益-郑露彬
 export function getMyEarning(data) {
   return request({
-    url: '/user/partner/profit_record',
+    url: '/user/partner/my_profit',
     method: 'post',
     data
   })
