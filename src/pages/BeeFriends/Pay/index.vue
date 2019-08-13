@@ -409,20 +409,20 @@ export default {
       this.countDown = 0
     },
     // 调整金额
-    adjustMoney() {
-      if (!this.money) {
-        this.money === null
-        this.isActive = false
-      } else {
-        this.money = Math.floor(this.money)
-        // 只判断是否在最大最小范围内
-        if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
-          this.isActive = true
-        } else {
-          this.isActive = false
-        }
-      }
-    },
+    // adjustMoney() {
+    //   if (!this.money) {
+    //     this.money === null
+    //     this.isActive = false
+    //   } else {
+    //     this.money = Math.floor(this.money)
+    //     // 只判断是否在最大最小范围内
+    //     if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
+    //       this.isActive = true
+    //     } else {
+    //       this.isActive = false
+    //     }
+    //   }
+    // },
     // 调整金额
     adjustMoney1() {
       let value = this.money.toString()
