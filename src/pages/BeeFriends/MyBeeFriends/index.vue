@@ -22,11 +22,9 @@
     <div
       class="user-fixed"
       :style="{backgroundImage:'url('+beeIcon.bee_firends_img_avatar_bg+')'}"
+      @click="$router.push({name:'myEarn'})"
     >
-      <div
-        class="header-img"
-        @click="$router.push({name:'myEarn'})"
-      >
+      <div class="header-img">
         <div class="header-img2">
           <div class="header-img3">
             <img
@@ -42,7 +40,6 @@
           ref="countItem"
           class="my-grade"
           :style="{backgroundImage:'url('+beeIcon.bee_firend_icon_gold_top+')'}"
-          @click="showProject=true"
         >
           <template v-if="Number(partnerData.sup_balance)<1000">
             <ICountUp

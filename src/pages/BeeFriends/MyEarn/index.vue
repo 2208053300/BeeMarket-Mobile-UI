@@ -22,7 +22,10 @@
                 <!-- </div> -->
                 <span class="partner-mark">{{ detailData.level_text }}</span>
               </div>
-              <van-button v-if="false" class="rule-button">
+              <van-button
+                v-if="false"
+                class="rule-button"
+              >
                 升星规则
               </van-button>
             </div>
@@ -41,18 +44,30 @@
           <!-- <span class="user-name">{{ detailData.basic.nickname }}</span> -->
         </div>
         <div class="earn-tab">
-          <div class="tab-content" @click="changeEarnType('left')">
+          <div
+            class="tab-content"
+            @click="changeEarnType('left')"
+          >
             <div class="type-img">
-              <img :src="beeIcon.bee_firends_income_icon_growingup" alt="">
+              <img
+                :src="beeIcon.bee_firends_income_icon_growingup"
+                alt=""
+              >
             </div>
             <span class="num">{{ detailData.road_commission }}</span>
             <p class="type-text">
               在路上
             </p>
           </div>
-          <div class="tab-content" @click="changeEarnType('right')">
+          <div
+            class="tab-content"
+            @click="changeEarnType('right')"
+          >
             <div class="type-img">
-              <img :src="beeIcon.bee_firends_income_icon_gold" alt="">
+              <img
+                :src="beeIcon.bee_firends_income_icon_gold"
+                alt=""
+              >
             </div>
             <span class="num">{{ detailData.get_commission }}</span>
             <p class="type-text">
@@ -67,7 +82,10 @@
           class="detail-title"
         >
           <div class="title-img">
-            <img :src="beeIcon.bee_firends_gold_add" alt="">
+            <img
+              :src="beeIcon.bee_firends_gold_add"
+              alt=""
+            >
           </div>
           <span class="title-text">增长详情</span>
         </div>
@@ -76,12 +94,18 @@
           class="detail-title"
         >
           <div class="title-img">
-            <img :src="beeIcon.bee_firends_gold_add" alt="">
+            <img
+              :src="beeIcon.bee_firends_gold_add"
+              alt=""
+            >
           </div>
           <span class="title-text">增长详情</span>
         </div>
 
-        <div v-if="detailList.length !== 0" class="detail-content">
+        <div
+          v-if="detailList.length !== 0"
+          class="detail-content"
+        >
           <van-list
             v-model="loading"
             :finished="finished"
@@ -109,7 +133,16 @@
                 {{ item.time }}
               </div>
               <div class="info-text">
-                {{ item.logo }}{{ item.content }}
+                <div
+                  v-if="item.logo"
+                  class="head-content"
+                >
+                  <img
+                    :src="item.logo"
+                    alt="头像"
+                  >
+                </div>
+                {{ item.content }}
               </div>
               <div class="circle" />
             </div>
@@ -118,15 +151,25 @@
             我们只记录自然年的公益值收益
           </div>
         </div>
-        <div v-else class="empty-img text-center">
-          <img :src="beeIcon.emptyImg" alt="">
+        <div
+          v-else
+          class="empty-img text-center"
+        >
+          <img
+            :src="beeIcon.emptyImg"
+            alt=""
+          >
           <p class="tip">
             暂无数据
           </p>
         </div>
       </div>
 
-      <van-button block class="cash-btn" @click="toCash">
+      <van-button
+        block
+        class="cash-btn"
+        @click="toCash"
+      >
         我要提现
       </van-button>
     </div>
@@ -172,7 +215,9 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    // this.getMyEarningData()
+    this.getMyEarningData()
+    // 获取余额数
+    this.getWithdrawNumData()
     // FIXME ios bug暂时无解
     try {
       this.page = 1
@@ -190,6 +235,7 @@ export default {
   },
   methods: {
     async getMyEarningData() {
+      this.loading = true
       const res = await getMyEarning({
         type: this.earnType,
         page: this.page
@@ -199,9 +245,10 @@ export default {
       this.detailData = res.data
       this.roadList = this.detailData.road_record
       this.gotList = this.detailData.get_record
+      this.finished = true
+      this.loading = false
       if (this.earnType === 'left') {
         this.detailList = this.roadList
-        this.finished = true
       } else {
         this.detailList = this.gotList
         // if (this.detailList.length === res.data.record.total_num) {
@@ -255,7 +302,7 @@ export default {
     // 获取余额数
     async getWithdrawNumData() {
       const res = await getWithdrawNum()
-      this.withdrawNum = res.data.sup_balance
+      this.withdrawNum = Number(res.data.sup_balance)
     }
   }
 }
@@ -373,9 +420,8 @@ export default {
     }
     .detail-content {
       padding: 0.38rem 0 0 0.32rem;
-      margin-left: 0.25rem;
       border-left: 0.02rem solid #ebebeb;
-      margin-bottom: 0.5rem;
+      margin: 0.3rem 0 0.5rem 0.22rem;
       .detail-card {
         background-color: #fff8ec;
         padding: 0.23rem 0.64rem 0.2rem 0.46rem;
@@ -391,6 +437,16 @@ export default {
           font-size: 0.26rem;
           margin-top: 0.14rem;
           line-height: 0.36rem;
+          .head-content {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 0.2rem;
+            margin-bottom: 0.1rem;
+            display: inline-block;
+            vertical-align: middle;
+          }
         }
         .circle {
           width: 0.22rem;
