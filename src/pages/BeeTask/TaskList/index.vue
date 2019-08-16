@@ -308,7 +308,13 @@ export default {
         this.getTaskListData()
       }
     },
+    // 去完成
     doTask(item) {
+      // 如果没有绑定手机号，直接跳转
+      if (!this.$store.state.user.hasPhone) {
+        this.$router.push('/persion/profile/accountBind/bindPhone')
+        return
+      }
       switch (item.target_to) {
         case 1:
           this.$router.push({ path: '/discover', query: { active: 1 }})
