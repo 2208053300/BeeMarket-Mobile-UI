@@ -473,6 +473,14 @@ export function getMyEarning(data) {
     data
   })
 }
+// 蜂友圈 - 我的收益记录-郑露彬
+export function getMyEarningList(data) {
+  return request({
+    url: '/user/partner/profit_log',
+    method: 'post',
+    data
+  })
+}
 // 蜂友圈 - 我的收益
 export function remindLogin(data) {
   return request({

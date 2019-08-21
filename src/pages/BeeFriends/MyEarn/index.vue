@@ -46,7 +46,7 @@
         <div class="earn-tab">
           <div
             class="tab-content"
-            @click="changeEarnType('left')"
+            @click="changeEarnType(1)"
           >
             <div class="type-img">
               <img
@@ -61,7 +61,7 @@
           </div>
           <div
             class="tab-content"
-            @click="changeEarnType('right')"
+            @click="changeEarnType(2)"
           >
             <div class="type-img">
               <img
@@ -78,7 +78,7 @@
       </div>
       <div class="earn-detail">
         <div
-          v-if="earnType === 'left' && detailList.length !== 0"
+          v-if="earnType === 1 && detailList.length !== 0"
           class="detail-title"
         >
           <div class="title-img">
@@ -90,7 +90,7 @@
           <span class="title-text">增长详情</span>
         </div>
         <div
-          v-if="earnType === 'right' && detailList.length !== 0"
+          v-if="earnType === 2 && detailList.length !== 0"
           class="detail-title"
         >
           <div class="title-img">
@@ -103,13 +103,14 @@
         </div>
 
         <div
-          v-if="detailList.length !== 0"
+          v-if="!isEmpty"
           class="detail-content"
         >
           <van-list
             v-model="loading"
             :finished="finished"
             :immediate-check="false"
+            finished-text="没有更多了"
             @load="onLoad"
           >
             <!-- <div
@@ -151,8 +152,9 @@
             我们只记录自然年的公益值收益
           </div>
         </div>
+        <!-- v-else -->
         <div
-          v-else
+          v-if="isEmpty"
           class="empty-img text-center"
         >
           <img
@@ -177,7 +179,7 @@
 </template>
 
 <script>
-import { getWithdrawNum, getMyEarning } from '@/api/BeeApi/user'
+import { getWithdrawNum, getMyEarning, getMyEarningList } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 export default {
   metaInfo: {
@@ -194,14 +196,16 @@ export default {
         bee_firends_gold_add: require('@/assets/icon/beeFriends/info/bee_firends_gold_add.png'),
         emptyImg: require('@/assets/icon/public/empty.png')
       },
-      earnType: 'left',
+      // 类型 1在路上（默认为1） 2已到账
+      earnType: 1,
       page: 1,
       detailData: {},
+      // 收益记录
       detailList: [],
-      // 在路上的收益
-      roadList: [],
-      // 已获得收益
-      gotList: [],
+      // 总页数
+      totalPages: 0,
+      // 是否没有数据记录
+      isEmpty: false,
       loading: false,
       osObj: getOs(),
       finished: false,
@@ -234,6 +238,7 @@ export default {
     }
   },
   methods: {
+    // 收益顶部信息
     async getMyEarningData() {
       this.loading = true
       const res = await getMyEarning({
@@ -243,51 +248,45 @@ export default {
       console.log('我的收益：', res)
 
       this.detailData = res.data
-      this.roadList = this.detailData.road_record
-      this.gotList = this.detailData.get_record
-      this.finished = true
-      this.loading = false
-      if (this.earnType === 'left') {
-        this.detailList = this.roadList
-      } else {
-        this.detailList = this.gotList
-        // if (this.detailList.length === res.data.record.total_num) {
-        //   this.finished = true
-        // } else {
-        //   this.finished = false
-        // }
-      }
-      this.page = 2
+    },
+    // 收益记录
+    async getEarningList() {
+      const res = await getMyEarningList(
+        {
+          type: this.earnType,
+          page: this.page
+        }
+      )
+      this.totalPages = res.data.page_size
+      this.detailList = res.data.lists
     },
     // 切换在路上 已得到
     changeEarnType(type) {
       this.earnType = type
       this.page = 1
-      this.finished = true
-      if (this.earnType === 'left') {
-        this.detailList = this.roadList
-      } else {
-        this.detailList = this.gotList
-      }
-      // this.getMyEarningData()
-      // this.detailList = this.detailData.get_record
+      // this.finished = true
     },
+    // 加载列表
     onLoad() {
+      console.log(123456)
+
       // 异步更新数据
-      setTimeout(async() => {
-        const res = await getMyEarning({
-          type: this.earnType,
-          page: this.page
-        })
-        this.page++
-        // this.detailList.push(...res.data.record.list)
-        this.roadList.push(...res.data.road_record)
-        this.gotList.push(...res.data.get_record)
-        this.loading = false
-        // if (this.detailList.length === res.data.record.total_num) {
-        this.finished = true
-        // }
-      }, 500)
+      // setTimeout(async() => {
+      //   const res = await getMyEarningList({
+      //     type: this.earnType,
+      //     page: this.page
+      //   })
+      //   this.page++
+      //   this.totalPages = res.data.page_size
+      //   this.detailList.push(...res.data.lists)
+      //   if (this.detailList.length === 0) {
+      //     this.isEmpty = true
+      //   }
+      //   this.loading = false
+      //   if (this.page === this.totalPages) {
+      //     this.finished = true
+      //   }
+      // }, 500)
     },
 
     // 我要提现
