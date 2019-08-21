@@ -221,7 +221,7 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.getMyEarningData()
     // 获取余额数
-    // this.getWithdrawNumData()
+    this.getWithdrawNumData()
 
     // FIXME ios bug暂时无解
     try {
