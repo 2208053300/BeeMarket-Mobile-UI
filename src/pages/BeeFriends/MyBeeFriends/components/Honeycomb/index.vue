@@ -230,7 +230,7 @@ export default {
             'circle_list'
           ][i][j]
           row[this.config['circle_list'][i][j]['y']][k] = {
-            ...this.$parent.partnerData.list[k],
+            ...this.$parent.partnerData.lists[k],
             ...row[this.config['circle_list'][i][j]['y']][k]
           }
           // 动画顺序
@@ -281,7 +281,9 @@ export default {
       }, 100)
     },
     showDetail(item) {
-      if ('user_id' in item) {
+      console.log(item)
+
+      if ('nickname' in item) {
         this.$emit('update:detailCard', true)
         this.$emit('update:detailItem', item)
       }

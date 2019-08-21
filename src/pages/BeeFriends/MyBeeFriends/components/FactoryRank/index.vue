@@ -17,8 +17,7 @@
               class="tab-img"
             />
             <div class="type-num">
-              <!-- 厂商：<span class="num">{{ friendsData.num||0 }} </span>个 -->
-              厂商：<span class="num">0</span>个
+              厂商：<span class="num">{{ friendsData.count||0 }}</span>个
             </div>
           </div>
           <div class="type-tab">
@@ -46,41 +45,82 @@
             >
           </div>
         </div>
-        <!-- <van-tabs
+        <van-tabs
           v-model="activeTab"
           :color="BeeDefault"
           :title-active-color="BeeDefault"
           :title-inactive-color="Grey2"
           line-height="1px"
           class="list-filter"
+          @click="changeType"
         >
-          <van-tab>
+          <van-tab :name="1">
             <div slot="title">
-              用户状态
+              厂商状态
               <div class="sort-img">
                 <img
+                  v-if="[1,2].indexOf(sortType)===-1"
                   :src="beeIcon.beefriends_friend_icon_n"
+                  alt=""
+                >
+                <img
+                  v-if="sortType===1"
+                  :src="beeIcon.beefriends_friend_icon_top"
+                  alt=""
+                >
+                <img
+                  v-if="sortType===2"
+                  :src="beeIcon.beefriends_friend_icon_down"
                   alt=""
                 >
               </div>
             </div>
           </van-tab>
-          <van-tab>
+          <van-tab :name="3">
             <div slot="title">
-              登录时间
+              商品数量
+              <div class="sort-img">
+                <img
+                  v-if="[3,4].indexOf(sortType)===-1"
+                  :src="beeIcon.beefriends_friend_icon_n"
+                  alt=""
+                >
+                <img
+                  v-if="sortType===3"
+                  :src="beeIcon.beefriends_friend_icon_top"
+                  alt=""
+                >
+                <img
+                  v-if="sortType===4"
+                  :src="beeIcon.beefriends_friend_icon_down"
+                  alt=""
+                >
+              </div>
             </div>
           </van-tab>
-          <van-tab>
-            <div slot="title">
-              蜂友数量
-            </div>
-          </van-tab>
-          <van-tab>
+          <van-tab :name="5">
             <div slot="title">
               收益贡献
+              <div class="sort-img">
+                <img
+                  v-if="[5,6].indexOf(sortType)===-1"
+                  :src="beeIcon.beefriends_friend_icon_n"
+                  alt=""
+                >
+                <img
+                  v-if="sortType===5"
+                  :src="beeIcon.beefriends_friend_icon_top"
+                  alt=""
+                >
+                <img
+                  v-if="sortType===6"
+                  :src="beeIcon.beefriends_friend_icon_down"
+                  alt=""
+                >
+              </div>
             </div>
           </van-tab>
-        </van-tabs> -->
+        </van-tabs>
         <div class="rank-list">
           <van-list
             v-model="loading"
@@ -90,39 +130,42 @@
             @load="onLoad"
           >
             <div
-              v-for="(item,index) in friendsData.friendsList"
+              v-for="(item,index) in friendsList"
               :key="index"
               class="factory-cell"
             >
               <div class="ranking">
                 <!-- 如果排名前小于三 -->
                 <div
-                  v-if="index<=2"
+                  v-if="item.rank<=2"
                   class="rank-num"
                 >
                   <img
-                    v-if="index===0"
+                    v-if="item.rank===0"
                     :src="beeIcon.bee_firends_invite_icon_goldaward"
                     alt="1"
                   >
                   <img
-                    v-if="index===1"
+                    v-if="item.rank===1"
                     :src="beeIcon.bee_firends_invite_icon_silveraward"
                     alt="2"
                   >
                   <img
-                    v-if="index===2"
+                    v-if="item.rank===2"
                     :src="beeIcon.bee_firends_invite_icon_bronzeaward"
                     alt="3"
                   >
                 </div>
-                <span v-else>{{ index+1 }}</span>
+                <span v-else>{{ item.rank+1 }}</span>
               </div>
-              <div class="factory-detail">
+              <div
+                class="factory-detail"
+                :class="{grayBg:item.type===3}"
+              >
                 <div class="head-img">
                   <div
                     class="img-content"
-                    :style="{borderColor:getColor(index)}"
+                    :style="{borderColor:getColor(item.rank)}"
                   >
                     <img
                       :src="item.store_logo||$store.state.app.head_detault"
@@ -131,17 +174,17 @@
                   </div>
                   <div class="partner-tag">
                     <img
-                      v-if="item.status===2"
-                      :src="beeIcon.bee_firends_invite_icon_open||$store.state.app.head_detault"
-                      alt="已开店"
-                    >
-                    <img
-                      v-if="item.status===1"
+                      v-if="item.type===1"
                       :src="beeIcon.bee_firends_invite_icon_pending||$store.state.app.head_detault"
                       alt="待审核"
                     >
                     <img
-                      v-if="item.status===-1"
+                      v-if="item.type===2"
+                      :src="beeIcon.bee_firends_invite_icon_open||$store.state.app.head_detault"
+                      alt="已开店"
+                    >
+                    <img
+                      v-if="item.type===3"
                       :src="beeIcon.bee_firends_invite_icon_closed||$store.state.app.head_detault"
                       alt="已关闭"
                     >
@@ -151,17 +194,20 @@
                   <div class="left-detail">
                     <div
                       class="name"
-                      :class="{partner:item.is_partner}"
+                      :class="{partner:item.type===2}"
                     >
-                      {{ item.nickname }}
+                      {{ item.company_name }}
                     </div>
                     <span
-                      v-if="item.products_number"
+                      v-if="item.product_count&&item.type!==3"
                       class="firends"
-                    >（商品数量：<span class="num">{{ item.current_friends_num }}</span>个 ）</span>
-                    <!-- 用户未绑定手机号 -->
+                    >（商品数量：<span class="num">{{ item.product_count }}</span>个 ）</span>
+                    <span
+                      v-if="item.type===3"
+                      class="friends"
+                    >（已关闭）</span>
                     <div class="honey-num">
-                      累计共享收益贡献<span class="num"> {{ item.settlement_amount }} </span>个
+                      <span class="num"> {{ item.percentages }} </span>
                     </div>
                     <!-- <div class="login-time">
                       最后登录时间：<span class="time">{{ item.last_login_time }}</span>
@@ -200,7 +246,7 @@
 </template>
 
 <script>
-import { getFriends, remindLogin, isPartner } from '@/api/BeeApi/user'
+import { getMerchant, remindLogin, isPartner } from '@/api/BeeApi/user'
 import { getUID } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
@@ -238,6 +284,7 @@ export default {
       loading: false,
       finished: false,
       page: 1,
+      sortType: 1,
       osObj: getOs(),
       uid: 0,
       activeTab: 0
@@ -259,15 +306,34 @@ export default {
   },
   methods: {
     async getFriendsData() {
-      const res = await getFriends({ type: this.friendsType })
+      const res = await getMerchant({ sort: this.sortType })
       this.friendsData = res.data || {}
-      this.friendsList = res.data.friendsList
+      this.friendsList = res.data.lists
       if (this.friendsList.length < 10) {
         this.finished = true
       } else {
         this.finished = false
       }
       this.page = 2
+    },
+    onLoad() {
+      // 异步更新数据
+      setTimeout(async() => {
+        const res = await getMerchant({
+          type: this.friendsType,
+          page: this.page
+        })
+        this.friendsList.push(...res.data.lists)
+        this.page++
+        this.loading = false
+        // 数据全部加载完成
+        if (
+          this.friendsList.length === res.data.count ||
+          res.data.lists.length === 0
+        ) {
+          this.finished = true
+        }
+      }, 500)
     },
     async remindLoginData(id) {
       try {
@@ -316,7 +382,7 @@ export default {
     async getShareLink() {
       const res = await isPartner()
       return `https://app.fengjishi.com/#/beeFriends?uid=${this.uid}&phone=${
-        res.data.user_phone
+        res.data.inviter_phone
       }`
     },
     // 分享
@@ -349,31 +415,21 @@ export default {
         //
       }
     },
-    onLoad() {
-      // 异步更新数据
-      setTimeout(async() => {
-        const res = await getFriends({
-          type: this.friendsType,
-          page: this.page
-        })
-        this.friendsList.push(...res.data.friendsList)
-        this.page++
-        this.loading = false
-        // 数据全部加载完成
-        if (
-          this.friendsList.length === res.data.friends_num ||
-          res.data.friendsList.length === 0
-        ) {
-          this.finished = true
-        }
-      }, 500)
-    },
+
     handleClose() {
       this.$emit('update:showRank2', false)
     },
-    changeType(type) {
-      this.friendsType = type
-      this.page = 2
+    changeType(name) {
+      if (name === this.sortType) {
+        // 如果点击激活标签页
+        if (name >= this.sortType) {
+          this.sortType = this.sortType + 1
+        } else {
+          this.sortType = name
+        }
+      } else {
+        this.sortType = name
+      }
       this.finished = true
       this.getFriendsData()
     },
@@ -560,6 +616,10 @@ export default {
                 box-sizing: border-box;
               }
             }
+          }
+          .grayBg {
+            -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
+            filter: grayscale(100%);
           }
         }
       }

@@ -1,12 +1,12 @@
 <template>
   <div
-    v-if="$store.state.user.userStatus===1"
+    v-if="$store.state.user.userStatus===3||$store.state.user.userStatus===4"
     class="my-friends"
     :style="{backgroundImage:'url('+beeIcon.bee_firends_img_bg+')'}"
-    :class="[{hasHeader:$store.state.app.beeHeader&&!osObj.isApp},{hasNotice:!$store.state.user.isActiveUser}]"
+    :class="[{hasHeader:$store.state.app.beeHeader&&!osObj.isApp},{hasNotice:$store.state.user.userStatus === 3}]"
   >
     <div
-      v-if="!$store.state.user.isActiveUser"
+      v-if="$store.state.user.userStatus === 3"
       class="active-notice"
     >
       <div class="notice-content">
@@ -109,13 +109,13 @@
         @click="harvestBalanceData()"
       >
         <div
-          v-if="partnerData.can_receive_balance"
+          v-if="Number(partnerData.can_receive_balance)"
           class="get-num"
         >
           {{ partnerData.can_receive_balance }}
         </div>
         <div
-          v-if="partnerData.can_receive_balance"
+          v-if="Number(partnerData.can_receive_balance)"
           class="handle-tip"
         >
           <div class="tip-hand">
@@ -190,7 +190,7 @@ export default {
       showHoney: true,
       honeyType: 2,
       partnerData: {
-        show_users2: [],
+        lists: [],
         sup_balance: 0
       },
       combData: [],
@@ -236,11 +236,6 @@ export default {
           path: '/persion/profile/accountBind/bindPhone',
           query: { reason: 'beeFriends' }
         })
-        // if (vm.$store.state.user.applyCondition === 0) {
-        //   vm.$router.replace({ name: 'noQualified' })
-        // } else if (vm.$store.state.user.applyCondition === 1) {
-        //   vm.$router.replace({ name: 'introduction' })
-        // }
       } else if (vm.$store.state.user.userStatus === 2) {
         vm.$router.replace({ name: 'introduction' })
       } else if (vm.$store.state.user.userStatus === 5) {
@@ -261,7 +256,6 @@ export default {
     } catch (error) {
       //
     }
-    this.getReceiveNumData()
     this.clearHistory()
     this.loadUID()
   },
@@ -292,14 +286,6 @@ export default {
         this.$store.state.user.showFarmPop = false
       }
     },
-    // async getReceiveNumData() {
-    //   try {
-    //     const res = await getReceiveNum({ type: this.honeyType })
-    //     this.can_receive_balance = res.data ? res.data.can_receive_balance : 0
-    //   } catch (error) {
-    //     //
-    //   }
-    // },
     async harvestBalanceData() {
       if (!this.partnerData.can_receive_balance) {
         this.$toast({
@@ -316,7 +302,7 @@ export default {
           this.partnerData.sup_balance =
             Number(this.partnerData.sup_balance) +
             Number(this.partnerData.can_receive_balance)
-          this.getReceiveNumData()
+          this.partnerData.can_receive_balance = 0
         }, 3000)
       }
     },

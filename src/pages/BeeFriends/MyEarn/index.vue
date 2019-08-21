@@ -292,7 +292,7 @@ export default {
 
     // 我要提现
     toCash() {
-      if (!this.$store.state.user.isActiveUser) {
+      if (this.$store.state.user.userStatus === 3) {
         this.$toast('用户合伙人身份未激活！')
         return
       }
