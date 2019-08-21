@@ -428,7 +428,15 @@ export function getPartner(data) {
 // 蜂友圈 - 首页的好友列表
 export function getFriends(data) {
   return request({
-    url: '/user/partner/friends_list',
+    url: '/user/partner/user_lists',
+    method: 'post',
+    data
+  })
+}
+// 蜂友圈 - 首页的厂商列表
+export function getMerchant(data) {
+  return request({
+    url: '/user/partner/merchant_lists',
     method: 'post',
     data
   })
