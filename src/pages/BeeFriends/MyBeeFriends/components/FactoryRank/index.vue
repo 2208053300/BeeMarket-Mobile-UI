@@ -316,7 +316,7 @@ export default {
     async getShareLink() {
       const res = await isPartner()
       return `https://app.fengjishi.com/#/beeFriends?uid=${this.uid}&phone=${
-        res.data.user_phone
+        res.data.inviter_phone
       }`
     },
     // 分享

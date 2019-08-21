@@ -109,7 +109,7 @@
           <van-list
             v-model="loading"
             :finished="finished"
-            :immediate-check="false"
+            :immediate-check="true"
             finished-text="没有更多了"
             @load="onLoad"
           >
@@ -221,7 +221,8 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.getMyEarningData()
     // 获取余额数
-    this.getWithdrawNumData()
+    // this.getWithdrawNumData()
+
     // FIXME ios bug暂时无解
     try {
       this.page = 1
@@ -240,7 +241,7 @@ export default {
   methods: {
     // 收益顶部信息
     async getMyEarningData() {
-      this.loading = true
+      // this.loading = true
       const res = await getMyEarning({
         type: this.earnType,
         page: this.page
@@ -248,6 +249,7 @@ export default {
       console.log('我的收益：', res)
 
       this.detailData = res.data
+      // this.loading = false
     },
     // 收益记录
     async getEarningList() {
@@ -264,29 +266,27 @@ export default {
     changeEarnType(type) {
       this.earnType = type
       this.page = 1
-      // this.finished = true
+      this.onLoad()
     },
     // 加载列表
     onLoad() {
-      console.log(123456)
-
       // 异步更新数据
-      // setTimeout(async() => {
-      //   const res = await getMyEarningList({
-      //     type: this.earnType,
-      //     page: this.page
-      //   })
-      //   this.page++
-      //   this.totalPages = res.data.page_size
-      //   this.detailList.push(...res.data.lists)
-      //   if (this.detailList.length === 0) {
-      //     this.isEmpty = true
-      //   }
-      //   this.loading = false
-      //   if (this.page === this.totalPages) {
-      //     this.finished = true
-      //   }
-      // }, 500)
+      setTimeout(async() => {
+        const res = await getMyEarningList({
+          type: this.earnType,
+          page: this.page
+        })
+        this.page++
+        this.totalPages = res.data.page_size
+        this.detailList.push(...res.data.lists)
+        if (this.detailList.length === 0) {
+          this.isEmpty = true
+        }
+        this.loading = false
+        if (this.page === this.totalPages) {
+          this.finished = true
+        }
+      }, 500)
     },
 
     // 我要提现
