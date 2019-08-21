@@ -179,7 +179,7 @@
 </template>
 
 <script>
-import { getWithdrawNum, getMyEarning, getMyEarningList } from '@/api/BeeApi/user'
+import { getMyEarning, getMyEarningList } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 export default {
   metaInfo: {
@@ -220,8 +220,6 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getMyEarningData()
-    // 获取余额数
-    this.getWithdrawNumData()
 
     // FIXME ios bug暂时无解
     try {
@@ -291,23 +289,15 @@ export default {
 
     // 我要提现
     toCash() {
-      if (this.$store.state.user.userStatus === 3) {
-        this.$toast('用户合伙人身份未激活！')
-        return
-      }
-      if (this.withdrawNum < 100) {
+      if (this.$store.state.user.withdrawNum < 100) {
         this.$toast('可提现余额不足100元！')
         return
       }
       this.$router.push({
         name: 'friendPay'
       })
-    },
-    // 获取余额数
-    async getWithdrawNumData() {
-      const res = await getWithdrawNum()
-      this.withdrawNum = Number(res.data.sup_balance)
     }
+
   }
 }
 </script>
