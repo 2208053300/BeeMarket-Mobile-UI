@@ -258,6 +258,25 @@ export default {
       }
       this.page = 2
     },
+    onLoad() {
+      // 异步更新数据
+      setTimeout(async() => {
+        const res = await getFriends({
+          type: this.friendsType,
+          page: this.page
+        })
+        this.friendsList.push(...res.data.friendsList)
+        this.page++
+        this.loading = false
+        // 数据全部加载完成
+        if (
+          this.friendsList.length === res.data.friends_num ||
+          res.data.friendsList.length === 0
+        ) {
+          this.finished = true
+        }
+      }, 500)
+    },
     async remindLoginData(id) {
       try {
         const res = await remindLogin({ remind_user_id: id })
@@ -338,25 +357,7 @@ export default {
         //
       }
     },
-    onLoad() {
-      // 异步更新数据
-      setTimeout(async() => {
-        const res = await getFriends({
-          type: this.friendsType,
-          page: this.page
-        })
-        this.friendsList.push(...res.data.friendsList)
-        this.page++
-        this.loading = false
-        // 数据全部加载完成
-        if (
-          this.friendsList.length === res.data.friends_num ||
-          res.data.friendsList.length === 0
-        ) {
-          this.finished = true
-        }
-      }, 500)
-    },
+
     handleClose() {
       this.$emit('update:showRank', false)
     },

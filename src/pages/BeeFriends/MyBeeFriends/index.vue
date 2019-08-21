@@ -28,7 +28,7 @@
         <div class="header-img2">
           <div class="header-img3">
             <img
-              :src="partnerData.user_head||$store.state.app.head_detault"
+              :src="partnerData.head_image_url||$store.state.app.head_detault"
               alt="头像"
               :onerror="$store.state.app.head_detault"
             >
@@ -109,13 +109,13 @@
         @click="harvestBalanceData()"
       >
         <div
-          v-if="can_receive_balance"
+          v-if="partnerData.can_receive_balance"
           class="get-num"
         >
-          {{ can_receive_balance }}
+          {{ partnerData.can_receive_balance }}
         </div>
         <div
-          v-if="can_receive_balance"
+          v-if="partnerData.can_receive_balance"
           class="handle-tip"
         >
           <div class="tip-hand">
@@ -133,7 +133,7 @@
 
 <script>
 import { getOs } from '@/utils'
-import { getPartner, getReceiveNum, harvestBalance } from '@/api/BeeApi/user'
+import { getPartner, harvestBalance } from '@/api/BeeApi/user'
 import Honeycomb from './components/Honeycomb'
 import UserCard from './components/UserCard'
 import FriendsRank from './components/FriendsRank'
@@ -194,7 +194,6 @@ export default {
         sup_balance: 0
       },
       combData: [],
-      can_receive_balance: 0,
       detailItem: {},
       delay: 1000,
       options: {
@@ -230,20 +229,21 @@ export default {
         vm.$toast(localStorage.getItem('BM-App-Token'))
         // vm.$toast('获取合伙人身份失败，请重试！' + error)
       }
-      // 0 非合伙人 1 合伙人 2 冻结
-      if (vm.$store.state.user.userStatus === 0) {
+      // 1未绑定手机号普通用户 2注销后的普通用户 3有蜂友圈的普通用户 4有蜂友圈的合伙人 5冻结蜂友圈的合伙人
+      if (vm.$store.state.user.userStatus === 1) {
         // 如果不满足，跳转绑定手机号
         vm.$router.replace({
           path: '/persion/profile/accountBind/bindPhone',
           query: { reason: 'beeFriends' }
         })
-        // 当 is_partner = 0 时，该字段有效；1表示满足申请条件，0表示不满足
         // if (vm.$store.state.user.applyCondition === 0) {
         //   vm.$router.replace({ name: 'noQualified' })
         // } else if (vm.$store.state.user.applyCondition === 1) {
         //   vm.$router.replace({ name: 'introduction' })
         // }
       } else if (vm.$store.state.user.userStatus === 2) {
+        vm.$router.replace({ name: 'introduction' })
+      } else if (vm.$store.state.user.userStatus === 5) {
         vm.$router.replace({ name: 'freeze' })
       }
     })
@@ -286,22 +286,22 @@ export default {
       // 如果是一星合伙人
       if (
         this.$store.state.user.showFarmPop &&
-        this.partnerData.show_users2[0].is_partner === 1
+        this.partnerData.lists[0].level === 1
       ) {
         this.showGift = true
         this.$store.state.user.showFarmPop = false
       }
     },
-    async getReceiveNumData() {
-      try {
-        const res = await getReceiveNum({ type: this.honeyType })
-        this.can_receive_balance = res.data ? res.data.can_receive_balance : 0
-      } catch (error) {
-        //
-      }
-    },
+    // async getReceiveNumData() {
+    //   try {
+    //     const res = await getReceiveNum({ type: this.honeyType })
+    //     this.can_receive_balance = res.data ? res.data.can_receive_balance : 0
+    //   } catch (error) {
+    //     //
+    //   }
+    // },
     async harvestBalanceData() {
-      if (!this.can_receive_balance) {
+      if (!this.partnerData.can_receive_balance) {
         this.$toast({
           position: 'bottom',
           message: '您目前还没有可收集的余额！'
@@ -315,7 +315,7 @@ export default {
           this.showHoney = true
           this.partnerData.sup_balance =
             Number(this.partnerData.sup_balance) +
-            Number(this.can_receive_balance)
+            Number(this.partnerData.can_receive_balance)
           this.getReceiveNumData()
         }, 3000)
       }
@@ -333,18 +333,6 @@ export default {
       } else {
         //
       }
-    },
-    // 播放视频
-    play() {
-      this.$refs.video.play()
-      this.showControls = true
-    },
-    pause() {
-      this.$refs.video.pause()
-    },
-    handleCloseRule() {
-      this.showRule = false
-      this.pause()
     },
     omitNumber(val) {
       if (Number(val) > 1000) {
