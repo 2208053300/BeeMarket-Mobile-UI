@@ -226,8 +226,7 @@ export default {
       try {
         await vm.$store.dispatch('GerUserStatus')
       } catch (error) {
-        vm.$toast(localStorage.getItem('BM-App-Token'))
-        // vm.$toast('获取合伙人身份失败，请重试！' + error)
+        vm.$toast('获取合伙人身份失败，请重试！' + error)
       }
       // 1未绑定手机号普通用户 2注销后的普通用户 3有蜂友圈的普通用户 4有蜂友圈的合伙人 5冻结蜂友圈的合伙人
       if (vm.$store.state.user.userStatus === 1) {
@@ -274,9 +273,10 @@ export default {
 
     async getPartnerData() {
       this.showComb = false
-      const res = await getPartner({ type: this.honeyType })
+      const res = await getPartner()
       this.partnerData = res.data
       this.showComb = true
+      this.$store.state.user.withdrawNum = this.partnerData.sup_balance
       // 如果是一星合伙人
       if (
         this.$store.state.user.showFarmPop &&
@@ -302,6 +302,8 @@ export default {
           this.partnerData.sup_balance =
             Number(this.partnerData.sup_balance) +
             Number(this.partnerData.can_receive_balance)
+          // 保存变更余额
+          this.$store.state.user.withdrawNum = this.partnerData.sup_balance
           this.partnerData.can_receive_balance = 0
         }, 3000)
       }

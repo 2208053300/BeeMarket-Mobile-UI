@@ -10,7 +10,7 @@ const user = {
     have_no_read: false,
     // 1是合伙人，2冻结合伙人，0非合伙人
     userStatus: null,
-    isActiveUser: 0,
+    withdrawNum: 0,
     // 当 is_partner = 0 时，该字段有效；1表示满足申请条件，0表示不满足
     applyCondition: 0,
     is_new_user: false,
