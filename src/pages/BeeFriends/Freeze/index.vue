@@ -4,14 +4,14 @@
     <div class="personal-info">
       <!-- 头像 姓名 -->
       <div class="avatar flex">
-        <img :src="icon.avatar" class="img">
+        <img :src="freeze.head_image_url" class="img">
         <div class="info">
           <p class="name">
             {{ freeze.nickname }}
           </p>
           <div class="role flex">
             <div class="stars">
-              <img v-for="item in freeze.partner_level" :key="item" :src="icon.star" class="star-img">
+              <img v-for="item in freeze.level" :key="item" :src="icon.star" class="star-img">
             </div>
             <span>合伙人</span>
           </div>
@@ -42,7 +42,7 @@
             蜂友（人）
           </p>
           <p class="num">
-            {{ freeze.friends_num }}
+            {{ freeze.friend_num }}
           </p>
         </li>
         <li>
@@ -50,7 +50,7 @@
             厂商（家）
           </p>
           <p class="num">
-            {{ freeze.merchart_mun }}
+            {{ freeze.merchant_mun }}
           </p>
         </li>
       </ul>
@@ -82,7 +82,7 @@
             —Thaw account—
           </p>
           <p class="des">
-            如果您在2019年6月13日之前进行消费集市将自动为您解冻
+            如果您在{{ freeze.time }}之前进行消费集市将自动为您解冻
           </p>
           <van-button class="btn" @click="goSortList">
             去逛逛
@@ -99,7 +99,7 @@
             —Account cancellation—
           </p>
           <p class="des">
-            如果您在2019年9月13日之前没有进行消费集市将注销您的蜂友圈账户
+            如果您在{{ freeze.time }}之前没有进行消费集市将注销您的蜂友圈账户
           </p>
         </div>
       </li>
