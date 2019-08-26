@@ -223,8 +223,8 @@ export default {
 
     // FIXME ios bug暂时无解
     try {
-      this.page = 1
-      setTimeout(document.querySelector('.tab-content').click(), 3000)
+      // this.page = 1
+      // setTimeout(document.querySelector('.tab-content').click(), 3000)
     } catch (error) {
       //
     }
@@ -274,6 +274,8 @@ export default {
           type: this.earnType,
           page: this.page
         })
+        console.log(res, 1111111111)
+
         this.page++
         this.totalPages = res.data.page_size
         this.detailList.push(...res.data.lists)
@@ -281,7 +283,10 @@ export default {
           this.isEmpty = true
         }
         this.loading = false
-        if (this.page === this.totalPages) {
+        console.log('this.page,this.totalPages', this.page, this.totalPages)
+        if (this.page > this.totalPages) {
+          console.log('stop')
+
           this.finished = true
         }
       }, 500)
