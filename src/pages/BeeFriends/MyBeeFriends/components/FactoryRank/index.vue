@@ -137,26 +137,26 @@
               <div class="ranking">
                 <!-- 如果排名前小于三 -->
                 <div
-                  v-if="item.rank<=2"
+                  v-if="item.rank<=3"
                   class="rank-num"
                 >
                   <img
-                    v-if="item.rank===0"
+                    v-if="item.rank===1"
                     :src="beeIcon.bee_firends_invite_icon_goldaward"
                     alt="1"
                   >
                   <img
-                    v-if="item.rank===1"
+                    v-if="item.rank===2"
                     :src="beeIcon.bee_firends_invite_icon_silveraward"
                     alt="2"
                   >
                   <img
-                    v-if="item.rank===2"
+                    v-if="item.rank===3"
                     :src="beeIcon.bee_firends_invite_icon_bronzeaward"
                     alt="3"
                   >
                 </div>
-                <span v-else>{{ item.rank+1 }}</span>
+                <span v-else>{{ item.rank }}</span>
               </div>
               <div
                 class="factory-detail"
@@ -434,11 +434,11 @@ export default {
       this.getFriendsData()
     },
     getColor(index) {
-      if (index === 0) {
+      if (index === 1) {
         return '#FDBB18'
-      } else if (index === 1) {
-        return '#BEBEBE'
       } else if (index === 2) {
+        return '#BEBEBE'
+      } else if (index === 3) {
         return '#DB7D64'
       } else {
         return '#ffffff'

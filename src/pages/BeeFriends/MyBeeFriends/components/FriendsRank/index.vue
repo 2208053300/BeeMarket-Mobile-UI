@@ -159,26 +159,26 @@
               <div class="ranking">
                 <!-- 如果排名前小于三 -->
                 <div
-                  v-if="item.rank<=2"
+                  v-if="item.rank<=3"
                   class="rank-num"
                 >
                   <img
-                    v-if="item.rank===0"
+                    v-if="item.rank===1"
                     :src="beeIcon.bee_firends_invite_icon_goldaward"
                     alt="1"
                   >
                   <img
-                    v-if="item.rank===1"
+                    v-if="item.rank===2"
                     :src="beeIcon.bee_firends_invite_icon_silveraward"
                     alt="2"
                   >
                   <img
-                    v-if="item.rank===2"
+                    v-if="item.rank===3"
                     :src="beeIcon.bee_firends_invite_icon_bronzeaward"
                     alt="3"
                   >
                 </div>
-                <span v-else>{{ item.rank+1 }}</span>
+                <span v-else>{{ item.rank }}</span>
               </div>
               <div class="friends-detail">
                 <div class="head-img">
@@ -210,7 +210,7 @@
                     >
                   </div>
                 </div>
-                <div class="firends-name">
+                <div class="friends-name">
                   <div class="left-detail">
                     <div
                       class="name"
@@ -220,12 +220,12 @@
                     </div>
                     <span
                       v-if="item.friend_count"
-                      class="firends"
+                      class="friends"
                     >（关联蜂友：<span class="num">{{ item.friend_count }}</span>个 ）</span>
                     <!-- 用户未绑定手机号 -->
                     <span
                       v-if="item.type===3"
-                      class="firends no-phone"
+                      class="friends no-phone"
                     >（用户未绑定手机号）</span>
                     <div class="honey-num">
                       <span class="num"> {{ item.percentages }} </span>
@@ -454,11 +454,11 @@ export default {
       this.getFriendsData()
     },
     getColor(index) {
-      if (index === 0) {
+      if (index === 1) {
         return '#FDBB18'
-      } else if (index === 1) {
-        return '#BEBEBE'
       } else if (index === 2) {
+        return '#BEBEBE'
+      } else if (index === 3) {
         return '#DB7D64'
       } else {
         return '#ffffff'
@@ -588,7 +588,7 @@ export default {
                 left: -0.1rem;
               }
             }
-            .firends-name {
+            .friends-name {
               display: flex;
               flex: 1;
               align-items: center;
@@ -607,13 +607,13 @@ export default {
                 .partner {
                   color: @BeeDefault;
                 }
-                .firends {
+                .friends {
                   font-size: 0.2rem;
                   .num {
                     color: @Orange1;
                   }
                 }
-                no-phone {
+                .no-phone {
                   color: #f76047;
                 }
                 .honey-num {

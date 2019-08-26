@@ -280,14 +280,14 @@ export default {
       // 如果是一星合伙人
       if (
         this.$store.state.user.showFarmPop &&
-        this.partnerData.lists[0].level === 1
+        this.partnerData.lists[0].level < 2
       ) {
         this.showGift = true
         this.$store.state.user.showFarmPop = false
       }
     },
     async harvestBalanceData() {
-      if (!this.partnerData.can_receive_balance) {
+      if (!Number(this.partnerData.can_receive_balance)) {
         this.$toast({
           position: 'bottom',
           message: '您目前还没有可收集的余额！'
