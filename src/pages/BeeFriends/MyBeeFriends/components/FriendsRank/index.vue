@@ -561,10 +561,10 @@ export default {
           align-items: center;
           .ranking {
             margin-right: 0.26rem;
-            .rank-num {
-              width: 0.38rem;
-              height: 0.49rem;
-            }
+            width: 0.38rem;
+            height: 0.49rem;
+            text-align: center;
+            line-height: 0.49rem;
           }
           .friends-detail {
             display: flex;
