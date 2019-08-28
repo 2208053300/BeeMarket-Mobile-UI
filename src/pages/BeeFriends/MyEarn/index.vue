@@ -113,18 +113,6 @@
             finished-text="没有更多了"
             @load="onLoad"
           >
-            <!-- <div
-              class="detail-card"
-            >
-              <div class="info-time">
-                2019.20.20
-              </div>
-              <div class="info-text">
-                <img :src="beeIcon.bee_firends_income_icon_growingup" class="list-avatar">
-                fdsff1d21f3d1f3ds
-              </div>
-              <div class="circle" />
-            </div> -->
             <div
               v-for="(item, index) in detailList"
               :key="index"
@@ -264,6 +252,7 @@ export default {
     changeEarnType(type) {
       this.earnType = type
       this.page = 1
+      this.detailList = []
       this.onLoad()
     },
     // 加载列表
@@ -274,13 +263,14 @@ export default {
           type: this.earnType,
           page: this.page
         })
-        console.log(res, 1111111111)
 
         this.page++
         this.totalPages = res.data.page_size
         this.detailList.push(...res.data.lists)
         if (this.detailList.length === 0) {
           this.isEmpty = true
+        } else {
+          this.isEmpty = false
         }
         this.loading = false
         console.log('this.page,this.totalPages', this.page, this.totalPages)
