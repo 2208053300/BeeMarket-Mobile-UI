@@ -272,10 +272,6 @@ export default {
     },
 
     async getPartnerData() {
-      // 如果不满足条件，避免请求接口
-      if ([3, 4].indexOf(this.$store.state.user.userStatus) === -1) {
-        return
-      }
       this.showComb = false
       const res = await getPartner()
       this.partnerData = res.data
