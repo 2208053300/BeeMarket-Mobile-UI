@@ -90,7 +90,7 @@ export default {
         title: '',
         desc: '',
         imgUrl: '',
-        url: ''
+        link: ''
       },
 
       // 传达心意，送句祝福
@@ -172,11 +172,13 @@ export default {
     async loadUID() {
       const res = await getUID()
       this.uid = res.data.uid
-      alert('调用微信分享')
-      alert('title', this.share_data.title)
-      alert('desc', this.share_data.desc)
-      alert('imgUrl', this.share_data.imgUrl)
-      alert('link', this.share_data.link)
+      console.log('分享信息', this.share_data)
+
+      // alert('调用微信分享')
+      // alert('title', this.share_data.title)
+      // alert('desc', this.share_data.desc)
+      // alert('imgUrl', this.share_data.imgUrl)
+      // alert('link', this.share_data.link)
 
       wxapi.wxShare({
         title: this.share_data.title,
