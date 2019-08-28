@@ -102,7 +102,13 @@ export default {
 
   },
   watch: {
-
+    remark: {
+      handler(oldVal, newVal) {
+        if (this.remark.length > 20) {
+          this.remark = newVal.slice(0, 20)
+        }
+      }
+    }
   },
   created() {
 
