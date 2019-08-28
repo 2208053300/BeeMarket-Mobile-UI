@@ -211,8 +211,8 @@ export default {
 
     // FIXME ios bug暂时无解
     try {
-      // this.page = 1
-      // setTimeout(document.querySelector('.tab-content').click(), 3000)
+      this.page = 1
+      setTimeout(document.querySelector('.tab-content').click(), 3000)
     } catch (error) {
       //
     }
