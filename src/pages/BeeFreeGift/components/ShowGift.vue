@@ -163,6 +163,7 @@ export default {
           // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
         )
       } else {
+        this.loadUID()
         this.showWxTip = true
       }
     },
@@ -171,6 +172,11 @@ export default {
     async loadUID() {
       const res = await getUID()
       this.uid = res.data.uid
+      alert('调用微信分享')
+      alert('title', this.share_data.title)
+      alert('desc', this.share_data.desc)
+      alert('imgUrl', this.share_data.imgUrl)
+      alert('link', this.share_data.link)
 
       wxapi.wxShare({
         title: this.share_data.title,
