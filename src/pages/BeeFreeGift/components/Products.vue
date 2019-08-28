@@ -23,7 +23,7 @@
               <p class="product-price">
                 <span class="sell-price">￥{{ product.sell_price }}</span>
               </p>
-              <van-button round size="mini" @click="showSkuPopup(index)">
+              <van-button round size="mini" @click="showSkuPopup(index,product.pid)">
                 免费送礼
               </van-button>
             </div>
@@ -100,9 +100,9 @@ export default {
     },
 
     // NOTE 点击立即送礼,选择sku,sku 确定获取分享数据
-    showSkuPopup(index) {
+    showSkuPopup(index, pid) {
       console.log(index, 456456456)
-
+      this.pid = pid
       this.showSku = true
 
       this.nowProduct = this.products[index]
