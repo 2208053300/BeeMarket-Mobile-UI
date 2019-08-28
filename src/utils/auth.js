@@ -16,7 +16,7 @@ export async function getToken() {
     // 如果微信链接带CODE
     const uriProp = GetRequest('code')
     const uid = getQueryString('uid')
-    if (!uriProp || (token === null || token === undefined)) {
+    if (!uriProp && (token === null || token === undefined)) {
       await checkToken()
     }
     // 正常流程，直接返回token
