@@ -23,7 +23,7 @@
               <p class="product-price">
                 <span class="sell-price"><span style="font-size:.35rem;">￥</span>{{ product.sell_price }}</span>
               </p>
-              <span class="num">满{{ product.lottery_num }}人参与，立即开奖</span>
+              <span class="num">满{{ product.lottery_num }}人参与，立刻开奖</span>
             </div>
           </div>
         </div>
@@ -175,7 +175,7 @@ export default {
       wxapi.wxShare({
         title: this.share_data.title,
         desc: this.share_data.desc,
-        imgUrl: this.share_data.img,
+        imgUrl: this.share_data.imgUrl,
         link: this.share_data.link
       })
     }
