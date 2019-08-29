@@ -111,7 +111,7 @@
       <van-button v-if="detail.is_Winning" class="action-btn" size="large">
         <span
           v-if="detail.is_receive === 0"
-          @click="fillAddress"
+          @click="getGift"
         >我要领取礼物</span>
         <span v-else @click="goFreeGiftIndex">我也要免费送礼</span>
       </van-button>
@@ -145,6 +145,7 @@
 </template>
 
 <script>
+import { confirmOrder } from '@/api/BeeApi/order'
 import { linkData, participate, getDetail } from '@/api/BeeApi/freeGift'
 
 import Products from '../components/Products'
@@ -258,9 +259,46 @@ export default {
       })
     },
 
-    // 点击我要领取礼物，跳到填写地址页面
-    fillAddress() {
-      this.$router.push({ name: 'fillAddress' })
+    // 点击我要领取礼物
+    async getGift() {
+      // TODO 跳转下单 参考免费领取茅台和燕窝
+      const res = await confirmOrder(
+        JSON.stringify({
+          os: 'general|present',
+          tid: this.tid
+        })
+      )
+      if (res.status_code === 200) {
+        this.$store.state.order.orderDetail = res.data
+        this.$store.state.order.addrDetail = res.data.addr
+        this.$router.push({
+          name: 'confirmOrder',
+          query: {
+            target: 'general|present',
+            tid: this.$route.query.id
+          }
+        })
+      }
+      // TODO 跳转下单 参考普通商品下单
+      // const res1 = await confirmOrder(
+      //   JSON.stringify({
+      //     product: {
+      //       sid: this.$store.state.cart.skuId,
+      //       number: this.$store.state.cart.pNumber
+      //     },
+      //     os: this.$route.query.target || 'general'
+      //   })
+      // )
+      // if (res1.status_code === 200) {
+      //   this.$store.state.order.orderDetail = res1.data
+      //   this.$store.state.order.addrDetail = res1.data.addr
+      //   this.$router.push({
+      //     name: 'confirmOrder',
+      //     query: {
+      //       target: this.$route.query.target || 'general'
+      //     }
+      //   })
+      // }
     },
 
     // 显示/隐藏更多参与者头像
