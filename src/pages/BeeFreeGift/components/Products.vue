@@ -90,7 +90,10 @@ export default {
   methods: {
     // 获取商品数据
     async getIndexData() {
-      const res = await getIndexData()
+      const res = await getIndexData({
+        page: this.page,
+        pageSize: this.pageSize
+      })
       this.page++
       this.loading = false
       this.products.push(...res.data)
