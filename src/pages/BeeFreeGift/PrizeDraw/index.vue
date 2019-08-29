@@ -223,7 +223,8 @@ export default {
         const res = await participate({ id: this.linkData.id })
         console.log('参与活动：', res)
         if (res.status_code === 200) {
-          this.getDetailData()
+          // this.getDetailData()
+          this.closePop()
         }
       } catch (error) {
         console.log('nage:', error)
