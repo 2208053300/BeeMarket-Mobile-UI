@@ -6,7 +6,7 @@
     <van-list
       v-model="loading"
       :finished="finished"
-      :immediate-check="false"
+      :immediate-check="immediateCheck"
       finished-text="我也是有底线的 o(´^｀)o"
       @load="getIndexData"
     >
@@ -59,6 +59,7 @@ export default {
       },
       loading: false,
       finished: false,
+      immediateCheck: true,
       products: [],
       page: 1,
       pageSize: 10,
@@ -85,7 +86,7 @@ export default {
 
   },
   mounted() {
-    this.getIndexData()
+    // this.getIndexData()
   },
   methods: {
     // 获取商品数据
