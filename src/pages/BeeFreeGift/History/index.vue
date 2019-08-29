@@ -94,7 +94,7 @@ export default {
       head_msg: [],
       loading: false,
       finished: false,
-      immediateCheck: false,
+      immediateCheck: true,
       products: [],
       page: 1,
       pageSize: 10,
