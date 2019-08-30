@@ -101,13 +101,14 @@
       </div>
       <!-- 操作按钮 -->
       <!-- 中奖 -->
-      <van-button class="action-btn" size="large">
-        <span
-          v-if="detail.status === 4"
-          @click="getGift"
-        >我要领取礼物</span>
-        <span v-else @click="goFreeGiftIndex">我也要免费送礼</span>
-      </van-button>
+      <div>
+        <van-button v-if="detail.status === 4" class="action-btn" size="large" @click="getGift">
+          <span>我要领取礼物</span>
+        </van-button>
+        <van-button v-else class="action-btn" size="large" @click="goFreeGiftIndex">
+          <span>我也要免费送礼</span>
+        </van-button>
+      </div>
     </div>
     <!-- 免费送礼商品列表 -->
     <Products />
@@ -243,6 +244,8 @@ export default {
 
     // 跳转到免费送礼首页
     goFreeGiftIndex() {
+      console.log(123456)
+
       this.$router.push({
         name: 'beeFreeGift'
         // query: {
@@ -434,7 +437,7 @@ export default {
       }
     }
 
-    .action-btn{background:@BeeDefault; font-size: .34rem;color: #fff; margin-top:.4rem; pointer-events: auto;
+    .action-btn{background:@BeeDefault; font-size: .34rem;color: #fff; border-radius: 0.1rem; margin-top:.4rem; pointer-events: auto;
       span{display: block;}
     }
 
