@@ -55,16 +55,19 @@
 
       <!-- 参与者 -->
       <div v-else class="participant bg-white">
-        <p v-if="detail.status === 1" class="getter-tip text-center">
+        <!-- 中奖者信息 -->
+        <p v-if="detail.status === 4" class="getter-tip text-center">
           {{ detail.join_data.winning_desc }}
         </p>
-        <p v-if="detail.status === 1" class="time-tip  text-center">
+        <p v-if="detail.status === 4" class="time-tip  text-center">
           {{ detail.join_data.winning_time }}
         </p>
+        <!-- 参与人数 -->
         <p class="tip text-center">
           已有<span>{{ detail.join_data.join_num }}</span>人参与，<span>{{ detail.join_data.lottery_qty }}</span>人参与立即开奖
         </p>
-        <div v-if="detail.status === 1" class="getter-man">
+        <!-- 中奖者头像 -->
+        <div v-if="detail.status === 4" class="getter-man">
           <img
             :src="detail.join_data.winning_user_head_image"
             class="getter-avatar"
@@ -73,7 +76,7 @@
         </div>
         <ul
           class="men flex flex-center flex-wrap"
-          :class="{ small: detail.status === 1 }"
+          :class="{ small: detail.status === 4 }"
         >
           <li
             v-for="(item, index) in detail.join_data.join_user_head_images"
@@ -97,20 +100,10 @@
         </p>
       </div>
       <!-- 操作按钮 -->
-      <!-- 未中奖 -->
-      <van-button
-        v-if="!detail.is_Winning"
-        round
-        class="action-btn"
-        size="large"
-        @click="goFreeGiftIndex"
-      >
-        我也要免费送礼
-      </van-button>
       <!-- 中奖 -->
-      <van-button v-if="detail.is_Winning" class="action-btn" size="large">
+      <van-button class="action-btn" size="large">
         <span
-          v-if="detail.is_receive === 0"
+          v-if="detail.status === 4"
           @click="getGift"
         >我要领取礼物</span>
         <span v-else @click="goFreeGiftIndex">我也要免费送礼</span>
@@ -200,9 +193,8 @@ export default {
         const res = await linkData({ id: this.$route.query.id })
         this.linkData = res.data
         this.showPopup = true
-        // is_valid 链接是否可用，true 可用，false 失效,
-        // is_join 是否参与过， true 已参与，false 未参与
-        if (!this.linkData.is_valid || this.linkData.is_join) {
+        // is_show 是否显示抽奖弹窗 1 显示 0 隐藏
+        if (this.linkData.is_show === 0) {
           this.closePop()
         }
       } catch (error) {
