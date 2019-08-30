@@ -19,7 +19,12 @@
         @load="getIndexData"
       >
         <div v-for="(product, index) in products" :key="index" class="product flex flex-between">
+          <!-- 结果标志 -->
+          <img v-if="product.status===1" class="result-img" :src="icon.successImg" alt="">
+          <img v-if="product.status===-1" class="result-img" :src="icon.failImg" alt="">
+          <!-- 商品图片 -->
           <img :src="product.thumb_url" class="product-img">
+          <!-- 其他信息 -->
           <div class="product-info flex flex-column flex-between">
             <div>
               <p class="product-name">
@@ -60,9 +65,6 @@
               </van-button>
             </div>
           </div>
-          <!-- 结果标志 -->
-          <img v-if="product.status===1" class="result-img" :src="icon.successImg" alt="">
-          <img v-if="product.status===-1" class="result-img" :src="icon.failImg" alt="">
         </div>
       </van-list>
     </div>
