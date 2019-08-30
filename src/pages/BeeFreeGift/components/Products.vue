@@ -33,7 +33,7 @@
     </van-list>
 
     <!-- 免费送礼弹窗 -->
-    <ShowGift :show-gift="showGift" :product="nowProduct" />
+    <ShowGift :show-gift="showGift" :product="nowProduct" :sid="nowProduct.s_id" />
 
     <!-- sku -->
     <Sku :show-sku="showSku" :pid="pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" />
@@ -74,6 +74,7 @@ export default {
       propsId: [],
       pNumber: 0,
       limitNum: 0
+
     }
   },
   computed: {
