@@ -23,7 +23,7 @@
               <p class="product-price">
                 <span class="sell-price"><span style="font-size:.35rem;">￥</span>{{ product.sell_price }}</span>
               </p>
-              <span class="num">满{{ product.lottery_num }}人参与，立即开奖</span>
+              <span class="num">满{{ product.lottery_num }}人参与，立刻开奖</span>
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@ export default {
         title: '',
         desc: '',
         imgUrl: '',
-        url: ''
+        link: ''
       },
 
       // 传达心意，送句祝福
@@ -102,7 +102,13 @@ export default {
 
   },
   watch: {
-
+    remark: {
+      handler(oldVal, newVal) {
+        if (this.remark.length > 20) {
+          this.remark = newVal.slice(0, 20)
+        }
+      }
+    }
   },
   created() {
 
@@ -157,6 +163,7 @@ export default {
           // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
         )
       } else {
+        this.loadUID()
         this.showWxTip = true
       }
     },
@@ -165,11 +172,18 @@ export default {
     async loadUID() {
       const res = await getUID()
       this.uid = res.data.uid
+      console.log('分享信息', this.share_data)
+
+      // alert('调用微信分享')
+      // alert('title', this.share_data.title)
+      // alert('desc', this.share_data.desc)
+      // alert('imgUrl', this.share_data.imgUrl)
+      // alert('link', this.share_data.link)
 
       wxapi.wxShare({
         title: this.share_data.title,
         desc: this.share_data.desc,
-        imgUrl: this.share_data.img,
+        imgUrl: this.share_data.imgUrl,
         link: this.share_data.link
       })
     }

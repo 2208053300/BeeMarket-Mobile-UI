@@ -41,18 +41,18 @@
             {{ detailItem.nickname }}
           </div>
           <div
-            v-if="honeyType!==1&&detailItem.is_partner"
+            v-if="honeyType!==1&&detailItem.level"
             class="user-grade"
           >
             <van-icon
-              v-for="(item,index) in detailItem.is_partner"
+              v-for="(item,index) in detailItem.level"
               :key="index"
               :name="beeIcon.bee_firends_basic_icon_star"
             />
             <span class="name">合伙人</span>
           </div>
           <div
-            v-if="honeyType===1&&!detailItem.is_partner"
+            v-if="honeyType===1&&!detailItem.level"
             class="store-name"
           >
             店铺名
@@ -82,7 +82,7 @@
               class="firends-image"
             />
             <div class="friends-num">
-              厂商:<span class="num">{{ detailItem.business }}</span>个
+              厂商:<span class="num">{{ detailItem.merchant_count }}</span>个
             </div>
           </div>
           <div class="friends-part">
@@ -91,7 +91,7 @@
               class="firends-image"
             />
             <div class="friends-num">
-              蜂友:<span class="num">{{ detailItem.friend }}</span>个
+              蜂友:<span class="num">{{ detailItem.friend_count }}</span>个
             </div>
           </div>
           <div
@@ -103,7 +103,7 @@
               class="firends-image"
             />
             <div class="friends-num">
-              关联蜂友:<span class="num">{{ detailItem.relation_friend }}</span>个
+              关联蜂友:<span class="num">{{ detailItem.friend_count }}</span>个
             </div>
           </div>
         </div>

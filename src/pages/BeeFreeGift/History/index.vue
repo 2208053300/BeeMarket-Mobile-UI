@@ -19,7 +19,12 @@
         @load="getIndexData"
       >
         <div v-for="(product, index) in products" :key="index" class="product flex flex-between">
+          <!-- 结果标志 -->
+          <img v-if="product.status===1" class="result-img" :src="icon.successImg" alt="">
+          <img v-if="product.status===-1" class="result-img" :src="icon.failImg" alt="">
+          <!-- 商品图片 -->
           <img :src="product.thumb_url" class="product-img">
+          <!-- 其他信息 -->
           <div class="product-info flex flex-column flex-between">
             <div>
               <p class="product-name">
@@ -60,9 +65,6 @@
               </van-button>
             </div>
           </div>
-          <!-- 结果标志 -->
-          <img v-if="product.status===1" class="result-img" :src="icon.successImg" alt="">
-          <img v-if="product.status===-1" class="result-img" :src="icon.failImg" alt="">
         </div>
       </van-list>
     </div>
@@ -94,7 +96,7 @@ export default {
       head_msg: [],
       loading: false,
       finished: false,
-      immediateCheck: false,
+      immediateCheck: true,
       products: [],
       page: 1,
       pageSize: 10,
@@ -131,7 +133,7 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getIndexData()
+    // this.getIndexData()
 
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare

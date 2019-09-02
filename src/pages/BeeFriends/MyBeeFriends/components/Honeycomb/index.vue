@@ -15,7 +15,7 @@
           :id="'hexagon'+item2.id"
           :key="index2"
           :ref="'hexagon'+item2.id"
-          :class="[{showitem:showList.indexOf(item2.id)!==-1&&item2.nickname&&checkOverflow('hexagon'+item2.id)},{firstItem:item2.id===config.center_point.id},{partnerItem:item2.is_partner}]"
+          :class="[{showitem:showList.indexOf(item2.id)!==-1&&item2.nickname&&checkOverflow('hexagon'+item2.id)},{firstItem:item2.id===config.center_point.id},{partnerItem:item2.level}]"
           class="comb-card hexagon"
           :test="index2"
           @click="showDetail(item2)"
@@ -230,7 +230,7 @@ export default {
             'circle_list'
           ][i][j]
           row[this.config['circle_list'][i][j]['y']][k] = {
-            ...this.$parent.partnerData.show_users2[k],
+            ...this.$parent.partnerData.lists[k],
             ...row[this.config['circle_list'][i][j]['y']][k]
           }
           // 动画顺序
@@ -281,7 +281,9 @@ export default {
       }, 100)
     },
     showDetail(item) {
-      if ('user_id' in item) {
+      console.log(item)
+
+      if ('nickname' in item) {
         this.$emit('update:detailCard', true)
         this.$emit('update:detailItem', item)
       }

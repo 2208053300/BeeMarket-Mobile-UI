@@ -15,7 +15,7 @@
     </van-goods-action>
 
     <!-- sku -->
-    <Sku :show-sku="showSku" :pid="pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" />
+    <Sku :show-sku="showSku" :pid="commodityData.pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" />
     <!-- 免费送礼弹窗 -->
     <ShowGift :show-gift="showGift" :product="nowProduct" />
   </div>

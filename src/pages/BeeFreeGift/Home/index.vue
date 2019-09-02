@@ -29,7 +29,7 @@
       <van-list
         v-model="loading"
         :finished="finished"
-        :immediate-check="false"
+        :immediate-check="immediateCheck"
         finished-text="我也是有底线的 o(´^｀)o"
         @load="getIndexData"
       >
@@ -111,6 +111,7 @@ export default {
       head_msg: '恭喜小贾送出4个礼盒，',
       loading: false,
       finished: false,
+      immediateCheck: true,
       products: [
       ],
       page: 1,
@@ -127,7 +128,7 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getIndexData()
+    // this.getIndexData()
   },
   methods: {
     // 获取商品数据

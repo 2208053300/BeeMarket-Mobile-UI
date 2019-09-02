@@ -303,8 +303,8 @@ export default {
     async isPartner() {
       const res = await isPartner()
       //  console.log('用户是否合伙人身份：', res)
-      this.factory.referrer_number = res.data.user_phone
-      if (res.data.user_phone) {
+      this.factory.referrer_number = res.data.inviter_phone
+      if (res.data.inviter_phone) {
         this.status = false
       } else {
         this.status = true

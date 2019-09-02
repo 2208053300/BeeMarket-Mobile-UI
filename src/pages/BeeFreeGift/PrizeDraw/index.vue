@@ -55,16 +55,19 @@
 
       <!-- 参与者 -->
       <div v-else class="participant bg-white">
-        <p v-if="detail.status === 1" class="getter-tip text-center">
+        <!-- 中奖者信息 -->
+        <p v-if="detail.status === 4" class="getter-tip text-center">
           {{ detail.join_data.winning_desc }}
         </p>
-        <p v-if="detail.status === 1" class="time-tip  text-center">
+        <p v-if="detail.status === 4" class="time-tip  text-center">
           {{ detail.join_data.winning_time }}
         </p>
+        <!-- 参与人数 -->
         <p class="tip text-center">
           已有<span>{{ detail.join_data.join_num }}</span>人参与，<span>{{ detail.join_data.lottery_qty }}</span>人参与立即开奖
         </p>
-        <div v-if="detail.status === 1" class="getter-man">
+        <!-- 中奖者头像 -->
+        <div v-if="detail.status === 4" class="getter-man">
           <img
             :src="detail.join_data.winning_user_head_image"
             class="getter-avatar"
@@ -73,7 +76,7 @@
         </div>
         <ul
           class="men flex flex-center flex-wrap"
-          :class="{ small: detail.status === 1 }"
+          :class="{ small: detail.status === 4 }"
         >
           <li
             v-for="(item, index) in detail.join_data.join_user_head_images"
@@ -97,24 +100,15 @@
         </p>
       </div>
       <!-- 操作按钮 -->
-      <!-- 未中奖 -->
-      <van-button
-        v-if="!detail.is_Winning"
-        round
-        class="action-btn"
-        size="large"
-        @click="goFreeGiftIndex"
-      >
-        我也要免费送礼
-      </van-button>
       <!-- 中奖 -->
-      <van-button v-if="detail.is_Winning" class="action-btn" size="large">
-        <span
-          v-if="detail.is_receive === 0"
-          @click="fillAddress"
-        >我要领取礼物</span>
-        <span v-else @click="goFreeGiftIndex">我也要免费送礼</span>
-      </van-button>
+      <div>
+        <van-button v-if="detail.status === 4" class="action-btn" size="large" @click="getGift">
+          <span>我要领取礼物</span>
+        </van-button>
+        <van-button v-else class="action-btn" size="large" @click="goFreeGiftIndex">
+          <span>我也要免费送礼</span>
+        </van-button>
+      </div>
     </div>
     <!-- 免费送礼商品列表 -->
     <Products />
@@ -145,6 +139,7 @@
 </template>
 
 <script>
+import { confirmOrder } from '@/api/BeeApi/order'
 import { linkData, participate, getDetail } from '@/api/BeeApi/freeGift'
 
 import Products from '../components/Products'
@@ -199,9 +194,8 @@ export default {
         const res = await linkData({ id: this.$route.query.id })
         this.linkData = res.data
         this.showPopup = true
-        // is_valid 链接是否可用，true 可用，false 失效,
-        // is_join 是否参与过， true 已参与，false 未参与
-        if (!this.linkData.is_valid || this.linkData.is_join) {
+        // is_show 是否显示抽奖弹窗 1 显示 0 隐藏
+        if (this.linkData.is_show === 0) {
           this.closePop()
         }
       } catch (error) {
@@ -223,7 +217,8 @@ export default {
         const res = await participate({ id: this.linkData.id })
         console.log('参与活动：', res)
         if (res.status_code === 200) {
-          this.getDetailData()
+          // this.getDetailData()
+          this.closePop()
         }
       } catch (error) {
         console.log('nage:', error)
@@ -249,6 +244,8 @@ export default {
 
     // 跳转到免费送礼首页
     goFreeGiftIndex() {
+      console.log(123456)
+
       this.$router.push({
         name: 'beeFreeGift'
         // query: {
@@ -257,9 +254,46 @@ export default {
       })
     },
 
-    // 点击我要领取礼物，跳到填写地址页面
-    fillAddress() {
-      this.$router.push({ name: 'fillAddress' })
+    // 点击我要领取礼物
+    async getGift() {
+      // TODO 跳转下单 参考免费领取茅台和燕窝
+      const res = await confirmOrder(
+        JSON.stringify({
+          os: 'general|present',
+          tid: this.tid
+        })
+      )
+      if (res.status_code === 200) {
+        this.$store.state.order.orderDetail = res.data
+        this.$store.state.order.addrDetail = res.data.addr
+        this.$router.push({
+          name: 'confirmOrder',
+          query: {
+            target: 'general|present',
+            tid: this.$route.query.id
+          }
+        })
+      }
+      // TODO 跳转下单 参考普通商品下单
+      // const res1 = await confirmOrder(
+      //   JSON.stringify({
+      //     product: {
+      //       sid: this.$store.state.cart.skuId,
+      //       number: this.$store.state.cart.pNumber
+      //     },
+      //     os: this.$route.query.target || 'general'
+      //   })
+      // )
+      // if (res1.status_code === 200) {
+      //   this.$store.state.order.orderDetail = res1.data
+      //   this.$store.state.order.addrDetail = res1.data.addr
+      //   this.$router.push({
+      //     name: 'confirmOrder',
+      //     query: {
+      //       target: this.$route.query.target || 'general'
+      //     }
+      //   })
+      // }
     },
 
     // 显示/隐藏更多参与者头像
@@ -403,7 +437,7 @@ export default {
       }
     }
 
-    .action-btn{background:@BeeDefault; font-size: .34rem;color: #fff; margin-top:.4rem; pointer-events: auto;
+    .action-btn{background:@BeeDefault; font-size: .34rem;color: #fff; border-radius: 0.1rem; margin-top:.4rem; pointer-events: auto;
       span{display: block;}
     }
 

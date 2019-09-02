@@ -126,6 +126,8 @@ export default {
           this.$refs.farmList.condition.sort = ''
           this.$refs.farmList.condition.order = ''
           this.$refs.farmList.condition.page = 1
+          this.$refs.farmList.finished = false
+          this.$refs.farmList.loading = true
           this.$refs.farmList.getProductListData()
         }
       })

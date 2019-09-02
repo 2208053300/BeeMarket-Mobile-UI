@@ -35,6 +35,11 @@ const router = new Router({
           component: () => import('@/pages/BeeFreeGift/PrizeDraw')
         },
         {
+          path: 'confirmOrder',
+          name: 'confirmOrder',
+          component: () => import('@/pages/BeeFreeGift/ConfirmOrder')
+        },
+        {
           path: 'fillAddress',
           name: 'fillAddress',
           component: () => import('@/pages/BeeFreeGift/AddAddress')

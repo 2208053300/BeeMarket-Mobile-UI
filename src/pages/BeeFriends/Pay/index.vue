@@ -13,7 +13,7 @@
         class="auth-form"
       >
         <div class="form-box bg-white">
-          <!-- <div class="form-group">
+          <div class="form-group">
             <label for="user_name">用户姓名</label>
             <div class="input-box">
               <input
@@ -30,7 +30,7 @@
                 请正确输入姓名！
               </p>
             </div>
-          </div> -->
+          </div>
           <div class="form-group">
             <label for="user_ID">身份证号</label>
             <div class="input-box">
@@ -236,7 +236,7 @@ export default {
       // 实现input连续输入，只发一次请求
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
-        this.adjustMoney()
+        this.adjustMoney1()
         // this.money = parseInt(this.money)
         // console.log(this.money)
       }, 500)
@@ -257,18 +257,18 @@ export default {
   methods: {
     // 提交第一步
     async submitFir() {
-      // if (!this.valiName() && !this.valiIdNo()) {
-      //   this.$toast('请正确填写姓名、身份证号码')
-      //   return false
-      // }
-      if (!this.valiIdNo()) {
-        this.$toast('请正确填写身份证号码')
+      if (!this.valiName() && !this.valiIdNo()) {
+        this.$toast('请正确填写姓名、身份证号码')
         return false
       }
+      // if (!this.valiIdNo()) {
+      //   this.$toast('请正确填写身份证号码')
+      //   return false
+      // }
       try {
         const res = await toCash({
           status: this.status,
-          // name: this.name,
+          name: this.name,
           idNo: this.idNo
         })
         if (res.status_code === 200) {
@@ -409,17 +409,66 @@ export default {
       this.countDown = 0
     },
     // 调整金额
-    adjustMoney() {
-      if (!this.money) {
-        this.money === null
-        this.isActive = false
+    // adjustMoney() {
+    //   if (!this.money) {
+    //     this.money === null
+    //     this.isActive = false
+    //   } else {
+    //     this.money = Math.floor(this.money)
+    //     // 只判断是否在最大最小范围内
+    //     if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
+    //       this.isActive = true
+    //     } else {
+    //       this.isActive = false
+    //     }
+    //   }
+    // },
+    // 调整金额
+    adjustMoney1() {
+      let value = this.money.toString()
+      console.log(value, typeof value)
+
+      // 是小数
+      if (value.indexOf('.') !== -1) {
+        var str = value.split('.')
+        var intNum = str[0]
+        var floatNum = str[1]
+        if (floatNum.length > 2) {
+          floatNum = floatNum.substr(0, 2)
+          value = intNum + '.' + floatNum
+        }
+        this.money = +value
+      }
+      // 判断金额是否在范围内
+      if (this.money >= this.totalNum) {
+        this.money = this.totalNum
+        if (this.totalNum < this.MIN_MONEY) {
+          this.isActive = false
+          this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
+        } else if (
+          this.totalNum >= this.MIN_MONEY &&
+          this.totalNum <= this.MAX_MONEY
+        ) {
+          this.isActive = true
+          this.money = this.totalNum
+
+          this.cashTip = '可以提现！'
+        } else if (this.totalNum > this.MAX_MONEY) {
+          this.isActive = true
+          this.money = this.MAX_MONEY
+          this.cashTip = '可以提现！'
+        }
       } else {
-        this.money = Math.floor(this.money)
-        // 只判断是否在最大最小范围内
         if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
           this.isActive = true
-        } else {
+          this.cashTip = '可以提现！'
+        } else if (this.money > this.MAX_MONEY) {
+          this.isActive = true
+          this.money = this.MAX_MONEY
+          this.cashTip = '提现金额至多' + this.MAX_MONEY + '!'
+        } else if (this.money < this.MIN_MONEY) {
           this.isActive = false
+          this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
         }
       }
     }
