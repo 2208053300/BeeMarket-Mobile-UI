@@ -12,7 +12,7 @@
             <span>{{ user.nickname }}</span>，您好！
           </p>
           <p class="tip">
-            欢迎来到服务中心，很高兴为您服务
+            欢迎来到蜂集市客服中心，很高兴为您服务
           </p>
         </div>
       </div>
