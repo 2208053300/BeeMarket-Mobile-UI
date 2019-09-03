@@ -248,9 +248,6 @@ export default {
 
       this.$router.push({
         name: 'beeFreeGift'
-        // query: {
-        //   t: 123
-        // }
       })
     },
 
