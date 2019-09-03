@@ -150,9 +150,7 @@ export default {
           title: this.share_data.title,
           desc: this.share_data.desc,
           img_path: this.share_data.imgUrl,
-          // 地址应该放 web 站 网页
           url: this.share_data.link
-          // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(

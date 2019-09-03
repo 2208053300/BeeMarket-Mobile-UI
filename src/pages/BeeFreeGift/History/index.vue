@@ -79,7 +79,7 @@
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 import { getUID } from '@/api/BeeApi/user'
-import { getHistoryData } from '@/api/BeeApi/freeGift'
+import { getHistoryData, getShareData } from '@/api/BeeApi/freeGift'
 import DownTime from './components/DownTime'
 export default {
   metaInfo: {
@@ -117,8 +117,8 @@ export default {
       share_data: {
         title: '',
         desc: '',
-        img_path: '',
-        url: ''
+        imgUrl: '',
+        link: ''
       }
     }
   },
@@ -162,40 +162,41 @@ export default {
     },
 
     // NOTE 送给更多朋友
-    shareMore(product) {
+    async shareMore(product) {
       console.log(product)
-
+      const res = await getShareData({
+        rid: product.rid
+      })
+      this.share_data = res.data
       if (this.osObj.isWx) {
         this.showWxTip = true
         wxapi.wxShare({
-          title: product.pname,
-          desc: product.pname,
-          imgUrl: product.thumb_url,
-          link: 'http://192.168.0.90:8080/beeFreeGift#/prizeDraw?id=' + product.rid
+          title: this.share_data.title,
+          desc: this.share_data.desc,
+          imgUrl: this.share_data.imgUrl,
+          link: this.share_data.link
         })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToShare.postMessage({
-          title: product.pname,
-          desc: product.pname,
-          img_path: product.thumb_url,
-          // 地址应该放 web 站 网页
-          url: 'http://192.168.0.90:8080/beeFreeGift#/prizeDraw?id=' + product.rid
-          // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+          title: this.share_data.title,
+          desc: this.share_data.desc,
+          img_path: this.share_data.imgUrl,
+          url: this.share_data.link
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(
-          product.pname,
-          product.pname,
-          product.thumb_url,
-          'http://192.168.0.90:8080/beeFreeGift#/prizeDraw?id=' + product.rid// this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+          this.share_data.title,
+          this.share_data.desc,
+          this.share_data.imgUrl,
+          this.share_data.link,
         )
       } else {
         this.showWxTip = true
         wxapi.wxShare({
-          title: product.pname,
-          desc: product.pname,
-          imgUrl: product.thumb_url,
-          link: 'http://192.168.0.90:8080/beeFreeGift#/prizeDraw?id=' + product.rid
+          title: this.share_data.title,
+          desc: this.share_data.desc,
+          imgUrl: this.share_data.imgUrl,
+          link: this.share_data.link
         })
       }
     },
