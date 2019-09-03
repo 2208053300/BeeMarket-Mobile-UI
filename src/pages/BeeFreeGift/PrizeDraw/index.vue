@@ -260,7 +260,7 @@ export default {
       const res = await confirmOrder(
         JSON.stringify({
           os: 'general|present',
-          tid: this.tid
+          tid: this.$route.query.id
         })
       )
       if (res.status_code === 200) {
