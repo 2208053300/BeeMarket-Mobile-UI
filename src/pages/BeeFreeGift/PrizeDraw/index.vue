@@ -76,7 +76,7 @@
         </div>
         <ul
           class="men flex flex-center flex-wrap"
-          :class="{ small: detail.status === 4 }"
+          :class="{ small: [3,4,5].includes(detail.status) }"
         >
           <li
             v-for="(item, index) in detail.join_data.join_user_head_images"
