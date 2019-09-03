@@ -93,7 +93,7 @@ export default {
   props: {},
   data() {
     return {
-      title1: '测试标题',
+
       // 不显示顶部轮播导航
       showIndicators: false,
       head_msg: [],
@@ -152,7 +152,7 @@ export default {
       if (res.data.length < this.pageSize) {
         this.finished = true
       }
-      this.title1 = 'ceshi dfkdjl '
+
     },
 
     // NOTE 送礼详情

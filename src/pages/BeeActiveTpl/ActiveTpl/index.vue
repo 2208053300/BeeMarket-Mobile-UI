@@ -103,7 +103,7 @@ export default {
       // 活动标题
       activity: {
         id: '',
-        title: '加载中',
+        title: '加载中...',
         background_img: '',
         navigate_data: [],
         product_navigate: [
