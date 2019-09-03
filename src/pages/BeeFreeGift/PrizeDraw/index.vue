@@ -56,10 +56,10 @@
       <!-- 参与者 -->
       <div v-else class="participant bg-white">
         <!-- 中奖者信息 -->
-        <p v-if="detail.status === 4" class="getter-tip text-center">
+        <p v-if="[3,4].includes(detail.status)" class="getter-tip text-center">
           {{ detail.join_data.winning_desc }}
         </p>
-        <p v-if="detail.status === 4" class="time-tip  text-center">
+        <p v-if="[3,4].includes(detail.status)" class="time-tip  text-center">
           {{ detail.join_data.winning_time }}
         </p>
         <!-- 参与人数 -->
