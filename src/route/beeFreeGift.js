@@ -40,6 +40,22 @@ const router = new Router({
           component: () => import('@/pages/BeeFreeGift/ConfirmOrder')
         },
         {
+          path: 'addressSetting',
+          component: () => import('@/pages/BeeAddress'),
+          children: [
+            {
+              path: '',
+              name: 'addressManage',
+              component: () => import('@/pages/BeeAddress/AddressManage')
+            },
+            {
+              path: 'addAddress',
+              name: 'addAddress',
+              component: () => import('@/pages/BeeAddress/AddAddress')
+            }
+          ]
+        },
+        {
           path: 'fillAddress',
           name: 'fillAddress',
           component: () => import('@/pages/BeeFreeGift/AddAddress')
