@@ -67,7 +67,7 @@
           已有<span>{{ detail.join_data.join_num }}</span>人参与，<span>{{ detail.join_data.lottery_qty }}</span>人参与立即开奖
         </p>
         <!-- 中奖者头像 -->
-        <div v-if="detail.status === 4" class="getter-man">
+        <div v-if="[3,4].includes(detail.status)" class="getter-man">
           <img
             :src="detail.join_data.winning_user_head_image"
             class="getter-avatar"
