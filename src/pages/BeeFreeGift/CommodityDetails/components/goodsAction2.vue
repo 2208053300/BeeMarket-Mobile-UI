@@ -10,23 +10,21 @@
       <van-goods-action-button
         text="我要送礼"
         class="buy-now"
-        @click="showSkuPopup(index)"
+        @click="showSkuPopup()"
       />
     </van-goods-action>
 
     <!-- sku -->
-    <Sku :show-sku="showSku" :pid="pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" />
+    <Sku :show-sku="showSku" :pid="commodityData.pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" />
     <!-- 免费送礼弹窗 -->
-    <ShowGift :show-gift="showGift" :product="nowProduct" />
+    <ShowGift :show-gift="showGift" :product="nowProduct" :sid="nowProduct.s_id" />
   </div>
 </template>
 
 <script>
-// import { addShopcartProduct, security } from '@/api/BeeApi/user'
-// import { confirmOrder } from '@/api/BeeApi/order'
-// import { collectProduct, cancelCollect } from '@/api/BeeApi/product'
 import Sku from '../../components/Sku'
 import ShowGift from '../../components/ShowGift'
+
 export default {
   components: {
     Sku,
@@ -68,10 +66,10 @@ export default {
       })
     },
     // NOTE 点击立即送礼,选择sku,sku 确定获取分享数据
-    showSkuPopup(index) {
-      console.log(index, 456456456)
+    showSkuPopup() {
       this.showSku = true
-      this.nowProduct = this.products[index]
+
+      // this.nowProduct = this.products[index]
       // this.showGift = true
       console.log('立即送礼')
     }

@@ -10,7 +10,7 @@ const user = {
     have_no_read: false,
     // 1是合伙人，2冻结合伙人，0非合伙人
     userStatus: null,
-    isActiveUser: 1,
+    withdrawNum: 0,
     // 当 is_partner = 0 时，该字段有效；1表示满足申请条件，0表示不满足
     applyCondition: 0,
     is_new_user: false,
@@ -60,9 +60,6 @@ const user = {
     },
     SET_UID: (state, uid) => {
       state.uid = uid
-    },
-    SET_ISACTIVEUSER: (state, isActiveUser) => {
-      state.isActiveUser = isActiveUser
     }
   },
   actions: {
@@ -89,9 +86,9 @@ const user = {
     async GerUserStatus({ commit }) {
       const res = await isPartner()
       if (res.status_code === 200) {
-        commit('SET_USER_STATUS', res.data.is_partner)
-        commit('SET_ISACTIVEUSER', res.data.active)
-        commit('SET_USER_APPLY_CONFITION', res.data.apply_condition)
+        commit('SET_USER_STATUS', res.data.type)
+        // commit('SET_ISACTIVEUSER', res.data.active)
+        // commit('SET_USER_APPLY_CONFITION', res.data.apply_condition)
       }
     },
     async GetUid({ commit }) {

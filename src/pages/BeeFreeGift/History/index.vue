@@ -19,7 +19,12 @@
         @load="getIndexData"
       >
         <div v-for="(product, index) in products" :key="index" class="product flex flex-between">
+          <!-- 结果标志 -->
+          <img v-if="product.status===1" class="result-img" :src="icon.successImg" alt="">
+          <img v-if="product.status===-1" class="result-img" :src="icon.failImg" alt="">
+          <!-- 商品图片 -->
           <img :src="product.thumb_url" class="product-img">
+          <!-- 其他信息 -->
           <div class="product-info flex flex-column flex-between">
             <div>
               <p class="product-name">
@@ -60,9 +65,6 @@
               </van-button>
             </div>
           </div>
-          <!-- 结果标志 -->
-          <img v-if="product.status===1" class="result-img" :src="icon.successImg" alt="">
-          <img v-if="product.status===-1" class="result-img" :src="icon.failImg" alt="">
         </div>
       </van-list>
     </div>
@@ -77,11 +79,13 @@
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 import { getUID } from '@/api/BeeApi/user'
-import { getHistoryData } from '@/api/BeeApi/freeGift'
+import { getHistoryData, getShareData } from '@/api/BeeApi/freeGift'
 import DownTime from './components/DownTime'
 export default {
-  metaInfo: {
-    title: '送礼记录'
+  metaInfo() {
+    return {
+      title: '送礼记录'
+    }
   },
   components: {
     DownTime
@@ -89,12 +93,13 @@ export default {
   props: {},
   data() {
     return {
+
       // 不显示顶部轮播导航
       showIndicators: false,
       head_msg: [],
       loading: false,
       finished: false,
-      immediateCheck: false,
+      immediateCheck: true,
       products: [],
       page: 1,
       pageSize: 10,
@@ -115,8 +120,8 @@ export default {
       share_data: {
         title: '',
         desc: '',
-        img_path: '',
-        url: ''
+        imgUrl: '',
+        link: ''
       }
     }
   },
@@ -131,7 +136,7 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    this.getIndexData()
+    // this.getIndexData()
 
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare
@@ -147,6 +152,7 @@ export default {
       if (res.data.length < this.pageSize) {
         this.finished = true
       }
+
     },
 
     // NOTE 送礼详情
@@ -160,40 +166,41 @@ export default {
     },
 
     // NOTE 送给更多朋友
-    shareMore(product) {
+    async shareMore(product) {
       console.log(product)
-
+      const res = await getShareData({
+        rid: product.rid
+      })
+      this.share_data = res.data
       if (this.osObj.isWx) {
         this.showWxTip = true
         wxapi.wxShare({
-          title: product.pname,
-          desc: product.pname,
-          imgUrl: product.thumb_url,
-          link: 'http://192.168.0.90:8080/beeFreeGift#/prizeDraw?id=' + product.rid
+          title: this.share_data.title,
+          desc: this.share_data.desc,
+          imgUrl: this.share_data.imgUrl,
+          link: this.share_data.link
         })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToShare.postMessage({
-          title: product.pname,
-          desc: product.pname,
-          img_path: product.thumb_url,
-          // 地址应该放 web 站 网页
-          url: 'http://192.168.0.90:8080/beeFreeGift#/prizeDraw?id=' + product.rid
-          // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+          title: this.share_data.title,
+          desc: this.share_data.desc,
+          img_path: this.share_data.imgUrl,
+          url: this.share_data.link
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(
-          product.pname,
-          product.pname,
-          product.thumb_url,
-          'http://192.168.0.90:8080/beeFreeGift#/prizeDraw?id=' + product.rid// this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+          this.share_data.title,
+          this.share_data.desc,
+          this.share_data.imgUrl,
+          this.share_data.link,
         )
       } else {
         this.showWxTip = true
         wxapi.wxShare({
-          title: product.pname,
-          desc: product.pname,
-          imgUrl: product.thumb_url,
-          link: 'http://192.168.0.90:8080/beeFreeGift#/prizeDraw?id=' + product.rid
+          title: this.share_data.title,
+          desc: this.share_data.desc,
+          imgUrl: this.share_data.imgUrl,
+          link: this.share_data.link
         })
       }
     },

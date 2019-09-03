@@ -1,7 +1,7 @@
 <template>
   <div class="other-info">
     <van-cell-group>
-      <van-cell
+      <!-- <van-cell
         is-link
         class="other1 sku-select"
         @click="handleSku"
@@ -26,7 +26,7 @@
         <p class="cell-value">
           选择
         </p>
-      </van-cell>
+      </van-cell> -->
     </van-cell-group>
     <van-cell-group class="other1">
       <!-- <van-cell>

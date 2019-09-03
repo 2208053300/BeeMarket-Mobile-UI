@@ -46,7 +46,7 @@
         <div class="earn-tab">
           <div
             class="tab-content"
-            @click="changeEarnType('left')"
+            @click="changeEarnType(1)"
           >
             <div class="type-img">
               <img
@@ -61,7 +61,7 @@
           </div>
           <div
             class="tab-content"
-            @click="changeEarnType('right')"
+            @click="changeEarnType(2)"
           >
             <div class="type-img">
               <img
@@ -78,7 +78,7 @@
       </div>
       <div class="earn-detail">
         <div
-          v-if="earnType === 'left' && detailList.length !== 0"
+          v-if="earnType === 1 && detailList.length !== 0"
           class="detail-title"
         >
           <div class="title-img">
@@ -90,7 +90,7 @@
           <span class="title-text">增长详情</span>
         </div>
         <div
-          v-if="earnType === 'right' && detailList.length !== 0"
+          v-if="earnType === 2 && detailList.length !== 0"
           class="detail-title"
         >
           <div class="title-img">
@@ -103,27 +103,16 @@
         </div>
 
         <div
-          v-if="detailList.length !== 0"
+          v-if="!isEmpty"
           class="detail-content"
         >
           <van-list
             v-model="loading"
             :finished="finished"
-            :immediate-check="false"
+            :immediate-check="true"
+            finished-text="没有更多了"
             @load="onLoad"
           >
-            <!-- <div
-              class="detail-card"
-            >
-              <div class="info-time">
-                2019.20.20
-              </div>
-              <div class="info-text">
-                <img :src="beeIcon.bee_firends_income_icon_growingup" class="list-avatar">
-                fdsff1d21f3d1f3ds
-              </div>
-              <div class="circle" />
-            </div> -->
             <div
               v-for="(item, index) in detailList"
               :key="index"
@@ -151,8 +140,9 @@
             我们只记录自然年的公益值收益
           </div>
         </div>
+        <!-- v-else -->
         <div
-          v-else
+          v-if="isEmpty"
           class="empty-img text-center"
         >
           <img
@@ -177,7 +167,7 @@
 </template>
 
 <script>
-import { getWithdrawNum, getMyEarning } from '@/api/BeeApi/user'
+import { getMyEarning, getMyEarningList } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 export default {
   metaInfo: {
@@ -194,14 +184,16 @@ export default {
         bee_firends_gold_add: require('@/assets/icon/beeFriends/info/bee_firends_gold_add.png'),
         emptyImg: require('@/assets/icon/public/empty.png')
       },
-      earnType: 'left',
+      // 类型 1在路上（默认为1） 2已到账
+      earnType: 1,
       page: 1,
       detailData: {},
+      // 收益记录
       detailList: [],
-      // 在路上的收益
-      roadList: [],
-      // 已获得收益
-      gotList: [],
+      // 总页数
+      totalPages: 0,
+      // 是否没有数据记录
+      isEmpty: false,
       loading: false,
       osObj: getOs(),
       finished: false,
@@ -216,8 +208,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getMyEarningData()
-    // 获取余额数
-    this.getWithdrawNumData()
+
     // FIXME ios bug暂时无解
     try {
       this.page = 1
@@ -234,8 +225,9 @@ export default {
     }
   },
   methods: {
+    // 收益顶部信息
     async getMyEarningData() {
-      this.loading = true
+      // this.loading = true
       const res = await getMyEarning({
         type: this.earnType,
         page: this.page
@@ -243,72 +235,64 @@ export default {
       console.log('我的收益：', res)
 
       this.detailData = res.data
-      this.roadList = this.detailData.road_record
-      this.gotList = this.detailData.get_record
-      this.finished = true
-      this.loading = false
-      if (this.earnType === 'left') {
-        this.detailList = this.roadList
-      } else {
-        this.detailList = this.gotList
-        // if (this.detailList.length === res.data.record.total_num) {
-        //   this.finished = true
-        // } else {
-        //   this.finished = false
-        // }
-      }
-      this.page = 2
+      // this.loading = false
+    },
+    // 收益记录
+    async getEarningList() {
+      const res = await getMyEarningList(
+        {
+          type: this.earnType,
+          page: this.page
+        }
+      )
+      this.totalPages = res.data.page_size
+      this.detailList = res.data.lists
     },
     // 切换在路上 已得到
     changeEarnType(type) {
       this.earnType = type
       this.page = 1
-      this.finished = true
-      if (this.earnType === 'left') {
-        this.detailList = this.roadList
-      } else {
-        this.detailList = this.gotList
-      }
-      // this.getMyEarningData()
-      // this.detailList = this.detailData.get_record
+      this.detailList = []
+      this.onLoad()
     },
+    // 加载列表
     onLoad() {
       // 异步更新数据
       setTimeout(async() => {
-        const res = await getMyEarning({
+        const res = await getMyEarningList({
           type: this.earnType,
           page: this.page
         })
+
         this.page++
-        // this.detailList.push(...res.data.record.list)
-        this.roadList.push(...res.data.road_record)
-        this.gotList.push(...res.data.get_record)
+        this.totalPages = res.data.page_size
+        this.detailList.push(...res.data.lists)
+        if (this.detailList.length === 0) {
+          this.isEmpty = true
+        } else {
+          this.isEmpty = false
+        }
         this.loading = false
-        // if (this.detailList.length === res.data.record.total_num) {
-        this.finished = true
-        // }
+        console.log('this.page,this.totalPages', this.page, this.totalPages)
+        if (this.page > this.totalPages) {
+          console.log('stop')
+
+          this.finished = true
+        }
       }, 500)
     },
 
     // 我要提现
     toCash() {
-      if (!this.$store.state.user.isActiveUser) {
-        this.$toast('用户合伙人身份未激活！')
-        return
-      }
-      if (this.withdrawNum < 100) {
+      if (this.$store.state.user.withdrawNum < 100) {
         this.$toast('可提现余额不足100元！')
         return
       }
       this.$router.push({
         name: 'friendPay'
       })
-    },
-    // 获取余额数
-    async getWithdrawNumData() {
-      const res = await getWithdrawNum()
-      this.withdrawNum = Number(res.data.sup_balance)
     }
+
   }
 }
 </script>

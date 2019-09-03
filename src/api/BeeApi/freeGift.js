@@ -17,10 +17,18 @@ export function postSku(data) {
     data
   })
 }
-// NOTE 获取分享数据
+// NOTE 根据 sku_id 获取分享数据
 export function freeGiftInvite(data) {
   return request({
     url: '/present/invite',
+    method: 'post',
+    data
+  })
+}
+// NOTE 根据 送礼记录 id 获取分享数据
+export function getShareData(data) {
+  return request({
+    url: '/present/share',
     method: 'post',
     data
   })

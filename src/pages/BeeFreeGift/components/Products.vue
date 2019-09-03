@@ -6,16 +6,16 @@
     <van-list
       v-model="loading"
       :finished="finished"
-      :immediate-check="false"
+      :immediate-check="immediateCheck"
       finished-text="我也是有底线的 o(´^｀)o"
       @load="getIndexData"
     >
       <div class="flex flex-between flex-wrap">
         <div v-for="(product, index) in products" :key="index" class="product flex flex-column">
-          <img :src="product.tUrl" class="product-img" @click="showDetail()">
+          <img :src="product.tUrl" class="product-img" @click="showDetail(product.pid,product.target)">
           <div class="product-info flex flex-column flex-between">
             <div>
-              <p class="product-name no-wrap" @click="showDetail()">
+              <p class="product-name no-wrap" @click="showDetail(product.pid,product.target)">
                 {{ product.pname }}
               </p>
             </div>
@@ -23,7 +23,7 @@
               <p class="product-price">
                 <span class="sell-price">￥{{ product.sell_price }}</span>
               </p>
-              <van-button round size="mini" @click="showSkuPopup(index)">
+              <van-button round size="mini" @click="showSkuPopup(index,product.pid)">
                 免费送礼
               </van-button>
             </div>
@@ -33,7 +33,7 @@
     </van-list>
 
     <!-- 免费送礼弹窗 -->
-    <ShowGift :show-gift="showGift" :product="nowProduct" />
+    <ShowGift :show-gift="showGift" :product="nowProduct" :sid="nowProduct.s_id" />
 
     <!-- sku -->
     <Sku :show-sku="showSku" :pid="pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" />
@@ -59,6 +59,7 @@ export default {
       },
       loading: false,
       finished: false,
+      immediateCheck: true,
       products: [],
       page: 1,
       pageSize: 10,
@@ -73,6 +74,7 @@ export default {
       propsId: [],
       pNumber: 0,
       limitNum: 0
+
     }
   },
   computed: {
@@ -85,12 +87,15 @@ export default {
 
   },
   mounted() {
-    this.getIndexData()
+    // this.getIndexData()
   },
   methods: {
     // 获取商品数据
     async getIndexData() {
-      const res = await getIndexData()
+      const res = await getIndexData({
+        page: this.page,
+        pageSize: this.pageSize
+      })
       this.page++
       this.loading = false
       this.products.push(...res.data)
@@ -100,9 +105,9 @@ export default {
     },
 
     // NOTE 点击立即送礼,选择sku,sku 确定获取分享数据
-    showSkuPopup(index) {
+    showSkuPopup(index, pid) {
       console.log(index, 456456456)
-
+      this.pid = pid
       this.showSku = true
 
       this.nowProduct = this.products[index]
@@ -111,12 +116,12 @@ export default {
     },
 
     // NOTE 跳转到商品详情
-    showDetail() {
+    showDetail(pid, target) {
       this.$router.push({
         path: '/detail',
         query: {
-          pid: 16934,
-          target: 'general'
+          pid,
+          target
         }
       })
     }
