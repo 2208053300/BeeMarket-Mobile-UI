@@ -270,7 +270,7 @@ export default {
           name: 'confirmOrder',
           query: {
             target: 'general|present',
-            tid: this.$route.query.id
+            sid: this.$route.query.id
           }
         })
       }

@@ -124,12 +124,13 @@ export default {
       // TODO 缺少农副产品和限量蜂抢字段获取
       const res = await createOrder(
         JSON.stringify({
-          tid: this.$route.query.tid,
+          sid: this.$route.query.sid,
           addr_id: this.order.addrDetail.addr_id,
           stores: storeData,
           charity_used: this.charity_used,
           anonymous: this.anonymous,
-          os: this.$route.query.target || 'general',
+          // os: this.$route.query.target || 'general',
+          os: 'general|present',
           // 此处暂时无赠送好友ot不变
           ot: 'general'
         })
