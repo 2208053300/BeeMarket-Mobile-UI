@@ -28,7 +28,7 @@ export function freeGiftInvite(data) {
 // NOTE 根据 送礼记录 id 获取分享数据
 export function getShareData(data) {
   return request({
-    url: '/present/invite',
+    url: '/present/share',
     method: 'post',
     data
   })
