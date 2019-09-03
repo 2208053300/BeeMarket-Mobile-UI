@@ -453,7 +453,7 @@ export default {
    .tip{font-size: .26rem; color: #fff; margin-bottom: 0.54rem;}
    .remark{width: 5.18rem; height: 1.23rem; font-size: .28rem;color: @BeeDefault; line-height: 1.7;
     padding:0 .5rem ;
-    margin: 0 auto .88rem;
+    margin: 0 auto .58rem;
     box-sizing: border-box;
     background: url(../../../assets/icon/freeGift/freegift_details_img_text_small_bg.png) no-repeat;
     background-size: 5.18rem 1.23rem;
