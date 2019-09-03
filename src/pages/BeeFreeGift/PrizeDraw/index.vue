@@ -139,8 +139,10 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
+import wxapi from '@/utils/wxapi'
 import { confirmOrder } from '@/api/BeeApi/order'
-import { linkData, participate, getDetail } from '@/api/BeeApi/freeGift'
+import { linkData, participate, getDetail, getShareData } from '@/api/BeeApi/freeGift'
 
 import Products from '../components/Products'
 export default {
@@ -168,7 +170,15 @@ export default {
       closeOnClickOverlay: false,
 
       linkData: {},
-
+      // 获取 os 平台
+      osObj: getOs(),
+      // 分享数据
+      share_data: {
+        title: '',
+        desc: '',
+        imgUrl: '',
+        link: ''
+      },
       // 开奖详情
       detail: {
         top_data: {
@@ -197,6 +207,8 @@ export default {
         // is_show 是否显示抽奖弹窗 1 显示 0 隐藏
         if (this.linkData.is_show === 0) {
           this.closePop()
+
+          this.shareMore()
         }
       } catch (error) {
         console.log(error)
@@ -271,26 +283,6 @@ export default {
           }
         })
       }
-      // TODO 跳转下单 参考普通商品下单
-      // const res1 = await confirmOrder(
-      //   JSON.stringify({
-      //     product: {
-      //       sid: this.$store.state.cart.skuId,
-      //       number: this.$store.state.cart.pNumber
-      //     },
-      //     os: this.$route.query.target || 'general'
-      //   })
-      // )
-      // if (res1.status_code === 200) {
-      //   this.$store.state.order.orderDetail = res1.data
-      //   this.$store.state.order.addrDetail = res1.data.addr
-      //   this.$router.push({
-      //     name: 'confirmOrder',
-      //     query: {
-      //       target: this.$route.query.target || 'general'
-      //     }
-      //   })
-      // }
     },
 
     // 显示/隐藏更多参与者头像
@@ -300,6 +292,44 @@ export default {
         this.showMen = this.men
       } else {
         this.showMen = 15
+      }
+    },
+    // NOTE 送给更多朋友
+    async shareMore() {
+      const res = await getShareData({
+        rid: this.$route.query.id
+      })
+      this.share_data = res.data
+      if (this.osObj.isWx) {
+        this.showWxTip = true
+        wxapi.wxShare({
+          title: this.share_data.title,
+          desc: this.share_data.desc,
+          imgUrl: this.share_data.imgUrl,
+          link: this.share_data.link
+        })
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToShare.postMessage({
+          title: this.share_data.title,
+          desc: this.share_data.desc,
+          img_path: this.share_data.imgUrl,
+          url: this.share_data.link
+        })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToShare(
+          this.share_data.title,
+          this.share_data.desc,
+          this.share_data.imgUrl,
+          this.share_data.link,
+        )
+      } else {
+        this.showWxTip = true
+        wxapi.wxShare({
+          title: this.share_data.title,
+          desc: this.share_data.desc,
+          imgUrl: this.share_data.imgUrl,
+          link: this.share_data.link
+        })
       }
     }
   }
