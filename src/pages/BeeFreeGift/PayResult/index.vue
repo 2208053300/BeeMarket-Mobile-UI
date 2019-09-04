@@ -6,7 +6,7 @@
       领取成功
     </p>
     <p class="val text-center">
-      您已成功领取小贾送出的礼物<br>
+      您已成功领取{{ name }}送出的礼物<br>
       平台将立即安排发货
     </p>
 
@@ -25,7 +25,8 @@ export default {
   props: {},
   data() {
     return {
-      successImg: require('@/assets/icon/common/wechat_order_gift_img_success.png')
+      successImg: require('@/assets/icon/common/wechat_order_gift_img_success.png'),
+      name: this.$route.query.name
     }
   },
   computed: {},
@@ -39,7 +40,6 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    alert('trade_no:', this.$route.query.trade_no)
   },
   methods: {
     // 进入免费送礼首页

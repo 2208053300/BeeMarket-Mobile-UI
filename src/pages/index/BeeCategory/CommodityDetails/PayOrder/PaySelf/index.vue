@@ -317,12 +317,9 @@ export default {
     // 查看付款结果
     toResult(url) {
       if (url) {
-        alert(url)
         window.location.href = url
       } else {
-        alert('没有url')
         if (this.payMethod === 'wxpay') {
-          alert('微信支付回调')
           orderVerify({
             pay_method: this.payMethod,
             trade_no: this.order.payInfo.trade_no
@@ -335,7 +332,6 @@ export default {
             })
           })
         } else {
-          alert('余额支付回调')
           this.$router.replace({
             name: 'payResult',
             query: {
