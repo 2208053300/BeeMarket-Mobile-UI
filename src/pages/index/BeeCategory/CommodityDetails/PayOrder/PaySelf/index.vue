@@ -254,7 +254,7 @@ export default {
       try {
         res = await orderPay({
           trade_no: this.order.payInfo.trade_no,
-          pay_method: 'wxpay',
+          pay_method: 'wxpay', // blpay
           pay_type: 'JSAPI',
           code: code
         })
@@ -316,16 +316,25 @@ export default {
     },
     // 查看付款结果
     toResult() {
-      orderVerify({
-        pay_method: this.payMethod,
-        trade_no: this.order.payInfo.trade_no
-      }).then(res => {})
-      this.$router.replace({
-        name: 'payResult',
-        query: {
+      if (this.payMethod === 'wxpay') {
+        orderVerify({
+          pay_method: this.payMethod,
           trade_no: this.order.payInfo.trade_no
-        }
-      })
+        }).then(res => {})
+        this.$router.replace({
+          name: 'payResult',
+          query: {
+            trade_no: this.order.payInfo.trade_no
+          }
+        })
+      } else {
+        this.$router.replace({
+          name: 'payResult',
+          query: {
+            trade_no: this.order.payInfo.trade_no
+          }
+        })
+      }
     }
   }
 }

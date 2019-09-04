@@ -40,6 +40,11 @@ const router = new Router({
           component: () => import('@/pages/BeeFreeGift/ConfirmOrder')
         },
         {
+          path: 'payResult',
+          name: 'payResult',
+          component: () => import('@/pages/BeeFreeGift/PayResult')
+        },
+        {
           path: 'addressSetting',
           component: () => import('@/pages/BeeAddress'),
           children: [
