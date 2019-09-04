@@ -418,21 +418,21 @@ export default {
           desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
           imgUrl:
             'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
-          link: `http://app.fengjishi.com/beeRegister#/?uid=${this.uid}`
+          link: `https://app.fengjishi.com/beeRegister#/?uid=${this.uid}`
         })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToShare.postMessage({
           title: '蜂集市-蜂友圈',
           desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
           img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
-          url: `http://app.fengjishi.com/beeRegister#/?uid=${this.uid}`
+          url: `https://app.fengjishi.com/beeRegister#/?uid=${this.uid}`
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(
           '蜂集市-蜂友圈',
           '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
           'https://img.fengjishi.com/app/images/share_logo.jpg',
-          `http://app.fengjishi.com/beeRegister#/?uid=${this.uid}`
+          `https://app.fengjishi.com/beeRegister#/?uid=${this.uid}`
         )
       } else {
         this.$toast('请使用微信访问后分享！')

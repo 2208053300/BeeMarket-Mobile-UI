@@ -87,13 +87,13 @@ export default {
       const osObj = getOs()
       if (osObj.isWx) {
         // 微信直接跳转路由
-        window.location.href = 'http://app.fengjishi.com/#/beeTask'
+        window.location.href = 'https://app.fengjishi.com/#/beeTask'
       } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToCatList.postMessage(1)
       } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToCatList()
       } else {
-        window.location.href = 'http://app.fengjishi.com/#/beeTask'
+        window.location.href = 'https://app.fengjishi.com/#/beeTask'
       }
     }
   }
