@@ -253,7 +253,10 @@
             </div>
           </van-list>
         </div>
-        <div class="btn-content">
+        <div
+          v-if="osObj.isApp"
+          class="btn-content"
+        >
           <van-button
             class="fast-invite"
             @click="fastInvite"
