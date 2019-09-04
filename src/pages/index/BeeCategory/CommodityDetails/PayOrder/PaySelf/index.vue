@@ -254,7 +254,7 @@ export default {
       try {
         res = await orderPay({
           trade_no: this.order.payInfo.trade_no,
-          pay_method: 'wxpay', // blpay
+          pay_method: 'wxpay',
           pay_type: 'JSAPI',
           code: code
         })
@@ -320,12 +320,13 @@ export default {
         orderVerify({
           pay_method: this.payMethod,
           trade_no: this.order.payInfo.trade_no
-        }).then(res => {})
-        this.$router.replace({
-          name: 'payResult',
-          query: {
-            trade_no: this.order.payInfo.trade_no
-          }
+        }).then(res => {
+          this.$router.replace({
+            name: 'payResult',
+            query: {
+              trade_no: this.order.payInfo.trade_no
+            }
+          })
         })
       } else {
         this.$router.replace({
@@ -335,6 +336,17 @@ export default {
           }
         })
       }
+
+      // orderVerify({
+      //   pay_method: this.payMethod,
+      //   trade_no: this.order.payInfo.trade_no
+      // }).then(res => {})
+      // this.$router.replace({
+      //   name: 'payResult',
+      //   query: {
+      //     trade_no: this.order.payInfo.trade_no
+      //   }
+      // })
     }
   }
 }
