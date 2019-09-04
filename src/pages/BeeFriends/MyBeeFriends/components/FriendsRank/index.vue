@@ -17,7 +17,7 @@
               class="tab-img"
             />
             <div class="type-num">
-              蜂友：<span class="num">{{ friendsData.count||0 }} </span>个
+              <span class="red-text">直接</span>蜂友：<span class="num">{{ friendsData.count||0 }} </span>个
             </div>
           </div>
           <div class="type-tab">
@@ -528,6 +528,9 @@ export default {
             display: inline-block;
             .num {
               color: @BeeDefault3;
+            }
+            .red-text{
+              color: @Red1;
             }
           }
         }

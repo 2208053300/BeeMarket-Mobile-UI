@@ -68,6 +68,8 @@
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
 import { getActionList } from '@/api/BeeApi/action'
+import wxapi from '@/utils/wxapi'
+import { getUID } from '@/api/BeeApi/user'
 
 export default {
   components: {},
@@ -98,6 +100,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getActionListData()
+    this.loadUID()
   },
   methods: {
     async getActionListData() {
@@ -122,6 +125,21 @@ export default {
           this.finished = true
         }
       }, 500)
+    },
+    async loadUID() {
+      try {
+        const res = await getUID()
+        this.uid = res.data.uid
+        wxapi.wxShare({
+          title: '蜂集市-助力公益',
+          desc: '就差你了，加入蜂集市，一起助力公益',
+          imgUrl:
+            'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+          link: `http://app.fengjishi.com/beeRegister#/?uid=${this.uid}`
+        })
+      } catch (error) {
+        this.$toast(error)
+      }
     }
   }
 }
@@ -188,8 +206,8 @@ export default {
         text-align: right;
       }
     }
-    .noSchedule{
-      margin-top:0.4rem;
+    .noSchedule {
+      margin-top: 0.4rem;
       justify-content: flex-end;
     }
   }

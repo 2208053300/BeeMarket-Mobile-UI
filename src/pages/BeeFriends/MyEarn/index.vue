@@ -136,9 +136,6 @@
               <div class="circle" />
             </div>
           </van-list>
-          <div class="bottom-text">
-            我们只记录自然年的公益值收益
-          </div>
         </div>
         <!-- v-else -->
         <div
@@ -449,13 +446,6 @@ export default {
           top: 0.6rem;
         }
       }
-    }
-    .bottom-text {
-      position: absolute;
-      bottom: 0.5rem;
-      left: 2.2rem;
-      font-size: 0.22rem;
-      color: @Grey1;
     }
   }
   .list-avatar {
