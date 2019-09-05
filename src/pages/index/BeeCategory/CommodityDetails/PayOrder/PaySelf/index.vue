@@ -315,24 +315,24 @@ export default {
       // })
     },
     // 查看付款结果
-    toResult(url = '') {
-      alert('支付成功结果，', url)
-      alert('支付方式', this.payMethod)
-      alert('trade_no：', this.order.payInfo.trade_no)
-      if (url.length > 0) {
-        alert('有url：', url)
-        window.location.href = url
+    toResult(data) {
+      alert('支付成功结果，', data.url)
+      alert('支付方式', data.pay_method)
+      alert('trade_no：', data.trade_no)
+      if (data.url.length > 0) {
+        alert('有url：', data.url)
+        window.location.href = data.url
       } else {
-        alert('没有url')
-        orderVerify({
-          pay_method: this.payMethod,
-          trade_no: this.order.payInfo.trade_no
-        }).then(res => {})
-
+        if (data.pay_method === 'wxPay') {
+          orderVerify({
+            pay_method: this.payMethod,
+            trade_no: this.order.payInfo.trade_no
+          }).then(res => {})
+        }
         this.$router.replace({
           name: 'payResult',
           query: {
-            trade_no: this.order.payInfo.trade_no
+            trade_no: data.trade_no
           }
         })
       }
