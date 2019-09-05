@@ -316,6 +316,7 @@ export default {
     },
     // 查看付款结果
     toResult(url) {
+      alert('支付成功结果，', url)
       if (url) {
         alert('有url：', url)
         window.location.href = url
