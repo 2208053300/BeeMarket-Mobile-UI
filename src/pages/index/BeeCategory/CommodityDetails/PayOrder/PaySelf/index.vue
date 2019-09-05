@@ -315,9 +315,9 @@ export default {
       // })
     },
     // 查看付款结果
-    toResult(url) {
+    toResult(url = '') {
       alert('支付成功结果，', url)
-      if (url) {
+      if (url.length > 0) {
         alert('有url：', url)
         window.location.href = url
       } else {
