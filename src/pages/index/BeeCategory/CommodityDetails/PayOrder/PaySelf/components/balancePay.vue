@@ -100,7 +100,7 @@ export default {
           if (res.data.extra_url) {
             this.$emit('success', res.data.extra_url) // 发出支付成功事件
           } else {
-            this.$emit('success') // 发出支付成功事件
+            this.$emit('success', '') // 发出支付成功事件
           }
           this.isShow = false
         }
