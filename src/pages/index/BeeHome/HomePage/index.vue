@@ -56,7 +56,7 @@ import farmProduct from './components/farmProduct'
 import actionList from './components/actionList'
 import guessLike from './components/guessLike'
 import actionPop from './components/actionPop'
-import { isLogin } from '@/utils/auth'
+import { isLogin, checkToken } from '@/utils/auth'
 import wxapi from '@/utils/wxapi'
 import { getOs } from '@/utils'
 export default {
@@ -169,6 +169,9 @@ export default {
     // 获取uid
     async loadUID() {
       const res = await getUID()
+      if (!res.data.uid) {
+        await checkToken()
+      }
       this.uid = res.data.uid
     },
     // 拼接链接
