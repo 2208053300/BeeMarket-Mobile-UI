@@ -30,6 +30,7 @@ export async function getToken() {
       const res = await auditWechat({ code: uriProp, uid: uid })
       // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
       if (res.status_code !== 200 || Cookies.get('BM-App-Token') === 'waiting') {
+        Cookies.set('BM-App-Token', '')
         await checkToken()
       }
     }
