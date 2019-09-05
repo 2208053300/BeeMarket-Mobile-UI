@@ -322,10 +322,10 @@ export default {
         alert('有url：', url)
         window.location.href = url
       } else {
-        orderVerify({
-          pay_method: this.payMethod,
-          trade_no: this.order.payInfo.trade_no
-        }).then(res => {})
+        // orderVerify({
+        //   pay_method: this.payMethod,
+        //   trade_no: this.order.payInfo.trade_no
+        // }).then(res => {})
         this.$router.replace({
           name: 'payResult',
           query: {
