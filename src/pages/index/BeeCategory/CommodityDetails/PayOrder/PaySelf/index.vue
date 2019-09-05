@@ -317,6 +317,8 @@ export default {
     // 查看付款结果
     toResult(url = '') {
       alert('支付成功结果，', url)
+      alert('支付方式', this.payMethod)
+      return
       if (url.length > 0) {
         alert('有url：', url)
         window.location.href = url
