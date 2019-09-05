@@ -2,6 +2,7 @@ import { getOs } from '@/utils'
 import Cookies from 'js-cookie'
 import { auditWechat } from '@/api/BeeApi/auth'
 import { GetRequest, getQueryString } from '@/utils/index'
+import wait from '@/utils/wait'
 
 // SECTION 获取Token
 export async function getToken() {
@@ -16,14 +17,15 @@ export async function getToken() {
     // 如果微信链接带CODE
     const uriProp = GetRequest('code')
     const uid = getQueryString('uid')
-    if (!uriProp && (token === null || token === undefined)) {
+    if (!uriProp && !token) {
       await checkToken()
     }
     // 正常流程，直接返回token
-    if (token && token !== 'waiting') {
+    if (token || token === 'waiting') {
       return token
-      // 正常授权流程，直接跳转获取token
-    } else if (uriProp && token !== 'waiting') {
+    }
+    // 正常授权流程，直接跳转获取token
+    if (uriProp && token !== 'waiting') {
       Cookies.set('BM-App-Token', 'waiting')
       await auditWechat({ code: uriProp, uid: uid })
       // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
@@ -74,6 +76,7 @@ export function checkToken() {
     //   module.default.replace('/login')
     // })
   }
+  wait(3000)
 }
 // 设置Token
 export function setToken(Token) {
