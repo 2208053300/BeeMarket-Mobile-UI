@@ -317,6 +317,7 @@ export default {
     // 查看付款结果
     toResult(url) {
       if (url) {
+        alert('有url：', url)
         window.location.href = url
       } else {
         if (this.payMethod === 'wxpay') {
