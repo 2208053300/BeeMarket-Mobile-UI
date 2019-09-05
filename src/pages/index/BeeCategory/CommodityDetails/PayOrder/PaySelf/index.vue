@@ -318,30 +318,20 @@ export default {
 
     // 查看付款结果
     toResult(url) {
-      this.$dialog.alert({
-        message: this.order.payInfo
-      })
-      try {
-        if (url.length > 0) {
-          window.location.href = url
-        } else {
-          if (this.payMethod === 'wxPay') {
-            orderVerify({
-              pay_method: this.payMethod,
-              trade_no: this.order.payInfo.trade_no
-            }).then(res => {})
-          }
-          this.$router.replace({
-            name: 'payResult',
-            query: {
-              trade_no: this.order.payInfo.trade_no
-            }
-          })
+      if (url.length > 0) {
+        window.location.href = url
+      } else {
+        if (this.payMethod === 'wxPay') {
+          orderVerify({
+            pay_method: this.payMethod,
+            trade_no: this.order.payInfo.trade_no
+          }).then(res => {})
         }
-      } catch (error) {
-        alert('出错啦')
-        this.$dialog.alert({
-          message: error
+        this.$router.replace({
+          name: 'payResult',
+          query: {
+            trade_no: this.order.payInfo.trade_no
+          }
         })
       }
 
