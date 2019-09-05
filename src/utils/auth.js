@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 import { auditWechat } from '@/api/BeeApi/auth'
 import { GetRequest, getQueryString } from '@/utils/index'
 
+let isReload = false
 // SECTION 获取Token
 export async function getToken() {
   const osObj = getOs()
@@ -24,7 +25,7 @@ export async function getToken() {
       return token
     }
     // 正常授权流程，直接跳转获取token
-    if (uriProp && token !== 'waiting') {
+    if (uriProp && token !== 'waiting' && !isReload) {
       Cookies.set('BM-App-Token', 'waiting')
       const res = await auditWechat({ code: uriProp, uid: uid })
       // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
@@ -37,6 +38,7 @@ export async function getToken() {
 }
 // REVIEW 此处判断用户登录情况
 export function checkToken() {
+  isReload = true
   // 如果是微信，并且没有本地Token，则直接拼接跳转获取token
   const osObj = getOs()
   if (osObj.isWx) {
