@@ -320,6 +320,8 @@ export default {
 
     // 查看付款结果
     toResult(url = '') {
+      alert('trade_no', this.order.payInfo.trade_no)
+      return
       if (url.length > 0) {
         window.location.href = url
       } else {
