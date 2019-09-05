@@ -153,7 +153,11 @@ export default {
         confirmorder_pay_icon_overage_disabled: require('@/assets/icon/order/confirmorder_pay_icon_overage_disabled@2x.png')
       },
       timer: '',
-      payMethod: ''
+      payMethod: '',
+      // 测试添加的数据
+      order: {
+        payInfo: {}
+      }
     }
   },
   computed: {
@@ -316,7 +320,7 @@ export default {
     },
     toResult() {
       alert('支付方式：', this.payMethod)
-      alert('支付信息', this.order.payInfo)
+      alert('支付信息', this.order.payInfo.trade_no)
     },
     // 查看付款结果
     toResult1(data) {
