@@ -316,37 +316,16 @@ export default {
     },
     // 查看付款结果
     toResult() {
-      if (this.payMethod === 'wxpay') {
-        orderVerify({
-          pay_method: this.payMethod,
+      orderVerify({
+        pay_method: this.payMethod,
+        trade_no: this.order.payInfo.trade_no
+      }).then(res => {})
+      this.$router.replace({
+        name: 'payResult',
+        query: {
           trade_no: this.order.payInfo.trade_no
-        }).then(res => {
-          this.$router.replace({
-            name: 'payResult',
-            query: {
-              trade_no: this.order.payInfo.trade_no
-            }
-          })
-        })
-      } else {
-        this.$router.replace({
-          name: 'payResult',
-          query: {
-            trade_no: this.order.payInfo.trade_no
-          }
-        })
-      }
-
-      // orderVerify({
-      //   pay_method: this.payMethod,
-      //   trade_no: this.order.payInfo.trade_no
-      // }).then(res => {})
-      // this.$router.replace({
-      //   name: 'payResult',
-      //   query: {
-      //     trade_no: this.order.payInfo.trade_no
-      //   }
-      // })
+        }
+      })
     }
   }
 }
