@@ -314,8 +314,12 @@ export default {
       //   }
       // })
     },
+    toResult() {
+      alert('支付方式：', this.payMethod)
+      alert('支付信息', this.order.payInfo)
+    },
     // 查看付款结果
-    toResult(data) {
+    toResult1(data) {
       alert('支付成功结果，', data.url)
       alert('支付方式', data.pay_method)
       alert('trade_no：', data.trade_no)
