@@ -56,7 +56,7 @@ import farmProduct from './components/farmProduct'
 import actionList from './components/actionList'
 import guessLike from './components/guessLike'
 import actionPop from './components/actionPop'
-import { isLogin, checkToken } from '@/utils/auth'
+import { isLogin } from '@/utils/auth'
 import wxapi from '@/utils/wxapi'
 import { getOs } from '@/utils'
 export default {
@@ -138,25 +138,15 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
+    this.loadUID()
     this.getHomeData()
-    wxapi.wxRegister(this.wxRegCallback)
     // 获取用户消息
     this.$store.dispatch('GerUserMsg')
-    this.loadUID()
   },
   methods: {
     async getHomeData() {
       const res = await getHome()
       this.homeData = res.data
-      if (this.osObj.isWx) {
-        wxapi.wxShare({
-          title: '蜂集市',
-          desc: '蜂集市，让生活蜂富起来！',
-          imgUrl:
-            'https://img.fengjishi.com/app/images/share_logo.jpg',
-          link: this.getShareLink()
-        })
-      }
     },
     // 跳转到需要登录的路由
     async authRoute(path) {
@@ -169,10 +159,16 @@ export default {
     // 获取uid
     async loadUID() {
       const res = await getUID()
-      if (!res.data.uid) {
-        await checkToken()
-      }
       this.uid = res.data.uid
+      if (this.osObj.isWx) {
+        wxapi.wxShare({
+          title: '蜂集市',
+          desc: '蜂集市，让生活蜂富起来！',
+          imgUrl:
+            'https://img.fengjishi.com/app/images/share_logo.jpg',
+          link: this.getShareLink()
+        })
+      }
     },
     // 拼接链接
     getShareLink() {
