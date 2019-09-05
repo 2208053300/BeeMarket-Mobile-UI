@@ -315,15 +315,15 @@ export default {
       // })
     },
     // 查看付款结果
-    toResult(data = {}) {
+    toResult(data) {
       alert('支付成功结果，', data.url)
-      alert('支付方式', data.payMethod)
+      alert('支付方式', data.pay_method)
       alert('trade_no：', data.trade_no)
       if (data.url.length > 0) {
         alert('有url：', data.url)
         window.location.href = data.url
       } else {
-        if (data.payMethod === 'wxPay') {
+        if (data.pay_method === 'wxPay') {
           orderVerify({
             pay_method: this.payMethod,
             trade_no: this.order.payInfo.trade_no

@@ -97,6 +97,9 @@ export default {
           paypwd: this.password
         })
         if (res.status_code === 200) {
+          alert(this.payInfo.trade_no)
+          alert('blpay')
+          alert(res.data.extra_url)
           if (res.data.extra_url) {
             this.$emit('success', { url: res.data.extra_url, trade_no: this.payInfo.trade_no, pay_method: 'blpay' }) // 发出支付成功事件
           } else {
