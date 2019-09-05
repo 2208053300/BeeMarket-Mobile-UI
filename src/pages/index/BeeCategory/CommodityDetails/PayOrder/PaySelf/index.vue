@@ -1,5 +1,8 @@
 <template>
   <div class="pay-order">
+    <p>{{ payMethod }}</p>
+    <p>{{ order.payInfo }}</p>
+
     <div class="pay-header">
       <div class="header-title">
         <span>剩余支付时间</span>
@@ -153,11 +156,7 @@ export default {
         confirmorder_pay_icon_overage_disabled: require('@/assets/icon/order/confirmorder_pay_icon_overage_disabled@2x.png')
       },
       timer: '',
-      payMethod: '',
-      // 测试添加的数据
-      order: {
-        payInfo: {}
-      }
+      payMethod: ''
     }
   },
   computed: {
@@ -318,20 +317,13 @@ export default {
       //   }
       // })
     },
-    toResult() {
-      alert('支付方式：', this.payMethod)
-      alert('支付信息', this.order.payInfo.trade_no)
-    },
+
     // 查看付款结果
-    toResult1(data) {
-      alert('支付成功结果，', data.url)
-      alert('支付方式', data.pay_method)
-      alert('trade_no：', data.trade_no)
-      if (data.url.length > 0) {
-        alert('有url：', data.url)
-        window.location.href = data.url
+    toResult(url = '') {
+      if (url.length > 0) {
+        window.location.href = url
       } else {
-        if (data.pay_method === 'wxPay') {
+        if (this.payMethod === 'wxPay') {
           orderVerify({
             pay_method: this.payMethod,
             trade_no: this.order.payInfo.trade_no
@@ -340,7 +332,7 @@ export default {
         this.$router.replace({
           name: 'payResult',
           query: {
-            trade_no: data.trade_no
+            trade_no: this.order.payInfo.trade_no
           }
         })
       }
