@@ -318,16 +318,16 @@ export default {
     toResult(url = '') {
       alert('支付成功结果，', url)
       alert('支付方式', this.payMethod)
+      alert('trade_no：', this.order.payInfo.trade_no)
       if (url.length > 0) {
         alert('有url：', url)
         window.location.href = url
       } else {
         alert('没有url')
-        alert('trade_no：', this.order.payInfo.trade_no)
-        // orderVerify({
-        //   pay_method: this.payMethod,
-        //   trade_no: this.order.payInfo.trade_no
-        // }).then(res => {})
+        orderVerify({
+          pay_method: this.payMethod,
+          trade_no: this.order.payInfo.trade_no
+        }).then(res => {})
 
         this.$router.replace({
           name: 'payResult',
