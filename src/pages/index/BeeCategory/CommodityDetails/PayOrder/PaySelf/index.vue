@@ -318,6 +318,9 @@ export default {
 
     // 查看付款结果
     toResult(url) {
+      this.$dialog.alert({
+        message: this.order.payInfo
+      })
       try {
         if (url.length > 0) {
           window.location.href = url
