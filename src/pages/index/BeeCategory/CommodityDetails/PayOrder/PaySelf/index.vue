@@ -318,33 +318,20 @@ export default {
     toResult(url = '') {
       alert('支付成功结果，', url)
       alert('支付方式', this.payMethod)
-      return
       if (url.length > 0) {
         alert('有url：', url)
         window.location.href = url
       } else {
-        if (this.payMethod === 'wxpay') {
-          alert('无 url 微信支付')
-          orderVerify({
-            pay_method: this.payMethod,
+        orderVerify({
+          pay_method: this.payMethod,
+          trade_no: this.order.payInfo.trade_no
+        }).then(res => {})
+        this.$router.replace({
+          name: 'payResult',
+          query: {
             trade_no: this.order.payInfo.trade_no
-          }).then(res => {
-            this.$router.replace({
-              name: 'payResult',
-              query: {
-                trade_no: this.order.payInfo.trade_no
-              }
-            })
-          })
-        } else {
-          alert('无 url 余额支付')
-          this.$router.replace({
-            name: 'payResult',
-            query: {
-              trade_no: this.order.payInfo.trade_no
-            }
-          })
-        }
+          }
+        })
       }
 
       // orderVerify({
