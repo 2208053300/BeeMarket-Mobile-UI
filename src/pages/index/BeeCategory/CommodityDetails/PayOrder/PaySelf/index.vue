@@ -1,8 +1,5 @@
 <template>
   <div class="pay-order">
-    <p>{{ payMethod }}</p>
-    <p>{{ order.payInfo }}</p>
-
     <div class="pay-header">
       <div class="header-title">
         <span>剩余支付时间</span>
@@ -319,7 +316,7 @@ export default {
     },
 
     // 查看付款结果
-    toResult(url = '') {
+    toResult(url) {
       if (url.length > 0) {
         window.location.href = url
       } else {
