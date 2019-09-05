@@ -18,6 +18,7 @@ export async function getToken() {
     const uriProp = GetRequest('code')
     const uid = getQueryString('uid')
     if (!uriProp && !token) {
+      isReload = true
       await checkToken()
     }
     // 正常流程，直接返回token
@@ -31,6 +32,7 @@ export async function getToken() {
       // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
       if (res.status_code !== 200 || Cookies.get('BM-App-Token') === 'waiting') {
         Cookies.set('BM-App-Token', '')
+        isReload = true
         await checkToken()
       }
     }
@@ -39,7 +41,6 @@ export async function getToken() {
 }
 // REVIEW 此处判断用户登录情况
 export function checkToken() {
-  isReload = true
   // 如果是微信，并且没有本地Token，则直接拼接跳转获取token
   const osObj = getOs()
   if (osObj.isWx) {
@@ -94,7 +95,7 @@ export function getVerify() {
 }
 // 设置多端登陆
 export function setVerify(verify) {
-  return Cookies.set('BM-Verify-Ver', verify)
+  return Cookies.set('BM-Verify-Ver', verify, { expires: 3 })
 }
 
 // 判断是否登录
