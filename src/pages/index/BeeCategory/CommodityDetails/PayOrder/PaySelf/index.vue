@@ -320,6 +320,7 @@ export default {
         window.location.href = url
       } else {
         if (this.payMethod === 'wxpay') {
+          alert('无 url 微信支付')
           orderVerify({
             pay_method: this.payMethod,
             trade_no: this.order.payInfo.trade_no
@@ -332,6 +333,7 @@ export default {
             })
           })
         } else {
+          alert('无 url 余额支付')
           this.$router.replace({
             name: 'payResult',
             query: {
