@@ -209,7 +209,14 @@ export default {
     // FIXME ios bug暂时无解
     try {
       this.page = 1
-      setTimeout(document.querySelector('.tab-content').click(), 3000)
+      // setTimeout(document.querySelector('.tab-content').click(), 3000)
+      setTimeout(() => {
+        if (this.detailList.length === 0) {
+          console.log('3s内没加载数据，手动执行')
+
+          this.onLoad()
+        }
+      }, 3000)
     } catch (error) {
       //
     }
