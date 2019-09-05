@@ -99,7 +99,7 @@ export default {
         if (res.status_code === 200) {
           alert('返回的地址：', res.data.extra_url)
           alert('返回的全部：', res.data)
-          this.$parent.payMethod = 'blpay'
+          this.$parent.payMethod = 'wxpay'
           this.$parent.order.payInfo.trade_no = this.payInfo.trade_no
           if (res.data.extra_url) {
             this.$emit('success', { url: res.data.extra_url, trade_no: this.payInfo.trade_no, pay_method: 'blpay' }) // 发出支付成功事件
