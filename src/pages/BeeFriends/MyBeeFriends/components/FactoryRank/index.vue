@@ -372,7 +372,7 @@ export default {
           title: '蜂集市-蜂友圈',
           desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
           imgUrl:
-            'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+            'https://img.fengjishi.com/app/images/share_logo.jpg',
           link:
             window.location.href.split('#')[0] +
             '#' +
@@ -390,7 +390,7 @@ export default {
           title: '蜂集市-蜂友圈',
           desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
           imgUrl:
-            'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
+            'https://img.fengjishi.com/app/images/share_logo.jpg',
           link: `https://app.fengjishi.com/beeRegister#/?uid=${this.uid}`
         })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
