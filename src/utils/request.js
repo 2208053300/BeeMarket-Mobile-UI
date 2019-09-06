@@ -33,6 +33,9 @@ service.interceptors.request.use(
       className: 'loadingPop'
     })
     console.log('请求参数：', config.data)
+    if (config.data.auditWechat) {
+      return config
+    }
     // 强制设置 token 在 getToken 函数中设置
     const osObj = getOs()
     if (await isLogin()) {

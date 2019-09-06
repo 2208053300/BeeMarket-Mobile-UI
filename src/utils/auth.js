@@ -24,8 +24,7 @@ export async function getToken() {
     if (token) {
       return token
     } else if (uriProp) {
-      Cookies.set('BM-App-Token', 'loading')
-      const res = await auditWechat({ code: uriProp, uid: uid })
+      const res = await auditWechat({ code: uriProp, uid: uid, auditWechat: 1 })
       // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
       if (res.status_code !== 200) {
         Cookies.set('BM-App-Token', '')
