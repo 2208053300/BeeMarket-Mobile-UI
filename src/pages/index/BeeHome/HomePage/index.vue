@@ -166,13 +166,9 @@ export default {
           desc: '蜂集市，让生活蜂富起来！',
           imgUrl:
             'https://img.fengjishi.com/app/images/share_logo.jpg',
-          link: this.getShareLink()
+          link: window.location.href.split('#')[0] + '#' + `/?uid=${this.uid}`
         })
       }
-    },
-    // 拼接链接
-    getShareLink() {
-      return `https://app.fengjishi.com/#/?uid=${this.uid}`
     }
   }
 }
