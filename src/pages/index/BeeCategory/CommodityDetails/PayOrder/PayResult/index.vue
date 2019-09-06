@@ -1,7 +1,7 @@
 <template>
   <div class="pay-result">
     <div
-      v-if="$store.state.user.userStatus===1"
+      v-if="[3,4].indexOf($store.state.user.userStatus)!==-1"
       class="pay-result1"
     >
       <div class="result-container">
@@ -56,7 +56,7 @@
       </div>
     </div>
     <div
-      v-if="$store.state.user.userStatus===0"
+      v-if="[1,2,5].indexOf($store.state.user.userStatus)!==-1"
       class="pay-result0"
     >
       <div class="first-pay">
