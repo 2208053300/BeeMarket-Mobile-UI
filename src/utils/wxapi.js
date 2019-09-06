@@ -49,36 +49,19 @@ const wxApi = {
    * @param {[type]} error   [失败回调]
    */
   ShareTimeline(option) {
-    const osObj = getOs()
-    if (osObj.isIphone) {
-      wx.updateTimelineShareData({
-        title: option.title, // 分享标题
-        link: option.link, // 分享链接
-        imgUrl: option.imgUrl, // 分享图标
-        success() {
-          // 用户成功分享后执行的回调函数
-          option.success()
-        },
-        cancel() {
-          // 用户取消分享后执行的回调函数
-          option.error()
-        }
-      })
-    } else {
-      wx.onMenuShareTimeline({
-        title: option.title, // 分享标题
-        link: option.link, // 分享链接
-        imgUrl: option.imgUrl, // 分享图标
-        success() {
-          // 用户成功分享后执行的回调函数
-          option.success()
-        },
-        cancel() {
-          // 用户取消分享后执行的回调函数
-          option.error()
-        }
-      })
-    }
+    wx.updateTimelineShareData({
+      title: option.title, // 分享标题
+      link: option.link, // 分享链接
+      imgUrl: option.imgUrl, // 分享图标
+      success() {
+        // 用户成功分享后执行的回调函数
+        option.success()
+      },
+      cancel() {
+        // 用户取消分享后执行的回调函数
+        option.error()
+      }
+    })
   },
   /**
    * [ShareAppMessage qq、微信分享给朋友 1.4.0版本]
@@ -87,38 +70,20 @@ const wxApi = {
    * @param {[type]} error   [失败回调]
    */
   ShareAppMessage(option) {
-    const osObj = getOs()
-    if (osObj.isIphone) {
-      wx.updateAppMessageShareData({
-        title: option.title, // 分享标题
-        desc: option.desc, // 分享描述
-        link: option.link, // 分享链接
-        imgUrl: option.imgUrl, // 分享图标
-        success() {
-          // 用户成功分享后执行的回调函数
-          option.success()
-        },
-        cancel() {
-          // 用户取消分享后执行的回调函数
-          option.error()
-        }
-      })
-    } else {
-      wx.onMenuShareAppMessage({
-        title: option.title, // 分享标题
-        desc: option.desc, // 分享描述
-        link: option.link, // 分享链接
-        imgUrl: option.imgUrl, // 分享图标
-        success() {
-          // 用户成功分享后执行的回调函数
-          option.success()
-        },
-        cancel() {
-          // 用户取消分享后执行的回调函数
-          option.error()
-        }
-      })
-    }
+    wx.updateAppMessageShareData({
+      title: option.title, // 分享标题
+      desc: option.desc, // 分享描述
+      link: option.link, // 分享链接
+      imgUrl: option.imgUrl, // 分享图标
+      success() {
+        // 用户成功分享后执行的回调函数
+        option.success()
+      },
+      cancel() {
+        // 用户取消分享后执行的回调函数
+        option.error()
+      }
+    })
   },
   // 微信分享
   wxShare(option) {
