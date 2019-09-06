@@ -24,7 +24,7 @@ export async function getToken() {
     if (token) {
       return token
     } else {
-      if (window.location.href.indexOf('authorize') === -1) {
+      if (window.location.href.indexOf('authorize') !== -1) {
         return
       }
       Cookies.set('BM-App-Token', 'loading')
