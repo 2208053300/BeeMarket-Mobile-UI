@@ -290,30 +290,6 @@ export default {
           }
         }
       )
-      // wx.WeixinJSBridge({
-      //   appId: params.appId, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-      //   timestamp: params.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-      //   nonceStr: params.nonceStr, // 支付签名随机串，不长于 32 位
-      //   package: params.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
-      //   signType: params.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-      //   paySign: params.paySign, // 支付签名
-      //   success(res) {
-      //     console.log(123123)
-
-      //     if (res.errMsg === 'chooseWXPay:ok') {
-      //     } else {
-      //       _this.$toast(`支付失败：${JSON.stringify(res)}`)
-      //     }
-      //   },
-      //   cancel(res) {
-      //     console.log(456456)
-      //     _this.$toast('用户取消支付~')
-      //   },
-      //   fail(res) {
-      //     console.log(789789)
-      //     _this.$toast(`支付失败->${JSON.stringify(res)}`)
-      //   }
-      // })
     },
 
     // 查看付款结果
@@ -334,17 +310,6 @@ export default {
           }
         })
       }
-
-      // orderVerify({
-      //   pay_method: this.payMethod,
-      //   trade_no: this.order.payInfo.trade_no
-      // }).then(res => {})
-      // this.$router.replace({
-      //   name: 'payResult',
-      //   query: {
-      //     trade_no: this.order.payInfo.trade_no
-      //   }
-      // })
     }
   }
 }
