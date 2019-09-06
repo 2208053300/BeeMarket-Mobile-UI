@@ -153,8 +153,8 @@ export default {
         confirmorder_pay_icon_overage_disabled: require('@/assets/icon/order/confirmorder_pay_icon_overage_disabled@2x.png')
       },
       timer: '',
-      payMethod: '',
-      order: {}
+      payMethod: ''
+
     }
   },
   computed: {
