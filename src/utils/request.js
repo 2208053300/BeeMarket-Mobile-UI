@@ -33,7 +33,7 @@ service.interceptors.request.use(
       className: 'loadingPop'
     })
     console.log('请求参数：', config.data)
-    if (config.data.auditWechat) {
+    if ('auditWechat' in config.data) {
       return config
     }
     // 强制设置 token 在 getToken 函数中设置
