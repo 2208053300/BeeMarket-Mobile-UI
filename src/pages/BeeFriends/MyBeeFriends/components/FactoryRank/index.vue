@@ -382,7 +382,7 @@ export default {
     // 获取分享链接
     async getShareLink() {
       const res = await isPartner()
-      return `https://app.fengjishi.com/#/beeFriends?uid=${this.uid}&phone=${
+      return window.location.href.split('#')[0] + '#' + `/beeFriends?uid=${this.uid}&phone=${
         res.data.inviter_phone
       }`
     },

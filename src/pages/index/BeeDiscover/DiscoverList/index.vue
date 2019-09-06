@@ -66,7 +66,7 @@ export default {
         title: '蜂公益，关注社会，关注未来',
         desc: '公益心，公益行，我们等你一起。',
         imgUrl: 'https://img.fengjishi.com/app/images/action.jpg',
-        link: `https://app.fengjishi.com/#/discover?active=1&uid=${this.uid}`
+        link: window.location.href.split('#')[0] + '#' + `/discover?active=1&uid=${this.uid}`
       })
     }
 

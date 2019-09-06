@@ -118,7 +118,7 @@ export default {
         title: '蜂集市-限量蜂抢',
         desc: '蜂集市，让生活蜂富起来！',
         imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
-        link: `https://app.fengjishi.com/#/beeLimit?uid=${this.uid}`
+        link: window.location.href.split('#')[0] + '#' + `/beeLimit?uid=${this.uid}`
       })
     },
     getProgress(val1, val2) {
