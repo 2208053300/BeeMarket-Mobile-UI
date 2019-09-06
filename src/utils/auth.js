@@ -23,12 +23,8 @@ export async function getToken() {
     // 正常流程，直接返回token
     if (token) {
       return token
-    } else {
-      if (window.location.href.indexOf('authorize') !== -1) {
-        return
-      }
-      Cookies.set('BM-App-Token', 'loading')
-      const res = await auditWechat({ code: uriProp, uid: uid })
+    } else if (uriProp) {
+      const res = await auditWechat({ code: uriProp, uid: uid, auditWechat: 1 })
       // FIXME 如果CODE已经使用过，没有返回TOKEN，重定向到授权页
       if (res.status_code !== 200) {
         Cookies.set('BM-App-Token', '')
