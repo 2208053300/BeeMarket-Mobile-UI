@@ -367,24 +367,20 @@ export default {
       try {
         const res = await getUID()
         this.uid = res.data.uid
-        const linkUrl = await this.getShareLink()
+        const res2 = await isPartner()
         wxapi.wxShare({
           title: '蜂集市-蜂友圈',
           desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
           imgUrl:
             'https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg',
-          link: linkUrl
+          link:
+            window.location.href.split('#')[0] +
+            '#' +
+            `/beeFriends?uid=${this.uid}&phone=${res2.data.inviter_phone}`
         })
       } catch (error) {
         this.$toast(error)
       }
-    },
-    // 获取分享链接
-    async getShareLink() {
-      const res = await isPartner()
-      return window.location.href.split('#')[0] + '#' + `/beeFriends?uid=${this.uid}&phone=${
-        res.data.inviter_phone
-      }`
     },
     // 分享
     appShare() {
