@@ -163,17 +163,12 @@ export default {
     async loadUID() {
       const res = await getUID()
       this.uid = res.data.uid
-      let shareUrl = 'http://app.fengjishi.com.cn/#' + `/?uid=${this.uid}`
-      shareUrl =
-        shareUrl.split('#')[0] +
-        '/redirect.html?app3Redirect=' +
-        encodeURIComponent(shareUrl)
       if (this.osObj.isWx) {
         wxapi.wxShare({
           title: '蜂集市',
           desc: '蜂集市，让生活蜂富起来！',
           imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
-          link: shareUrl
+          link: window.location.href.split('#')[0] + '#' + `/?uid=${this.uid}`
         })
       }
       // 分享链接如果带/#/必须使用手动截取
