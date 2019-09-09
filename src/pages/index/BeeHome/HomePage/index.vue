@@ -1,6 +1,9 @@
 <template>
   <div class="home-page">
-    <img :src="beeIcon.home_img_top_bg_under" class="top-bg">
+    <img
+      :src="beeIcon.home_img_top_bg_under"
+      class="top-bg"
+    >
     <div class="header-content">
       <div class="home-header">
         <div class="logo-content">
@@ -164,11 +167,12 @@ export default {
         wxapi.wxShare({
           title: '蜂集市',
           desc: '蜂集市，让生活蜂富起来！',
-          imgUrl:
-            'https://img.fengjishi.com/app/images/share_logo.jpg',
+          imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
           link: window.location.href.split('#')[0] + '#' + `/?uid=${this.uid}`
         })
       }
+      // 分享链接如果带/#/必须使用手动截取
+      //  window.location.href.split('#')[0] + '#' +window.location.href.split('#')[1]
     }
   }
 }

@@ -14,6 +14,7 @@ const app = {
     defaultImg3: require('@/assets/icon/home/ic_banner_default@2x.png'),
     head_detault: require('@/assets/icon/personalCenter/head_default.png'),
     homeUri: 'https://app.fengjishi.com/#',
+    homeUri2: 'https://app.fengjishi.com/',
     share_data: {
       desc: '',
       img: '',
