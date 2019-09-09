@@ -12,7 +12,6 @@ import {
   setVerify
 } from '@/utils/auth'
 import { isJSON } from '@/utils'
-import { getOs } from '@/utils'
 
 const service = axios.create({
   // api 的 base_url
@@ -41,13 +40,9 @@ service.interceptors.request.use(
       return config
     }
     // 强制设置 token 在 getToken 函数中设置
-    const osObj = getOs()
     if (await isLogin()) {
       config.headers['BM-App-Token'] = await getToken()
       config.headers['BM-Verify-Ver'] = getVerify()
-    } else if (osObj.isWx) {
-      // REVIEW 如果是微信，默认第一次直接授权
-      checkToken()
     }
     config.headers['Accept'] = 'application/prs.BM-APP-API.v1+json'
     // 此处如果有JSON数据，需要加上请求头
