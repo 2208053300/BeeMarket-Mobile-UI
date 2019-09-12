@@ -9,7 +9,6 @@
         <video
           ref="video"
           :src="video_url"
-          :poster="beeIcon.first_screen"
           class="video-body"
           :controls="showControls"
         />
@@ -58,8 +57,7 @@ export default {
       video_url: 'https://img.fengjishi.com.cn/app/videos/education/friendship-course-1.mp4',
       showControls: false,
       beeIcon: {
-        title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
-        first_screen: require('@/assets/icon/task/talent/first_screen@3x.png')
+        title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png')
       }
     }
   },
@@ -124,18 +122,18 @@ export default {
 <style scoped lang="less">
 //inPartner.html earnedRouter.html
 @videoWidth: 6.4rem;
-@videoHeight: 3.3rem;
+@videoHeight: 3.6rem;
 .video-container {
   background: url(../../../assets/icon/noviceGuide/00-新手教培_改_02.png);
   background-size: cover;
   padding: 0.52rem 0.54rem;
   box-sizing: border-box;
   .video {
+    margin: auto;
     width: @videoWidth;
     height: @videoHeight;
     border-radius: 0.08rem;
     .video-body {
-      background-color: black;
       width: @videoWidth;
       height: @videoHeight;
       border-radius: 0.08rem;
@@ -143,7 +141,7 @@ export default {
     .control {
       width: @videoWidth;
       height: @videoHeight;
-      top: -3.3rem;
+      top: -@videoHeight;
       left: 0;
       position: absolute;
       display: flex;
