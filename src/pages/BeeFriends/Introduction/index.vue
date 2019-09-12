@@ -11,6 +11,7 @@
           :src="video_url"
           class="video-body"
           :controls="showControls"
+          :poster="beeIcon.first_screen"
         />
         <div v-if="!showControls" style="position: relative">
           <div class="control">
@@ -57,7 +58,8 @@ export default {
       video_url: 'https://img.fengjishi.com.cn/app/videos/education/friendship-course-1.mp4',
       showControls: false,
       beeIcon: {
-        title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png')
+        title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
+        first_screen: require('@/assets/icon/task/talent/first_screen@3x.png')
       }
     }
   },
@@ -137,6 +139,7 @@ export default {
       width: @videoWidth;
       height: @videoHeight;
       border-radius: 0.08rem;
+      object-fit: cover;
     }
     .control {
       width: @videoWidth;
