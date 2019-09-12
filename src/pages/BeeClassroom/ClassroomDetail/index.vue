@@ -234,7 +234,7 @@ export default {
 <style lang="less">
 .class-room-detail {
   @videoWidth: 6.4rem;
-  @videoHeight: 3.3rem;
+  @videoHeight: 3.6rem;
   p {
     margin: 0;
   }
@@ -263,7 +263,6 @@ export default {
     display: flex;
     justify-content: center;
     .video-body {
-      background-color: black;
       width: @videoWidth;
       height: @videoHeight;
       border-radius: 0.08rem;
