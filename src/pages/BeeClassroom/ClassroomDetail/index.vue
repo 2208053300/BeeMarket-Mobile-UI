@@ -266,6 +266,7 @@ export default {
       width: @videoWidth;
       height: @videoHeight;
       border-radius: 0.08rem;
+      object-fit: cover;
     }
     .control {
       width: 1.28rem;
