@@ -260,6 +260,8 @@ export default {
     padding: 0.8rem 0.54rem 0 0.54rem;
     border-radius: 0.08rem;
     position: relative;
+    display: flex;
+    justify-content: center;
     .video-body {
       background-color: black;
       width: @videoWidth;
@@ -269,8 +271,11 @@ export default {
     .control {
       width: 1.28rem;
       height: 1.28rem;
-      top: 40%;
-      left: 42%;
+      top: 0.8rem;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
       position: absolute;
       display: flex;
       justify-content: center;
