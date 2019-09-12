@@ -103,7 +103,7 @@
               class="firends-image"
             />
             <div class="friends-num">
-              关联蜂友:<span class="num">{{ detailItem.friend_count }}</span>个
+              间接蜂友:<span class="num">{{ detailItem.friend_count }}</span>个
             </div>
           </div>
         </div>

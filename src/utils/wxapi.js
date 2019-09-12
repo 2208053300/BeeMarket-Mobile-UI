@@ -87,6 +87,12 @@ const wxApi = {
   },
   // 微信分享
   wxShare(option) {
+    // 处理分享链接重定向
+    option.link = option.link.split('&from=groupmessage').join('')
+    option.link =
+      window.location.origin +
+      '/redirect.html?app3Redirect=' +
+      encodeURIComponent(option.link)
     const osObj = getOs()
     if (!osObj.isWx) {
       console.log('非微信环境')
