@@ -26,7 +26,7 @@
               class="tab-img"
             />
             <div class="type-num">
-              关联蜂友：<span class="num">{{ friendsData.business_num||0 }} </span>个
+              间接蜂友：<span class="num">{{ friendsData.business_num||0 }} </span>个
             </div> -->
           </div>
           <div

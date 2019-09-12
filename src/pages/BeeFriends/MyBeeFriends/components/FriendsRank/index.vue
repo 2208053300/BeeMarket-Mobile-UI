@@ -26,7 +26,7 @@
               class="tab-img"
             />
             <div class="type-num">
-              关联蜂友：<span class="num">{{ friendsData.friend_relation_count||0 }} </span>个
+              间接蜂友：<span class="num">{{ friendsData.friend_relation_count||0 }} </span>个
             </div>
           </div>
           <div
@@ -221,7 +221,7 @@
                     <span
                       v-if="item.friend_count"
                       class="friends"
-                    >（关联蜂友：<span class="num">{{ item.friend_count }}</span>个 ）</span>
+                    >（间接蜂友：<span class="num">{{ item.friend_count }}</span>个 ）</span>
                     <!-- 用户未绑定手机号 -->
                     <span
                       v-if="item.type===3"
