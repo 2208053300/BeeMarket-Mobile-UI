@@ -7,7 +7,7 @@
         <video
           ref="video"
           :src="video.video_url"
-          :poster="video.first_screen"
+          :poster="video.showControls ? '': video.first_screen"
           class="video-body"
           :controls="video.showControls"
           webkit-playsinline="true"

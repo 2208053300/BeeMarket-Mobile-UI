@@ -7,7 +7,7 @@
         <video
           ref="video"
           :src="video_url"
-          :poster="beeIcon.first_screen"
+          :poster="showControls ? '' : beeIcon.first_screen"
           class="video-body"
           :controls="showControls"
         />

@@ -11,7 +11,7 @@
           :src="video_url"
           class="video-body"
           :controls="showControls"
-          :poster="beeIcon.first_screen"
+          :poster="showControls ? '' : beeIcon.first_screen"
         />
         <div v-if="!showControls" style="position: relative">
           <div class="control">
