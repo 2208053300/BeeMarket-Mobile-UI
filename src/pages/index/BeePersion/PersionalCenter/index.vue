@@ -58,7 +58,7 @@
               v-else
               class="head-type"
             >
-              <span>非合伙人</span>
+              <span>普通用户</span>
             </div>
           </van-col>
         </van-row>
