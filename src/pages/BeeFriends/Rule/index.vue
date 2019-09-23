@@ -12,7 +12,7 @@
           ref="video"
           src="https://img.fengjishi.com.cn/app/videos/education/friendship-course-1.mp4"
           class="video-body"
-          :poster="beeIcon.first_screen"
+          :poster="showControls ? '' : beeIcon.first_screen"
           :controls="showControls"
         />
         <div v-if="!showControls" style="position: relative">

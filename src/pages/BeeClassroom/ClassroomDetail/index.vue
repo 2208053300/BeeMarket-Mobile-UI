@@ -11,7 +11,7 @@
         <video
           ref="video"
           :src="detail.video_url"
-          :poster="detail.first_screen"
+          :poster="showControls ? '' : detail.first_screen"
           class="video-body"
           :controls="showControls"
         />
