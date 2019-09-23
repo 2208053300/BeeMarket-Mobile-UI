@@ -25,7 +25,8 @@
           ￥{{ order.orderDetail.freight_amount||0 }}
         </div>
       </van-cell>
-      <van-cell class="deduction-content">
+      <!-- 没有公益值的时候隐藏 -->
+      <van-cell v-if="order.orderDetail.charity_amount" class="deduction-content">
         <div
           slot="title"
           class="cell-title "
