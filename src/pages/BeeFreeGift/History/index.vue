@@ -152,7 +152,6 @@ export default {
       if (res.data.length < this.pageSize) {
         this.finished = true
       }
-
     },
 
     // NOTE 送礼详情
