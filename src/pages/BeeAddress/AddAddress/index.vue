@@ -110,7 +110,7 @@ export default {
   data() {
     return {
       beeForm: {
-        tag: 'home',
+        tag: '',
         last_id: ''
       },
       BeeDefault,
