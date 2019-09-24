@@ -9,7 +9,10 @@
       @close="handleClose"
       @click-overlay="handleClose"
     >
-      <div class="rank-content">
+      <div
+        class="rank-content"
+        :class="{appBottom:osObj.isApp}"
+      >
         <div class="rank-type">
           <div class="type-tab">
             <van-icon
@@ -232,7 +235,10 @@
             </div>
           </van-list>
         </div>
-        <div class="btn-content">
+        <div
+          v-if="osObj.isApp"
+          class="btn-content"
+        >
           <van-button
             class="fast-invite"
             @click="fastInvite"
@@ -371,8 +377,7 @@ export default {
         wxapi.wxShare({
           title: '蜂集市-蜂友圈',
           desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-          imgUrl:
-            'https://img.fengjishi.com/app/images/share_logo.jpg',
+          imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
           link:
             window.location.href.split('#')[0] +
             '#' +
@@ -389,8 +394,7 @@ export default {
         wxapi.wxShare({
           title: '蜂集市-蜂友圈',
           desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-          imgUrl:
-            'https://img.fengjishi.com/app/images/share_logo.jpg',
+          imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
           link: `https://app.fengjishi.com/beeRegister#/?uid=${this.uid}`
         })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
@@ -476,6 +480,7 @@ export default {
     border-top-left-radius: 0.3rem;
     border-top-right-radius: 0.3rem;
     overflow: inherit;
+
     .rank-content {
       position: relative;
       padding-bottom: 1rem;
@@ -633,6 +638,9 @@ export default {
           color: #ffffff;
         }
       }
+    }
+    .appBottom {
+      padding-bottom: 0.2rem;
     }
   }
 }
