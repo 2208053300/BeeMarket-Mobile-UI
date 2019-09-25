@@ -35,6 +35,16 @@
         去结算
       </div>
     </div>
+    <div v-if="giftPackage.package_recharge_balance > 0" class="tips tips-bottom">
+      <van-checkbox v-model="useBalance">
+        使用余额
+        <img
+          slot="icon"
+          slot-scope="props"
+          :src="props.checked ? beeIcon.active : beeIcon.inactive"
+        >
+      </van-checkbox>
+    </div>
   </div>
 </template>
 
@@ -47,7 +57,9 @@ export default {
     return {
       beeIcon: {
         lightPackage: require('@/assets/icon/giftPackage/farm_pic_ceremony_n@2x.png'),
-        packages: require('@/assets/icon/giftPackage/farm_pic_ceremony_d@2x.png')
+        packages: require('@/assets/icon/giftPackage/farm_pic_ceremony_d@2x.png'),
+        active: require('@/assets/icon/giftPackage/farm_icon_check.png'),
+        inactive: require('@/assets/icon/giftPackage/farm_icon_uncheck.png')
       },
       maxMoney: 599
     }
@@ -59,6 +71,14 @@ export default {
     },
     tipMoneyText() {
       return (this.maxMoney - this.giftPackage.selectedTotalAmount).toFixed(2)
+    },
+    useBalance: {
+      get() {
+        return this.giftPackage.use_balance
+      },
+      set(val) {
+        this.$store.commit('SET_USE_PACKAGE_BALANCE', val)
+      }
     }
   },
   watch: {},
@@ -104,7 +124,18 @@ export default {
       color: @BeeDefault;
     }
   }
+  .tips-bottom {
+    height: 0.56rem;
+    padding-top: 0.08rem;
+    padding-bottom: 0;
+    border-bottom-left-radius: 0.16rem;
+    border-bottom-right-radius: 0.16rem;
+    position: relative;
+    top: -0.08rem;
+    margin-bottom: -0.08rem;
+  }
   .bar-body {
+    z-index: 1;
     width: 6.8rem;
     height: 1rem;
     position: relative;

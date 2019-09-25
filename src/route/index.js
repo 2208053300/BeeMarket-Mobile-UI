@@ -805,12 +805,18 @@ const router = new Router({
       children: [
         {
           path: '',
+          name: 'giftPackageHome',
           component: () => import('@/pages/BeeGiftPackage/Home')
         },
         {
           path: 'detail',
           name: 'giftPackagePDetail',
           component: () => import('@/pages/BeeGiftPackage/CommodityDetails')
+        },
+        {
+          path: 'buySuccess',
+          name: 'buySuccess',
+          component: () => import('@/pages/BeeGiftPackage/BuySuccess')
         }
       ]
     },

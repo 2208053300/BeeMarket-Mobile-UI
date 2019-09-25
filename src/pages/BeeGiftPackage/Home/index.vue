@@ -154,6 +154,6 @@ export default {
   text-align: center;
 }
 .product-list {
-  padding: 0 0.28rem 2rem 0.28rem;
+  padding: 0 0.28rem 2.56rem 0.28rem;
 }
 </style>
