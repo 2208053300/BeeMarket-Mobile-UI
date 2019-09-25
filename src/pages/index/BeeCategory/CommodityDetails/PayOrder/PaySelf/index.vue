@@ -116,7 +116,7 @@
       <van-button
         class="doneBtn"
         round
-        @click="toResult"
+        @click="pay"
       >
         确认付款
       </van-button>
