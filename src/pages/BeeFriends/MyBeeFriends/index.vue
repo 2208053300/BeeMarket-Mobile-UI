@@ -267,7 +267,10 @@ export default {
         title: '蜂集市-蜂友圈',
         desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益！',
         imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
-        link: window.location.href.split('#')[0] + '#' + `/beeFriends?uid=${this.uid}`
+        link:
+          window.location.href.split('#')[0] +
+          '#' +
+          `/beeFriends?uid=${this.uid}`
       })
     },
 
@@ -323,10 +326,10 @@ export default {
       }
     },
     omitNumber(val) {
-      if (Number(val) > 1000) {
-        return Math.floor(Number(val) / 10) / 100 + 'K'
-      } else if (Number(val) > 1000000) {
+      if (Number(val) > 1000000) {
         return Math.floor(Number(val) / 1000) / 1000 + 'M'
+      } else if (Number(val) > 1000) {
+        return Math.floor(Number(val) / 10) / 100 + 'K'
       } else {
         return Number(val)
       }
