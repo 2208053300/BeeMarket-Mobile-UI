@@ -14,6 +14,17 @@
           ￥{{ order.orderDetail.product_amount }}
         </div>
       </van-cell>
+      <van-cell v-if="this.$store.state.giftPackage.use_balance">
+        <div
+          slot="title"
+          class="cell-title"
+        >
+          礼包抵扣
+        </div>
+        <div class="cell-val">
+          -￥{{ order.orderDetail.pgpackage_deduct }}
+        </div>
+      </van-cell>
       <van-cell>
         <div
           slot="title"
