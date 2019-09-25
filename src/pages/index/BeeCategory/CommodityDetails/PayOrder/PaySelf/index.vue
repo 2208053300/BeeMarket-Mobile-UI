@@ -295,7 +295,7 @@ export default {
     // 查看付款结果
     toResult(url) {
       let customCallbackUrl = this.$route.query.callback_url
-      if (customCallbackUrl === null) {
+      if (customCallbackUrl === null || customCallbackUrl === undefined) {
         this.toDefaultResult(url)
       } else {
         customCallbackUrl = decodeURIComponent(customCallbackUrl)

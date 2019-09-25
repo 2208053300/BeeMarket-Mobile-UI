@@ -13,9 +13,6 @@
 
 <script>
 export default {
-  metaInfo: {
-    title: '购买结果'
-  },
   props: {},
   data() {
     return {}
