@@ -299,7 +299,7 @@ export default {
         this.toDefaultResult(url)
       } else {
         customCallbackUrl = decodeURIComponent(customCallbackUrl)
-        window.location.href = `encodeURIComponent?trade_no=${this.order.payInfo.trade_no}`
+        window.location.href = `${customCallbackUrl}?trade_no=${this.order.payInfo.trade_no}`
       }
     },
     toDefaultResult(url) {
