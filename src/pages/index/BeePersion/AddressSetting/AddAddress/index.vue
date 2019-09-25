@@ -195,6 +195,11 @@ export default {
       font-size: 0.28rem;
       color: @Grey1;
     }
+    .van-cell__value{
+      .van-field__body{
+        height:100%;
+      }
+    }
   }
   .address-tag {
     .van-cell__title {

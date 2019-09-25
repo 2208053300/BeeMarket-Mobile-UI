@@ -87,7 +87,8 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
 
-    document.querySelector('.login-page').style.height = document.body.clientHeight - 44 + 'px'
+    document.querySelector('.login-page').style.height =
+      document.body.clientHeight - 44 + 'px'
     this.getMobileNum()
   },
   methods: {
@@ -103,6 +104,9 @@ export default {
       return reg2.test(this.verificationCode)
     },
     async sendSmsData() {
+      if (this.countDown !== 0) {
+        return
+      }
       try {
         const res = await sendSms({ type: 'passwd' })
         if (res.status_code === 200) {
@@ -117,7 +121,9 @@ export default {
       const res = await smsVerify({
         smsCode: this.verificationCode,
         type: 'passwd',
-        t: Date.parse(new Date()).toString().substr(0, 10)
+        t: Date.parse(new Date())
+          .toString()
+          .substr(0, 10)
       })
       if (res.status_code === 200) {
         this.$router.push({
@@ -133,7 +139,7 @@ export default {
       this.countDown = 60
       const clock = window.setInterval(() => {
         this.countDown--
-        if (this.countDown === 0) {
+        if (this.countDown <= 0) {
           window.clearInterval(clock)
         }
       }, 1000)
