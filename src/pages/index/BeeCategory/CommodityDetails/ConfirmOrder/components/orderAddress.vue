@@ -183,9 +183,8 @@ export default {
   methods: {
     selectAddress() {
       this.$store.state.app.pushName = 'confirmOrder'
-      const _this = this
       this.$store.state.app.pushQuery = {
-        target: _this.$route.query.target
+        target: this.$route.query.target
       }
       this.$router.push('/persion/addressSetting?mode=select')
     },
