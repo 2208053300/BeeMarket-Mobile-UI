@@ -15,6 +15,11 @@ const router = new Router({
       children: [
         {
           path: '',
+          name: 'giftPackageWelcome',
+          component: () => import('@/pages/BeeGiftPackage/Welcome')
+        },
+        {
+          path: 'home',
           name: 'giftPackageHome',
           component: () => import('@/pages/BeeGiftPackage/Home')
         },
