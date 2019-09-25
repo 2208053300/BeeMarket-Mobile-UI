@@ -152,7 +152,7 @@ export default {
       // 获取确认订单
       const res = await confirmOrder(JSON.stringify({
         os: 'pgpackage',
-        is_special_pgpackage: this.$store.state.giftPackage.use_balance
+        is_special_pgpackage: this.$store.state.giftPackage.use_balance ? 1 : 0
       }))
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
@@ -187,7 +187,7 @@ export default {
           os: this.$route.query.target || 'general',
           // 此处暂时无赠送好友ot不变
           ot: 'general',
-          is_special_pgpackage: this.$store.state.giftPackage.use_balance
+          is_special_pgpackage: this.$store.state.giftPackage.use_balance ? 1 : 0
         })
       )
       if (res.status_code === 200) {
