@@ -7,6 +7,7 @@ const app = {
     },
     backTop: false,
     pushName: '',
+    pushQuery: {},
     // 图片错误时加载默认图片填充
     defaultImg:
       "this.src='https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg'",

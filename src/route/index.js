@@ -215,7 +215,7 @@ const router = new Router({
             },
             {
               path: 'confirmOrder',
-              name: 'confirmOrder',
+              name: 'taskConfirmOrder',
               component: () => import('@/pages/BeeTask/ConfirmOrder')
             },
             {

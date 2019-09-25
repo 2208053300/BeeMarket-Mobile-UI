@@ -22,9 +22,6 @@ const giftPackage = {
       if (state.package_recharge_balance > 0) {
         state.use_balance = bool
         sessionStorage.setItem('use_package_balance', bool)
-      } else {
-        state.use_balance = false
-        sessionStorage.setItem('use_package_balance', 'false')
       }
     }
   },
@@ -38,15 +35,15 @@ const giftPackage = {
       state.package_recharge_balance = res.data.pgpackage_recharge_balance
       if (state.package_recharge_balance > 0) {
         const use_balance = sessionStorage.getItem('use_package_balance')
-        if (use_balance === null || use_balance === 'true') {
+        if (use_balance == null) {
           state.use_balance = true
         } else {
-          state.use_balance = false
+          state.use_balance = use_balance === 'true'
         }
+        sessionStorage.setItem('use_package_balance', state.use_balance)
       } else {
         state.use_balance = false
       }
-      sessionStorage.setItem('use_package_balance', state.use_balance)
     }
   }
 }

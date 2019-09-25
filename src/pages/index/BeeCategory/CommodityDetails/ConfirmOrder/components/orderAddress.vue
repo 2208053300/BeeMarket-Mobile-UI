@@ -183,7 +183,10 @@ export default {
   methods: {
     selectAddress() {
       this.$store.state.app.pushName = 'confirmOrder'
-      // TODO 重新选择送货地址
+      const _this = this
+      this.$store.state.app.pushQuery = {
+        target: _this.$route.query.target
+      }
       this.$router.push('/persion/addressSetting?mode=select')
     },
     sendToFirend() {

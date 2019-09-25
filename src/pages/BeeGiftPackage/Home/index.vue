@@ -83,7 +83,7 @@ export default {
   },
   watch: {
     canSettlement() {
-      if (this.giftPackage.selectedTotalAmount >= this.maxMoney) {
+      if (this.canSettlement) {
         this.packageVisible = true
       }
     }

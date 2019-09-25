@@ -150,7 +150,7 @@ export default {
   flex-direction: column;
   z-index: 1000;
   max-height: 70vh;
-  padding-bottom: 1.4rem;
+  padding-bottom: 1.96rem;
   .tips {
     flex-shrink: 0;
     margin: 0;

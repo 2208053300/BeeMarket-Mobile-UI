@@ -182,7 +182,7 @@ export default {
   mounted() {},
   methods: {
     selectAddress() {
-      this.$store.state.app.pushName = 'confirmOrder'
+      this.$store.state.app.pushName = 'taskConfirmOrder'
       // TODO 重新选择送货地址
       this.$router.push({
         name: 'addressManage',

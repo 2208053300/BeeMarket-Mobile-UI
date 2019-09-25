@@ -1,5 +1,5 @@
 <template>
-  <div class="gift-bar flex flex-column align-center" @click="$emit('open-list')">
+  <div class="gift-bar flex flex-column align-center">
     <div v-if="giftPackage.showTip" class="tips">
       <span v-if="giftPackage.selectedTotalAmount===0">
         任意搭配满<span class="money-text"> {{ maxMoney }} 元</span>，自动生成礼包！
@@ -9,7 +9,7 @@
       </span>
       <span v-if="giftPackage.selectedTotalAmount >= maxMoney">礼包已生成</span>
     </div>
-    <div class="bar-body">
+    <div class="bar-body" @click="$emit('open-list')">
       <!-- 礼包图标 -->
       <div class="package">
         <img
@@ -68,7 +68,11 @@ export default {
   computed: {
     ...mapState(['giftPackage']),
     canSettlement() {
-      return this.giftPackage.selectedTotalAmount >= this.maxMoney
+      if (this.giftPackage.use_balance) {
+        return this.giftPackage.selectedTotalAmount > 0
+      } else {
+        return this.giftPackage.selectedTotalAmount >= this.maxMoney
+      }
     },
     tipMoneyText() {
       return (this.maxMoney - this.giftPackage.selectedTotalAmount).toFixed(2)
