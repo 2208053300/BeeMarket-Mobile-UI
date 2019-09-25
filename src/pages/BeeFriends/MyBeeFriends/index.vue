@@ -325,6 +325,8 @@ export default {
     omitNumber(val) {
       if (Number(val) > 1000) {
         return Math.floor(Number(val) / 10) / 100 + 'K'
+      } else if (Number(val) > 1000000) {
+        return Math.floor(Number(val) / 1000) / 1000 + 'M'
       } else {
         return Number(val)
       }
