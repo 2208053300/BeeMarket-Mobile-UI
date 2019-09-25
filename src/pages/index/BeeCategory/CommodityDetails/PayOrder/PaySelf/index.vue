@@ -294,6 +294,15 @@ export default {
 
     // 查看付款结果
     toResult(url) {
+      let customCallbackUrl = this.$route.query.callback_url
+      if (customCallbackUrl === null) {
+        this.toDefaultResult(url)
+      } else {
+        customCallbackUrl = decodeURIComponent(customCallbackUrl)
+        window.location.href = `encodeURIComponent?trade_no=${this.order.payInfo.trade_no}`
+      }
+    },
+    toDefaultResult(url) {
       if (url.length > 0) {
         window.location.href = url
       } else {

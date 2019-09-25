@@ -41,6 +41,7 @@
         <img
           slot="icon"
           slot-scope="props"
+          style="width: 0.27rem;height: auto;vertical-align: unset"
           :src="props.checked ? beeIcon.active : beeIcon.inactive"
         >
       </van-checkbox>

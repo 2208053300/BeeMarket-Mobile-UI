@@ -45,3 +45,11 @@ export function packageEmpty(data) {
     data
   })
 }
+
+// NOTE 礼包充值
+export function recharge() {
+  return request({
+    url: '/package/recharge',
+    method: 'post'
+  })
+}

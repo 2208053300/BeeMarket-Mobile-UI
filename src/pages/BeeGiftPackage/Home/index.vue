@@ -2,6 +2,12 @@
   <div class="bee-index">
     <bee-header @on-rule="onRule" />
     <img :src="beeIcon.headImg">
+    <div class="recharge">
+      <img :src="beeIcon.recharge_bg">
+      <button @click="goRecharge">
+        购买礼包
+      </button>
+    </div>
     <div class="product-list">
       <div class="item flex flex-wrap">
         <product-item
@@ -31,7 +37,7 @@
 </template>
 
 <script>
-import { getIndexData, packageAdd } from '@/api/BeeApi/giftPackage'
+import { getIndexData, packageAdd, recharge } from '@/api/BeeApi/giftPackage'
 import { mapState } from 'vuex'
 import BeeHeader from './components/header'
 import ProductItem from './components/productItem'
@@ -40,6 +46,7 @@ import sku from '../components/Sku'
 import GiftPackageList from '../components/giftPackageList'
 import Rule from './components/rule'
 import PackageBuild from '../components/packageBuild'
+import { goPayFromPayInfo } from '@/utils/wxPay'
 export default {
   metaInfo: {
     title: '农礼包产品'
@@ -49,7 +56,8 @@ export default {
   data() {
     return {
       beeIcon: {
-        headImg: require('@/assets/icon/giftPackage/farm_pic_banner@2x.png')
+        headImg: require('@/assets/icon/giftPackage/farm_pic_banner.png'),
+        recharge_bg: require('@/assets/icon/giftPackage/farm_pic_recharge.png')
       },
       products: [],
       showSku: false,
@@ -66,7 +74,11 @@ export default {
   computed: {
     ...mapState(['giftPackage']),
     canSettlement() {
-      return this.giftPackage.selectedTotalAmount >= this.maxMoney
+      if (this.giftPackage.use_balance) {
+        return this.giftPackage.selectedTotalAmount > 0
+      } else {
+        return this.giftPackage.selectedTotalAmount >= this.maxMoney
+      }
     }
   },
   watch: {
@@ -142,6 +154,17 @@ export default {
       this.$refs.giftBar.$el.style.zIndex = this.zIndex
       this.zIndex += 4
       this.giftListVisible = true
+    },
+    // 去充值
+    async goRecharge() {
+      const res = await recharge()
+      let callbackUrl = window.location.origin
+      if (window.location.href === '/') {
+        callbackUrl = callbackUrl + '/#/beeGiftPackage/buySuccess'
+      } else {
+        callbackUrl = callbackUrl + '/buySuccess'
+      }
+      goPayFromPayInfo(res.data, callbackUrl)
     }
   }
 }
@@ -152,6 +175,26 @@ export default {
   padding-top: 46px;
   background: #ffe1ba;
   text-align: center;
+  .recharge {
+    height: 3.4rem;
+    position: relative;
+    top: -1.2rem;
+    margin-bottom: -1.2rem;
+    button {
+      position: absolute;
+      bottom: 0.72rem;
+      right: 0.96rem;
+      border: none;
+      border-radius: 20rem;
+      width: 2rem;
+      background: #915212;
+      line-height: 0.64rem;
+      color: white;
+      font-weight: bold;
+      font-size: 0.32rem;
+      padding: 0;
+    }
+  }
 }
 .product-list {
   padding: 0 0.28rem 2.56rem 0.28rem;

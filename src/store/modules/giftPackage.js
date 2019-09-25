@@ -6,7 +6,7 @@ const giftPackage = {
     showTip: true, // 是否显示提示
     productList: [], // 礼包中的商品
     package_recharge_balance: 0, // 礼包余额
-    use_balance: false
+    use_balance: sessionStorage.getItem('use_package_balance') === 'true'
   },
   mutations: {
     SET_SELECTED_TOTAL_NUM(state, num) {

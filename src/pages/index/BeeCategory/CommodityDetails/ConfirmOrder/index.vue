@@ -151,7 +151,8 @@ export default {
     async confirmGiftPackageOrder() {
       // 获取确认订单
       const res = await confirmOrder(JSON.stringify({
-        os: 'pgpackage'
+        os: 'pgpackage',
+        is_special_pgpackage: this.$store.state.giftPackage.use_balance
       }))
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
@@ -185,7 +186,8 @@ export default {
           anonymous: this.anonymous,
           os: this.$route.query.target || 'general',
           // 此处暂时无赠送好友ot不变
-          ot: 'general'
+          ot: 'general',
+          is_special_pgpackage: this.$store.state.giftPackage.use_balance
         })
       )
       if (res.status_code === 200) {
