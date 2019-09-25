@@ -53,7 +53,7 @@ export default {
     },
     goSettlement() {
       this.handleClose()
-      if (window.location.href === '/') {
+      if (window.location.pathname === '/') {
         this.$router.push('/category/details/confirmOrder?target=pgpackage')
       } else {
         window.location.href = '/#/category/details/confirmOrder?target=pgpackage'

@@ -100,7 +100,7 @@ export default {
     },
     // 去我的蜂友圈
     goCircle() {
-      if (window.location.href === '/') {
+      if (window.location.pathname === '/') {
         this.$router.push('/beeFriends')
       } else {
         window.location.href = '/#/beeFriends'
@@ -114,7 +114,7 @@ export default {
       } else if (os.isAndroid && os.isApp) {
         window.beeMarket.ToCatList()
       } else {
-        if (window.location.href === '/') {
+        if (window.location.pathname === '/') {
           this.$router.push('/category')
         } else {
           window.location.href = '/#/category'

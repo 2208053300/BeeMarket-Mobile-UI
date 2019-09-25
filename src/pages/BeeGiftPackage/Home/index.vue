@@ -159,10 +159,10 @@ export default {
     async goRecharge() {
       const res = await recharge()
       let callbackUrl = window.location.origin
-      if (window.location.href === '/') {
+      if (window.location.pathname === '/') {
         callbackUrl = callbackUrl + '/#/beeGiftPackage/buySuccess'
       } else {
-        callbackUrl = callbackUrl + '/#/buySuccess'
+        callbackUrl = callbackUrl + '/beeGiftPackage#/buySuccess'
       }
       goPayFromPayInfo(res.data, callbackUrl)
     }
