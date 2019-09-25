@@ -162,7 +162,7 @@ export default {
       if (window.location.href === '/') {
         callbackUrl = callbackUrl + '/#/beeGiftPackage/buySuccess'
       } else {
-        callbackUrl = callbackUrl + '/buySuccess'
+        callbackUrl = callbackUrl + '/#/buySuccess'
       }
       goPayFromPayInfo(res.data, callbackUrl)
     }

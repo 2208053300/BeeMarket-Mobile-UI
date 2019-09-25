@@ -13,7 +13,7 @@ function goPay(query) {
 export function goPayFromOrder(orderNo, callBackUrl) {
   let query = 'orderNo=' + orderNo
   if (callBackUrl) {
-    query += '&call_back_url=' + encodeURIComponent(callBackUrl)
+    query += '&callback_url=' + encodeURIComponent(callBackUrl)
   }
   goPay(query)
 }
@@ -26,7 +26,7 @@ export function goPayFromPayInfo(payInfo, callBackUrl) {
   query += '&wxpay=' + payInfo.pay_methods.wxpay
   query += '&trade_no=' + payInfo.trade_no
   if (callBackUrl) {
-    query += '&call_back_url=' + encodeURIComponent(callBackUrl)
+    query += '&callback_url=' + encodeURIComponent(callBackUrl)
   }
   goPay(query)
 }

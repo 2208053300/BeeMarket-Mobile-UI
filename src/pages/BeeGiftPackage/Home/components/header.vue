@@ -89,6 +89,7 @@ export default {
   position: fixed;
   background: white;
   color: black;
+  z-index: 100;
 }
 .white-back {
   background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(255, 255, 255));
