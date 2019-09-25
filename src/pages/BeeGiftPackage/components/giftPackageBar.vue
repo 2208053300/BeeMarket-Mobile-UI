@@ -35,17 +35,6 @@
         去结算
       </div>
     </div>
-    <div v-if="giftPackage.package_recharge_balance > 0" class="tips tips-bottom">
-      <van-checkbox v-model="useBalance">
-        使用余额
-        <img
-          slot="icon"
-          slot-scope="props"
-          style="width: 0.27rem;height: auto;vertical-align: unset"
-          :src="props.checked ? beeIcon.active : beeIcon.inactive"
-        >
-      </van-checkbox>
-    </div>
   </div>
 </template>
 
@@ -68,7 +57,7 @@ export default {
   computed: {
     ...mapState(['giftPackage']),
     canSettlement() {
-      if (this.giftPackage.use_balance) {
+      if (this.giftPackage.package_recharge_balance > 0) {
         return this.giftPackage.selectedTotalAmount > 0
       } else {
         return this.giftPackage.selectedTotalAmount >= this.maxMoney
@@ -76,14 +65,6 @@ export default {
     },
     tipMoneyText() {
       return (this.maxMoney - this.giftPackage.selectedTotalAmount).toFixed(2)
-    },
-    useBalance: {
-      get() {
-        return this.giftPackage.use_balance
-      },
-      set(val) {
-        this.$store.commit('SET_USE_PACKAGE_BALANCE', val)
-      }
     }
   },
   watch: {},
@@ -128,16 +109,6 @@ export default {
     .money-text {
       color: @BeeDefault;
     }
-  }
-  .tips-bottom {
-    height: 0.56rem;
-    padding-top: 0.08rem;
-    padding-bottom: 0;
-    border-bottom-left-radius: 0.16rem;
-    border-bottom-right-radius: 0.16rem;
-    position: relative;
-    top: -0.08rem;
-    margin-bottom: -0.08rem;
   }
   .bar-body {
     z-index: 1;
