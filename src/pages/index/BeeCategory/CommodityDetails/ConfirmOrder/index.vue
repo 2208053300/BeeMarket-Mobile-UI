@@ -14,17 +14,6 @@
           ￥{{ order.orderDetail.product_amount }}
         </div>
       </van-cell>
-      <van-cell v-if="this.$store.state.giftPackage.use_balance">
-        <div
-          slot="title"
-          class="cell-title"
-        >
-          礼包抵扣
-        </div>
-        <div class="cell-val">
-          -￥{{ order.orderDetail.pgpackage_deduct }}
-        </div>
-      </van-cell>
       <van-cell>
         <div
           slot="title"
@@ -34,6 +23,17 @@
         </div>
         <div class="cell-val">
           ￥{{ order.orderDetail.freight_amount||0 }}
+        </div>
+      </van-cell>
+      <van-cell v-if="this.$store.state.giftPackage.use_balance">
+        <div
+          slot="title"
+          class="cell-title"
+        >
+          礼包抵扣
+        </div>
+        <div class="cell-val">
+          -￥{{ order.orderDetail.pgpackage_deduct }}
         </div>
       </van-cell>
       <!-- 没有公益值的时候隐藏 -->
