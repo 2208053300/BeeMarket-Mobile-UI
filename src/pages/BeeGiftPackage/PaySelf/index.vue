@@ -169,7 +169,7 @@ export default {
     background-color: #fff;
     border-radius: 0.2rem;
     .header-title {
-      margin-top: 0.6rem;
+      padding-top: 0.6rem;
       font-size: 0.28rem;
       color: #666666;
       text-align: center;
