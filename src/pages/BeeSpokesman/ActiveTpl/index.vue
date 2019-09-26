@@ -356,7 +356,7 @@ export default {
       // APP保存图片与微信保存图片
       if (this.osObj.isApp) {
         e.preventDefault()
-        const baseString = this.share_img.slice(23)
+        const baseString = this.share_img.slice(22)
         if (this.osObj.isAndroid) {
           window.beeMarket.SaveShareImgBase64(baseString)
         } else if (this.osObj.isIphone) {
