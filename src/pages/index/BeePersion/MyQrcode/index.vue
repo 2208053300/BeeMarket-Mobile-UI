@@ -5,7 +5,7 @@
         邀请好友加入您的蜂友圈
       </div>
       <div class="header-text2">
-        邀请扫描二维码 - 加入您的蜂友圈和集市一起共享收益
+        邀请扫描二维码 - 加入您的蜂友圈和蜂集市一起共享收益
       </div>
       <div
         class="qrcode-content"
