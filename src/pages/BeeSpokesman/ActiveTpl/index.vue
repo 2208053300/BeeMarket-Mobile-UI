@@ -1,9 +1,6 @@
 <template>
   <div class="spokesman">
-    <van-tabs
-      v-model="active"
-      :sticky="true"
-    >
+    <van-tabs v-model="active" :sticky="true">
       <van-tab title="立即分享">
         <div class="share-desc text-center">
           <p>分享即可为集市代言</p>
@@ -11,61 +8,40 @@
         </div>
         <!-- <div v-if="items.length" class="full-page-slide-wrapper"> -->
         <div class="full-page-slide-wrapper">
-          <swiper
-            ref="mySwiper"
-            :options="swiperOption"
-          >
+          <swiper ref="mySwiper" :options="swiperOption">
             <!-- slides -->
             <template v-for="item in items">
-              <swiper-slide
-                v-if="item.img"
-                :key="item.id"
-              >
+              <swiper-slide v-if="item.img" :key="item.id">
                 <!-- <img :src="item.img" alt @click="toTopic(item)"> -->
                 <img :src="item.img">
               </swiper-slide>
             </template>
-            <div
-              slot="pagination"
-              class="swiper-pagination"
-            />
+            <div slot="pagination" class="swiper-pagination" />
           </swiper>
         </div>
         <!-- 操作 -->
         <ul class="action flex flex-between">
           <li class="text-center">
-            <img
-              :src="icons.save"
-              alt=""
-            >
+            <img :src="icons.save" alt="">
             <span>保存图片</span>
           </li>
           <li class="text-center">
-            <img
-              :src="icons.share"
-              alt=""
-            >
+            <img :src="icons.share" alt="">
             <span>立即分享</span>
           </li>
         </ul>
       </van-tab>
       <van-tab title="自己上传">
         <van-collapse v-model="collapseActive">
-          <van-collapse-item
-            title="生成流程："
-            name="1"
-          >
+          <van-collapse-item title="生成流程：" name="1">
             <p>1.上传一张自己的图片</p>
-            <p>1.选择海报文案</p>
-            <p>1.生成专属代言海报</p>
-            <p>1.分享或者保存到相册，为集市代言</p>
+            <p>2.选择海报文案</p>
+            <p>3.生成专属代言海报</p>
+            <p>4.分享或者保存到相册，为集市代言</p>
           </van-collapse-item>
           <!-- 上传图片 -->
         </van-collapse>
-        <div
-          class="comment-imgs"
-          :class="{hasImg:commentImgs}"
-        >
+        <div class="comment-imgs" :class="{ hasImg: commentImgs }">
           <van-uploader :after-read="onRead">
             <template v-if="commentImgs">
               <div class="comment-img">
@@ -73,7 +49,7 @@
               </div>
             </template>
             <template v-else>
-              <van-icon name="photograph" />
+              <van-icon name="photograph" size="0.5rem" />
               <div class="img-num">
                 <span class="upload-text">添加图片</span>
               </div>
@@ -81,38 +57,28 @@
           </van-uploader>
           <div class="share-content">
             <img
-              v-if="share_img&&showEnd"
+              v-if="share_img && showEnd"
               class="share-img"
               :src="share_img"
             >
           </div>
-          <p
-            v-if="!commentImgs"
-            class="text-center tip"
-          >
+          <p v-if="!commentImgs" class="text-center tip">
             您还没有上传图片，点击上传吧
           </p>
-          <div
-            v-if="commentImgs&&!showEnd"
-            class="poster-text"
-          >
+          <div v-if="commentImgs && !showEnd" class="poster-text">
             <div
-              v-for="(item,index) in posterText"
+              v-for="(item, index) in posterText"
               :key="index"
               class="text-item"
-              :class="{activeItem:activeText===index}"
-              @click="activeText=index"
+              :class="{ activeItem: activeText === index }"
+              @click="activeText = index"
             >
               <van-icon
-                v-if="activeText===index"
+                v-if="activeText === index"
                 name="checked"
                 color="#ffa42f"
               />
-              <van-icon
-                v-else
-                name="circle"
-                color="#999999"
-              />
+              <van-icon v-else name="circle" color="#999999" />
               <div class="text-content">
                 <p class="text1">
                   123
@@ -126,68 +92,38 @@
               </div>
             </div>
           </div>
-          <div
-            v-if="showEnd"
-            class="last-step"
-          >
+          <div v-if="showEnd" class="last-step">
             <div class="action-content">
-              <div
-                class="action-item"
-                @click="changeBg()"
-              >
+              <div class="action-item" @click="changeBg()">
                 <div class="img-content">
-                  <img
-                    :src="icons.pic"
-                    alt=""
-                  >
+                  <img :src="icons.pic" alt="">
                 </div>
                 <span>更换图片</span>
               </div>
-              <div
-                class="action-item"
-                @click="changeText"
-              >
+              <div class="action-item" @click="changeText">
                 <div class="img-content">
-                  <img
-                    :src="icons.text"
-                    alt=""
-                  >
+                  <img :src="icons.text" alt="">
                 </div>
                 <span>更换文案</span>
               </div>
-              <div
-                class="action-item"
-                @click="saveImg"
-              >
-                <a
-                  :href="share_img"
-                  download=""
-                >
+              <div class="action-item" @click="saveImg">
+                <a :href="share_img" download="">
                   <div class="img-content">
-                    <img
-                      :src="icons.save"
-                      alt=""
-                    >
+                    <img :src="icons.save" alt="">
                   </div>
                   <span>保存图片</span>
                 </a>
               </div>
-              <div
-                class="action-item"
-                @click="shareImm"
-              >
+              <div class="action-item" @click="shareImm">
                 <div class="img-content">
-                  <img
-                    :src="icons.share"
-                    alt=""
-                  >
+                  <img :src="icons.share" alt="">
                 </div>
                 <span>立即分享</span>
               </div>
             </div>
           </div>
           <div
-            v-if="commentImgs&&!showEnd"
+            v-if="commentImgs && !showEnd"
             class="next-step"
             @click="doneText"
           >
@@ -581,12 +517,18 @@ export default {
       .van-uploader__wrapper {
         height: 100%;
         .van-icon {
-          padding-top: 0.5rem;
+          margin-bottom: 0.1rem;
+          font-size: 0.3rem;
+          color: #666
         }
+        .upload-text{font-size: 0.28rem; color: #666;}
       }
     }
     .van-uploader__input-wrapper {
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
   }
   .tip {
@@ -655,8 +597,7 @@ export default {
         .img-content {
           width: 0.8rem;
           height: 0.8rem;
-          margin:0 auto 0.2rem;
-
+          margin: 0 auto 0.2rem;
         }
       }
     }
