@@ -54,7 +54,8 @@
       </p>
 
       <!-- 参与者 -->
-      <div v-else class="participant bg-white">
+      <!-- <div v-else class="participant bg-white"> -->
+      <div v-else-if="detail.status!==1" class="participant bg-white">
         <!-- 中奖者信息 -->
         <p v-if="[3,4,5].includes(detail.status)" class="getter-tip text-center">
           {{ detail.join_data.winning_desc }}
