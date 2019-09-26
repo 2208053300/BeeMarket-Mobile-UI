@@ -137,7 +137,7 @@
               >
                 <div class="img-content">
                   <img
-                    src=""
+                    :src="icons.pic"
                     alt=""
                   >
                 </div>
@@ -149,7 +149,7 @@
               >
                 <div class="img-content">
                   <img
-                    src=""
+                    :src="icons.text"
                     alt=""
                   >
                 </div>
@@ -165,7 +165,7 @@
                 >
                   <div class="img-content">
                     <img
-                      src=""
+                      :src="icons.save"
                       alt=""
                     >
                   </div>
@@ -178,7 +178,7 @@
               >
                 <div class="img-content">
                   <img
-                    src=""
+                    :src="icons.share"
                     alt=""
                   >
                 </div>
@@ -655,7 +655,8 @@ export default {
         .img-content {
           width: 0.8rem;
           height: 0.8rem;
-          margin-bottom: 0.2rem;
+          margin:0 auto 0.2rem;
+
         }
       }
     }

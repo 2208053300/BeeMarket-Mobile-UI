@@ -107,7 +107,7 @@
       </p>
     </div>
 
-    <div class="op-item" @click="goSinglePage('/#/beeActiveTpl?id=21')">
+    <div class="op-item" @click="goSinglePage('#/beeActiveTpl?id=21')">
       <div class="img-content">
         <img
           :src="beeIcon.home_icon_agricultural_products"
