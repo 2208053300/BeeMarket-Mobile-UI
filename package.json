@@ -32,7 +32,8 @@
     "vue-meta": "^2.0.4",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "weixin-js-sdk": "^1.4.0-test"
+    "weixin-js-sdk": "^1.4.0-test",
+    "vue-awesome-swiper": "^2.6.7"
   },
   "devDependencies": {
     "@carpenter/vue-tencent-captcha": "^0.1.0",

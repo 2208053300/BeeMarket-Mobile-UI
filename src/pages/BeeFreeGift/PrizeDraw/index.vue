@@ -197,6 +197,19 @@ export default {
   created() {},
   mounted() {
     this.getLinkData()
+
+    // app 调用本地 方法，需将该方法挂载到window
+    window.appShare = this.shareMore
+
+    if (this.osObj.isWx) {
+      //
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(true)
+    } else {
+      //
+    }
   },
   methods: {
     async getLinkData() {
@@ -208,7 +221,7 @@ export default {
         if (this.linkData.is_show === 0) {
           this.closePop()
 
-          this.shareMore()
+          this.onlywxShare()
         }
       } catch (error) {
         console.log(error)
@@ -294,7 +307,20 @@ export default {
         this.showMen = 15
       }
     },
-    // NOTE 送给更多朋友
+    // NOTE 微信分享
+    async onlywxShare() {
+      const res = await getShareData({
+        rid: this.$route.query.id
+      })
+      this.share_data = res.data
+      wxapi.wxShare({
+        title: this.share_data.title,
+        desc: this.share_data.desc,
+        imgUrl: this.share_data.imgUrl,
+        link: this.share_data.link
+      })
+    },
+    // NOTE app分享更多朋友
     async shareMore() {
       const res = await getShareData({
         rid: this.$route.query.id
