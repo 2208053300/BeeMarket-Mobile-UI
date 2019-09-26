@@ -1,6 +1,9 @@
 <template>
   <div class="spokesman">
-    <van-tabs v-model="active">
+    <van-tabs
+      v-model="active"
+      :sticky="true"
+    >
       <van-tab title="立即分享">
         <div class="share-desc text-center">
           <p>分享即可为集市代言</p>
@@ -351,6 +354,14 @@ export default {
     saveImg(e) {
       if (this.osObj.isApp) {
         e.preventDefault()
+        const baseString = this.share_img.slice(23)
+        if (this.osObj.isAndroid) {
+          window.beeMarket.SaveShareImgBase64(baseString)
+        } else if (this.osObj.isIphone) {
+          window.webkit.messageHandlers.ToProducePackage.postMessage({
+            data: baseString
+          })
+        }
       } else {
         return
       }
@@ -511,8 +522,8 @@ export default {
     }
   }
   .comment-imgs.hasImg {
-    margin-top: 0.6rem;
     .van-uploader {
+      margin-top: 1.1rem;
       border: none;
       width: 3.8rem;
     }
@@ -522,14 +533,13 @@ export default {
   }
   .comment-imgs {
     height: 100%;
-    margin-top: 2.32rem;
     display: flex;
     flex-direction: column;
     position: relative;
     .share-content {
       position: absolute;
       left: 0;
-      top: 0.5rem;
+      top: 1.1rem;
       width: 100%;
       text-align: center;
       .share-img {
@@ -564,12 +574,15 @@ export default {
       width: 2rem;
       height: 2rem;
       text-align: center;
-      padding-top: 0.5rem;
+      margin: 0 auto;
+      margin-top: 2.82rem;
       box-sizing: border-box;
       border: 0.04rem dashed @Grey6;
-      margin: 0 auto;
       .van-uploader__wrapper {
         height: 100%;
+        .van-icon {
+          padding-top: 0.5rem;
+        }
       }
     }
     .van-uploader__input-wrapper {
