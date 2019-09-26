@@ -195,6 +195,13 @@ export default {
   computed: {},
   watch: {},
   created() {},
+  beforeDestroy() {
+    if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(false)
+    }
+  },
   mounted() {
     this.getLinkData()
 

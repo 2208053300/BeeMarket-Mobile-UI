@@ -133,15 +133,15 @@ export default {
     this.$store.state.app.beeFooter.show = false
     // this.getIndexData()
 
-    if (this.osObj.isWx) {
-      //
-    } else if (this.osObj.isIphone && this.osObj.isApp) {
-      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
-    } else if (this.osObj.isAndroid && this.osObj.isApp) {
-      window.beeMarket.showShareIcon(false)
-    } else {
-      //
-    }
+    // if (this.osObj.isWx) {
+    //   //
+    // } else if (this.osObj.isIphone && this.osObj.isApp) {
+    //   window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+    // } else if (this.osObj.isAndroid && this.osObj.isApp) {
+    //   window.beeMarket.showShareIcon(false)
+    // } else {
+    //   //
+    // }
   },
   methods: {
     // 获取商品数据
