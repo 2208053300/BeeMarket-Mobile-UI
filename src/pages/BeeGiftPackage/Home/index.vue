@@ -14,9 +14,13 @@
       </div>
     </div>
     <gift-package-bar ref="giftBar" @open-list="openGiftList" />
-    <div v-if="giftPackage.package_recharge_balance===0" class="recharge" @click="goRecharge">
-      去充值
-    </div>
+    <img
+      v-if="giftPackage.package_recharge_balance===0"
+      :src="beeIcon.recharge_icon"
+      class="recharge"
+      alt="去充值"
+      @click="goRecharge"
+    >
     <sku
       :show-sku.sync="showSku"
       :pid="pid"
@@ -43,7 +47,7 @@ import sku from '../components/Sku'
 import GiftPackageList from '../components/giftPackageList'
 import Rule from './components/rule'
 import PackageBuild from '../components/packageBuild'
-import { goPayFromPayInfo } from '@/utils/wxPay'
+import goPayFromPayInfo from '../PaySelf/goPayFromPayInfo'
 export default {
   metaInfo: {
     title: '农礼包产品'
@@ -54,7 +58,8 @@ export default {
     return {
       beeIcon: {
         headImg: require('@/assets/icon/giftPackage/farm_pic_banner@2x.png'),
-        recharge_bg: require('@/assets/icon/giftPackage/farm_pic_recharge.png')
+        recharge_bg: require('@/assets/icon/giftPackage/farm_pic_recharge.png'),
+        recharge_icon: require('@/assets/icon/giftPackage/farm_pic_button.png')
       },
       products: [],
       showSku: false,
@@ -155,13 +160,7 @@ export default {
     // 去充值
     async goRecharge() {
       const res = await recharge()
-      let callbackUrl = window.location.origin
-      if (window.location.pathname === '/') {
-        callbackUrl = callbackUrl + '/#/beeGiftPackage/buySuccess'
-      } else {
-        callbackUrl = callbackUrl + '/beeGiftPackage#/buySuccess'
-      }
-      goPayFromPayInfo(res.data, callbackUrl)
+      goPayFromPayInfo(res.data)
     }
   }
 }
@@ -173,14 +172,11 @@ export default {
   background: #ffe1ba;
   text-align: center;
   .recharge {
-    border-radius: 50px;
-    color: white;
-    line-height: 1.8;
     position: fixed;
-    right: 0.5rem;
+    right: 0.28rem;
     bottom: 2.5rem;
-    width: 100px;
-    background: #7f5723;
+    width: 1.77rem;
+    height: auto;
   }
 }
 .product-list {

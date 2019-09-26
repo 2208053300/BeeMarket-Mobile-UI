@@ -19,7 +19,9 @@ import {
   NavBar,
   Icon,
   Stepper,
-  Checkbox
+  Checkbox,
+  Cell,
+  CellGroup
 } from 'vant'
 
 Vue
@@ -33,6 +35,8 @@ Vue
   .use(Icon)
   .use(Stepper)
   .use(Checkbox)
+  .use(Cell)
+  .use(CellGroup)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

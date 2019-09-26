@@ -822,6 +822,11 @@ const router = new Router({
           path: 'buySuccess',
           name: 'buySuccess',
           component: () => import('@/pages/BeeGiftPackage/BuySuccess')
+        },
+        {
+          path: 'buyGiftPackage',
+          name: 'buyGiftPackage',
+          component: () => import('@/pages/BeeGiftPackage/PaySelf')
         }
       ]
     },
