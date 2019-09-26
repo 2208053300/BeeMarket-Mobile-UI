@@ -220,7 +220,7 @@ export default {
   props: {},
   data() {
     return {
-      active: 1,
+      active: 0,
       icons: {
         save: require('@/assets/icon/spokesman/endorsement_immediately_icon_preservation@2x.png'),
         share: require('@/assets/icon/spokesman/endorsement_immediately_icon_wechat@2x.png'),
