@@ -25,6 +25,17 @@
           ￥{{ order.orderDetail.freight_amount||0 }}
         </div>
       </van-cell>
+      <van-cell v-if="order.orderDetail.pgpackage_deduct !== undefined">
+        <div
+          slot="title"
+          class="cell-title"
+        >
+          礼包抵扣
+        </div>
+        <div class="cell-val">
+          -￥{{ order.orderDetail.pgpackage_deduct }}
+        </div>
+      </van-cell>
       <!-- 没有公益值的时候隐藏 -->
       <van-cell v-if="order.orderDetail.charity_amount" class="deduction-content">
         <div
@@ -151,8 +162,7 @@ export default {
     async confirmGiftPackageOrder() {
       // 获取确认订单
       const res = await confirmOrder(JSON.stringify({
-        os: 'pgpackage',
-        is_special_pgpackage: this.$store.state.giftPackage.use_balance
+        os: 'pgpackage'
       }))
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
@@ -186,8 +196,7 @@ export default {
           anonymous: this.anonymous,
           os: this.$route.query.target || 'general',
           // 此处暂时无赠送好友ot不变
-          ot: 'general',
-          is_special_pgpackage: this.$store.state.giftPackage.use_balance
+          ot: 'general'
         })
       )
       if (res.status_code === 200) {

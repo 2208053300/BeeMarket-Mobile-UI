@@ -89,7 +89,7 @@ export default {
   computed: {
     ...mapState(['giftPackage']),
     canSettlement() {
-      if (this.giftPackage.use_balance) {
+      if (this.giftPackage.package_recharge_balance > 0) {
         return this.giftPackage.selectedTotalAmount > 0
       } else {
         return this.giftPackage.selectedTotalAmount >= this.maxMoney
@@ -98,7 +98,7 @@ export default {
   },
   watch: {
     canSettlement() {
-      if (this.giftPackage.selectedTotalAmount >= this.maxMoney) {
+      if (this.canSettlement && this.giftPackage.package_recharge_balance === 0) {
         this.packageVisible = true
       }
     }

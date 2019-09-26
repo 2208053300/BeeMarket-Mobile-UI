@@ -2,12 +2,6 @@
   <div class="bee-index">
     <bee-header @on-rule="onRule" />
     <img :src="beeIcon.headImg">
-    <div class="recharge">
-      <img :src="beeIcon.recharge_bg">
-      <button @click="goRecharge">
-        购买礼包
-      </button>
-    </div>
     <div class="product-list">
       <div class="item flex flex-wrap">
         <product-item
@@ -20,6 +14,9 @@
       </div>
     </div>
     <gift-package-bar ref="giftBar" @open-list="openGiftList" />
+    <div v-if="giftPackage.package_recharge_balance===0" class="recharge" @click="goRecharge">
+      去充值
+    </div>
     <sku
       :show-sku.sync="showSku"
       :pid="pid"
@@ -56,7 +53,7 @@ export default {
   data() {
     return {
       beeIcon: {
-        headImg: require('@/assets/icon/giftPackage/farm_pic_banner.png'),
+        headImg: require('@/assets/icon/giftPackage/farm_pic_banner@2x.png'),
         recharge_bg: require('@/assets/icon/giftPackage/farm_pic_recharge.png')
       },
       products: [],
@@ -74,7 +71,7 @@ export default {
   computed: {
     ...mapState(['giftPackage']),
     canSettlement() {
-      if (this.giftPackage.use_balance) {
+      if (this.giftPackage.package_recharge_balance > 0) {
         return this.giftPackage.selectedTotalAmount > 0
       } else {
         return this.giftPackage.selectedTotalAmount >= this.maxMoney
@@ -83,7 +80,7 @@ export default {
   },
   watch: {
     canSettlement() {
-      if (this.giftPackage.selectedTotalAmount >= this.maxMoney) {
+      if (this.canSettlement && this.giftPackage.package_recharge_balance === 0) {
         this.packageVisible = true
       }
     }
@@ -176,27 +173,17 @@ export default {
   background: #ffe1ba;
   text-align: center;
   .recharge {
-    height: 3.4rem;
-    position: relative;
-    top: -1.2rem;
-    margin-bottom: -1.2rem;
-    button {
-      position: absolute;
-      bottom: 0.72rem;
-      right: 0.96rem;
-      border: none;
-      border-radius: 20rem;
-      width: 2rem;
-      background: #915212;
-      line-height: 0.64rem;
-      color: white;
-      font-weight: bold;
-      font-size: 0.32rem;
-      padding: 0;
-    }
+    border-radius: 50px;
+    color: white;
+    line-height: 1.8;
+    position: fixed;
+    right: 0.5rem;
+    bottom: 2.5rem;
+    width: 100px;
+    background: #7f5723;
   }
 }
 .product-list {
-  padding: 0 0.28rem 2.56rem 0.28rem;
+  padding: 0 0.28rem 2.56rem 0.2rem;
 }
 </style>
