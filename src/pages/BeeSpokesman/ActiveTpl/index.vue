@@ -339,6 +339,7 @@ export default {
       this.collapseActive = []
     },
     async doneText() {
+      // 点击下一步，生成海报
       this.showEnd = true
       const imgDom = document.querySelector('.comment-img')
       try {
@@ -352,30 +353,55 @@ export default {
       }
     },
     saveImg(e) {
+      // APP保存图片与微信保存图片
       if (this.osObj.isApp) {
         e.preventDefault()
         const baseString = this.share_img.slice(23)
         if (this.osObj.isAndroid) {
           window.beeMarket.SaveShareImgBase64(baseString)
         } else if (this.osObj.isIphone) {
-          window.webkit.messageHandlers.ToProducePackage.postMessage({
+          window.webkit.messageHandlers.ToSaveShareImgBase64.postMessage({
             data: baseString
           })
         }
-      } else {
-        return
+      } else if (this.osObj.isWx) {
+        this.$toast('请长按海报保存到本地！')
       }
     },
     changeBg() {
+      // 更换背景
       this.commentImgs = null
       this.showEnd = false
       this.collapseActive = ['1']
     },
     changeText() {
+      // 更换文字
       this.showEnd = false
     },
     shareImm() {
-      //
+      // TODO 立即分享，需要注入分享信息后调用
+      if (this.osObj.isWx) {
+        //
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToShare.postMessage({
+          title: this.activity.share_data.title,
+          desc: this.activity.share_data.desc,
+          img_path: this.activity.share_data.img,
+          // 地址应该放 web 站 网页
+          url: this.activity.share_data.link
+          // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+        })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToShare(
+          this.activity.share_data.title,
+          this.activity.share_data.desc,
+          this.activity.share_data.img,
+          this.activity.share_data.link
+          // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+        )
+      } else {
+        //
+      }
     }
   }
 }
@@ -655,7 +681,7 @@ export default {
         .img-content {
           width: 0.8rem;
           height: 0.8rem;
-          margin-bottom: 0.2rem;
+          margin: 0 auto 0.2rem;
         }
       }
     }
