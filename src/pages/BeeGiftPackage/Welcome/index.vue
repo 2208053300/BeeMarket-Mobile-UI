@@ -1,18 +1,31 @@
 <template>
   <div>
-    <router-link :to="{name: 'giftPackageHome'}">
+    <div @click="toGiftPackage" style="color: blue">
       去农礼包
-    </router-link>
+    </div>
   </div>
 </template>
 
 <script>
+import { getOs } from '@/utils'
+
 export default {
   props: {},
   data() {
     return {}
   },
-  methods: {}
+  methods: {
+    toGiftPackage() {
+      const osObj = getOs()
+      if (osObj.isIphone && osObj.isApp) {
+        window.webkit.messageHandlers.ToProducePackage.postMessage(1)
+      } else if (osObj.isAndroid && osObj.isApp) {
+        window.beeMarket.ToPackage(false)
+      } else {
+        this.$router.replace({ name: 'giftPackageHome' })
+      }
+    }
+  }
 }
 </script>
 
