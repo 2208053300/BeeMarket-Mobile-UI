@@ -140,6 +140,16 @@ export default {
 
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare
+
+    if (this.osObj.isWx) {
+      //
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(false)
+    } else {
+      //
+    }
   },
   methods: {
     // 获取商品数据
