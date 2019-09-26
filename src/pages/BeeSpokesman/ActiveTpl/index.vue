@@ -38,6 +38,29 @@
             <p>1.生成专属代言海报</p>
             <p>1.分享或者保存到相册，为集市代言</p>
           </van-collapse-item>
+          <!-- 上传图片 -->
+          <div class="comment-imgs" :class="{hasImg:commentImgs}">
+            <van-uploader :after-read="onRead">
+              <template v-if="commentImgs">
+                <div
+                  class="comment-img"
+                >
+                  <img :src="commentImgs.content">
+                </div>
+              </template>
+              <template v-else>
+                <van-icon name="photograph" />
+                <div class="img-num">
+                  <span
+                    class="upload-text"
+                  >添加图片</span>
+                </div>
+              </template>
+            </van-uploader>
+            <p class="text-center tip">
+              您还没有上传图片，请上传
+            </p>
+          </div>
         </van-collapse>
       </van-tab>
     </van-tabs>
@@ -65,7 +88,7 @@ export default {
   props: {},
   data() {
     return {
-      active: 0,
+      active: 1,
       icons: {
         save: require('@/assets/icon/spokesman/endorsement_immediately_icon_preservation@2x.png'),
         share: require('@/assets/icon/spokesman/endorsement_immediately_icon_wechat@2x.png'),
@@ -90,7 +113,6 @@ export default {
 
       defaultIndex: 0,
       swiperOption: {
-
         direction: 'horizontal',
         loop: true,
         // autoplay: 5000,
@@ -105,7 +127,8 @@ export default {
           bulletClass: 'slide_dot'
         }
       },
-      osObj: getOs()
+      osObj: getOs(),
+      commentImgs: null
     }
   },
   computed: {},
@@ -161,7 +184,13 @@ export default {
       } else {
         //
       }
+    },
+
+    onRead(file) {
+      console.log(file)
+      this.commentImgs = file
     }
+
   }
 }
 </script>
@@ -179,22 +208,24 @@ export default {
     background-color: @BeeDefault;
   }
 
-  .share-desc{
+  .share-desc {
     margin: 0.4rem auto;
-    p{margin: 0}
-    p:nth-of-type(1){
+    p {
+      margin: 0;
+    }
+    p:nth-of-type(1) {
       font-size: 0.3rem;
       font-weight: 600;
       color: #333;
-      margin-bottom: 0.2rem
+      margin-bottom: 0.2rem;
     }
-    p:nth-of-type(2){
+    p:nth-of-type(2) {
       font-size: 0.28rem;
       color: #666;
     }
   }
 
-  .action{
+  .action {
     width: 96%;
     margin-left: 2%;
     background: #fff;
@@ -202,8 +233,16 @@ export default {
     margin-top: 0.7rem;
     padding: 0.3rem 1.6rem;
     box-sizing: border-box;
-    img{width: .96rem; height: .96rem; margin-bottom: .2rem}
-    span{font-size: .26rem;color: #333; display: block}
+    img {
+      width: 0.96rem;
+      height: 0.96rem;
+      margin-bottom: 0.2rem;
+    }
+    span {
+      font-size: 0.26rem;
+      color: #333;
+      display: block;
+    }
   }
 
   .full-page-slide-wrapper {
@@ -263,12 +302,67 @@ export default {
     }
   }
 
-  .van-cell{background-color:#FFFBF6;}
-  .van-cell__title span{color: #666; font-size: 0.26rem}
-  .van-collapse-item__content{
-    background-color:#FFFBF6;
-    padding: 0.2rem 0.3rem;
-    p{margin: 0;line-height: 1.7; font-size: 0.24rem}
+  .van-cell {
+    background-color: #fffbf6;
   }
+  .van-cell__title span {
+    color: #666;
+    font-size: 0.26rem;
+  }
+  .van-collapse-item__content {
+    background-color: #fffbf6;
+    padding: 0.2rem 0.3rem;
+    p {
+      margin: 0;
+      line-height: 1.7;
+      font-size: 0.24rem;
+    }
+  }
+  .comment-imgs.hasImg{
+    margin-top:0.6rem;
+    .van-uploader{
+      border: none;
+      width:3.8rem;
+    }
+    .tip{
+      display: none;
+    }
+  }
+  .comment-imgs {
+    margin-top: 2.32rem;
+    display: flex;
+    flex-direction: column;
+    .comment-img {
+      text-align: center;
+      position: relative;
+      img {
+        border-radius: 0.05rem;
+        width: 3.8rem;
+        height: 6.68rem;
+        margin:0 auto
+      }
+    }
+    .upload-img {
+      display: flex;
+      box-sizing: border-box;
+      border-radius: 0.1rem;
+      text-align: center;
+      width: 2rem;
+      height: 2rem;
+      margin: 0 auto;
+    }
+
+    .van-uploader{
+      width: 2rem;
+      height: 2rem;
+      text-align: center;
+      padding-top:0.5rem;
+      box-sizing: border-box;
+      border: 0.04rem dashed @Grey6;
+      margin: 0 auto
+    }
+    .van-uploader__input-wrapper{width: 100%;}
+  }
+  .tip{font-size: 0.28rem;color: #999; display: block}
 }
 </style>

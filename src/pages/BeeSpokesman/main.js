@@ -21,7 +21,9 @@ import {
   Tabs,
   Button,
   Collapse,
-  CollapseItem
+  CollapseItem,
+  Icon,
+  Uploader
 } from 'vant'
 
 Vue.use(Tab)
@@ -30,6 +32,8 @@ Vue.use(Tab)
   .use(Button)
   .use(Collapse)
   .use(CollapseItem)
+  .use(Icon)
+  .use(Uploader)
   .use(VueAwesomeSwiper, /* { default global options } */)
 
 // NOTE 移动端点击延迟
