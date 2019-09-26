@@ -18,7 +18,9 @@ export default {
     toGiftPackage() {
       const osObj = getOs()
       if (osObj.isIphone && osObj.isApp) {
-        window.webkit.messageHandlers.ToProducePackage.postMessage(1)
+        window.webkit.messageHandlers.ToProducePackage.postMessage({
+          alertRule: false
+        })
       } else if (osObj.isAndroid && osObj.isApp) {
         window.beeMarket.ToPackage(false)
       } else {
