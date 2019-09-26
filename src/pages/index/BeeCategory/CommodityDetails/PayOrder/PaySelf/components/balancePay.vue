@@ -97,7 +97,7 @@ export default {
           paypwd: this.password
         })
         if (res.status_code === 200) {
-          if (res.data.extra_url) {
+          if (res.data !== undefined && res.data.extra_url) {
             this.$emit('success', res.data.extra_url) // 发出支付成功事件
           } else {
             this.$emit('success', '') // 发出支付成功事件
