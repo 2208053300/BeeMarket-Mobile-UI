@@ -12,7 +12,8 @@
             <!-- slides -->
             <template v-for="item in items">
               <swiper-slide v-if="item.img" :key="item.id">
-                <img :src="item.img" alt @click="toTopic(item)">
+                <!-- <img :src="item.img" alt @click="toTopic(item)"> -->
+                <img :src="item.img">
               </swiper-slide>
             </template>
             <div slot="pagination" class="swiper-pagination" />
@@ -265,13 +266,18 @@ export default {
         // width: calc(100% - 50px);
         width: 3.76rem;
         border-radius: 5px;
+        transition: height 0.2s linear;
       }
-      // .swiper-slide-active{width: 3.76rem;}
+      .swiper-slide-active{
+        height: 100%;
+      }
       .swiper-slide-prev {
         height: 90% !important;
+        // transition: height 0.2s linear;
       }
       .swiper-slide-next {
         height: 90% !important;
+        // transition: height 0.2s linear;
       }
     }
     img {
