@@ -162,6 +162,7 @@ export default {
 
 <style scoped lang="less">
 .pay-order {
+  padding-top: 46px;
   .pay-header {
     margin: 0.32rem;
     padding: 0 0.32rem 0.6rem;
