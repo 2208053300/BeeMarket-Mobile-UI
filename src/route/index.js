@@ -251,6 +251,7 @@ const router = new Router({
             }
           ]
         }
+
       ]
     },
     {
