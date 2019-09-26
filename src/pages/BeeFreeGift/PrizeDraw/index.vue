@@ -54,7 +54,8 @@
       </p>
 
       <!-- 参与者 -->
-      <div v-else class="participant bg-white">
+      <!-- <div v-else class="participant bg-white"> -->
+      <div v-else-if="detail.status!==1" class="participant bg-white">
         <!-- 中奖者信息 -->
         <p v-if="[3,4,5].includes(detail.status)" class="getter-tip text-center">
           {{ detail.join_data.winning_desc }}
@@ -195,8 +196,28 @@ export default {
   computed: {},
   watch: {},
   created() {},
+  beforeDestroy() {
+    if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(false)
+    }
+  },
   mounted() {
     this.getLinkData()
+
+    // app 调用本地 方法，需将该方法挂载到window
+    window.appShare = this.shareMore
+
+    if (this.osObj.isWx) {
+      //
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(true)
+    } else {
+      //
+    }
   },
   methods: {
     async getLinkData() {
@@ -208,7 +229,7 @@ export default {
         if (this.linkData.is_show === 0) {
           this.closePop()
 
-          this.shareMore()
+          this.onlywxShare()
         }
       } catch (error) {
         console.log(error)
@@ -294,7 +315,20 @@ export default {
         this.showMen = 15
       }
     },
-    // NOTE 送给更多朋友
+    // NOTE 微信分享
+    async onlywxShare() {
+      const res = await getShareData({
+        rid: this.$route.query.id
+      })
+      this.share_data = res.data
+      wxapi.wxShare({
+        title: this.share_data.title,
+        desc: this.share_data.desc,
+        imgUrl: this.share_data.imgUrl,
+        link: this.share_data.link
+      })
+    },
+    // NOTE app分享更多朋友
     async shareMore() {
       const res = await getShareData({
         rid: this.$route.query.id
