@@ -2,6 +2,7 @@
   <div class="prize-draw">
     <!-- top -->
     {{ $store.state.cart.sid }}
+    {{ $store.state.user.is_bind_mobile }}
     <div class="title">
       <p class="tip text-center">
         {{ detail.top_data.status_desc }}
@@ -292,7 +293,7 @@ export default {
 
     // 点击我要领取礼物
     async getGift() {
-      if (!this.$store.state.is_mobile_bind) {
+      if (!this.$store.state.user.is_bind_mobile) {
         this.$store.dispatch('setSid', this.$route.query.id)
         window.location.href = window.location.origin + '/#/persion/profile/accountBind'
         return
