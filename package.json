@@ -1,6 +1,6 @@
 {
   "name": "beemarket-web",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "private": true,
   "description": "beeMarket",
   "author": "beeMarket",
@@ -20,19 +20,20 @@
     "fastclick": "^1.0.6",
     "global": "^4.4.0",
     "hammerjs": "^2.0.8",
-    "html2canvas": "^1.0.0-rc.3",
+    "html2canvas": "^1.0.0-rc.4",
     "js-base64": "^2.5.1",
     "js-cookie": "^2.2.0",
     "qs": "^6.7.0",
     "url-parse": "^1.4.7",
-    "vant": "^2.0.0",
+    "vant": "^2.2.3",
     "video.js": "^7.5.4",
     "vue": "^2.6.6",
     "vue-countup-v2": "^4.0.0",
     "vue-meta": "^2.0.4",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "weixin-js-sdk": "^1.4.0-test"
+    "weixin-js-sdk": "^1.4.0-test",
+    "vue-awesome-swiper": "^2.6.7"
   },
   "devDependencies": {
     "@carpenter/vue-tencent-captcha": "^0.1.0",

@@ -22,6 +22,11 @@ const router = new Router({
           path: 'enterPolicty',
           name: 'enterPolicty',
           component: () => import('@/pages/BeeFactory/EnterPolicty')
+        },
+        {
+          path: 'enterSuccess',
+          name: 'enterSuccess',
+          component: () => import('@/pages/BeeFactory/Success')
         }
       ]
     }

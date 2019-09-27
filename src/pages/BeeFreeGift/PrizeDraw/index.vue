@@ -1,6 +1,8 @@
 <template>
   <div class="prize-draw">
     <!-- top -->
+    <!-- {{ $store.state.cart.sid }}
+    {{ $store.state.user.is_bind_mobile }} -->
     <div class="title">
       <p class="tip text-center">
         {{ detail.top_data.status_desc }}
@@ -54,7 +56,8 @@
       </p>
 
       <!-- 参与者 -->
-      <div v-else class="participant bg-white">
+      <!-- <div v-else class="participant bg-white"> -->
+      <div v-else-if="detail.status!==1" class="participant bg-white">
         <!-- 中奖者信息 -->
         <p v-if="[3,4,5].includes(detail.status)" class="getter-tip text-center">
           {{ detail.join_data.winning_desc }}
@@ -139,6 +142,7 @@
 </template>
 
 <script>
+import { security } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 import { confirmOrder } from '@/api/BeeApi/order'
@@ -172,6 +176,8 @@ export default {
       linkData: {},
       // 获取 os 平台
       osObj: getOs(),
+      // 是否绑定了手机号码
+      is_mobile_bind: false,
       // 分享数据
       share_data: {
         title: '',
@@ -195,8 +201,30 @@ export default {
   computed: {},
   watch: {},
   created() {},
+  beforeDestroy() {
+    if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(false)
+    }
+  },
   mounted() {
     this.getLinkData()
+    this.securityData()
+
+    this.$store.dispatch('setSid', this.$route.query.id)
+    // app 调用本地 方法，需将该方法挂载到window
+    window.appShare = this.shareMore
+
+    if (this.osObj.isWx) {
+      //
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(true)
+    } else {
+      //
+    }
   },
   methods: {
     async getLinkData() {
@@ -208,7 +236,7 @@ export default {
         if (this.linkData.is_show === 0) {
           this.closePop()
 
-          this.shareMore()
+          this.onlywxShare()
         }
       } catch (error) {
         console.log(error)
@@ -265,11 +293,16 @@ export default {
 
     // 点击我要领取礼物
     async getGift() {
+      if (!this.$store.state.user.is_bind_mobile) {
+        this.$store.dispatch('setSid', this.$route.query.id)
+        window.location.href = window.location.origin + '/#/persion/profile/accountBind'
+        return
+      }
       // TODO 跳转下单 参考免费领取茅台和燕窝
       const res = await confirmOrder(
         JSON.stringify({
           os: 'general|present',
-          sid: this.$route.query.id
+          sid: this.$route.query.id || this.$store.state.cart.sid
         })
       )
       if (res.status_code === 200) {
@@ -279,12 +312,17 @@ export default {
           name: 'confirmOrder',
           query: {
             target: 'general|present',
-            sid: this.$route.query.id
+            sid: this.$route.query.id || this.$store.state.cart.sid
           }
         })
       }
     },
 
+    async securityData() {
+      const res = await security()
+      this.is_mobile_bind = res.data.mobile_bind
+      this.$store.dispatch('IsBindMobile', res.data.mobile_bind)
+    },
     // 显示/隐藏更多参与者头像
     showMore(type) {
       this.isMore = type
@@ -294,7 +332,20 @@ export default {
         this.showMen = 15
       }
     },
-    // NOTE 送给更多朋友
+    // NOTE 微信分享
+    async onlywxShare() {
+      const res = await getShareData({
+        rid: this.$route.query.id
+      })
+      this.share_data = res.data
+      wxapi.wxShare({
+        title: this.share_data.title,
+        desc: this.share_data.desc,
+        imgUrl: this.share_data.imgUrl,
+        link: this.share_data.link
+      })
+    },
+    // NOTE app分享更多朋友
     async shareMore() {
       const res = await getShareData({
         rid: this.$route.query.id

@@ -20,7 +20,7 @@
       </div>
       <div class="history-btn">
         <van-button round :to="{path: 'history'}">
-          我的送礼记录 >
+          我的参与记录 >
         </van-button>
       </div>
     </div>
@@ -59,13 +59,35 @@
       </van-list>
     </div>
     <!-- 规则 -->
-    <van-popup v-model="showRule" class="rule-box">
-      <div class=" bg-white">
-        <p>  规则弹框</p>
-        <p>  规则弹框</p>
-        <p>  规则弹框</p>
-        <p>  规则弹框</p>
-        <p>  规则弹框</p>
+    <van-popup v-model="showRule" position="bottom" class="rule-box">
+      <div class="text-right">
+        <img :src="icon.close" alt="" class="close-rule" @click="showRule=false">
+      </div>
+      <img :src="icon.title" alt="" class="rule-title">
+      <div class=" rule-content">
+        <h3>一、送礼攻略</h3>
+        <p>
+          <span>1.1</span>  <span>选择商品，点击“立即送礼”选择礼物并将礼物送给微信好友；</span>
+        </p>
+        <p>
+          <span>1.2</span>  <span>好友点击您的链接并参与抽奖；</span>
+        </p>
+        <p>
+          <span>1.3</span>  <span>在3小时内，参与抽奖人数达到指定人数立刻开奖（随机产生中奖用户）。</span>
+        </p>
+        <h3>二、活动规则</h3>
+        <p>
+          <span>2.1</span>  <span>参与抽奖用户必须为“蜂集市”APP新用户，同一设备、微信号、手机号视为同一用户；</span>
+        </p>
+        <p>
+          <span>2.2</span>  <span>每位用户每日可多次参与免费送礼；</span>
+        </p>
+        <p>
+          <span>2.3</span>  <span>若发现用户存在刷单，虚假用户等违规行为，蜂集市友圈判断单次活动无效；</span>
+        </p>
+        <p>
+          <span>2.4</span>  <span>活动完成后“蜂集市”会在48小时内安排发货，用户可登录APP并前往我的订单中查看物流详情；</span>
+        </p>
       </div>
     </van-popup>
     <!-- 免费送礼弹窗 -->
@@ -77,7 +99,7 @@
 </template>
 
 <script>
-
+import { getOs } from '@/utils'
 import { getIndexData } from '@/api/BeeApi/freeGift'
 import Sku from '../components/Sku'
 import ShowGift from '../components/ShowGift'
@@ -96,7 +118,11 @@ export default {
       showIndicators: false,
       // 是否显示规则弹框
       showRule: false,
-
+      // 规则弹框关闭图片
+      icon: {
+        close: require('@/assets/icon/freeGift/gif_icon_cancel.png'),
+        title: require('@/assets/icon/freeGift/gift_pic_title.png')
+      },
       // 送礼弹框
       showGift: false,
       nowProduct: {},
@@ -118,7 +144,10 @@ export default {
       pageSize: 10,
 
       // sku_id
-      sid: 0
+      sid: 0,
+
+      // 获取 os 平台
+      osObj: getOs()
 
     }
   },
@@ -129,6 +158,16 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     // this.getIndexData()
+
+    // if (this.osObj.isWx) {
+    //   //
+    // } else if (this.osObj.isIphone && this.osObj.isApp) {
+    //   window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+    // } else if (this.osObj.isAndroid && this.osObj.isApp) {
+    //   window.beeMarket.showShareIcon(false)
+    // } else {
+    //   //
+    // }
   },
   methods: {
     // 获取商品数据
@@ -250,9 +289,47 @@ export default {
     }
   }
   .rule-box{
-    width: 5.6rem;
+    width: 100%;
     padding: 0.3rem;
-    border-radius: 0.1rem
+    overflow-y: visible;
+    box-sizing:border-box;
+    background: url(../../../assets/icon/freeGift/gif_pic_bg.png) no-repeat;
+    background-size:100% 100%;
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+    // border-radius: 0.1rem
+    .close-rule{width: .48rem;height: .48rem; margin-bottom: 0.2rem}
+    .rule-title{
+      position: absolute;
+      left: 50%;
+      top: -0.28rem;
+      width: 3.84rem;
+      height: .78rem;
+      transform: translateX(-50%);
+    }
+    .rule-content{
+      background-color: rgba(255,255,255,.8);
+      border-radius: 0.1rem;
+      padding: 0.2rem 0.3rem;
+      h3{
+        color: #FFA42F;
+        font-size:0.36rem;
+      }
+
+      p{
+        display: flex;
+        padding-left: 0.4rem;
+      span:nth-of-type(1){
+        font-weight: 600;
+        margin-right: 0.1rem;
+      }
+
+        margin: 0.1rem 0;
+        font-size: 0.28rem;
+        color: #333;
+        line-height: 1.5;
+      }
+    }
   }
 
 }

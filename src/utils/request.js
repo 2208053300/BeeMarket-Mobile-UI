@@ -1,5 +1,5 @@
 import axios from 'axios'
-import qs from 'qs'
+// import qs from 'qs'
 import { Toast } from 'vant'
 import store from '@/store'
 import {
@@ -50,16 +50,21 @@ service.interceptors.request.use(
       config.headers['Content-Type'] = 'application/json'
       return config
     }
+    // if ('image' in config.data && config.data.image.type.indexOf('image') !== -1) {
+    //   config.headers['Content-Type'] = 'multipart/form-data'
+    // }
     // 去除options预请求方法
-    if (config.method === 'post') {
-      // config.data = qs.stringify(config.data)
-      if (config.data) {
-        const keys = Object.keys(config.data)
-        if (keys.length > 0) {
-          config.data = qs.stringify(config.data)
-        }
-      }
-    }
+    // if (config.method === 'post') {
+    //   // config.data = qs.stringify(config.data)
+    //   if (config.data) {
+    //     const keys = Object.keys(config.data)
+    //     if (keys.length > 0) {
+    //       config.data = qs.stringify(config.data)
+    //     }
+    //   }
+    // }
+    console.log(config.data)
+
     return config
   },
   error => {

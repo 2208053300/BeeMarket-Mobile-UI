@@ -9,7 +9,10 @@
       @close="handleClose"
       @click-overlay="handleClose"
     >
-      <div class="rank-content">
+      <div
+        class="rank-content"
+        :class="{appBottom:osObj.isApp}"
+      >
         <div class="rank-type">
           <div class="type-tab">
             <van-icon
@@ -26,7 +29,7 @@
               class="tab-img"
             />
             <div class="type-num">
-              关联蜂友：<span class="num">{{ friendsData.friend_relation_count||0 }} </span>个
+              间接蜂友：<span class="num">{{ friendsData.friend_relation_count||0 }} </span>个
             </div>
           </div>
           <div
@@ -221,7 +224,7 @@
                     <span
                       v-if="item.friend_count"
                       class="friends"
-                    >（关联蜂友：<span class="num">{{ item.friend_count }}</span>个 ）</span>
+                    >（间接蜂友：<span class="num">{{ item.friend_count }}</span>个 ）</span>
                     <!-- 用户未绑定手机号 -->
                     <span
                       v-if="item.type===3"
@@ -394,8 +397,7 @@ export default {
         wxapi.wxShare({
           title: '蜂集市-蜂友圈',
           desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-          imgUrl:
-            'https://img.fengjishi.com/app/images/share_logo.jpg',
+          imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
           link:
             window.location.href.split('#')[0] +
             '#' +
@@ -412,8 +414,7 @@ export default {
         wxapi.wxShare({
           title: '蜂集市-蜂友圈',
           desc: '就差你了，成为合伙人加入蜂友圈，一起拥有持续收益',
-          imgUrl:
-            'https://img.fengjishi.com/app/images/share_logo.jpg',
+          imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
           link: `https://app.fengjishi.com/beeRegister#/?uid=${this.uid}`
         })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
@@ -598,7 +599,7 @@ export default {
                   font-size: 0.24rem;
                   font-weight: bold;
                   display: inline-block;
-                  max-width: 1.5rem;
+                  max-width: 1.2rem;
                   overflow: hidden;
                   text-overflow: ellipsis;
                   white-space: nowrap;
@@ -655,6 +656,9 @@ export default {
           color: #ffffff;
         }
       }
+    }
+    .appBottom {
+      padding-bottom: 0.2rem;
     }
   }
 }

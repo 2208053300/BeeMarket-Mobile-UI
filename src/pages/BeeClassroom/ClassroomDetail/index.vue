@@ -11,7 +11,7 @@
         <video
           ref="video"
           :src="detail.video_url"
-          :poster="detail.first_screen"
+          :poster="showControls ? '' : detail.first_screen"
           class="video-body"
           :controls="showControls"
         />
@@ -234,7 +234,7 @@ export default {
 <style lang="less">
 .class-room-detail {
   @videoWidth: 6.4rem;
-  @videoHeight: 3.3rem;
+  @videoHeight: 3.6rem;
   p {
     margin: 0;
   }
@@ -260,17 +260,22 @@ export default {
     padding: 0.8rem 0.54rem 0 0.54rem;
     border-radius: 0.08rem;
     position: relative;
+    display: flex;
+    justify-content: center;
     .video-body {
-      background-color: black;
       width: @videoWidth;
       height: @videoHeight;
       border-radius: 0.08rem;
+      object-fit: cover;
     }
     .control {
       width: 1.28rem;
       height: 1.28rem;
-      top: 40%;
-      left: 42%;
+      top: 0.8rem;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
       position: absolute;
       display: flex;
       justify-content: center;

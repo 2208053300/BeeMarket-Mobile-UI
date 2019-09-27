@@ -24,6 +24,11 @@ const router = new Router({
           component: Home
         },
         {
+          path: 'beeSpokesman',
+          name: 'beeSpokesman',
+          component: () => import('@/pages/BeeSpokesman/ActiveTpl')
+        },
+        {
           path: 'beeActiveTpl',
           component: () => import('@/pages/BeeActiveTpl'),
           children: [
@@ -92,6 +97,11 @@ const router = new Router({
               path: 'enterPolicty',
               name: 'enterPolicty',
               component: () => import('@/pages/BeeFactory/EnterPolicty')
+            },
+            {
+              path: 'enterSuccess',
+              name: 'enterSuccess',
+              component: () => import('@/pages/BeeFactory/Success')
             }
           ]
         },
@@ -215,7 +225,7 @@ const router = new Router({
             },
             {
               path: 'confirmOrder',
-              name: 'confirmOrder',
+              name: 'taskConfirmOrder',
               component: () => import('@/pages/BeeTask/ConfirmOrder')
             },
             {
@@ -251,6 +261,7 @@ const router = new Router({
             }
           ]
         }
+
       ]
     },
     {
@@ -805,12 +816,28 @@ const router = new Router({
       children: [
         {
           path: '',
+          name: 'giftPackageWelcome',
+          component: () => import('@/pages/BeeGiftPackage/Welcome')
+        },
+        {
+          path: 'home',
+          name: 'giftPackageHome',
           component: () => import('@/pages/BeeGiftPackage/Home')
         },
         {
           path: 'detail',
           name: 'giftPackagePDetail',
           component: () => import('@/pages/BeeGiftPackage/CommodityDetails')
+        },
+        {
+          path: 'buySuccess',
+          name: 'buySuccess',
+          component: () => import('@/pages/BeeGiftPackage/BuySuccess')
+        },
+        {
+          path: 'buyGiftPackage',
+          name: 'buyGiftPackage',
+          component: () => import('@/pages/BeeGiftPackage/PaySelf')
         }
       ]
     },

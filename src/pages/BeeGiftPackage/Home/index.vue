@@ -14,6 +14,13 @@
       </div>
     </div>
     <gift-package-bar ref="giftBar" @open-list="openGiftList" />
+    <img
+      v-if="giftPackage.package_recharge_balance===0"
+      :src="beeIcon.recharge_icon"
+      class="recharge"
+      alt="去充值"
+      @click="goRecharge"
+    >
     <sku
       :show-sku.sync="showSku"
       :pid="pid"
@@ -31,7 +38,7 @@
 </template>
 
 <script>
-import { getIndexData, packageAdd } from '@/api/BeeApi/giftPackage'
+import { getIndexData, packageAdd, recharge } from '@/api/BeeApi/giftPackage'
 import { mapState } from 'vuex'
 import BeeHeader from './components/header'
 import ProductItem from './components/productItem'
@@ -40,6 +47,7 @@ import sku from '../components/Sku'
 import GiftPackageList from '../components/giftPackageList'
 import Rule from './components/rule'
 import PackageBuild from '../components/packageBuild'
+import goPayFromPayInfo from '../PaySelf/goPayFromPayInfo'
 export default {
   metaInfo: {
     title: '农礼包产品'
@@ -49,7 +57,9 @@ export default {
   data() {
     return {
       beeIcon: {
-        headImg: require('@/assets/icon/giftPackage/farm_pic_banner@2x.png')
+        headImg: require('@/assets/icon/giftPackage/farm_pic_banner@2x.png'),
+        recharge_bg: require('@/assets/icon/giftPackage/farm_pic_recharge.png'),
+        recharge_icon: require('@/assets/icon/giftPackage/farm_pic_button.png')
       },
       products: [],
       showSku: false,
@@ -66,12 +76,16 @@ export default {
   computed: {
     ...mapState(['giftPackage']),
     canSettlement() {
-      return this.giftPackage.selectedTotalAmount >= this.maxMoney
+      if (this.giftPackage.package_recharge_balance > 0) {
+        return this.giftPackage.selectedTotalAmount > 0
+      } else {
+        return this.giftPackage.selectedTotalAmount >= this.maxMoney
+      }
     }
   },
   watch: {
     canSettlement() {
-      if (this.giftPackage.selectedTotalAmount >= this.maxMoney) {
+      if (this.canSettlement && this.giftPackage.package_recharge_balance === 0) {
         this.packageVisible = true
       }
     }
@@ -142,6 +156,11 @@ export default {
       this.$refs.giftBar.$el.style.zIndex = this.zIndex
       this.zIndex += 4
       this.giftListVisible = true
+    },
+    // 去充值
+    async goRecharge() {
+      const res = await recharge()
+      goPayFromPayInfo(res.data)
     }
   }
 }
@@ -152,8 +171,15 @@ export default {
   padding-top: 46px;
   background: #ffe1ba;
   text-align: center;
+  .recharge {
+    position: fixed;
+    right: 0.28rem;
+    bottom: 2.5rem;
+    width: 1.77rem;
+    height: auto;
+  }
 }
 .product-list {
-  padding: 0 0.28rem 2rem 0.28rem;
+  padding: 0 0.28rem 2.56rem 0.2rem;
 }
 </style>

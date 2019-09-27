@@ -1,6 +1,6 @@
 <template>
-  <div class="gift-bar flex flex-column align-center" @click="$emit('open-list')">
-    <div v-if="giftPackage.showTip" class="tips">
+  <div class="gift-bar flex flex-column align-center">
+    <div v-if="giftPackage.showTip && giftPackage.package_recharge_balance===0" class="tips">
       <span v-if="giftPackage.selectedTotalAmount===0">
         任意搭配满<span class="money-text"> {{ maxMoney }} 元</span>，自动生成礼包！
       </span>
@@ -9,7 +9,10 @@
       </span>
       <span v-if="giftPackage.selectedTotalAmount >= maxMoney">礼包已生成</span>
     </div>
-    <div class="bar-body">
+    <div v-if="giftPackage.showTip && giftPackage.package_recharge_balance > 0" class="tips">
+      剩余<span class="money-text"> {{ giftPackage.package_recharge_balance }} 元</span>可使用（金额永不失效）
+    </div>
+    <div class="bar-body" @click="$emit('open-list')">
       <!-- 礼包图标 -->
       <div class="package">
         <img
@@ -47,7 +50,9 @@ export default {
     return {
       beeIcon: {
         lightPackage: require('@/assets/icon/giftPackage/farm_pic_ceremony_n@2x.png'),
-        packages: require('@/assets/icon/giftPackage/farm_pic_ceremony_d@2x.png')
+        packages: require('@/assets/icon/giftPackage/farm_pic_ceremony_d@2x.png'),
+        active: require('@/assets/icon/giftPackage/farm_icon_check.png'),
+        inactive: require('@/assets/icon/giftPackage/farm_icon_uncheck.png')
       },
       maxMoney: 599
     }
@@ -55,7 +60,11 @@ export default {
   computed: {
     ...mapState(['giftPackage']),
     canSettlement() {
-      return this.giftPackage.selectedTotalAmount >= this.maxMoney
+      if (this.giftPackage.package_recharge_balance > 0) {
+        return this.giftPackage.selectedTotalAmount > 0
+      } else {
+        return this.giftPackage.selectedTotalAmount >= this.maxMoney
+      }
     },
     tipMoneyText() {
       return (this.maxMoney - this.giftPackage.selectedTotalAmount).toFixed(2)
@@ -68,7 +77,7 @@ export default {
     // 去结算
     goSettlement() {
       if (this.canSettlement) {
-        if (window.location.href === '/') {
+        if (window.location.pathname === '/') {
           this.$router.push('/category/details/confirmOrder?target=pgpackage')
         } else {
           window.location.href = '/#/category/details/confirmOrder?target=pgpackage'
@@ -105,6 +114,7 @@ export default {
     }
   }
   .bar-body {
+    z-index: 1;
     width: 6.8rem;
     height: 1rem;
     position: relative;

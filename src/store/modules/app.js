@@ -6,7 +6,9 @@ const app = {
       active: 0
     },
     backTop: false,
+    backTopHide: false, // 隐藏小蜜蜂
     pushName: '',
+    pushQuery: {},
     // 图片错误时加载默认图片填充
     defaultImg:
       "this.src='https://img.fengjishi.com.cn/product/album/2019/06/03204403fnhaQkphpQ6l19R.jpeg'",
@@ -31,6 +33,9 @@ const app = {
     },
     SET_BACKTOP: (state, backTop) => {
       state.backTop = backTop
+    },
+    SET_BACKTOP_HIDE: (state, hide) => {
+      state.backTopHide = hide
     },
     SET_PUSHNAME: (state, pushName) => {
       state.pushName = pushName

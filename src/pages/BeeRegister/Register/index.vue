@@ -7,13 +7,14 @@
         <video
           ref="video"
           :src="video.video_url"
-          :poster="video.first_screen"
+          :poster="video.showControls ? '': video.first_screen"
           class="video-body"
           :controls="video.showControls"
           webkit-playsinline="true"
           playsinline
           x5-video-player-type="h5"
           x5-video-player-fullscreen="true"
+          :style="{height: videoHeight}"
         />
         <!-- <div v-if="!video.showControls" style="position: relative"> -->
 
@@ -82,7 +83,12 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    videoHeight() {
+      const width = document.documentElement.clientWidth || document.body.clientWidth
+      return width / 16 * 9 + 'px'
+    }
+  },
   watch: {},
   // beforeRouteEnter(to, from, next) {
   //   if (window.localStorage.removeItem('BM-App-Token')) {
@@ -131,6 +137,7 @@ export default {
     background-color: black;
     width: 100%;
     height: 4.35rem;
+    object-fit: cover;
   }
   .control {
     width: 1.28rem;

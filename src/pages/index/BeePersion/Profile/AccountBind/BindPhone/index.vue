@@ -108,6 +108,9 @@ export default {
       return reg.test(this.phone) && reg2.test(this.verificationCode)
     },
     async sendSmsData() {
+      if (this.countDown !== 0) {
+        return
+      }
       if (this.$route.query.reason === 'beeFriends') {
         this.toastMessage.clear()
       }
@@ -135,6 +138,7 @@ export default {
         })
         this.$toast(res.message)
         if (res.status_code === 200) {
+          this.$store.dispatch('IsBindMobile', true)
           setTimeout(() => {
             // this.$router.push({ path: '/persion/profile/accountBind' })
             // this.$router.push({ name: this.$store.state.app.pushName })
@@ -150,7 +154,7 @@ export default {
       this.countDown = 60
       const clock = window.setInterval(() => {
         this.countDown--
-        if (this.countDown === 0) {
+        if (this.countDown <= 0) {
           window.clearInterval(clock)
         }
       }, 1000)

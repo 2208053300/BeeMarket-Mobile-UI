@@ -4,7 +4,9 @@ const cart = {
     cartSelected: [],
     skuId: 0,
     pNumber: 1,
-    showSku: false
+    showSku: false,
+    // 送礼id
+    sid: null
   },
   mutations: {
     SET_CartINFO: (state, cartInfo) => {
@@ -12,12 +14,21 @@ const cart = {
     },
     SET_CARTSELECTED: (state, cartSelected) => {
       state.cartSelected = cartSelected
+    },
+    SET_SID: (state, sid) => {
+      state.sid = sid
     }
   },
   actions: {
     GetCartInfo({ commit }, uid) {
       return new Promise(resolve => {
         commit('SET_CartINFO')
+        resolve()
+      })
+    },
+    setSid({ commit }, sid) {
+      return new Promise(resolve => {
+        commit('SET_SID', sid)
         resolve()
       })
     }

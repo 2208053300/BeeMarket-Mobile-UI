@@ -10,7 +10,7 @@ import '@/main'
 import '@/utils/flexiable'
 
 import { List, Button, Swipe, SwipeItem, Popup, ImagePreview, Icon, CellGroup, Cell, Field, ActionSheet, GoodsAction, GoodsActionIcon,
-  GoodsActionButton } from 'vant'
+  GoodsActionButton, SwitchCell, Row, Col, Loading } from 'vant'
 
 Vue
   .use(List)
@@ -27,6 +27,10 @@ Vue
   .use(GoodsAction)
   .use(GoodsActionIcon)
   .use(GoodsActionButton)
+  .use(SwitchCell)
+  .use(Row)
+  .use(Col)
+  .use(Loading)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

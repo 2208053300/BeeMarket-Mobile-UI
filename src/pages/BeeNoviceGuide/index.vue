@@ -7,7 +7,7 @@
         <video
           ref="video"
           :src="video_url"
-          :poster="beeIcon.first_screen"
+          :poster="showControls ? '' : beeIcon.first_screen"
           class="video-body"
           :controls="showControls"
         />
@@ -86,7 +86,7 @@ export default {
 <style scoped lang="less">
 .novice-guide {
   @videoWidth: 6.4rem;
-  @videoHeight: 3.3rem;
+  @videoHeight: 3.6rem;
   .video-container {
     background: url(../../assets/icon/noviceGuide/00-新手教培_改_02.png);
     background-size: cover;
@@ -96,10 +96,10 @@ export default {
       height: @videoHeight;
       border-radius: 0.08rem;
       .video-body {
-        background-color: black;
         width: @videoWidth;
         height: @videoHeight;
         border-radius: 0.08rem;
+        object-fit: cover;
       }
       .control {
         width: @videoWidth;

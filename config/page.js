@@ -134,5 +134,15 @@ module.exports = {
   beeActionList: {
     entry: 'src/pages/BeeActionList/main.js',
     title: '公益动态'
+  },
+  // 公益代言
+  beeSpokesman: {
+    entry: 'src/pages/BeeSpokesman/main.js',
+    title: '我为公益代言'
+  },
+  // 联创大赛报名
+  lcEnrolling: {
+    entry: 'src/pages/LcEnrolling/main.js',
+    title: '联创大赛'
   }
 }

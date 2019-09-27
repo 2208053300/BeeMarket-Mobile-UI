@@ -15,12 +15,28 @@ const router = new Router({
       children: [
         {
           path: '',
+          name: 'giftPackageWelcome',
+          component: () => import('@/pages/BeeGiftPackage/Welcome')
+        },
+        {
+          path: 'home',
+          name: 'giftPackageHome',
           component: () => import('@/pages/BeeGiftPackage/Home')
         },
         {
           path: 'detail',
           name: 'giftPackagePDetail',
           component: () => import('@/pages/BeeGiftPackage/CommodityDetails')
+        },
+        {
+          path: 'buySuccess',
+          name: 'buySuccess',
+          component: () => import('@/pages/BeeGiftPackage/BuySuccess')
+        },
+        {
+          path: 'buyGiftPackage',
+          name: 'buyGiftPackage',
+          component: () => import('@/pages/BeeGiftPackage/PaySelf')
         }
       ]
     }

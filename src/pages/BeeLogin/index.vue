@@ -99,6 +99,9 @@ export default {
       }
     },
     async sendSmsData() {
+      if (this.countDown !== 0) {
+        return
+      }
       try {
         const res = await sendSms({ mobileNum: this.phone, type: 'login' })
         if (res.status_code === 200) {
@@ -126,7 +129,7 @@ export default {
       this.countDown = 60
       const clock = window.setInterval(() => {
         this.countDown--
-        if (this.countDown === 0) {
+        if (this.countDown <= 0) {
           window.clearInterval(clock)
         }
       }, 1000)
