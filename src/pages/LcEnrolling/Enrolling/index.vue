@@ -262,9 +262,9 @@ export default {
       }
       await join(this.form)
       if (getOs().isApp) {
-        await this.$router.push({ name: 'enrollingSucceedWechat' })
+        await this.$router.replace({ name: 'enrollingSucceedWechat' })
       } else {
-        await this.$router.push({ name: 'lcEnrollingSucceed' })
+        await this.$router.replace({ name: 'lcEnrollingSucceed' })
       }
     },
     async getVerify() {
