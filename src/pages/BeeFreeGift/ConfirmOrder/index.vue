@@ -124,7 +124,7 @@ export default {
       // TODO 缺少农副产品和限量蜂抢字段获取
       const res = await createOrder(
         JSON.stringify({
-          sid: this.$route.query.sid,
+          sid: this.$route.query.sid || this.$store.state.cart.sid,
           addr_id: this.order.addrDetail.addr_id,
           stores: storeData,
           charity_used: this.charity_used,
