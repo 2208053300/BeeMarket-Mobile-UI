@@ -27,7 +27,7 @@
           rows="3"
           autosize
         />
-        <!-- <van-cell
+        <van-cell
           title="标签"
           class="address-tag"
         >
@@ -54,9 +54,17 @@
               学校
             </div>
           </div>
-        </van-cell> -->
+        </van-cell>
       </van-cell-group>
-
+      <van-cell-group style="margin-top:0.3rem;">
+        <van-switch-cell
+          v-model="beeForm.def"
+          title="设为默认"
+          :active-color="BeeDefault"
+          :active-value="1"
+          :inactive-value="0"
+        />
+      </van-cell-group>
       <van-popup
         v-model="showArea"
         position="bottom"
@@ -72,14 +80,14 @@
         class="save-button"
         @click="editAddress"
       >
-        领取礼物
+        保存
       </van-button>
       <van-button
         v-else
         class="save-button"
         @click="saveAddress"
       >
-        领取礼物
+        保存
       </van-button>
     </div>
   </div>
@@ -102,7 +110,7 @@ export default {
   data() {
     return {
       beeForm: {
-        tag: 'home',
+        tag: '',
         last_id: ''
       },
       BeeDefault,
