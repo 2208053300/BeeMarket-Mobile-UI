@@ -61,7 +61,7 @@ export default {
     async securityData() {
       const res = await security()
       if (!res.data.mobile_bind) {
-        window.location.href = window.location.origin + '/#//persion/profile/accountBind'
+        window.location.href = window.location.origin + '/#/persion/profile/accountBind'
         // this.$router.replace('/persion/profile/accountBind')
       }
     }

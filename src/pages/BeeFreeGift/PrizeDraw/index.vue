@@ -290,7 +290,7 @@ export default {
     // 点击我要领取礼物
     async getGift() {
       if (!this.is_mobile_bind) {
-        window.location.href = window.location.origin + '/#//persion/profile/accountBind'
+        window.location.href = window.location.origin + '/#/persion/profile/accountBind'
         return
       }
       // TODO 跳转下单 参考免费领取茅台和燕窝
