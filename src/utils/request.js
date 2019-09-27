@@ -1,5 +1,5 @@
 import axios from 'axios'
-import qs from 'qs'
+// import qs from 'qs'
 import { Toast } from 'vant'
 import store from '@/store'
 import {
@@ -12,6 +12,7 @@ import {
   setVerify
 } from '@/utils/auth'
 import { isJSON } from '@/utils'
+import { log } from 'util'
 
 const service = axios.create({
   // api 的 base_url
@@ -51,15 +52,17 @@ service.interceptors.request.use(
       return config
     }
     // 去除options预请求方法
-    if (config.method === 'post') {
-      // config.data = qs.stringify(config.data)
-      if (config.data) {
-        const keys = Object.keys(config.data)
-        if (keys.length > 0) {
-          config.data = qs.stringify(config.data)
-        }
-      }
-    }
+    // if (config.method === 'post') {
+    //   // config.data = qs.stringify(config.data)
+    //   if (config.data) {
+    //     const keys = Object.keys(config.data)
+    //     if (keys.length > 0) {
+    //       config.data = qs.stringify(config.data)
+    //     }
+    //   }
+    // }
+    console.log(config.data)
+
     return config
   },
   error => {

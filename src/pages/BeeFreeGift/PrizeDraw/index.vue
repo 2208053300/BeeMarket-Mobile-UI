@@ -1,8 +1,8 @@
 <template>
   <div class="prize-draw">
     <!-- top -->
-    {{ $store.state.cart.sid }}
-    {{ $store.state.user.is_bind_mobile }}
+    <!-- {{ $store.state.cart.sid }}
+    {{ $store.state.user.is_bind_mobile }} -->
     <div class="title">
       <p class="tip text-center">
         {{ detail.top_data.status_desc }}
