@@ -534,7 +534,7 @@ export default {
 
     .van-uploader {
       width: 2rem;
-      height: 2rem;
+      min-height: 2rem;
       text-align: center;
       margin: 0 auto;
       margin-top: 2.82rem;
