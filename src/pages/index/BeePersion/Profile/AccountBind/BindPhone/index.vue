@@ -138,6 +138,7 @@ export default {
         })
         this.$toast(res.message)
         if (res.status_code === 200) {
+          this.$store.dispatch('IsBindMobile', true)
           setTimeout(() => {
             // this.$router.push({ path: '/persion/profile/accountBind' })
             // this.$router.push({ name: this.$store.state.app.pushName })
