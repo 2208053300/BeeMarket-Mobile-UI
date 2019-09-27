@@ -42,7 +42,7 @@ export default {
     margin: 0;
   }
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: black;
   background-image: url("../../../assets/icon/lcEnrollingSucceed/wechat_competition_leaderboard_img_bg.png");
   background-size: cover;
