@@ -321,7 +321,7 @@ export default {
         loop: true,
         autoplay: false,
         slidesPerView: 'auto',
-        loopedSlides: 5,
+        loopedSlides: 4,
         centeredSlides: true,
         spaceBetween: 20,
         slideToClickedSlide: true,
@@ -329,7 +329,7 @@ export default {
         coverflowEffect: {
           rotate: 0,
           stretch: 0,
-          depth: 300,
+          depth: 200,
           modifier: 1,
           slideShadows: false
         }
@@ -399,6 +399,10 @@ export default {
     async getTemplatesData() {
       const res = await getTemplates()
       this.posterImages = res.data
+      setTimeout(() => {
+        this.$refs.mySwiper.swiper.init()
+        // this.$refs.mySwiper.swiper.slideTo(1)
+      }, 1000)
     },
     // 获取用户二维码
     async getQrcodeData() {
