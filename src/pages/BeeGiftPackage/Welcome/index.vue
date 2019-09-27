@@ -4,7 +4,7 @@
     <div class="video">
       <video
         ref="video"
-        src="https://img.fengjishi.com.cn/bsm/marketing/fairClass_mg4hml1a4LpTm8fu.mp4"
+        src="https://img.fengjishi.com/app/videos/produce/produce_charity.mp4"
         :poster="video.showControls ? '' : video.first_screen"
         class="video-body"
         :controls="video.showControls"
