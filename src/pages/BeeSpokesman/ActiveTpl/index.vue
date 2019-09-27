@@ -319,21 +319,25 @@ export default {
       swiperOption: {
         direction: 'horizontal',
         loop: true,
-        // autoplay: 5000,
-        observer: true,
-        observerParents: true,
-        observeSlideChildren: true,
         autoplay: false,
         slidesPerView: 'auto',
+        loopedSlides: 4,
         centeredSlides: true,
-        spaceBetween: 10,
+        spaceBetween: 20,
         slideToClickedSlide: true,
-        // 如果需要分页器
-        pagination: {
-          el: '.swiper-pagination',
-          bulletActiveClass: 'slide_dot_active',
-          bulletClass: 'slide_dot'
+        effect: 'coverflow',
+        coverflowEffect: {
+          rotate: 0,
+          stretch: 0,
+          depth: 200,
+          modifier: 1,
+          slideShadows: false
         }
+        // slidesPerView: 'auto',
+        // spaceBetween: 10,
+        // centeredSlides: true,
+        // loop: true
+
       },
       osObj: getOs(),
       commentImgs: '',
@@ -395,6 +399,10 @@ export default {
     async getTemplatesData() {
       const res = await getTemplates()
       this.posterImages = res.data
+      setTimeout(() => {
+        this.$refs.mySwiper.swiper.init()
+        // this.$refs.mySwiper.swiper.slideTo(1)
+      }, 1000)
     },
     // 获取用户二维码
     async getQrcodeData() {
@@ -661,9 +669,9 @@ export default {
       .swiper-slide {
         width: 3.76rem;
         border-radius: 5px;
-
         transform: scaleY(0.9);
         transition: all 0.3s linear;
+
         .qrcode-content2 {
           position: absolute;
           bottom: 0.5rem;
@@ -681,12 +689,12 @@ export default {
         height: 100%;
         transform: scaleY(1);
       }
-      // .swiper-slide-prev {
-
-      // }
-      // .swiper-slide-next {
-
-      // }
+      .swiper-slide-prev {
+            //  height: 90% !important;
+      }
+      .swiper-slide-next {
+            // height: 90% !important;
+      }
     }
     img {
       object-fit: fill;
