@@ -64,7 +64,10 @@
           >
           <span>保存图片</span>
         </li>
-        <li class="text-center">
+        <li
+          class="text-center"
+          @click="saveImg2"
+        >
           <img
             :src="icons.share"
             alt=""
@@ -88,13 +91,13 @@
       </van-collapse>
       <div
         class="comment-imgs"
-        :class="{ hasImg: commentImgs }"
+        :class="{ hasImg: commentImgs||share_ori }"
       >
         <van-uploader :after-read="onRead">
-          <template v-if="commentImgs">
+          <template v-if="commentImgs||share_ori">
             <div
               class="comment-img"
-              :style="{backgroundImage:'url('+commentImgs.content|share_ori+')'}"
+              :style="{backgroundImage:'url('+commentImgs.content||share_ori+')'}"
             >
               <!-- <img :src="commentImgs.content"> -->
               <img
@@ -129,13 +132,13 @@
           >
         </div>
         <p
-          v-if="!commentImgs"
+          v-if="!commentImgs||!share_ori"
           class="text-center tip"
         >
           您还没有上传图片，点击上传吧
         </p>
         <div
-          v-if="commentImgs && !showEnd"
+          v-if="(commentImgs||share_ori) && !showEnd"
           class="poster-text"
         >
           <div
@@ -229,7 +232,7 @@
           </div>
         </div>
         <div
-          v-if="commentImgs && !showEnd"
+          v-if="(commentImgs||share_ori) && !showEnd"
           class="next-step"
           @click="doneText"
         >
@@ -362,16 +365,6 @@ export default {
     this.getIssetData()
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare
-
-    if (this.osObj.isWx) {
-      //
-    } else if (this.osObj.isIphone && this.osObj.isApp) {
-      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
-    } else if (this.osObj.isAndroid && this.osObj.isApp) {
-      window.beeMarket.showShareIcon(true)
-    } else {
-      //
-    }
   },
   methods: {
     // 获取模板
@@ -431,6 +424,8 @@ export default {
     },
 
     async onRead(file) {
+      this.commentImgs = file
+      this.collapseActive = []
       try {
         console.log(file)
 
@@ -438,8 +433,6 @@ export default {
       } catch (error) {
         this.$toast('上传图片失败！')
       }
-      this.commentImgs = file
-      this.collapseActive = []
     },
     async doneText() {
       // 点击下一步，生成海报
@@ -465,12 +458,6 @@ export default {
       }
     },
     async saveImg(e) {
-      try {
-        await postGenerated({ image: this.share_img })
-      } catch (error) {
-        this.$toast('上传图片失败！')
-      }
-
       // APP保存图片与微信保存图片
       if (this.osObj.isApp) {
         e.preventDefault()
@@ -478,35 +465,41 @@ export default {
         if (this.osObj.isAndroid) {
           window.beeMarket.SaveShareImgBase64(baseString)
         } else if (this.osObj.isIphone) {
-          window.webkit.messageHandlers.ToDownloadImage.postMessage({
+          window.webkit.messageHandlers.ToSaveShareImgBase64.postMessage({
             data: baseString
           })
         }
       } else if (this.osObj.isWx) {
         this.$toast('请长按海报保存到本地！')
       }
+      try {
+        await postGenerated({ image: this.share_img })
+      } catch (error) {
+        this.$toast('上传图片失败！')
+      }
     },
-
-    async saveImg2(e) {
-      const imgDom = document.querySelector('.van-uploader')
+    async createImg() {
+      const imgDom = document.querySelector('.swiper-slide-active')
       try {
         const canvasImg = await html2canvas(imgDom, {
-          scrollX: 0,
-          scrollY: 0,
-          x: imgDom.offsetLeft,
-          y:
-            imgDom.offsetTop +
-            document.querySelector('.comment-imgs').offsetTop,
+          // scrollX: 0,
+          // scrollY: 0,
+          // x: imgDom.offsetLeft,
+          y: document.querySelector('.full-page-slide-wrapper').offsetTop,
           // 必须获得其距离顶部距离，避免滚动偏移
           backgroundColor: null
         })
         const img = canvasImg.toDataURL('image/png')
         this.$toast('生成专属海报成功！')
         this.share_img = img
+        console.log(this.share_img)
       } catch (error) {
         console.log(error)
         this.$toast('生成专属海报失败！')
       }
+    },
+    async saveImg2(e) {
+      await this.createImg()
       // APP保存图片与微信保存图片
       if (this.osObj.isApp) {
         e.preventDefault()
@@ -514,7 +507,7 @@ export default {
         if (this.osObj.isAndroid) {
           window.beeMarket.SaveShareImgBase64(baseString)
         } else if (this.osObj.isIphone) {
-          window.webkit.messageHandlers.ToDownloadImage.postMessage({
+          window.webkit.messageHandlers.ToSaveShareImgBase64.postMessage({
             data: baseString
           })
         }
@@ -540,7 +533,24 @@ export default {
         if (this.osObj.isAndroid) {
           window.beeMarket.ToShareImgBase64(baseString)
         } else if (this.osObj.isIphone) {
-          window.webkit.messageHandlers.ToSaveShareImgBase64.postMessage({
+          window.webkit.messageHandlers.ToShareImgBase64.postMessage({
+            data: baseString
+          })
+        }
+      } else {
+        this.$toast('请长按海报保存到本地！')
+      }
+    },
+    async shareImm2(e) {
+      await this.createImg()
+      // TODO 立即分享，需要注入分享信息后调用
+      if (this.osObj.isApp) {
+        e.preventDefault()
+        const baseString = this.share_img.slice(22)
+        if (this.osObj.isAndroid) {
+          window.beeMarket.ToShareImgBase64(baseString)
+        } else if (this.osObj.isIphone) {
+          window.webkit.messageHandlers.ToShareImgBase64.postMessage({
             data: baseString
           })
         }
