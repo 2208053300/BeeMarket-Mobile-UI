@@ -65,9 +65,9 @@ export default {
           path: '/'
         })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.goIndex.postMessage('')
+        window.webkit.messageHandlers.GoIndex.postMessage('')
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
-        window.beeMarket.goIndex()
+        window.beeMarket.GoIndex()
       } else {
         this.$router.push({
           path: '/'
