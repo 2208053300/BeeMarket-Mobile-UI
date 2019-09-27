@@ -102,10 +102,30 @@
         :class="{ hasImg: commentImgs||share_ori }"
       >
         <van-uploader :after-read="onRead">
-          <template v-if="commentImgs||share_ori">
+          <template v-if="share_ori">
             <div
               class="comment-img"
-              :style="{backgroundImage:'url('+commentImgs.content||share_ori+')'}"
+              :style="{backgroundImage:'url('+share_ori+')'}"
+            >
+              <!-- <img :src="commentImgs.content"> -->
+              <img
+                :src="wenan[activeText]"
+                alt=""
+                class="wenan"
+              >
+              <div class="qrcode-content">
+                <img
+                  class="qrcode"
+                  :src="qrcodeBase64"
+                  alt=""
+                >
+              </div>
+            </div>
+          </template>
+          <template v-else>
+            <div
+              class="comment-img"
+              :style="{backgroundImage:'url('+commentImgs+')'}"
             >
               <!-- <img :src="commentImgs.content"> -->
               <img
@@ -320,7 +340,7 @@ export default {
         }
       },
       osObj: getOs(),
-      commentImgs: null,
+      commentImgs: '',
       posterText: [
         {
           text1: '不套路，不营销，',
@@ -380,7 +400,7 @@ export default {
     // 获取模板
     async getTemplatesData() {
       const res = await getTemplates()
-      this.posterImages.push(res.data)
+      this.posterImages = res.data
     },
     // 获取用户二维码
     async getQrcodeData() {
@@ -395,7 +415,9 @@ export default {
         const res2 = await getOrigin()
         this.share_ori = res2.data.image_url
         this.active = 1
+        this.active1 = false
         this.showEnd = true
+        this.collapseActive = []
       }
     },
     // 点击标签页
@@ -444,7 +466,8 @@ export default {
       } catch (error) {
         this.$toast('上传图片失败！')
       }
-      this.commentImgs = file
+      this.share_ori = ''
+      this.commentImgs = file.content
       this.collapseActive = []
     },
     async doneText() {
@@ -465,6 +488,11 @@ export default {
         const img = canvasImg.toDataURL('image/png')
         this.$toast('生成专属海报成功！')
         this.share_img = img
+        try {
+          await postGenerated({ image: this.share_img })
+        } catch (error) {
+          this.$toast('上传图片失败！')
+        }
       } catch (error) {
         this.$toast({ message: error, duration: 0 })
         console.log(error)
@@ -485,11 +513,6 @@ export default {
         }
       } else if (this.osObj.isWx) {
         this.$toast('请长按海报保存到本地！')
-      }
-      try {
-        await postGenerated({ image: this.share_img })
-      } catch (error) {
-        this.$toast('上传图片失败！')
       }
     },
     async createImg() {
@@ -656,7 +679,7 @@ export default {
         transition: all 0.3s linear;
         .qrcode-content2 {
           position: absolute;
-          bottom: 0.3rem;
+          bottom: 0.5rem;
           right: 0.3rem;
           background-color: #fff;
           width: 0.7rem;
