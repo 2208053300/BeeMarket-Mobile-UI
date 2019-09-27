@@ -408,17 +408,15 @@ export default {
         // 如果已经上传过图片，获取原图可直接更改文案
         const res2 = await getOrigin()
         this.share_ori = res2.data.image_url
-        this.active = 1
-        this.active1 = false
-        this.showEnd = true
         this.collapseActive = []
+        this.showEnd = true
       }
     },
     // 点击标签页
     onClickTabs(name, title) {
-      this.share_img = ''
-      this.showEnd = false
       if (title === '立即分享') {
+        this.share_img = ''
+        this.showEnd = false
         this.active1 = true
       } else {
         this.active1 = false
@@ -443,16 +441,28 @@ export default {
       // 点击下一步，生成海报
       this.showEnd = true
       const imgDom = document.querySelector('.van-uploader')
+      // 清晰度
+      const width = imgDom.offsetWidth
+      const height = imgDom.offsetHeight
+      const canvas = document.createElement('canvas')
+      const scale = 4
+      canvas.width = width * scale
+      canvas.height = height * scale
+      canvas.getContext('2d').scale(scale, scale)
       try {
         const canvasImg = await html2canvas(imgDom, {
+          scale: scale,
           useCORS: true,
+          canvas: canvas,
           scrollX: 0,
           scrollY: 0,
           x: imgDom.offsetLeft,
+          // 必须获得其距离顶部距离，避免滚动偏移
           y:
             imgDom.offsetTop +
             document.querySelector('.comment-imgs').offsetTop,
-          // 必须获得其距离顶部距离，避免滚动偏移
+          width: width,
+          height: height,
           backgroundColor: null
         })
         const img = canvasImg.toDataURL('image/png')
@@ -717,7 +727,7 @@ export default {
   }
   .comment-imgs.hasImg {
     .van-uploader {
-      margin-top: 1.1rem;
+      margin-top: 0.5rem;
       border: none;
       width: 3.8rem;
     }
@@ -733,7 +743,7 @@ export default {
     .share-content {
       position: absolute;
       left: 0;
-      top: 1.1rem;
+      top: 0.5rem;
       width: 100%;
       text-align: center;
       .share-img {
