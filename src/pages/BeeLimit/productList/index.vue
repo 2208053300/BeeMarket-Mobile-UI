@@ -115,8 +115,8 @@ export default {
       this.uid = res.data.uid
 
       wxapi.wxShare({
-        title: '蜂集市-限量蜂抢',
-        desc: '蜂集市，让生活蜂富起来！',
+        title: '蜂集市-让生活蜂富起来',
+        desc: '能省能免能赚，共享电商平台',
         imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
         link: window.location.href.split('#')[0] + '#' + `/beeLimit?uid=${this.uid}`
       })
