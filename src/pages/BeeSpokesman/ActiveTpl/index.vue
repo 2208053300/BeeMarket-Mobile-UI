@@ -332,12 +332,13 @@ export default {
         centeredSlides: true,
         spaceBetween: 10,
         slideToClickedSlide: true,
+        preventInteractionOnTransition: true
         // 如果需要分页器
-        pagination: {
-          el: '.swiper-pagination',
-          bulletActiveClass: 'slide_dot_active',
-          bulletClass: 'slide_dot'
-        }
+        // pagination: {
+        //   el: '.swiper-pagination',
+        //   bulletActiveClass: 'slide_dot_active',
+        //   bulletClass: 'slide_dot'
+        // }
       },
       osObj: getOs(),
       commentImgs: '',
