@@ -465,9 +465,9 @@ export default {
         this.$toast('生成专属海报成功！')
         this.share_img = img
       } catch (error) {
-        this.$toast(error)
+        this.$toast({ message: error, duration: 0 })
         console.log(error)
-        this.$toast('生成专属海报失败！')
+        // this.$toast('生成专属海报失败！')
       }
     },
     async saveImg(e) {
