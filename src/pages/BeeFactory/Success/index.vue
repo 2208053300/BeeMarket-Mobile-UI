@@ -61,6 +61,7 @@ export default {
 <style scope lang="less">
 #app.yellow{
   background-color: #FACE55;
+  border: 10px solid red;
 }
 .factory-success {
   letter-spacing:1px;
