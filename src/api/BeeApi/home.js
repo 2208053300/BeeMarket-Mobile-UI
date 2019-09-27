@@ -17,3 +17,12 @@ export function getBeeLimitList(data) {
     data
   })
 }
+
+// 用户基本信息获取
+export function getQrcode(data) {
+  return request({
+    url: '/promote/shareCode',
+    method: 'post',
+    data
+  })
+}

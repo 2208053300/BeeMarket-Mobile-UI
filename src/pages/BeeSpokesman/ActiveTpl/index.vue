@@ -235,8 +235,7 @@
 <script>
 import { getOs } from '@/utils'
 // import wxapi from '@/utils/wxapi'
-// import { getUID } from '@/api/BeeApi/user'
-// import { activityDetail } from '@/api/BeeApi/action'
+import { getQrcode } from '@/api/BeeApi/home'
 import html2canvas from 'html2canvas/dist/html2canvas.min.js'
 
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
@@ -359,6 +358,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
 
+    this.getQrcodeData()
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare
 
@@ -373,6 +373,10 @@ export default {
     }
   },
   methods: {
+    async getQrcodeData() {
+      const res = await getQrcode()
+      this.qrcodeBase64 = 'data:image/jpeg;base64,' + res.data.qrCode
+    },
     // 点击标签页
     onClickTabs(name, title) {
       if (title === '立即分享') {
@@ -444,7 +448,7 @@ export default {
         if (this.osObj.isAndroid) {
           window.beeMarket.SaveShareImgBase64(baseString)
         } else if (this.osObj.isIphone) {
-          window.webkit.messageHandlers.ToSaveShareImgBase64.postMessage({
+          window.webkit.messageHandlers.ToDownloadImage.postMessage({
             data: baseString
           })
         }
@@ -462,29 +466,20 @@ export default {
       // 更换文字
       this.showEnd = false
     },
-    shareImm() {
+    shareImm(e) {
       // TODO 立即分享，需要注入分享信息后调用
-      if (this.osObj.isWx) {
-        //
-      } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.ToShare.postMessage({
-          title: this.activity.share_data.title,
-          desc: this.activity.share_data.desc,
-          img_path: this.activity.share_data.img,
-          // 地址应该放 web 站 网页
-          url: this.activity.share_data.link
-          // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
-        })
-      } else if (this.osObj.isAndroid && this.osObj.isApp) {
-        window.beeMarket.ToShare(
-          this.activity.share_data.title,
-          this.activity.share_data.desc,
-          this.activity.share_data.img,
-          this.activity.share_data.link
-          // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
-        )
+      if (this.osObj.isApp) {
+        e.preventDefault()
+        const baseString = this.share_img.slice(22)
+        if (this.osObj.isAndroid) {
+          window.beeMarket.ToShareImgBase64(baseString)
+        } else if (this.osObj.isIphone) {
+          window.webkit.messageHandlers.ToSaveShareImgBase64.postMessage({
+            data: baseString
+          })
+        }
       } else {
-        //
+        this.$toast('请长按海报保存到本地！')
       }
     }
   }
