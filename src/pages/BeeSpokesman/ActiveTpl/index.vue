@@ -311,6 +311,7 @@ export default {
         slidesPerView: 'auto',
         centeredSlides: true,
         spaceBetween: 10,
+        slideToClickedSlide: true,
         // 如果需要分页器
         pagination: {
           el: '.swiper-pagination',
