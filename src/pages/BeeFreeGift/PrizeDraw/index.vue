@@ -1,6 +1,7 @@
 <template>
   <div class="prize-draw">
     <!-- top -->
+    {{ $store.state.cart.sid }}
     <div class="title">
       <p class="tip text-center">
         {{ detail.top_data.status_desc }}
@@ -209,6 +210,8 @@ export default {
   mounted() {
     this.getLinkData()
     this.securityData()
+
+    this.$store.dispatch('setSid', this.$route.query.id)
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.shareMore
 
