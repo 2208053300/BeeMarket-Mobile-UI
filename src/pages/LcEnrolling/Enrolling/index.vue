@@ -114,7 +114,7 @@ import { getOs } from '@/utils'
 export default {
   metaInfo() {
     return {
-      title: '联创大赛'
+      title: '联创大赛报名'
     }
   },
   props: {},
