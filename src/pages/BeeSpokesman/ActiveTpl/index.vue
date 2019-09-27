@@ -808,7 +808,9 @@ export default {
   .poster-text {
     width: 100%;
     overflow-x: scroll;
+    overflow-y: hidden;
     white-space: nowrap;
+    height: 1.3rem;
     .text-item {
       width: 4.72rem;
       height: 1.28rem;
