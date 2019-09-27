@@ -7,6 +7,11 @@ import '@/styles/normalize.min.css'
 import '@/styles/index/index.less'
 import '@/main'
 
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+
+// require styles
+import 'swiper/dist/css/swiper.css'
+
 // NOTE 定义rem基准
 import '@/utils/flexiable'
 
@@ -56,7 +61,9 @@ import {
   RadioGroup,
   Radio,
   DatetimePicker,
-  Switch
+  Switch,
+  Collapse,
+  CollapseItem
 } from 'vant'
 
 Vue.use(Icon)
@@ -107,6 +114,9 @@ Vue.use(Icon)
   .use(Radio)
   .use(DatetimePicker)
   .use(Switch)
+  .use(Collapse)
+  .use(CollapseItem)
+  .use(VueAwesomeSwiper, /* { default global options } */)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
