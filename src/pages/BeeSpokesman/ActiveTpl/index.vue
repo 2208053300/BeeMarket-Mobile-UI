@@ -426,6 +426,10 @@ export default {
         this.share_img = ''
         this.showEnd = false
         this.active1 = true
+        setTimeout(() => {
+          this.$refs.mySwiper.swiper.init()
+        // this.$refs.mySwiper.swiper.slideTo(1)
+        }, 500)
       } else {
         this.active1 = false
       }
