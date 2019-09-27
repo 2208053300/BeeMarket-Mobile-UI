@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
 export default {
   metaInfo() {
     return {
@@ -17,7 +18,9 @@ export default {
   },
   props: {},
   data() {
-    return {}
+    return {
+      osObj: getOs()
+    }
   },
   methods: {
     goHome() {
