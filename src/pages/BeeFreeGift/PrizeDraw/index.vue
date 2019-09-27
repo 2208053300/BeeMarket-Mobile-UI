@@ -290,6 +290,7 @@ export default {
     // 点击我要领取礼物
     async getGift() {
       if (!this.is_mobile_bind) {
+        this.$store.dispatch('setSid', this.$route.query.id)
         window.location.href = window.location.origin + '/#/persion/profile/accountBind'
         return
       }
@@ -297,7 +298,7 @@ export default {
       const res = await confirmOrder(
         JSON.stringify({
           os: 'general|present',
-          sid: this.$route.query.id
+          sid: this.$route.query.id || this.$store.state.cart.sid
         })
       )
       if (res.status_code === 200) {
