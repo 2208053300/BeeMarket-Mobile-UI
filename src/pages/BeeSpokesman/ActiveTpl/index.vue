@@ -122,7 +122,7 @@
               </div>
             </div>
           </template>
-          <template v-else>
+          <template v-if="commentImgs">
             <div
               class="comment-img"
               :style="{backgroundImage:'url('+commentImgs+')'}"
