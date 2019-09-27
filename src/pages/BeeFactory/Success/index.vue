@@ -35,17 +35,24 @@ export default {
   beforeCreate() {
     // 创建之前把背景色强制设置为白色
     // document.querySelector('#app').style.backgroundColor = '#FACE55'
-    document.querySelector('#app').className = 'yellow'
+    // document.querySelector('#app').className = 'yellow'
   },
   beforeDestroy() {
     // 销毁之前把白色背景给清除掉
     // document.querySelector('#app').style.background = ''
-    document.querySelector('#app').className = ''
+    // document.querySelector('#app').className = ''
   },
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+
+    const screenW = document.body.clientWidth
+    const screenH = document.body.clientHeight
+    console.log(screenW, screenH, document.getElementsByClassName('factory-success'))
+
+    document.getElementsByClassName('factory-success')[0].style.width = screenW + 'px'
+    document.getElementsByClassName('factory-success')[0].style.height = screenH - 46 + 'px'
   },
   methods: {
     // 跳转到入驻政策
@@ -59,13 +66,11 @@ export default {
 </script>
 
 <style scope lang="less">
-#app.yellow{
-  background-color: #FACE55;
-  border: 10px solid red;
-}
+
 .factory-success {
   letter-spacing:1px;
   color: #fff;
+  background-color: #FACE55;
   p {
     margin: 0;
   }
