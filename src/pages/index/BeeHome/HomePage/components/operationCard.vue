@@ -1,7 +1,10 @@
 <template>
   <div class="operation-card">
     <div class="op-item">
-      <div class="img-content" @click="$router.push('/beeClassroom')">
+      <div
+        class="img-content"
+        @click="$router.push('/beeClassroom')"
+      >
         <img
           :src="beeIcon.home_icon_classroom"
           alt="集市课堂"
@@ -12,7 +15,10 @@
       </p>
     </div>
     <div class="op-item">
-      <div class="img-content" @click="$router.push('/beeTask')">
+      <div
+        class="img-content"
+        @click="$router.push('/beeTask')"
+      >
         <img
           :src="beeIcon.home_icon_task"
           alt="新手专享"
@@ -66,7 +72,7 @@
     </div>
     <div
       class="op-item"
-      @click="goSinglePage('beeLimit')"
+      @click="$router.push('/beeLimit')"
     >
       <div class="img-content">
         <img
@@ -80,7 +86,7 @@
     </div>
     <div
       class="op-item"
-      @click="goSinglePage('beeSpokesman')"
+      @click="$router.push('/beeSpokesman')"
     >
       <div class="img-content">
         <img
@@ -107,7 +113,10 @@
       </p>
     </div>
 
-    <div class="op-item" @click="goSinglePage('#/beeActiveTpl?id=21')">
+    <div
+      class="op-item"
+      @click="goSinglePage('#/beeActiveTpl?id=21')"
+    >
       <div class="img-content">
         <img
           :src="beeIcon.home_icon_agricultural_products"
@@ -118,7 +127,10 @@
         联创大赛
       </p>
     </div>
-    <div class="op-item" @click="$router.push('beeFactory')">
+    <div
+      class="op-item"
+      @click="$router.push('beeFactory')"
+    >
       <div class="img-content">
         <img
           :src="beeIcon.home_icon_settled"
