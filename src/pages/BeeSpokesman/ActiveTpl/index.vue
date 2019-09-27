@@ -20,7 +20,10 @@
           </swiper>
         </div>
         <!-- 操作 -->
-        <ul class="action flex flex-between">
+        <p v-if="osObj.isWx" class="wx-tip">
+          请长按保存图片
+        </p>
+        <ul v-else class="action flex flex-between">
           <li class="text-center">
             <img :src="icons.save" alt="">
             <span>保存图片</span>
@@ -346,6 +349,7 @@ export default {
 <style  lang="less">
 .spokesman {
   height: 100%;
+  .wx-tip{font-size: 0.28rem; color: #666;}
   .van-tabs {
     height: 100%;
     box-sizing: border-box;
