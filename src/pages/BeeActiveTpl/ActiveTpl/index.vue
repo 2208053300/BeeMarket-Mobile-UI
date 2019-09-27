@@ -421,6 +421,7 @@ export default {
     top: 0;
     position: fixed;
     z-index: 999;
+    width: 100%;
   }
   .van-tabs__line {
     background: rgba(3, 0, 0, 0);
