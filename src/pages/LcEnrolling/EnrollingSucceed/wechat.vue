@@ -2,7 +2,7 @@
   <div class="enrolling-success-wechat">
     <img :src="require('@/assets/icon/lcEnrollingSucceed/wechat_1.png')" alt="报名成功">
     <img :src="require('@/assets/icon/lcEnrollingSucceed/wechat_2.png')" alt="报名成功">
-    <button @click="$router.replace({ name: 'PromotionContents' })">
+    <button @click="goHome">
       回到首页
     </button>
   </div>
@@ -19,7 +19,23 @@ export default {
   data() {
     return {}
   },
-  methods: {}
+  methods: {
+    goHome() {
+      if (this.osObj.isWx) {
+        this.$router.push({
+          path: '/'
+        })
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.GoIndex.postMessage('')
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.GoIndex()
+      } else {
+        this.$router.push({
+          path: '/'
+        })
+      }
+    }
+  }
 }
 </script>
 
