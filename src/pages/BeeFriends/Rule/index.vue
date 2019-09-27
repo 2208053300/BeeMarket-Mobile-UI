@@ -57,7 +57,7 @@ export default {
         rule_head: require('@/assets/icon/beeFriends/rule/提成规则2_02.jpg'),
         rule_1: require('@/assets/icon/beeFriends/rule/提成规则2_04.jpg'),
         rule_2: require('@/assets/icon/beeFriends/rule/提成规则2_05.jpg'),
-        rule_3: require('@/assets/icon/beeFriends/rule/提成规则2_06.jpg'),
+        rule_3: require('@/assets/icon/beeFriends/rule/提成规则2_06.png'),
         rule_4: require('@/assets/icon/beeFriends/rule/提成规则2_07.jpg'),
         rule_5: require('@/assets/icon/beeFriends/rule/提成规则2_08.jpg'),
         rule_6: require('@/assets/icon/beeFriends/rule/提成规则2_10.jpg')

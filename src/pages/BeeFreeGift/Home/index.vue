@@ -59,7 +59,7 @@
       </van-list>
     </div>
     <!-- 规则 -->
-    <van-popup v-model="showRule" class="rule-box">
+    <van-popup v-model="showRule" position="bottom" class="rule-box">
       <div class=" bg-white">
         <p>  规则弹框</p>
         <p>  规则弹框</p>
@@ -263,9 +263,9 @@ export default {
     }
   }
   .rule-box{
-    width: 5.6rem;
+    width: 100%;
     padding: 0.3rem;
-    border-radius: 0.1rem
+    // border-radius: 0.1rem
   }
 
 }
