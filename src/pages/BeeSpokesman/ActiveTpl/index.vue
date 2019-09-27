@@ -353,9 +353,18 @@ export default {
     async doneText() {
       // 点击下一步，生成海报
       this.showEnd = true
-      const imgDom = document.querySelector('.comment-img')
+      const imgDom = document.querySelector('.van-uploader')
       try {
-        const canvasImg = await html2canvas(imgDom)
+        const canvasImg = await html2canvas(imgDom, {
+          scrollX: 0,
+          scrollY: 0,
+          x: imgDom.offsetLeft,
+          y:
+            imgDom.offsetTop +
+            document.querySelector('.comment-imgs').offsetTop,
+          // 必须获得其距离顶部距离，避免滚动偏移
+          backgroundColor: null
+        })
         const img = canvasImg.toDataURL('image/png')
         this.$toast('生成专属海报成功！')
         this.share_img = img
