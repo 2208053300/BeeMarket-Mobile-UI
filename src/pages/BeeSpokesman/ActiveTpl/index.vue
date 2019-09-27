@@ -273,7 +273,7 @@
 
 <script>
 import { getOs } from '@/utils'
-// import wxapi from '@/utils/wxapi'
+import wxapi from '@/utils/wxapi'
 import {
   getQrcode,
   getTemplates,
@@ -392,8 +392,6 @@ export default {
     this.getTemplatesData()
     this.getQrcodeData()
     this.getIssetData()
-    // app 调用本地 方法，需将该方法挂载到window
-    window.appShare = this.appShare
   },
   methods: {
     // 获取模板
@@ -408,7 +406,7 @@ export default {
     },
     async getIssetData() {
       const res = await getIsset()
-      if (res.data.image_url) {
+      if ('image_url' in res.data) {
         this.share_img = res.data.image_url
         // 如果已经上传过图片，获取原图可直接更改文案
         const res2 = await getOrigin()
@@ -429,44 +427,19 @@ export default {
         this.active1 = false
       }
     },
-
-    // 分享
-    appShare() {
-      if (this.osObj.isWx) {
-        //
-      } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.ToShare.postMessage({
-          title: this.activity.share_data.title,
-          desc: this.activity.share_data.desc,
-          img_path: this.activity.share_data.img,
-          // 地址应该放 web 站 网页
-          url: this.activity.share_data.link
-          // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
-        })
-      } else if (this.osObj.isAndroid && this.osObj.isApp) {
-        window.beeMarket.ToShare(
-          this.activity.share_data.title,
-          this.activity.share_data.desc,
-          this.activity.share_data.img,
-          this.activity.share_data.link
-          // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
-        )
-      } else {
-        //
-      }
-    },
-
     async onRead(file) {
+      let res = null
       try {
         console.log(file.file)
         const imgFile = new FormData()
         imgFile.append('image', file.file)
-        await postCustom(imgFile)
+        res = await postCustom(imgFile)
       } catch (error) {
         this.$toast('上传图片失败！')
       }
       this.share_ori = ''
-      this.commentImgs = file.content
+      // this.commentImgs = file.content
+      this.commentImgs = res.data.image_url
       this.collapseActive = []
     },
     async doneText() {
@@ -475,6 +448,7 @@ export default {
       const imgDom = document.querySelector('.van-uploader')
       try {
         const canvasImg = await html2canvas(imgDom, {
+          useCORS: true,
           scrollX: 0,
           scrollY: 0,
           x: imgDom.offsetLeft,
@@ -518,6 +492,7 @@ export default {
       const imgDom = document.querySelector('.swiper-slide-active')
       try {
         const canvasImg = await html2canvas(imgDom, {
+          useCORS: true,
           y: document.querySelector('.full-page-slide-wrapper').offsetTop,
           // 必须获得其距离顶部距离，避免滚动偏移
           backgroundColor: null
