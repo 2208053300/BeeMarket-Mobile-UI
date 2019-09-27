@@ -52,7 +52,7 @@ export default {
     console.log(screenW, screenH, document.getElementsByClassName('factory-success'))
 
     document.getElementsByClassName('factory-success')[0].style.width = screenW + 'px'
-    document.getElementsByClassName('factory-success')[0].style.height = screenH - 46 + 'px'
+    document.getElementsByClassName('factory-success')[0].style.height = screenH + 'px'
   },
   methods: {
     // 跳转到入驻政策
