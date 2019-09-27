@@ -148,11 +148,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  #app {
-    background: white;
-    height: auto;
-  }
   .user-agreement {
+    height: auto;
     padding: 0.2rem;
     h4{margin-bottom: 0.25rem; margin-top: 0.3rem; font-size: 0.34rem;}
     h5{margin-bottom: 0.2rem; text-indent: 2em; font-size: 0.3rem; font-weight: 600;}

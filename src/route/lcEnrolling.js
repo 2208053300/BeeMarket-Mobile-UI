@@ -10,22 +10,22 @@ const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
-      path: 'lcEnrolling',
+      path: '/lcEnrolling',
       name: 'lcEnrolling',
       component: () => import('@/pages/LcEnrolling/Enrolling')
     },
     {
-      path: 'lcEnrollingSucceed',
+      path: '/lcEnrollingSucceed',
       name: 'lcEnrollingSucceed',
       component: () => import('@/pages/LcEnrolling/EnrollingSucceed')
     },
     {
-      path: 'lcEnrollingSucceedWechat',
+      path: '/lcEnrollingSucceedWechat',
       name: 'lcEnrollingSucceedWechat',
       component: () => import('@/pages/LcEnrolling/EnrollingSucceed/wechat')
     },
     {
-      path: 'lcUserAgreement',
+      path: '/lcUserAgreement',
       name: 'lcUserAgreement',
       component: () => import('@/pages/LcEnrolling/UserAgreement')
     }
