@@ -8,7 +8,7 @@ import { isJoin } from '@/api/BeeApi/lcEnrollingApi'
 import { getOs } from '@/utils'
 export default {
   metaInfo: {
-    title: '集市课堂'
+    title: '联创大赛'
   },
   components: {},
   mounted() {
