@@ -66,7 +66,7 @@
         </li>
         <li
           class="text-center"
-          @click="saveImg2"
+          @click="shareImm2"
         >
           <img
             :src="icons.share"
@@ -534,7 +534,7 @@ export default {
           window.beeMarket.ToShareImgBase64(baseString)
         } else if (this.osObj.isIphone) {
           window.webkit.messageHandlers.ToShareImgBase64.postMessage({
-            data: baseString
+            img_path: baseString
           })
         }
       } else {
@@ -551,7 +551,7 @@ export default {
           window.beeMarket.ToShareImgBase64(baseString)
         } else if (this.osObj.isIphone) {
           window.webkit.messageHandlers.ToShareImgBase64.postMessage({
-            data: baseString
+            img_path: baseString
           })
         }
       } else {
