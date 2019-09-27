@@ -14,7 +14,6 @@
         <p>分享即可为集市代言</p>
         <p>分享专属海报，我为集市代言</p>
       </div>
-      <!-- <div v-if="items.length" class="full-page-slide-wrapper"> -->
       <div class="full-page-slide-wrapper">
         <keep-alive>
           <swiper
@@ -22,15 +21,21 @@
             :options="swiperOption"
           >
             <!-- slides -->
-            <template v-for="item in items">
-              <swiper-slide
-                v-if="item.img"
-                :key="item.id"
-              >
-                <!-- <img :src="item.img" alt @click="toTopic(item)"> -->
-                <img :src="item.img">
-              </swiper-slide>
-            </template>
+
+            <swiper-slide
+              v-for="(item,index) in posterImages"
+              :key="index"
+            >
+              <!-- <img :src="item.img" alt @click="toTopic(item)"> -->
+              <img :src="item">
+              <div class="qrcode-content2">
+                <img
+                  class="qrcode"
+                  :src="qrcodeBase64"
+                  alt=""
+                >
+              </div>
+            </swiper-slide>
             <div
               slot="pagination"
               class="swiper-pagination"
@@ -49,7 +54,10 @@
         v-else
         class="action flex flex-between"
       >
-        <li class="text-center">
+        <li
+          class="text-center"
+          @click="saveImg2"
+        >
           <img
             :src="icons.save"
             alt=""
@@ -86,7 +94,7 @@
           <template v-if="commentImgs">
             <div
               class="comment-img"
-              :style="{backgroundImage:'url('+commentImgs.content+')'}"
+              :style="{backgroundImage:'url('+commentImgs.content|share_ori+')'}"
             >
               <!-- <img :src="commentImgs.content"> -->
               <img
@@ -235,7 +243,14 @@
 <script>
 import { getOs } from '@/utils'
 // import wxapi from '@/utils/wxapi'
-import { getQrcode } from '@/api/BeeApi/home'
+import {
+  getQrcode,
+  getTemplates,
+  getIsset,
+  getOrigin,
+  postGenerated,
+  postCustom
+} from '@/api/BeeApi/promote'
 import html2canvas from 'html2canvas/dist/html2canvas.min.js'
 
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
@@ -260,27 +275,10 @@ export default {
         text: require('@/assets/icon/spokesman/endorsement_immediately_icon_copywriting@2x.png'),
         pic: require('@/assets/icon/spokesman/endorsement_immediately_icon_replace@2x.png')
       },
-      items: [
-        {
-          img: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
-          id: 0
-        },
-        {
-          img: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
-          id: 1
-        },
-        {
-          img: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
-          id: 2
-        },
-        {
-          img: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
-          id: 3
-        },
-        {
-          img: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
-          id: 4
-        }
+      posterImages: [
+        require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
+        require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
+        require('@/assets/icon/freeGift/freegift_wechat_popup.png')
       ],
       wenan: {
         0: require('@/assets/icon/spokesman/文案一.png'),
@@ -336,7 +334,8 @@ export default {
       activeText: 0,
       showEnd: false,
       share_img: '',
-      qrcodeBase64: ''
+      qrcodeBase64: '',
+      share_ori: ''
     }
   },
   computed: {
@@ -358,7 +357,9 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
 
+    this.getTemplatesData()
     this.getQrcodeData()
+    this.getIssetData()
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare
 
@@ -373,9 +374,26 @@ export default {
     }
   },
   methods: {
+    // 获取模板
+    async getTemplatesData() {
+      const res = await getTemplates()
+      this.posterImages.push(res.data)
+    },
+    // 获取用户二维码
     async getQrcodeData() {
       const res = await getQrcode()
       this.qrcodeBase64 = 'data:image/jpeg;base64,' + res.data.qrCode
+    },
+    async getIssetData() {
+      const res = await getIsset()
+      if (res.data.image_url) {
+        this.share_img = res.data.image_url
+        // 如果已经上传过图片，获取原图可直接更改文案
+        const res2 = await getOrigin()
+        this.share_ori = res2.data.image_url
+        this.active = 1
+        this.showEnd = true
+      }
     },
     // 点击标签页
     onClickTabs(name, title) {
@@ -412,8 +430,14 @@ export default {
       }
     },
 
-    onRead(file) {
-      console.log(file)
+    async onRead(file) {
+      try {
+        console.log(file)
+
+        await postCustom({ image: file.file })
+      } catch (error) {
+        this.$toast('上传图片失败！')
+      }
       this.commentImgs = file
       this.collapseActive = []
     },
@@ -440,7 +464,49 @@ export default {
         this.$toast('生成专属海报失败！')
       }
     },
-    saveImg(e) {
+    async saveImg(e) {
+      try {
+        await postGenerated({ image: this.share_img })
+      } catch (error) {
+        this.$toast('上传图片失败！')
+      }
+
+      // APP保存图片与微信保存图片
+      if (this.osObj.isApp) {
+        e.preventDefault()
+        const baseString = this.share_img.slice(22)
+        if (this.osObj.isAndroid) {
+          window.beeMarket.SaveShareImgBase64(baseString)
+        } else if (this.osObj.isIphone) {
+          window.webkit.messageHandlers.ToDownloadImage.postMessage({
+            data: baseString
+          })
+        }
+      } else if (this.osObj.isWx) {
+        this.$toast('请长按海报保存到本地！')
+      }
+    },
+
+    async saveImg2(e) {
+      const imgDom = document.querySelector('.van-uploader')
+      try {
+        const canvasImg = await html2canvas(imgDom, {
+          scrollX: 0,
+          scrollY: 0,
+          x: imgDom.offsetLeft,
+          y:
+            imgDom.offsetTop +
+            document.querySelector('.comment-imgs').offsetTop,
+          // 必须获得其距离顶部距离，避免滚动偏移
+          backgroundColor: null
+        })
+        const img = canvasImg.toDataURL('image/png')
+        this.$toast('生成专属海报成功！')
+        this.share_img = img
+      } catch (error) {
+        console.log(error)
+        this.$toast('生成专属海报失败！')
+      }
       // APP保存图片与微信保存图片
       if (this.osObj.isApp) {
         e.preventDefault()
@@ -562,6 +628,17 @@ export default {
 
         transform: scaleY(0.9);
         transition: all 0.3s linear;
+        .qrcode-content2 {
+          position: absolute;
+          bottom: 0.3rem;
+          right: 0.3rem;
+          background-color: #fff;
+          width: 0.7rem;
+          height: 0.7rem;
+          .qrcode {
+            border-radius: 0;
+          }
+        }
       }
       .swiper-slide-active,
       .swiper-slide-duplicate-active {
@@ -656,12 +733,6 @@ export default {
       background-position: center;
       width: 3.8rem;
       height: 6.68rem;
-      // img {
-      //   width: 3.8rem;
-      //   height: 6.68rem;
-      //   margin: 0 auto;
-      //   object-fit: cover;
-      // }
       .wenan {
         position: absolute;
         left: 0;
