@@ -402,7 +402,7 @@ export default {
       setTimeout(() => {
         this.$refs.mySwiper.swiper.init()
         // this.$refs.mySwiper.swiper.slideTo(1)
-      }, 1000)
+      }, 1500)
     },
     // 获取用户二维码
     async getQrcodeData() {
