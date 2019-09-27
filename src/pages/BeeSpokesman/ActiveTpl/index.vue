@@ -17,6 +17,7 @@
       <div class="full-page-slide-wrapper">
         <keep-alive>
           <swiper
+            v-if="posterImages.length"
             ref="mySwiper"
             :options="swiperOption"
           >
@@ -43,17 +44,15 @@
           </swiper>
         </keep-alive>
       </div>
-      <!-- 操作 -->
-      <p
-        v-if="osObj.isWx"
-        class="wx-tip text-center"
-      >
-        请长按保存图片
-      </p>
-      <ul
-        v-else
-        class="action flex flex-between"
-      >
+      <van-popup v-model="clipImg">
+        <div class="imgPre">
+          <img
+            :src="share_img"
+            alt=""
+          >
+        </div>
+      </van-popup>
+      <ul class="action flex flex-between">
         <li
           class="text-center"
           @click="saveImg2"
@@ -96,8 +95,28 @@
         <van-uploader :after-read="onRead">
           <template v-if="commentImgs||share_ori">
             <div
+              v-if="share_ori"
               class="comment-img"
-              :style="{backgroundImage:'url('+commentImgs.content||share_ori+')'}"
+              :style="{backgroundImage:'url('+share_ori+')'}"
+            >
+              <!-- <img :src="commentImgs.content"> -->
+              <img
+                :src="wenan[activeText]"
+                alt=""
+                class="wenan"
+              >
+              <div class="qrcode-content">
+                <img
+                  class="qrcode"
+                  :src="qrcodeBase64"
+                  alt=""
+                >
+              </div>
+            </div>
+            <div
+              v-if="commentImgs"
+              class="comment-img"
+              :style="{backgroundImage:'url('+commentImgs+')'}"
             >
               <!-- <img :src="commentImgs.content"> -->
               <img
@@ -245,7 +264,6 @@
 
 <script>
 import { getOs } from '@/utils'
-// import wxapi from '@/utils/wxapi'
 import {
   getQrcode,
   getTemplates,
@@ -278,11 +296,7 @@ export default {
         text: require('@/assets/icon/spokesman/endorsement_immediately_icon_copywriting@2x.png'),
         pic: require('@/assets/icon/spokesman/endorsement_immediately_icon_replace@2x.png')
       },
-      posterImages: [
-        require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
-        require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
-        require('@/assets/icon/freeGift/freegift_wechat_popup.png')
-      ],
+      posterImages: [],
       wenan: {
         0: require('@/assets/icon/spokesman/文案一.png'),
         1: require('@/assets/icon/spokesman/文案二.png'),
@@ -295,23 +309,27 @@ export default {
       swiperOption: {
         direction: 'horizontal',
         loop: true,
-        // autoplay: 5000,
-        observer: true,
-        observerParents: true,
-        observeSlideChildren: true,
         autoplay: false,
         slidesPerView: 'auto',
+        loopedSlides: 4,
         centeredSlides: true,
-        spaceBetween: 10,
-        // 如果需要分页器
-        pagination: {
-          el: '.swiper-pagination',
-          bulletActiveClass: 'slide_dot_active',
-          bulletClass: 'slide_dot'
+        spaceBetween: 20,
+        slideToClickedSlide: true,
+        effect: 'coverflow',
+        coverflowEffect: {
+          rotate: 0,
+          stretch: 0,
+          depth: 200,
+          modifier: 1,
+          slideShadows: false
         }
+        // slidesPerView: 'auto',
+        // spaceBetween: 10,
+        // centeredSlides: true,
+        // loop: true
       },
       osObj: getOs(),
-      commentImgs: null,
+      commentImgs: '',
       posterText: [
         {
           text1: '不套路，不营销，',
@@ -338,7 +356,8 @@ export default {
       showEnd: false,
       share_img: '',
       qrcodeBase64: '',
-      share_ori: ''
+      share_ori: '',
+      clipImg: false
     }
   },
   computed: {
@@ -363,14 +382,16 @@ export default {
     this.getTemplatesData()
     this.getQrcodeData()
     this.getIssetData()
-    // app 调用本地 方法，需将该方法挂载到window
-    window.appShare = this.appShare
   },
   methods: {
     // 获取模板
     async getTemplatesData() {
       const res = await getTemplates()
-      this.posterImages.push(res.data)
+      this.posterImages = res.data
+      setTimeout(() => {
+        this.$refs.mySwiper.swiper.init()
+        // this.$refs.mySwiper.swiper.slideTo(1)
+      }, 1500)
     },
     // 获取用户二维码
     async getQrcodeData() {
@@ -379,79 +400,85 @@ export default {
     },
     async getIssetData() {
       const res = await getIsset()
-      if (res.data.image_url) {
+      if ('image_url' in res.data) {
         this.share_img = res.data.image_url
         // 如果已经上传过图片，获取原图可直接更改文案
         const res2 = await getOrigin()
         this.share_ori = res2.data.image_url
-        this.active = 1
+        this.collapseActive = []
         this.showEnd = true
       }
     },
     // 点击标签页
     onClickTabs(name, title) {
       if (title === '立即分享') {
+        this.share_img = ''
+        this.showEnd = false
         this.active1 = true
+        setTimeout(() => {
+          this.$refs.mySwiper.swiper.init()
+          // this.$refs.mySwiper.swiper.slideTo(1)
+        }, 500)
       } else {
         this.active1 = false
       }
     },
-
-    // 分享
-    appShare() {
-      if (this.osObj.isWx) {
-        //
-      } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.ToShare.postMessage({
-          title: this.activity.share_data.title,
-          desc: this.activity.share_data.desc,
-          img_path: this.activity.share_data.img,
-          // 地址应该放 web 站 网页
-          url: this.activity.share_data.link
-          // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
-        })
-      } else if (this.osObj.isAndroid && this.osObj.isApp) {
-        window.beeMarket.ToShare(
-          this.activity.share_data.title,
-          this.activity.share_data.desc,
-          this.activity.share_data.img,
-          this.activity.share_data.link
-          // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
-        )
-      } else {
-        //
-      }
-    },
-
     async onRead(file) {
-      this.commentImgs = file
-      this.collapseActive = []
+      let res = null
       try {
-        console.log(file)
-
-        await postCustom({ image: file.file })
+        console.log(file.file)
+        const imgFile = new FormData()
+        imgFile.append('image', file.file)
+        res = await postCustom(imgFile)
       } catch (error) {
         this.$toast('上传图片失败！')
       }
+      this.share_ori = ''
+      // this.commentImgs = file.content
+      this.commentImgs = res.data.image_url
+      this.collapseActive = []
     },
     async doneText() {
       // 点击下一步，生成海报
       this.showEnd = true
       const imgDom = document.querySelector('.van-uploader')
+      // 清晰度
+      const width = imgDom.offsetWidth
+      const height = imgDom.offsetHeight
+      const canvas = document.createElement('canvas')
+      const scale = 2
+      canvas.width = width * scale
+      canvas.height = height * scale
+      canvas.getContext('2d').scale(scale, scale)
       try {
         const canvasImg = await html2canvas(imgDom, {
+          scale: scale,
+          useCORS: true,
+          canvas: canvas,
           scrollX: 0,
           scrollY: 0,
           x: imgDom.offsetLeft,
+          // 必须获得其距离顶部距离，避免滚动偏移
           y:
             imgDom.offsetTop +
             document.querySelector('.comment-imgs').offsetTop,
-          // 必须获得其距离顶部距离，避免滚动偏移
+          width: width,
+          height: height,
           backgroundColor: null
         })
+        const context = canvasImg.getContext('2d')
+        // 【重要】关闭抗锯齿
+        context.mozImageSmoothingEnabled = false
+        context.webkitImageSmoothingEnabled = false
+        context.msImageSmoothingEnabled = false
+        context.imageSmoothingEnabled = false
         const img = canvasImg.toDataURL('image/png')
-        this.$toast('生成专属海报成功！')
         this.share_img = img
+        try {
+          await postGenerated({ image: this.share_img })
+        } catch (error) {
+          this.$toast('上传图片失败！')
+        }
       } catch (error) {
         console.log(error)
         this.$toast('生成专属海报失败！')
@@ -472,27 +499,18 @@ export default {
       } else if (this.osObj.isWx) {
         this.$toast('请长按海报保存到本地！')
       }
-      try {
-        await postGenerated({ image: this.share_img })
-      } catch (error) {
-        this.$toast('上传图片失败！')
-      }
     },
     async createImg() {
       const imgDom = document.querySelector('.swiper-slide-active')
       try {
         const canvasImg = await html2canvas(imgDom, {
-          // scrollX: 0,
-          // scrollY: 0,
-          // x: imgDom.offsetLeft,
+          useCORS: true,
           y: document.querySelector('.full-page-slide-wrapper').offsetTop,
           // 必须获得其距离顶部距离，避免滚动偏移
           backgroundColor: null
         })
         const img = canvasImg.toDataURL('image/png')
-        this.$toast('生成专属海报成功！')
         this.share_img = img
-        console.log(this.share_img)
       } catch (error) {
         console.log(error)
         this.$toast('生成专属海报失败！')
@@ -511,13 +529,15 @@ export default {
             data: baseString
           })
         }
-      } else if (this.osObj.isWx) {
+      } else {
+        this.clipImg = true
         this.$toast('请长按海报保存到本地！')
       }
     },
     changeBg() {
       // 更换背景
-      this.commentImgs = null
+      this.commentImgs = ''
+      this.share_ori = ''
       this.showEnd = false
       this.collapseActive = ['1']
     },
@@ -555,6 +575,7 @@ export default {
           })
         }
       } else {
+        this.clipImg = true
         this.$toast('请长按海报保存到本地！')
       }
     }
@@ -564,6 +585,10 @@ export default {
 
 <style  lang="less">
 .spokesman {
+  .imgPre {
+    width: 3.8rem;
+    height: 6.68rem;
+  }
   .wx-tip {
     font-size: 0.28rem;
     color: #666;
@@ -635,12 +660,12 @@ export default {
       .swiper-slide {
         width: 3.76rem;
         border-radius: 5px;
-
         transform: scaleY(0.9);
         transition: all 0.3s linear;
+
         .qrcode-content2 {
           position: absolute;
-          bottom: 0.3rem;
+          bottom: 0.5rem;
           right: 0.3rem;
           background-color: #fff;
           width: 0.7rem;
@@ -655,12 +680,12 @@ export default {
         height: 100%;
         transform: scaleY(1);
       }
-      // .swiper-slide-prev {
-
-      // }
-      // .swiper-slide-next {
-
-      // }
+      .swiper-slide-prev {
+        //  height: 90% !important;
+      }
+      .swiper-slide-next {
+        // height: 90% !important;
+      }
     }
     img {
       object-fit: fill;
@@ -708,9 +733,10 @@ export default {
   }
   .comment-imgs.hasImg {
     .van-uploader {
-      margin-top: 1.1rem;
+      margin-top: 0.5rem;
       border: none;
       width: 3.8rem;
+      height: 6.68rem;
     }
     .tip {
       display: none;
@@ -724,7 +750,7 @@ export default {
     .share-content {
       position: absolute;
       left: 0;
-      top: 1.1rem;
+      top: 0.5rem;
       width: 100%;
       text-align: center;
       .share-img {
@@ -734,15 +760,17 @@ export default {
     }
     .comment-img {
       text-align: center;
-      position: relative;
-      border-radius: 0.08rem;
+      position: absolute;
       background-color: @Grey7;
       overflow: hidden;
       border-radius: 0.05rem;
       background-size: cover;
       background-position: center;
-      width: 3.8rem;
-      height: 6.68rem;
+      width: 7.6rem;
+      height: 13.36rem;
+      transform: scale(0.5);
+      left: -1.9rem;
+      top: -3.34rem;
       .wenan {
         position: absolute;
         left: 0;
@@ -750,11 +778,11 @@ export default {
       }
       .qrcode-content {
         position: absolute;
-        bottom: 0.5rem;
-        right: 0.3rem;
+        bottom: 1rem;
+        right: 0.6rem;
         background-color: #fff;
-        width: 0.7rem;
-        height: 0.7rem;
+        width: 1.4rem;
+        height: 1.4rem;
         .qrcode {
           width: 100%;
           height: 100%;

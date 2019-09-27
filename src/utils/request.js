@@ -12,7 +12,6 @@ import {
   setVerify
 } from '@/utils/auth'
 import { isJSON } from '@/utils'
-import { log } from 'util'
 
 const service = axios.create({
   // api 的 base_url
@@ -51,6 +50,9 @@ service.interceptors.request.use(
       config.headers['Content-Type'] = 'application/json'
       return config
     }
+    // if ('image' in config.data && config.data.image.type.indexOf('image') !== -1) {
+    //   config.headers['Content-Type'] = 'multipart/form-data'
+    // }
     // 去除options预请求方法
     // if (config.method === 'post') {
     //   // config.data = qs.stringify(config.data)
