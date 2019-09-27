@@ -20,7 +20,7 @@
       </div>
       <div class="history-btn">
         <van-button round :to="{path: 'history'}">
-          我的送礼记录 >
+          我的参与记录 >
         </van-button>
       </div>
     </div>

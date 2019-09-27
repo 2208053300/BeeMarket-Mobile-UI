@@ -16,7 +16,7 @@ const router = new Router({
       children: [
         {
           path: '',
-          name: 'beeActiveTpl',
+          name: 'beeSpokesman',
           component: () => import('@/pages/BeeSpokesman/ActiveTpl')
         }
       ]

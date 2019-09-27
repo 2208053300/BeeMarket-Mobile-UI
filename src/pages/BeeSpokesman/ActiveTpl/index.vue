@@ -1,140 +1,215 @@
 <template>
   <div class="spokesman">
-    <van-tabs v-model="active" :sticky="true">
-      <van-tab title="立即分享">
-        <div class="share-desc text-center">
-          <p>分享即可为集市代言</p>
-          <p>分享专属海报，我为集市代言</p>
-        </div>
-        <!-- <div v-if="items.length" class="full-page-slide-wrapper"> -->
-        <div class="full-page-slide-wrapper">
-          <swiper ref="mySwiper" :options="swiperOption">
+    <van-tabs v-model="active" :sticky="true" @click="onClickTabs">
+      <van-tab title="立即分享" />
+
+      <van-tab title="自己上传" />
+    </van-tabs>
+    <template v-if="active1">
+      <div class="share-desc text-center">
+        <p>分享即可为集市代言</p>
+        <p>分享专属海报，我为集市代言</p>
+      </div>
+      <!-- <div v-if="items.length" class="full-page-slide-wrapper"> -->
+      <div class="full-page-slide-wrapper">
+        <keep-alive>
+          <swiper
+            ref="mySwiper"
+            :options="swiperOption"
+          >
             <!-- slides -->
             <template v-for="item in items">
-              <swiper-slide v-if="item.img" :key="item.id">
+              <swiper-slide
+                v-if="item.img"
+                :key="item.id"
+              >
                 <!-- <img :src="item.img" alt @click="toTopic(item)"> -->
                 <img :src="item.img">
               </swiper-slide>
             </template>
-            <div slot="pagination" class="swiper-pagination" />
-          </swiper>
-        </div>
-        <!-- 操作 -->
-        <p v-if="osObj.isWx" class="wx-tip text-center">
-          请长按保存图片
-        </p>
-        <ul v-else class="action flex flex-between">
-          <li class="text-center">
-            <img :src="icons.save" alt="">
-            <span>保存图片</span>
-          </li>
-          <li class="text-center">
-            <img :src="icons.share" alt="">
-            <span>立即分享</span>
-          </li>
-        </ul>
-      </van-tab>
-      <van-tab title="自己上传">
-        <van-collapse v-model="collapseActive">
-          <van-collapse-item title="生成流程：" name="1">
-            <p>1.上传一张自己的图片</p>
-            <p>2.选择海报文案</p>
-            <p>3.生成专属代言海报</p>
-            <p>4.分享或者保存到相册，为集市代言</p>
-          </van-collapse-item>
-          <!-- 上传图片 -->
-        </van-collapse>
-        <div class="comment-imgs" :class="{ hasImg: commentImgs }">
-          <van-uploader :after-read="onRead">
-            <template v-if="commentImgs">
-              <div class="comment-img">
-                <img :src="commentImgs.content">
-              </div>
-            </template>
-            <template v-else>
-              <van-icon name="photograph" size="0.5rem" />
-              <div class="img-num">
-                <span class="upload-text">添加图片</span>
-              </div>
-            </template>
-          </van-uploader>
-          <div class="share-content">
-            <img
-              v-if="share_img && showEnd"
-              class="share-img"
-              :src="share_img"
-            >
-          </div>
-          <p v-if="!commentImgs" class="text-center tip">
-            您还没有上传图片，点击上传吧
-          </p>
-          <div v-if="commentImgs && !showEnd" class="poster-text">
             <div
-              v-for="(item, index) in posterText"
-              :key="index"
-              class="text-item"
-              :class="{ activeItem: activeText === index }"
-              @click="activeText = index"
-            >
-              <van-icon
-                v-if="activeText === index"
-                name="checked"
-                color="#ffa42f"
-              />
-              <van-icon v-else name="circle" color="#999999" />
-              <div class="text-content">
-                <p class="text1">
-                  123
-                </p>
-                <p class="text1">
-                  456
-                </p>
-                <p class="text1">
-                  789
-                </p>
-              </div>
-            </div>
-          </div>
-          <div v-if="showEnd" class="last-step">
-            <div class="action-content">
-              <div class="action-item" @click="changeBg()">
-                <div class="img-content">
-                  <img :src="icons.pic" alt="">
-                </div>
-                <span>更换图片</span>
-              </div>
-              <div class="action-item" @click="changeText">
-                <div class="img-content">
-                  <img :src="icons.text" alt="">
-                </div>
-                <span>更换文案</span>
-              </div>
-              <div class="action-item" @click="saveImg">
-                <a :href="share_img" download="">
-                  <div class="img-content">
-                    <img :src="icons.save" alt="">
-                  </div>
-                  <span>保存图片</span>
-                </a>
-              </div>
-              <div class="action-item" @click="shareImm">
-                <div class="img-content">
-                  <img :src="icons.share" alt="">
-                </div>
-                <span>立即分享</span>
-              </div>
-            </div>
-          </div>
-          <div
-            v-if="commentImgs && !showEnd"
-            class="next-step"
-            @click="doneText"
+              slot="pagination"
+              class="swiper-pagination"
+            />
+          </swiper>
+        </keep-alive>
+      </div>
+      <!-- 操作 -->
+      <p
+        v-if="osObj.isWx"
+        class="wx-tip text-center"
+      >
+        请长按保存图片
+      </p>
+      <ul
+        v-else
+        class="action flex flex-between"
+      >
+        <li class="text-center">
+          <img
+            :src="icons.save"
+            alt=""
           >
-            下一步
+          <span>保存图片</span>
+        </li>
+        <li class="text-center">
+          <img
+            :src="icons.share"
+            alt=""
+          >
+          <span>立即分享</span>
+        </li>
+      </ul>
+    </template>
+    <template v-if="!active1">
+      <van-collapse v-model="collapseActive">
+        <van-collapse-item
+          title="生成流程："
+          name="1"
+        >
+          <p>1.上传一张自己的图片</p>
+          <p>2.选择海报文案</p>
+          <p>3.生成专属代言海报</p>
+          <p>4.分享或者保存到相册，为集市代言</p>
+        </van-collapse-item>
+        <!-- 上传图片 -->
+      </van-collapse>
+      <div
+        class="comment-imgs"
+        :class="{ hasImg: commentImgs }"
+      >
+        <van-uploader :after-read="onRead">
+          <template v-if="commentImgs">
+            <div class="comment-img">
+              <img :src="commentImgs.content">
+            </div>
+          </template>
+          <template v-else>
+            <van-icon
+              name="photograph"
+              size="0.5rem"
+            />
+            <div class="img-num">
+              <span class="upload-text">添加图片</span>
+            </div>
+          </template>
+        </van-uploader>
+        <div class="share-content">
+          <img
+            v-if="share_img && showEnd"
+            class="share-img"
+            :src="share_img"
+          >
+        </div>
+        <p
+          v-if="!commentImgs"
+          class="text-center tip"
+        >
+          您还没有上传图片，点击上传吧
+        </p>
+        <div
+          v-if="commentImgs && !showEnd"
+          class="poster-text"
+        >
+          <div
+            v-for="(item, index) in posterText"
+            :key="index"
+            class="text-item"
+            :class="{ activeItem: activeText === index }"
+            @click="activeText = index"
+          >
+            <van-icon
+              v-if="activeText === index"
+              name="checked"
+              color="#ffa42f"
+            />
+            <van-icon
+              v-else
+              name="circle"
+              color="#999999"
+            />
+            <div class="text-content">
+              <p class="text1">
+                123
+              </p>
+              <p class="text1">
+                456
+              </p>
+              <p class="text1">
+                789
+              </p>
+            </div>
           </div>
         </div>
-      </van-tab>
-    </van-tabs>
+        <div
+          v-if="showEnd"
+          class="last-step"
+        >
+          <div class="action-content">
+            <div
+              class="action-item"
+              @click="changeBg()"
+            >
+              <div class="img-content">
+                <img
+                  :src="icons.pic"
+                  alt=""
+                >
+              </div>
+              <span>更换图片</span>
+            </div>
+            <div
+              class="action-item"
+              @click="changeText"
+            >
+              <div class="img-content">
+                <img
+                  :src="icons.text"
+                  alt=""
+                >
+              </div>
+              <span>更换文案</span>
+            </div>
+            <div
+              class="action-item"
+              @click="saveImg"
+            >
+              <a
+                :href="share_img"
+                download=""
+              >
+                <div class="img-content">
+                  <img
+                    :src="icons.save"
+                    alt=""
+                  >
+                </div>
+                <span>保存图片</span>
+              </a>
+            </div>
+            <div
+              class="action-item"
+              @click="shareImm"
+            >
+              <div class="img-content">
+                <img
+                  :src="icons.share"
+                  alt=""
+                >
+              </div>
+              <span>立即分享</span>
+            </div>
+          </div>
+        </div>
+        <div
+          v-if="commentImgs && !showEnd"
+          class="next-step"
+          @click="doneText"
+        >
+          下一步
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -160,6 +235,7 @@ export default {
   data() {
     return {
       active: 0,
+      active1: true,
       icons: {
         save: require('@/assets/icon/spokesman/endorsement_immediately_icon_preservation@2x.png'),
         share: require('@/assets/icon/spokesman/endorsement_immediately_icon_wechat@2x.png'),
@@ -178,6 +254,14 @@ export default {
         {
           img: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
           id: 2
+        },
+        {
+          img: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
+          id: 3
+        },
+        {
+          img: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
+          id: 4
         }
       ],
       collapseActive: ['1'],
@@ -187,6 +271,9 @@ export default {
         direction: 'horizontal',
         loop: true,
         // autoplay: 5000,
+        observer: true,
+        observerParents: true,
+        observeSlideChildren: true,
         autoplay: false,
         slidesPerView: 'auto',
         centeredSlides: true,
@@ -217,7 +304,11 @@ export default {
       share_img: ''
     }
   },
-  computed: {},
+  computed: {
+    swiper() {
+      return this.$refs.mySwiper.swiper
+    }
+  },
   watch: {},
   beforeCreate() {
     // 创建之前把背景色强制设置为白色
@@ -246,6 +337,15 @@ export default {
     }
   },
   methods: {
+    // 点击标签页
+    onClickTabs(name, title) {
+      if (title === '立即分享') {
+        this.active1 = true
+      } else {
+        this.active1 = false
+      }
+    },
+
     // 分享
     appShare() {
       if (this.osObj.isWx) {
@@ -280,9 +380,18 @@ export default {
     async doneText() {
       // 点击下一步，生成海报
       this.showEnd = true
-      const imgDom = document.querySelector('.comment-img')
+      const imgDom = document.querySelector('.van-uploader')
       try {
-        const canvasImg = await html2canvas(imgDom)
+        const canvasImg = await html2canvas(imgDom, {
+          scrollX: 0,
+          scrollY: 0,
+          x: imgDom.offsetLeft,
+          y:
+            imgDom.offsetTop +
+            document.querySelector('.comment-imgs').offsetTop,
+          // 必须获得其距离顶部距离，避免滚动偏移
+          backgroundColor: null
+        })
         const img = canvasImg.toDataURL('image/png')
         this.$toast('生成专属海报成功！')
         this.share_img = img
@@ -348,19 +457,12 @@ export default {
 
 <style  lang="less">
 .spokesman {
-  height: 100%;
-  .wx-tip{font-size: 0.28rem; color: #666;}
-  .van-tabs {
-    height: 100%;
-    box-sizing: border-box;
-    padding-bottom: 0.98rem;
-    .van-tabs__content {
-      height: 100%;
-      .van-tab__pane {
-        height: 100%;
-      }
-    }
+
+  .wx-tip {
+    font-size: 0.28rem;
+    color: #666;
   }
+
   .van-tab span {
     font-size: 0.28rem;
     color: #666;
@@ -412,10 +514,9 @@ export default {
   .full-page-slide-wrapper {
     width: 100%;
     height: 6.68rem;
-    // background: white;
+
     box-sizing: content-box;
-    // padding-top: 15px;
-    // margin-top: 10px;
+
     position: relative;
     overflow: hidden;
     .swiper-container {
@@ -426,25 +527,23 @@ export default {
         align-items: center;
       }
       .swiper-slide {
-        // width: calc(100% - 50px);
+
         width: 3.76rem;
         border-radius: 5px;
 
         transform: scaleY(0.9);
         transition: all 0.3s linear;
       }
-      .swiper-slide-active {
+      .swiper-slide-active,.swiper-slide-duplicate-active {
         height: 100%;
-        transform: scaleY(1)
+        transform: scaleY(1);
       }
-      .swiper-slide-prev {
-        // height: 90% !important;
-        // transition: height 0.2s linear;
-      }
-      .swiper-slide-next {
-        // height: 90% !important;
-        // transition: height 0.2s linear;
-      }
+      // .swiper-slide-prev {
+
+      // }
+      // .swiper-slide-next {
+
+      // }
     }
     img {
       object-fit: fill;
@@ -540,21 +639,25 @@ export default {
     }
 
     .van-uploader {
-      width: 2rem;
+      min-width: 2rem;
       min-height: 2rem;
       text-align: center;
-      margin: 0 auto;
+      margin: 2.82rem auto 0.4rem;
       margin-top: 2.82rem;
       box-sizing: border-box;
       border: 0.04rem dashed @Grey6;
       .van-uploader__wrapper {
-        height: 100%;
+        min-width: 2rem;
+        min-height: 2rem;
         .van-icon {
           margin-bottom: 0.1rem;
           font-size: 0.3rem;
-          color: #666
+          color: #666;
         }
-        .upload-text{font-size: 0.28rem; color: #666;}
+        .upload-text {
+          font-size: 0.28rem;
+          color: #666;
+        }
       }
     }
     .van-uploader__input-wrapper {
@@ -570,9 +673,6 @@ export default {
     display: block;
   }
   .poster-text {
-    position: absolute;
-    bottom: 1.9rem;
-    left: 0;
     width: 100%;
     overflow-x: scroll;
     white-space: nowrap;
@@ -610,8 +710,7 @@ export default {
     }
   }
   .last-step {
-    position: absolute;
-    bottom: 0.6rem;
+    margin-top: 0.96rem;
     width: 100%;
     .action-content {
       margin: 0 0.2rem;
@@ -636,7 +735,6 @@ export default {
     }
   }
   .next-step {
-    position: absolute;
     width: 100%;
     height: 0.98rem;
     background-color: @BeeDefault;
@@ -644,8 +742,7 @@ export default {
     color: #fff;
     line-height: 0.98rem;
     text-align: center;
-    bottom: 0;
-    left: 0;
+    margin-top: 0.92rem;
   }
 }
 </style>

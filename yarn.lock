@@ -4187,10 +4187,10 @@ html-webpack-plugin@^3.2.0:
     toposort "^1.0.0"
     util.promisify "1.0.0"
 
-html2canvas@^1.0.0-rc.3:
-  version "1.0.0-rc.3"
-  resolved "https://registry.npm.taobao.org/html2canvas/download/html2canvas-1.0.0-rc.3.tgz#1de88b073f6bcaa6954ca1edfb46da13b258b038"
-  integrity sha1-HeiLBz9ryqaVTKHt+0baE7JYsDg=
+html2canvas@^1.0.0-rc.4:
+  version "1.0.0-rc.4"
+  resolved "https://registry.npm.taobao.org/html2canvas/download/html2canvas-1.0.0-rc.4.tgz?cache=0&sync_timestamp=1569130646676&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fhtml2canvas%2Fdownload%2Fhtml2canvas-1.0.0-rc.4.tgz#caa4a094d97d321035a8025e4757bdd5ac76da86"
+  integrity sha1-yqSglNl9MhA1qAJeR1e91ax22oY=
   dependencies:
     css-line-break "1.1.1"
 
