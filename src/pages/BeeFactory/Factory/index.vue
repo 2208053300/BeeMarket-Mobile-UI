@@ -376,7 +376,11 @@ export default {
           try {
             const res1 = await entering(formData)
             if (res1.code === 1 && res1.status_code === 200) {
-              this.$toast.success(res1.message)
+              this.$router.push({
+                name: 'enterSuccess'
+              })
+            } else {
+              this.$toast(res1.message)
             }
           } catch (error) {
             this.$toast.fail(error)
