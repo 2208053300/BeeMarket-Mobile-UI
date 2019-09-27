@@ -8,35 +8,59 @@
         </div>
         <!-- <div v-if="items.length" class="full-page-slide-wrapper"> -->
         <div class="full-page-slide-wrapper">
-          <swiper ref="mySwiper" :options="swiperOption">
+          <swiper
+            ref="mySwiper"
+            :options="swiperOption"
+          >
             <!-- slides -->
             <template v-for="item in items">
-              <swiper-slide v-if="item.img" :key="item.id">
+              <swiper-slide
+                v-if="item.img"
+                :key="item.id"
+              >
                 <!-- <img :src="item.img" alt @click="toTopic(item)"> -->
                 <img :src="item.img">
               </swiper-slide>
             </template>
-            <div slot="pagination" class="swiper-pagination" />
+            <div
+              slot="pagination"
+              class="swiper-pagination"
+            />
           </swiper>
         </div>
         <!-- 操作 -->
-        <p v-if="osObj.isWx" class="wx-tip text-center">
+        <p
+          v-if="osObj.isWx"
+          class="wx-tip text-center"
+        >
           请长按保存图片
         </p>
-        <ul v-else class="action flex flex-between">
+        <ul
+          v-else
+          class="action flex flex-between"
+        >
           <li class="text-center">
-            <img :src="icons.save" alt="">
+            <img
+              :src="icons.save"
+              alt=""
+            >
             <span>保存图片</span>
           </li>
           <li class="text-center">
-            <img :src="icons.share" alt="">
+            <img
+              :src="icons.share"
+              alt=""
+            >
             <span>立即分享</span>
           </li>
         </ul>
       </van-tab>
       <van-tab title="自己上传">
         <van-collapse v-model="collapseActive">
-          <van-collapse-item title="生成流程：" name="1">
+          <van-collapse-item
+            title="生成流程："
+            name="1"
+          >
             <p>1.上传一张自己的图片</p>
             <p>2.选择海报文案</p>
             <p>3.生成专属代言海报</p>
@@ -44,7 +68,10 @@
           </van-collapse-item>
           <!-- 上传图片 -->
         </van-collapse>
-        <div class="comment-imgs" :class="{ hasImg: commentImgs }">
+        <div
+          class="comment-imgs"
+          :class="{ hasImg: commentImgs }"
+        >
           <van-uploader :after-read="onRead">
             <template v-if="commentImgs">
               <div class="comment-img">
@@ -52,7 +79,10 @@
               </div>
             </template>
             <template v-else>
-              <van-icon name="photograph" size="0.5rem" />
+              <van-icon
+                name="photograph"
+                size="0.5rem"
+              />
               <div class="img-num">
                 <span class="upload-text">添加图片</span>
               </div>
@@ -65,10 +95,16 @@
               :src="share_img"
             >
           </div>
-          <p v-if="!commentImgs" class="text-center tip">
+          <p
+            v-if="!commentImgs"
+            class="text-center tip"
+          >
             您还没有上传图片，点击上传吧
           </p>
-          <div v-if="commentImgs && !showEnd" class="poster-text">
+          <div
+            v-if="commentImgs && !showEnd"
+            class="poster-text"
+          >
             <div
               v-for="(item, index) in posterText"
               :key="index"
@@ -81,7 +117,11 @@
                 name="checked"
                 color="#ffa42f"
               />
-              <van-icon v-else name="circle" color="#999999" />
+              <van-icon
+                v-else
+                name="circle"
+                color="#999999"
+              />
               <div class="text-content">
                 <p class="text1">
                   123
@@ -95,31 +135,61 @@
               </div>
             </div>
           </div>
-          <div v-if="showEnd" class="last-step">
+          <div
+            v-if="showEnd"
+            class="last-step"
+          >
             <div class="action-content">
-              <div class="action-item" @click="changeBg()">
+              <div
+                class="action-item"
+                @click="changeBg()"
+              >
                 <div class="img-content">
-                  <img :src="icons.pic" alt="">
+                  <img
+                    :src="icons.pic"
+                    alt=""
+                  >
                 </div>
                 <span>更换图片</span>
               </div>
-              <div class="action-item" @click="changeText">
+              <div
+                class="action-item"
+                @click="changeText"
+              >
                 <div class="img-content">
-                  <img :src="icons.text" alt="">
+                  <img
+                    :src="icons.text"
+                    alt=""
+                  >
                 </div>
                 <span>更换文案</span>
               </div>
-              <div class="action-item" @click="saveImg">
-                <a :href="share_img" download="">
+              <div
+                class="action-item"
+                @click="saveImg"
+              >
+                <a
+                  :href="share_img"
+                  download=""
+                >
                   <div class="img-content">
-                    <img :src="icons.save" alt="">
+                    <img
+                      :src="icons.save"
+                      alt=""
+                    >
                   </div>
                   <span>保存图片</span>
                 </a>
               </div>
-              <div class="action-item" @click="shareImm">
+              <div
+                class="action-item"
+                @click="shareImm"
+              >
                 <div class="img-content">
-                  <img :src="icons.share" alt="">
+                  <img
+                    :src="icons.share"
+                    alt=""
+                  >
                 </div>
                 <span>立即分享</span>
               </div>
@@ -392,19 +462,20 @@ export default {
 
 <style  lang="less">
 .spokesman {
-  height: 100%;
-  .wx-tip{font-size: 0.28rem; color: #666;}
-  .van-tabs {
-    height: 100%;
-    box-sizing: border-box;
-    padding-bottom: 0.98rem;
-    .van-tabs__content {
-      height: 100%;
-      .van-tab__pane {
-        height: 100%;
-      }
-    }
+  // height: 100%;
+  .wx-tip {
+    font-size: 0.28rem;
+    color: #666;
   }
+  // .van-tabs {
+  //   height: 100%;
+  //   .van-tabs__content {
+  //     height: 100%;
+  //     .van-tab__pane {
+  //       height: 100%;
+  //     }
+  //   }
+  // }
   .van-tab span {
     font-size: 0.28rem;
     color: #666;
@@ -479,7 +550,7 @@ export default {
       }
       .swiper-slide-active,.swiper-slide-duplicate-active {
         height: 100%;
-        transform: scaleY(1)
+        transform: scaleY(1);
       }
       .swiper-slide-prev {
         // height: 90% !important;
@@ -584,21 +655,25 @@ export default {
     }
 
     .van-uploader {
-      width: 2rem;
+      min-width: 2rem;
       min-height: 2rem;
       text-align: center;
-      margin: 0 auto;
+      margin: 2.82rem auto 0.4rem;
       margin-top: 2.82rem;
       box-sizing: border-box;
       border: 0.04rem dashed @Grey6;
       .van-uploader__wrapper {
-        height: 100%;
+        min-width: 2rem;
+        min-height: 2rem;
         .van-icon {
           margin-bottom: 0.1rem;
           font-size: 0.3rem;
-          color: #666
+          color: #666;
         }
-        .upload-text{font-size: 0.28rem; color: #666;}
+        .upload-text {
+          font-size: 0.28rem;
+          color: #666;
+        }
       }
     }
     .van-uploader__input-wrapper {
@@ -614,9 +689,6 @@ export default {
     display: block;
   }
   .poster-text {
-    position: absolute;
-    bottom: 1.9rem;
-    left: 0;
     width: 100%;
     overflow-x: scroll;
     white-space: nowrap;
@@ -654,8 +726,7 @@ export default {
     }
   }
   .last-step {
-    position: absolute;
-    bottom: 0.6rem;
+    margin-top: 0.96rem;
     width: 100%;
     .action-content {
       margin: 0 0.2rem;
@@ -680,7 +751,6 @@ export default {
     }
   }
   .next-step {
-    position: absolute;
     width: 100%;
     height: 0.98rem;
     background-color: @BeeDefault;
@@ -688,8 +758,7 @@ export default {
     color: #fff;
     line-height: 0.98rem;
     text-align: center;
-    bottom: 0;
-    left: 0;
+    margin-top: 0.92rem;
   }
 }
 </style>
