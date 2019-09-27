@@ -445,7 +445,7 @@ export default {
       const width = imgDom.offsetWidth
       const height = imgDom.offsetHeight
       const canvas = document.createElement('canvas')
-      const scale = 4
+      const scale = 2
       canvas.width = width * scale
       canvas.height = height * scale
       canvas.getContext('2d').scale(scale, scale)
@@ -465,6 +465,12 @@ export default {
           height: height,
           backgroundColor: null
         })
+        const context = canvasImg.getContext('2d')
+        // 【重要】关闭抗锯齿
+        context.mozImageSmoothingEnabled = false
+        context.webkitImageSmoothingEnabled = false
+        context.msImageSmoothingEnabled = false
+        context.imageSmoothingEnabled = false
         const img = canvasImg.toDataURL('image/png')
         this.$toast('生成专属海报成功！')
         this.share_img = img
@@ -531,7 +537,8 @@ export default {
     },
     changeBg() {
       // 更换背景
-      this.commentImgs = null
+      this.commentImgs = ''
+      this.share_ori = ''
       this.showEnd = false
       this.collapseActive = ['1']
     },
@@ -730,6 +737,7 @@ export default {
       margin-top: 0.5rem;
       border: none;
       width: 3.8rem;
+      height: 6.68rem;
     }
     .tip {
       display: none;
@@ -753,15 +761,17 @@ export default {
     }
     .comment-img {
       text-align: center;
-      position: relative;
-      border-radius: 0.08rem;
+      position: absolute;
       background-color: @Grey7;
       overflow: hidden;
       border-radius: 0.05rem;
       background-size: cover;
       background-position: center;
-      width: 3.8rem;
-      height: 6.68rem;
+      width: 7.6rem;
+      height: 13.36rem;
+      transform: scale(0.5);
+      left: -1.9rem;
+      top: -3.34rem;
       .wenan {
         position: absolute;
         left: 0;
@@ -769,11 +779,11 @@ export default {
       }
       .qrcode-content {
         position: absolute;
-        bottom: 0.5rem;
-        right: 0.3rem;
+        bottom: 1rem;
+        right: 0.6rem;
         background-color: #fff;
-        width: 0.7rem;
-        height: 0.7rem;
+        width: 1.4rem;
+        height: 1.4rem;
         .qrcode {
           width: 100%;
           height: 100%;
