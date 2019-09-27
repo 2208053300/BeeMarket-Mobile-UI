@@ -111,11 +111,11 @@
       <div class="img-content">
         <img
           :src="beeIcon.home_icon_agricultural_products"
-          alt="消费助农"
+          alt="联创大赛"
         >
       </div>
       <p class="op-text">
-        消费助农
+        联创大赛
       </p>
     </div>
     <div class="op-item" @click="$router.push('beeFactory')">
