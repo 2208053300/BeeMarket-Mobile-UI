@@ -64,7 +64,7 @@
         <img :src="icon.close" alt="" class="close-rule" @click="showRule=false">
       </div>
       <img :src="icon.title" alt="" class="rule-title">
-      <div class=" bg-white rule-content">
+      <div class=" rule-content">
         <h3>一、送礼攻略</h3>
         <p>
           <span>1.1</span>  <span>选择商品，点击“立即送礼”选择礼物并将礼物送给微信好友；</span>
@@ -308,6 +308,7 @@ export default {
       transform: translateX(-50%);
     }
     .rule-content{
+      background-color: rgba(255,255,255,.8);
       border-radius: 0.1rem;
       padding: 0.2rem 0.3rem;
       h3{
