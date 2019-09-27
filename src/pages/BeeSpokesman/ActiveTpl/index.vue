@@ -429,17 +429,20 @@ export default {
         // width: calc(100% - 50px);
         width: 3.76rem;
         border-radius: 5px;
-        transition: height 0.2s linear;
+
+        transform: scaleY(0.9);
+        transition: all 0.3s linear;
       }
       .swiper-slide-active {
         height: 100%;
+        transform: scaleY(1)
       }
       .swiper-slide-prev {
-        height: 90% !important;
+        // height: 90% !important;
         // transition: height 0.2s linear;
       }
       .swiper-slide-next {
-        height: 90% !important;
+        // height: 90% !important;
         // transition: height 0.2s linear;
       }
     }
