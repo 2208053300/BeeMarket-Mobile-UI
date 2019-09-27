@@ -52,17 +52,7 @@
           >
         </div>
       </van-popup>
-      <!-- 操作 -->
-      <p
-        v-if="osObj.isWx"
-        class="wx-tip text-center"
-      >
-        请长按保存图片
-      </p>
-      <ul
-        v-else
-        class="action flex flex-between"
-      >
+      <ul class="action flex flex-between">
         <li
           class="text-center"
           @click="saveImg2"
@@ -337,7 +327,6 @@ export default {
         // spaceBetween: 10,
         // centeredSlides: true,
         // loop: true
-
       },
       osObj: getOs(),
       commentImgs: '',
@@ -402,7 +391,7 @@ export default {
       setTimeout(() => {
         this.$refs.mySwiper.swiper.init()
         // this.$refs.mySwiper.swiper.slideTo(1)
-      }, 1000)
+      }, 1500)
     },
     // 获取用户二维码
     async getQrcodeData() {
@@ -428,7 +417,7 @@ export default {
         this.active1 = true
         setTimeout(() => {
           this.$refs.mySwiper.swiper.init()
-        // this.$refs.mySwiper.swiper.slideTo(1)
+          // this.$refs.mySwiper.swiper.slideTo(1)
         }, 500)
       } else {
         this.active1 = false
@@ -484,7 +473,6 @@ export default {
         context.msImageSmoothingEnabled = false
         context.imageSmoothingEnabled = false
         const img = canvasImg.toDataURL('image/png')
-        this.$toast('生成专属海报成功！')
         this.share_img = img
         try {
           await postGenerated({ image: this.share_img })
@@ -522,7 +510,6 @@ export default {
           backgroundColor: null
         })
         const img = canvasImg.toDataURL('image/png')
-        this.$toast('生成专属海报成功！')
         this.share_img = img
       } catch (error) {
         console.log(error)
@@ -694,10 +681,10 @@ export default {
         transform: scaleY(1);
       }
       .swiper-slide-prev {
-            //  height: 90% !important;
+        //  height: 90% !important;
       }
       .swiper-slide-next {
-            // height: 90% !important;
+        // height: 90% !important;
       }
     }
     img {
