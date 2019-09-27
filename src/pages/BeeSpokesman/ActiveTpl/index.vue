@@ -52,17 +52,7 @@
           >
         </div>
       </van-popup>
-      <!-- 操作 -->
-      <p
-        v-if="osObj.isWx"
-        class="wx-tip text-center"
-      >
-        请长按保存图片
-      </p>
-      <ul
-        v-else
-        class="action flex flex-between"
-      >
+      <ul class="action flex flex-between">
         <li
           class="text-center"
           @click="saveImg2"
@@ -337,7 +327,6 @@ export default {
         // spaceBetween: 10,
         // centeredSlides: true,
         // loop: true
-
       },
       osObj: getOs(),
       commentImgs: '',
@@ -428,7 +417,7 @@ export default {
         this.active1 = true
         setTimeout(() => {
           this.$refs.mySwiper.swiper.init()
-        // this.$refs.mySwiper.swiper.slideTo(1)
+          // this.$refs.mySwiper.swiper.slideTo(1)
         }, 500)
       } else {
         this.active1 = false
@@ -692,10 +681,10 @@ export default {
         transform: scaleY(1);
       }
       .swiper-slide-prev {
-            //  height: 90% !important;
+        //  height: 90% !important;
       }
       .swiper-slide-next {
-            // height: 90% !important;
+        // height: 90% !important;
       }
     }
     img {
