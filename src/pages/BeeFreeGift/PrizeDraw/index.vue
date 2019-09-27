@@ -292,7 +292,7 @@ export default {
 
     // 点击我要领取礼物
     async getGift() {
-      if (!this.is_mobile_bind) {
+      if (!this.$store.state.is_mobile_bind) {
         this.$store.dispatch('setSid', this.$route.query.id)
         window.location.href = window.location.origin + '/#/persion/profile/accountBind'
         return
@@ -320,6 +320,7 @@ export default {
     async securityData() {
       const res = await security()
       this.is_mobile_bind = res.data.mobile_bind
+      this.$store.dispatch('IsBindMobile', res.data.mobile_bind)
     },
     // 显示/隐藏更多参与者头像
     showMore(type) {

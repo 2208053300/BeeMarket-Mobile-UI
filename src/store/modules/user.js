@@ -16,9 +16,15 @@ const user = {
     is_new_user: false,
     uid: 0,
     hasPhone: false,
-    showFarmPop: false
+    showFarmPop: false,
+    // 是否绑定手机号
+    is_bind_mobile: false
+
   },
   mutations: {
+    SET_IS_BIND_MOBILE: (state, is_bind_mobile) => {
+      state.is_bind_mobile = is_bind_mobile
+    },
     SET_USER_INFO: (state, userInfo) => {
       state.userInfo = userInfo
       try {
@@ -94,6 +100,12 @@ const user = {
     async GetUid({ commit }) {
       const res = await getUID()
       commit('SET_UID', res.data.uid)
+    },
+    IsBindMobile({ commit }, isSet) {
+      return new Promise(resolve => {
+        commit('SET_IS_BIND_MOBILE', isSet)
+        resolve()
+      })
     }
   }
 }
