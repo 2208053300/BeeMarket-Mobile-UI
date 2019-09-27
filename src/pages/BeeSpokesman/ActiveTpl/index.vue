@@ -1,6 +1,6 @@
 <template>
   <div class="spokesman">
-    <van-tabs v-model="active" :sticky="true">
+    <van-tabs v-model="active" :sticky="true" @click="onClickTabs">
       <van-tab title="立即分享">
         <div class="share-desc text-center">
           <p>分享即可为集市代言</p>
@@ -178,6 +178,14 @@ export default {
         {
           img: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
           id: 2
+        },
+        {
+          img: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
+          id: 3
+        },
+        {
+          img: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
+          id: 4
         }
       ],
       collapseActive: ['1'],
@@ -187,6 +195,8 @@ export default {
         direction: 'horizontal',
         loop: true,
         // autoplay: 5000,
+        observer: true,
+        observerParents: true,
         autoplay: false,
         slidesPerView: 'auto',
         centeredSlides: true,
@@ -217,7 +227,8 @@ export default {
       share_img: ''
     }
   },
-  computed: {},
+  computed: {
+  },
   watch: {},
   beforeCreate() {
     // 创建之前把背景色强制设置为白色
@@ -246,6 +257,39 @@ export default {
     }
   },
   methods: {
+    // 点击标签页
+    onClickTabs(name, title) {
+      console.log(name, title)
+      console.log(this.$refs.mySwiper, this.$refs.mySwiper.swiper)
+
+      if (title === '立即分享') {
+        setTimeout(() => {
+          // this.$refs.mySwiper.swiper.init()
+          // this.$refs.mySwiper.swiper.update()
+          // this.$refs.mySwiper.swiper.slideTo(1)
+          this.swiperOption = {
+            direction: 'horizontal',
+            loop: true,
+            // autoplay: 5000,
+            observer: true,
+            observerParents: true,
+            autoplay: false,
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            spaceBetween: 10,
+            // 如果需要分页器
+            pagination: {
+              el: '.swiper-pagination',
+              bulletActiveClass: 'slide_dot_active',
+              bulletClass: 'slide_dot'
+            }
+          }
+          console.log('1s laster')
+        }, 1000)
+      }
+    },
+    // swiper
+
     // 分享
     appShare() {
       if (this.osObj.isWx) {
@@ -433,7 +477,7 @@ export default {
         transform: scaleY(0.9);
         transition: all 0.3s linear;
       }
-      .swiper-slide-active {
+      .swiper-slide-active,.swiper-slide-duplicate-active {
         height: 100%;
         transform: scaleY(1)
       }
