@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '入驻结果'
@@ -27,7 +28,9 @@ export default {
       icon: {
         wait: require('@/assets/icon/joinFactory/enter_icon_time.png'),
         bg: require('@/assets/icon/joinFactory/enter_pic_bg.png')
-      }
+      },
+      // 获取 os 平台
+      osObj: getOs()
     }
   },
   computed: {},
@@ -57,9 +60,19 @@ export default {
   methods: {
     // 跳转到入驻政策
     goHome() {
-      this.$router.push({
-        path: '/'
-      })
+      if (this.osObj.isWx) {
+        this.$router.push({
+          path: '/'
+        })
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.GoIndex.postMessage('')
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.GoIndex()
+      } else {
+        this.$router.push({
+          path: '/'
+        })
+      }
     }
   }
 }
