@@ -17,6 +17,7 @@
       <div class="full-page-slide-wrapper">
         <keep-alive>
           <swiper
+            v-if="posterImages.length"
             ref="mySwiper"
             :options="swiperOption"
           >
@@ -102,8 +103,9 @@
         :class="{ hasImg: commentImgs||share_ori }"
       >
         <van-uploader :after-read="onRead">
-          <template v-if="share_ori">
+          <template v-if="commentImgs||share_ori">
             <div
+              v-if="share_ori"
               class="comment-img"
               :style="{backgroundImage:'url('+share_ori+')'}"
             >
@@ -121,9 +123,8 @@
                 >
               </div>
             </div>
-          </template>
-          <template v-if="commentImgs">
             <div
+              v-if="commentImgs"
               class="comment-img"
               :style="{backgroundImage:'url('+commentImgs+')'}"
             >
@@ -273,7 +274,6 @@
 
 <script>
 import { getOs } from '@/utils'
-import wxapi from '@/utils/wxapi'
 import {
   getQrcode,
   getTemplates,
@@ -306,11 +306,7 @@ export default {
         text: require('@/assets/icon/spokesman/endorsement_immediately_icon_copywriting@2x.png'),
         pic: require('@/assets/icon/spokesman/endorsement_immediately_icon_replace@2x.png')
       },
-      posterImages: [
-        require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
-        require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
-        require('@/assets/icon/freeGift/freegift_wechat_popup.png')
-      ],
+      posterImages: [],
       wenan: {
         0: require('@/assets/icon/spokesman/文案一.png'),
         1: require('@/assets/icon/spokesman/文案二.png'),
@@ -468,9 +464,8 @@ export default {
           this.$toast('上传图片失败！')
         }
       } catch (error) {
-        this.$toast({ message: error, duration: 0 })
         console.log(error)
-        // this.$toast('生成专属海报失败！')
+        this.$toast('生成专属海报失败！')
       }
     },
     async saveImg(e) {
