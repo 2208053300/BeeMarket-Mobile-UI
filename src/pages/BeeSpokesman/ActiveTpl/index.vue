@@ -1,6 +1,10 @@
 <template>
   <div class="spokesman">
-    <van-tabs v-model="active" :sticky="true" @click="onClickTabs">
+    <van-tabs
+      v-model="active"
+      :sticky="true"
+      @click="onClickTabs"
+    >
       <van-tab title="立即分享" />
 
       <van-tab title="自己上传" />
@@ -80,8 +84,23 @@
       >
         <van-uploader :after-read="onRead">
           <template v-if="commentImgs">
-            <div class="comment-img">
-              <img :src="commentImgs.content">
+            <div
+              class="comment-img"
+              :style="{backgroundImage:'url('+commentImgs.content+')'}"
+            >
+              <!-- <img :src="commentImgs.content"> -->
+              <img
+                :src="wenan[activeText]"
+                alt=""
+                class="wenan"
+              >
+              <div class="qrcode-content">
+                <img
+                  class="qrcode"
+                  :src="qrcodeBase64"
+                  alt=""
+                >
+              </div>
             </div>
           </template>
           <template v-else>
@@ -130,13 +149,13 @@
             />
             <div class="text-content">
               <p class="text1">
-                123
+                {{ item.text1 }}
               </p>
               <p class="text1">
-                456
+                {{ item.text2 }}
               </p>
               <p class="text1">
-                789
+                {{ item.text3 }}
               </p>
             </div>
           </div>
@@ -264,6 +283,12 @@ export default {
           id: 4
         }
       ],
+      wenan: {
+        0: require('@/assets/icon/spokesman/文案一.png'),
+        1: require('@/assets/icon/spokesman/文案二.png'),
+        2: require('@/assets/icon/spokesman/文案三.png'),
+        3: require('@/assets/icon/spokesman/文案四.png')
+      },
       collapseActive: ['1'],
 
       defaultIndex: 0,
@@ -289,19 +314,30 @@ export default {
       commentImgs: null,
       posterText: [
         {
-          text1: '132',
-          text2: '456',
-          text3: '789'
+          text1: '不套路，不营销，',
+          text2: '海量优品，自由选购',
+          text3: '2019最大风口，我在蜂集市等你'
         },
         {
-          text1: '132',
-          text2: '456',
-          text3: '789'
+          text1: '零风险，零门槛',
+          text2: '我用一部手机，轻松创业',
+          text3: '既能朝九晚五，亦有诗和远方'
+        },
+        {
+          text1: '不捐钱，不捐物',
+          text2: '照样轻松做公益',
+          text3: '消费助农，我在行动'
+        },
+        {
+          text1: '爱宝贝，爱家人',
+          text2: '假冒伪劣零容忍',
+          text3: '能省能赚，宝妈首选'
         }
       ],
       activeText: 0,
       showEnd: false,
-      share_img: ''
+      share_img: '',
+      qrcodeBase64: ''
     }
   },
   computed: {
@@ -457,7 +493,6 @@ export default {
 
 <style  lang="less">
 .spokesman {
-
   .wx-tip {
     font-size: 0.28rem;
     color: #666;
@@ -527,14 +562,14 @@ export default {
         align-items: center;
       }
       .swiper-slide {
-
         width: 3.76rem;
         border-radius: 5px;
 
         transform: scaleY(0.9);
         transition: all 0.3s linear;
       }
-      .swiper-slide-active,.swiper-slide-duplicate-active {
+      .swiper-slide-active,
+      .swiper-slide-duplicate-active {
         height: 100%;
         transform: scaleY(1);
       }
@@ -621,11 +656,33 @@ export default {
       border-radius: 0.08rem;
       background-color: @Grey7;
       overflow: hidden;
-      img {
-        border-radius: 0.05rem;
-        width: 3.8rem;
-        height: 6.68rem;
-        margin: 0 auto;
+      border-radius: 0.05rem;
+      background-size: cover;
+      background-position: center;
+      width: 3.8rem;
+      height: 6.68rem;
+      // img {
+      //   width: 3.8rem;
+      //   height: 6.68rem;
+      //   margin: 0 auto;
+      //   object-fit: cover;
+      // }
+      .wenan {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      .qrcode-content {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 0.3rem;
+        background-color: #fff;
+        width: 0.7rem;
+        height: 0.7rem;
+        .qrcode {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
     .upload-img {
@@ -697,6 +754,7 @@ export default {
         }
         .text1 {
           color: @Grey1;
+          font-size: 0.26rem;
         }
       }
     }
