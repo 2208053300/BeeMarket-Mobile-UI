@@ -34,11 +34,12 @@ export default {
   watch: {},
   beforeCreate() {
     // 创建之前把背景色强制设置为白色
-    // document.querySelector('body').style.background = '#FACE55'
+    document.querySelector('body').style.background = '#FACE55'
     document.querySelector('#app').style.backgroundColor = '#FACE55'
   },
   beforeDestroy() {
     // 销毁之前把白色背景给清除掉
+    document.querySelector('body').style.background = ''
     document.querySelector('#app').style.background = ''
   },
   created() {},
