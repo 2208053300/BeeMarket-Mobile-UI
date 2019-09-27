@@ -20,7 +20,7 @@
           </swiper>
         </div>
         <!-- 操作 -->
-        <p v-if="osObj.isWx" class="wx-tip">
+        <p v-if="osObj.isWx" class="wx-tip text-center">
           请长按保存图片
         </p>
         <ul v-else class="action flex flex-between">
