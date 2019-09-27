@@ -899,7 +899,7 @@ export default {
     }
   }
   .next-step {
-    width: 100%;
+    margin: 0.3rem;
     height: 0.98rem;
     background-color: @BeeDefault;
     font-size: 0.36rem;
@@ -907,6 +907,7 @@ export default {
     line-height: 0.98rem;
     text-align: center;
     margin-top: 0.92rem;
+    border-radius: 0.2rem;
   }
 }
 </style>
