@@ -49,6 +49,7 @@ export default {
   },
   mounted() {
     this.$store.commit('SET_BACKTOP_HIDE', true)
+    this.$store.state.app.beeFooter.show = false
   },
   destroyed() {
     this.$store.commit('SET_BACKTOP_HIDE', false)
