@@ -23,7 +23,7 @@
       </router-view>
     </transition>
     <transition name="van-slide-right">
-      <back-top v-show="$store.state.app.backTop" />
+      <back-top v-show="$store.state.app.backTop && !$store.state.app.backTopHide" />
     </transition>
     <bee-footer v-show="$store.state.app.beeFooter.show" />
   </div>
