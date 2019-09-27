@@ -448,20 +448,12 @@ export default {
 
 <style  lang="less">
 .spokesman {
-  // height: 100%;
+
   .wx-tip {
     font-size: 0.28rem;
     color: #666;
   }
-  // .van-tabs {
-  //   height: 100%;
-  //   .van-tabs__content {
-  //     height: 100%;
-  //     .van-tab__pane {
-  //       height: 100%;
-  //     }
-  //   }
-  // }
+
   .van-tab span {
     font-size: 0.28rem;
     color: #666;
@@ -513,10 +505,9 @@ export default {
   .full-page-slide-wrapper {
     width: 100%;
     height: 6.68rem;
-    // background: white;
+
     box-sizing: content-box;
-    // padding-top: 15px;
-    // margin-top: 10px;
+
     position: relative;
     overflow: hidden;
     .swiper-container {
@@ -527,7 +518,7 @@ export default {
         align-items: center;
       }
       .swiper-slide {
-        // width: calc(100% - 50px);
+
         width: 3.76rem;
         border-radius: 5px;
 
@@ -538,14 +529,12 @@ export default {
         height: 100%;
         transform: scaleY(1);
       }
-      .swiper-slide-prev {
-        // height: 90% !important;
-        // transition: height 0.2s linear;
-      }
-      .swiper-slide-next {
-        // height: 90% !important;
-        // transition: height 0.2s linear;
-      }
+      // .swiper-slide-prev {
+
+      // }
+      // .swiper-slide-next {
+
+      // }
     }
     img {
       object-fit: fill;
