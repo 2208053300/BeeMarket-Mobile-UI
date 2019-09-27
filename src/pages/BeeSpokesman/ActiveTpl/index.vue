@@ -43,6 +43,14 @@
           </swiper>
         </keep-alive>
       </div>
+      <van-popup v-model="clipImg">
+        <div class="imgPre">
+          <img
+            :src="share_img"
+            alt=""
+          >
+        </div>
+      </van-popup>
       <!-- 操作 -->
       <p
         v-if="osObj.isWx"
@@ -338,7 +346,8 @@ export default {
       showEnd: false,
       share_img: '',
       qrcodeBase64: '',
-      share_ori: ''
+      share_ori: '',
+      clipImg: false
     }
   },
   computed: {
@@ -390,6 +399,8 @@ export default {
     },
     // 点击标签页
     onClickTabs(name, title) {
+      this.share_img = ''
+      this.showEnd = false
       if (title === '立即分享') {
         this.active1 = true
       } else {
@@ -424,15 +435,16 @@ export default {
     },
 
     async onRead(file) {
-      this.commentImgs = file
-      this.collapseActive = []
       try {
-        console.log(file)
-
-        await postCustom({ image: file.file })
+        console.log(file.file)
+        const imgFile = new FormData()
+        imgFile.append('image', file.file)
+        await postCustom(imgFile)
       } catch (error) {
         this.$toast('上传图片失败！')
       }
+      this.commentImgs = file
+      this.collapseActive = []
     },
     async doneText() {
       // 点击下一步，生成海报
@@ -453,6 +465,7 @@ export default {
         this.$toast('生成专属海报成功！')
         this.share_img = img
       } catch (error) {
+        this.$toast(error)
         console.log(error)
         this.$toast('生成专属海报失败！')
       }
@@ -482,9 +495,6 @@ export default {
       const imgDom = document.querySelector('.swiper-slide-active')
       try {
         const canvasImg = await html2canvas(imgDom, {
-          // scrollX: 0,
-          // scrollY: 0,
-          // x: imgDom.offsetLeft,
           y: document.querySelector('.full-page-slide-wrapper').offsetTop,
           // 必须获得其距离顶部距离，避免滚动偏移
           backgroundColor: null
@@ -492,7 +502,6 @@ export default {
         const img = canvasImg.toDataURL('image/png')
         this.$toast('生成专属海报成功！')
         this.share_img = img
-        console.log(this.share_img)
       } catch (error) {
         console.log(error)
         this.$toast('生成专属海报失败！')
@@ -511,7 +520,8 @@ export default {
             data: baseString
           })
         }
-      } else if (this.osObj.isWx) {
+      } else {
+        this.clipImg = true
         this.$toast('请长按海报保存到本地！')
       }
     },
@@ -555,6 +565,7 @@ export default {
           })
         }
       } else {
+        this.clipImg = true
         this.$toast('请长按海报保存到本地！')
       }
     }
@@ -564,6 +575,10 @@ export default {
 
 <style  lang="less">
 .spokesman {
+  .imgPre {
+    width: 3.8rem;
+    height: 6.68rem;
+  }
   .wx-tip {
     font-size: 0.28rem;
     color: #666;
