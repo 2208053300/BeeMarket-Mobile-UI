@@ -308,7 +308,7 @@ export default {
           name: 'confirmOrder',
           query: {
             target: 'general|present',
-            sid: this.$route.query.id
+            sid: this.$route.query.id || this.$store.state.cart.sid
           }
         })
       }
