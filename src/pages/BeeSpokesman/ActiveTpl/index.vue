@@ -480,7 +480,6 @@ export default {
         context.msImageSmoothingEnabled = false
         context.imageSmoothingEnabled = false
         const img = canvasImg.toDataURL('image/png')
-        this.$toast('生成专属海报成功！')
         this.share_img = img
         try {
           await postGenerated({ image: this.share_img })
@@ -518,7 +517,6 @@ export default {
           backgroundColor: null
         })
         const img = canvasImg.toDataURL('image/png')
-        this.$toast('生成专属海报成功！')
         this.share_img = img
       } catch (error) {
         console.log(error)
