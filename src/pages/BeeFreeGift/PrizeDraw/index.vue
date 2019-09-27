@@ -140,6 +140,7 @@
 </template>
 
 <script>
+import { security } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 import { confirmOrder } from '@/api/BeeApi/order'
@@ -173,6 +174,8 @@ export default {
       linkData: {},
       // 获取 os 平台
       osObj: getOs(),
+      // 是否绑定了手机号码
+      is_mobile_bind: false,
       // 分享数据
       share_data: {
         title: '',
@@ -205,7 +208,7 @@ export default {
   },
   mounted() {
     this.getLinkData()
-
+    this.securityData()
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.shareMore
 
@@ -286,6 +289,10 @@ export default {
 
     // 点击我要领取礼物
     async getGift() {
+      if (!this.is_mobile_bind) {
+        window.location.href = window.location.origin + '/#//persion/profile/accountBind'
+        return
+      }
       // TODO 跳转下单 参考免费领取茅台和燕窝
       const res = await confirmOrder(
         JSON.stringify({
@@ -306,6 +313,10 @@ export default {
       }
     },
 
+    async securityData() {
+      const res = await security()
+      this.is_mobile_bind = res.data.mobile_bind
+    },
     // 显示/隐藏更多参与者头像
     showMore(type) {
       this.isMore = type
