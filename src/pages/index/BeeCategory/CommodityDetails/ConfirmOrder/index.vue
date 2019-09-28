@@ -25,9 +25,7 @@
           ￥{{ order.orderDetail.freight_amount||0 }}
         </div>
       </van-cell>
-<<<<<<< HEAD
-=======
-      <van-cell v-if="order.orderDetail.pgpackage_deduct !== undefined">
+      <van-cell v-if="order.orderDetail.pgpackage_deduct > 0 ">
         <div
           slot="title"
           class="cell-title"
@@ -38,7 +36,6 @@
           -￥{{ order.orderDetail.pgpackage_deduct }}
         </div>
       </van-cell>
->>>>>>> dev
       <!-- 没有公益值的时候隐藏 -->
       <van-cell v-if="order.orderDetail.charity_amount" class="deduction-content">
         <div
