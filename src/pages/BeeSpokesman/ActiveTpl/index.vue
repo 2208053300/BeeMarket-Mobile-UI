@@ -420,6 +420,7 @@ export default {
           // this.$refs.mySwiper.swiper.slideTo(1)
         }, 500)
       } else {
+        this.share_img = ''
         this.active1 = false
       }
     },
@@ -446,7 +447,7 @@ export default {
       const width = imgDom.offsetWidth
       const height = imgDom.offsetHeight
       const canvas = document.createElement('canvas')
-      const scale = 2
+      const scale = 4
       canvas.width = width * scale
       canvas.height = height * scale
       canvas.getContext('2d').scale(scale, scale)
