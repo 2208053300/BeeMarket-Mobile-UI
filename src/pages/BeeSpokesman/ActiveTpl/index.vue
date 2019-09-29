@@ -780,7 +780,7 @@ export default {
       .qrcode-content {
         position: absolute;
         bottom: 1rem;
-        right: 0.8;
+        right: 0.8rem;
         background-color: #fff;
         width: 1.4rem;
         height: 1.4rem;
