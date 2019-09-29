@@ -447,7 +447,7 @@ export default {
       const width = imgDom.offsetWidth
       const height = imgDom.offsetHeight
       const canvas = document.createElement('canvas')
-      const scale = 4
+      const scale = 8
       canvas.width = width * scale
       canvas.height = height * scale
       canvas.getContext('2d').scale(scale, scale)
@@ -503,10 +503,21 @@ export default {
     },
     async createImg() {
       const imgDom = document.querySelector('.swiper-slide-active')
+      const width = imgDom.offsetWidth
+      const height = imgDom.offsetHeight
+      const canvas = document.createElement('canvas')
+      const scale = 8
+      canvas.width = width * scale
+      canvas.height = height * scale
+      canvas.getContext('2d').scale(scale, scale)
       try {
         const canvasImg = await html2canvas(imgDom, {
+          scale: scale,
+          canvas: canvas,
           useCORS: true,
           y: document.querySelector('.full-page-slide-wrapper').offsetTop,
+          width: width,
+          height: height,
           // 必须获得其距离顶部距离，避免滚动偏移
           backgroundColor: null
         })
@@ -767,11 +778,11 @@ export default {
       border-radius: 0.05rem;
       background-size: cover;
       background-position: center;
-      width: 7.6rem;
-      height: 13.36rem;
-      transform: scale(0.5);
-      left: -1.9rem;
-      top: -3.34rem;
+      width: 15.2rem;
+      height: 26.72rem;
+      transform: scale(0.25);
+      left: -5.7rem;
+      top: -10.02rem;
       .wenan {
         position: absolute;
         left: 0;
@@ -779,11 +790,11 @@ export default {
       }
       .qrcode-content {
         position: absolute;
-        bottom: 1rem;
-        right: 0.8rem;
+        bottom: 2rem;
+        right: 1.6rem;
         background-color: #fff;
-        width: 1.4rem;
-        height: 1.4rem;
+        width: 2.8rem;
+        height: 2.8rem;
         .qrcode {
           width: 100%;
           height: 100%;
