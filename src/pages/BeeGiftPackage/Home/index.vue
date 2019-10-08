@@ -50,7 +50,7 @@ export default {
   metaInfo: {
     title: '农礼包产品'
   },
-  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku, Rule, PackageBuild },
+  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku, Rule },
   props: {},
   data() {
     return {

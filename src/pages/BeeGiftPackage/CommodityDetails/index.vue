@@ -34,7 +34,6 @@
       @close="packageListClose"
       @gift-change="getNumberOfGift"
     />
-
   </div>
 </template>
 

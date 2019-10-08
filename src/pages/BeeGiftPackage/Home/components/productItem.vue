@@ -11,7 +11,7 @@
         {{ item.pname }}
       </p>
       <p class="desc no-wrap">
-        {{ item.product_desc }}
+        {{ item.product_desc || " " }}
       </p>
       <div class="price-op flex flex-between align-center">
         <div class="price">
@@ -123,6 +123,7 @@ export default {
     }
     .desc {
       font-size: 0.22rem;
+      height: 0.22rem;
       color: @Grey1;
       margin-top: 0.16rem;
     }
