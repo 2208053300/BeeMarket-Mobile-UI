@@ -268,7 +268,7 @@ export default {
       .product-info {
         width:3.66rem;
         .product-name {
-          margin-top: 10px;
+          line-height: 1.5;
           font-size: 0.26rem;
         }
         .product-desc {
