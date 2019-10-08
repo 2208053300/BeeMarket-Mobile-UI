@@ -60,11 +60,7 @@ export default {
   computed: {
     ...mapState(['giftPackage']),
     canSettlement() {
-      if (this.giftPackage.package_recharge_balance > 0) {
-        return this.giftPackage.selectedTotalAmount > 0
-      } else {
-        return this.giftPackage.selectedTotalAmount >= this.maxMoney
-      }
+      return this.giftPackage.selectedTotalAmount > 0
     },
     tipMoneyText() {
       return (this.maxMoney - this.giftPackage.selectedTotalAmount).toFixed(2)

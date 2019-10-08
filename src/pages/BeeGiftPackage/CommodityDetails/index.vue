@@ -35,7 +35,6 @@
       @gift-change="getNumberOfGift"
     />
 
-    <package-build :visible.sync="packageVisible" />
   </div>
 </template>
 
@@ -47,8 +46,6 @@ import richDetails from './components/richDetails'
 import BeeGuess from '@/components/BeeGuess'
 import { getUID } from '@/api/BeeApi/user'
 import wxapi from '@/utils/wxapi'
-
-import PackageBuild from '../components/packageBuild'
 import GiftPackageBar from '../components/giftPackageBar'
 import sku from '../components/Sku'
 import GiftPackageList from '../components/giftPackageList'
@@ -66,7 +63,6 @@ export default {
     commodityOverview,
     richDetails,
     BeeGuess,
-    PackageBuild,
     GiftPackageBar,
     sku,
     GiftPackageList,
@@ -77,7 +73,6 @@ export default {
     return {
       commodityData: {},
       uid: 0,
-      packageVisible: false,
       zIndex: 2500,
       giftListVisible: false,
       showSku: false,
@@ -89,20 +84,10 @@ export default {
   computed: {
     ...mapState(['giftPackage']),
     canSettlement() {
-      if (this.giftPackage.package_recharge_balance > 0) {
-        return this.giftPackage.selectedTotalAmount > 0
-      } else {
-        return this.giftPackage.selectedTotalAmount >= this.maxMoney
-      }
+      return this.giftPackage.selectedTotalAmount > 0
     }
   },
-  watch: {
-    canSettlement() {
-      if (this.canSettlement && this.giftPackage.package_recharge_balance === 0) {
-        this.packageVisible = true
-      }
-    }
-  },
+  watch: {},
   created() {},
   mounted() {
     this.$store.state.cart.skuId = 0

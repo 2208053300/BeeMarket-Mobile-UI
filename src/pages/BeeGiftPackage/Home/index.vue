@@ -33,7 +33,6 @@
       @close="packageListClose"
     />
     <rule :visible.sync="ruleVisible" />
-    <package-build :visible.sync="packageVisible" />
   </div>
 </template>
 
@@ -46,7 +45,6 @@ import GiftPackageBar from '../components/giftPackageBar'
 import sku from '../components/Sku'
 import GiftPackageList from '../components/giftPackageList'
 import Rule from './components/rule'
-import PackageBuild from '../components/packageBuild'
 import goPayFromPayInfo from '../PaySelf/goPayFromPayInfo'
 export default {
   metaInfo: {
@@ -68,27 +66,12 @@ export default {
       pid: 0,
       giftListVisible: false,
       ruleVisible: false,
-      packageVisible: false,
       zIndex: 2500,
       maxMoney: 599
     }
   },
   computed: {
-    ...mapState(['giftPackage']),
-    canSettlement() {
-      if (this.giftPackage.package_recharge_balance > 0) {
-        return this.giftPackage.selectedTotalAmount > 0
-      } else {
-        return this.giftPackage.selectedTotalAmount >= this.maxMoney
-      }
-    }
-  },
-  watch: {
-    canSettlement() {
-      if (this.canSettlement && this.giftPackage.package_recharge_balance === 0) {
-        this.packageVisible = true
-      }
-    }
+    ...mapState(['giftPackage'])
   },
   beforeCreate() {
     // 创建之前把背景色强制设置为白色
