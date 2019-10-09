@@ -9,13 +9,14 @@
       @click-overlay="handleClose()"
     >
       <p class="tips">
-        <span v-if="giftPackage.selectedTotalAmount===0">
+        <span v-if="giftPackage.package_type === 1 && giftPackage.lack_package_balance === 0">
           任意搭配满<span class="money-text"> {{ maxMoney }} 元</span>，自动生成礼包！
         </span>
-        <span v-if="giftPackage.selectedTotalAmount>0 && giftPackage.selectedTotalAmount < maxMoney">
-          还差 <span class="money-text"> {{ tipMoneyText }} 元</span>，自动生成礼包！
+        <span v-if="giftPackage.package_type === 1 && giftPackage.lack_package_balance > 0">
+          还差 <span class="money-text"> {{ giftPackage.lack_package_balance }} 元</span>，自动生成礼包！
         </span>
-        <span v-if="giftPackage.selectedTotalAmount >= maxMoney">礼包已生成</span>
+        <span v-if="giftPackage.package_type === 2">礼包已生成</span>
+        <span v-if="giftPackage.package_type === 3">未知话语</span>
       </p>
       <div class="list-header">
         <img :src="beeIcon.farm_shopcart_pic_text" style="width: 2.27rem">
@@ -75,10 +76,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['giftPackage']),
-    tipMoneyText() {
-      return (this.maxMoney - this.giftPackage.selectedTotalAmount).toFixed(2)
-    }
+    ...mapState(['giftPackage'])
   },
   watch: {},
   created() {},
