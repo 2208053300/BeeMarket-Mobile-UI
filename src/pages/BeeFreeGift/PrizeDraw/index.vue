@@ -200,6 +200,9 @@ export default {
   },
   computed: {},
   watch: {},
+  beforeCreate() {
+
+  },
   created() {},
   beforeDestroy() {
     if (this.osObj.isIphone && this.osObj.isApp) {
@@ -230,7 +233,12 @@ export default {
     async getLinkData() {
       try {
         const res = await linkData({ id: this.$route.query.id })
+        if (res.data.need_download_app) {
+          console.log('need download app')
+          return
+        }
         this.linkData = res.data
+
         this.showPopup = true
         // is_show 是否显示抽奖弹窗 1 显示 0 隐藏
         if (this.linkData.is_show === 0) {
