@@ -180,6 +180,7 @@ export default {
     color: #333333;
     line-height: 0.55rem;
     font-weight: bold;
+    user-select: text;
   }
   .divider {
     font-size: 0;
@@ -196,6 +197,7 @@ export default {
     color: #666666;
     font-size: 0.3rem;
     margin-bottom: 0.24rem;
+    user-select: text;
     img {
       margin-bottom: 0.16rem;
     }
