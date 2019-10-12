@@ -234,7 +234,9 @@ export default {
       try {
         const res = await linkData({ id: this.$route.query.id })
         if (res.data.need_download_app) {
-          window.location.href = window.location.origin + '/beeRegister#/'
+          this.$router.push({
+            name: 'downloadApp'
+          })
         }
         this.linkData = res.data
 

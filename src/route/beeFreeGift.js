@@ -58,6 +58,11 @@ const router = new Router({
           path: 'success',
           name: 'success',
           component: () => import('@/pages/BeeFreeGift/Success')
+        },
+        {
+          path: 'downloadApp',
+          name: 'downloadApp',
+          component: () => import('@/pages/BeeFreeGift/DownloadApp')
         }
       ]
     }
