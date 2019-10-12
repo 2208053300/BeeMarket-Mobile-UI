@@ -40,10 +40,15 @@
         @click="$router.push('/cart')"
       />
       <!-- TODO 不可购买 -->
-      <van-goods-action-button
+      <!-- <van-goods-action-button
         text="加入购物车"
         class="add-cart"
         @click="addShopcartProductData"
+      /> -->
+      <van-goods-action-button
+        text="免费送礼"
+        class="add-cart"
+        @click="freeGift"
       />
       <van-goods-action-button
         text="立即购买"
@@ -163,6 +168,19 @@ export default {
         this.showAnime2 = false
       }
       this.$toast(res.message)
+    },
+    freeGift() {
+      if (this.commodityData.offsale) {
+        this.$toast('商品已下架！')
+        return
+      }
+      if (!this.$store.state.cart.skuId) {
+        this.$toast('请先选择商品规格')
+        this.$parent.freeGift()
+        this.$store.state.cart.showSku = true
+        return false
+      }
+      this.$parent.doneGift()
     },
     // 立即购买
     async confirmOrderData() {

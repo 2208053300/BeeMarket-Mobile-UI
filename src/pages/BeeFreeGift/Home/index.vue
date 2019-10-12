@@ -58,6 +58,9 @@
         </div>
       </van-list>
     </div>
+    <van-button round class="cash-btn" @click="goHome">
+      全场免费送礼物
+    </van-button>
     <!-- 规则 -->
     <van-popup v-model="showRule" position="bottom" class="rule-box">
       <div class="text-right">
@@ -200,6 +203,16 @@ export default {
           target
         }
       })
+    },
+    // 全场免费送礼 跳转首页
+    goHome() {
+      if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.GoIndex.postMessage('')
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.GoIndex()
+      } else {
+        window.location.href = window.location.origin
+      }
     }
 
   }
@@ -332,5 +345,17 @@ export default {
     }
   }
 
+  .cash-btn {
+  position: fixed;
+  bottom: 0.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: @BeeDefault;
+  color: #fff;
+  font-size: 0.36rem;
+  border: none;
+  padding: 0 0.35rem;
+  width: 6.9rem;
+}
 }
 </style>
