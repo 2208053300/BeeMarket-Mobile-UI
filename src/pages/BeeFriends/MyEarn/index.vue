@@ -286,9 +286,8 @@ export default {
     // background-repeat: no-repeat no-repeat;
     // background-size: 100% 100%, 4.6rem 2.72rem;
     // background-position: 0 0, top right;
-  // background-size: contain
     background: url('../../../assets/icon/beeFriends/info/bee_firend_img_top_bg1.png')  top  no-repeat ,linear-gradient(180deg, @BeeDefault 40%, #fff 60%);
-    // text-align: center;
+
     .img-content {
       // margin: 0 auto 0.18rem;
       padding: 0 0.3rem;
@@ -474,6 +473,7 @@ export default {
   img {
     width: 2.88rem;
     height: 2.68rem;
+    margin-bottom:.2rem;
   }
   .tip {
     font-size: 0.24rem;
