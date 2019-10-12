@@ -59,7 +59,10 @@
               </div>
             </div>
           </div>
-          <div class="prop-content">
+          <div
+            v-if="selectType!==2"
+            class="prop-content"
+          >
             <div class="prop-title">
               数量
             </div>
@@ -70,10 +73,16 @@
               :max="limitNum||99"
             />
           </div>
+          <p
+            v-if="selectType===2&&propsData.person_num"
+            class="gift-num"
+          >
+            满<span class="num">{{ propsData.person_num }}</span>人参与，立刻开奖~
+          </p>
         </div>
       </div>
       <div
-        v-if="selectType===0"
+        v-if="selectType===0||selectType===2"
         class="done-btn"
       >
         <van-button
@@ -235,6 +244,7 @@ export default {
     handleClose() {
       this.$emit('update:selectType', 0)
       this.$emit('update:showSku', false)
+      this.$emit('update:freeGift', false)
     },
     // 确定选项，跳转下单
     handleDone() {
@@ -245,8 +255,11 @@ export default {
       // FIXME 此处注意方法顺序
       this.$emit('get-sku-name', this.skuName)
       this.$emit('get-sku-id', this.propsData.sku_id)
-      this.$emit('sku-done') // SKU选择完成
-      // return this.propsData.sku_id
+      if (this.selectType !== 2) {
+        this.$emit('sku-done') // SKU选择完成
+      } else {
+        this.$parent.$parent.doneGift()
+      }
     },
     // 确定选项，加入购物车
     handleAdd() {
@@ -359,6 +372,16 @@ export default {
               border-bottom-right-radius: 45%;
               color: @Grey2;
             }
+          }
+        }
+        .gift-num {
+          margin-top: 0.6rem;
+          text-align: center;
+          font-size: 0.28rem;
+          color: @BeeDefault;
+          .num {
+            font-size: 0.44rem;
+            margin: 0 0.04rem 0 0.06rem;
           }
         }
       }

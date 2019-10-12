@@ -224,20 +224,9 @@ export default {
       try {
         const res = await postSku({ sid: this.sid })
         if (res.status_code === 200) {
-          // this.$emit('update:showSku', false)
-          // this.$emit('update:showGift', true)
           this.$parent.showSku = false
           this.$parent.showGift = true
           this.$parent.nowProduct = res.data
-          // this.$parent.nowProduct = res.data
-
-          // this.$emit('update:propsId', this.selProps)
-          // this.$emit('update:pNumber', this.productNum)
-          // FIXME 此处注意方法顺序
-          // this.$emit('get-sku-name', this.skuName)
-          // this.$emit('get-sku-id', this.propsData.sku_id)
-          // this.$emit('sku-done') // SKU选择完成
-          // return this.propsData.sku_id
         }
       } catch (error) {
         console.log(error)
