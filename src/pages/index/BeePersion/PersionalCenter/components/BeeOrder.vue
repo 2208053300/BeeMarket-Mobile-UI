@@ -5,6 +5,7 @@
         style="border-top-left-radius: 0.2rem;border-top-right-radius: 0.2rem"
         title="我的订单"
         value="查看全部订单"
+        is-link
         @click="authRoute('/persion/order')"
       />
       <!-- TODO 跳转时带上订单状态，安装后直接切换标签栏 -->
