@@ -27,7 +27,7 @@
           </div>
         </div>
         <!-- 收益 -->
-        <div class="earning-tabs bg-white">
+        <div class="earning-tabs">
           <img :src="beeIcon.bee_firends_my_earn" class="my-earn-pic">
           <div class="earning-num text-center">
             <div class="total-num">
@@ -190,7 +190,6 @@ export default {
       setTimeout(() => {
         if (this.detailList.length === 0) {
           console.log('3s内没加载数据，手动执行')
-
           this.onLoad()
         }
       }, 3000)
@@ -327,6 +326,7 @@ export default {
         padding: 0;
       }
       .earning-tabs {
+        background-color: #fff;
         border-radius: 0.1rem;
         width: 98%;
         margin: 0.3rem auto;
