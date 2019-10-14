@@ -94,23 +94,26 @@
           is-link
           @click="authRoute('/persion/BeeCommonweal')"
         />
-        <div class="commonweal-detail">
+        <div
+          v-if="userInfo.bee_charity_statistics"
+          class="commonweal-detail"
+        >
           <div class="detail-item active-text">
             可用公益值
             <p class="num">
-              123
+              {{ userInfo.bee_charity_statistics.available_charity_value }}
             </p>
           </div>
           <div class="detail-item">
             累计公益值
             <p class="num">
-              123
+              {{ userInfo.bee_charity_statistics.total_charity_value }}
             </p>
           </div>
           <div class="detail-item">
             路上公益值
             <p class="num">
-              123
+              {{ userInfo.bee_charity_statistics.not_arrived_charity_value }}
             </p>
           </div>
         </div>

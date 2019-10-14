@@ -8,7 +8,7 @@
       </van-swipe>
     </div> -->
     <p class="history-title">
-      送礼记录
+      参与记录
     </p>
     <div class="product-list">
       <van-list

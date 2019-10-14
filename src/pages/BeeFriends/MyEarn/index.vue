@@ -27,7 +27,7 @@
           </div>
         </div>
         <!-- 收益 -->
-        <div class="earning-tabs bg-white">
+        <div class="earning-tabs">
           <img :src="beeIcon.bee_firends_my_earn" class="my-earn-pic">
           <div class="earning-num text-center">
             <div class="total-num">
@@ -177,7 +177,9 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    // document.body.style.backgroundColor = '#fff'
+  },
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
@@ -190,7 +192,6 @@ export default {
       setTimeout(() => {
         if (this.detailList.length === 0) {
           console.log('3s内没加载数据，手动执行')
-
           this.onLoad()
         }
       }, 3000)
@@ -277,18 +278,12 @@ export default {
 
 <style scoped lang="less">
 .earn-header {
-  // height: 4.3rem;
-
+  background-color:#fff;
   .head-img {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    // background-image: linear-gradient(180deg, @BeeDefault 40%, #fff 60%) ,url('../../../assets/icon/beeFriends/info/bee_firend_img_top_bg1.png');
-    // background-repeat: no-repeat no-repeat;
-    // background-size: 100% 100%, 4.6rem 2.72rem;
-    // background-position: 0 0, top right;
-  // background-size: contain
     background: url('../../../assets/icon/beeFriends/info/bee_firend_img_top_bg1.png')  top  no-repeat ,linear-gradient(180deg, @BeeDefault 40%, #fff 60%);
-    // text-align: center;
+
     .img-content {
       // margin: 0 auto 0.18rem;
       padding: 0 0.3rem;
@@ -328,9 +323,10 @@ export default {
         padding: 0;
       }
       .earning-tabs {
+        background-color: #fff;
         border-radius: 0.1rem;
         width: 98%;
-        margin: 0.3rem auto;
+        margin: 0.3rem auto 0;
         padding-top: 0.6rem;
         box-shadow: 0 10px 20px #eee;
         position: relative;
@@ -474,6 +470,7 @@ export default {
   img {
     width: 2.88rem;
     height: 2.68rem;
+    margin-bottom:.2rem;
   }
   .tip {
     font-size: 0.24rem;
