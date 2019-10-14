@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-swipe class="winning-roll" :autoplay="5000" :show-indicators="false" :touchable="false" vertical>
+    <van-swipe v-if="list.length > 0" class="winning-roll" :autoplay="5000" :show-indicators="false" :touchable="false" vertical>
       <van-swipe-item v-for="(item, index) in list" :key="index" class="winning-item">
         <img :src="item.avatar">
         <span>{{ item.text }}</span>
@@ -40,6 +40,7 @@ export default {
       display: grid;
       grid-template-columns: 0.48rem 1fr;
       align-items: center;
+      grid-column-gap: 0.11rem;
       column-gap: 0.11rem;
       img {
         margin-left: 0.04rem;
@@ -56,6 +57,7 @@ export default {
         width: 95%;
         overflow: hidden;
         text-overflow:ellipsis;
+        margin-top: 2px;
       }
     }
   }
