@@ -4,6 +4,7 @@
       :src="beeIcon.home_img_top_bg_under"
       class="top-bg"
     >
+    <winning-roll style="position: fixed; top: 1.4rem;left: 0.3rem;z-index: 100" />
     <div class="header-content">
       <div class="home-header">
         <div class="logo-content">
@@ -62,6 +63,7 @@ import actionPop from './components/actionPop'
 import { isLogin } from '@/utils/auth'
 import wxapi from '@/utils/wxapi'
 import { getOs } from '@/utils'
+import WinningRoll from '@/components/BeeWinningRoll/index'
 export default {
   metaInfo() {
     return {
@@ -79,7 +81,8 @@ export default {
     farmProduct,
     actionList,
     guessLike,
-    actionPop
+    actionPop,
+    WinningRoll
   },
   props: {},
   data() {
