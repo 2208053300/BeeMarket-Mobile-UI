@@ -382,6 +382,7 @@ export default {
           .num {
             font-size: 0.44rem;
             margin: 0 0.04rem 0 0.06rem;
+            font-weight: bold;
           }
         }
       }
