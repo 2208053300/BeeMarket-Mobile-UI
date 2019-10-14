@@ -63,7 +63,7 @@ import actionPop from './components/actionPop'
 import { isLogin } from '@/utils/auth'
 import wxapi from '@/utils/wxapi'
 import { getOs } from '@/utils'
-import WinningRoll from '@/components/BeeWinningRoll/winningRoll'
+import WinningRoll from '@/components/BeeWinningRoll/index'
 export default {
   metaInfo() {
     return {

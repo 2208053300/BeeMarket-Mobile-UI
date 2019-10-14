@@ -47,7 +47,7 @@ import sku from '../components/Sku'
 import GiftPackageList from '../components/giftPackageList'
 import Rule from './components/rule'
 import goPayFromPayInfo from '../PaySelf/goPayFromPayInfo'
-import WinningRoll from '@/components/BeeWinningRoll/winningRoll'
+import WinningRoll from '@/components/BeeWinningRoll/index'
 export default {
   metaInfo: {
     title: '农礼包产品'
