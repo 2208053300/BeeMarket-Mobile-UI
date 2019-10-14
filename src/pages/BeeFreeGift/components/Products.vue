@@ -88,6 +88,9 @@ export default {
   },
   mounted() {
     // this.getIndexData()
+    if (window.location.href.includes('GuideDownload')) {
+      this.icon.titleImg = require('@/assets/icon/freeGift/freegift_details_text_gift1.png')
+    }
   },
   methods: {
     // 获取商品数据
