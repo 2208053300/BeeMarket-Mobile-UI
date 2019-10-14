@@ -1,6 +1,7 @@
 <template>
   <div class="bee-index">
     <bee-header @on-rule="onRule" />
+    <winning-roll style="position: fixed; top: 1.95rem;left: 0.28rem" />
     <img :src="beeIcon.headImg">
     <div class="product-list">
       <div class="item flex flex-wrap">
@@ -46,11 +47,12 @@ import sku from '../components/Sku'
 import GiftPackageList from '../components/giftPackageList'
 import Rule from './components/rule'
 import goPayFromPayInfo from '../PaySelf/goPayFromPayInfo'
+import WinningRoll from '@/components/BeeWinningRoll/winningRoll'
 export default {
   metaInfo: {
     title: '农礼包产品'
   },
-  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku, Rule },
+  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku, Rule, WinningRoll },
   props: {},
   data() {
     return {
