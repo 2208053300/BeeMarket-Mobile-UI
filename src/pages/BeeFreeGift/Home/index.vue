@@ -1,7 +1,7 @@
 <template>
   <div class="free-gift-index">
     <!-- 暂时不要顶部滚动消息 -->
-    <div class="head-msg">
+    <!-- <div class="head-msg">
       <van-swipe
         :autoplay="3000"
         :show-indicators="showIndicators"
@@ -18,7 +18,8 @@
           {{ head_msg }}
         </van-swipe-item>
       </van-swipe>
-    </div>
+    </div> -->
+    <Swiper :block="true" :is-theme-color="true" />
     <div class="header">
       <div class="rule" @click="showRule = true">
         活动规则
@@ -91,7 +92,7 @@
           @click="showRule = false"
         >
       </div>
-      <img :src="icon.title" alt="" class="rule-title" >
+      <img :src="icon.title" alt="" class="rule-title">
       <div class=" rule-content">
         <h3>一、送礼攻略</h3>
         <p>
@@ -137,6 +138,7 @@
 import { getOs } from '@/utils'
 import { getIndexData } from '@/api/BeeApi/freeGift'
 import Sku from '../components/Sku'
+import Swiper from '../components/Swiper'
 import ShowGift from '../components/ShowGift'
 export default {
   metaInfo: {
@@ -144,7 +146,8 @@ export default {
   },
   components: {
     Sku,
-    ShowGift
+    ShowGift,
+    Swiper
   },
   props: {},
   data() {
@@ -268,11 +271,13 @@ export default {
   }
   .header {
     position: relative;
+    top: 30px;
     height: 5.42rem;
     background-color: rgba(255, 167, 32, 0.18);
     background-image: url(../../../assets/icon/freeGift/freegift_home_img_top.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    margin-bottom: 30px;
     .rule {
       font-size: 0.24rem;
       color: white;
