@@ -177,7 +177,9 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    // document.body.style.backgroundColor = '#fff'
+  },
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
@@ -276,15 +278,10 @@ export default {
 
 <style scoped lang="less">
 .earn-header {
-  // height: 4.3rem;
-
+  background-color:#fff;
   .head-img {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    // background-image: linear-gradient(180deg, @BeeDefault 40%, #fff 60%) ,url('../../../assets/icon/beeFriends/info/bee_firend_img_top_bg1.png');
-    // background-repeat: no-repeat no-repeat;
-    // background-size: 100% 100%, 4.6rem 2.72rem;
-    // background-position: 0 0, top right;
     background: url('../../../assets/icon/beeFriends/info/bee_firend_img_top_bg1.png')  top  no-repeat ,linear-gradient(180deg, @BeeDefault 40%, #fff 60%);
 
     .img-content {
@@ -329,7 +326,7 @@ export default {
         background-color: #fff;
         border-radius: 0.1rem;
         width: 98%;
-        margin: 0.3rem auto;
+        margin: 0.3rem auto 0;
         padding-top: 0.6rem;
         box-shadow: 0 10px 20px #eee;
         position: relative;
