@@ -1,24 +1,7 @@
 <template>
   <div class="free-gift-index">
     <!-- 暂时不要顶部滚动消息 -->
-    <!-- <div class="head-msg">
-      <van-swipe
-        :autoplay="3000"
-        :show-indicators="showIndicators"
-        vertical
-        class="swiper"
-      >
-        <van-swipe-item class="no-wrap">
-          {{ head_msg }}
-        </van-swipe-item>
-        <van-swipe-item class="no-wrap">
-          {{ head_msg }}
-        </van-swipe-item>
-        <van-swipe-item class="no-wrap">
-          {{ head_msg }}
-        </van-swipe-item>
-      </van-swipe>
-    </div> -->
+
     <Swiper :block="true" :type="type" :bg-color="bgColor" :font-color="fontColor" />
     <div class="header">
       <div class="rule" @click="showRule = true">
@@ -305,12 +288,12 @@ export default {
       bottom: 0.2rem;
 
       .van-button {
-        background: #ffbd2f;
+        background: #FFA42F;
         color: white;
-        height: 0.44rem;
-        line-height: 0.4rem;
+        height: 0.68rem;
+        line-height: 0.66rem;
         font-size: 0.26rem;
-        padding: 0 0.3rem;
+        width: 2.6rem;
       }
     }
   }
