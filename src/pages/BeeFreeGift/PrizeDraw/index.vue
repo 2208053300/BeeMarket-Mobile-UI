@@ -220,7 +220,8 @@ export default {
     }
   },
   mounted() {
-    this.getLinkData()
+    // this.getLinkData()
+    this.getDetailData()
     this.securityData()
 
     this.$store.dispatch('setSid', this.$route.query.id)
@@ -241,14 +242,7 @@ export default {
     async getLinkData() {
       try {
         const res = await linkData({ id: this.$route.query.id })
-        // if (res.data.need_download_app) {
-        //   this.$router.push({
-        //     name: 'GuideDownload',
-        //     query: {
-        //       id: this.$route.query.id
-        //     }
-        //   })
-        // }
+
         this.linkData = res.data
 
         this.showPopup = true
