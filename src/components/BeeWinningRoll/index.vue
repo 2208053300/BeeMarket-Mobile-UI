@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { prizeList } from '@/api/BeeApi/user'
 export default {
   props: {},
   data() {
@@ -26,7 +27,11 @@ export default {
       ]
     }
   },
-  methods: {}
+  methods: {
+    async getPrizeList() {
+      const res = await prizeList()
+    }
+  }
 }
 </script>
 
