@@ -73,6 +73,7 @@ export default {
     if (document.querySelector('.fixed-header')) {
       document.querySelector('.block').style.top = '46px'
     }
+    this.getPirzeData()
   },
   methods: {
     async getPirzeData() {
