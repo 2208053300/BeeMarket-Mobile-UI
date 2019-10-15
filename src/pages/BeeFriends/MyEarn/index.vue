@@ -205,9 +205,7 @@ export default {
     } catch (error) {
       //
     }
-    if (this.osObj.isWx) {
-      // this.loadUID()
-    } else if (this.osObj.isIphone && this.osObj.isApp) {
+    if (this.osObj.isIphone && this.osObj.isApp) {
       window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
     } else if (this.osObj.isAndroid && this.osObj.isApp) {
       window.beeMarket.showShareIcon(false)

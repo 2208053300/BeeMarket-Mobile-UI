@@ -244,12 +244,14 @@ export default {
         }
       })
     },
-    // 全场免费送礼 跳转首页
+    // 全场免费送礼 跳转首页/分类
     goHome() {
       if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.GoIndex.postMessage('')
+        // window.webkit.messageHandlers.GoIndex.postMessage('')
+        window.webkit.messageHandlers.ToCatList.postMessage(1)
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
-        window.beeMarket.GoIndex()
+        // window.beeMarket.GoIndex()
+        window.beeMarket.ToCatList()
       } else {
         window.location.href = window.location.origin
       }
