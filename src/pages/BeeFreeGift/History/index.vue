@@ -82,7 +82,7 @@
                 size="mini"
                 @click="goPrizeDraw(product.rid)"
               >
-                送礼详情
+                参与详情
               </van-button>
               <van-button
                 v-if="[1, -1].includes(product.status)"

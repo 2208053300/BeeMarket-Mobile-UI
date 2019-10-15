@@ -75,7 +75,7 @@ export default {
 <style scoped lang="less">
 .swiper-box {
   background-color: rgba(0, 0, 0, 0.46);
-  padding: 0 0.3rem;
+  padding: 0 0.1rem;
   position: fixed;
   top: 0.3rem;
   left: 0.2rem;
@@ -94,6 +94,7 @@ export default {
     top: 0;
     left: 0;
     border-radius: 0;
+    padding: 0 0.3rem;
   }
   &.bgYellow{
     background-color: #FFEAB0;
@@ -104,7 +105,11 @@ export default {
     width: 0.44rem;
     height: 0.44rem;
     margin-right: 0.1rem;
-    border-radius: 50%;
+    border-radius: 0.22rem;
+  }
+  .van-swipe-item{
+    display: flex;
+    align-items: center;
   }
 }
 </style>
