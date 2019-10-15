@@ -486,6 +486,7 @@ export default {
       padding-top: 0.5rem;
       padding-bottom:.5rem;
       border-radius: 0.1rem;
+      background-color: #fff;
       .getter-tip{
         font-size:.32rem ;
         color: @BeeDefault;
