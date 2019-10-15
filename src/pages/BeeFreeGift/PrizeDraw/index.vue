@@ -283,7 +283,7 @@ export default {
     // 开奖详情
     async getDetailData() {
       try {
-        const res = await getDetail({ id: this.linkData.id })
+        const res = await getDetail({ id: this.$route.query.id })
         console.log('开奖详情：', res)
         this.detail = res.data
         if (this.detail.join_data.join_num > 15) {
