@@ -63,7 +63,7 @@ export default {
         font-size: 0.24rem;
         display: inline-block;
         white-space: nowrap;
-        width: 95%;
+        width: 98%;
         overflow: hidden;
         text-overflow:ellipsis;
         margin-top: 2px;
