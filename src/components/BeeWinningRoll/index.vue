@@ -2,8 +2,8 @@
   <div>
     <van-swipe v-if="list.length > 0" class="winning-roll" :autoplay="5000" :show-indicators="false" :touchable="false" vertical>
       <van-swipe-item v-for="(item, index) in list" :key="index" class="winning-item">
-        <img :src="item.avatar">
-        <span>{{ item.text }}</span>
+        <img :src="item.user_head_url">
+        <span>{{ item.notice }}</span>
       </van-swipe-item>
     </van-swipe>
   </div>
@@ -12,24 +12,28 @@
 <script>
 import { prizeList } from '@/api/BeeApi/user'
 export default {
-  props: {},
+  props: {
+    type: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
-      list: [
-        {
-          avatar: 'https://head.fengjishi.com/user/headimg/2019/09/28031902B3dtaYiYgZcSx6qP.jpeg',
-          text: '恭喜二蛋抽中一部Phone'
-        },
-        {
-          avatar: 'https://head.fengjishi.com/user/headimg/2019/09/28031902B3dtaYiYgZcSx6qP.jpeg',
-          text: '恭喜优秀的王麻子抽中一部Phone11 Plus'
-        }
-      ]
+      list: []
     }
+  },
+  mounted() {
+    this.getPrizeList()
   },
   methods: {
     async getPrizeList() {
-      const res = await prizeList()
+      const types = {
+        'home': 0,
+        'giftPackage': 4
+      }
+      const res = await prizeList({ type: types[this.type] })
+      this.list = res.data
     }
   }
 }
@@ -37,7 +41,7 @@ export default {
 
 <style lang="less" scoped>
   .winning-roll {
-    width: 5rem;
+    width: 5.5rem;
     height: 0.55rem;
     background: rgba(0, 0, 0, 0.46);
     border-radius: 5rem;
@@ -59,7 +63,7 @@ export default {
         font-size: 0.24rem;
         display: inline-block;
         white-space: nowrap;
-        width: 95%;
+        width: 98%;
         overflow: hidden;
         text-overflow:ellipsis;
         margin-top: 2px;
