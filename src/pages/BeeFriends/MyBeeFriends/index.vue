@@ -10,7 +10,7 @@
       v-if="$store.state.user.userStatus === 3"
       class="active-notice"
     >
-      <div class="notice-content">
+      <div class="notice-content" id="noticeContent">
         <van-notice-bar
           left-icon="volume-o"
           background="transparent"
@@ -22,6 +22,7 @@
     </div>
     <div
       class="user-fixed"
+      id="userFixed"
       :style="{backgroundImage:'url('+beeIcon.bee_firends_img_avatar_bg+')'}"
       @click="$router.push({name:'myEarn'})"
     >
@@ -56,6 +57,7 @@
     </div>
     <div
       class="rule-fixed"
+      id="rule-fixed"
       @click="$router.push({name:'beeFriendRule'})"
     >
       <img
@@ -252,29 +254,14 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+
+  },
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
 
-    if (document.querySelector('.fixed-header')) {
-      console.log(1)
 
-      if (document.querySelector('.user-fixed')) {
-        console.log(2)
-        document.querySelector('.user-fixed').style.top = '1.8rem'
-      }
-
-      if (document.querySelector('.rule-fixed')) {
-        console.log(3)
-        document.querySelector('.rule-fixed').style.top = '1.8rem'
-      }
-
-      if (document.querySelector('.active-notice')) {
-        console.log(4)
-        document.querySelector('.active-notice').style.top = '2.1rem'
-      }
-    }
 
     this.getPartnerData()
     // FIXME ios bug暂时无解
@@ -379,7 +366,7 @@ export default {
 
   .user-fixed {
     position: fixed;
-    top: 0.32rem;
+    top: 0.92rem;
     left: 0.22rem;
     height: 0.9rem;
     width: 2.14rem;
@@ -437,7 +424,7 @@ export default {
   }
   .rule-fixed {
     position: fixed;
-    top: 0.32rem;
+    top: 0.92rem;
     right: 0.3rem;
     height: 0.92rem;
     width: 0.75rem;
@@ -537,7 +524,7 @@ export default {
   .active-notice {
     position: fixed;
     width: 100%;
-    top: 1.5rem;
+    top: 2.1rem;
     height: 0.4rem;
     line-height: 0.4rem;
     z-index: 80;
@@ -567,16 +554,16 @@ export default {
 }
 .hasHeader {
   .user-fixed {
-    top: 1.2rem;
+    top: 1.8rem;
   }
   .rt-fixed {
     top: 1.2rem;
   }
   .rule-fixed {
-    top: 1.2rem;
+    top: 1.8rem;
   }
   .active-notice {
-    top: 2.5rem;
+    top: 3.1rem;
   }
 }
 </style>

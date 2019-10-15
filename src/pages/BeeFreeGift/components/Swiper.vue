@@ -47,20 +47,8 @@ export default {
       showIndicators: false,
       swiperData: [
         {
-          user_head_url: require('@/assets/icon/freeGift/crown.png'),
-          notice: '恭喜你中奖了'
-        },
-        {
-          user_head_url: require('@/assets/icon/freeGift/crown.png'),
-          notice: '恭喜你中奖了'
-        },
-        {
-          user_head_url: require('@/assets/icon/freeGift/crown.png'),
-          notice: '恭喜你中奖了'
-        },
-        {
-          user_head_url: require('@/assets/icon/freeGift/crown.png'),
-          notice: '恭喜你中奖了'
+          user_head_url: '',
+          notice: ''
         }
       ]
 
