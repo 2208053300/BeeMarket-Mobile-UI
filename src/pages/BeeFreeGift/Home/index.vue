@@ -294,6 +294,7 @@ export default {
         line-height: 0.66rem;
         font-size: 0.26rem;
         width: 2.6rem;
+        border: none;
       }
     }
   }
