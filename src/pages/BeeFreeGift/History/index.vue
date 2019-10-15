@@ -1,6 +1,7 @@
 <template>
   <div class="free-gift-history">
-    <Swiper :block="true" :is-theme-color="true" />
+    <Swiper :block="true" :type="type" :bg-color="bgColor" :font-color="fontColor" />
+
     <p class="history-title">
       参与记录
     </p>
@@ -137,6 +138,11 @@ export default {
   props: {},
   data() {
     return {
+      // 中奖信息滚动所需数据
+      bgColor: 'rgba(255, 234, 176, 1)',
+      fontColor: '#333',
+      type: 2,
+
       beeIcon: {
         emptyImg: require('@/assets/icon/public/empty.png')
       },

@@ -19,7 +19,7 @@
         </van-swipe-item>
       </van-swipe>
     </div> -->
-    <Swiper :block="true" :is-theme-color="true" />
+    <Swiper :block="true" :type="type" :bg-color="bgColor" :font-color="fontColor" />
     <div class="header">
       <div class="rule" @click="showRule = true">
         活动规则
@@ -152,6 +152,10 @@ export default {
   props: {},
   data() {
     return {
+      // 中奖信息滚动所需数据
+      bgColor: 'rgba(255, 234, 176, 1)',
+      fontColor: '#333',
+      type: 2,
       // 不显示顶部轮播导航
       showIndicators: false,
       // 是否显示规则弹框

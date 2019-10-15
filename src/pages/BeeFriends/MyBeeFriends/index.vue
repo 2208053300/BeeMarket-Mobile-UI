@@ -5,6 +5,7 @@
     :style="{backgroundImage:'url('+beeIcon.bee_firends_img_bg+')'}"
     :class="[{hasHeader:$store.state.app.beeHeader&&!osObj.isApp},{hasNotice:$store.state.user.userStatus === 3}]"
   >
+    <Swiper :block="true" :type="type" :bg-color="bgColor" :font-color="fontColor" class="bee-swiper" />
     <div
       v-if="$store.state.user.userStatus === 3"
       class="active-notice"
@@ -139,6 +140,7 @@ import UserCard from './components/UserCard'
 import FriendsRank from './components/FriendsRank'
 import FactoryRank from './components/FactoryRank'
 import JoinProject from './components/JoinProject'
+import Swiper from '../../BeeFreeGift/components/Swiper'
 // import ListType from './components/ListType'
 import GoFarmGift from './components/GoFarmGift'
 import ICountUp from 'vue-countup-v2'
@@ -158,11 +160,17 @@ export default {
     JoinProject,
     // ListType,
     ICountUp,
-    GoFarmGift
+    GoFarmGift,
+    Swiper
   },
   props: {},
   data() {
     return {
+      // 中奖信息滚动所需数据
+      bgColor: 'rgba(255, 237, 213, 1)',
+      fontColor: '#333',
+      type: 3,
+
       detailCard: false,
       showRank: false,
       showRank2: false,
@@ -248,6 +256,26 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+
+    if (document.querySelector('.fixed-header')) {
+      console.log(1)
+
+      if (document.querySelector('.user-fixed')) {
+        console.log(2)
+        document.querySelector('.user-fixed').style.top = '1.8rem'
+      }
+
+      if (document.querySelector('.rule-fixed')) {
+        console.log(3)
+        document.querySelector('.rule-fixed').style.top = '1.8rem'
+      }
+
+      if (document.querySelector('.active-notice')) {
+        console.log(4)
+        document.querySelector('.active-notice').style.top = '2.1rem'
+      }
+    }
+
     this.getPartnerData()
     // FIXME ios bug暂时无解
     try {
