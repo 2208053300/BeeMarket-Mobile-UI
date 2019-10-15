@@ -23,9 +23,10 @@
               <p class="product-price">
                 <span class="sell-price">￥{{ product.sell_price }}</span>
               </p>
-              <van-button round size="mini" @click="showSkuPopup(index,product.pid)">
+              <van-button v-if="canClick" round size="mini" @click="showSkuPopup(index,product.pid)">
                 免费送礼
               </van-button>
+              <span v-if="!canClick" class="lottery-tip">{{ product.lottery_num }}人开奖</span>
             </div>
           </div>
         </div>
@@ -50,7 +51,10 @@ export default {
     ShowGift
   },
   props: {
-
+    canClick: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {
@@ -120,6 +124,9 @@ export default {
 
     // NOTE 跳转到商品详情
     showDetail(pid, target) {
+      if (!this.canClick) {
+        return
+      }
       this.$router.push({
         path: '/detail',
         query: {
@@ -167,6 +174,7 @@ export default {
       .action{
         .num{font-size: .22rem; color: @BeeDefault;}
         .van-button{font-size: .22rem; color:#fff; background-color: @BeeDefault; height: 0.54rem; line-height: 0.5rem; padding: 0 0.3rem;}
+        .lottery-tip{font-size: .22rem;color: #999;}
       }
     }
 

@@ -78,7 +78,7 @@
       </div>
     </div>
     <!-- 免费送礼商品列表 -->
-    <Products />
+    <Products :can-click="false" />
   </div>
 </template>
 
