@@ -451,7 +451,6 @@ export default {
 
   .empty-img {
     padding-top: 1.5rem;
-    margin-left: -0.6rem;
     img {
       width: 2.88rem;
       height: 2.68rem;
