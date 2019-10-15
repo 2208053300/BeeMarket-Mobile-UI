@@ -1,7 +1,7 @@
 <template>
   <div class="bee-index">
     <bee-header @on-rule="onRule" />
-    <winning-roll style="position: fixed; top: 1.95rem;left: 0.28rem" />
+    <winning-roll style="position: fixed; top: 1.95rem;left: 0.28rem" type="giftPackage" />
     <img :src="beeIcon.headImg">
     <div class="product-list">
       <div class="item flex flex-wrap">

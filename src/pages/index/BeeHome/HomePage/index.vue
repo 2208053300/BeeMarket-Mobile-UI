@@ -4,7 +4,7 @@
       :src="beeIcon.home_img_top_bg_under"
       class="top-bg"
     >
-    <winning-roll style="position: fixed; top: 1.4rem;left: 0.3rem;z-index: 100" />
+    <winning-roll style="position: fixed; top: 1.4rem;left: 0.3rem;z-index: 100" type="home" />
     <div class="header-content">
       <div class="home-header">
         <div class="logo-content">
