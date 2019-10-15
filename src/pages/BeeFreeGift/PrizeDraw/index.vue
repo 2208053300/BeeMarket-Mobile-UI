@@ -3,7 +3,7 @@
     <!-- top -->
     <!-- {{ $store.state.cart.sid }}
     {{ $store.state.user.is_bind_mobile }} -->
-    <Swiper :block="false" :is-theme-color="false" />
+    <Swiper :block="false" :type="type" :bg-color="bgColor" :font-color="fontColor" />
     <div class="title">
       <p class="tip text-center">
         {{ detail.top_data.status_desc }}
@@ -162,6 +162,11 @@ export default {
   props: {},
   data() {
     return {
+      // 中奖信息滚动所需数据
+      bgColor: 'rgba(0, 0, 0, .46)',
+      fontColor: '#fff',
+      type: 2,
+
       icon: {
         avatar: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
         crown: require('@/assets/icon/freeGift/crown.png')

@@ -22,7 +22,7 @@
         </van-swipe-item>
       </van-swipe>
     </div> -->
-    <Swiper :block="false" :is-theme-color="false" />
+    <Swiper :block="false" :type="type" :bg-color="bgColor" :font-color="fontColor" />
     <div class="title">
       <p class="tip text-center">
         <!-- {{ detail.top_data.status_desc }} -->
@@ -102,6 +102,10 @@ export default {
   props: {},
   data() {
     return {
+      // 中奖信息滚动所需数据
+      bgColor: 'rgba(0, 0, 0, .46)',
+      fontColor: '#fff',
+      type: 2,
       // 不显示顶部轮播导航
       showIndicators: false,
       head_msg: '恭喜你中奖率',

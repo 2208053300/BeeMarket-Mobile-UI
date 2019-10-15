@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-box" :class="{block: block===true,'bgYellow': isThemeColor===true}">
+  <div class="swiper-box" :class="{block: block===true}" :style="{backgroundColor:bgColor, color:fontColor}">
     <van-swipe
       :autoplay="3000"
       :show-indicators="showIndicators"
@@ -8,26 +8,37 @@
     >
       <van-swipe-item v-for="(item, index) in swiperData" :key="index" class="no-wrap">
         <img
-          :src="item.img"
+          :src="item.user_head_url"
           alt=""
           class="swiper-img"
-        ><span>{{ item.desc }}</span>
+        ><span>{{ item.notice }}</span>
       </van-swipe-item>
     </van-swipe>
   </div>
 </template>
 
 <script>
+import { prizeList } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {
+
     block: {
       type: Boolean,
       default: true
     },
-    isThemeColor: {
-      type: Boolean,
-      default: true
+    // 0-首页 1-限时蜂抢 2-免费送礼 3-蜂友圈 4-农礼包
+    type: {
+      type: Number,
+      default: 0
+    },
+    bgColor: {
+      type: String,
+      default: 'rgba(0, 0, 0, 0.46)'
+    },
+    fontColor: {
+      type: String,
+      default: '#333'
     }
   },
   data() {
@@ -36,20 +47,8 @@ export default {
       showIndicators: false,
       swiperData: [
         {
-          img: require('@/assets/icon/freeGift/crown.png'),
-          desc: '恭喜你中奖了'
-        },
-        {
-          img: require('@/assets/icon/freeGift/crown.png'),
-          desc: '恭喜你中奖了'
-        },
-        {
-          img: require('@/assets/icon/freeGift/crown.png'),
-          desc: '恭喜你中奖了'
-        },
-        {
-          img: require('@/assets/icon/freeGift/crown.png'),
-          desc: '恭喜你中奖了'
+          user_head_url: '',
+          notice: ''
         }
       ]
 
@@ -58,8 +57,18 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
-  methods: {}
+  mounted() {
+    if (document.querySelector('.fixed-header')) {
+      document.querySelector('.block').style.top = '46px'
+    }
+    this.getPirzeData()
+  },
+  methods: {
+    async getPirzeData() {
+      const res = await prizeList({ type: this.type })
+      this.swiperData = res.data
+    }
+  }
 }
 </script>
 
@@ -73,11 +82,12 @@ export default {
   width: 3.79rem;
   z-index: 999;
   border-radius: 20px;
-   .swiper {
+  color:#333;
+  .swiper {
     height: 0.6rem;
     line-height: 0.6rem;
     font-size: 0.24rem;
-    color: #fff;
+
   }
   &.block{
     width: 100%;
@@ -87,9 +97,7 @@ export default {
   }
   &.bgYellow{
     background-color: #FFEAB0;
-    .swiper{
-      color: #333;
-    }
+
   }
 
   .swiper-img {
