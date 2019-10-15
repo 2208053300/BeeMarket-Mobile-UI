@@ -1,27 +1,5 @@
 <template>
   <div class="prize-draw">
-    <!-- top -->
-    <!-- {{ $store.state.cart.sid }}
-    {{ $store.state.user.is_bind_mobile }} -->
-    <!-- 中奖滚屏信息 -->
-    <!-- <div class="head-msg">
-      <van-swipe
-        :autoplay="3000"
-        :show-indicators="showIndicators"
-        vertical
-        class="swiper"
-      >
-        <van-swipe-item class="no-wrap">
-          <img :src="detail.top_data.head_image_url" alt="" class="swiper-img"><span>{{ head_msg }}</span>
-        </van-swipe-item>
-        <van-swipe-item class="no-wrap">
-          <img :src="detail.top_data.head_image_url" alt="" class="swiper-img"><span>{{ head_msg }}</span>
-        </van-swipe-item>
-        <van-swipe-item class="no-wrap">
-          <img :src="detail.top_data.head_image_url" alt="" class="swiper-img"><span>{{ head_msg }}</span>
-        </van-swipe-item>
-      </van-swipe>
-    </div> -->
     <Swiper :block="false" :type="type" :bg-color="bgColor" :font-color="fontColor" />
     <div class="title">
       <p class="tip text-center">
@@ -83,11 +61,11 @@
 </template>
 
 <script>
-import { security } from '@/api/BeeApi/user'
+// import { security } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
-import { confirmOrder } from '@/api/BeeApi/order'
-import { linkData, participate, getDetail, getShareData } from '@/api/BeeApi/freeGift'
+// import { confirmOrder } from '@/api/BeeApi/order'
+import { getShareData, downInfo } from '@/api/BeeApi/freeGift'
 
 import Products from '../components/Products'
 import Swiper from '../components/Swiper'
@@ -167,6 +145,7 @@ export default {
     // this.securityData()
 
     this.getDetailData()
+    this.onlywxShare()
 
     this.$store.dispatch('setSid', this.$route.query.id)
     // app 调用本地 方法，需将该方法挂载到window
@@ -183,50 +162,11 @@ export default {
     }
   },
   methods: {
-    async getLinkData() {
-      try {
-        const res = await linkData({ id: this.$route.query.id })
-
-        this.linkData = res.data
-
-        this.showPopup = true
-        // is_show 是否显示抽奖弹窗 1 显示 0 隐藏
-        if (this.linkData.is_show === 0) {
-          this.closePop()
-          this.onlywxShare()
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    },
-
-    // 关闭抽奖弹框
-    async closePop() {
-      this.showPopup = false
-      if (document.querySelector('.van-overlay')) {
-        document.querySelector('.van-overlay').style.backgroundColor = 'rgba(0,0,0,.7)'
-      }
-      this.getDetailData()
-    },
-    // 抽奖
-    async drawLucky() {
-      try {
-        const res = await participate({ id: this.linkData.id })
-        console.log('参与活动：', res)
-        if (res.status_code === 200) {
-          // this.getDetailData()
-          this.closePop()
-        }
-      } catch (error) {
-        console.log('nage:', error)
-        this.$toast.fail(error)
-      }
-    },
 
     // 开奖详情
     async getDetailData() {
       try {
-        const res = await getDetail({ id: this.$route.query.id })
+        const res = await downInfo({ id: this.$route.query.id })
         console.log('开奖详情：', res)
         this.detail = res.data
         if (this.detail.join_data.join_num > 15) {
@@ -239,7 +179,7 @@ export default {
       }
     },
 
-    // 跳转到免费送礼首页
+    // 跳转到提示下载
     goDownloadApp() {
       console.log(121313)
       this.$router.push({
@@ -247,47 +187,6 @@ export default {
       })
     },
 
-    // 点击我要领取礼物
-    async getGift() {
-      if (!this.$store.state.user.is_bind_mobile) {
-        this.$store.dispatch('setSid', this.$route.query.id)
-        window.location.href = window.location.origin + '/#/persion/profile/accountBind'
-        return
-      }
-      // TODO 跳转下单 参考免费领取茅台和燕窝
-      const res = await confirmOrder(
-        JSON.stringify({
-          os: 'general|present',
-          sid: this.$route.query.id || this.$store.state.cart.sid
-        })
-      )
-      if (res.status_code === 200) {
-        this.$store.state.order.orderDetail = res.data
-        this.$store.state.order.addrDetail = res.data.addr
-        this.$router.push({
-          name: 'confirmOrder',
-          query: {
-            target: 'general|present',
-            sid: this.$route.query.id || this.$store.state.cart.sid
-          }
-        })
-      }
-    },
-
-    async securityData() {
-      const res = await security()
-      this.is_mobile_bind = res.data.mobile_bind
-      this.$store.dispatch('IsBindMobile', res.data.mobile_bind)
-    },
-    // 显示/隐藏更多参与者头像
-    showMore(type) {
-      this.isMore = type
-      if (type) {
-        this.showMen = this.men
-      } else {
-        this.showMen = 15
-      }
-    },
     // NOTE 微信分享
     async onlywxShare() {
       const res = await getShareData({

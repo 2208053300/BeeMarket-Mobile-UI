@@ -60,6 +60,14 @@ export function getDetail(data) {
     data
   })
 }
+// NOTE 开奖引导下载 详情
+export function downInfo(data) {
+  return request({
+    url: '/present/downInfo',
+    method: 'post',
+    data
+  })
+}
 
 // NOTE 获取免费送礼 送礼历史列表数据
 export function getHistoryData(data) {
