@@ -8,16 +8,17 @@
     >
       <van-swipe-item v-for="(item, index) in swiperData" :key="index" class="no-wrap">
         <img
-          :src="item.img"
+          :src="item.user_head_url"
           alt=""
           class="swiper-img"
-        ><span>{{ item.desc }}</span>
+        ><span>{{ item.notice }}</span>
       </van-swipe-item>
     </van-swipe>
   </div>
 </template>
 
 <script>
+import { prizeList } from '@/api/BeeApi/user'
 export default {
   components: {},
   props: {
@@ -46,20 +47,20 @@ export default {
       showIndicators: false,
       swiperData: [
         {
-          img: require('@/assets/icon/freeGift/crown.png'),
-          desc: '恭喜你中奖了'
+          user_head_url: require('@/assets/icon/freeGift/crown.png'),
+          notice: '恭喜你中奖了'
         },
         {
-          img: require('@/assets/icon/freeGift/crown.png'),
-          desc: '恭喜你中奖了'
+          user_head_url: require('@/assets/icon/freeGift/crown.png'),
+          notice: '恭喜你中奖了'
         },
         {
-          img: require('@/assets/icon/freeGift/crown.png'),
-          desc: '恭喜你中奖了'
+          user_head_url: require('@/assets/icon/freeGift/crown.png'),
+          notice: '恭喜你中奖了'
         },
         {
-          img: require('@/assets/icon/freeGift/crown.png'),
-          desc: '恭喜你中奖了'
+          user_head_url: require('@/assets/icon/freeGift/crown.png'),
+          notice: '恭喜你中奖了'
         }
       ]
 
@@ -73,7 +74,12 @@ export default {
       document.querySelector('.block').style.top = '46px'
     }
   },
-  methods: {}
+  methods: {
+    async getPirzeData() {
+      const res = await prizeList({ type: this.type })
+      this.swiperData = res.data
+    }
+  }
 }
 </script>
 
