@@ -56,7 +56,7 @@
         <div class="com-detail2">
           <div
             class="detail2-item"
-            @click="goDetail(2)"
+            @click="goDetail(1)"
           >
             <div class="detail2-title">
               累计公益值
@@ -65,7 +65,7 @@
           </div>
           <div
             class="detail2-item"
-            @click="goDetail(3)"
+            @click="goDetail(2)"
           >
             <div class="detail2-title">
               途中公益值
