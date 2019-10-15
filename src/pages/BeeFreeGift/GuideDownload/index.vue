@@ -3,22 +3,26 @@
     <!-- top -->
     <!-- {{ $store.state.cart.sid }}
     {{ $store.state.user.is_bind_mobile }} -->
-    <!-- <div class="title">
-      <p class="tip text-center">
-        {{ detail.top_data.status_desc }}
-      </p>
-      <div class="shared-man text-center">
-        <img :src="linkData.head_image_url" class="share-avatar">
-        <div class="box">
-          <p>
-            {{ linkData.nickname }}
-          </p>
-          <p>
-            {{ linkData.desc }}
-          </p>
-        </div>
-      </div>
+    <!-- 中奖滚屏信息 -->
+    <!-- <div class="head-msg">
+      <van-swipe
+        :autoplay="3000"
+        :show-indicators="showIndicators"
+        vertical
+        class="swiper"
+      >
+        <van-swipe-item class="no-wrap">
+          <img :src="detail.top_data.head_image_url" alt="" class="swiper-img"><span>{{ head_msg }}</span>
+        </van-swipe-item>
+        <van-swipe-item class="no-wrap">
+          <img :src="detail.top_data.head_image_url" alt="" class="swiper-img"><span>{{ head_msg }}</span>
+        </van-swipe-item>
+        <van-swipe-item class="no-wrap">
+          <img :src="detail.top_data.head_image_url" alt="" class="swiper-img"><span>{{ head_msg }}</span>
+        </van-swipe-item>
+      </van-swipe>
     </div> -->
+    <Swiper :block="false" :is-theme-color="false" />
     <div class="title">
       <p class="tip text-center">
         <!-- {{ detail.top_data.status_desc }} -->
@@ -86,16 +90,21 @@ import { confirmOrder } from '@/api/BeeApi/order'
 import { linkData, participate, getDetail, getShareData } from '@/api/BeeApi/freeGift'
 
 import Products from '../components/Products'
+import Swiper from '../components/Swiper'
 export default {
   metaInfo: {
     title: '免费送礼'
   },
   components: {
-    Products
+    Products,
+    Swiper
   },
   props: {},
   data() {
     return {
+      // 不显示顶部轮播导航
+      showIndicators: false,
+      head_msg: '恭喜你中奖率',
       icon: {
         avatar: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
         crown: require('@/assets/icon/freeGift/crown.png')
@@ -334,12 +343,35 @@ export default {
 .prize-draw{
   .van-overlay{background-color:#000; }
   p{margin: 0}
+
+  .head-msg {
+    background:rgba(0,0,0,.46);
+    padding: 0 0.3rem;
+    position: fixed;
+    top: .3rem;
+    left: .2rem;
+    width: 3.79rem;
+    z-index: 999;
+    border-radius: 20px;
+  }
+  // .swiper {
+  //   height: 0.6rem;
+  //   line-height: 0.6rem;
+  //   font-size: 0.26rem;
+  //   color: #fff;
+  // }
+  // .swiper-img{
+  //   width:.44rem;
+  //   height:.44rem;
+  //   margin-right: 0.1rem;
+  //   border-radius: 50%;
+  // }
   .title{background:#F5F5F5;
     .tip{ font-size: 0.38rem;color:@BeeDefault; margin-top: 0.6rem; margin-bottom: 1rem;}
     .shared-man{
       width: 7.18rem;
       height: 1.76rem;
-      margin: 0 auto;
+      margin: 1.3rem auto 0;
       position: relative;
       background: url(../../../assets/icon/freeGift/freegift_details_img_text_bg.png) no-repeat;
       background-size: 7.18rem 1.76rem;
