@@ -10,7 +10,7 @@
       v-if="$store.state.user.userStatus === 3"
       class="active-notice"
     >
-      <div class="notice-content" id="noticeContent">
+      <div id="noticeContent" class="notice-content">
         <van-notice-bar
           left-icon="volume-o"
           background="transparent"
@@ -21,8 +21,8 @@
       </div>
     </div>
     <div
-      class="user-fixed"
       id="userFixed"
+      class="user-fixed"
       :style="{backgroundImage:'url('+beeIcon.bee_firends_img_avatar_bg+')'}"
       @click="$router.push({name:'myEarn'})"
     >
@@ -56,8 +56,8 @@
       </div>
     </div>
     <div
-      class="rule-fixed"
       id="rule-fixed"
+      class="rule-fixed"
       @click="$router.push({name:'beeFriendRule'})"
     >
       <img
@@ -260,8 +260,6 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-
-
 
     this.getPartnerData()
     // FIXME ios bug暂时无解

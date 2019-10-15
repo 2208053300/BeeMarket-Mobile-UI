@@ -184,7 +184,14 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getMyEarningData()
+
     this.getPartnerData()
+    // FIXME ios bug暂时无解
+    try {
+      setTimeout(this.getPartnerData(), 3000)
+    } catch (error) {
+      //
+    }
     // FIXME ios bug暂时无解
     try {
       this.page = 1
@@ -209,8 +216,10 @@ export default {
   methods: {
     async getPartnerData() {
       const res = await getPartner()
+      console.log('getPartnerData:', res)
 
       this.$store.state.user.withdrawNum = res.data.sup_balance
+      this.withdrawNum = res.data.sup_balance
     },
     // 收益顶部信息
     async getMyEarningData() {
@@ -269,7 +278,7 @@ export default {
 
     // 我要提现
     toCash() {
-      if (this.$store.state.user.withdrawNum < 100) {
+      if (this.withdrawNum < 100) {
         this.$toast('可提现余额不足100元！')
         return
       }
