@@ -1,7 +1,7 @@
 <template>
   <div class="download text-center">
     <img :src="icon.topImg" class="top-img">
-    <div class="steps bg-white text-center">
+    <div class="steps bg-white text-center is-iphone" :class="{isIphone: osObj.isIphone}">
       <section>
         <p>1、下载登录后，点击首页“ <span> 免费送礼</span>”</p>
         <img :src="icon.step1">
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { getOs } from '@/utils'
 export default {
   components: {},
   props: {},
@@ -42,7 +43,9 @@ export default {
         step2: require('@/assets/icon/freeGift/download_app_pic_3.png'),
         iPhone: require('@/assets/icon/freeGift/download_app_icon_iphone.png'),
         Android: require('@/assets/icon/freeGift/download_app_icon_android.png')
-      }
+      },
+      // 获取 os 平台
+      osObj: getOs()
     }
   },
   computed: {},
@@ -86,6 +89,9 @@ export default {
    margin:.3rem auto 1.6rem ;
    padding: .6rem .3rem ;
    border-radius: 0.1rem;
+   &.isIphone{
+      margin:.3rem auto 2.6rem ;
+   }
    p{
      font-size: .26rem;
      color:#333;
@@ -99,7 +105,8 @@ export default {
     bottom:0;
     left:0;
     background: #fff;
-    padding: 0.2rem 0;
+    padding: 0.2rem 0.3rem;
+    box-sizing:border-box;
     width:100%;
     img{width:.41rem;height:.49rem; margin-right: 0.1rem;}
  }
