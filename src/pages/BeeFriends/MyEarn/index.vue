@@ -140,7 +140,7 @@
 </template>
 
 <script>
-import { getMyEarning, getMyEarningList } from '@/api/BeeApi/user'
+import { getPartner, getMyEarning, getMyEarningList } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 export default {
   metaInfo: {
@@ -184,7 +184,7 @@ export default {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
     this.getMyEarningData()
-
+    this.getPartnerData()
     // FIXME ios bug暂时无解
     try {
       this.page = 1
@@ -207,6 +207,11 @@ export default {
     }
   },
   methods: {
+    async getPartnerData() {
+      const res = await getPartner()
+
+      this.$store.state.user.withdrawNum = res.data.sup_balance
+    },
     // 收益顶部信息
     async getMyEarningData() {
       // this.loading = true
