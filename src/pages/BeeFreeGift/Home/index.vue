@@ -113,6 +113,7 @@
       :props-id="propsId"
       :p-number="pNumber"
       :limit-num="limitNum"
+      :select-type.sync="selectType"
     />
   </div>
 </template>
@@ -158,6 +159,7 @@ export default {
       propsId: [],
       pNumber: 0,
       limitNum: 0,
+      selectType: 2,
 
       head_msg: '恭喜小贾送出4个礼盒，',
       loading: false,

@@ -37,7 +37,7 @@
     <ShowGift :show-gift="showGift" :product="nowProduct" :sid="nowProduct.s_id" />
 
     <!-- sku -->
-    <Sku :show-sku="showSku" :pid="pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" />
+    <Sku :show-sku="showSku" :pid="pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" :select-type.sync="selectType" />
   </div>
 </template>
 
@@ -77,7 +77,8 @@ export default {
       pid: 16934,
       propsId: [],
       pNumber: 0,
-      limitNum: 0
+      limitNum: 0,
+      selectType: 2
 
     }
   },
