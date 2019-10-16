@@ -15,7 +15,7 @@
     </van-goods-action>
 
     <!-- sku -->
-    <Sku :show-sku="showSku" :pid="commodityData.pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" />
+    <Sku :show-sku="showSku" :pid="commodityData.pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" :select-type.sync="selectType" />
     <!-- 免费送礼弹窗 -->
     <ShowGift :show-gift="showGift" :product="nowProduct" :sid="nowProduct.s_id" />
   </div>
@@ -46,6 +46,7 @@ export default {
       propsId: [],
       pNumber: 0,
       limitNum: 0,
+      selectType: 2,
       // 送礼弹框
       showGift: false,
       nowProduct: {}
