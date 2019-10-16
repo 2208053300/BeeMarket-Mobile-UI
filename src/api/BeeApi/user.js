@@ -677,3 +677,21 @@ export function getUID(data) {
     data
   })
 }
+
+// 获取中奖列表
+export function prizeList(data) {
+  return request({
+    url: '/user/prize',
+    method: 'post',
+    data
+  })
+}
+
+// 获取中奖列表
+export function getEquity(data) {
+  return request({
+    url: '/user/equity',
+    method: 'post',
+    data
+  })
+}

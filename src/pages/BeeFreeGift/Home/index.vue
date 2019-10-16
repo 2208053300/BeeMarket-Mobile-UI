@@ -1,25 +1,14 @@
 <template>
   <div class="free-gift-index">
     <!-- 暂时不要顶部滚动消息 -->
-    <div v-if="false" class="head-msg">
-      <van-swipe :autoplay="3000" :show-indicators="showIndicators" vertical class="swiper">
-        <van-swipe-item class="no-wrap">
-          {{ head_msg }}
-        </van-swipe-item>
-        <van-swipe-item class="no-wrap">
-          {{ head_msg }}
-        </van-swipe-item>
-        <van-swipe-item class="no-wrap">
-          {{ head_msg }}
-        </van-swipe-item>
-      </van-swipe>
-    </div>
+
+    <Swiper :block="true" :type="type" :bg-color="bgColor" :font-color="fontColor" />
     <div class="header">
       <div class="rule" @click="showRule = true">
         活动规则
       </div>
       <div class="history-btn">
-        <van-button round :to="{path: 'history'}">
+        <van-button round :to="{ path: 'history' }">
           我的参与记录 >
         </van-button>
       </div>
@@ -33,11 +22,22 @@
         finished-text="我也是有底线的 o(´^｀)o"
         @load="getIndexData"
       >
-        <div v-for="(product, index) in products" :key="index" class="product flex flex-between">
-          <img :src="product.tUrl" class="product-img" @click="showDetail(product.pid,product.target)">
+        <div
+          v-for="(product, index) in products"
+          :key="index"
+          class="product flex flex-between"
+        >
+          <img
+            :src="product.tUrl"
+            class="product-img"
+            @click="showDetail(product.pid, product.target)"
+          >
           <div class="product-info flex flex-column flex-between">
             <div>
-              <p class="product-name no-wrap" @click="showDetail(product.pid,product.target)">
+              <p
+                class="product-name no-wrap"
+                @click="showDetail(product.pid, product.target)"
+              >
                 {{ product.pname }}
               </p>
               <p class="product-desc no-wrap">
@@ -50,7 +50,11 @@
             </div>
             <div class="action flex flex-between align-center">
               <span class="num">满{{ product.lottery_num }}个人开奖</span>
-              <van-button round size="mini" @click="showSkuPopup(index,product.pid)">
+              <van-button
+                round
+                size="mini"
+                @click="showSkuPopup(index, product.pid)"
+              >
                 立即送礼
               </van-button>
             </div>
@@ -58,35 +62,44 @@
         </div>
       </van-list>
     </div>
+    <van-button round class="cash-btn" @click="goHome">
+      全场免费送礼物
+    </van-button>
     <!-- 规则 -->
     <van-popup v-model="showRule" position="bottom" class="rule-box">
       <div class="text-right">
-        <img :src="icon.close" alt="" class="close-rule" @click="showRule=false">
+        <img
+          :src="icon.close"
+          alt=""
+          class="close-rule"
+          @click="showRule = false"
+        >
       </div>
       <img :src="icon.title" alt="" class="rule-title">
       <div class=" rule-content">
         <h3>一、送礼攻略</h3>
         <p>
-          <span>1.1</span>  <span>选择商品，点击“立即送礼”选择礼物并将礼物送给微信好友；</span>
+          <span>1.1</span>
+          <span>选择商品，点击“立即送礼”选择礼物并将礼物送给微信好友；</span>
         </p>
+        <p><span>1.2</span> <span>好友点击您的链接并参与抽奖；</span></p>
         <p>
-          <span>1.2</span>  <span>好友点击您的链接并参与抽奖；</span>
-        </p>
-        <p>
-          <span>1.3</span>  <span>在3小时内，参与抽奖人数达到指定人数立刻开奖（随机产生中奖用户）。</span>
+          <span>1.3</span>
+          <span>在3小时内，参与抽奖人数达到指定人数立刻开奖（随机产生中奖用户）。</span>
         </p>
         <h3>二、活动规则</h3>
         <p>
-          <span>2.1</span>  <span>参与抽奖用户必须为“蜂集市”APP新用户，同一设备、微信号、手机号视为同一用户；</span>
+          <span>2.1</span>
+          <span>参与抽奖用户必须为“蜂集市”APP新用户，同一设备、微信号、手机号视为同一用户；</span>
+        </p>
+        <p><span>2.2</span> <span>每位用户每日可多次参与免费送礼；</span></p>
+        <p>
+          <span>2.3</span>
+          <span>若发现用户存在刷单，虚假用户等违规行为，蜂集市友圈判断单次活动无效；</span>
         </p>
         <p>
-          <span>2.2</span>  <span>每位用户每日可多次参与免费送礼；</span>
-        </p>
-        <p>
-          <span>2.3</span>  <span>若发现用户存在刷单，虚假用户等违规行为，蜂集市友圈判断单次活动无效；</span>
-        </p>
-        <p>
-          <span>2.4</span>  <span>活动完成后“蜂集市”会在48小时内安排发货，用户可登录APP并前往我的订单中查看物流详情；</span>
+          <span>2.4</span>
+          <span>活动完成后“蜂集市”会在48小时内安排发货，用户可登录APP并前往我的订单中查看物流详情；</span>
         </p>
       </div>
     </van-popup>
@@ -94,7 +107,14 @@
     <ShowGift :show-gift="showGift" :product="nowProduct" :sid="sid" />
 
     <!-- sku -->
-    <Sku :show-sku="showSku" :pid="pid" :props-id="propsId" :p-number="pNumber" :limit-num="limitNum" />
+    <Sku
+      :show-sku="showSku"
+      :pid="pid"
+      :props-id="propsId"
+      :p-number="pNumber"
+      :limit-num="limitNum"
+      :select-type.sync="selectType"
+    />
   </div>
 </template>
 
@@ -102,6 +122,7 @@
 import { getOs } from '@/utils'
 import { getIndexData } from '@/api/BeeApi/freeGift'
 import Sku from '../components/Sku'
+import Swiper from '../components/Swiper'
 import ShowGift from '../components/ShowGift'
 export default {
   metaInfo: {
@@ -109,11 +130,16 @@ export default {
   },
   components: {
     Sku,
-    ShowGift
+    ShowGift,
+    Swiper
   },
   props: {},
   data() {
     return {
+      // 中奖信息滚动所需数据
+      bgColor: 'rgba(255, 234, 176, 1)',
+      fontColor: '#333',
+      type: 2,
       // 不显示顶部轮播导航
       showIndicators: false,
       // 是否显示规则弹框
@@ -133,13 +159,13 @@ export default {
       propsId: [],
       pNumber: 0,
       limitNum: 0,
+      selectType: 2,
 
       head_msg: '恭喜小贾送出4个礼盒，',
       loading: false,
       finished: false,
       immediateCheck: true,
-      products: [
-      ],
+      products: [],
       page: 1,
       pageSize: 10,
 
@@ -148,7 +174,6 @@ export default {
 
       // 获取 os 平台
       osObj: getOs()
-
     }
   },
   computed: {},
@@ -172,7 +197,10 @@ export default {
   methods: {
     // 获取商品数据
     async getIndexData() {
-      const res = await getIndexData({ page: this.page, pageSize: this.pageSize })
+      const res = await getIndexData({
+        page: this.page,
+        pageSize: this.pageSize
+      })
       console.log('首页res：', res)
       this.page++
       this.loading = false
@@ -200,8 +228,19 @@ export default {
           target
         }
       })
+    },
+    // 全场免费送礼 跳转首页/分类
+    goHome() {
+      if (this.osObj.isIphone && this.osObj.isApp) {
+        // window.webkit.messageHandlers.GoIndex.postMessage('')
+        window.webkit.messageHandlers.ToCatList.postMessage(1)
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        // window.beeMarket.GoIndex()
+        window.beeMarket.ToCatList()
+      } else {
+        window.location.href = window.location.origin
+      }
     }
-
   }
 }
 </script>
@@ -215,14 +254,21 @@ export default {
     background: #ffbd2f;
     padding: 0 0.3rem;
   }
-  .swiper{height: 0.6rem; line-height: 0.6rem; font-size: 0.26rem; color: #333;}
+  .swiper {
+    height: 0.6rem;
+    line-height: 0.6rem;
+    font-size: 0.26rem;
+    color: #333;
+  }
   .header {
     position: relative;
+    top: 30px;
     height: 5.42rem;
     background-color: rgba(255, 167, 32, 0.18);
     background-image: url(../../../assets/icon/freeGift/freegift_home_img_top.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    margin-bottom: 30px;
     .rule {
       font-size: 0.24rem;
       color: white;
@@ -244,17 +290,19 @@ export default {
       bottom: 0.2rem;
 
       .van-button {
-        background: #ffbd2f;
+        background: #FFA42F;
         color: white;
-        height: 0.44rem;
-        line-height: 0.4rem;
+        height: 0.68rem;
+        line-height: 0.66rem;
         font-size: 0.26rem;
-        padding: 0 0.3rem;
+        width: 2.6rem;
+        border: none;
       }
     }
   }
   .product-list {
     padding: 15px;
+    margin-bottom: 1rem;
     .product {
       background-color: white;
       border-radius: 10px;
@@ -266,9 +314,9 @@ export default {
         border-radius: 0.1rem;
       }
       .product-info {
-        width:3.66rem;
+        width: 3.66rem;
         .product-name {
-          margin-top: 10px;
+          line-height: 1.5;
           font-size: 0.26rem;
         }
         .product-desc {
@@ -279,50 +327,70 @@ export default {
         .product-price {
           margin-top: 10px;
         }
-        .sell-price{ font-size: 0.26rem;color:@BeeDefault; margin-right: .1rem;}
-        .line-price{ font-size: 0.22rem;color:#999; text-decoration: line-through}
+        .sell-price {
+          font-size: 0.26rem;
+          color: @BeeDefault;
+          margin-right: 0.1rem;
+        }
+        .line-price {
+          font-size: 0.22rem;
+          color: #999;
+          text-decoration: line-through;
+        }
       }
-      .action{
-        .num{font-size: .22rem; color: @BeeDefault;}
-        .van-button{font-size: .22rem; color:#fff; background-color: @BeeDefault; padding: 0 0.3rem;}
+      .action {
+        .num {
+          font-size: 0.22rem;
+          color: @BeeDefault;
+        }
+        .van-button {
+          font-size: 0.22rem;
+          color: #fff;
+          background-color: @BeeDefault;
+          padding: 0 0.3rem;
+        }
       }
     }
   }
-  .rule-box{
+  .rule-box {
     width: 100%;
     padding: 0.3rem;
     overflow-y: visible;
-    box-sizing:border-box;
+    box-sizing: border-box;
     background: url(../../../assets/icon/freeGift/gif_pic_bg.png) no-repeat;
-    background-size:100% 100%;
+    background-size: 100% 100%;
     border-top-left-radius: 0.2rem;
     border-top-right-radius: 0.2rem;
     // border-radius: 0.1rem
-    .close-rule{width: .48rem;height: .48rem; margin-bottom: 0.2rem}
-    .rule-title{
+    .close-rule {
+      width: 0.48rem;
+      height: 0.48rem;
+      margin-bottom: 0.2rem;
+    }
+    .rule-title {
       position: absolute;
       left: 50%;
       top: -0.28rem;
       width: 3.84rem;
-      height: .78rem;
+      height: 0.78rem;
       transform: translateX(-50%);
     }
-    .rule-content{
-      background-color: rgba(255,255,255,.8);
+    .rule-content {
+      background-color: rgba(255, 255, 255, 0.8);
       border-radius: 0.1rem;
       padding: 0.2rem 0.3rem;
-      h3{
-        color: #FFA42F;
-        font-size:0.36rem;
+      h3 {
+        color: #ffa42f;
+        font-size: 0.36rem;
       }
 
-      p{
+      p {
         display: flex;
         padding-left: 0.4rem;
-      span:nth-of-type(1){
-        font-weight: 600;
-        margin-right: 0.1rem;
-      }
+        span:nth-of-type(1) {
+          font-weight: 600;
+          margin-right: 0.1rem;
+        }
 
         margin: 0.1rem 0;
         font-size: 0.28rem;
@@ -332,5 +400,17 @@ export default {
     }
   }
 
+  .cash-btn {
+    position: fixed;
+    bottom: 0.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: @BeeDefault;
+    color: #fff;
+    font-size: 0.36rem;
+    border: none;
+    padding: 0 0.35rem;
+    width: 6.9rem;
+  }
 }
 </style>

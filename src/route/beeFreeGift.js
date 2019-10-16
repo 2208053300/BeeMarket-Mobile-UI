@@ -44,13 +44,6 @@ const router = new Router({
           name: 'payResult',
           component: () => import('@/pages/BeeFreeGift/PayResult')
         },
-        // {
-        //   path: 'addressSetting',
-        //   component: () => import('@/pages/BeeAddress'),
-        //   children: [
-
-        //   ]
-        // },
         {
           path: 'addressManage',
           name: 'addressManage',
@@ -61,15 +54,20 @@ const router = new Router({
           name: 'addAddress',
           component: () => import('@/pages/BeeFreeGift/AddAddress')
         },
-        // {
-        //   path: 'fillAddress',
-        //   name: 'fillAddress',
-        //   component: () => import('@/pages/BeeFreeGift/AddAddress')
-        // },
         {
           path: 'success',
           name: 'success',
           component: () => import('@/pages/BeeFreeGift/Success')
+        },
+        {
+          path: 'GuideDownload',
+          name: 'GuideDownload',
+          component: () => import('@/pages/BeeFreeGift/GuideDownload')
+        },
+        {
+          path: 'downloadApp',
+          name: 'downloadApp',
+          component: () => import('@/pages/BeeFreeGift/DownloadApp')
         }
       ]
     }

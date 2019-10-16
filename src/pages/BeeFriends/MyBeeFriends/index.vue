@@ -5,11 +5,12 @@
     :style="{backgroundImage:'url('+beeIcon.bee_firends_img_bg+')'}"
     :class="[{hasHeader:$store.state.app.beeHeader&&!osObj.isApp},{hasNotice:$store.state.user.userStatus === 3}]"
   >
+    <Swiper :block="true" :type="type" :bg-color="bgColor" :font-color="fontColor" class="bee-swiper" />
     <div
       v-if="$store.state.user.userStatus === 3"
       class="active-notice"
     >
-      <div class="notice-content">
+      <div id="noticeContent" class="notice-content">
         <van-notice-bar
           left-icon="volume-o"
           background="transparent"
@@ -20,6 +21,7 @@
       </div>
     </div>
     <div
+      id="userFixed"
       class="user-fixed"
       :style="{backgroundImage:'url('+beeIcon.bee_firends_img_avatar_bg+')'}"
       @click="$router.push({name:'myEarn'})"
@@ -54,6 +56,7 @@
       </div>
     </div>
     <div
+      id="rule-fixed"
       class="rule-fixed"
       @click="$router.push({name:'beeFriendRule'})"
     >
@@ -139,6 +142,7 @@ import UserCard from './components/UserCard'
 import FriendsRank from './components/FriendsRank'
 import FactoryRank from './components/FactoryRank'
 import JoinProject from './components/JoinProject'
+import Swiper from '../../BeeFreeGift/components/Swiper'
 // import ListType from './components/ListType'
 import GoFarmGift from './components/GoFarmGift'
 import ICountUp from 'vue-countup-v2'
@@ -158,11 +162,17 @@ export default {
     JoinProject,
     // ListType,
     ICountUp,
-    GoFarmGift
+    GoFarmGift,
+    Swiper
   },
   props: {},
   data() {
     return {
+      // 中奖信息滚动所需数据
+      bgColor: 'rgba(255, 237, 213, 1)',
+      fontColor: '#333',
+      type: 3,
+
       detailCard: false,
       showRank: false,
       showRank2: false,
@@ -244,10 +254,13 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+
+  },
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+
     this.getPartnerData()
     // FIXME ios bug暂时无解
     try {
@@ -351,7 +364,7 @@ export default {
 
   .user-fixed {
     position: fixed;
-    top: 0.32rem;
+    top: 0.92rem;
     left: 0.22rem;
     height: 0.9rem;
     width: 2.14rem;
@@ -409,7 +422,7 @@ export default {
   }
   .rule-fixed {
     position: fixed;
-    top: 0.32rem;
+    top: 0.92rem;
     right: 0.3rem;
     height: 0.92rem;
     width: 0.75rem;
@@ -509,7 +522,7 @@ export default {
   .active-notice {
     position: fixed;
     width: 100%;
-    top: 1.5rem;
+    top: 2.1rem;
     height: 0.4rem;
     line-height: 0.4rem;
     z-index: 80;
@@ -539,16 +552,16 @@ export default {
 }
 .hasHeader {
   .user-fixed {
-    top: 1.2rem;
+    top: 1.8rem;
   }
   .rt-fixed {
     top: 1.2rem;
   }
   .rule-fixed {
-    top: 1.2rem;
+    top: 1.8rem;
   }
   .active-notice {
-    top: 2.5rem;
+    top: 3.1rem;
   }
 }
 </style>

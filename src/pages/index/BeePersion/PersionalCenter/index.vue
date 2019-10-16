@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="container">
-      <van-row
+      <!-- <van-row
         class="persion-op"
         type="flex"
         align="center"
@@ -76,7 +76,48 @@
           :style="{backgroundImage:'url('+userInfo.bee_charity.image_url+')'}"
           @click="authRoute('/persion/BeeCommonweal')"
         />
-      </van-row>
+      </van-row> -->
+      <div class="commonweal">
+        <div
+          class="img-content"
+          @click="authRoute('/beeFriends/myRights')"
+        >
+          <img
+            :src="beeIcon.bee_firend_img_income"
+            alt=""
+          >
+        </div>
+        <van-cell
+          style="border-top-left-radius: 0.2rem;border-top-right-radius: 0.2rem"
+          title="我的公益值"
+          value="查看我的公益值"
+          is-link
+          @click="authRoute('/persion/BeeCommonweal')"
+        />
+        <div
+          v-if="userInfo.bee_charity_statistics"
+          class="commonweal-detail"
+        >
+          <div class="detail-item active-text">
+            可用公益值
+            <p class="num">
+              {{ userInfo.bee_charity_statistics.available_charity_value }}
+            </p>
+          </div>
+          <div class="detail-item">
+            累计公益值
+            <p class="num">
+              {{ userInfo.bee_charity_statistics.total_charity_value }}
+            </p>
+          </div>
+          <div class="detail-item">
+            路上公益值
+            <p class="num">
+              {{ userInfo.bee_charity_statistics.not_arrived_charity_value }}
+            </p>
+          </div>
+        </div>
+      </div>
       <bee-order
         :express-info="userInfo.express_info"
         :order-status="userInfo.order_status"
@@ -211,7 +252,8 @@ export default {
         mine_icon_customer: require('@/assets/icon/personalCenter/mine_icon_customer@2x.png'),
         mine_icon_set: require('@/assets/icon/personalCenter/mine_icon_set@2x.png'),
         head_default: require('@/assets/icon/personalCenter/head_default.png'),
-        mine_icon_star_partner: require('@/assets/icon/personalCenter/mine_icon_star_partner@2x.png')
+        mine_icon_star_partner: require('@/assets/icon/personalCenter/mine_icon_star_partner@2x.png'),
+        bee_firend_img_income: require('@/assets/icon/beeFriends/info/bee_firend_img_income.png')
       },
       userInfo: {
         personal_info: {
@@ -331,7 +373,7 @@ export default {
       width: 100%;
       background-size: cover;
     }
-    .beeClassroom{
+    .beeClassroom {
       background-position: center;
     }
     .van-row {
@@ -344,6 +386,52 @@ export default {
       height: 2rem;
       background-color: #fff;
       background-size: cover;
+    }
+    .commonweal {
+      background-color: #fff;
+      border-radius: 0.2rem;
+      margin: 0.1rem 0;
+      position: relative;
+      .img-content {
+        position: absolute;
+        right: 0.4rem;
+        top: -0.96rem;
+        width: 2.16rem;
+        height: 0.96rem;
+      }
+      .van-cell:not(:last-child)::after {
+        left: 0;
+      }
+      .van-cell {
+        .van-cell__title {
+          color: @ProductName;
+          font-size: 0.32rem;
+          font-weight: 700;
+        }
+        .van-cell__value {
+          font-size: 0.22rem;
+          color: @Grey3;
+        }
+      }
+      .commonweal-detail {
+        border-top: 0.02rem solid @Grey5;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        height: 1.5rem;
+        box-sizing: border-box;
+        align-items: center;
+        text-align: center;
+        .active-text {
+          color: @BeeDefault;
+        }
+        .detail-item {
+          font-size: 0.26rem;
+          .num {
+            font-size: 0.3rem;
+            margin-top: 0.2rem;
+          }
+        }
+      }
     }
     .more-op {
       margin: 0.1rem 0;

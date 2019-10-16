@@ -48,6 +48,9 @@
           {{ item.tag_name }}
         </div>
       </div>
+      <div class="add-cart" @click="addCart">
+        <van-icon name="plus" />加入购物车
+      </div>
     </div>
   </div>
 </template>
@@ -75,7 +78,11 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    addCart() {
+      this.$parent.skuAdd()
+    }
+  }
 }
 </script>
 
@@ -166,6 +173,20 @@ export default {
         color: #ffffff;
         background: linear-gradient(to right, @BeeDefault, #ff7116);
       }
+    }
+  }
+  .add-cart {
+    background-color: @BeeDefault;
+    border-radius: 0.24rem;
+    width: 2.04rem;
+    height: 0.48rem;
+    line-height: 0.48rem;
+    font-size: 0.24rem;
+    color: #ffffff;
+    margin: 0.1rem auto 0;
+    .van-icon {
+      margin-right: 0.07rem;
+      vertical-align: text-top;
     }
   }
 }

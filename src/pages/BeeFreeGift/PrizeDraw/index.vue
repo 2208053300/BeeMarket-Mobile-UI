@@ -3,6 +3,7 @@
     <!-- top -->
     <!-- {{ $store.state.cart.sid }}
     {{ $store.state.user.is_bind_mobile }} -->
+    <Swiper :block="false" :type="type" :bg-color="bgColor" :font-color="fontColor" />
     <div class="title">
       <p class="tip text-center">
         {{ detail.top_data.status_desc }}
@@ -149,16 +150,23 @@ import { confirmOrder } from '@/api/BeeApi/order'
 import { linkData, participate, getDetail, getShareData } from '@/api/BeeApi/freeGift'
 
 import Products from '../components/Products'
+import Swiper from '../components/Swiper'
 export default {
   metaInfo: {
     title: '免费送礼'
   },
   components: {
-    Products
+    Products,
+    Swiper
   },
   props: {},
   data() {
     return {
+      // 中奖信息滚动所需数据
+      bgColor: 'rgba(0, 0, 0, .46)',
+      fontColor: '#fff',
+      type: 2,
+
       icon: {
         avatar: require('@/assets/icon/freeGift/freegift_wechat_popup.png'),
         crown: require('@/assets/icon/freeGift/crown.png')
@@ -200,6 +208,9 @@ export default {
   },
   computed: {},
   watch: {},
+  beforeCreate() {
+
+  },
   created() {},
   beforeDestroy() {
     if (this.osObj.isIphone && this.osObj.isApp) {
@@ -209,7 +220,8 @@ export default {
     }
   },
   mounted() {
-    this.getLinkData()
+    // this.getLinkData()
+    this.getDetailData()
     this.securityData()
 
     this.$store.dispatch('setSid', this.$route.query.id)
@@ -230,7 +242,9 @@ export default {
     async getLinkData() {
       try {
         const res = await linkData({ id: this.$route.query.id })
+
         this.linkData = res.data
+
         this.showPopup = true
         // is_show 是否显示抽奖弹窗 1 显示 0 隐藏
         if (this.linkData.is_show === 0) {
@@ -269,7 +283,7 @@ export default {
     // 开奖详情
     async getDetailData() {
       try {
-        const res = await getDetail({ id: this.linkData.id })
+        const res = await getDetail({ id: this.$route.query.id })
         console.log('开奖详情：', res)
         this.detail = res.data
         if (this.detail.join_data.join_num > 15) {
@@ -392,7 +406,7 @@ export default {
   .van-overlay{background-color:#000; }
   p{margin: 0}
   .title{background:#F5F5F5;
-    .tip{ font-size: 0.38rem;color:@BeeDefault; margin-top: 0.6rem; margin-bottom: 1rem;}
+    .tip{ font-size: 0.38rem;color:@BeeDefault; margin-top: 1.3rem; margin-bottom: 1rem;}
     .shared-man{
       width: 7.18rem;
       height: 1.76rem;
@@ -466,6 +480,7 @@ export default {
       padding-top: 0.5rem;
       padding-bottom:.5rem;
       border-radius: 0.1rem;
+      background-color: #fff;
       .getter-tip{
         font-size:.32rem ;
         color: @BeeDefault;

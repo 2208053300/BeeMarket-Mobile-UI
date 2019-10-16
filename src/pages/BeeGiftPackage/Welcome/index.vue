@@ -25,8 +25,8 @@
     <img :src="require('@/assets/icon/giftPackage/wellcome/wellcome_04.png')" alt="">
     <img :src="require('@/assets/icon/giftPackage/wellcome/wellcome_05.png')" alt="">
     <img :src="require('@/assets/icon/giftPackage/wellcome/wellcome_06.png')" alt="">
-    <div style="position: relative;display: flex;justify-content: center">
-      <button class="goto-buy" @click="toGiftPackage">
+    <div class="goto-buy">
+      <button @click="toGiftPackage">
         立即选购
       </button>
     </div>
@@ -108,17 +108,21 @@ export default {
     }
   }
   .goto-buy {
-    border: none;
-    padding: 0;
-    position: absolute;
-    line-height: 1rem;
-    top: -1.7rem;
-    width: 6.8rem;
-    margin-bottom: -1.7rem;
-    color: white;
-    font-size: 0.42rem;
-    border-radius: 5rem;
-    background: #915212;
-    box-shadow: 2px 2px 27px #76410b;
+    position: fixed;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    bottom: 0.7rem;
+    button {
+      border: none;
+      padding: 0;
+      line-height: 1rem;
+      width: 6.8rem;
+      color: white;
+      font-size: 0.42rem;
+      border-radius: 5rem;
+      background: #915212;
+      box-shadow: 2px 2px 27px #76410b;
+    }
   }
 </style>

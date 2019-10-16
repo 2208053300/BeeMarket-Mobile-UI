@@ -1,12 +1,19 @@
 <template>
   <div>
-    <van-popup v-model="showGift" class="gift-box" @close="closeShowGift">
+    <van-popup
+      v-model="showGift"
+      class="gift-box"
+      @close="closeShowGift"
+    >
       <div class="bg-white">
         <p class="title text-center">
           蜂集市送礼新方式
         </p>
         <div class="product flex flex-between">
-          <img :src="product.tUrl" class="product-img">
+          <img
+            :src="product.tUrl"
+            class="product-img"
+          >
           <div class="product-info flex flex-column flex-between">
             <div>
               <p class="product-name">
@@ -34,18 +41,37 @@
           <p class="tip1">
             传达心意，送句祝福
           </p>
-          <input v-model.trim="remark" type="text" placeholder="我从蜂集市上选了一件礼物送大家!">
+          <input
+            v-model.trim="remark"
+            type="text"
+            placeholder="我从蜂集市上选了一件礼物送大家!"
+          >
         </div>
       </div>
-      <van-button class="share-btn" size="large" @click="getShareData">
+      <van-button
+        class="share-btn"
+        size="large"
+        @click="getShareData"
+      >
         邀请好友抢礼物
       </van-button>
-      <img :src="icon.closeImg" class="close-img" @click="closeShowGift">
+      <img
+        :src="icon.closeImg"
+        class="close-img"
+        @click="closeShowGift"
+      >
     </van-popup>
 
     <!-- 微信分享提示遮罩 -->
-    <van-popup v-model="showWxTip" class="share-tip-box" position="top">
-      <img :src="icon.shareTipImg" class="share-tip-img">
+    <van-popup
+      v-model="showWxTip"
+      class="share-tip-box"
+      position="top"
+    >
+      <img
+        :src="icon.shareTipImg"
+        class="share-tip-img"
+      >
     </van-popup>
   </div>
 </template>
@@ -56,9 +82,7 @@ import wxapi from '@/utils/wxapi'
 import { getUID } from '@/api/BeeApi/user'
 import { freeGiftInvite } from '@/api/BeeApi/freeGift'
 export default {
-  components: {
-
-  },
+  components: {},
   props: {
     showGift: {
       type: Boolean,
@@ -98,9 +122,7 @@ export default {
       nowShowGift: false
     }
   },
-  computed: {
-
-  },
+  computed: {},
   watch: {
     remark: {
       handler(oldVal, newVal) {
@@ -110,9 +132,7 @@ export default {
       }
     }
   },
-  created() {
-
-  },
+  created() {},
   mounted() {
     // app 调用本地 方法，需将该方法挂载到window
     window.appShare = this.appShare
@@ -157,7 +177,7 @@ export default {
           this.share_data.title,
           this.share_data.desc,
           this.share_data.imgUrl,
-          this.share_data.link,
+          this.share_data.link
           // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
         )
       } else {
@@ -178,89 +198,126 @@ export default {
         link: this.share_data.link
       })
     }
-
   }
 }
 </script>
 
 <style scoped lang="less">
- .gift-box{
-
-    width: 6.93rem;
-    height: 9.68rem;
-    padding: 0.64rem;
-    box-sizing: border-box;
-    overflow-y: visible;
-    background:url(../../../assets/icon/freeGift/freegift_popup.png) no-repeat;
-    background-size:6.93rem 9.68rem;
-    p{margin: 0}
-    .title{margin-bottom: 0.5rem; margin-top: 0.5rem;}
-    .product {
-      background-color: white;
-      border-radius:0.1rem;
-      margin-bottom:0.1rem;
-      .product-img {
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: 0.1rem;
-      }
-      .product-info {
-        width:2.8rem;
-        .product-name {
-          margin-top:0.1rem;
-          margin-bottom:0.2rem;
-          font-size: 0.26rem;
-
-          text-overflow: -o-ellipsis-lastline;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          line-clamp: 2;
-          -webkit-box-orient: vertical;
-
-        }
-        .prop{font-size: 0.24rem; color:#999;}
-        .product-desc {
-          font-size: 0.2rem;
-          color: #999;
-          margin-top:0.1rem;
-        }
-        .product-price {
-          margin-top:0.1rem;
-        }
-        .sell-price{ font-size: 0.5rem;color:@BeeDefault; margin-right: .1rem;
-        }
-
-      }
-      .action{
-        .num{font-size: .24rem; color: @BeeDefault;}
-
-      }
-    }
-    .tip{font-size: 0.22rem;color:#FF3F3F; background-color:#FFEDD7; text-align: center; height: 0.62rem; line-height: 0.62rem; border-radius: .1rem;
-      margin-bottom:0.5rem; margin-top: 0.5rem;
-    }
-    .input{
-      .tip1{ font-size:0.24rem ;color:#666; margin-bottom: 0.1rem;}
-      input{border: 1px solid #999; font-size: 0.24rem; height: 0.6rem;line-height:0.6rem; width: 100%; border-radius: 0.1rem; padding: 0 0.3rem; box-sizing: border-box;}
-    }
-    .share-btn{
-      position: absolute;
-      bottom: 0.48rem;
-      width:100%;
-      left: 0;
-      opacity: 0;
-    }
-    .close-img{
-      width: 0.4rem;
-      height: 0.4rem;
-      position: absolute;
-      top: -0.5rem;
-      right: 0;
-    }
-
+.gift-box {
+  width: 6.93rem;
+  height: 9.68rem;
+  padding: 0.64rem;
+  box-sizing: border-box;
+  overflow-y: visible;
+  background: url(../../../assets/icon/freeGift/freegift_popup.png) no-repeat;
+  background-size: 6.93rem 9.68rem;
+  p {
+    margin: 0;
   }
-  .van-popup.share-tip-box{background-color: rgba(0, 0, 0, 0); text-align: right;}
-  .share-tip-img{width:3.3rem;height: 2.28rem; margin-right: 0.2rem;margin-top: 0.2rem;}
+  .title {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .product {
+    background-color: white;
+    border-radius: 0.1rem;
+    margin-bottom: 0.1rem;
+    .product-img {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.1rem;
+    }
+    .product-info {
+      width: 2.8rem;
+      .product-name {
+        margin-top: 0.1rem;
+        margin-bottom: 0.2rem;
+        font-size: 0.26rem;
+
+        text-overflow: -o-ellipsis-lastline;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      .prop {
+        font-size: 0.24rem;
+        color: #999;
+      }
+      .product-desc {
+        font-size: 0.2rem;
+        color: #999;
+        margin-top: 0.1rem;
+      }
+      .product-price {
+        margin-top: 0.1rem;
+      }
+      .sell-price {
+        font-size: 0.5rem;
+        color: @BeeDefault;
+        margin-right: 0.1rem;
+      }
+    }
+    .action {
+      .num {
+        font-size: 0.24rem;
+        color: @BeeDefault;
+      }
+    }
+  }
+  .tip {
+    font-size: 0.22rem;
+    color: #ff3f3f;
+    background-color: #ffedd7;
+    text-align: center;
+    height: 0.62rem;
+    line-height: 0.62rem;
+    border-radius: 0.1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .input {
+    .tip1 {
+      font-size: 0.24rem;
+      color: #666;
+      margin-bottom: 0.1rem;
+    }
+    input {
+      border: 1px solid #999;
+      font-size: 0.24rem;
+      height: 0.6rem;
+      line-height: 0.6rem;
+      width: 100%;
+      border-radius: 0.1rem;
+      padding: 0 0.3rem;
+      box-sizing: border-box;
+    }
+  }
+  .share-btn {
+    position: absolute;
+    bottom: 0.48rem;
+    width: 100%;
+    left: 0;
+    opacity: 0;
+  }
+  .close-img {
+    width: 0.4rem;
+    height: 0.4rem;
+    position: absolute;
+    top: -0.5rem;
+    right: 0;
+  }
+}
+.van-popup.share-tip-box {
+  background-color: rgba(0, 0, 0, 0);
+  text-align: right;
+}
+.share-tip-img {
+  width: 3.3rem;
+  height: 2.28rem;
+  margin-right: 0.2rem;
+  margin-top: 0.2rem;
+}
 </style>

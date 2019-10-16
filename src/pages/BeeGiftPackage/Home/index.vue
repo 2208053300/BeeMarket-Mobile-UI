@@ -1,6 +1,7 @@
 <template>
   <div class="bee-index">
     <bee-header @on-rule="onRule" />
+    <winning-roll style="position: fixed; top: 1.95rem;left: 0.28rem" type="giftPackage" />
     <img :src="beeIcon.headImg">
     <div class="product-list">
       <div class="item flex flex-wrap">
@@ -33,7 +34,6 @@
       @close="packageListClose"
     />
     <rule :visible.sync="ruleVisible" />
-    <package-build :visible.sync="packageVisible" />
   </div>
 </template>
 
@@ -46,13 +46,13 @@ import GiftPackageBar from '../components/giftPackageBar'
 import sku from '../components/Sku'
 import GiftPackageList from '../components/giftPackageList'
 import Rule from './components/rule'
-import PackageBuild from '../components/packageBuild'
 import goPayFromPayInfo from '../PaySelf/goPayFromPayInfo'
+import WinningRoll from '@/components/BeeWinningRoll/index'
 export default {
   metaInfo: {
     title: '农礼包产品'
   },
-  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku, Rule, PackageBuild },
+  components: { GiftPackageList, BeeHeader, ProductItem, GiftPackageBar, sku, Rule, WinningRoll },
   props: {},
   data() {
     return {
@@ -68,27 +68,12 @@ export default {
       pid: 0,
       giftListVisible: false,
       ruleVisible: false,
-      packageVisible: false,
       zIndex: 2500,
       maxMoney: 599
     }
   },
   computed: {
-    ...mapState(['giftPackage']),
-    canSettlement() {
-      if (this.giftPackage.package_recharge_balance > 0) {
-        return this.giftPackage.selectedTotalAmount > 0
-      } else {
-        return this.giftPackage.selectedTotalAmount >= this.maxMoney
-      }
-    }
-  },
-  watch: {
-    canSettlement() {
-      if (this.canSettlement && this.giftPackage.package_recharge_balance === 0) {
-        this.packageVisible = true
-      }
-    }
+    ...mapState(['giftPackage'])
   },
   beforeCreate() {
     // 创建之前把背景色强制设置为白色
