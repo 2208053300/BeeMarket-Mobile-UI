@@ -6,18 +6,23 @@
     >
       <div class="user-img">
         <img
-          src=""
+          :src="tempData.wx_head_image_url"
           alt=""
         >
       </div>
       <div class="partner-level">
-        <div class="star-img">
+        <div
+          v-for="(item,index) in tempData.level"
+          :key="index"
+          class="star-img"
+        >
           <img
             :src="beeIcon.interests_icon_star_white"
             alt=""
           >
         </div>
-        <span>合伙人</span>
+        <span v-if="tempData.level">合伙人</span>
+        <span v-else>普通用户</span>
       </div>
     </div>
     <div class="rights-body">
@@ -42,8 +47,20 @@
         <div class="tab-content">
           <div class="unlock-way">
             <div
+              v-if="tempData.level>activeTab"
               class="lock-status"
-              :class="{lockStatus2:1}"
+            >
+              <div class="status-img">
+                <img
+                  :src="beeIcon.interests_icon_lock_complete"
+                  alt=""
+                >
+              </div>
+              <span>已解锁</span>
+            </div>
+            <div
+              v-else
+              class="lock-status lockStatus2"
             >
               <div class="status-img">
                 <img
@@ -51,7 +68,7 @@
                   alt=""
                 >
               </div>
-              <span>已解锁</span>
+              <span>待解锁</span>
             </div>
             <span v-if="activeTab===1">解锁方式（2选1）</span>
             <span v-else>解锁方式</span>
@@ -94,10 +111,13 @@
                 购买1次农礼包
               </p>
               <div class="progress-bar">
-                <div class="progress-content" />
+                <div
+                  class="progress-content"
+                  :style="{width:tempData.pay_pgpackage/599+'%'}"
+                />
               </div>
               <p class="task-num">
-                ￥399 / ￥599
+                {{ tempData.pay_pgpackage }} / ￥599
               </p>
               <van-button
                 class="task-handle"
@@ -118,10 +138,13 @@
                 个人+直接蜂友订单总和
               </p>
               <div class="progress-bar">
-                <div class="progress-content" />
+                <div
+                  class="progress-content"
+                  :style="{width:tempData.pay_pgpackage/1000+'%'}"
+                />
               </div>
               <p class="task-num">
-                ￥399 / ￥599
+                {{ tempData.order_count }} / 1000
               </p>
               <van-button
                 class="task-handle"
@@ -144,10 +167,13 @@
                 直接蜂友达到二星合伙人的数量≥100人
               </p>
               <div class="progress-bar">
-                <div class="progress-content" />
+                <div
+                  class="progress-content"
+                  :style="{width:tempData.pay_pgpackage/100+'%'}"
+                />
               </div>
               <p class="task-num">
-                ￥399 / ￥599
+                {{ tempData.partner_count }} / 100
               </p>
               <van-button
                 class="task-handle"
@@ -168,6 +194,7 @@
 <script>
 import EarnTable from './components/EarnTable'
 import { getOs } from '@/utils'
+import { getEquity } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '我的权益'
@@ -195,7 +222,8 @@ export default {
         0: require('@/assets/icon/beeFriends/rights/interests_nav_one.png'),
         1: require('@/assets/icon/beeFriends/rights/interests_nav_two.png'),
         2: require('@/assets/icon/beeFriends/rights/interests_nav_three.png')
-      }
+      },
+      tempData: {}
     }
   },
   computed: {},
@@ -204,8 +232,13 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    this.getEquityData()
   },
   methods: {
+    async getEquityData() {
+      const res = await getEquity()
+      this.tempData = res.data
+    },
     getTab() {
       return this.nav_bg[this.activeTab]
     },
@@ -312,18 +345,21 @@ export default {
             display: inline-block;
             color: @BeeDefault;
             margin-right: 0.2rem;
-            background-color: #FFC171;
+            background-color: #ffc171;
             .status-img {
               width: 0.29rem;
               height: 0.3rem;
               margin-right: 0.1rem;
               display: inline-block;
+              position: relative;
+              top: -0.02rem;
+              // FIXME 图片莫名其妙错位
             }
           }
           .lockStatus2 {
             border-color: @Grey1;
             color: @Grey1;
-            background-color: rgba(244,244,244,1);
+            background-color: rgba(244, 244, 244, 1);
             .status-img {
               width: 0.21rem;
             }
@@ -384,7 +420,6 @@ export default {
               position: absolute;
               top: 0;
               left: 0;
-              width: 50%;
               height: 0.2rem;
             }
           }
