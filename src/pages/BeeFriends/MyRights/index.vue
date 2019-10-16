@@ -53,7 +53,8 @@
               </div>
               <span>已解锁</span>
             </div>
-            <span>解锁方式</span>
+            <span v-if="activeTab===1">解锁方式（2选1）</span>
+            <span v-else>解锁方式</span>
           </div>
           <div
             v-if="activeTab===0"
@@ -72,6 +73,7 @@
               <van-button
                 class="task-handle"
                 round
+                @click="goCategory"
               >
                 立即选购
               </van-button>
@@ -100,6 +102,7 @@
               <van-button
                 class="task-handle"
                 round
+                @click="goFarm"
               >
                 选购农礼包
               </van-button>
@@ -123,6 +126,7 @@
               <van-button
                 class="task-handle"
                 round
+                @click="goCategory"
               >
                 立即选购
               </van-button>
@@ -148,6 +152,7 @@
               <van-button
                 class="task-handle"
                 round
+                @click="$router.push({name:'beeFriends'})"
               >
                 进入蜂友圈
               </van-button>
@@ -155,17 +160,17 @@
           </div>
         </div>
       </div>
+      <earn-table class="rights-card" />
     </div>
-    <earn-table class="rights-card" />
-  </div>
   </div>
 </template>
 
 <script>
 import EarnTable from './components/EarnTable'
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
-    title: '我的收益'
+    title: '我的权益'
   },
   components: {
     EarnTable
@@ -207,6 +212,33 @@ export default {
     // TODO 请求接口
     changeTab(active) {
       this.activeTab = active
+    },
+    // 跳转到分类购买商品
+    goCategory() {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        this.$router.push('/category')
+      } else if (osObj.isIphone && osObj.isApp) {
+        window.webkit.messageHandlers.ToCatList.postMessage(1)
+      } else if (osObj.isAndroid && osObj.isApp) {
+        window.beeMarket.ToCatList()
+      } else {
+        this.$router.push('/category')
+      }
+    },
+    goFarm() {
+      const osObj = getOs()
+      if (osObj.isWx) {
+        this.$router.push('/beeGiftPackage')
+      } else if (osObj.isIphone && osObj.isApp) {
+        window.webkit.messageHandlers.ToProducePackage.postMessage({
+          alertRule: false
+        })
+      } else if (osObj.isAndroid && osObj.isApp) {
+        window.beeMarket.ToPackage(false)
+      } else {
+        this.$router.push('/beeGiftPackage')
+      }
     }
   }
 }
@@ -220,7 +252,7 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    padding-top: 0.7rem;
+    padding-top: 1.2rem;
     box-sizing: border-box;
     .user-img {
       width: 0.96rem;
@@ -280,6 +312,7 @@ export default {
             display: inline-block;
             color: @BeeDefault;
             margin-right: 0.2rem;
+            background-color: #FFC171;
             .status-img {
               width: 0.29rem;
               height: 0.3rem;
@@ -290,6 +323,7 @@ export default {
           .lockStatus2 {
             border-color: @Grey1;
             color: @Grey1;
+            background-color: rgba(244,244,244,1);
             .status-img {
               width: 0.21rem;
             }
@@ -365,7 +399,7 @@ export default {
             background-position: center;
             box-sizing: border-box;
             padding: 0.64rem 0.56rem;
-            .progress-bar{
+            .progress-bar {
               width: 4.32rem;
             }
             .task-handle {
