@@ -12,7 +12,7 @@
           <p class="name">
             {{ freeze.nickname }}
           </p>
-          <div class="role flex">
+          <div class="role flex align-center">
             <div class="stars">
               <img
                 v-for="item in freeze.level"
@@ -21,7 +21,7 @@
                 class="star-img"
               >
             </div>
-            <span>合伙人</span>
+            <span style="margin-left:0.1rem; padding-top:2px;">合伙人</span>
           </div>
         </div>
       </div>
@@ -237,7 +237,7 @@ export default {
     .star-img {
       width: 0.24rem;
       height: 0.24rem;
-      margin-right: 0.2rem;
+      margin-right: 0.1rem;
     }
   }
   .money {
