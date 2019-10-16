@@ -8,7 +8,7 @@
         还差 <span class="money-text"> {{ giftPackage.lack_package_balance }} 元</span>，自动生成礼包！
       </span>
       <span v-if="giftPackage.package_type === 2">礼包已生成</span>
-      <span v-if="giftPackage.package_type === 3">未知话语</span>
+      <span v-if="giftPackage.package_type === 3">让农产品走出大山，走进千家万户</span>
     </div>
     <div v-if="giftPackage.showTip && giftPackage.package_recharge_balance > 0" class="tips">
       剩余<span class="money-text"> {{ giftPackage.package_recharge_balance }} 元</span>可使用（金额永不失效）
