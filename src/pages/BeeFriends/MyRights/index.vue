@@ -113,11 +113,11 @@
               <div class="progress-bar">
                 <div
                   class="progress-content"
-                  :style="{width:tempData.pay_pgpackage/599+'%'}"
+                  :style="{width:tempData.total_amount/599+'%'}"
                 />
               </div>
               <p class="task-num">
-                ￥{{ tempData.pay_pgpackage }} / ￥599
+                ￥{{ tempData.total_amount }} / ￥599
               </p>
               <van-button
                 class="task-handle"
