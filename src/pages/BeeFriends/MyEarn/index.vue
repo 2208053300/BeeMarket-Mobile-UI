@@ -21,14 +21,22 @@
               <!-- </div> -->
               <span class="partner-mark">{{ detailData.level_text }}</span>
             </div>
-            <van-button v-if="false" class="rule-button">
+            <van-button
+              v-if="false"
+              class="rule-button"
+            >
               升星规则
             </van-button>
           </div>
         </div>
         <!-- 收益 -->
         <div class="earning-tabs">
-          <img :src="beeIcon.bee_firends_my_earn" class="my-earn-pic">
+          <div
+            class="my-earn-pic"
+            @click="$router.push({name:'myRights'})"
+          >
+            <img :src="beeIcon.bee_firends_my_earn">
+          </div>
           <div class="earning-num text-center">
             <div class="total-num">
               <p class="label">
@@ -52,7 +60,10 @@
             >
               <span class="num">{{ detailData.road_commission }}</span>
               <div class="type-img">
-                <img :src="beeIcon.bee_firends_income_icon_growingup" alt="">
+                <img
+                  :src="beeIcon.bee_firends_income_icon_growingup"
+                  alt=""
+                >
                 <span class="type-text">
                   在路上
                 </span>
@@ -66,7 +77,10 @@
             >
               <span class="num">{{ detailData.get_commission }}</span>
               <div class="type-img">
-                <img :src="beeIcon.bee_firends_income_icon_gold" alt="">
+                <img
+                  :src="beeIcon.bee_firends_income_icon_gold"
+                  alt=""
+                >
                 <span class="type-text">
                   已到账
                 </span>
@@ -83,7 +97,10 @@
         class="detail-title"
       >
         <div class="title-img">
-          <img :src="beeIcon.bee_firends_gold_add" alt="">
+          <img
+            :src="beeIcon.bee_firends_gold_add"
+            alt=""
+          >
         </div>
         <span class="title-text">增长详情</span>
       </div>
@@ -92,13 +109,19 @@
         class="detail-title"
       >
         <div class="title-img">
-          <img :src="beeIcon.bee_firends_gold_add" alt="">
+          <img
+            :src="beeIcon.bee_firends_gold_add"
+            alt=""
+          >
         </div>
         <span class="title-text">增长详情</span>
       </div>
 
       <!-- 有记录 -->
-      <div v-if="!isEmpty" class="detail-content">
+      <div
+        v-if="!isEmpty"
+        class="detail-content"
+      >
         <van-list
           v-model="loading"
           :finished="finished"
@@ -115,8 +138,14 @@
               {{ item.time }}
             </div>
             <div class="info-text">
-              <div v-if="item.logo" class="head-content">
-                <img :src="item.logo" alt="头像">
+              <div
+                v-if="item.logo"
+                class="head-content"
+              >
+                <img
+                  :src="item.logo"
+                  alt="头像"
+                >
               </div>
               {{ item.content }}
             </div>
@@ -125,15 +154,25 @@
         </van-list>
       </div>
       <!-- v-else 无记录-->
-      <div v-if="isEmpty" class="empty-img text-center">
-        <img :src="beeIcon.emptyImg" alt="">
+      <div
+        v-if="isEmpty"
+        class="empty-img text-center"
+      >
+        <img
+          :src="beeIcon.emptyImg"
+          alt=""
+        >
         <p class="tip">
           暂无数据
         </p>
       </div>
     </div>
 
-    <van-button round class="cash-btn" @click="toCash">
+    <van-button
+      round
+      class="cash-btn"
+      @click="toCash"
+    >
       我要提现
     </van-button>
   </div>
@@ -290,11 +329,13 @@ export default {
 
 <style scoped lang="less">
 .earn-header {
-  background-color:#fff;
+  background-color: #fff;
   .head-img {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    background: url('../../../assets/icon/beeFriends/info/bee_firend_img_top_bg1.png')  top  no-repeat ,linear-gradient(180deg, @BeeDefault 40%, #fff 60%);
+    background: url("../../../assets/icon/beeFriends/info/bee_firend_img_top_bg1.png")
+        top no-repeat,
+      linear-gradient(180deg, @BeeDefault 40%, #fff 60%);
 
     .img-content {
       // margin: 0 auto 0.18rem;
@@ -342,12 +383,12 @@ export default {
         padding-top: 0.6rem;
         box-shadow: 0 10px 20px #eee;
         position: relative;
-        .my-earn-pic{
+        .my-earn-pic {
           position: absolute;
           top: -0.96rem;
           right: 0.3rem;
-          width:2.19rem;
-          height: .96rem;
+          width: 2.19rem;
+          height: 0.96rem;
         }
       }
       .earning-num {
@@ -379,10 +420,14 @@ export default {
   }
   .earn-tab {
     margin-top: 0.6rem;
-    .line{width:1px;height:0.9rem;background-color:#ccc;}
+    .line {
+      width: 1px;
+      height: 0.9rem;
+      background-color: #ccc;
+    }
     .tab-content {
       text-align: center;
-      padding:0 0.6rem 0.5rem;
+      padding: 0 0.6rem 0.5rem;
       &.active {
         border-bottom: 0.05rem solid @BeeDefault;
       }
@@ -477,12 +522,12 @@ export default {
   border-radius: 50%;
 }
 .empty-img {
-  padding-top: .5rem;
+  padding-top: 0.5rem;
   margin-left: -0.6rem;
   img {
     width: 2.88rem;
     height: 2.68rem;
-    margin-bottom:.2rem;
+    margin-bottom: 0.2rem;
   }
   .tip {
     font-size: 0.24rem;

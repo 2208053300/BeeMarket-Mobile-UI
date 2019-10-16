@@ -183,7 +183,7 @@ export default {
     line-height: 0.48rem;
     font-size: 0.24rem;
     color: #ffffff;
-    margin: auto;
+    margin: 0.1rem auto 0;
     .van-icon {
       margin-right: 0.07rem;
       vertical-align: text-top;
