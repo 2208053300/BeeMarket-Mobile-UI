@@ -28,7 +28,7 @@
         </div>
         <!-- 收益 -->
         <div class="earning-tabs">
-          <img :src="beeIcon.bee_firends_my_earn" class="my-earn-pic">
+          <img :src="beeIcon.bee_firends_my_earn" alt="我的权益" class="my-earn-pic" @click="goMyRights">
           <div class="earning-num text-center">
             <div class="total-num">
               <p class="label">
@@ -282,6 +282,13 @@ export default {
       }
       this.$router.push({
         name: 'friendPay'
+      })
+    },
+
+    // NOTE 跳转到我的权益
+    goMyRights() {
+      this.$router.push({
+        path: ''
       })
     }
   }
