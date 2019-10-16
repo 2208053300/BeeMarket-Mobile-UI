@@ -62,6 +62,11 @@ const router = new Router({
           path: 'noQualified',
           name: 'noQualified',
           component: () => import('@/pages/BeeFriends/NoQualified')
+        },
+        {
+          path: 'myRights',
+          name: 'myRights',
+          component: () => import('@/pages/BeeFriends/MyRights')
         }
       ]
     }

@@ -80,7 +80,7 @@
       <div class="commonweal">
         <div
           class="img-content"
-          @click="authRoute('/beeFriends/myearn')"
+          @click="authRoute('/beeFriends/myRights')"
         >
           <img
             :src="beeIcon.bee_firend_img_income"
