@@ -156,7 +156,7 @@
             </div>
           </div>
           <div
-            v-if="activeTab===2"
+            v-if="activeTab===2||activeTab===3"
             class="unlock-desc"
           >
             <div
@@ -241,6 +241,9 @@ export default {
       this.activeTab = this.tempData.level
     },
     getTab() {
+      if (this.activeTab === 3) {
+        return this.nav_bg[2]
+      }
       return this.nav_bg[this.activeTab]
     },
     // TODO 请求接口
@@ -306,6 +309,8 @@ export default {
         margin-right: 0.1rem;
         vertical-align: text-top;
         display: inline-block;
+        position: relative;
+        top: -0.04rem;
       }
     }
   }
