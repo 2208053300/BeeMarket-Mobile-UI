@@ -6,7 +6,7 @@
     >
       <div class="user-img">
         <img
-          :src="tempData.wx_head_image_url"
+          :src="tempData.head_image_url"
           alt=""
         >
       </div>
