@@ -322,6 +322,13 @@ export default {
       this.$router.push({
         name: 'friendPay'
       })
+    },
+
+    // NOTE 跳转到我的权益
+    goMyRights() {
+      this.$router.push({
+        path: ''
+      })
     }
   }
 }
