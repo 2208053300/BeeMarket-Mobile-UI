@@ -4,14 +4,22 @@
     <div class="personal-info">
       <!-- 头像 姓名 -->
       <div class="avatar flex">
-        <img :src="freeze.head_image_url" class="img">
+        <img
+          :src="freeze.head_image_url"
+          class="img"
+        >
         <div class="info">
           <p class="name">
             {{ freeze.nickname }}
           </p>
           <div class="role flex align-center">
             <div class="stars">
-              <img v-for="item in freeze.level" :key="item" :src="icon.star" class="star-img">
+              <img
+                v-for="item in freeze.level"
+                :key="item"
+                :src="icon.star"
+                class="star-img"
+              >
             </div>
             <span style="margin-left:0.1rem; padding-top:2px;">合伙人</span>
           </div>
@@ -55,12 +63,14 @@
         </li>
       </ul>
     </div>
-    <!-- <p>token: {{ appToken }}</p> -->
     <!-- 解冻提示 -->
     <ul class="freeze-tip text-center bg-white">
       <li>
         <div class="item">
-          <img :src="icon.freezeImg1" class="img freeze-img">
+          <img
+            :src="icon.freezeImg1"
+            class="img freeze-img"
+          >
           <p class="title">
             您的蜂友圈账户已被冻结
           </p>
@@ -74,7 +84,10 @@
       </li>
       <li>
         <div class="item">
-          <img :src="icon.freezeImg2" class="img">
+          <img
+            :src="icon.freezeImg2"
+            class="img"
+          >
           <p class="title">
             任意消费，解冻账户
           </p>
@@ -84,14 +97,20 @@
           <p class="des">
             如果您在{{ freeze.time }}之前进行消费集市将自动为您解冻
           </p>
-          <van-button class="btn" @click="goSortList">
+          <van-button
+            class="btn"
+            @click="goSortList"
+          >
             去逛逛
           </van-button>
         </div>
       </li>
       <li>
         <div class="item">
-          <img :src="icon.freezeImg3" class="img">
+          <img
+            :src="icon.freezeImg3"
+            class="img"
+          >
           <p class="title">
             账户注销
           </p>
@@ -108,7 +127,6 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie'
 import { goHome, getOs } from '@/utils'
 import { getFreezeData } from '@/api/BeeApi/user'
 export default {
@@ -127,8 +145,7 @@ export default {
       // 获取 os 平台
       osObj: getOs(),
       // 冻结数据
-      freeze: {},
-      appToken: Cookies.get('token') || Cookies.get('BM-App-Token')
+      freeze: {}
     }
   },
   computed: {},
@@ -158,7 +175,9 @@ export default {
       if (this.osObj.isWx) {
         //
       } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.clearHistory.postMessage({ url: window.location.href })
+        window.webkit.messageHandlers.clearHistory.postMessage({
+          url: window.location.href
+        })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.clearHistory()
       } else {
