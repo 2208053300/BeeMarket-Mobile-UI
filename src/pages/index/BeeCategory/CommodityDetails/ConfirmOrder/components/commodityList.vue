@@ -51,6 +51,7 @@
           <van-field
             v-model="item.note"
             autosize
+            maxlength="30"
             placeholder="选填您的要求"
           />
         </div>
