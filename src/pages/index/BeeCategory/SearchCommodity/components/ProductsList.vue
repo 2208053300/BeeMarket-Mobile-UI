@@ -66,7 +66,8 @@ export default {
         // 页码
         page: 1,
         // 搜索关键词
-        search: ''
+        search: '',
+        model: 'WeChat'
       },
       // 三级分类下的商品列表
       goodsList: [],
@@ -78,6 +79,7 @@ export default {
       pageSize: 2,
       immediate: false,
       offset: 300
+
     }
   },
   computed: {},
