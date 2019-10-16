@@ -10,13 +10,13 @@
     >
       <p class="tips">
         <span v-if="giftPackage.package_type === 1 && giftPackage.lack_package_balance === 0">
-          任意搭配满<span class="money-text"> {{ maxMoney }} 元</span>，自动生成礼包！
+          任意搭配满<span class="light-text"> {{ maxMoney }} 元</span>，自动生成礼包！
         </span>
         <span v-if="giftPackage.package_type === 1 && giftPackage.lack_package_balance > 0">
-          还差 <span class="money-text"> {{ giftPackage.lack_package_balance }} 元</span>，自动生成礼包！
+          还差 <span class="light-text"> {{ giftPackage.lack_package_balance }} 元</span>，自动生成礼包！
         </span>
-        <span v-if="giftPackage.package_type === 2">礼包已生成</span>
-        <span v-if="giftPackage.package_type === 3">让农产品走出大山，走进千家万户</span>
+        <span v-if="giftPackage.package_type === 2" class="light-text">礼包已生成</span>
+        <span v-if="giftPackage.package_type === 3" class="light-text">让农产品走出大山，走进千家万户</span>
       </p>
       <div class="list-header">
         <img :src="beeIcon.farm_shopcart_pic_text" style="width: 2.27rem">
@@ -159,7 +159,7 @@ export default {
     line-height: 0.6rem;
     border-top-right-radius: 0.2rem;
     border-top-left-radius: 0.2rem;
-    .money-text {
+    .light-text {
       color: @BeeDefault;
     }
   }
