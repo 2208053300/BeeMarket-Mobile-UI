@@ -1,5 +1,6 @@
 <template>
   <div class="bee-limit">
+    <Swiper :block="true" :type="type" :bg-color="bgColor" :font-color="fontColor" />
     <div class="limit-content">
       <div class="header-img">
         <img
@@ -76,16 +77,24 @@ import { getBeeLimitList } from '@/api/BeeApi/home'
 import { getOs } from '@/utils'
 import { getUID } from '@/api/BeeApi/user'
 import wxapi from '@/utils/wxapi'
+import Swiper from '../../BeeFreeGift/components/Swiper'
 export default {
   metaInfo() {
     return {
       title: '限量蜂抢'
     }
   },
-  components: {},
+  components: {
+    Swiper
+  },
   props: {},
   data() {
     return {
+      // 中奖信息滚动所需数据
+      bgColor: 'rgba(255, 237, 213, 1)',
+      fontColor: '#333',
+      type: 1,
+
       commodityList: [],
       productData: {},
       loading: false,
@@ -187,6 +196,7 @@ export default {
   height: 100%;
   background-color: #fff;
   .limit-content {
+    margin-top:.6rem;
     padding: 0.2rem 0.3rem;
     box-sizing: border-box;
 
