@@ -47,7 +47,7 @@
         <div class="tab-content">
           <div class="unlock-way">
             <div
-              v-if="tempData.level>activeTab"
+              v-if="(tempData.level>activeTab)||tempData.level===3"
               class="lock-status"
             >
               <div class="status-img">
