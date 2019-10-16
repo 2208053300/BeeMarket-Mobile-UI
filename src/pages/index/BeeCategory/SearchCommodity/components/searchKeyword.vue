@@ -100,6 +100,7 @@ export default {
   .history-tag {
     padding-top: 0.08rem;
     .history-item {
+      max-width: 80%;
       margin-top: 0.3rem;
       font-size: 0.28rem;
       display: inline-block;
