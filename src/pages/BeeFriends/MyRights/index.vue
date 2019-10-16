@@ -47,7 +47,7 @@
         <div class="tab-content">
           <div class="unlock-way">
             <div
-              v-if="tempData.level>activeTab"
+              v-if="(tempData.level>activeTab)||tempData.level===3"
               class="lock-status"
             >
               <div class="status-img">
@@ -113,11 +113,11 @@
               <div class="progress-bar">
                 <div
                   class="progress-content"
-                  :style="{width:tempData.total_amount/599+'%'}"
+                  :style="{width:(Number(tempData.total_amount)/599)*100+'%'}"
                 />
               </div>
               <p class="task-num">
-                ￥{{ tempData.total_amount }} / ￥599
+                ￥{{ Number(tempData.total_amount) }} / ￥599
               </p>
               <van-button
                 class="task-handle"
@@ -140,7 +140,7 @@
               <div class="progress-bar">
                 <div
                   class="progress-content"
-                  :style="{width:tempData.pay_pgpackage/1000+'%'}"
+                  :style="{width:(tempData.order_count/1000)*100+'%'}"
                 />
               </div>
               <p class="task-num">
@@ -156,7 +156,7 @@
             </div>
           </div>
           <div
-            v-if="activeTab===2"
+            v-if="activeTab===2||activeTab===3"
             class="unlock-desc"
           >
             <div
@@ -169,7 +169,7 @@
               <div class="progress-bar">
                 <div
                   class="progress-content"
-                  :style="{width:tempData.pay_pgpackage/100+'%'}"
+                  :style="{width:(tempData.partner_count/100)*100+'%'}"
                 />
               </div>
               <p class="task-num">
@@ -241,6 +241,9 @@ export default {
       this.activeTab = this.tempData.level
     },
     getTab() {
+      if (this.activeTab === 3) {
+        return this.nav_bg[2]
+      }
       return this.nav_bg[this.activeTab]
     },
     // TODO 请求接口
@@ -306,6 +309,8 @@ export default {
         margin-right: 0.1rem;
         vertical-align: text-top;
         display: inline-block;
+        position: relative;
+        top: -0.04rem;
       }
     }
   }
@@ -346,7 +351,7 @@ export default {
             display: inline-block;
             color: @BeeDefault;
             margin-right: 0.2rem;
-            background-color: #FFF9F2;
+            background-color: #fff9f2;
             .status-img {
               width: 0.29rem;
               height: 0.3rem;
@@ -422,6 +427,7 @@ export default {
               top: 0;
               left: 0;
               height: 0.2rem;
+              max-width: 100%;
             }
           }
           .task-num {
