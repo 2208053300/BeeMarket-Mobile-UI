@@ -89,7 +89,7 @@
           推荐奖励
         </div>
         <div class="item-right">
-          <span>推荐商家入驻 持续分享商家营业额的</span>
+          <p>推荐商家入驻 持续分享商家营业额的<span class="num">0.5%</span></p>
         </div>
       </div>
     </div>
@@ -172,6 +172,9 @@ export default {
         .right-text {
           font-size: 0.22rem;
           color: @Grey1;
+        }
+        .num{
+          font-size: 0.28rem;
         }
       }
     }

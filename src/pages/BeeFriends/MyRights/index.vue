@@ -117,7 +117,7 @@
                 />
               </div>
               <p class="task-num">
-                {{ tempData.pay_pgpackage }} / ￥599
+                ￥{{ tempData.pay_pgpackage }} / ￥599
               </p>
               <van-button
                 class="task-handle"
@@ -346,7 +346,7 @@ export default {
             display: inline-block;
             color: @BeeDefault;
             margin-right: 0.2rem;
-            background-color: #ffc171;
+            background-color: #FFF9F2;
             .status-img {
               width: 0.29rem;
               height: 0.3rem;
