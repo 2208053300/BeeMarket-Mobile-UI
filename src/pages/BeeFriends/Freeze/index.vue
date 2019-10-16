@@ -55,7 +55,7 @@
         </li>
       </ul>
     </div>
-
+    <p>token: {{ appToken }}</p>
     <!-- 解冻提示 -->
     <ul class="freeze-tip text-center bg-white">
       <li>
@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 import { goHome, getOs } from '@/utils'
 import { getFreezeData } from '@/api/BeeApi/user'
 export default {
@@ -126,7 +127,8 @@ export default {
       // 获取 os 平台
       osObj: getOs(),
       // 冻结数据
-      freeze: {}
+      freeze: {},
+      appToken: Cookies.get('token') || Cookies.get('BM-App-Token')
     }
   },
   computed: {},
