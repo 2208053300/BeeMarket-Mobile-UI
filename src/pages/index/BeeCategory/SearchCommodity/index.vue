@@ -225,6 +225,7 @@ export default {
 
   .van-search {
     padding: 0;
+    height: 44px;
     .van-search__content--round {
       border: 0.02rem solid @Grey6;
       background-color: @Grey5;

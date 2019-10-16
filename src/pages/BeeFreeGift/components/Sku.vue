@@ -59,17 +59,12 @@
               </div>
             </div>
           </div>
-          <!-- <div class="prop-content">
-            <div class="prop-title">
-              数量
-            </div>
-            <van-stepper
-              v-model="productNum"
-              class="product-num"
-              min="1"
-              :max="limitNum||99"
-            />
-          </div> -->
+          <p
+            v-if="selectType===2&&propsData.person_num"
+            class="gift-num"
+          >
+            满<span class="num">{{ propsData.person_num }}</span>人参与，立刻开奖~
+          </p>
         </div>
       </div>
       <div class="done-btn">
@@ -117,6 +112,10 @@ export default {
     limitNum: {
       type: Number,
       default: 99
+    },
+    selectType: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -336,6 +335,17 @@ export default {
               border-bottom-right-radius: 45%;
               color: @Grey2;
             }
+          }
+        }
+          .gift-num {
+          margin-top: 0.6rem;
+          text-align: center;
+          font-size: 0.28rem;
+          color: @BeeDefault;
+          .num {
+            font-size: 0.44rem;
+            margin: 0 0.04rem 0 0.06rem;
+            font-weight: bold;
           }
         }
       }
