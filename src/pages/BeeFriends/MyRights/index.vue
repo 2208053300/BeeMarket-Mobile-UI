@@ -238,6 +238,7 @@ export default {
     async getEquityData() {
       const res = await getEquity()
       this.tempData = res.data
+      this.activeTab = this.tempData.level
     },
     getTab() {
       return this.nav_bg[this.activeTab]
