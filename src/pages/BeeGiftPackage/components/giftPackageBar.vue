@@ -2,13 +2,13 @@
   <div class="gift-bar flex flex-column align-center">
     <div v-if="giftPackage.showTip && giftPackage.package_recharge_balance===0" class="tips">
       <span v-if="giftPackage.package_type === 1 && giftPackage.lack_package_balance === 0">
-        任意搭配满<span class="money-text"> {{ maxMoney }} 元</span>，自动生成礼包！
+        任意搭配满<span class="light-text"> {{ maxMoney }} 元</span>，自动生成礼包！
       </span>
       <span v-if="giftPackage.package_type === 1 && giftPackage.lack_package_balance > 0">
-        还差 <span class="money-text"> {{ giftPackage.lack_package_balance }} 元</span>，自动生成礼包！
+        还差 <span class="light-text"> {{ giftPackage.lack_package_balance }} 元</span>，自动生成礼包！
       </span>
-      <span v-if="giftPackage.package_type === 2">礼包已生成</span>
-      <span v-if="giftPackage.package_type === 3">让农产品走出大山，走进千家万户</span>
+      <span v-if="giftPackage.package_type === 2" class="light-text">礼包已生成</span>
+      <span v-if="giftPackage.package_type === 3" class="light-text">让农产品走出大山，走进千家万户</span>
     </div>
     <div v-if="giftPackage.showTip && giftPackage.package_recharge_balance > 0" class="tips">
       剩余<span class="money-text"> {{ giftPackage.package_recharge_balance }} 元</span>可使用（金额永不失效）
@@ -103,7 +103,7 @@ export default {
     border: 1px solid rgba(255, 198, 128, 0.9);
     border-top-left-radius: 0.16rem;
     border-top-right-radius: 0.16rem;
-    .money-text {
+    .light-text {
       color: @BeeDefault;
     }
   }
