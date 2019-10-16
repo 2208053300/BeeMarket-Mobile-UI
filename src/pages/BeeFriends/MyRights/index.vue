@@ -113,11 +113,11 @@
               <div class="progress-bar">
                 <div
                   class="progress-content"
-                  :style="{width:tempData.total_amount/599+'%'}"
+                  :style="{width:(Number(tempData.total_amount)/599)*100+'%'}"
                 />
               </div>
               <p class="task-num">
-                ￥{{ tempData.total_amount }} / ￥599
+                ￥{{ Number(tempData.total_amount) }} / ￥599
               </p>
               <van-button
                 class="task-handle"
@@ -140,7 +140,7 @@
               <div class="progress-bar">
                 <div
                   class="progress-content"
-                  :style="{width:tempData.pay_pgpackage/1000+'%'}"
+                  :style="{width:(tempData.order_count/1000)*100+'%'}"
                 />
               </div>
               <p class="task-num">
@@ -169,7 +169,7 @@
               <div class="progress-bar">
                 <div
                   class="progress-content"
-                  :style="{width:tempData.pay_pgpackage/100+'%'}"
+                  :style="{width:(tempData.partner_count/100)*100+'%'}"
                 />
               </div>
               <p class="task-num">
@@ -346,7 +346,7 @@ export default {
             display: inline-block;
             color: @BeeDefault;
             margin-right: 0.2rem;
-            background-color: #FFF9F2;
+            background-color: #fff9f2;
             .status-img {
               width: 0.29rem;
               height: 0.3rem;
@@ -422,6 +422,7 @@ export default {
               top: 0;
               left: 0;
               height: 0.2rem;
+              max-width: 100%;
             }
           }
           .task-num {
