@@ -163,7 +163,10 @@
           alt=""
         >
         <p class="tip">
-          暂无数据
+          你好{{ detailData.nickname }}
+        </p>
+        <p class="tip">
+          欢迎加入我们 开启共享之旅
         </p>
       </div>
     </div>
@@ -539,6 +542,7 @@ export default {
   .tip {
     font-size: 0.24rem;
     color: #999;
+    margin-bottom: 0.1rem;
   }
 }
 .cash-btn {
