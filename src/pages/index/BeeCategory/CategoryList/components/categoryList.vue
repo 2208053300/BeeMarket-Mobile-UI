@@ -176,6 +176,7 @@ export default {
     overflow: hidden;
   }
   .select-category {
+    position: relative;
     width: 21%;
     min-width: 1.6rem;
     height: 100%;

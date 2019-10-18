@@ -6,7 +6,7 @@
     >
       <div class="user-img">
         <img
-          :src="tempData.wx_head_image_url"
+          :src="tempData.head_image_url"
           alt=""
         >
       </div>
@@ -236,9 +236,13 @@ export default {
   },
   methods: {
     async getEquityData() {
-      const res = await getEquity()
-      this.tempData = res.data
-      this.activeTab = this.tempData.level
+      try {
+        const res = await getEquity()
+        this.tempData = res.data
+        this.activeTab = this.tempData.level
+      } catch (error) {
+        this.$router.push({ name: 'freeze' })
+      }
     },
     getTab() {
       if (this.activeTab === 3) {
