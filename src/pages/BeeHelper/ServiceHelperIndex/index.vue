@@ -166,7 +166,7 @@ export default {
   margin-right: 0.3rem;
 }
 .user-info {
-  padding: 0 0.3rem;
+  padding: 0.3rem;
   .name {
     font-size: 0.28rem;
     color: #000;
@@ -178,6 +178,7 @@ export default {
   }
 }
 .helper-title {
+  padding:0.3rem 0;
   font-size: 0.22rem;
   padding-left: 0.3rem;
 }
