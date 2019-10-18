@@ -36,13 +36,38 @@
           -￥{{ order.orderDetail.pgpackage_deduct }}
         </div>
       </van-cell>
-      <!-- 没有公益值的时候隐藏 -->
-      <van-cell v-if="order.orderDetail.charity_amount" class="deduction-content">
+
+      <!-- 没有余额的时候隐藏 -->
+      <van-cell v-if="bakOrderAmount > 0 && order.orderDetail.cash_balance > 0" class="deduction-content">
         <div
           slot="title"
-          class="cell-title "
+          class="cell-title cell-deduction"
         >
-          抵扣
+          <div style="flex-shrink: 0">
+            收益抵扣
+          </div>
+          <span class="deduction-num">
+            您蜂友圈收益共有{{ order.orderDetail.cash_balance }}元，可抵扣{{ order.orderDetail.cash_balance }}元
+          </span>
+        </div>
+        <van-switch
+          v-model="balance_used"
+          :active-color="BeeDefault"
+          :disabled="balance_disabled"
+          size="20px"
+          @change="deductionBalanceMoney"
+        />
+      </van-cell>
+
+      <!-- 没有公益值的时候隐藏 -->
+      <van-cell v-if="bakOrderAmount > 0 && order.orderDetail.charity_amount > 0" class="deduction-content">
+        <div
+          slot="title"
+          class="cell-title cell-deduction"
+        >
+          <div style="flex-shrink: 0">
+            公益值抵扣
+          </div>
           <div class="deduction-num">
             您共有{{ order.orderDetail.charity_amount }}公益值，可抵扣{{ order.orderDetail.charity_deduction }}元
           </div>
@@ -50,7 +75,9 @@
         <van-switch
           v-model="charity_used"
           :active-color="BeeDefault"
-          @change="deductionMoney"
+          :disabled="charity_disabled"
+          size="20px"
+          @change="deductionCharityMoney"
         />
       </van-cell>
     </van-cell-group>
@@ -97,9 +124,14 @@
     </van-cell-group>
     <div class="submit-order">
       <div class="total-price">
-        <span>合计：</span>
-        <div class="price-num">
-          ￥{{ order.orderDetail.order_amount }}
+        <div>
+          <span>合计：</span>
+          <div class="price-num">
+            ￥{{ order.orderDetail.order_amount }}
+          </div>
+        </div>
+        <div v-if="deductionText" style="color: gray;font-size: 0.22rem">
+          {{ deductionText }}
         </div>
       </div>
       <van-button
@@ -138,17 +170,42 @@ export default {
       anonymous: false,
       charity_used: false,
       orderTypeText: 'general',
-      joinBee: true
+      joinBee: true,
+      balance_used: false,
+      bakOrderAmount: 0,
+      balance_disabled: false,
+      charity_disabled: false
     }
   },
   computed: {
-    ...mapState(['order'])
+    ...mapState(['order']),
+    deductionText() {
+      if (this.balance_used && this.charity_used) {
+        let charityDeduction = this.order.orderDetail.charity_deduction
+        const balanceDeductionAfter = this.bakOrderAmount - this.order.orderDetail.cash_balance
+        if (balanceDeductionAfter < charityDeduction) {
+          charityDeduction = balanceDeductionAfter
+        }
+        return `(收益已抵扣￥${this.order.orderDetail.cash_balance}；公益值已抵扣￥${charityDeduction})`
+      } else if (this.balance_used && !this.charity_used) {
+        const balanceDeduction = this.order.orderDetail.cash_balance >= this.bakOrderAmount ? this.bakOrderAmount
+          : this.order.orderDetail.cash_balance
+        return `(收益已抵扣￥${balanceDeduction})`
+      } else if (!this.balance_used && this.charity_used) {
+        const charityDeduction = this.order.orderDetail.charity_deduction >= this.bakOrderAmount ? this.bakOrderAmount
+          : this.order.orderDetail.charity_deduction
+        return `(公益值已抵扣￥${charityDeduction})`
+      } else {
+        return ''
+      }
+    }
   },
   watch: {},
   created() {},
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    this.bakOrderAmount = this.order.orderDetail.order_amount
     if (this.$route.query.target === 'pgpackage') {
       this.confirmGiftPackageOrder()
     } else {
@@ -220,15 +277,76 @@ export default {
         this.orderTypeText = 'general'
       }
     },
-    deductionMoney(checked) {
+    // 余额抵扣状态改变
+    deductionBalanceMoney(checked) {
+      const cash_balance = this.order.orderDetail.cash_balance
+      const charity_deduction = this.order.orderDetail.charity_deduction
       if (checked) {
-        this.order.orderDetail.order_amount =
-          this.order.orderDetail.order_amount -
-          this.order.orderDetail.charity_deduction
+        const cash_balance_after = this.bakOrderAmount - cash_balance // 余额抵扣后的金额
+        const charity_deduction_after = this.bakOrderAmount - charity_deduction // 公益值抵扣后的金额
+        // 余额能全部抵扣
+        if (cash_balance_after <= 0) {
+          // 公益值抵扣开关选中
+          if (this.charity_used) {
+            // 关掉开关
+            this.charity_used = false
+          }
+          // 公益值不能全部抵扣则禁用公益值抵扣开关
+          this.charity_disabled = charity_deduction_after > 0
+        }
+        // 计算扣除后的金额
+        // 公益值抵扣开启
+        if (this.charity_used) {
+          this.order.orderDetail.order_amount = this.bakOrderAmount - cash_balance - charity_deduction
+        } else {
+          this.order.orderDetail.order_amount = this.bakOrderAmount - cash_balance
+        }
+        if (this.order.orderDetail.order_amount < 0) {
+          this.order.orderDetail.order_amount = 0
+        }
       } else {
-        this.order.orderDetail.order_amount =
-          this.order.orderDetail.order_amount +
-          this.order.orderDetail.charity_deduction
+        this.charity_disabled = false
+        if (this.charity_used) {
+          this.order.orderDetail.order_amount = this.bakOrderAmount - charity_deduction
+        } else {
+          this.order.orderDetail.order_amount = this.bakOrderAmount
+        }
+      }
+    },
+    // 公益值抵扣状态改变
+    deductionCharityMoney(checked) {
+      const cash_balance = this.order.orderDetail.cash_balance
+      const charity_deduction = this.order.orderDetail.charity_deduction
+      if (checked) {
+        const cash_balance_after = this.bakOrderAmount - cash_balance // 余额抵扣后的金额
+        const charity_deduction_after = this.bakOrderAmount - charity_deduction // 公益值抵扣后的金额
+        // 公益值能全部抵扣
+        if (charity_deduction_after <= 0) {
+          // 余额抵扣开关选中
+          if (this.balance_used) {
+            // 关掉开关
+            this.balance_used = false
+          }
+          // 余额不能全部抵扣则禁用余额抵扣开关
+          this.balance_disabled = cash_balance_after > 0
+        }
+        // 计算扣除后的金额
+        // 公益值抵扣开启
+        if (this.balance_used) {
+          this.order.orderDetail.order_amount = this.bakOrderAmount - cash_balance - charity_deduction
+        } else {
+          this.order.orderDetail.order_amount = this.bakOrderAmount - charity_deduction
+        }
+        if (this.order.orderDetail.order_amount < 0) {
+          this.order.orderDetail.order_amount = 0
+        }
+      } else {
+        this.balance_disabled = false
+        if (this.balance_used) {
+          this.order.orderDetail.order_amount = this.bakOrderAmount - cash_balance
+        } else {
+          this.order.orderDetail.order_amount = this.bakOrderAmount
+        }
       }
     }
   }
@@ -245,13 +363,18 @@ export default {
     .cell-title {
       font-size: 0.28rem;
     }
+    .cell-deduction {
+      display: flex;
+      align-items: center;
+      width: 75vw;
+    }
     .deduction-content {
       align-items: center;
       .van-cell__title {
         flex: 3;
       }
       .deduction-num {
-        margin-left: 0.24rem;
+        margin-left: 0.05rem;
         padding: 0.06rem;
         box-sizing: border-box;
         color: @BeeDefault;
@@ -259,6 +382,9 @@ export default {
         display: inline-block;
         font-size: 0.24rem;
         border-radius: 0.05rem;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
     }
   }
@@ -294,6 +420,10 @@ export default {
       font-size: 0.24rem;
       color: @Grey2;
       margin-right: 0.32rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
       .price-num {
         font-size: 0.28rem;
         color: @BeeDefault;
