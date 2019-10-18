@@ -178,9 +178,8 @@ export default {
   }
 }
 .helper-title {
-  padding:0.3rem 0;
+  padding:0.3rem;
   font-size: 0.22rem;
-  padding-left: 0.3rem;
 }
 
 .sort-box {
