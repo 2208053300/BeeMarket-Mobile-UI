@@ -238,7 +238,7 @@ export default {
         // window.beeMarket.GoIndex()
         window.beeMarket.ToCatList()
       } else {
-        window.location.href = window.location.origin
+        window.location.href = window.location.origin + '/#/category'
       }
     }
   }

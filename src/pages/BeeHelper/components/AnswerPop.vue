@@ -107,20 +107,22 @@ export default {
           // TODO 请求接口 有用
           await solved({ id: this.id })
           this.used = false
-          this.$notify({
-            message: '感谢您的反馈！',
-            duration: 2000,
-            background: '#1989fa'
-          })
+          // this.$notify({
+          //   message: '感谢您的反馈！',
+          //   duration: 2000,
+          //   background: '#1989fa'
+          // })
+          this.$toast.success('感谢您的反馈！')
         } else {
           // TODO 请求接口 没用
           await unsolved({ id: this.id })
           this.unused = false
-          this.$notify({
-            message: '感谢您的反馈！',
-            duration: 2000,
-            background: '#1989fa'
-          })
+          this.$toast.success('感谢您的反馈！')
+          // this.$notify({
+          //   message: '感谢您的反馈！',
+          //   duration: 2000,
+          //   background: '#1989fa'
+          // })
         }
         this.isAjaxed = true
       }
@@ -144,6 +146,7 @@ export default {
   border-bottom: 1px solid #ddd;
   padding: 0 0.3rem;
   .title {
+    padding: 0.3rem 0;
     font-weight: 600;
     font-size: 0.3rem;
     color: #333;
@@ -156,9 +159,13 @@ export default {
   padding: 0 0.3rem;
   font-size: 0.28rem;
   color: #333;
+  line-height: 1.5;
+  padding-top:0.3rem;
+  padding-bottom: 0.3rem;
   p {
     font-size: 0.28rem;
     color: #333;
+
   }
 }
 .feedback-icon{

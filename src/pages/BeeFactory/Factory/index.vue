@@ -618,6 +618,7 @@ export default {
     position: relative;
     border-radius: 0.1rem;
     padding: 0.4rem;
+    line-height: 1.5;
   }
   .join {
     margin-top: 0.4rem;
