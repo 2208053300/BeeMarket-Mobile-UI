@@ -250,6 +250,7 @@ export default {
           addr_id: this.order.addrDetail.addr_id,
           stores: storeData,
           charity_used: this.charity_used,
+          balance_used: this.balance_used,
           anonymous: this.anonymous,
           os: this.$route.query.target || 'general',
           // 此处暂时无赠送好友ot不变
