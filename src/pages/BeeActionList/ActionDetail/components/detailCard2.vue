@@ -1,9 +1,6 @@
 <template>
   <div class="card2">
     <van-tabs v-model="active">
-      <p onclick="goDetail('1','1','1')">
-        fdfd
-      </p>
       <van-tab title="项目简介">
         <div
           class="item-info"
