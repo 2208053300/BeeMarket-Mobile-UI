@@ -1,6 +1,9 @@
 <template>
   <div class="card2">
     <van-tabs v-model="active">
+      <p onclick="goDetail('1','1','1')">
+        fdfd
+      </p>
       <van-tab title="项目简介">
         <div
           class="item-info"
@@ -28,7 +31,7 @@
           <div
             v-if="actionDetails.schedule_status===4"
             class="show-detail text-right"
-            @click="goDetail(actionDetails.id)"
+            @click="goCompleteDetail(actionDetails.id)"
           >
             查看详情 》
           </div>
@@ -58,7 +61,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
-
+import { getOs } from '@/utils'
 export default {
   components: {},
   props: {
@@ -73,23 +76,40 @@ export default {
     return {
       showMore: false,
       BeeDefault,
-      active: 0
+      active: 0,
+      osObj: getOs()
     }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {
-
+    window.goDetail = this.goDetail
   },
   methods: {
-    goDetail(id) {
+    goCompleteDetail(id) {
       this.$router.push({
         name: 'completeDetail',
         query: {
           id
         }
       })
+    },
+    goDetail(pid, target, uid) {
+      if (this.osObj.isWx) {
+        window.location.href = 'https://app.fengjishi.com/#/category/details?pid=' + pid + '&target=' + target + '&uid=' +
+            uid
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToProductDetail.postMessage({
+          pid: pid,
+          target: target
+        })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToProductDetail(pid, target)
+      } else {
+        window.location.href = 'https://app.fengjishi.com/#/category/details?pid=' + pid + '&target=' + target + '&uid=' +
+            uid
+      }
     }
   }
 }

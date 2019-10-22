@@ -49,7 +49,7 @@
               </p>
             </div>
             <div class="action flex flex-between align-center">
-              <span class="num">满{{ product.lottery_num }}个人开奖</span>
+              <span class="num">分享{{ product.lottery_num }}个人开奖</span>
               <van-button
                 round
                 size="mini"
