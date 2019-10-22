@@ -85,6 +85,7 @@ export default {
   created() {},
   mounted() {
     window.goDetail = this.goDetail
+    window.goWxArticle = this.goWxArticle
   },
   methods: {
     goCompleteDetail(id) {
@@ -109,6 +110,12 @@ export default {
       } else {
         window.location.href = 'https://app.fengjishi.com/#/category/details?pid=' + pid + '&target=' + target + '&uid=' +
             uid
+      }
+    },
+    goWxArticle(url) {
+      var osObj = getOs()
+      if (osObj.isWx) {
+        window.location.href = url
       }
     }
   }
