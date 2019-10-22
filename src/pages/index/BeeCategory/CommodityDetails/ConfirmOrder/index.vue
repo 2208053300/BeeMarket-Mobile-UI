@@ -60,7 +60,7 @@
       </van-cell>
 
       <!-- 没有公益值的时候隐藏 -->
-      <van-cell v-if="bakOrderAmount > 0 && order.orderDetail.charity_amount > 0" class="deduction-content">
+      <van-cell v-if="bakOrderAmount > 0 && order.orderDetail.charity_balance > 0" class="deduction-content">
         <div
           slot="title"
           class="cell-title cell-deduction"
@@ -69,7 +69,7 @@
             公益值抵扣
           </div>
           <div class="deduction-num">
-            您共有{{ order.orderDetail.charity_amount }}公益值，可抵扣{{ order.orderDetail.charity_deduction }}元
+            您共有{{ order.orderDetail.charity_amount }}公益值，可抵扣{{ order.orderDetail.charity_balance }}元
           </div>
         </div>
         <van-switch
@@ -181,7 +181,7 @@ export default {
     ...mapState(['order']),
     deductionText() {
       if (this.balance_used && this.charity_used) {
-        let charityDeduction = this.order.orderDetail.charity_deduction
+        let charityDeduction = this.order.orderDetail.charity_balance
         const balanceDeductionAfter = this.bakOrderAmount - this.order.orderDetail.cash_balance
         if (balanceDeductionAfter < charityDeduction) {
           charityDeduction = balanceDeductionAfter
@@ -192,8 +192,8 @@ export default {
           : this.order.orderDetail.cash_balance
         return `(收益已抵扣￥${balanceDeduction})`
       } else if (!this.balance_used && this.charity_used) {
-        const charityDeduction = this.order.orderDetail.charity_deduction >= this.bakOrderAmount ? this.bakOrderAmount
-          : this.order.orderDetail.charity_deduction
+        const charityDeduction = this.order.orderDetail.charity_balance >= this.bakOrderAmount ? this.bakOrderAmount
+          : this.order.orderDetail.charity_balance
         return `(公益值已抵扣￥${charityDeduction})`
       } else {
         return ''
@@ -281,10 +281,10 @@ export default {
     // 余额抵扣状态改变
     deductionBalanceMoney(checked) {
       const cash_balance = this.order.orderDetail.cash_balance
-      const charity_deduction = this.order.orderDetail.charity_deduction
+      const charity_balance = this.order.orderDetail.charity_balance
       if (checked) {
         const cash_balance_after = this.bakOrderAmount - cash_balance // 余额抵扣后的金额
-        const charity_deduction_after = this.bakOrderAmount - charity_deduction // 公益值抵扣后的金额
+        const charity_deduction_after = this.bakOrderAmount - charity_balance // 公益值抵扣后的金额
         // 余额能全部抵扣
         if (cash_balance_after <= 0) {
           // 公益值抵扣开关选中
@@ -298,7 +298,7 @@ export default {
         // 计算扣除后的金额
         // 公益值抵扣开启
         if (this.charity_used) {
-          this.order.orderDetail.order_amount = this.bakOrderAmount - cash_balance - charity_deduction
+          this.order.orderDetail.order_amount = this.bakOrderAmount - cash_balance - charity_balance
         } else {
           this.order.orderDetail.order_amount = this.bakOrderAmount - cash_balance
         }
@@ -308,7 +308,7 @@ export default {
       } else {
         this.charity_disabled = false
         if (this.charity_used) {
-          this.order.orderDetail.order_amount = this.bakOrderAmount - charity_deduction
+          this.order.orderDetail.order_amount = this.bakOrderAmount - charity_balance
         } else {
           this.order.orderDetail.order_amount = this.bakOrderAmount
         }
@@ -317,10 +317,10 @@ export default {
     // 公益值抵扣状态改变
     deductionCharityMoney(checked) {
       const cash_balance = this.order.orderDetail.cash_balance
-      const charity_deduction = this.order.orderDetail.charity_deduction
+      const charity_balance = this.order.orderDetail.charity_balance
       if (checked) {
         const cash_balance_after = this.bakOrderAmount - cash_balance // 余额抵扣后的金额
-        const charity_deduction_after = this.bakOrderAmount - charity_deduction // 公益值抵扣后的金额
+        const charity_deduction_after = this.bakOrderAmount - charity_balance // 公益值抵扣后的金额
         // 公益值能全部抵扣
         if (charity_deduction_after <= 0) {
           // 余额抵扣开关选中
@@ -334,9 +334,9 @@ export default {
         // 计算扣除后的金额
         // 公益值抵扣开启
         if (this.balance_used) {
-          this.order.orderDetail.order_amount = this.bakOrderAmount - cash_balance - charity_deduction
+          this.order.orderDetail.order_amount = this.bakOrderAmount - cash_balance - charity_balance
         } else {
-          this.order.orderDetail.order_amount = this.bakOrderAmount - charity_deduction
+          this.order.orderDetail.order_amount = this.bakOrderAmount - charity_balance
         }
         if (this.order.orderDetail.order_amount < 0) {
           this.order.orderDetail.order_amount = 0
