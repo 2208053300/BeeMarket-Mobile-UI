@@ -63,7 +63,7 @@
             v-if="selectType===2&&propsData.person_num"
             class="gift-num"
           >
-            满<span class="num">{{ propsData.person_num }}</span>人参与，立刻开奖~
+            分享<span class="num">{{ propsData.person_num }}</span>人参与，立即开奖~
           </p>
         </div>
       </div>
