@@ -84,32 +84,6 @@
             </div>
           </div>
         </van-cell>
-        <van-cell
-          v-if="!order.payInfo.pay_methods.blpay"
-          class="pay-method"
-        >
-          <div
-            slot="title"
-            class="method-title"
-          >
-            <div class="method-img">
-              <img
-                :src="beeIcon.confirmorder_pay_icon_overage_disabled"
-                alt="蜂集市支付"
-              >
-            </div>
-            <div class="method-name">
-              <div class="overage">
-                <span class="grey-text">
-                  蜂集市支付
-                </span>
-                <span class="grey-text2">
-                  余额不足
-                </span>
-              </div>
-            </div>
-          </div>
-        </van-cell>
       </van-cell-group>
     </div>
     <div class="pay-done">
