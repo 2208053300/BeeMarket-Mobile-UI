@@ -5,9 +5,22 @@
     {{ $store.state.user.is_bind_mobile }} -->
     <Swiper :block="false" :type="type" :bg-color="bgColor" :font-color="fontColor" />
     <div class="title">
-      <p class="tip text-center">
-        {{ detail.top_data.status_desc }}
-      </p>
+      <div class="top-time">
+        <p class="tip text-center">
+          {{ detail.top_data.status_desc }}
+        </p>
+        <div v-if="detail.status===4" class="down-time flex flex-center align-center" @finish="finished">
+          <span>剩余领取时间：</span>
+          <van-count-down :time="detail.top_data.remain_time">
+            <template v-slot="timeData">
+              <span class="item">{{ timeData.days }}</span>天
+              <span class="item">{{ timeData.hours }}</span>小时
+              <span class="item">{{ timeData.minutes }}</span>分
+              <!-- <span class="item">{{ timeData.seconds }}</span>秒 -->
+            </template>
+          </van-count-down>
+        </div>
+      </div>
       <div class="shared-man text-center">
         <img :src="detail.top_data.head_image_url" class="share-avatar">
         <div class="box">
@@ -110,7 +123,7 @@
           <span>我要领取礼物</span>
         </van-button>
         <van-button v-else class="action-btn" size="large" @click="goFreeGiftIndex">
-          <span>我也要免费送礼</span>
+          <span>我也要免费送礼物</span>
         </van-button>
       </div>
     </div>
@@ -199,11 +212,13 @@ export default {
           status_desc: '',
           head_image_url: '',
           title: '',
-          title_desc: ''
+          title_desc: '',
+          remain_time: null
         },
         product_data: {},
         join_data: {}
       }
+
     }
   },
   computed: {},
@@ -291,6 +306,7 @@ export default {
         } else {
           this.isShowArrow = false
         }
+        // this.timeDown(20000)
       } catch (error) {
         console.log(error)
       }
@@ -345,6 +361,11 @@ export default {
       } else {
         this.showMen = 15
       }
+    },
+
+    // 领取时间倒计时结束
+    finished() {
+      window.location.reload()
     },
     // NOTE 微信分享
     async onlywxShare() {
@@ -406,7 +427,22 @@ export default {
   .van-overlay{background-color:#000; }
   p{margin: 0}
   .title{background:#F5F5F5;
-    .tip{ font-size: 0.38rem;color:@BeeDefault; margin-top: 1.3rem; margin-bottom: 1rem;}
+    .tip{ font-size: 0.38rem;color:@BeeDefault; margin-top: 1.3rem; }
+    .top-time{
+      margin-bottom: 1rem;
+    }
+    .down-time{
+      margin-top: 0.2rem;
+      font-size: 0.24rem;
+      color: #333;
+      .van-count-down{
+         font-size: 0.24rem;
+         color: #333;
+      }
+      .item{
+         color: @BeeDefault;
+      }
+    }
     .shared-man{
       width: 7.18rem;
       height: 1.76rem;
@@ -530,7 +566,7 @@ export default {
       }
     }
 
-    .action-btn{background:@BeeDefault; font-size: .34rem;color: #fff; border-radius: 0.1rem; margin-top:.4rem; pointer-events: auto;
+    .action-btn{background:@BeeDefault; font-size: .34rem;color: #fff; border-radius: 0.5rem; margin-top:.4rem; pointer-events: auto;
       span{display: block;}
     }
 
