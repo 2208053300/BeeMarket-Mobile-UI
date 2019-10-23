@@ -365,7 +365,8 @@ export default {
 
     // 领取时间倒计时结束
     finished() {
-      window.location.reload()
+      // window.location.reload()
+      this.getDetailData()
     },
     // NOTE 微信分享
     async onlywxShare() {
