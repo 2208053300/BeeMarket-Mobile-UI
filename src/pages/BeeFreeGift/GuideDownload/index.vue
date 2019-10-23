@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="btns">
-        <van-button v-if="detail.is_has_mobile" round size="large" class="re-btn" @click="goDownloadApp">
+        <van-button v-if="!detail.is_has_mobile" round size="large" class="re-btn" @click="goDownloadApp">
           查看并领取礼物
         </van-button>
         <van-button round size="large" class="go-market-btn" @click="goDownloadApp">
