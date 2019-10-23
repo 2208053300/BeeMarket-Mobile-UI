@@ -301,12 +301,12 @@ export default {
         const res = await getDetail({ id: this.$route.query.id })
         console.log('开奖详情：', res)
         this.detail = res.data
+        this.detail.top_data.remain_time = this.detail.top_data.remain_time * 1000
         if (this.detail.join_data.join_num > 15) {
           this.showMen = 15
         } else {
           this.isShowArrow = false
         }
-        // this.timeDown(20000)
       } catch (error) {
         console.log(error)
       }
