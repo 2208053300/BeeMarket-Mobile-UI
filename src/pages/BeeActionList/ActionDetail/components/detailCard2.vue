@@ -156,7 +156,7 @@ export default {
       // background-image: linear-gradient(to bottom,rgba(255,255,255,.5),#fff);
       background-color: #fff;
     }
-    p{ margin: 0.1rem 0; line-height: 1.4}
+    p{  line-height: 1.4}
     &.more {
       height: auto;
     }
