@@ -76,8 +76,16 @@
             <span>￥{{ orderDetail.product_amount }}</span>
           </div>
           <div class="price-text">
+            <span>余额抵扣</span>
+            <span>￥{{ orderDetail.balance_used }}</span>
+          </div>
+          <div v-if="orderDetail.source !== 'pgpackage'" class="price-text">
             <span>公益值抵扣</span>
             <span>￥{{ orderDetail.charity_used }}</span>
+          </div>
+          <div v-if="orderDetail.source === 'pgpackage'" class="price-text">
+            <span>农礼包抵扣</span>
+            <span>￥{{ orderDetail.used_pgpackage_amount }}</span>
           </div>
           <div class="price-text">
             <span>运费</span>
