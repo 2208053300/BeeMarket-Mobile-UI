@@ -149,6 +149,7 @@ export default {
         } else if (osObj.isIphone && osObj.isApp) {
           window.webkit.messageHandlers.ToPayOrder.postMessage({
             payOrderJson: JSON.stringify(this.order.payInfo),
+            isRechargePackage: false,
             ot: 'general'
           })
         } else if (osObj.isAndroid && osObj.isApp) {
