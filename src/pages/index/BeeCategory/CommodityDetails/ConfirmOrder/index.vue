@@ -127,7 +127,7 @@
         <div>
           <span>合计：</span>
           <div class="price-num">
-            ￥{{ order.orderDetail.order_amount }}
+            ￥{{ order.orderDetail.order_amount.toFixed(2) }}
           </div>
         </div>
         <div v-if="deductionText" style="color: gray;font-size: 0.22rem">
