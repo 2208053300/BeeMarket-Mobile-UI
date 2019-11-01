@@ -76,7 +76,7 @@
             <span>￥{{ orderDetail.product_amount }}</span>
           </div>
           <div class="price-text">
-            <span>余额抵扣</span>
+            <span>收益抵扣</span>
             <span>￥{{ orderDetail.balance_used }}</span>
           </div>
           <div v-if="orderDetail.source !== 'pgpackage'" class="price-text">
