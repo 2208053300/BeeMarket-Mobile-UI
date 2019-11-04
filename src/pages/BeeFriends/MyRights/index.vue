@@ -340,6 +340,9 @@ export default {
       .tab-content {
         background-color: #fff;
         padding: 0.4rem 0 0.1rem;
+        p{
+          margin: 0;
+        }
         .unlock-way {
           font-size: 0.28rem;
           margin: 0 0.32rem;
@@ -400,7 +403,7 @@ export default {
             width: 2.62rem;
             height: 0.64rem;
             line-height: 0.64rem;
-            // margin-top: 0.6rem;
+            margin-top: 0.6rem;
             font-size: 0.28rem;
             color: #c2a36b;
             box-shadow: 0 0.03rem 0.07rem 0 rgba(159, 85, 133, 0.35);
@@ -413,9 +416,9 @@ export default {
             background-position: center;
             box-sizing: border-box;
             padding: 0.56rem 0.48rem;
-            // .task-handle {
-            //   margin-top: 0.4rem;
-            // }
+            .task-handle {
+              margin-top: 0.4rem;
+            }
           }
           .progress-bar {
             width: 100%;
@@ -448,9 +451,9 @@ export default {
             .progress-bar {
               width: 4.32rem;
             }
-            // .task-handle {
-            //   margin-top: 0.4rem;
-            // }
+            .task-handle {
+              margin-top: 0.4rem;
+            }
           }
         }
         .unlock-desc2 {
