@@ -9,7 +9,7 @@
         <p class="tip text-center">
           {{ detail.top_data.status_desc }}
         </p>
-        <div v-if="detail.status===4" class="down-time flex flex-center align-center" @finish="finished">
+        <div v-if="[4,6].includes(detail.status)" class="down-time flex flex-center align-center" @finish="finished">
           <span>剩余领取时间：</span>
           <van-count-down :time="detail.top_data.remain_time">
             <template v-slot="timeData">
