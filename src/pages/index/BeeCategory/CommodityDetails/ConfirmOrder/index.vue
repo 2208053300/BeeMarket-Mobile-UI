@@ -47,7 +47,7 @@
             收益抵扣
           </div>
           <span class="deduction-num">
-            您蜂友圈收益共有{{ order.orderDetail.cash_balance }}元，可抵扣{{ order.orderDetail.cash_balance }}元
+            您的收益{{ order.orderDetail.cash_balance }}元，可抵扣{{ order.orderDetail.cash_balance }}元
           </span>
         </div>
         <van-switch
@@ -127,7 +127,7 @@
         <div>
           <span>合计：</span>
           <div class="price-num">
-            ￥{{ order.orderDetail.order_amount }}
+            ￥{{ order.orderDetail.order_amount.toFixed(2) }}
           </div>
         </div>
         <div v-if="deductionText" style="color: gray;font-size: 0.22rem">
@@ -224,6 +224,7 @@ export default {
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
+        this.bakOrderAmount = res.data.order_amount
       }
     },
     async createOrderData() {
