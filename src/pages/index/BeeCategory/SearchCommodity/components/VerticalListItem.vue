@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="item flex" @click="$router.push({path:'/category/details',query:{pid:item.pid}})">
+    <div class="item flex" @click="$router.push({path:'/category/details',query:{pid:item.pid,target:item.target}})">
       <div class="img">
         <img :src="item.tUrl">
       </div>
