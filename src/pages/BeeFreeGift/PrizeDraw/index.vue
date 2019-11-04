@@ -335,6 +335,7 @@ export default {
           sid: this.$route.query.id || this.$store.state.cart.sid
         })
       )
+
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
