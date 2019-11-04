@@ -73,10 +73,10 @@
       <!-- <div v-else class="participant bg-white"> -->
       <div v-else-if="detail.status!==1" class="participant bg-white">
         <!-- 中奖者信息 -->
-        <p v-if="[3,4,5].includes(detail.status)" class="getter-tip text-center">
+        <p v-if="[3,4,5,6].includes(detail.status)" class="getter-tip text-center">
           {{ detail.join_data.winning_desc }}
         </p>
-        <p v-if="[3,4,5].includes(detail.status)" class="time-tip  text-center">
+        <p v-if="[3,4,5,6].includes(detail.status)" class="time-tip  text-center">
           {{ detail.join_data.winning_time }}
         </p>
         <!-- 参与人数 -->
@@ -84,7 +84,7 @@
           已有<span>{{ detail.join_data.join_num }}</span>人参与，<span>{{ detail.join_data.lottery_qty }}</span>人参与立即开奖
         </p>
         <!-- 中奖者头像 -->
-        <div v-if="[3,4,5].includes(detail.status)" class="getter-man">
+        <div v-if="[3,4,5,6].includes(detail.status)" class="getter-man">
           <img
             :src="detail.join_data.winning_user_head_image"
             class="getter-avatar"
@@ -93,7 +93,7 @@
         </div>
         <ul
           class="men flex flex-center flex-wrap"
-          :class="{ small: [3,4,5].includes(detail.status) }"
+          :class="{ small: [3,4,5,6].includes(detail.status) }"
         >
           <li
             v-for="(item, index) in detail.join_data.join_user_head_images"
