@@ -340,6 +340,9 @@ export default {
       .tab-content {
         background-color: #fff;
         padding: 0.4rem 0 0.1rem;
+        p{
+          margin: 0;
+        }
         .unlock-way {
           font-size: 0.28rem;
           margin: 0 0.32rem;

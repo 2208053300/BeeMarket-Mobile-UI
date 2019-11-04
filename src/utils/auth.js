@@ -67,12 +67,13 @@ export function checkToken() {
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     }
   } else {
-    // TODO 网页打开带上UID等参数
-    window.theRouter.push('/login')
     // 如果是网页端，没有token弹出手机号登录界面
-    // import('../route/index').then(module => {
-    //   module.default.replace('/login')
-    // })
+    if (window.theRouter.currentRoute.name !== 'BeeLogin') {
+      window.theRouter.replace({
+        path: '/login',
+        query: { redirect: window.theRouter.currentRoute.fullPath }
+      })
+    }
   }
 }
 // 设置Token
