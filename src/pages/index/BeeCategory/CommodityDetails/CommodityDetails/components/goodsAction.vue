@@ -199,18 +199,18 @@ export default {
         this.$store.state.cart.showSku = true
         return false
       }
-      const res = await confirmOrder(
-        JSON.stringify({
-          product: {
-            sid: this.$store.state.cart.skuId,
-            number: this.$store.state.cart.pNumber
-          },
-          os: this.$route.query.target || 'general'
-        })
-      )
+      const params = {
+        product: {
+          sid: this.$store.state.cart.skuId,
+          number: this.$store.state.cart.pNumber
+        },
+        os: this.$route.query.target || 'general'
+      }
+      const res = await confirmOrder(params)
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
+        this.$store.state.order.confirmOrderParams = params
         this.$router.push({
           path: '/category/details/confirmOrder',
           query: {

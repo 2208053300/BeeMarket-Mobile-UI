@@ -211,6 +211,10 @@ export default {
     } else {
       if (JSON.stringify(this.order.orderDetail) === '{}') {
         this.$router.go(-1)
+        return
+      }
+      if (this.$route.query.origin === 'selectAddress') {
+        this.addressChange()
       }
     }
   },
@@ -349,6 +353,16 @@ export default {
         } else {
           this.order.orderDetail.order_amount = this.bakOrderAmount
         }
+      }
+    },
+    // 地址改变
+    async addressChange() {
+      const params = this.$store.state.order.confirmOrderParams
+      params.addr_id = this.$store.state.order.addrDetail.addr_id
+      const res = await confirmOrder(params)
+      if (res.status_code === 200) {
+        this.$store.state.order.orderDetail = res.data
+        this.bakOrderAmount = res.data.order_amount
       }
     }
   }
