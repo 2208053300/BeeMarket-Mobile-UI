@@ -328,17 +328,16 @@ export default {
         window.location.href = window.location.origin + '/#/persion/profile/accountBind'
         return
       }
-      // TODO 跳转下单 参考免费领取茅台和燕窝
-      const res = await confirmOrder(
-        JSON.stringify({
-          os: 'general|present',
-          sid: this.$route.query.id || this.$store.state.cart.sid
-        })
-      )
-
+      // 跳转下单 参考免费领取茅台和燕窝
+      const params = {
+        os: 'general|present',
+        sid: this.$route.query.id || this.$store.state.cart.sid
+      }
+      const res = await confirmOrder(params)
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
+        this.$store.state.order.confirmOrderParams = params
         this.$router.push({
           name: 'confirmOrder',
           query: {

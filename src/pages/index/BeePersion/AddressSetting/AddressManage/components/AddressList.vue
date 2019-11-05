@@ -137,7 +137,10 @@ export default {
     selectAddr(addr) {
       if (this.$route.query.mode === 'select') {
         this.$store.state.order.addrDetail = addr
-        this.$router.push({ name: this.$store.state.app.pushName })
+        this.$router.push({
+          name: this.$store.state.app.pushName,
+          query: this.$store.state.app.pushQuery
+        })
       }
     }
   }

@@ -208,14 +208,12 @@ export default {
       const ctids = this.cart.cartSelected.map(item => {
         return item.cart_id
       })
-      const res = await confirmOrder(
-        JSON.stringify({
-          ctids: ctids
-        })
-      )
+      const params = { ctids: ctids }
+      const res = await confirmOrder(params)
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
+        this.$store.state.order.confirmOrderParams = params
         this.$router.push({
           path: '/category/details/confirmOrder',
           query: {
