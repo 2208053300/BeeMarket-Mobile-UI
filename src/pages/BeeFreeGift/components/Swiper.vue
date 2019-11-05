@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-box" :class="{block: block===true}" :style="{backgroundColor:bgColor, color:fontColor}">
+  <div v-if="swiperData.length>0" class="swiper-box" :class="{block: block===true}" :style="{backgroundColor:bgColor, color:fontColor}">
     <van-swipe
       :autoplay="3000"
       :show-indicators="showIndicators"
