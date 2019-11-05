@@ -1,7 +1,5 @@
 import store from '@/store'
-// 不使用时需要注释掉VConsole，以免占用资源
-// import VConsole from 'vconsole' // 引入移动端VConsole
-// new VConsole() // 启动VConsole
+
 // 防抖
 function debounce(fn, wait) {
   var timeout = null
