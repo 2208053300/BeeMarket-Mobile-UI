@@ -86,6 +86,10 @@ export default {
     } else {
       if (JSON.stringify(this.order.orderDetail) === '{}') {
         this.$router.go(-1)
+        return
+      }
+      if (this.$route.query.origin === 'selectAddress') {
+        this.addressChange()
       }
     }
   },

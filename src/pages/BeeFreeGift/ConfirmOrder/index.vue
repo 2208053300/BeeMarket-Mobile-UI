@@ -398,6 +398,7 @@ export default {
       const res = await confirmOrder(params)
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
+        this.bakOrderAmount = res.data.order_amount
       }
     }
   }
