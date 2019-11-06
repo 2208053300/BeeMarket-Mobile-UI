@@ -53,7 +53,7 @@
                2 售后按钮正常
            -->
             <van-button
-              v-if="product.cs_status!==0"
+              v-if="[1,2].includes(product.cs_status)"
               class="apply-button"
               :class="{applying:product.cs_status===1}"
               @click="$router.push({path:'/persion/order/applyAfter',query:{order_product_id:product.opid}})"
