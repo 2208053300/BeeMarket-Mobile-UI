@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+#### v3.0.7 (2019-11-6)
+
+1. 优化免费送礼功能；
+2. 新增商家活动 - 满减邮费
+3. 新增确认订单页面 - 收益抵扣
+4. 修复部分已知bug
+
 #### v3.0.6 (2019-10-16)
 
 1. 优化免费送礼功能；
