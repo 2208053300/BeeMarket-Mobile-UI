@@ -46,6 +46,9 @@
             <van-stepper v-model="item2.number" />
           </div> -->
         </div>
+        <div class="free-postage-box flex align-center">
+          <i class="free-postage">店铺活动</i> <span>满200元可包邮</span>
+        </div>
         <div class="commodity-message">
           <span class="message-text">留言：</span>
           <van-field
@@ -154,6 +157,24 @@ export default {
           }
         }
       }
+      .free-postage-box{
+         font-size: 0.28rem;
+          margin-bottom: 0.1rem;
+          margin-top: 0.1rem;
+        .free-postage{
+          font-style: normal;
+
+          max-width: 2.2rem;
+          padding: 0.03rem 0.08rem;
+          box-sizing: border-box;
+          font-size: 0.2rem;
+          text-align: center;
+          color: @Red1;
+          border: 0.02rem solid @Red1;
+          margin-right: 0.12rem;
+          border-radius: 0.04rem;
+        }
+      }
       .commodity-message {
         display: flex;
         align-items: center;
@@ -162,6 +183,7 @@ export default {
           font-size: 0.28rem;
         }
         .van-field {
+          padding: 0.1rem 0.15rem;
           font-size: 0.28rem;
           color: @Grey1;
         }

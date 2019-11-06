@@ -46,10 +46,6 @@ export default {
       // 不显示顶部轮播导航
       showIndicators: false,
       swiperData: [
-        {
-          user_head_url: '',
-          notice: ''
-        }
       ]
 
     }
@@ -66,7 +62,9 @@ export default {
   methods: {
     async getPirzeData() {
       const res = await prizeList({ type: this.type })
-      this.swiperData = res.data
+      if (res.data) {
+        this.swiperData = res.data
+      }
     }
   }
 }
