@@ -127,7 +127,7 @@
         <div>
           <span>合计：</span>
           <div class="price-num">
-            ￥{{ order.orderDetail.order_amount.toFixed(2) }}
+            ￥{{ order.orderDetail.order_amount && order.orderDetail.order_amount.toFixed(2) }}
           </div>
         </div>
         <div v-if="deductionText" style="color: gray;font-size: 0.22rem">
@@ -229,6 +229,9 @@ export default {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
         this.bakOrderAmount = res.data.order_amount
+        if (this.order.orderDetail.stores.length === 0) {
+          this.$router.go(-1)
+        }
       }
     },
     async createOrderData() {

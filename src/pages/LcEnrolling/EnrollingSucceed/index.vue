@@ -8,7 +8,7 @@
       您已成功报名
     </p>
     <p style="font-size: 0.3rem;color:#E9DCB8;margin-top: 0.2rem">
-      去下载App完成任务吧
+      关注「联创大赛」公众号 查看排名实况
     </p>
     <div class="download">
       <a href="https://apps.apple.com/cn/app/%E8%9C%82%E9%9B%86%E5%B8%82/id1382648901">
