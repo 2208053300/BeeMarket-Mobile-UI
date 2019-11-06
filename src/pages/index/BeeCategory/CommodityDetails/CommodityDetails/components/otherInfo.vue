@@ -47,7 +47,7 @@
           <span class="cell-content">{{ commodityData.charity_get }}</span>
         </p>
       </van-cell>
-      <van-cell v-if="commodityData.is_free_freight===1">
+      <van-cell v-if="commodityData.meet_amount_free_freight>0">
         <p
           slot="title"
           class="cell-title"
