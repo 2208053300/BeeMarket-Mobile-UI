@@ -26,7 +26,7 @@
               <van-button v-if="canClick" round size="mini" @click="showSkuPopup(index,product.pid)">
                 免费送礼
               </van-button>
-              <span v-if="!canClick" class="lottery-tip">{{ product.lottery_num }}人开奖</span>
+              <span v-if="!canClick" class="lottery-tip">分享{{ product.lottery_num }}人开奖</span>
             </div>
           </div>
         </div>

@@ -555,7 +555,7 @@ export default {
         height: 6.5rem;
         .friends-cell {
           border-bottom: 0.02rem solid @Grey6;
-          height: 1.32rem;
+          min-height: 1.32rem;
           box-sizing: border-box;
           padding: 0.2rem 0.4rem 0.18rem 0.54rem;
           display: flex;

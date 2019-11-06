@@ -1,7 +1,5 @@
 import store from '@/store'
-// 不使用时需要注释掉VConsole，以免占用资源
-// import VConsole from 'vconsole' // 引入移动端VConsole
-// new VConsole() // 启动VConsole
+
 // 防抖
 function debounce(fn, wait) {
   var timeout = null
@@ -21,3 +19,10 @@ function handle() {
 }
 // 滚动事件
 window.addEventListener('scroll', debounce(handle, 1000))
+
+// 引入控制台插件
+if (process.env.NODE_ENV === 'development') {
+  const VConsole = require('vconsole')
+  // eslint-disable-next-line
+  const my_console = new VConsole()
+}

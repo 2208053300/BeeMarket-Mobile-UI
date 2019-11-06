@@ -72,7 +72,9 @@ export default {
     $route: {
       handler: function(route) {
         // NOTE 这里记录退出登录前的路由，再次登录会直接进入上次退出的目录
-        this.redirect = route.query && route.query.redirect
+        if (route.query && route.query.redirect) {
+          this.redirect = decodeURIComponent(route.query.redirect)
+        }
       },
       immediate: true
     }
@@ -121,7 +123,7 @@ export default {
       })
       if (res.status_code === 200) {
         this.$store.state.user.userInfo = res.data
-        this.$router.push({ path: this.redirect || '/' })
+        this.$router.replace({ path: this.redirect || '/' })
       }
     },
     // 开始倒计时

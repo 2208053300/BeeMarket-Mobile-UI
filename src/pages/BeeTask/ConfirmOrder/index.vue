@@ -86,6 +86,10 @@ export default {
     } else {
       if (JSON.stringify(this.order.orderDetail) === '{}') {
         this.$router.go(-1)
+        return
+      }
+      if (this.$route.query.origin === 'selectAddress') {
+        this.addressChange()
       }
     }
   },
@@ -101,6 +105,9 @@ export default {
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
+        if (this.order.orderDetail.stores.length === 0) {
+          this.$router.go(-1)
+        }
       }
     },
     async createOrderData() {
@@ -149,6 +156,7 @@ export default {
         } else if (osObj.isIphone && osObj.isApp) {
           window.webkit.messageHandlers.ToPayOrder.postMessage({
             payOrderJson: JSON.stringify(this.order.payInfo),
+            isRechargePackage: false,
             ot: 'general'
           })
         } else if (osObj.isAndroid && osObj.isApp) {
@@ -185,6 +193,15 @@ export default {
         this.order.orderDetail.order_amount =
           this.order.orderDetail.order_amount +
           this.order.orderDetail.charity_deduction
+      }
+    },
+    // 地址改变
+    async addressChange() {
+      const params = this.$store.state.order.confirmOrderParams
+      params.addr_id = this.$store.state.order.addrDetail.addr_id
+      const res = await confirmOrder(params)
+      if (res.status_code === 200) {
+        this.$store.state.order.orderDetail = res.data
       }
     }
   }

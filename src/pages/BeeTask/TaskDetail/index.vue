@@ -190,16 +190,15 @@ export default {
         return
       }
       const os = this.tid === '2' ? 'task|maotai' : 'task|bns'
-      // TODO 跳转下单
-      const res = await confirmOrder(
-        JSON.stringify({
-          os: os,
-          tid: this.tid
-        })
-      )
+      const params = {
+        os: os,
+        tid: this.tid
+      }
+      const res = await confirmOrder(params)
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
+        this.$store.state.order.confirmOrderParams = params
         this.$router.push({
           name: 'confirmOrder',
           query: {

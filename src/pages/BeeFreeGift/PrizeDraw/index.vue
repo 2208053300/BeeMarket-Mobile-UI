@@ -5,9 +5,22 @@
     {{ $store.state.user.is_bind_mobile }} -->
     <Swiper :block="false" :type="type" :bg-color="bgColor" :font-color="fontColor" />
     <div class="title">
-      <p class="tip text-center">
-        {{ detail.top_data.status_desc }}
-      </p>
+      <div class="top-time">
+        <p class="tip text-center">
+          {{ detail.top_data.status_desc }}
+        </p>
+        <div v-if="[4,6].includes(detail.status)" class="down-time flex flex-center align-center" @finish="finished">
+          <span>剩余领取时间：</span>
+          <van-count-down :time="detail.top_data.remain_time">
+            <template v-slot="timeData">
+              <span class="item">{{ timeData.days }}</span>天
+              <span class="item">{{ timeData.hours }}</span>小时
+              <span class="item">{{ timeData.minutes }}</span>分
+              <!-- <span class="item">{{ timeData.seconds }}</span>秒 -->
+            </template>
+          </van-count-down>
+        </div>
+      </div>
       <div class="shared-man text-center">
         <img :src="detail.top_data.head_image_url" class="share-avatar">
         <div class="box">
@@ -60,10 +73,10 @@
       <!-- <div v-else class="participant bg-white"> -->
       <div v-else-if="detail.status!==1" class="participant bg-white">
         <!-- 中奖者信息 -->
-        <p v-if="[3,4,5].includes(detail.status)" class="getter-tip text-center">
+        <p v-if="[3,4,5,6].includes(detail.status)" class="getter-tip text-center">
           {{ detail.join_data.winning_desc }}
         </p>
-        <p v-if="[3,4,5].includes(detail.status)" class="time-tip  text-center">
+        <p v-if="[3,4,5,6].includes(detail.status)" class="time-tip  text-center">
           {{ detail.join_data.winning_time }}
         </p>
         <!-- 参与人数 -->
@@ -71,7 +84,7 @@
           已有<span>{{ detail.join_data.join_num }}</span>人参与，<span>{{ detail.join_data.lottery_qty }}</span>人参与立即开奖
         </p>
         <!-- 中奖者头像 -->
-        <div v-if="[3,4,5].includes(detail.status)" class="getter-man">
+        <div v-if="[3,4,5,6].includes(detail.status)" class="getter-man">
           <img
             :src="detail.join_data.winning_user_head_image"
             class="getter-avatar"
@@ -80,7 +93,7 @@
         </div>
         <ul
           class="men flex flex-center flex-wrap"
-          :class="{ small: [3,4,5].includes(detail.status) }"
+          :class="{ small: [3,4,5,6].includes(detail.status) }"
         >
           <li
             v-for="(item, index) in detail.join_data.join_user_head_images"
@@ -110,7 +123,7 @@
           <span>我要领取礼物</span>
         </van-button>
         <van-button v-else class="action-btn" size="large" @click="goFreeGiftIndex">
-          <span>我也要免费送礼</span>
+          <span>我也要免费送礼物</span>
         </van-button>
       </div>
     </div>
@@ -199,11 +212,13 @@ export default {
           status_desc: '',
           head_image_url: '',
           title: '',
-          title_desc: ''
+          title_desc: '',
+          remain_time: null
         },
         product_data: {},
         join_data: {}
       }
+
     }
   },
   computed: {},
@@ -286,6 +301,7 @@ export default {
         const res = await getDetail({ id: this.$route.query.id })
         console.log('开奖详情：', res)
         this.detail = res.data
+        this.detail.top_data.remain_time = this.detail.top_data.remain_time * 1000
         if (this.detail.join_data.join_num > 15) {
           this.showMen = 15
         } else {
@@ -312,16 +328,16 @@ export default {
         window.location.href = window.location.origin + '/#/persion/profile/accountBind'
         return
       }
-      // TODO 跳转下单 参考免费领取茅台和燕窝
-      const res = await confirmOrder(
-        JSON.stringify({
-          os: 'general|present',
-          sid: this.$route.query.id || this.$store.state.cart.sid
-        })
-      )
+      // 跳转下单 参考免费领取茅台和燕窝
+      const params = {
+        os: 'general|present',
+        sid: this.$route.query.id || this.$store.state.cart.sid
+      }
+      const res = await confirmOrder(params)
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
+        this.$store.state.order.confirmOrderParams = params
         this.$router.push({
           name: 'confirmOrder',
           query: {
@@ -345,6 +361,12 @@ export default {
       } else {
         this.showMen = 15
       }
+    },
+
+    // 领取时间倒计时结束
+    finished() {
+      // window.location.reload()
+      this.getDetailData()
     },
     // NOTE 微信分享
     async onlywxShare() {
@@ -406,7 +428,22 @@ export default {
   .van-overlay{background-color:#000; }
   p{margin: 0}
   .title{background:#F5F5F5;
-    .tip{ font-size: 0.38rem;color:@BeeDefault; margin-top: 1.3rem; margin-bottom: 1rem;}
+    .tip{ font-size: 0.38rem;color:@BeeDefault; margin-top: 1.3rem; }
+    .top-time{
+      margin-bottom: 1rem;
+    }
+    .down-time{
+      margin-top: 0.2rem;
+      font-size: 0.24rem;
+      color: #333;
+      .van-count-down{
+         font-size: 0.24rem;
+         color: #333;
+      }
+      .item{
+         color: @BeeDefault;
+      }
+    }
     .shared-man{
       width: 7.18rem;
       height: 1.76rem;
@@ -530,7 +567,7 @@ export default {
       }
     }
 
-    .action-btn{background:@BeeDefault; font-size: .34rem;color: #fff; border-radius: 0.1rem; margin-top:.4rem; pointer-events: auto;
+    .action-btn{background:@BeeDefault; font-size: .34rem;color: #fff; border-radius: 0.5rem; margin-top:.4rem; pointer-events: auto;
       span{display: block;}
     }
 

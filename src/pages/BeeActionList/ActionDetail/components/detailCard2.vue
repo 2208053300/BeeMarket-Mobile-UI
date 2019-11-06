@@ -28,7 +28,7 @@
           <div
             v-if="actionDetails.schedule_status===4"
             class="show-detail text-right"
-            @click="goDetail(actionDetails.id)"
+            @click="goCompleteDetail(actionDetails.id)"
           >
             查看详情 》
           </div>
@@ -58,7 +58,7 @@
 
 <script>
 import { BeeDefault } from '@/styles/index/variables.less'
-
+import { getOs } from '@/utils'
 export default {
   components: {},
   props: {
@@ -73,23 +73,47 @@ export default {
     return {
       showMore: false,
       BeeDefault,
-      active: 0
+      active: 0,
+      osObj: getOs()
     }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {
-
+    window.goDetail = this.goDetail
+    window.goWxArticle = this.goWxArticle
   },
   methods: {
-    goDetail(id) {
+    goCompleteDetail(id) {
       this.$router.push({
         name: 'completeDetail',
         query: {
           id
         }
       })
+    },
+    goDetail(pid, target, uid) {
+      if (this.osObj.isWx) {
+        window.location.href = 'https://app.fengjishi.com/#/category/details?pid=' + pid + '&target=' + target + '&uid=' +
+            uid
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToProductDetail.postMessage({
+          pid: pid,
+          target: target
+        })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToProductDetail(pid, target)
+      } else {
+        window.location.href = 'https://app.fengjishi.com/#/category/details?pid=' + pid + '&target=' + target + '&uid=' +
+            uid
+      }
+    },
+    goWxArticle(url) {
+      var osObj = getOs()
+      if (osObj.isWx) {
+        window.location.href = url
+      }
     }
   }
 }
@@ -119,6 +143,7 @@ export default {
     padding: 0.3rem;
     position: relative;
     height: 4rem;
+
     .show-more {
       position: absolute;
       bottom: 0;
@@ -131,6 +156,7 @@ export default {
       // background-image: linear-gradient(to bottom,rgba(255,255,255,.5),#fff);
       background-color: #fff;
     }
+    p{  line-height: 1.4}
     &.more {
       height: auto;
     }

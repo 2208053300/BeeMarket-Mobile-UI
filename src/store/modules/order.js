@@ -4,7 +4,8 @@ const order = {
     source: 'general',
     target: 'general',
     addrDetail: {},
-    payInfo: {}
+    payInfo: {},
+    confirmOrderParams: {} // 确认订单参数
   },
   mutations: {},
   actions: {}
