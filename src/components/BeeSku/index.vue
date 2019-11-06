@@ -70,7 +70,7 @@
               v-model="productNum"
               class="product-num"
               min="1"
-              :max="limitNum||99"
+              :max="propsData.max_purchase"
             />
           </div>
           <p
@@ -152,6 +152,8 @@ export default {
       type: Number,
       default: 0
     }
+    // type 是否为虚拟商品 1为实物商品 2为虚拟商品
+    // max_purchase 商品SKU可选最大数量
   },
   data() {
     return {
@@ -265,6 +267,7 @@ export default {
     handleAdd() {
       this.$emit('update:selectType', 0)
       this.$emit('update:showSku', false)
+      this.$emit('update:pNumber', this.productNum)
       this.$emit('get-sku-id', this.propsData.sku_id)
       this.$emit('sku-add')
     }

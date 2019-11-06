@@ -8,14 +8,21 @@
 
  -->
   <div class="cart-list">
-    <div v-for="(store, index) in cart.cartInfo" :key="index" class="bee-store">
+    <div
+      v-for="(store, index) in cart.cartInfo"
+      :key="index"
+      class="bee-store"
+    >
       <van-checkbox
         v-model="store.checked"
         :checked-color="BeeDefault"
         style="margin-top:0"
         @click="checkProduct(store.products[0].cart_id, 'group', store.checked)"
       >
-        <van-icon name="shop-o" style="vertical-align: text-top;" />
+        <van-icon
+          name="shop-o"
+          style="vertical-align: text-top;"
+        />
         {{ store.store_name }}
       </van-checkbox>
       <van-checkbox
@@ -59,7 +66,10 @@
             {{ item.props_name }}
             <van-icon name="arrow-down" />
           </div>
-          <span slot="price" class="card-price"> ￥{{ item.sell_price }} </span>
+          <span
+            slot="price"
+            class="card-price"
+          > ￥{{ item.sell_price }} </span>
           <!-- current_status === -2 || -3 售罄或者下架 显示移除按钮 -->
 
           <div
@@ -206,13 +216,15 @@ export default {
     },
     // TODO 更改数量
     async changeNum(num, ctid) {
-      const res = await updateShopcartProductNum({
-        ctid: ctid,
-        number: num
-      })
-      if (res.status_code === 200) {
-        this.$parent.getShopcartListData()
+      try {
+        await updateShopcartProductNum({
+          ctid: ctid,
+          number: num
+        })
+      } catch (error) {
+        console.log(error)
       }
+      this.$parent.getShopcartListData()
     }
   }
 }
