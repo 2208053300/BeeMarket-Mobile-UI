@@ -46,8 +46,8 @@
             <van-stepper v-model="item2.number" />
           </div> -->
         </div>
-        <div class="free-postage-box flex align-center">
-          <i class="free-postage">店铺活动</i> <span>满200元可包邮</span>
+        <div v-if="item.is_free_freight===1" class="free-postage-box flex align-center">
+          <i class="free-postage">店铺活动</i> <span>满{{ item.meet_amount_free_freight }}元可包邮</span>
         </div>
         <div class="commodity-message">
           <span class="message-text">留言：</span>

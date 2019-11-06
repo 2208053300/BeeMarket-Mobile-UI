@@ -47,14 +47,14 @@
           <span class="cell-content">{{ commodityData.charity_get }}</span>
         </p>
       </van-cell>
-      <van-cell>
+      <van-cell v-if="commodityData.is_free_freight===1">
         <p
           slot="title"
           class="cell-title"
         >
           <span class="title-text">运费</span>
           <!-- <span class="cell-content">集市所有商品均无条件包邮（特殊地区及活动除外）</span> -->
-          <span class="cell-content flex align-center"><span>商品满{{ commodityData.charity_get }}元后可包邮</span><i class="free-postage">店铺活动</i></span>
+          <span class="cell-content flex align-center"><span>商品满{{ commodityData.meet_amount_free_freight }}元后可包邮</span><i class="free-postage">店铺活动</i></span>
         </p>
       </van-cell>
       <van-cell v-if="commodityData.remarks">
