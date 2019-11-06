@@ -47,13 +47,14 @@
           <span class="cell-content">{{ commodityData.charity_get }}</span>
         </p>
       </van-cell>
-      <van-cell>
+      <van-cell v-if="commodityData.is_free_freight===1">
         <p
           slot="title"
           class="cell-title"
         >
           <span class="title-text">运费</span>
-          <span class="cell-content">集市所有商品均无条件包邮（特殊地区及活动除外）</span>
+          <!-- <span class="cell-content">集市所有商品均无条件包邮（特殊地区及活动除外）</span> -->
+          <span class="cell-content flex align-center"><span>商品满{{ commodityData.meet_amount_free_freight }}元后可包邮</span><i class="free-postage">店铺活动</i></span>
         </p>
       </van-cell>
       <van-cell v-if="commodityData.remarks">
@@ -279,6 +280,19 @@ export default {
         font-size: 0.24rem;
         color: @Grey1;
         margin-right: 0.36rem;
+      }
+      .free-postage{
+        font-style: normal;
+        margin-left: 0.1rem;
+        max-width: 2.2rem;
+        padding: 0.03rem 0.08rem;
+        box-sizing: border-box;
+        font-size: 0.2rem;
+        text-align: center;
+        color: @Red1;
+        border: 0.02rem solid @Red1;
+        margin-right: 0.12rem;
+        border-radius: 0.04rem;
       }
     }
     .cell-value {
