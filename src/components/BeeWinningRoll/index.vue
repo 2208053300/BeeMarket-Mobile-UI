@@ -33,7 +33,7 @@ export default {
         'giftPackage': 4
       }
       const res = await prizeList({ type: types[this.type] })
-      this.list = res.data
+      this.list = res.data || []
     }
   }
 }

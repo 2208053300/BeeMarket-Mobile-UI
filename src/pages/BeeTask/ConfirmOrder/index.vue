@@ -105,6 +105,9 @@ export default {
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
+        if (this.order.orderDetail.stores.length === 0) {
+          this.$router.go(-1)
+        }
       }
     },
     async createOrderData() {
