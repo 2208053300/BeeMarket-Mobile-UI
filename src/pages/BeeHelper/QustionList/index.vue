@@ -114,6 +114,6 @@ export default {
 
 <style scoped lang="less">
 .container {
-  margin-bottom: 75px;
+  margin-bottom: 100px;
 }
 </style>
