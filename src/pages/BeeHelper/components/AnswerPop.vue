@@ -164,8 +164,7 @@ export default {
   p {
     margin: 0.1rem;
     font-size: 0.28rem;
-    // color: #333;
-    color: red;
+    color: #333;
 
   }
 }
