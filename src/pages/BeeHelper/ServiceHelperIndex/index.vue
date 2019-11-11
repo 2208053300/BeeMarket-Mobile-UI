@@ -159,6 +159,9 @@ export default {
 </script>
 
 <style scoped lang="less">
+.container{
+  padding-bottom: 100px;
+}
 .avatar {
   width: 0.98rem;
   height: 0.98rem;
@@ -179,6 +182,7 @@ export default {
 }
 .helper-title {
   padding:0.3rem;
+  margin: 0;
   font-size: 0.22rem;
 }
 
