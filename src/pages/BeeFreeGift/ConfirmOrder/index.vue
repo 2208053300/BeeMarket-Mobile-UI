@@ -187,15 +187,15 @@ export default {
         if (balanceDeductionAfter < charityDeduction) {
           charityDeduction = balanceDeductionAfter
         }
-        return `(收益已抵扣￥${this.order.orderDetail.cash_balance}；公益值已抵扣￥${charityDeduction})`
+        return `(收益已抵扣￥${this.order.orderDetail.cash_balance.toFixed(2)}；公益值已抵扣￥${charityDeduction.toFixed(2)})`
       } else if (this.balance_used && !this.charity_used) {
         const balanceDeduction = this.order.orderDetail.cash_balance >= this.bakOrderAmount ? this.bakOrderAmount
           : this.order.orderDetail.cash_balance
-        return `(收益已抵扣￥${balanceDeduction})`
+        return `(收益已抵扣￥${balanceDeduction.toFixed(2)})`
       } else if (!this.balance_used && this.charity_used) {
         const charityDeduction = this.order.orderDetail.charity_balance >= this.bakOrderAmount ? this.bakOrderAmount
           : this.order.orderDetail.charity_balance
-        return `(公益值已抵扣￥${charityDeduction})`
+        return `(公益值已抵扣￥${charityDeduction.toFixed(2)})`
       } else {
         return ''
       }
