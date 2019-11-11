@@ -146,6 +146,7 @@ export default {
   border-bottom: 1px solid #ddd;
   padding: 0 0.3rem;
   .title {
+    margin: 0;
     padding: 0.3rem 0;
     font-weight: 600;
     font-size: 0.3rem;
@@ -156,18 +157,19 @@ export default {
   min-height: 3.73rem;
   height: 5rem;
   overflow: scroll;
-  padding: 0 0.3rem;
+  padding: 0 0.3rem 0.2rem;
   font-size: 0.28rem;
   color: #333;
   line-height: 1.5;
-  padding-top:0.3rem;
-  padding-bottom: 0.3rem;
   p {
+    margin: 0.1rem;
     font-size: 0.28rem;
-    color: #333;
+    // color: #333;
+    color: red;
 
   }
 }
+
 .feedback-icon{
   width:0.43rem;
   height: 0.44rem;
