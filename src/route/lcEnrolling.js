@@ -28,6 +28,11 @@ const router = new Router({
       path: '/lcUserAgreement',
       name: 'lcUserAgreement',
       component: () => import('@/pages/LcEnrolling/UserAgreement')
+    },
+    {
+      path: 'competitionDetails',
+      name: 'CompetitionDetails',
+      component: () => import('@/pages/LcEnrolling/CompetitionDetails')
     }
   ]
 })
