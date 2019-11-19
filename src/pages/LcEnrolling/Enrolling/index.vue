@@ -4,6 +4,7 @@
     <div class="video">
       <video
         ref="video"
+        preload="auto"
         src="https://img.fengjishi.com/lianchuang/components/appeal.mp4"
         class="video-body"
         :controls="showControls"

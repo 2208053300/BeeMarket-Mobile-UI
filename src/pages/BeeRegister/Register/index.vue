@@ -6,6 +6,7 @@
       <div class="video">
         <video
           ref="video"
+          preload="auto"
           :src="video.video_url"
           :poster="video.showControls ? '': video.first_screen"
           class="video-body"

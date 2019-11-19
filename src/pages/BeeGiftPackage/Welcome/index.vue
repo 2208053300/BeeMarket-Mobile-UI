@@ -4,6 +4,7 @@
     <div class="video">
       <video
         ref="video"
+        preload="auto"
         src="https://img.fengjishi.com/app/videos/produce/produce_charity.mp4"
         :poster="video.showControls ? '' : video.first_screen"
         class="video-body"

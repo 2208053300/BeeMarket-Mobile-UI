@@ -8,6 +8,7 @@
       <div class="video">
         <video
           ref="video"
+          preload="auto"
           :src="video_url"
           class="video-body"
           :controls="showControls"

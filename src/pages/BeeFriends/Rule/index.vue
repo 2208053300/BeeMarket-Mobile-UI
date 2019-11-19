@@ -10,6 +10,7 @@
       <div class="video">
         <video
           ref="video"
+          preload="auto"
           src="https://img.fengjishi.com.cn/app/videos/education/friendship-course-1.mp4"
           class="video-body"
           :poster="showControls ? '' : beeIcon.first_screen"
