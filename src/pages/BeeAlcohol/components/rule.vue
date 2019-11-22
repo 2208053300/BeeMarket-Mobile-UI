@@ -45,7 +45,7 @@
           <img
             :src="require('@/assets/icon/alcohol/liqueur_button_understand.png')"
             alt="我知道了"
-            style="width: 6.3rem;margin-bottom: 0.2rem"
+            style="width: 6.3rem;margin-bottom: 0.2rem;height: auto"
             @click="handleClose()"
           >
         </div>

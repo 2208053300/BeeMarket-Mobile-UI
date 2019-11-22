@@ -38,7 +38,10 @@
       </div>
     </div>
     <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_05.jpg')" alt="head">
-    <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_06.jpg')" alt="head">
+    <div style="position: relative">
+      <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_06.jpg')" alt="head">
+      <img :src="require('@/assets/icon/alcohol/liqueur_button_begin.png')" alt="立即购买" class="bottom-btn">
+    </div>
     <rule v-model="showRule" />
   </div>
 </template>
@@ -100,18 +103,23 @@ export default {
       object-fit: cover;
     }
     .control {
-      width: 1.28rem;
-      height: 1.28rem;
-      top: 0.8rem;
+      width: 100%;
+      height: @videoHeight;
+      top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
       position: absolute;
       display: flex;
       justify-content: center;
       align-items: center;
     }
+  }
+  .bottom-btn {
+    height: auto;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: 1000;
+    left: 0;
   }
 }
 </style>
