@@ -144,5 +144,9 @@ module.exports = {
   lcEnrolling: {
     entry: 'src/pages/LcEnrolling/main.js',
     title: '联创大赛'
+  },
+  beeAlcohol: {
+    entry: 'src/pages/BeeAlcohol/main.js',
+    title: '年终狂欢 瓜分1亿'
   }
 }

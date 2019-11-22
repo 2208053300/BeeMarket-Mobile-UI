@@ -3,7 +3,7 @@
     <!-- TODO swiper中放置视频必须设置高度 -->
     <video
       ref="videoPlayer"
-       preload="auto"
+      preload="auto"
       class="video-js commodity-video vjs-default-skin vjs-big-play-centered vjs-16-9 "
     >
       <source
