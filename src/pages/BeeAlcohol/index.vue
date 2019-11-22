@@ -93,6 +93,7 @@ export default {
     display: flex;
     justify-content: center;
     .video-body {
+      object-position: center;
       width: @videoWidth;
       height: @videoHeight;
       border-radius: 0.08rem;

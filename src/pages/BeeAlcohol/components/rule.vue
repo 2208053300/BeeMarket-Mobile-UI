@@ -47,7 +47,7 @@
             alt="我知道了"
             style="width: 6.3rem;margin-bottom: 0.2rem"
             @click="handleClose()"
-          />
+          >
         </div>
       </div>
     </van-popup>
@@ -84,7 +84,7 @@ export default {
   background-color: #CB271B;
   border-top-left-radius: 0.2rem;
   border-top-right-radius: 0.2rem;
-  overflow: scroll;
+  overflow-y: scroll;
   .text {
     padding-left: 0.28rem;
     padding-right: 0.37rem;
