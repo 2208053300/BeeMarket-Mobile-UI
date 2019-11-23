@@ -19,7 +19,7 @@
       <div class="video">
         <video
           ref="video"
-          src="https://back-1252641901.cos.ap-chengdu.myqcloud.com/intro.mp4"
+          src="https://img.fengjishi.com/app/videos/maotai/intro.mp4"
           preload="auto"
           :poster="showControls ? '' : require('@/assets/icon/alcohol/pw_pic_video.png')"
           class="video-body"
