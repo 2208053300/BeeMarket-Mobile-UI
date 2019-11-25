@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './index.vue'
+import router from '@/route/beeAlcohol'
 import Meta from 'vue-meta'
 import '@/styles/normalize.min.css'
 import '@/styles/index/index.less'
@@ -23,5 +24,6 @@ Vue.use(Meta)
 Vue.config.productionTip = false
 
 new Vue({
+  router,
   render: h => h(App)
 }).$mount('#app')

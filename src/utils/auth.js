@@ -15,7 +15,7 @@ export async function getToken() {
     const token = Cookies.get('BM-App-Token')
     // 如果微信链接带CODE
     const uriProp = GetRequest('code')
-    const uid = getQueryString('uid')
+    const uid = getQueryString('uid') || Cookies.get('uid')
     if (!uriProp && !token) {
       // 正常授权流程，直接跳转获取token
       await checkToken()
