@@ -97,7 +97,7 @@ export default {
         setShareOptions({
           title: '年终狂欢 瓜分1亿',
           desc: '购茅台一箱，送现金一万',
-          link: location.origin + '/beeAlcohol#/?uid=' + this.uid
+          link: this.uid ? location.origin + '/beeAlcohol#/?usid=' + this.uid : location.origin + '/beeAlcohol#/'
         })
       } catch (error) {
         console.log(error)
