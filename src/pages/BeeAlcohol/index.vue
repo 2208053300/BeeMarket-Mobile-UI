@@ -6,7 +6,7 @@
 <script>
 export default {
   metaInfo: {
-    title: '年终狂欢 瓜分1亿'
+    title: '年终狂欢 瓜分十亿'
   }
 }
 </script>

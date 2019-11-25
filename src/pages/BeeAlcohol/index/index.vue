@@ -54,7 +54,7 @@ import { showShareIcon, setShareOptions } from '@/utils/share'
 
 export default {
   metaInfo: {
-    title: '年终狂欢 瓜分1亿'
+    title: '年终狂欢 瓜分十亿'
   },
   components: { Rule },
   props: {},
@@ -95,9 +95,9 @@ export default {
         const res = await getUID()
         this.uid = res.data.uid
         setShareOptions({
-          title: '年终狂欢 瓜分1亿',
+          title: '年终狂欢 瓜分十亿',
           desc: '购茅台一箱，送现金一万',
-          link: this.uid ? location.origin + '/beeAlcohol#/?usid=' + this.uid : location.origin + '/beeAlcohol#/'
+          link: this.uid ? location.origin + '/beeAlcohol#/?uid=' + this.uid : location.origin + '/beeAlcohol#/'
         })
       } catch (error) {
         console.log(error)
@@ -111,6 +111,10 @@ export default {
 .bee-alcohol {
   @videoWidth: 6.68rem;
   @videoHeight: 3.76rem;
+  // 图片衔接处有白线，随出此下策
+  img {
+    margin-bottom: -1px;
+  }
   .video {
     width: 100%;
     border-radius: 0.08rem;
