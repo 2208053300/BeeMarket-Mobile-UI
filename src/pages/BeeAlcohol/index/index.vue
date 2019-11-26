@@ -95,8 +95,8 @@ export default {
         const res = await getUID()
         this.uid = res.data.uid
         setShareOptions({
-          title: '年终狂欢 瓜分十亿',
-          desc: '购茅台一箱，送现金一万',
+          title: '年终狂欢，瓜分10亿',
+          desc: '买好酒送豪礼，差钱？！点击领取10000元红包，茅台免费喝，现金轻松赚！',
           link: this.uid ? location.origin + '/beeAlcohol#/?uid=' + this.uid : location.origin + '/beeAlcohol#/'
         })
       } catch (error) {
