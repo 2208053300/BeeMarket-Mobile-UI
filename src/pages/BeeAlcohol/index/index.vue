@@ -1,7 +1,7 @@
 <template>
   <div class="bee-alcohol">
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_01.jpg')" alt="head">
+      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_01.jpg')" alt="head">
       <div style="position: absolute;bottom: 0;left: 0;display: flex;justify-content: center;width: 100%">
         <img
           :src="beeIcon.rule"
@@ -11,11 +11,11 @@
         >
       </div>
     </div>
-    <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_02.jpg')" alt="head">
-    <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_03.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_02.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_03.jpg')" alt="head">
     <!-- 视频播放部分 -->
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_04.jpg')" alt="head">
+      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_04.jpg')" alt="head">
       <div class="video">
         <video
           ref="video"
@@ -37,9 +37,11 @@
         </div>
       </div>
     </div>
-    <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_05.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_05.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_06.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_07.jpg')" alt="head">
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_06.jpg')" alt="head">
+      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_08.jpg')" alt="head">
       <img :src="require('@/assets/icon/alcohol/liqueur_button_begin.png')" alt="立即购买" class="bottom-btn">
     </div>
     <rule v-model="showRule" />
@@ -119,7 +121,7 @@ export default {
     width: 100%;
     border-radius: 0.08rem;
     position: absolute;
-    top: 1.36rem;
+    top: 0;
     display: flex;
     justify-content: center;
     .video-body {
