@@ -112,7 +112,7 @@ export default {
         number: this.$route.query.number
       }
       this.$router.push({
-        name: 'addressSetting',
+        name: 'addressManage',
         query: { mode: 'select' }
       })
     },

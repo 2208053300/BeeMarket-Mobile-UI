@@ -186,12 +186,9 @@ export default {
       this.$store.state.app.pushQuery = {
         origin: 'selectAddress'
       }
-      // TODO 重新选择送货地址
       this.$router.push({
         name: 'addressManage',
-        query: {
-          mode: 'select'
-        }
+        query: { mode: 'select' }
       })
     },
     sendToFirend() {
