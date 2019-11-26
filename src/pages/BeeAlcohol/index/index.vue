@@ -56,7 +56,7 @@ import { showShareIcon, setShareOptions } from '@/utils/share'
 
 export default {
   metaInfo: {
-    title: '年终狂欢 瓜分十亿'
+    title: '年终狂欢 瓜分10亿'
   },
   components: { Rule },
   props: {},
