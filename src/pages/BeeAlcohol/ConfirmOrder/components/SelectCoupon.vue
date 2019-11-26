@@ -14,21 +14,35 @@
       <div class="desc">
         选择抵扣（可任意搭配 全额抵扣）
       </div>
+      <!-- 优惠券列表 start-->
       <div class="coupons">
         <div v-for="item in selfCoupon" :key="item.id" class="coupon-item">
-          <div>
+          <div class="checkbox">
             <van-checkbox
-              v-model="anonymous"
+              v-model="item.checked"
               :checked-color="BeeDefault"
             />
           </div>
+          <div class="coupon-amount enable">
+            ￥{{ item.amount }}
+          </div>
+          <div class="description">
+            <span>活动红包</span>仅可用于 [购一箱 送一万]钜惠活动的抵扣
+          </div>
         </div>
+      </div>
+      <!-- 优惠券列表 end-->
+      <div style="text-align: center">
+        <button class="submit">
+          完成
+        </button>
       </div>
     </div>
   </van-popup>
 </template>
 
 <script>
+import { BeeDefault } from '@/styles/index/variables.less'
 export default {
   props: {
     visible: {
@@ -49,6 +63,7 @@ export default {
   },
   data() {
     return {
+      BeeDefault,
       selfCoupon: []
     }
   },
@@ -71,19 +86,52 @@ export default {
   border-top-right-radius: 0.20rem;
   border-top-left-radius: 0.20rem;
   .container {
-    padding: 0 0.25rem;
     .desc {
+      padding-left: 0.25rem;
       font-size: 0.28rem;
       color:rgba(153,153,153,1);
     }
     .coupons {
+      padding: 0 0.25rem;
       max-height: 50vh;
       overflow-y: scroll;
+      margin-top: 0.2rem;
+      @coupon-height: 1.2rem;
       .coupon-item {
         margin-bottom: 0.2rem;
         display: grid;
-        grid-template-columns: 0.48rem 2.28rem 1fr;
+        grid-template-columns: 0.6rem 2.28rem 1fr;
+        height: @coupon-height;
+        .checkbox {
+          display: flex;
+          align-items: center;
+        }
+        .coupon-amount {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .enable {
+          background: url("../../../../assets/icon/alcohol/liqueur_order_red_envelope_bg_n.png");
+          background-size: cover;
+        }
+        .disable {
+          background: url("../../../../assets/icon/alcohol/liqueur_order_red_envelope_bg_d.png");
+          background-size: cover;
+        }
       }
+    }
+    .submit {
+      background: @BeeDefault;
+      width: 6.86rem;
+      line-height: 0.9rem;
+      border: unset;
+      padding: 0;
+      border-radius: 1rem;
+      margin-top: 0.6rem;
+      margin-bottom: 0.2rem;
+      color: white;
+      font-weight: bold;
     }
   }
 }
