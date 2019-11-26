@@ -32,7 +32,7 @@ const router = new Router({
       ]
     },
     {
-      path: 'confirmOrder',
+      path: '/confirmOrder',
       name: 'confirmOrder',
       component: () =>
         import(
@@ -40,7 +40,7 @@ const router = new Router({
         )
     },
     {
-      path: 'addressSetting',
+      path: '/addressSetting',
       name: 'addressSetting',
       component: () => import('@/pages/BeeAddress'),
       children: [
@@ -55,6 +55,11 @@ const router = new Router({
           component: () => import('@/pages/BeeAddress/AddAddress')
         }
       ]
+    },
+    {
+      path: '/login',
+      name: 'BeeLogin',
+      component: () => import('@/pages/BeeLogin')
     }
 
   ]
@@ -69,4 +74,6 @@ router.beforeEach(async(to, from, next) => {
     next()
   }
 })
+// 将router暴露到全局，方便request引用
+window.theRouter = router
 export default router

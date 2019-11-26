@@ -14,7 +14,7 @@
         集市课堂
       </p>
     </div>
-    <div class="op-item">
+    <!-- <div class="op-item">
       <div
         class="img-content"
         @click="$router.push('/beeTask')"
@@ -26,6 +26,20 @@
       </div>
       <p class="op-text">
         新手专享
+      </p>
+    </div> -->
+    <div class="op-item">
+      <div
+        class="img-content"
+        @click="$router.push('/beeTask')"
+      >
+        <img
+          :src="beeIcon.home_icon_billion"
+          alt="瓜分10亿"
+        >
+      </div>
+      <p class="op-text">
+        瓜分10亿
       </p>
     </div>
     <div
@@ -159,7 +173,8 @@ export default {
         home_icon_endorsement: require('@/assets/icon/home/index/home_icon_endorsement@2x.png'),
         home_icon_gift_package: require('@/assets/icon/home/index/home_icon_farm@2x.png'),
         home_icon_agricultural_products: require('@/assets/icon/home/index/home_icon_agricultural_products@2x.png'),
-        home_icon_settled: require('@/assets/icon/home/index/home_icon_settled@2x.png')
+        home_icon_settled: require('@/assets/icon/home/index/home_icon_settled@2x.png'),
+        home_icon_billion: require('@/assets/icon/home/index/home_icon_billion.png')
       }
     }
   },
