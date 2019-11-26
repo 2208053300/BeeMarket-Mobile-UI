@@ -128,8 +128,9 @@ export default {
       object-position: center;
       width: @videoWidth;
       height: @videoHeight;
-      border-radius: 0.08rem;
+      border-radius: 0.1rem;
       object-fit: cover;
+      border: 0.04rem solid #fbf9fe;
     }
     .control {
       width: 100%;
