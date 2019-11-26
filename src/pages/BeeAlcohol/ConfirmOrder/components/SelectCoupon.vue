@@ -23,8 +23,10 @@
               :checked-color="BeeDefault"
             />
           </div>
-          <div class="coupon-amount enable">
-            ￥{{ item.amount }}
+          <div class="coupon-amount coupon-amount-enable">
+            <div>
+              <span class="rmb">￥</span>{{ item.amount }}
+            </div>
           </div>
           <div class="description">
             <span>活动红包</span>仅可用于 [购一箱 送一万]钜惠活动的抵扣
@@ -110,14 +112,24 @@ export default {
           display: flex;
           justify-content: center;
           align-items: center;
+          color: white;
+          font-size: 0.56rem;
+          font-weight: bold;
+          .rmb {
+            font-weight: normal;
+            font-size: 0.28rem;
+          }
         }
-        .enable {
+        .coupon-amount-enable {
           background: url("../../../../assets/icon/alcohol/liqueur_order_red_envelope_bg_n.png");
           background-size: cover;
         }
-        .disable {
+        .coupon-amount-disable {
           background: url("../../../../assets/icon/alcohol/liqueur_order_red_envelope_bg_d.png");
           background-size: cover;
+        }
+        .description {
+
         }
       }
     }
