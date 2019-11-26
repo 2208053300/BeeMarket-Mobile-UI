@@ -80,7 +80,7 @@
     </div>
     <select-coupon
       :visible.sync="selectCouponVisible"
-      :order-amount="bakOrderAmount"
+      :order-amount="4800"
       :cash-coupon="cash_coupon_list"
     />
   </div>
