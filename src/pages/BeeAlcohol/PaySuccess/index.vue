@@ -6,7 +6,7 @@
         付款成功
       </p>
       <p class="price">
-        ￥ 4800
+        ￥ {{ result.pay_amount }}
       </p>
       <button class="order-btn">
         查看订单
@@ -15,25 +15,25 @@
     <!-- <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_02.jpg')" alt="head">
     <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_03.jpg')" alt="head"> -->
 
-    <div class="subsidy">
+    <div v-if="result.cash_coupon>0" class="subsidy">
       <div class="sub-price">
         <p class="price">
-          10000元
+          {{ result.cash_coupon }}元
         </p>
         <p class="txt">
           红包补贴已到账
         </p>
       </div>
-      <img :src="beeIcon.useBtn" class="use-btn">
+      <img :src="beeIcon.useBtn" class="use-btn" @click="goIndex">
     </div>
   </div>
 </template>
 
 <script>
 // import Rule from './components/rule'
-import Cookies from 'js-cookie'
-import { getUID } from '@/api/BeeApi/user'
-import { showShareIcon, setShareOptions } from '@/utils/share'
+// import Cookies from 'js-cookie'
+// import { getUID } from '@/api/BeeApi/user'
+import { payResult } from '@/api/BeeApi/order'
 
 export default {
   metaInfo: {
@@ -43,20 +43,18 @@ export default {
   props: {},
   data() {
     return {
-      showControls: false,
       beeIcon: {
         tipImg: require('@/assets/icon/alcohol/liqueur_result_icon_success.png'),
         useBtn: require('@/assets/icon/alcohol/liqueur_result_button.png')
       },
-      showRule: false,
-      uid: 0
+      result: {}
     }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {
-    // this.initShare()
+    this.getPayResult()
     // 如果有store说明该页面作为组件在webApp显示
     if (this.$store) {
       this.$store.state.app.beeHeader = true
@@ -68,20 +66,12 @@ export default {
     // showShareIcon()
   },
   methods: {
-
-    // 分享
-    async initShare() {
-      try {
-        const res = await getUID()
-        this.uid = res.data.uid
-        setShareOptions({
-          title: '年终狂欢 瓜分1亿',
-          desc: '购茅台一箱，送现金一万',
-          link: this.uid ? location.origin + '/beeAlcohol#/?usid=' + this.uid : location.origin + '/beeAlcohol#/'
-        })
-      } catch (error) {
-        console.log(error)
-      }
+    async getPayResult() {
+      const res = await payResult({ trade_no: this.$router.query.trade_no })
+      this.result = res.data
+    },
+    goIndex() {
+      window.location.href = this.result.cash_coupon_url
     }
   }
 }

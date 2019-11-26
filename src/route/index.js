@@ -232,22 +232,6 @@ const router = new Router({
               path: 'confirmOrder',
               name: 'taskConfirmOrder',
               component: () => import('@/pages/BeeTask/ConfirmOrder')
-            },
-            {
-              path: 'addressSetting',
-              component: () => import('@/pages/BeeAddress'),
-              children: [
-                {
-                  path: '',
-                  name: 'addressManage',
-                  component: () => import('@/pages/BeeAddress/AddressManage')
-                },
-                {
-                  path: 'addAddress',
-                  name: 'addAddress',
-                  component: () => import('@/pages/BeeAddress/AddAddress')
-                }
-              ]
             }
           ]
         },

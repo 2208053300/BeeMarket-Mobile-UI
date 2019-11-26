@@ -27,7 +27,7 @@
       </van-cell>
 
       <!-- 没有公益值的时候隐藏 -->
-      <van-cell v-if="order.orderDetail.hongbao > 0" class="deduction-content">
+      <van-cell v-if="order.orderDetail.cash_coupon" class="deduction-content" is-link @click="selectCouponVisible=true">
         <div
           slot="title"
           class="cell-title cell-deduction"
@@ -36,28 +36,15 @@
             红包抵扣
           </div>
           <div class="deduction-num">
-            {{ order.orderDetail.hongbao }}元现金红包
+            {{ cash_coupon_total }}元现金红包
           </div>
         </div>
-        <div>
-          选择<van-icon name="arrow" />
+        <div style="display: flex;align-items: center;justify-content: flex-end">
+          选择
         </div>
       </van-cell>
     </van-cell-group>
     <van-cell-group class="other-info2">
-      <van-cell class="benefit-content">
-        <div
-          slot="title"
-          class="cell-title"
-        >
-          公益宝贝
-        </div>
-        <span class="benefit-text">将我的消费计入公益值</span>
-        <van-checkbox
-          v-model="joinBee"
-          :checked-color="BeeDefault"
-        />
-      </van-cell>
       <van-cell class="deduction-content">
         <div
           slot="title"
@@ -91,6 +78,11 @@
         提交订单
       </van-button>
     </div>
+    <select-coupon
+      :visible.sync="selectCouponVisible"
+      :order-amount="bakOrderAmount"
+      :cash-coupon="cash_coupon_list"
+    />
   </div>
 </template>
 
@@ -98,6 +90,7 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 import orderAddress from './components/orderAddress'
 import commodityList from './components/commodityList'
+import SelectCoupon from '@/pages/BeeAlcohol/ConfirmOrder/components/SelectCoupon'
 import { mapState } from 'vuex'
 import { createOrder } from '@/api/BeeApi/order'
 import { goPayFromPayInfo } from '@/utils/wxPay'
@@ -110,24 +103,24 @@ export default {
   },
   components: {
     orderAddress,
-    commodityList
+    commodityList,
+    SelectCoupon
   },
   props: {},
   data() {
     return {
       BeeDefault,
-      orderType: false,
       anonymous: false,
-      charity_used: false,
+      selectCouponVisible: false,
       orderTypeText: 'general',
-      joinBee: true,
       balance_used: false,
       bakOrderAmount: 0,
-      balance_disabled: false,
-      charity_disabled: false,
       query: {
-        os: 'songjiu',
-        number: this.$route.query.number
+        os: 'liquor',
+        product: {
+          sid: 0,
+          number: parseInt(this.$route.query.number)
+        }
       }
     }
   },
@@ -135,6 +128,19 @@ export default {
     ...mapState(['order']),
     deductionText() {
       return '抵扣文案'
+    },
+    cash_coupon_total() {
+      return this.order.orderDetail.cash_coupon.reduce(
+        (total, item) => {
+          return total + item.amount
+        }, 0)
+    },
+    cash_coupon_list() {
+      if (this.order.orderDetail.cash_coupon) {
+        return this.order.orderDetail.cash_coupon
+      } else {
+        return []
+      }
     }
   },
   watch: {},
@@ -152,13 +158,34 @@ export default {
     this.confirmOrder()
   },
   methods: {
-    // 确认礼包订单信息
+    // 确认订单信息
     async confirmOrder() {
       // 获取确认订单
-      const res = await confirmOrder(JSON.stringify({
-        os: 'maijiu',
-        number: this.$route.query.number
-      }))
+      // const res = await confirmOrder(this.query)
+      const res = JSON.parse('{"message":"OK","code":1,"status_code":200,"data":{"stores":[{"mid":1310,"store_name":"\u5fae\u60e0\u7535\u5b50\u5546\u52a1","is_free_freight":0,"meet_amount_free_freight":0,"products":[{"sid":170754,"pname":"\u6296\u97f3\u540c\u6b3e\u4e00\u6b21\u6027\u67d3\u53d1\u7c89\u997c\u5939","number":1,"sell_price":30,"tUrl":"https:\\/\\/img.fengjishi.com\\/product\\/album\\/2019\\/10\\/07111631rLXqVaf41Hy2tZce.jpeg?x-oss-process=style\\/Thumb","props_name":"6\u4e2a\u88c5\u67d3\u8272\u7c89\u997c"}],"merchant_price":30}],"addr":{"addr_id":9,"def":1,"tag":"home","name":"\u9ec4\u67d0\u4eba","mobileNum":"176****2556","address":"\u91cd\u5e86 \u91cd\u5e86 \u6e1d\u5317 \u9f99\u6eaa\u8857\u9053 \u6d4b\u8bd5\u5730\u5740"},"product_amount":30,"freight_amount":0,"order_amount":30,"charity_deduction":0,"charity_balance":2,"pgpackage_deduct":0,"charity_amount":200,"cash_balance":0,"cash_balance_str":"0","charity_balance_str":"2"}}')
+      res.data.cash_coupon = [
+        {
+          id: 1,
+          amount: 2000,
+          checked: false,
+          disable: false
+        }, {
+          id: 2,
+          amount: 2000,
+          checked: false,
+          disable: false
+        }, {
+          id: 3,
+          amount: 3000,
+          checked: false,
+          disable: false
+        }, {
+          id: 4,
+          amount: 3000,
+          checked: false,
+          disable: false
+        }
+      ]
       if (res.status_code === 200) {
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
@@ -191,10 +218,8 @@ export default {
         JSON.stringify({
           addr_id: this.order.addrDetail.addr_id,
           stores: storeData,
-          charity_used: this.charity_used,
-          balance_used: this.balance_used,
           anonymous: this.anonymous,
-          os: this.$route.query.target || 'general',
+          os: this.$route.query.target || 'liquor',
           // 此处暂时无赠送好友ot不变
           ot: 'general'
         })
@@ -242,7 +267,7 @@ export default {
         flex: 3;
       }
       .deduction-num {
-        margin-left: 0.05rem;
+        margin-left: 0.1rem;
         padding: 0.06rem;
         box-sizing: border-box;
         color: @BeeDefault;

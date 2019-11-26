@@ -19,7 +19,7 @@
       <div class="new-address">
         <van-button
           class="done-button"
-          @click="$router.push('/persion/addressSetting/addAddress')"
+          @click="$router.push({name:'addAddress'})"
         >
           <van-icon name="plus" />新增收货地址
         </van-button>

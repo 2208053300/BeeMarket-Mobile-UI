@@ -9,3 +9,11 @@ export function getTicketListData(data) {
     data
   })
 }
+// NOTE 获取现金券列表
+export function toBalance(data) {
+  return request({
+    url: '/ser/coupon/PresentBalance',
+    method: 'post',
+    data
+  })
+}
