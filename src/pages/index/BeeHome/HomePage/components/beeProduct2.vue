@@ -33,7 +33,8 @@ export default {
   methods: {
     goUrl(url, id) {
       // REVIEW
-      this.$router.push({ path: '/beeActiveTpl', query: { id: id }})
+      // this.$router.push({ path: '/beeGiftPackage' })
+      location.href = url
     }
   }
 }
