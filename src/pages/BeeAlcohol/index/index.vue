@@ -1,7 +1,7 @@
 <template>
   <div class="bee-alcohol">
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_01.jpg')" alt="head">
+      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_01.jpg')" alt="head">
       <div style="position: absolute;bottom: 0;left: 0;display: flex;justify-content: center;width: 100%">
         <img
           :src="beeIcon.rule"
@@ -11,11 +11,11 @@
         >
       </div>
     </div>
-    <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_02.jpg')" alt="head">
-    <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_03.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_02.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_03.jpg')" alt="head">
     <!-- 视频播放部分 -->
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_04.jpg')" alt="head">
+      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_04.jpg')" alt="head">
       <div class="video">
         <video
           ref="video"
@@ -37,9 +37,11 @@
         </div>
       </div>
     </div>
-    <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_05.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_05.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_06.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_07.jpg')" alt="head">
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_06.jpg')" alt="head">
+      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_08.jpg')" alt="head">
       <img
         :src="require('@/assets/icon/alcohol/liqueur_button_buy.png')"
         alt="立即购买"
@@ -58,11 +60,10 @@ import SelectNum from './components/SelectNum'
 import Cookies from 'js-cookie'
 import { getUID } from '@/api/BeeApi/user'
 import { showShareIcon, setShareOptions } from '@/utils/share'
-import { getOs } from '@/utils'
 
 export default {
   metaInfo: {
-    title: '年终狂欢 瓜分十亿'
+    title: '年终狂欢 瓜分10亿'
   },
   components: { Rule, SelectNum },
   props: {},
@@ -128,7 +129,7 @@ export default {
     width: 100%;
     border-radius: 0.08rem;
     position: absolute;
-    top: 1.36rem;
+    top: 0;
     display: flex;
     justify-content: center;
     .video-body {
