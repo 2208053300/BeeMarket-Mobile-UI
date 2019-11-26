@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './index.vue'
 import router from '@/route/beeAlcohol'
 import Meta from 'vue-meta'
+import store from '@/store'
 import '@/styles/normalize.min.css'
 import '@/styles/index/index.less'
 import '@/main'
@@ -9,7 +10,7 @@ import '@/main'
 import '@/utils/flexiable'
 
 // NOTE 引入Vant懒加载
-import { Lazyload, Popup } from 'vant'
+import { Cell, CellGroup, Icon, Lazyload, Popup } from 'vant'
 Vue.use(Lazyload, {
   preLoad: 2
 })
@@ -21,9 +22,13 @@ FastClick.attach(document.body)
 
 // NOTE 修改页面meta数据
 Vue.use(Meta)
+  .use(Cell)
+  .use(CellGroup)
+  .use(Icon)
 Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

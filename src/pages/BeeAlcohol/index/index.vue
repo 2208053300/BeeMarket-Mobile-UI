@@ -40,23 +40,31 @@
     <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_05.jpg')" alt="head">
     <div style="position: relative">
       <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_06.jpg')" alt="head">
-      <img :src="require('@/assets/icon/alcohol/liqueur_button_begin.png')" alt="立即购买" class="bottom-btn">
+      <img
+        :src="require('@/assets/icon/alcohol/liqueur_button_buy.png')"
+        alt="立即购买"
+        class="bottom-btn"
+        @click="showBuy=true"
+      >
     </div>
     <rule v-model="showRule" />
+    <select-num v-model="showBuy" />
   </div>
 </template>
 
 <script>
-import Rule from './components/rule'
+import Rule from './components/Rule'
+import SelectNum from './components/SelectNum'
 import Cookies from 'js-cookie'
 import { getUID } from '@/api/BeeApi/user'
 import { showShareIcon, setShareOptions } from '@/utils/share'
+import { getOs } from '@/utils'
 
 export default {
   metaInfo: {
     title: '年终狂欢 瓜分十亿'
   },
-  components: { Rule },
+  components: { Rule, SelectNum },
   props: {},
   data() {
     return {
@@ -66,7 +74,8 @@ export default {
         rule: require('@/assets/icon/alcohol/liqueur_button_rule.png')
       },
       showRule: false,
-      uid: 0
+      uid: 0,
+      showBuy: false
     }
   },
   computed: {},
@@ -74,8 +83,8 @@ export default {
   created() {},
   mounted() {
     this.initShare()
-    // 如果有store说明该页面作为组件在webApp显示
-    if (this.$store) {
+    // 在APP页面不显示header
+    if (!getOs().isApp) {
       this.$store.state.app.beeHeader = true
       this.$store.state.app.beeFooter.show = false
     }
