@@ -30,6 +30,31 @@ const router = new Router({
           component: () => import('@/pages/BeeAlcohol/TicketList')
         }
       ]
+    },
+    {
+      path: 'confirmOrder',
+      name: 'confirmOrder',
+      component: () =>
+        import(
+          '@/pages/BeeAlcohol/ConfirmOrder'
+        )
+    },
+    {
+      path: 'addressSetting',
+      name: 'addressSetting',
+      component: () => import('@/pages/BeeAddress'),
+      children: [
+        {
+          path: '',
+          name: 'addressManage',
+          component: () => import('@/pages/BeeAddress/AddressManage')
+        },
+        {
+          path: 'addAddress',
+          name: 'addAddress',
+          component: () => import('@/pages/BeeAddress/AddAddress')
+        }
+      ]
     }
 
   ]

@@ -1,7 +1,7 @@
 <template>
   <div class="bee-alcohol">
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_01.jpg')" alt="head">
+      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_01.jpg')" alt="head">
       <div style="position: absolute;bottom: 0;left: 0;display: flex;justify-content: center;width: 100%">
         <img
           :src="beeIcon.rule"
@@ -11,11 +11,11 @@
         >
       </div>
     </div>
-    <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_02.jpg')" alt="head">
-    <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_03.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_02.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_03.jpg')" alt="head">
     <!-- 视频播放部分 -->
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_04.jpg')" alt="head">
+      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_04.jpg')" alt="head">
       <div class="video">
         <video
           ref="video"
@@ -37,26 +37,35 @@
         </div>
       </div>
     </div>
-    <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_05.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_05.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_06.jpg')" alt="head">
+    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_07.jpg')" alt="head">
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_06.jpg')" alt="head">
-      <img :src="require('@/assets/icon/alcohol/liqueur_button_begin.png')" alt="立即购买" class="bottom-btn">
+      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_08.jpg')" alt="head">
+      <img
+        :src="require('@/assets/icon/alcohol/liqueur_button_buy.png')"
+        alt="立即购买"
+        class="bottom-btn"
+        @click="showBuy=true"
+      >
     </div>
     <rule v-model="showRule" />
+    <select-num v-model="showBuy" />
   </div>
 </template>
 
 <script>
-import Rule from './components/rule'
+import Rule from './components/Rule'
+import SelectNum from './components/SelectNum'
 import Cookies from 'js-cookie'
 import { getUID } from '@/api/BeeApi/user'
 import { showShareIcon, setShareOptions } from '@/utils/share'
 
 export default {
   metaInfo: {
-    title: '年终狂欢 瓜分1亿'
+    title: '年终狂欢 瓜分10亿'
   },
-  components: { Rule },
+  components: { Rule, SelectNum },
   props: {},
   data() {
     return {
@@ -66,7 +75,8 @@ export default {
         rule: require('@/assets/icon/alcohol/liqueur_button_rule.png')
       },
       showRule: false,
-      uid: 0
+      uid: 0,
+      showBuy: false
     }
   },
   computed: {},
@@ -74,8 +84,8 @@ export default {
   created() {},
   mounted() {
     this.initShare()
-    // 如果有store说明该页面作为组件在webApp显示
-    if (this.$store) {
+    // 在APP页面不显示header
+    if (!getOs().isApp) {
       this.$store.state.app.beeHeader = true
       this.$store.state.app.beeFooter.show = false
     }
@@ -95,9 +105,9 @@ export default {
         const res = await getUID()
         this.uid = res.data.uid
         setShareOptions({
-          title: '年终狂欢 瓜分1亿',
-          desc: '购茅台一箱，送现金一万',
-          link: this.uid ? location.origin + '/beeAlcohol#/?usid=' + this.uid : location.origin + '/beeAlcohol#/'
+          title: '年终狂欢，瓜分10亿',
+          desc: '买好酒送豪礼，差钱？！点击领取10000元红包，茅台免费喝，现金轻松赚！',
+          link: this.uid ? location.origin + '/beeAlcohol#/?uid=' + this.uid : location.origin + '/beeAlcohol#/'
         })
       } catch (error) {
         console.log(error)
@@ -111,11 +121,15 @@ export default {
 .bee-alcohol {
   @videoWidth: 6.68rem;
   @videoHeight: 3.76rem;
+  // 图片衔接处有白线，随出此下策
+  img {
+    margin-bottom: -1px;
+  }
   .video {
     width: 100%;
     border-radius: 0.08rem;
     position: absolute;
-    top: 1.36rem;
+    top: 0;
     display: flex;
     justify-content: center;
     .video-body {
