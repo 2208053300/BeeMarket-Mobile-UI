@@ -2,8 +2,8 @@
   <div class="main-action">
     <div
       class="bee-product"
-      :style="{backgroundImage:'url('+(home_pic_liqueur ||$store.state.app.defaultImg3)+')'}"
-      @click="$router.push('/beeTask')"
+      :style="{backgroundImage:'url('+(homeData.new_user.show_image ||$store.state.app.defaultImg3)+')'}"
+      @click="$router.push('/beeAlcohol')"
     />
   </div>
 </template>
@@ -12,20 +12,19 @@
 export default {
   components: {},
   props: {
-    // homeData: {
-    //   type: Object,
-    //   default: () => {
-    //     return {
-    //       new_user: {
-    //         show_image: ''
-    //       }
-    //     }
-    //   }
-    // }
+    homeData: {
+      type: Object,
+      default: () => {
+        return {
+          new_user: {
+            show_image: ''
+          }
+        }
+      }
+    }
   },
   data() {
     return {
-      home_pic_liqueur: require('@/assets/icon/home/index/home_pic_liqueur.png')
     }
   },
   computed: {},
