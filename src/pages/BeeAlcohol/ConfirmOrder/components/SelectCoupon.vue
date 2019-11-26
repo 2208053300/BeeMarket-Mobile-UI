@@ -79,6 +79,9 @@ export default {
       this.selfCoupon = val
     }
   },
+  mounted() {
+    this.selfCoupon = this.cashCoupon
+  },
   methods: {
     handleClose() {
       this.$emit('update:cashCoupon', this.selfCoupon)
