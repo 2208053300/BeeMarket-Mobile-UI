@@ -11,10 +11,12 @@ import '@/utils/flexiable'
 
 // NOTE 引入Vant懒加载
 import { Button, Cell, CellGroup, Checkbox, CheckboxGroup, Field, Icon, Lazyload, Popup } from 'vant'
+import { Row, Col } from 'vant'
+
 Vue.use(Lazyload, {
   preLoad: 2
 })
-Vue.use(Popup)
+Vue.use(Popup).use(Row).use(Col)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

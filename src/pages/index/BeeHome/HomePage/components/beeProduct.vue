@@ -3,7 +3,7 @@
     <div
       class="bee-product"
       :style="{backgroundImage:'url('+(homeData.new_user.show_image ||$store.state.app.defaultImg3)+')'}"
-      @click="$router.push('/beeTask')"
+      @click="$router.push('/beeAlcohol')"
     />
   </div>
 </template>
@@ -24,7 +24,8 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+    }
   },
   computed: {},
   watch: {},
