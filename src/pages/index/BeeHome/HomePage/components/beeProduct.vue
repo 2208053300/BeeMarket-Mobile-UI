@@ -3,7 +3,7 @@
     <div
       class="bee-product"
       :style="{backgroundImage:'url('+(homeData.new_user.show_image ||$store.state.app.defaultImg3)+')'}"
-      @click="$router.push('/beeAlcohol')"
+      @click="goUrl(homeData.plan.url,homeData.plan.plan_id)"
     />
   </div>
 </template>
@@ -33,8 +33,9 @@ export default {
   mounted() {},
   methods: {
     goUrl(url, id) {
+      this.$router.push('/beeAlcohol')
       // REVIEW
-      this.$router.push({ path: '/beeActiveTpl', query: { id: id }})
+      // this.$router.push({ path: '/beeActiveTpl', query: { id: id }})
     }
   }
 }
