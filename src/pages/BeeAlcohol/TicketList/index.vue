@@ -43,8 +43,8 @@
     </div>
     <!-- 底部 分享、去购买 按钮 -->
     <div class="bottom">
-      <img :src="beeIcon.buyBtn" class="btn-img">
-      <!-- <img :src="beeIcon.shareBtn" class="btn-img"> -->
+      <img :src="beeIcon.buyBtn" class="btn-img" @click="goIndex">
+      <!-- <img :src="beeIcon.shareBtn" class="btn-img" @click="initShare"> -->
     </div>
   </div>
 </template>
@@ -53,6 +53,8 @@
 // import Rule from './components/rule'
 // import Cookies from 'js-cookie'
 import { getUID } from '@/api/BeeApi/user'
+import { getOs } from '@/utils'
+import wxapi from '@/utils/wxapi'
 import { getTicketListData, toBalance } from '@/api/BeeApi/alcohol'
 import {
   // showShareIcon,
@@ -96,19 +98,13 @@ export default {
       this.$store.state.app.beeHeader = true
       this.$store.state.app.beeFooter.show = false
     }
-    // if (this.$route.query.uid) {
-    //   Cookies.set('uid', this.$route.query.uid)
-    // }
-    // showShareIcon()
   },
   methods: {
     // 获取现金券列表数据
     async getListData() {
       const res = await getTicketListData()
-
       this.text = res.data.text
       this.total_amount2 = res.data.total_amount
-      console.log(this.total_amount2)
       this.listData = res.data.lists
     },
     // 列表按钮操作 id:现金券id status: 3 立即使用 4 立即提现 5 转为余额
@@ -128,7 +124,11 @@ export default {
         console.log('其他，出问题了额，status:', status)
       }
     },
-    // 分享
+    // 去购买
+    goIndex() {
+      this.$router.push('/')
+    },
+    // 去分享
     async initShare() {
       try {
         const res = await getUID()
@@ -136,7 +136,7 @@ export default {
         setShareOptions({
           title: '年终狂欢 瓜分1亿',
           desc: '购茅台一箱，送现金一万',
-          link: this.uid ? location.origin + '/beeAlcohol#/?usid=' + this.uid : location.origin + '/beeAlcohol#/'
+          link: this.uid ? location.origin + '/beeAlcohol#/?uid=' + this.uid : location.origin + '/beeAlcohol#/'
         })
       } catch (error) {
         console.log(error)
