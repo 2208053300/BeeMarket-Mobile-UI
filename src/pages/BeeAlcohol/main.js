@@ -9,11 +9,11 @@ import '@/main'
 import '@/utils/flexiable'
 
 // NOTE 引入Vant懒加载
-import { Lazyload, Popup } from 'vant'
+import { Lazyload, Popup, Row, Col, Button } from 'vant'
 Vue.use(Lazyload, {
   preLoad: 2
 })
-Vue.use(Popup)
+Vue.use(Popup).use(Row).use(Col).use(Button)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')
