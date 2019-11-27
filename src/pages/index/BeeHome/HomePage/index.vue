@@ -41,7 +41,7 @@
     <new-product :home-data="homeData" />
     <action-list :home-data="homeData" />
     <guess-like :guess-data="homeData.random_product" />
-    <actionPop />
+    <!-- <actionPop /> -->
   </div>
 </template>
 
@@ -59,7 +59,7 @@ import newProduct from './components/newProduct'
 import farmProduct from './components/farmProduct'
 import actionList from './components/actionList'
 import guessLike from './components/guessLike'
-import actionPop from './components/actionPop'
+// import actionPop from './components/actionPop'
 import { isLogin } from '@/utils/auth'
 import wxapi from '@/utils/wxapi'
 import { getOs } from '@/utils'
@@ -81,7 +81,7 @@ export default {
     farmProduct,
     actionList,
     guessLike,
-    actionPop,
+    // actionPop,
     WinningRoll
   },
   props: {},
