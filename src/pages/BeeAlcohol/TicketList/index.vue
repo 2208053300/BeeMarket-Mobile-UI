@@ -157,7 +157,13 @@ export default {
     },
     // 去购买
     goIndex() {
-      this.$router.push('/')
+      if (this.osObj.isApp) {
+        this.$router.push('/')
+      } else {
+        this.$router.push({
+          path: '/beeAlcohol'
+        })
+      }
     },
 
     // 分享
