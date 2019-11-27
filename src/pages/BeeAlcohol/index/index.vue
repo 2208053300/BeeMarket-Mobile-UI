@@ -64,7 +64,6 @@ import Rule from './components/Rule'
 import SelectNum from './components/SelectNum'
 import Cookies from 'js-cookie'
 import { getUID } from '@/api/BeeApi/user'
-import { getOs } from '@/utils'
 import { showShareIcon, setShareOptions } from '@/utils/share'
 import BeeWinningRoll from '@/components/BeeWinningRoll'
 
