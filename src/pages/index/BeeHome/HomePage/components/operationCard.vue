@@ -31,7 +31,7 @@
     <div class="op-item">
       <div
         class="img-content"
-        @click="$router.push('/beeAlcohol')"
+        @click="goSinglePage('beeAlcohol#/', false)"
       >
         <img
           :src="beeIcon.home_icon_billion"
@@ -190,8 +190,8 @@ export default {
         this.$router.push(path)
       }
     },
-    async goSinglePage(path) {
-      if (!(await isLogin())) {
+    async goSinglePage(path, isNeedLogin = true) {
+      if (isNeedLogin && !(await isLogin())) {
         this.$router.push('/login')
       } else {
         console.log(window.location.origin + '/' + path)

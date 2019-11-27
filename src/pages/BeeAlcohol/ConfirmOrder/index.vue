@@ -234,9 +234,9 @@ export default {
         })
       })
       // 筛选出已选择的买酒抵扣券id
-      let cash_coupon_ids = []
+      const cash_coupon_ids = []
       if (this.order.orderDetail.cash_coupon) {
-        cash_coupon_ids = this.order.orderDetail.cash_coupon.forEach(item => {
+        this.order.orderDetail.cash_coupon.forEach(item => {
           if (item.checked) {
             cash_coupon_ids.push(item.id)
           }
@@ -254,9 +254,10 @@ export default {
           os: 'liquor',
           // 此处暂时无赠送好友ot不变
           ot: 'general',
-          cash_coupon_ids
+          cash_coupon_ids: cash_coupon_ids
         })
       )
+      return
       if (res.status_code === 200) {
         const osObj = getOs()
         this.order.payInfo = res.data
