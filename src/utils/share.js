@@ -35,28 +35,31 @@ export function hideShareIcon() {
 export function setShareOptions(options) {
   const osObj = getOs()
   options.imgUrl = options.imgUrl || 'https://img.fengjishi.com/app/images/share_logo.jpg'
-  wxapi.wxShare({
-    title: options.title,
-    desc: options.desc,
-    imgUrl: options.imgUrl,
-    link: options.link
-  })
-  window.appShare = () => {
-    if (osObj.isIphone && osObj.isApp) {
-      window.webkit.messageHandlers.ToShare.postMessage({
-        title: options.title,
-        desc: options.desc,
-        img_path: options.imgUrl,
-        // 地址应该放 web 站 网页
-        url: options.link
-      })
-    } else if (osObj.isAndroid && osObj.isApp) {
-      window.beeMarket.ToShare(
-        options.title,
-        options.desc,
-        options.imgUrl,
-        options.link
-      )
+  if (osObj.isWx) {
+    wxapi.wxShare({
+      title: options.title,
+      desc: options.desc,
+      imgUrl: options.imgUrl,
+      link: options.link
+    })
+  } else {
+    window.appShare = () => {
+      if (osObj.isIphone) {
+        window.webkit.messageHandlers.ToShare.postMessage({
+          title: options.title,
+          desc: options.desc,
+          img_path: options.imgUrl,
+          // 地址应该放 web 站 网页
+          url: options.link
+        })
+      } else if (osObj.isAndroid) {
+        window.beeMarket.ToShare(
+          options.title,
+          options.desc,
+          options.imgUrl,
+          options.link
+        )
+      }
     }
   }
 }
