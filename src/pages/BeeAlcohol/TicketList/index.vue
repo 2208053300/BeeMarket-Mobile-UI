@@ -136,7 +136,7 @@ export default {
         res = await toBalance({ id })
         this.$toast(res.message)
         setTimeout(() => {
-          this.getTicketListData()
+          this.getListData()
         }, 2000)
       } else {
         console.log('其他，出问题了额，status:', status)
