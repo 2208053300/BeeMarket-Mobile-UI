@@ -96,11 +96,9 @@ export default {
   mounted() {
     this.initShare()
     this.$store.commit('SET_BACKTOP_HIDE', true)
-    // 在APP页面不显示header
-    if (!getOs().isApp) {
-      this.$store.state.app.beeHeader = false
-      this.$store.state.app.beeFooter.show = false
-    }
+    // 在APP页面显示header
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = false
     if (this.$route.query.uid) {
       Cookies.set('uid', this.$route.query.uid)
     }

@@ -107,11 +107,9 @@ export default {
   mounted() {
     this.getUid()
     this.getListData()
-    // 如果有store说明该页面作为组件在webApp显示
-    if (!getOs().isApp) {
-      this.$store.state.app.beeHeader = true
-      this.$store.state.app.beeFooter.show = false
-    }
+    // 此页面不显示header
+    this.$store.state.app.beeHeader = false
+    this.$store.state.app.beeFooter.show = false
   },
   methods: {
     // 获取现金券列表数据
