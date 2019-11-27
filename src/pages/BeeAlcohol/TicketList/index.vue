@@ -67,7 +67,7 @@
 import { getUID } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
-import { getTicketListData, toBalance } from '@/api/BeeApi/alcohol'
+import { getTicketListData, toBalance, toCash } from '@/api/BeeApi/alcohol'
 
 export default {
   metaInfo: {
@@ -128,7 +128,10 @@ export default {
       if (status === 3) {
         this.$router.push('/')
       } else if (status === 4) {
-        window.location.href = window.location.origin + '/beeFriends#/pay'
+        res = await toCash({ id })
+        if (res.status_code === 200) {
+          window.location.href = window.location.origin + '/beeFriends#/pay'
+        }
       } else if (status === 5) {
         res = await toBalance({ id })
         this.$toast(res.message)
