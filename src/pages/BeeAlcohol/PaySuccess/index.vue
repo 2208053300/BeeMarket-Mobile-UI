@@ -13,9 +13,6 @@
         查看订单
       </button>
     </div>
-    <!-- <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_02.jpg')" alt="head">
-    <img :src="require('@/assets/icon/alcohol/1-首页改版六-2切图_03.jpg')" alt="head"> -->
-
     <div v-if="result.cash_coupon>0" class="subsidy">
       <div class="sub-price">
         <p class="price">
@@ -31,9 +28,6 @@
 </template>
 
 <script>
-// import Rule from './components/rule'
-// import Cookies from 'js-cookie'
-// import { getUID } from '@/api/BeeApi/user'
 import { payResult } from '@/api/BeeApi/order'
 import { getOs } from '@/utils'
 
@@ -62,10 +56,6 @@ export default {
       this.$store.state.app.beeHeader = true
       this.$store.state.app.beeFooter.show = false
     }
-    // if (this.$route.query.uid) {
-    //   Cookies.set('uid', this.$route.query.uid)
-    // }
-    // showShareIcon()
   },
   methods: {
     async getPayResult() {

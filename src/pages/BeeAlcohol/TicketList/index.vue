@@ -11,7 +11,7 @@
     <!-- 补贴券列表 -->
     <div class="ticket-box">
       <p class="title text-center">
-        红包提现
+        补贴提现
       </p>
       <van-row>
         <!-- type 类型 1可提现 2可转为余额 -->
@@ -41,10 +41,10 @@
         </van-col>
       </van-row>
     </div>
-    <!-- 底部 分享、去购买 按钮 -->
+    <!-- 底部 type  2 分享、1 去购买 按钮 -->
     <div class="bottom">
-      <img v-if="type===2" :src="beeIcon.buyBtn" class="btn-img" @click="goIndex">
-      <img v-if="type===1" :src="beeIcon.shareBtn" class="btn-img" @click="goShare">
+      <img v-if="type===1" :src="beeIcon.buyBtn" class="btn-img" @click="goIndex">
+      <img v-if="type===2" :src="beeIcon.shareBtn" class="btn-img" @click="goShare">
     </div>
 
     <!-- 微信分享提示遮罩 -->
