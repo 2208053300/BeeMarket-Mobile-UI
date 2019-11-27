@@ -209,7 +209,7 @@ export default {
     height:3.16rem;
     position: relative;
     box-sizing: border-box;
-    padding-top: 0.4rem;
+    padding-top: 0.5rem;
   }
   .price{
     font-size: 1.2rem;
