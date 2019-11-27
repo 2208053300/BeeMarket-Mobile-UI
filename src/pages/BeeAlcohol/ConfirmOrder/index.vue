@@ -26,7 +26,7 @@
         </div>
       </van-cell>
 
-      <!-- 没有公益值的时候隐藏 -->
+      <!-- 没有买酒抵扣的时候隐藏 -->
       <van-cell
         v-if="order.orderDetail.cash_coupon && order.orderDetail.cash_coupon.length > 0"
         class="deduction-content"
@@ -120,7 +120,6 @@ export default {
       selectCouponVisible: false,
       orderTypeText: 'general',
       balance_used: false,
-      bakOrderAmount: 0,
       query: {
         os: 'liquor',
         product: {
@@ -202,7 +201,6 @@ export default {
         this.warpCashCoupon(res.data.cash_coupon)
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
-        this.bakOrderAmount = res.data.order_amount
         if (this.order.orderDetail.stores.length === 0) {
           this.$router.go(-1)
         }
