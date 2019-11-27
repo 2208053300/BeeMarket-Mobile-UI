@@ -16,7 +16,11 @@
       </div>
       <!-- 优惠券列表 start-->
       <div class="coupons">
-        <div v-for="item in selfCoupon" :key="item.id" class="coupon-item">
+        <div
+          v-for="item in selfCoupon"
+          :key="item.id"
+          class="coupon-item"
+        >
           <div class="checkbox">
             <van-checkbox
               v-model="item.checked"
@@ -25,12 +29,12 @@
               @change="itemChange(item)"
             />
           </div>
-          <div class="coupon-amount" :class="{'coupon-amount-disable': item.disable}">
+          <div class="coupon-amount" :class="{'coupon-amount-disable': item.disable}" @click="changeItem(item)">
             <div>
               <span class="rmb">￥</span>{{ item.amount }}
             </div>
           </div>
-          <div class="description" :class="{'desc-disable': item.disable}">
+          <div class="description" :class="{'desc-disable': item.disable}" @click="changeItem(item)">
             <div>
               <span class="hb">活动红包</span>仅可用于 [购一箱 送一万]钜惠活动的抵扣
             </div>
@@ -105,6 +109,11 @@ export default {
         this.deducted -= item.amount
       }
       this.computeDisable()
+    },
+    changeItem(item) {
+      if (!item.disable) {
+        item.checked = !item.checked
+      }
     }
   }
 }

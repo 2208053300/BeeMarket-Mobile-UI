@@ -65,7 +65,7 @@ export default {
     async securityData() {
       const res = await security()
       if (!res.data.mobile_bind) {
-        this.$router.replace('/persion/profile/accountBind')
+        this.$router.replace({ name: 'accountBind' })
       }
     }
   }
