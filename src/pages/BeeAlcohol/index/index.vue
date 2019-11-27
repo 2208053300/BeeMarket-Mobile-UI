@@ -187,7 +187,7 @@ export default {
   .bottom-btn {
     height: auto;
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     z-index: 1000;
     left: 0;

@@ -147,6 +147,6 @@ module.exports = {
   },
   beeAlcohol: {
     entry: 'src/pages/BeeAlcohol/main.js',
-    title: '年终狂欢 瓜分1亿'
+    title: '年终狂欢 瓜分10亿'
   }
 }
