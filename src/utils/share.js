@@ -11,6 +11,16 @@ export function showShareIcon() {
   }
 }
 
+// 使APP显示分享图标
+export function hideShareIcon() {
+  const osObj = getOs()
+  if (osObj.isIphone && osObj.isApp) {
+    window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+  } else if (osObj.isAndroid && osObj.isApp) {
+    window.beeMarket.showShareIcon(false)
+  }
+}
+
 // 设置点击分享后的回调
 /**
  * 对微信和app设置分享配置

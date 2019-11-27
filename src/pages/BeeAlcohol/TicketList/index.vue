@@ -68,10 +68,6 @@ import { getUID } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 import { getTicketListData, toBalance } from '@/api/BeeApi/alcohol'
-import {
-// showShareIcon,
-// setShareOptions
-} from '@/utils/share'
 
 export default {
   metaInfo: {
@@ -114,7 +110,7 @@ export default {
     this.getListData()
     // this.initShare()
     // 如果有store说明该页面作为组件在webApp显示
-    if (this.$store) {
+    if (!getOs().isApp) {
       this.$store.state.app.beeHeader = true
       this.$store.state.app.beeFooter.show = false
     }

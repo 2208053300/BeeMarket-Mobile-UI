@@ -31,6 +31,7 @@
 <script>
 import { getAddressList, security } from '@/api/BeeApi/user'
 import AddressList from './components/AddressList'
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '地址管理'
@@ -49,8 +50,11 @@ export default {
   created() {},
   mounted() {
     this.getAddressListData()
-    this.$store.state.app.beeHeader = true
-    this.$store.state.app.beeFooter.show = false
+    // 在APP页面不显示header
+    if (!getOs().isApp) {
+      this.$store.state.app.beeHeader = true
+      this.$store.state.app.beeFooter.show = false
+    }
     this.securityData()
   },
   methods: {

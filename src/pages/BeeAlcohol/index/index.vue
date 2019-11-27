@@ -89,7 +89,7 @@ export default {
     this.initShare()
     // 在APP页面不显示header
     if (!getOs().isApp) {
-      this.$store.state.app.beeHeader = true
+      this.$store.state.app.beeHeader = false
       this.$store.state.app.beeFooter.show = false
     }
     if (this.$route.query.uid) {

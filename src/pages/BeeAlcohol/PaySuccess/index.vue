@@ -34,6 +34,7 @@
 // import Cookies from 'js-cookie'
 // import { getUID } from '@/api/BeeApi/user'
 import { payResult } from '@/api/BeeApi/order'
+import { getOs } from '@/utils'
 
 export default {
   metaInfo: {
@@ -56,7 +57,7 @@ export default {
   mounted() {
     this.getPayResult()
     // 如果有store说明该页面作为组件在webApp显示
-    if (this.$store) {
+    if (!getOs().isApp) {
       this.$store.state.app.beeHeader = true
       this.$store.state.app.beeFooter.show = false
     }
