@@ -15,12 +15,12 @@ const router = new Router({
       component: () => import('@/pages/BeeAlcohol/index/index')
     },
     {
-      path: 'paySuccess',
+      path: '/paySuccess',
       name: 'paySuccess',
       component: () => import('@/pages/BeeAlcohol/PaySuccess')
     },
     {
-      path: 'ticket',
+      path: '/ticket',
       name: 'ticket',
       component: () => import('@/pages/BeeAlcohol/TicketList')
     },
