@@ -31,7 +31,7 @@
     <div class="op-item">
       <div
         class="img-content"
-        @click="$router.push('/beeTask')"
+        @click="$router.push('/beeAlcohol')"
       >
         <img
           :src="beeIcon.home_icon_billion"
