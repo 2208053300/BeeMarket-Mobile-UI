@@ -198,22 +198,6 @@ export default {
     async confirmOrder() {
       // 获取确认订单
       const res = await confirmOrder(this.query)
-      // const res = JSON.parse('{"message":"OK","code":1,"status_code":200,"data":{"stores":[{"mid":1310,"store_name":"\u5fae\u60e0\u7535\u5b50\u5546\u52a1","is_free_freight":0,"meet_amount_free_freight":0,"products":[{"sid":170754,"pname":"\u6296\u97f3\u540c\u6b3e\u4e00\u6b21\u6027\u67d3\u53d1\u7c89\u997c\u5939","number":1,"sell_price":30,"tUrl":"https:\\/\\/img.fengjishi.com\\/product\\/album\\/2019\\/10\\/07111631rLXqVaf41Hy2tZce.jpeg?x-oss-process=style\\/Thumb","props_name":"6\u4e2a\u88c5\u67d3\u8272\u7c89\u997c"}],"merchant_price":30}],"addr":{"addr_id":9,"def":1,"tag":"home","name":"\u9ec4\u67d0\u4eba","mobileNum":"176****2556","address":"\u91cd\u5e86 \u91cd\u5e86 \u6e1d\u5317 \u9f99\u6eaa\u8857\u9053 \u6d4b\u8bd5\u5730\u5740"},"product_amount":30,"freight_amount":0,"order_amount":30,"charity_deduction":0,"charity_balance":2,"pgpackage_deduct":0,"charity_amount":200,"cash_balance":0,"cash_balance_str":"0","charity_balance_str":"2"}}')
-      // res.data.cash_coupon = [
-      //   {
-      //     id: 1,
-      //     amount: 2000
-      //   }, {
-      //     id: 2,
-      //     amount: 2000
-      //   }, {
-      //     id: 3,
-      //     amount: 3000
-      //   }, {
-      //     id: 4,
-      //     amount: 3000
-      //   }
-      // ]
       if (res.status_code === 200) {
         this.warpCashCoupon(res.data.cash_coupon)
         this.$store.state.order.orderDetail = res.data
@@ -256,8 +240,11 @@ export default {
         JSON.stringify({
           addr_id: this.order.addrDetail.addr_id,
           stores: storeData,
+          charity_used: false,
+          balance_used: false,
+          is_special_pgpackage: 0,
           anonymous: this.anonymous,
-          os: this.$route.query.target || 'liquor',
+          os: 'liquor',
           // 此处暂时无赠送好友ot不变
           ot: 'general'
         })
@@ -265,16 +252,7 @@ export default {
       if (res.status_code === 200) {
         const osObj = getOs()
         this.order.payInfo = res.data
-        if (osObj.isWx) {
-          if (this.orderTypeText === 'please') {
-            this.$router.push('/category/details/payForAnother')
-          } else if (this.orderTypeText === 'present') {
-            this.$router.push('/category/details/giveFirends')
-          } else {
-            // 去支付
-            goPayFromPayInfo(this.order.payInfo, '/beeAlcohol#/paySuccess')
-          }
-        } else if (osObj.isIphone && osObj.isApp) {
+        if (osObj.isIphone && osObj.isApp) {
           window.webkit.messageHandlers.ToPayOrder.postMessage({
             payOrderJson: JSON.stringify(this.order.payInfo),
             isRechargePackage: false,
@@ -286,6 +264,15 @@ export default {
             'liquor'
           )
           window.beeMarket.CloseThisActivity()
+        } else {
+          if (this.orderTypeText === 'please') {
+            this.$router.push('/category/details/payForAnother')
+          } else if (this.orderTypeText === 'present') {
+            this.$router.push('/category/details/giveFirends')
+          } else {
+            // 去支付
+            goPayFromPayInfo(this.order.payInfo, '/beeAlcohol#/paySuccess')
+          }
         }
       }
     },

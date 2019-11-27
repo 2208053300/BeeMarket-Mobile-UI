@@ -1,5 +1,9 @@
 <template>
   <div class="bee-alcohol">
+    <bee-winning-roll
+      style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100"
+      type="alcohol"
+    />
     <div style="position: relative">
       <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_01.jpg')" alt="head">
       <div style="position: absolute;bottom: 0;left: 0;display: flex;justify-content: center;width: 100%">
@@ -62,12 +66,13 @@ import Cookies from 'js-cookie'
 import { getUID } from '@/api/BeeApi/user'
 import { getOs } from '@/utils'
 import { showShareIcon, setShareOptions } from '@/utils/share'
+import BeeWinningRoll from '@/components/BeeWinningRoll'
 
 export default {
   metaInfo: {
     title: '年终狂欢 瓜分10亿'
   },
-  components: { Rule, SelectNum },
+  components: { Rule, SelectNum, BeeWinningRoll },
   props: {},
   data() {
     return {

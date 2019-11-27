@@ -12,7 +12,15 @@ export function getTicketListData(data) {
 // NOTE 获取现金券列表
 export function toBalance(data) {
   return request({
-    url: '/ser/coupon/PresentBalance',
+    url: '/user/coupon/PresentBalance',
+    method: 'post',
+    data
+  })
+}
+
+export function maxNumber(data) {
+  return request({
+    url: '/user/liquor/number',
     method: 'post',
     data
   })
