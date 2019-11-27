@@ -138,8 +138,8 @@ export default {
       this.uid = res.data.uid
 
       wxapi.wxShare({
-        title: '蜂集市-让生活蜂富起来！',
-        desc: '能省能免能赚，共享电商平台',
+        title: '限量蜂抢-只打折，不打烊！',
+        desc: '每日精选限量特价商品，抢到的都说好，你还在等什么？',
         imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
         link: window.location.href.split('#')[0] + '#' + `/beeLimit?uid=${this.uid}`
       })
@@ -207,16 +207,16 @@ export default {
         //
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToShare.postMessage({
-          title: '蜂集市-让生活蜂富起来！',
-          desc: '能省能免能赚，共享电商平台',
+          title: '限量蜂抢-只打折，不打烊！',
+          desc: '每日精选限量特价商品，抢到的都说好，你还在等什么？',
           img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
           // 地址应该放 web 站 网页
           url: window.location.origin + `/#/beeLimit?uid=${this.uid}`
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(
-          '蜂集市-让生活蜂富起来！',
-          '能省能免能赚，共享电商平台',
+          '限量蜂抢-只打折，不打烊！',
+          '每日精选限量特价商品，抢到的都说好，你还在等什么？',
           'https://img.fengjishi.com/app/images/share_logo.jpg',
           window.location.origin + `/#/beeLimit?uid=${this.uid}`
         )
