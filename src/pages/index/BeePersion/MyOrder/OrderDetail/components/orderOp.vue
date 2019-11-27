@@ -187,7 +187,11 @@ export default {
   methods: {
     // 去支付
     goPay(orderNo) {
-      goPayFromOrder(orderNo)
+      if (this.orderDetail.t_order === 'liquor') {
+        goPayFromOrder(orderNo, '/#/beeAlcohol/paySuccess')
+      } else {
+        goPayFromOrder(orderNo)
+      }
     },
     // 再次购买
     async buyAgain(order) {

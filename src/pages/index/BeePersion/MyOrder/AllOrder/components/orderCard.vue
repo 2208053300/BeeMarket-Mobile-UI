@@ -205,7 +205,11 @@ export default {
   mounted() {},
   methods: {
     goPay(orderNo) {
-      goPayFromOrder(orderNo)
+      if (this.orderDetail.t_order === 'liquor') {
+        goPayFromOrder(orderNo, '/#/beeAlcohol/paySuccess')
+      } else {
+        goPayFromOrder(orderNo)
+      }
     },
     onLoad() {
       // 异步更新数据
