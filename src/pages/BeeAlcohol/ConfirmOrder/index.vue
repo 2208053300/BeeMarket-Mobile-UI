@@ -252,16 +252,7 @@ export default {
       if (res.status_code === 200) {
         const osObj = getOs()
         this.order.payInfo = res.data
-        if (osObj.isWx) {
-          if (this.orderTypeText === 'please') {
-            this.$router.push('/category/details/payForAnother')
-          } else if (this.orderTypeText === 'present') {
-            this.$router.push('/category/details/giveFirends')
-          } else {
-            // 去支付
-            goPayFromPayInfo(this.order.payInfo, '/beeAlcohol#/paySuccess')
-          }
-        } else if (osObj.isIphone && osObj.isApp) {
+        if (osObj.isIphone && osObj.isApp) {
           window.webkit.messageHandlers.ToPayOrder.postMessage({
             payOrderJson: JSON.stringify(this.order.payInfo),
             isRechargePackage: false,
@@ -273,6 +264,15 @@ export default {
             'liquor'
           )
           window.beeMarket.CloseThisActivity()
+        } else {
+          if (this.orderTypeText === 'please') {
+            this.$router.push('/category/details/payForAnother')
+          } else if (this.orderTypeText === 'present') {
+            this.$router.push('/category/details/giveFirends')
+          } else {
+            // 去支付
+            goPayFromPayInfo(this.order.payInfo, '/beeAlcohol#/paySuccess')
+          }
         }
       }
     },
