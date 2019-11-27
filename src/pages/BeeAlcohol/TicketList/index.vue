@@ -131,6 +131,8 @@ export default {
         res = await toCash({ id })
         if (res.status_code === 200) {
           window.location.href = window.location.origin + '/beeFriends#/pay'
+        } else {
+          this.getListData()
         }
       } else if (status === 5) {
         res = await toBalance({ id })
