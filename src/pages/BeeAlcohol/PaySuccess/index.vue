@@ -1,6 +1,7 @@
 <template>
   <div class="pay-success">
     <div class="result text-center">
+      <p>{{ result }}</p>
       <img :src="beeIcon.tipImg" class="tip-img">
       <p class="tip-txt">
         付款成功
@@ -77,9 +78,11 @@ export default {
     // 查看订单
     orderDetail() {
       if (this.result.check_to === 'list') {
+        alert(window.location.origin + '/#/persion/order')
         // 跳订单列表
         window.location.href = window.location.origin + '/#/persion/order'
       } else if (this.result.check_to === 'order') {
+        alert(window.location.href = window.location.origin + '/#/persion/order/orderDetail?order_no=' + this.result.order_no)
         // 跳订单详情
         window.location.href = window.location.origin + '/#/persion/order/orderDetail?order_no=' + this.result.order_no
       }
