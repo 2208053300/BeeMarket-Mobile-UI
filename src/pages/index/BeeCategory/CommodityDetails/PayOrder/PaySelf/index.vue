@@ -139,7 +139,6 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
-    console.log('callbackUrl:', this.$route.query.callback_url)
     const orderNo = this.$route.query.orderNo
     if (orderNo) {
       this.getPayInfo(orderNo)
@@ -273,7 +272,6 @@ export default {
       if (customCallbackUrl === null || customCallbackUrl === undefined) {
         this.toDefaultResult(url)
       } else {
-        // customCallbackUrl = decodeURIComponent(customCallbackUrl)
         window.location.href = `${customCallbackUrl}?trade_no=${this.order.payInfo.trade_no}`
       }
     },

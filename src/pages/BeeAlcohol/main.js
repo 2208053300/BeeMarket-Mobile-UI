@@ -11,7 +11,7 @@ import '@/utils/flexiable'
 
 // NOTE 引入Vant懒加载
 import { Button, Cell, CellGroup, Checkbox, CheckboxGroup,
-  Field, Icon, Lazyload, Popup, Row, Col, NavBar, Tabbar, TabbarItem } from 'vant'
+  Field, Icon, Lazyload, Popup, Row, Col, NavBar, Tabbar, TabbarItem, Swipe, SwipeItem } from 'vant'
 
 Vue.use(Lazyload, {
   preLoad: 2
@@ -34,6 +34,8 @@ Vue.use(Meta)
   .use(NavBar)
   .use(Tabbar)
   .use(TabbarItem)
+  .use(Swipe)
+  .use(SwipeItem)
 
 Vue.config.productionTip = false
 
