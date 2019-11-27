@@ -206,9 +206,9 @@ export default {
   methods: {
     goPay(card) {
       if (card.t_order === 'liquor') {
-        goPayFromOrder(card.orderNo, '/#/beeAlcohol/paySuccess')
+        goPayFromOrder(card.order_no, '/#/beeAlcohol/paySuccess')
       } else {
-        goPayFromOrder(card.orderNo)
+        goPayFromOrder(card.order_no)
       }
     },
     onLoad() {

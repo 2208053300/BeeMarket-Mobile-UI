@@ -26,7 +26,7 @@
         {{ maxTips }}
       </p>
       <div style="text-align: center">
-        <button @click="confirmOrder()">
+        <button :class="{'button-disable': number===0}" @click="confirmOrder()">
           确定
         </button>
       </div>
@@ -66,6 +66,9 @@ export default {
       if (this.maxNumber === -1) {
         return true
       } else {
+        if (this.maxNumber === 0) {
+          return false
+        }
         return this.number < this.maxNumber
       }
     }
@@ -78,6 +81,9 @@ export default {
       this.$emit('update', false)
     },
     confirmOrder() {
+      if (this.number === 0) {
+        return
+      }
       this.handleClose()
       this.$router.push({
         name: 'alcoholConfirmOrder',
@@ -89,6 +95,9 @@ export default {
     async getMaxNumber() {
       const res = await maxNumber()
       this.maxNumber = res.data.count
+      if (this.maxNumber === 0) {
+        this.number = 0
+      }
     }
   }
 }
@@ -119,6 +128,9 @@ export default {
     font-weight:bold;
     color:white;
     text-shadow:0 2px 5px rgba(214,63,3,0.55);
+  }
+  .button-disable {
+    background: gray;
   }
   .plus-minus {
     display: flex;
