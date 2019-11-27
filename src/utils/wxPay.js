@@ -1,9 +1,9 @@
 function goPay(query) {
-  const appid =
-    // ? 'wxb541620e8a98a7c0'
+  let appid =
     process.env.NODE_ENV !== 'production'
       ? 'wx55baa3edb8c37fa8'
       : 'wxd0e389ffa2c4f924'
+  appid = 'wx55baa3edb8c37fa8'
   const route = '/#/category/details/payOrder?'
   window.location.href =
     `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=` +
