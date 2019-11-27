@@ -233,6 +233,15 @@ export default {
           storeData[index].products[index2].number = item2.number
         })
       })
+      // 筛选出已选择的买酒抵扣券id
+      let cash_coupon_ids = []
+      if (this.order.orderDetail.cash_coupon) {
+        cash_coupon_ids = this.order.orderDetail.cash_coupon.forEach(item => {
+          if (item.checked) {
+            cash_coupon_ids.push(item.id)
+          }
+        })
+      }
       // TODO 缺少农副产品和限量蜂抢字段获取
       const res = await createOrder(
         JSON.stringify({
@@ -244,7 +253,8 @@ export default {
           anonymous: this.anonymous,
           os: 'liquor',
           // 此处暂时无赠送好友ot不变
-          ot: 'general'
+          ot: 'general',
+          cash_coupon_ids
         })
       )
       if (res.status_code === 200) {
