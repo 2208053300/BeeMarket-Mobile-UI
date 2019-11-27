@@ -11,7 +11,7 @@
     <!-- 补贴券列表 -->
     <div class="ticket-box">
       <p class="title text-center">
-        红包提现
+        补贴提现
       </p>
       <van-row>
         <!-- type 类型 1可提现 2可转为余额 -->
