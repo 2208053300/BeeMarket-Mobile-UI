@@ -153,7 +153,7 @@ export default {
     // 跳转到现金券列表
     goTicket() {
       this.$router.push({
-        path: '/ticket'
+        name: 'ticket'
       })
     }
   }
