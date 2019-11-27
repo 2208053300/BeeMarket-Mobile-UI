@@ -257,7 +257,6 @@ export default {
           cash_coupon_ids: cash_coupon_ids
         })
       )
-      return
       if (res.status_code === 200) {
         const osObj = getOs()
         this.order.payInfo = res.data
