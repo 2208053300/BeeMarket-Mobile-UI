@@ -124,7 +124,15 @@ export default {
     async btnAction(id, status) {
       let res
       if (status === 3) {
-        this.$router.push('/')
+        // this.$router.push('/')
+        if (this.osObj.isApp) {
+          this.$router.push('/')
+        } else {
+          this.$router.push({
+            path: '/beeAlcohol'
+          })
+          // window.location.href = window.location.origin + '/beeAlcohol'
+        }
       } else if (status === 4) {
         res = await toCash({ id })
         if (res.status_code === 200) {
