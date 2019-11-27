@@ -27,7 +27,12 @@
       </van-cell>
 
       <!-- 没有公益值的时候隐藏 -->
-      <van-cell v-if="order.orderDetail.cash_coupon" class="deduction-content" is-link @click="selectCouponVisible=true">
+      <van-cell
+        v-if="order.orderDetail.cash_coupon && order.orderDetail.cash_coupon.length > 0"
+        class="deduction-content"
+        is-link
+        @click="selectCouponVisible=true"
+      >
         <div
           slot="title"
           class="cell-title cell-deduction"
@@ -128,15 +133,19 @@ export default {
     ...mapState(['order']),
     // 已抵扣金额
     deductedAmount() {
-      return this.order.orderDetail.cash_coupon.reduce(
-        (total, item) => {
-          if (item.checked) {
-            return total + item.amount
-          } else {
-            return total
-          }
-        }, 0
-      )
+      if (this.order.orderDetail.cash_coupon) {
+        return this.order.orderDetail.cash_coupon.reduce(
+          (total, item) => {
+            if (item.checked) {
+              return total + item.amount
+            } else {
+              return total
+            }
+          }, 0
+        )
+      } else {
+        return 0
+      }
     },
     // 抵扣文案
     deductionText() {
@@ -253,16 +262,29 @@ export default {
         })
       )
       if (res.status_code === 200) {
-        console.log(res)
+        const osObj = getOs()
         this.order.payInfo = res.data
-        console.log('支付信息', res.data)
-        if (this.orderTypeText === 'please') {
-          this.$router.push('/category/details/payForAnother')
-        } else if (this.orderTypeText === 'present') {
-          this.$router.push('/category/details/giveFirends')
-        } else {
-          // 去支付
-          goPayFromPayInfo(this.order.payInfo)
+        if (osObj.isWx) {
+          if (this.orderTypeText === 'please') {
+            this.$router.push('/category/details/payForAnother')
+          } else if (this.orderTypeText === 'present') {
+            this.$router.push('/category/details/giveFirends')
+          } else {
+            // 去支付
+            goPayFromPayInfo(this.order.payInfo, '/beeAlcohol#/paySuccess')
+          }
+        } else if (osObj.isIphone && osObj.isApp) {
+          window.webkit.messageHandlers.ToPayOrder.postMessage({
+            payOrderJson: JSON.stringify(this.order.payInfo),
+            isRechargePackage: false,
+            ot: 'liquor'
+          })
+        } else if (osObj.isAndroid && osObj.isApp) {
+          window.beeMarket.ToPayOrder(
+            JSON.stringify(res),
+            'liquor'
+          )
+          window.beeMarket.CloseThisActivity()
         }
       }
     },

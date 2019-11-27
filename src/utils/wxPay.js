@@ -11,7 +11,11 @@ function goPay(query) {
     '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
 }
 export function goPayFromOrder(orderNo, callBackUrl) {
-  goPay('orderNo=' + orderNo)
+  let query = 'orderNo=' + orderNo
+  if (callBackUrl) {
+    query += '&callback_url=' + encodeURIComponent(callBackUrl)
+  }
+  goPay(query)
 }
 export function goPayFromPayInfo(payInfo, callBackUrl) {
   let query = 'balance=' + payInfo.balance
@@ -21,5 +25,8 @@ export function goPayFromPayInfo(payInfo, callBackUrl) {
   query += '&blpay=' + payInfo.pay_methods.blpay
   query += '&wxpay=' + payInfo.pay_methods.wxpay
   query += '&trade_no=' + payInfo.trade_no
+  if (callBackUrl) {
+    query += '&callback_url=' + encodeURIComponent(callBackUrl)
+  }
   goPay(query)
 }

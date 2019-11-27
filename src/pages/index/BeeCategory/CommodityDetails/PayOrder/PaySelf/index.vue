@@ -268,11 +268,11 @@ export default {
 
     // 查看付款结果
     toResult(url) {
-      let customCallbackUrl = this.$route.query.callback_url
+      const customCallbackUrl = this.$route.query.callback_url
       if (customCallbackUrl === null || customCallbackUrl === undefined) {
         this.toDefaultResult(url)
       } else {
-        customCallbackUrl = decodeURIComponent(customCallbackUrl)
+        // customCallbackUrl = decodeURIComponent(customCallbackUrl)
         window.location.href = `${customCallbackUrl}?trade_no=${this.order.payInfo.trade_no}`
       }
     },
