@@ -57,7 +57,7 @@ export default {
   computed: {
     maxTips() {
       if (this.maxNumber < 10) {
-        return `每人限购10件，您已购买${this.maxNumber}件`
+        return `每人限购10件，您已购买${10 - this.maxNumber}件`
       } else {
         return '每人限购10件'
       }
