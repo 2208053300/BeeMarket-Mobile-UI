@@ -19,7 +19,7 @@
           {{ result.cash_coupon }}元
         </p>
         <p class="txt">
-          红包补贴已到账
+          现金补贴已到账
         </p>
       </div>
       <img :src="beeIcon.useBtn" class="use-btn" @click="goIndex">

@@ -18,9 +18,9 @@
         <!-- status 状态 1未获得 2已使用 3立即使用 4立即提现 5转为余额 -->
         <van-col v-for="(item, index) in listData" :key="index" span="12">
           <div class="ticket-item text-center" :class="{used: item.status===2}">
-            <img v-if="item.type===1 && [1,4].includes(item.status)" :src="beeIcon.toCash" class="corner-img">
+            <img v-if="item.type===1 && [1,3,4,5].includes(item.status)" :src="beeIcon.toCash" class="corner-img">
             <img v-if="item.type===1 && item.status===2" :src="beeIcon.notCash" class="corner-img">
-            <img v-if="item.type===2 && [1,5].includes(item.status)" :src="beeIcon.canTurn" class="corner-img">
+            <img v-if="item.type===2 && [1,3,4,5].includes(item.status)" :src="beeIcon.canTurn" class="corner-img">
             <img v-if="item.type===2 && item.status===2" :src="beeIcon.notTurn" class="corner-img">
             <p class="ticket-price">
               {{ item.amount }}<span>元</span>
