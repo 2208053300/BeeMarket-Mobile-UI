@@ -65,12 +65,9 @@
 // import Rule from './components/rule'
 // import Cookies from 'js-cookie'
 import { getUID } from '@/api/BeeApi/user'
-import { getTicketListData, toBalance } from '@/api/BeeApi/alcohol'
-// import {
-//   setShareOptions
-// } from '@/utils/share'
 import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
+import { getTicketListData, toBalance } from '@/api/BeeApi/alcohol'
 
 export default {
   metaInfo: {
