@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     async getPayResult() {
-      const res = await payResult({ trade_no: this.$router.query.trade_no })
+      const res = await payResult({ trade_no: this.$route.query.trade_no })
       this.result = res.data
     },
     goIndex() {
