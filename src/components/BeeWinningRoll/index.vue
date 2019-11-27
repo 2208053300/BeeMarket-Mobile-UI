@@ -30,7 +30,8 @@ export default {
     async getPrizeList() {
       const types = {
         'home': 0,
-        'giftPackage': 4
+        'giftPackage': 4,
+        'alcohol': 5
       }
       const res = await prizeList({ type: types[this.type] })
       this.list = res.data || []
