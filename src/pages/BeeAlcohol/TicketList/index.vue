@@ -168,7 +168,7 @@ export default {
           title: '年终狂欢 瓜分1亿',
           desc: '购茅台一箱，送现金一万',
           imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
-          link: location.origin + '/beeAlcohol#/?uid=' + this.uid
+          link: location.origin + '/#/beeAlcohol?uid=' + this.uid
         })
       } else if (this.osObj.isIphone && this.osObj.isApp) {
         window.webkit.messageHandlers.ToShare.postMessage({
@@ -176,14 +176,14 @@ export default {
           desc: '购茅台一箱，送现金一万',
           img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
           // 地址应该放 web 站 网页
-          url: location.origin + '/beeAlcohol#/?uid=' + this.uid
+          url: location.origin + '/#/beeAlcohol?uid=' + this.uid
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(
           '年终狂欢 瓜分1亿',
           '购茅台一箱，送现金一万',
           'https://img.fengjishi.com/app/images/share_logo.jpg',
-          location.origin + '/beeAlcohol#/?uid=' + this.uid
+          location.origin + '/#/beeAlcohol?uid=' + this.uid
         )
       } else {
         console.log('other')

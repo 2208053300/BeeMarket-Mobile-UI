@@ -116,7 +116,7 @@ export default {
         setShareOptions({
           title: '年终狂欢，瓜分10亿',
           desc: '茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！',
-          link: this.uid ? location.origin + '/beeAlcohol#/?uid=' + this.uid : location.origin + '/beeAlcohol#/'
+          link: this.uid ? location.origin + '/#/beeAlcohol?uid=' + this.uid : location.origin + '/#/beeAlcohol'
         })
       } catch (error) {
         console.log(error)
