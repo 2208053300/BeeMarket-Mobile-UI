@@ -105,7 +105,7 @@ export default {
   mounted() {},
   methods: {
     selectAddress() {
-      this.$store.state.app.pushName = 'confirmOrder'
+      this.$store.state.app.pushName = 'alcoholConfirmOrder'
       this.$store.state.app.pushQuery = {
         target: this.$route.query.target,
         origin: 'selectAddress',
