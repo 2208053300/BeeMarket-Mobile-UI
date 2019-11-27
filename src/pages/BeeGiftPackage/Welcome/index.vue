@@ -36,6 +36,8 @@
 
 <script>
 import { getOs } from '@/utils'
+import { getUID } from '@/api/BeeApi/user'
+import wxapi from '@/utils/wxapi'
 
 export default {
   props: {},
@@ -45,12 +47,28 @@ export default {
         showControls: false,
         first_screen: require('@/assets/icon/giftPackage/wellcome/first_screen@3x.png'),
         title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png')
-      }
+      },
+      // 获取 os 平台
+      osObj: getOs()
     }
   },
   mounted() {
     this.$store.commit('SET_BACKTOP_HIDE', true)
     this.$store.state.app.beeFooter.show = false
+
+    this.loadUID()
+
+    // app 调用本地 方法，需将该方法挂载到window
+    window.appShare = this.appShare
+    if (this.osObj.isWx) {
+      //
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(true)
+    } else {
+      //
+    }
   },
   destroyed() {
     this.$store.commit('SET_BACKTOP_HIDE', false)
@@ -72,6 +90,41 @@ export default {
     play() {
       this.$refs.video.play()
       this.video.showControls = true
+    },
+
+    async loadUID() {
+      const res = await getUID()
+      this.uid = res.data.uid
+
+      wxapi.wxShare({
+        title: '蜂集市-让生活蜂富起来！',
+        desc: '能省能免能赚，共享电商平台',
+        imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
+        link: window.location.href.split('#')[0] + '#' + `/beeGiftPackage?uid=${this.uid}`
+      })
+    },
+    // 分享
+    appShare() {
+      if (this.osObj.isWx) {
+        //
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToShare.postMessage({
+          title: '蜂集市-让生活蜂富起来！',
+          desc: '能省能免能赚，共享电商平台',
+          img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
+          // 地址应该放 web 站 网页
+          url: window.location.href.split('#')[0] + '#' + `/beeGiftPackage?uid=${this.uid}`
+        })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToShare(
+          '蜂集市-让生活蜂富起来！',
+          '能省能免能赚，共享电商平台',
+          'https://img.fengjishi.com/app/images/share_logo.jpg',
+          window.location.href.split('#')[0] + '#' + `/beeLimit?uid=${this.uid}`
+        )
+      } else {
+        //
+      }
     }
   }
 }

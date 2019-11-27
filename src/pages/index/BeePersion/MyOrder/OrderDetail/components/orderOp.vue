@@ -196,8 +196,12 @@ export default {
           order_no: order.order_no
         })
         if (res.status_code === 200) {
-          this.$toast('已加入购物车')
-          this.$router.push('/cart')
+          if (res.data.url) {
+            window.location.href = res.data.url
+          } else {
+            this.$toast('已加入购物车')
+            this.$router.push('/cart')
+          }
         }
       } catch (error) {
         this.$toast(error)

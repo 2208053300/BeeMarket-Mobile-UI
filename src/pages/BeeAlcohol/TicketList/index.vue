@@ -43,9 +43,21 @@
     </div>
     <!-- 底部 分享、去购买 按钮 -->
     <div class="bottom">
-      <img :src="beeIcon.buyBtn" class="btn-img" @click="goIndex">
-      <!-- <img :src="beeIcon.shareBtn" class="btn-img" @click="initShare"> -->
+      <img v-if="type===2" :src="beeIcon.buyBtn" class="btn-img" @click="goIndex">
+      <img v-if="type===1" :src="beeIcon.shareBtn" class="btn-img" @click="goShare">
     </div>
+
+    <!-- 微信分享提示遮罩 -->
+    <van-popup
+      v-model="showWxTip"
+      class="share-tip-box"
+      position="top"
+    >
+      <img
+        :src="beeIcon.shareTipImg"
+        class="share-tip-img"
+      >
+    </van-popup>
   </div>
 </template>
 
@@ -77,20 +89,28 @@ export default {
         canTurn: require('@/assets/icon/alcohol/liqueur_red_envelope_label_turn_n.png'), // 可转余额
         notTurn: require('@/assets/icon/alcohol/liqueur_red_envelope_label_turn_d.png'), // 不可转余额
         buyBtn: require('@/assets/icon/alcohol/liqueur_red_envelope_button_buy.png'), // 不可转余额
-        shareBtn: require('@/assets/icon/alcohol/liqueur_red_envelope_button_share.png') // 不可转余额
+        shareBtn: require('@/assets/icon/alcohol/liqueur_red_envelope_button_share.png'), // 不可转余额
+        shareTipImg: require('@/assets/icon/share/guide1.png') // 不可转余额
       },
 
       uid: 0,
       // listData
       listData: [],
       text: '',
-      total_amount2: 0
+      total_amount2: 0,
+      type: 0, // 1 分享，2购买
+      // 获取 os 平台
+      osObj: getOs(),
+      // 微信分享提示
+      showWxTip: false
     }
   },
   computed: {},
   watch: {},
   created() {},
   mounted() {
+    this.getUid()
+
     this.getListData()
     // this.initShare()
     // 如果有store说明该页面作为组件在webApp显示
@@ -106,6 +126,7 @@ export default {
       this.text = res.data.text
       this.total_amount2 = res.data.total_amount
       this.listData = res.data.lists
+      this.type = res.data.type
     },
     // 列表按钮操作 id:现金券id status: 3 立即使用 4 立即提现 5 转为余额
     async btnAction(id, status) {
@@ -124,22 +145,43 @@ export default {
         console.log('其他，出问题了额，status:', status)
       }
     },
+    // 获取uid
+    async getUid() {
+      const res = await getUID()
+      this.uid = res.data.uid
+    },
     // 去购买
     goIndex() {
       this.$router.push('/')
     },
-    // 去分享
-    async initShare() {
-      try {
-        const res = await getUID()
-        this.uid = res.data.uid
-        setShareOptions({
+
+    // 分享
+    async goShare() {
+      if (this.osObj.isWx) {
+        this.showWxTip = true
+        wxapi.wxShare({
           title: '年终狂欢 瓜分1亿',
           desc: '购茅台一箱，送现金一万',
-          link: this.uid ? location.origin + '/beeAlcohol#/?uid=' + this.uid : location.origin + '/beeAlcohol#/'
+          imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
+          link: location.origin + '/beeAlcohol#/?usid=' + this.uid
         })
-      } catch (error) {
-        console.log(error)
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToShare.postMessage({
+          title: '年终狂欢 瓜分1亿',
+          desc: '购茅台一箱，送现金一万',
+          img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
+          // 地址应该放 web 站 网页
+          url: location.origin + '/beeAlcohol#/?usid=' + this.uid
+        })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToShare(
+          '年终狂欢 瓜分1亿',
+          '购茅台一箱，送现金一万',
+          'https://img.fengjishi.com/app/images/share_logo.jpg',
+          location.origin + '/beeAlcohol#/?usid=' + this.uid
+        )
+      } else {
+        console.log('other')
       }
     }
   }
@@ -250,5 +292,15 @@ export default {
     width:7.5rem;
     height: 1.1rem;
   }
+.van-popup.share-tip-box {
+  background-color: rgba(0, 0, 0, 0);
+  text-align: right;
+}
+.share-tip-img {
+  width: 3.3rem;
+  height: 2.28rem;
+  margin-right: 0.2rem;
+  margin-top: 0.2rem;
+}
 }
 </style>
