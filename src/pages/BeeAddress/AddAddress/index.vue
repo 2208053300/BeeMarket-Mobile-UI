@@ -97,6 +97,7 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 import BeeArea from '@/components/BeeArea'
 import { getAddressDetail, addAddress, updateAddress } from '@/api/BeeApi/user'
+import { getOs } from '@/utils'
 export default {
   metaInfo() {
     if (this.$route.query.addr_id) {
@@ -133,8 +134,12 @@ export default {
   watch: {},
   created() {},
   mounted() {
-    this.$store.state.app.beeHeader = true
-    this.$store.state.app.beeFooter.show = false
+    // 在APP页面不显示header
+    if (!getOs().isApp) {
+      this.$store.state.app.beeHeader = true
+      this.$store.state.app.beeFooter.show = false
+    }
+
     // NOTE 如果是编辑地址
     if (this.$route.query.addr_id) {
       this.getAddressDetailData()

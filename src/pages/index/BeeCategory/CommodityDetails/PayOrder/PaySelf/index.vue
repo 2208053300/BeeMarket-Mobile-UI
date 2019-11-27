@@ -139,6 +139,7 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = true
     this.$store.state.app.beeFooter.show = false
+    console.log('callbackUrl:', this.$route.query.callback_url)
     const orderNo = this.$route.query.orderNo
     if (orderNo) {
       this.getPayInfo(orderNo)
