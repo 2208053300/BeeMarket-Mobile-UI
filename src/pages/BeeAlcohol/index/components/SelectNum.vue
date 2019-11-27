@@ -22,7 +22,7 @@
           <svg t="1574734368286" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1325" width="24" height="24"><path d="M480.256 128l0 768 62.464 0 1.024-768-63.488 0zM896 480.256l-768 0 0 62.464 768 1.024 0-63.488z" fill="" p-id="1326" /></svg>
         </div>
       </div>
-      <p v-show="maxNumber>-1" class="tips">
+      <p v-show="false" class="tips">
         {{ maxTips }}
       </p>
       <div style="text-align: center">
