@@ -90,8 +90,12 @@ export default {
   computed: {},
   watch: {},
   created() {},
+  destroyed() {
+    this.$store.commit('SET_BACKTOP_HIDE', false)
+  },
   mounted() {
     this.initShare()
+    this.$store.commit('SET_BACKTOP_HIDE', true)
     // 在APP页面不显示header
     if (!getOs().isApp) {
       this.$store.state.app.beeHeader = false

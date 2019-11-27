@@ -31,7 +31,7 @@
     <div class="op-item">
       <div
         class="img-content"
-        @click="goSinglePage('beeAlcohol#/', false)"
+        @click="$router.push('beeAlcohol')"
       >
         <img
           :src="beeIcon.home_icon_billion"

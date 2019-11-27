@@ -26,7 +26,7 @@ const router = new Router({
     },
     {
       path: '/confirmOrder',
-      name: 'confirmOrder',
+      name: 'alcoholConfirmOrder',
       component: () =>
         import(
           '@/pages/BeeAlcohol/ConfirmOrder'

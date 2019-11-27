@@ -73,7 +73,7 @@ export default {
     confirmOrder() {
       this.handleClose()
       this.$router.push({
-        name: 'confirmOrder',
+        name: 'alcoholConfirmOrder',
         query: {
           number: this.number
         }

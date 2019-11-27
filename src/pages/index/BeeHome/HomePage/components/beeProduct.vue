@@ -33,7 +33,7 @@ export default {
   mounted() {},
   methods: {
     goUrl(url, id) {
-      window.location.href = '/beeAlcohol#/'
+      this.$router.push('/beeAlcohol')
       // REVIEW
       // this.$router.push({ path: '/beeActiveTpl', query: { id: id }})
     }
