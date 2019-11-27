@@ -9,10 +9,18 @@ export function getTicketListData(data) {
     data
   })
 }
-// NOTE 获取现金券列表
+// NOTE 转为余额
 export function toBalance(data) {
   return request({
     url: '/user/coupon/PresentBalance',
+    method: 'post',
+    data
+  })
+}
+// NOTE 现金券提现
+export function toCash(data) {
+  return request({
+    url: '/user/coupon/cashBalance',
     method: 'post',
     data
   })
