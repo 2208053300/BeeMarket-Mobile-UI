@@ -15,7 +15,7 @@
         >
           <div
             class="commodity-details"
-            @click="$router.push({path:'/category/details',query: { pid: product.pid, target: product.target }})"
+            @click="goDetail(product.url,product.pid,product.target)"
           >
             <div class="commodity-img">
               <img
@@ -122,7 +122,19 @@ export default {
   watch: {},
   created() {},
   mounted() {},
-  methods: {}
+  methods: {
+    // 跳转商品详情，如果是活动商品直接跳转到活动页，否则跳转到正常商品详情页面
+    goDetail(url, pid, target) {
+      if (url) {
+        window.location.href = url
+      } else {
+        this.$router.push({
+          path: '/category/details',
+          query: { pid, target }
+        })
+      }
+    }
+  }
 }
 </script>
 

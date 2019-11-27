@@ -75,13 +75,13 @@
             取消时间：{{ orderDetail.canceled_at }}
           </div>
           <div
-            v-if="orderDetail.s_pay!==0"
+            v-if="orderDetail.s_pay!==-1"
             class="details2-text"
           >
             支付方式：{{ orderDetail.pay_method_name }}
           </div>
           <div
-            v-if="orderDetail.s_pay!==0"
+            v-if="orderDetail.s_pay!==-1"
             class="details2-text"
           >
             支付时间：{{ orderDetail.paid_at }}

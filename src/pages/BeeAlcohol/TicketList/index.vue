@@ -106,9 +106,7 @@ export default {
   created() {},
   mounted() {
     this.getUid()
-
     this.getListData()
-    // this.initShare()
     // 如果有store说明该页面作为组件在webApp显示
     if (!getOs().isApp) {
       this.$store.state.app.beeHeader = true
