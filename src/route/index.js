@@ -106,6 +106,56 @@ const router = new Router({
           ]
         },
         {
+          path: 'beeAlcohol',
+          component: () => import('@/pages/BeeAlcohol'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/pages/BeeAlcohol/index/index')
+            },
+            {
+              path: '/paySuccess',
+              name: 'paySuccess',
+              component: () => import('@/pages/BeeAlcohol/PaySuccess')
+            },
+            {
+              path: '/ticket',
+              name: 'ticket',
+              component: () => import('@/pages/BeeAlcohol/TicketList')
+            },
+            {
+              path: '/confirmOrder',
+              name: 'confirmOrder',
+              component: () =>
+                import(
+                  '@/pages/BeeAlcohol/ConfirmOrder'
+                )
+            },
+            {
+              path: '/addressSetting',
+              name: 'addressSetting',
+              component: () => import('@/pages/BeeAddress'),
+              children: [
+                {
+                  path: '',
+                  name: 'addressManage',
+                  component: () => import('@/pages/BeeAddress/AddressManage')
+                },
+                {
+                  path: 'addAddress',
+                  name: 'addAddress',
+                  component: () => import('@/pages/BeeAddress/AddAddress')
+                }
+              ]
+            },
+            {
+              path: '/login',
+              name: 'BeeLogin',
+              component: () => import('@/pages/BeeLogin')
+            }
+          ]
+        },
+        {
           path: 'beeFriends',
           component: () => import('@/pages/BeeFriends'),
           children: [

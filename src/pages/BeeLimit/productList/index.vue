@@ -100,7 +100,9 @@ export default {
       loading: false,
       finished: false,
       page: 1,
-      uid: 0
+      uid: 0,
+      // 获取 os 平台
+      osObj: getOs()
     }
   },
   computed: {},
