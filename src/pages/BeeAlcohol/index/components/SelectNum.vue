@@ -53,6 +53,7 @@ export default {
       this.$emit('update', false)
     },
     confirmOrder() {
+      this.handleClose()
       this.$router.push({
         name: 'confirmOrder',
         query: {
