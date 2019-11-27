@@ -27,7 +27,12 @@
       </van-cell>
 
       <!-- 没有公益值的时候隐藏 -->
-      <van-cell v-if="order.orderDetail.cash_coupon" class="deduction-content" is-link @click="selectCouponVisible=true">
+      <van-cell
+        v-if="order.orderDetail.cash_coupon && order.orderDetail.cash_coupon.length > 0"
+        class="deduction-content"
+        is-link
+        @click="selectCouponVisible=true"
+      >
         <div
           slot="title"
           class="cell-title cell-deduction"
@@ -63,7 +68,7 @@
         <div>
           <span>合计：</span>
           <div class="price-num">
-            ￥{{ order.orderDetail.order_amount && order.orderDetail.order_amount.toFixed(2) }}
+            ￥{{ totalMount }}
           </div>
         </div>
         <div v-if="deductionText" style="color: gray;font-size: 0.22rem">
@@ -80,7 +85,7 @@
     </div>
     <select-coupon
       :visible.sync="selectCouponVisible"
-      :order-amount="bakOrderAmount"
+      :order-amount="order.orderDetail.order_amount"
       :cash-coupon="cash_coupon_list"
     />
   </div>
@@ -126,9 +131,39 @@ export default {
   },
   computed: {
     ...mapState(['order']),
-    deductionText() {
-      return '抵扣文案'
+    // 已抵扣金额
+    deductedAmount() {
+      if (this.order.orderDetail.cash_coupon) {
+        return this.order.orderDetail.cash_coupon.reduce(
+          (total, item) => {
+            if (item.checked) {
+              return total + item.amount
+            } else {
+              return total
+            }
+          }, 0
+        )
+      } else {
+        return 0
+      }
     },
+    // 抵扣文案
+    deductionText() {
+      return this.deductedAmount > 0 ? `(红包抵扣￥${this.deductedAmount})` : ''
+    },
+    // 订单总价
+    totalMount() {
+      if (this.deductedAmount > 0) {
+        let amount = this.order.orderDetail.order_amount - this.deductedAmount
+        if (amount < 0) {
+          amount = 0
+        }
+        return amount
+      } else {
+        return this.order.orderDetail.order_amount
+      }
+    },
+    // 所有抵扣券总额
     cash_coupon_total() {
       return this.order.orderDetail.cash_coupon.reduce(
         (total, item) => {
@@ -166,33 +201,35 @@ export default {
       res.data.cash_coupon = [
         {
           id: 1,
-          amount: 2000,
-          checked: false,
-          disable: false
+          amount: 2000
         }, {
           id: 2,
-          amount: 2000,
-          checked: false,
-          disable: false
+          amount: 2000
         }, {
           id: 3,
-          amount: 3000,
-          checked: false,
-          disable: false
+          amount: 3000
         }, {
           id: 4,
-          amount: 3000,
-          checked: false,
-          disable: false
+          amount: 3000
         }
       ]
       if (res.status_code === 200) {
+        this.warpCashCoupon(res.data.cash_coupon)
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
         this.bakOrderAmount = res.data.order_amount
         if (this.order.orderDetail.stores.length === 0) {
           this.$router.go(-1)
         }
+      }
+    },
+    // 为优惠券添加check和disable字段
+    async warpCashCoupon(cash_coupon) {
+      if (cash_coupon) {
+        cash_coupon.forEach(item => {
+          item.checked = false
+          item.disable = false
+        })
       }
     },
     async createOrderData() {
@@ -225,16 +262,29 @@ export default {
         })
       )
       if (res.status_code === 200) {
-        console.log(res)
+        const osObj = getOs()
         this.order.payInfo = res.data
-        console.log('支付信息', res.data)
-        if (this.orderTypeText === 'please') {
-          this.$router.push('/category/details/payForAnother')
-        } else if (this.orderTypeText === 'present') {
-          this.$router.push('/category/details/giveFirends')
-        } else {
-          // 去支付
-          goPayFromPayInfo(this.order.payInfo)
+        if (osObj.isWx) {
+          if (this.orderTypeText === 'please') {
+            this.$router.push('/category/details/payForAnother')
+          } else if (this.orderTypeText === 'present') {
+            this.$router.push('/category/details/giveFirends')
+          } else {
+            // 去支付
+            goPayFromPayInfo(this.order.payInfo, '/beeAlcohol#/paySuccess')
+          }
+        } else if (osObj.isIphone && osObj.isApp) {
+          window.webkit.messageHandlers.ToPayOrder.postMessage({
+            payOrderJson: JSON.stringify(this.order.payInfo),
+            isRechargePackage: false,
+            ot: 'liquor'
+          })
+        } else if (osObj.isAndroid && osObj.isApp) {
+          window.beeMarket.ToPayOrder(
+            JSON.stringify(res),
+            'liquor'
+          )
+          window.beeMarket.CloseThisActivity()
         }
       }
     },
