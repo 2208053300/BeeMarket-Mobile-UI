@@ -113,14 +113,14 @@ export default {
           desc: '能省能免能赚，共享电商平台',
           img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
           // 地址应该放 web 站 网页
-          url: window.location.origin + `/beeGiftPackage?uid=${this.uid}`
+          url: window.location.origin + `/#/beeGiftPackage?uid=${this.uid}`
         })
       } else if (this.osObj.isAndroid && this.osObj.isApp) {
         window.beeMarket.ToShare(
           '蜂集市-让生活蜂富起来！',
           '能省能免能赚，共享电商平台',
           'https://img.fengjishi.com/app/images/share_logo.jpg',
-          window.location.origin + `/beeLimit?uid=${this.uid}`
+          window.location.origin + `/#/beeLimit?uid=${this.uid}`
         )
       } else {
         //
