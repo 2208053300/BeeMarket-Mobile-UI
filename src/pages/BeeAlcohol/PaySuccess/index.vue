@@ -1,6 +1,7 @@
 <template>
   <div class="pay-success">
     <div class="result text-center">
+      <p>{{ result }}</p>
       <img :src="beeIcon.tipImg" class="tip-img">
       <p class="tip-txt">
         付款成功
