@@ -187,7 +187,7 @@ export default {
   methods: {
     // 去支付
     goPay(orderNo) {
-      if (this.orderDetail.t_order === 'liquor') {
+      if (this.orderDetail.source === 'liquor') {
         goPayFromOrder(orderNo, '/#/beeAlcohol/paySuccess')
       } else {
         goPayFromOrder(orderNo)

@@ -131,7 +131,7 @@
             v-if="card.s_pay === 0&&card.s_order !== -1"
             round
             class="order-button"
-            @click.stop="goPay(card.order_no)"
+            @click.stop="goPay(card)"
           >
             去支付
           </van-button>
@@ -204,11 +204,11 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    goPay(orderNo) {
-      if (this.orderDetail.t_order === 'liquor') {
-        goPayFromOrder(orderNo, '/#/beeAlcohol/paySuccess')
+    goPay(card) {
+      if (card.t_order === 'liquor') {
+        goPayFromOrder(card.orderNo, '/#/beeAlcohol/paySuccess')
       } else {
-        goPayFromOrder(orderNo)
+        goPayFromOrder(card.orderNo)
       }
     },
     onLoad() {
