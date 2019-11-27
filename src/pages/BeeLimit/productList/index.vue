@@ -111,6 +111,18 @@ export default {
     this.$store.state.app.beeFooter.show = false
     this.getBeeLimitListData()
     this.loadUID()
+
+    // app 调用本地 方法，需将该方法挂载到window
+    window.appShare = this.appShare
+    if (this.osObj.isWx) {
+      //
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: true })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(true)
+    } else {
+      //
+    }
   },
   methods: {
     async getBeeLimitListData() {
@@ -186,6 +198,29 @@ export default {
         //   this.finished = true
         // }
       }, 500)
+    },
+    // 分享
+    appShare() {
+      if (this.osObj.isWx) {
+        //
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToShare.postMessage({
+          title: '蜂集市-让生活蜂富起来！',
+          desc: '能省能免能赚，共享电商平台',
+          img_path: 'https://img.fengjishi.com/app/images/share_logo.jpg',
+          // 地址应该放 web 站 网页
+          url: window.location.href.split('#')[0] + '#' + `/beeLimit?uid=${this.uid}`
+        })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToShare(
+          '蜂集市-让生活蜂富起来！',
+          '能省能免能赚，共享电商平台',
+          'https://img.fengjishi.com/app/images/share_logo.jpg',
+          window.location.href.split('#')[0] + '#' + `/beeLimit?uid=${this.uid}`
+        )
+      } else {
+        //
+      }
     }
   }
 }

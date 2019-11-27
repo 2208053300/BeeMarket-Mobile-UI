@@ -51,6 +51,7 @@
     </div>
     <rule v-model="showRule" />
     <select-num v-model="showBuy" />
+    <img :src="beeIcon.ticketImg" class="ticket-img" @click="goTicket">
   </div>
 </template>
 
@@ -73,7 +74,8 @@ export default {
       showControls: false,
       beeIcon: {
         title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
-        rule: require('@/assets/icon/alcohol/liqueur_button_rule.png')
+        rule: require('@/assets/icon/alcohol/liqueur_button_rule.png'),
+        ticketImg: require('@/assets/icon/alcohol/liqueur_pic_red_envelope.png')
       },
       showRule: false,
       uid: 0,
@@ -113,6 +115,37 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    // 分享
+    appShare() {
+      if (this.osObj.isWx) {
+        //
+      } else if (this.osObj.isIphone && this.osObj.isApp) {
+        window.webkit.messageHandlers.ToShare.postMessage({
+          title: this.activity.share_data.title,
+          desc: this.activity.share_data.desc,
+          img_path: this.activity.share_data.img,
+          // 地址应该放 web 站 网页
+          url: this.activity.share_data.link
+          // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+        })
+      } else if (this.osObj.isAndroid && this.osObj.isApp) {
+        window.beeMarket.ToShare(
+          this.activity.share_data.title,
+          this.activity.share_data.desc,
+          this.activity.share_data.img,
+          this.activity.share_data.link
+          // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
+        )
+      } else {
+        //
+      }
+    },
+    // 跳转到现金券列表
+    goTicket() {
+      this.$router.push({
+        path: '/ticket'
+      })
     }
   }
 }
@@ -158,6 +191,13 @@ export default {
     bottom: 0;
     z-index: 1000;
     left: 0;
+  }
+  .ticket-img{
+    position: fixed;
+    bottom: 1rem;
+    right: 0;
+    width:2rem;
+    height: 2.2rem;
   }
 }
 </style>
