@@ -69,8 +69,8 @@ import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 import { getTicketListData, toBalance } from '@/api/BeeApi/alcohol'
 import {
-  // showShareIcon,
-  setShareOptions
+// showShareIcon,
+// setShareOptions
 } from '@/utils/share'
 
 export default {
