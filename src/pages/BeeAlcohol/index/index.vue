@@ -1,6 +1,7 @@
 <template>
   <div class="bee-alcohol">
     <bee-winning-roll
+      v-if="test"
       style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100"
       type="alcohol"
     />
@@ -83,7 +84,8 @@ export default {
       },
       showRule: false,
       uid: 0,
-      showBuy: false
+      showBuy: false,
+      test: true
     }
   },
   computed: {},
@@ -102,6 +104,14 @@ export default {
       Cookies.set('uid', this.$route.query.uid)
     }
     showShareIcon()
+
+    const that = this
+    window.onresize = function temp() {
+      that.test = false
+      setTimeout(() => {
+        that.test = true
+      }, 1000)
+    }
   },
   methods: {
     // 播放视频

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+#### v3.0.8 (2019-11-27)
+
+1. 新增“瓜分10亿”活动；
+2. 修复部分已知bug
+  
 #### v3.0.7 (2019-11-6)
 
 1. 优化免费送礼功能；
