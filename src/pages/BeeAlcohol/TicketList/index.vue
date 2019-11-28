@@ -131,12 +131,15 @@ export default {
           this.$router.push({
             path: '/beeAlcohol'
           })
-          // window.location.href = window.location.origin + '/beeAlcohol'
         }
       } else if (status === 4) {
         res = await toCash({ id })
         if (res.status_code === 200) {
-          window.location.href = window.location.origin + '/beeFriends#/pay'
+          if (this.osObj.isApp) {
+            window.location.href = window.location.origin + '/#/beeFriends/pay'
+          } else {
+            window.location.href = window.location.origin + '/beeFriends#/pay'
+          }
         } else {
           this.getListData()
         }

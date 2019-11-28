@@ -96,7 +96,7 @@
           </div>
           <div class="tip-info">
             <p>
-              <span>有<span id="num">{{ totalNum }}</span>元不可提现</span>
+              <span>有<span id="num">{{ no_sup_balance }}</span>元不可提现</span>
             </p>
             <span
               class="all-to-cash"
@@ -227,6 +227,8 @@ export default {
       MAX_MONEY: 1000,
       // 可提现总金额
       totalNum: 0,
+      // 不可提现金额
+      no_sup_balance:0,
       // 金额提示
       cashTip: '请输入提现金额！',
       // 短信验证码弹框
@@ -394,12 +396,13 @@ export default {
       return true
     },
 
-    // 获取 可提现数量
+    // 获取 (不)可提现数量
     async getCanWithdraw() {
       try {
         const res = await getWithdrawNum()
         if (res.status_code === 200) {
           this.totalNum = res.data.sup_balance
+          this.no_sup_balance = res.data.no_sup_balance
           this.phone = res.data.phone
         }
       } catch (error) {
@@ -535,6 +538,7 @@ export default {
         -webkit-tap-highlight-color: transparent;
         margin-bottom: 0.1rem;
         padding-left: 0.2rem;
+
       }
       .error {
         padding-left: 0.2rem;
@@ -620,6 +624,9 @@ export default {
           outline: none;
           -webkit-tap-highlight-color: transparent;
           color: #221814;
+          position: relative;
+          z-index: 22;
+          background-color: transparent;
         }
         input::-webkit-input-placeholder {
           color: #ccc;
@@ -636,6 +643,7 @@ export default {
         .all{font-size: 0.3rem;color: #FFA42F;}
         .tip{
           position: absolute;
+          z-index: 2;
           left: 1rem;
           color:#999;
           font-size: 0.3rem;
