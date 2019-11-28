@@ -55,7 +55,7 @@ const router = new Router({
       component: () => import('@/pages/BeeLogin')
     },
     {
-      path: 'accountBind',
+      path: '/accountBind',
       name: 'accountBind',
       component: () =>
         import('@/pages/index/BeePersion/Profile/AccountBind'),
