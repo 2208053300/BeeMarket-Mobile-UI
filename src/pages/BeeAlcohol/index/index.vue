@@ -110,7 +110,7 @@ export default {
       that.test = false
       setTimeout(() => {
         that.test = true
-      }, 1000)
+      }, 200)
     }
   },
   methods: {
