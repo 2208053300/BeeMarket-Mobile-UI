@@ -1,39 +1,54 @@
 <template>
   <div class="bee-alcohol">
     <bee-winning-roll
-      v-if="test"
+      v-if="showSwipe"
       style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100"
       type="alcohol"
     />
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_01.jpg')" alt="head">
-      <div style="position: absolute;bottom: 0;left: 0;display: flex;justify-content: center;width: 100%">
+      <img
+        :src="require('@/assets/icon/alcohol/1-首页改版七-切图_01.jpg')"
+        alt="head"
+      >
+      <div
+        style="position: absolute;bottom: 0;left: 0;display: flex;justify-content: center;width: 100%"
+      >
         <img
           :src="beeIcon.rule"
           alt="活动规则"
           style="width: 150px"
-          @click="showRule=true"
+          @click="showRule = true"
         >
       </div>
     </div>
-    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_02.jpg')" alt="head">
-    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_03.jpg')" alt="head">
+    <img
+      :src="require('@/assets/icon/alcohol/1-首页改版七-切图_02.jpg')"
+      alt="head"
+    >
+    <img
+      :src="require('@/assets/icon/alcohol/1-首页改版七-切图_03.jpg')"
+      alt="head"
+    >
     <!-- 视频播放部分 -->
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_04.jpg')" alt="head">
+      <img
+        :src="require('@/assets/icon/alcohol/1-首页改版七-切图_04.jpg')"
+        alt="head"
+      >
       <div class="video">
         <video
           ref="video"
           src="https://img.fengjishi.com/app/videos/maotai/intro.mp4"
           preload="auto"
-          :poster="showControls ? '' : require('@/assets/icon/alcohol/pw_pic_video.png')"
+          :poster="
+            showControls
+              ? ''
+              : require('@/assets/icon/alcohol/pw_pic_video.png')
+          "
           class="video-body"
           :controls="showControls"
         />
-        <div
-          v-if="!showControls"
-          class="control"
-        >
+        <div v-if="!showControls" class="control">
           <img
             :src="beeIcon.title_icon_stop"
             style="width: 1.28rem;height: 1.28rem"
@@ -42,16 +57,28 @@
         </div>
       </div>
     </div>
-    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_05.jpg')" alt="head">
-    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_06.jpg')" alt="head">
-    <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_07.jpg')" alt="head">
+    <img
+      :src="require('@/assets/icon/alcohol/1-首页改版七-切图_05.jpg')"
+      alt="head"
+    >
+    <img
+      :src="require('@/assets/icon/alcohol/1-首页改版七-切图_06.jpg')"
+      alt="head"
+    >
+    <img
+      :src="require('@/assets/icon/alcohol/1-首页改版七-切图_07.jpg')"
+      alt="head"
+    >
     <div style="position: relative">
-      <img :src="require('@/assets/icon/alcohol/1-首页改版七-切图_08.jpg')" alt="head">
+      <img
+        :src="require('@/assets/icon/alcohol/1-首页改版七-切图_08.jpg')"
+        alt="head"
+      >
       <img
         :src="require('@/assets/icon/alcohol/liqueur_button_buy.png')"
         alt="立即购买"
         class="bottom-btn"
-        @click="showBuy=true"
+        @click="showBuy = true"
       >
     </div>
     <rule v-model="showRule" />
@@ -67,7 +94,7 @@ import Cookies from 'js-cookie'
 import { getUID } from '@/api/BeeApi/user'
 import { showShareIcon, setShareOptions } from '@/utils/share'
 import BeeWinningRoll from '@/components/BeeWinningRoll'
-
+import wait from '@/utils/wait'
 export default {
   metaInfo: {
     title: '年终狂欢 瓜分10亿'
@@ -85,7 +112,7 @@ export default {
       showRule: false,
       uid: 0,
       showBuy: false,
-      test: true
+      showSwipe: true
     }
   },
   computed: {},
@@ -93,6 +120,7 @@ export default {
   created() {},
   destroyed() {
     this.$store.commit('SET_BACKTOP_HIDE', false)
+    window.onresize = null
   },
   mounted() {
     this.initShare()
@@ -106,11 +134,10 @@ export default {
     showShareIcon()
 
     const that = this
-    window.onresize = function temp() {
-      that.test = false
-      setTimeout(() => {
-        that.test = true
-      }, 200)
+    window.onresize = async() => {
+      that.showSwipe = false
+      await wait(1000)
+      that.showSwipe = true
     }
   },
   methods: {
@@ -126,7 +153,9 @@ export default {
         setShareOptions({
           title: '年终狂欢，瓜分10亿',
           desc: '茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！',
-          link: this.uid ? location.origin + '/#/beeAlcohol?uid=' + this.uid : location.origin + '/#/beeAlcohol'
+          link: this.uid
+            ? location.origin + '/#/beeAlcohol?uid=' + this.uid
+            : location.origin + '/#/beeAlcohol'
         })
       } catch (error) {
         console.log(error)
@@ -209,11 +238,11 @@ export default {
     z-index: 1000;
     left: 0;
   }
-  .ticket-img{
+  .ticket-img {
     position: fixed;
     bottom: 1rem;
     right: 0;
-    width:2rem;
+    width: 2rem;
     height: 2.2rem;
   }
 }

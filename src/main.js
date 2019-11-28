@@ -1,13 +1,6 @@
 import store from '@/store'
+import { debounce } from '@/utils'
 
-// 防抖
-function debounce(fn, wait) {
-  var timeout = null
-  return function() {
-    if (timeout !== null) clearTimeout(timeout)
-    timeout = setTimeout(fn, wait)
-  }
-}
 // 处理函数
 function handle() {
   if (window.pageYOffset > 1000) {
