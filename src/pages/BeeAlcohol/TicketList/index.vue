@@ -213,6 +213,7 @@ export default {
     background-size: 100% 100%;
     width: 7.5rem;
     height:3.16rem;
+    margin: 0 auto;
     position: relative;
     box-sizing: border-box;
     padding-top: 0.5rem;
@@ -300,8 +301,10 @@ export default {
     position: fixed;
     left: 0;
     bottom: 0;
-    width:7.5rem;
+    width:100%;
     height: 1.1rem;
+    text-align: center;
+    img{width: 7.5rem;}
   }
 .van-popup.share-tip-box {
   background-color: rgba(0, 0, 0, 0);
