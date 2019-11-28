@@ -124,11 +124,6 @@ const router = new Router({
               component: () => import('@/pages/BeeAlcohol/TicketList')
             },
             {
-              path: 'toCash',
-              name: 'toCash',
-              component: () => import('@/pages/BeeAlcohol/ToCash')
-            },
-            {
               path: 'confirmOrder',
               name: 'alcoholConfirmOrder',
               component: () =>

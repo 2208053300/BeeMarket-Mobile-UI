@@ -181,8 +181,8 @@
     >
       <p>不可提现的金额为集市留存资金，可在 “蜂集市”APP 中购买商品任意抵扣。</p>
       <van-button
-        @click="reason=false"
         class="btn"
+        @click="reason=false"
       >
         明白了
       </van-button>
@@ -228,7 +228,7 @@ export default {
       // 可提现总金额
       totalNum: 0,
       // 不可提现金额
-      no_sup_balance:0,
+      no_sup_balance: 0,
       // 金额提示
       cashTip: '请输入提现金额！',
       // 短信验证码弹框
@@ -262,6 +262,7 @@ export default {
   mounted() {
     this.getCanWithdraw()
     if (this.osObj.isWx) {
+      //
     } else if (this.osObj.isIphone && this.osObj.isApp) {
       window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
     } else if (this.osObj.isAndroid && this.osObj.isApp) {
@@ -269,16 +270,12 @@ export default {
     }
   },
   methods: {
-     // 提交第一步
+    // 提交第一步
     async submitFir() {
       if (!this.valiName() && !this.valiIdNo()) {
         this.$toast('请正确填写姓名、身份证号码')
         return false
       }
-      // if (!this.valiIdNo()) {
-      //   this.$toast('请正确填写身份证号码')
-      //   return false
-      // }
       try {
         const res = await toCash({
           status: this.status,
@@ -370,10 +367,6 @@ export default {
       } catch (error) {
         this.$toast.fail(error)
       }
-    },
-    // 查看原因
-    showReason(){
-
     },
     // 验证姓名
     valiName() {
