@@ -17,6 +17,7 @@
         :action-details="actionDetails"
       />
       <detail-card4
+        v-show="showActivityDirections"
         class="details-card"
         :action-details="actionDetails"
       />
@@ -151,7 +152,19 @@ export default {
       pwv_number: 0
     }
   },
-  computed: {},
+  computed: {
+    // 计算是否显示活动说明
+    showActivityDirections() {
+      if (this.actionDetails.activity_directions === undefined) {
+        return false
+      } else if (this.actionDetails.activity_directions.length === 0) {
+        return false
+      } else if (this.actionDetails.activity_directions[0].content === '') {
+        return false
+      }
+      return true
+    }
+  },
   watch: {},
   created() {},
   mounted() {
