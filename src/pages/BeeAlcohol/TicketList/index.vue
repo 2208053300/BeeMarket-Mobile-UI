@@ -131,12 +131,15 @@ export default {
           this.$router.push({
             path: '/beeAlcohol'
           })
-          // window.location.href = window.location.origin + '/beeAlcohol'
         }
       } else if (status === 4) {
         res = await toCash({ id })
         if (res.status_code === 200) {
-          window.location.href = window.location.origin + '/beeFriends#/pay'
+          if (this.osObj.isApp) {
+            window.location.href = window.location.origin + '/#/beeFriends/pay'
+          } else {
+            window.location.href = window.location.origin + '/beeFriends#/pay'
+          }
         } else {
           this.getListData()
         }
@@ -213,6 +216,7 @@ export default {
     background-size: 100% 100%;
     width: 7.5rem;
     height:3.16rem;
+    margin: 0 auto;
     position: relative;
     box-sizing: border-box;
     padding-top: 0.5rem;
@@ -300,8 +304,10 @@ export default {
     position: fixed;
     left: 0;
     bottom: 0;
-    width:7.5rem;
+    width:100%;
     height: 1.1rem;
+    text-align: center;
+    img{width: 7.5rem;}
   }
 .van-popup.share-tip-box {
   background-color: rgba(0, 0, 0, 0);
