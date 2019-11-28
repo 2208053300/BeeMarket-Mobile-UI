@@ -25,6 +25,11 @@ const router = new Router({
       component: () => import('@/pages/BeeAlcohol/TicketList')
     },
     {
+      path: '/toCash',
+      name: 'toCash',
+      component: () => import('@/pages/BeeAlcohol/ToCash')
+    },
+    {
       path: '/confirmOrder',
       name: 'alcoholConfirmOrder',
       component: () =>
@@ -55,7 +60,7 @@ const router = new Router({
       component: () => import('@/pages/BeeLogin')
     },
     {
-      path: 'accountBind',
+      path: '/accountBind',
       name: 'accountBind',
       component: () =>
         import('@/pages/index/BeePersion/Profile/AccountBind'),
