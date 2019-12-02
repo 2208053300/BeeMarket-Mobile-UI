@@ -70,42 +70,38 @@
         </van-button>
       </div>
     </div>
-
     <!-- 提现到微信 -->
-    <div
-      v-else
-      class="to-cash"
-    >
+    <div v-else class="to-cash">
       <div class="info">
         <div class="to-wx">
-          <span>提现到微信</span>
+          <span>提现到微信零钱钱包</span>
           <div class="img">
             <img :src="wxIcon">
           </div>
         </div>
         <div class="num-info bg-white">
-          <p class="title">
-            提现余额数
-          </p>
-          <div class="input-div">
-            <input
-              id="inputNum"
-              v-model.trim="money"
-              type="Number"
-              min="1"
-              placeholder="金额"
-            >
-            <span>(元)</span>
+          <div class="input-box">
+            <div class="input-div">
+              <span class="mark">￥</span>
+              <input
+                id="inputNum"
+                v-model.trim="money"
+                type="Number"
+                min="1"
+              >
+              <span class="all" @click="money = totalNum">全部</span>
+              <span v-show="showBalance" class="tip">可提现{{totalNum}}元</span>
+            </div>
+            <div v-show="showError" class="error to-cash-error">{{ cashTip }}</div>
           </div>
           <div class="tip-info">
             <p>
-              <span>最多可提现余额<span id="num">{{ totalNum }}</span>元</span>
-              <span class="error to-cash-error">{{ cashTip }}</span>
+              <span>有<span id="num">{{ no_sup_balance }}</span>元不可提现</span>
             </p>
             <span
               class="all-to-cash"
-              @click="money = totalNum"
-            >全部提现</span>
+              @click="reason = true"
+            >查看原因</span>
           </div>
         </div>
       </div>
@@ -121,7 +117,7 @@
             确认提现
           </span>
         </vueTencentCaptcha>
-        <p>每天只能提现一次，一次至少100元，最多1000元!</p>
+        <p>合伙人每日提现一次，金额为100-1000元！</p>
       </div>
     </div>
 
@@ -177,6 +173,20 @@
         </div>
       </div>
     </van-popup>
+    <!-- 短信验证码 -->
+    <van-popup
+      v-model="reason"
+      @closed="closed"
+      class="reason-popup"
+    >
+      <p>不可提现的金额为集市留存资金，可在 “蜂集市”APP 中购买商品任意抵扣。</p>
+      <van-button
+        class="btn"
+        @click="reason=false"
+      >
+        明白了
+      </van-button>
+    </van-popup>
   </div>
 </template>
 
@@ -217,6 +227,8 @@ export default {
       MAX_MONEY: 1000,
       // 可提现总金额
       totalNum: 0,
+      // 不可提现金额
+      no_sup_balance: 0,
       // 金额提示
       cashTip: '请输入提现金额！',
       // 短信验证码弹框
@@ -227,27 +239,30 @@ export default {
       sms: '',
       // 倒计时
       countDown: 0,
-      osObj: getOs()
+      osObj: getOs(),
+      // 查看原因开关
+      reason: false,
+      // 提示可提现余额
+      showBalance: true,
+      showError: false
     }
   },
   computed: {},
   watch: {
     money(curVal, oldVal) {
+      this.showBalance = false
       // 实现input连续输入，只发一次请求
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
         this.adjustMoney1()
-        // this.money = parseInt(this.money)
-        // console.log(this.money)
       }, 500)
     }
   },
   created() {},
   mounted() {
     this.getCanWithdraw()
-    // this.getMobileNum()
     if (this.osObj.isWx) {
-      // this.loadUID()
+      //
     } else if (this.osObj.isIphone && this.osObj.isApp) {
       window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
     } else if (this.osObj.isAndroid && this.osObj.isApp) {
@@ -261,10 +276,6 @@ export default {
         this.$toast('请正确填写姓名、身份证号码')
         return false
       }
-      // if (!this.valiIdNo()) {
-      //   this.$toast('请正确填写身份证号码')
-      //   return false
-      // }
       try {
         const res = await toCash({
           status: this.status,
@@ -378,12 +389,13 @@ export default {
       return true
     },
 
-    // 获取 可提现数量
+    // 获取 (不)可提现数量
     async getCanWithdraw() {
       try {
         const res = await getWithdrawNum()
         if (res.status_code === 200) {
           this.totalNum = res.data.sup_balance
+          this.no_sup_balance = res.data.no_sup_balance
           this.phone = res.data.phone
         }
       } catch (error) {
@@ -444,6 +456,7 @@ export default {
         this.money = this.totalNum
         if (this.totalNum < this.MIN_MONEY) {
           this.isActive = false
+          this.showError = true
           this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
         } else if (
           this.totalNum >= this.MIN_MONEY &&
@@ -451,23 +464,27 @@ export default {
         ) {
           this.isActive = true
           this.money = this.totalNum
-
+          this.showError = false
           this.cashTip = '可以提现！'
         } else if (this.totalNum > this.MAX_MONEY) {
           this.isActive = true
           this.money = this.MAX_MONEY
+          this.showError = false
           this.cashTip = '可以提现！'
         }
       } else {
         if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
           this.isActive = true
+          this.showError = false
           this.cashTip = '可以提现！'
         } else if (this.money > this.MAX_MONEY) {
           this.isActive = true
           this.money = this.MAX_MONEY
+          this.showError = true
           this.cashTip = '提现金额至多' + this.MAX_MONEY + '!'
         } else if (this.money < this.MIN_MONEY) {
           this.isActive = false
+          this.showError = true
           this.cashTip = '提现金额至少' + this.MIN_MONEY + '!'
         }
       }
@@ -514,6 +531,7 @@ export default {
         -webkit-tap-highlight-color: transparent;
         margin-bottom: 0.1rem;
         padding-left: 0.2rem;
+
       }
       .error {
         padding-left: 0.2rem;
@@ -562,10 +580,12 @@ export default {
       padding: 0.3rem 0.4rem;
       span {
         height: 0.25rem;
+        font-size: 0.3rem;
+        color: #999;
       }
       .img {
-        width: 0.57rem;
-        height: 0.57rem;
+        width: 0.6rem;
+        height: 0.6rem;
       }
       img {
         width: 100%;
@@ -578,34 +598,55 @@ export default {
         color: #221814;
         margin-bottom: 0.3rem;
       }
+      .input-box{
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 0.2rem;
+      }
       .input-div {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid #e5e5e5;
-        padding-bottom: 0.2rem;
+        position: relative;
+        .mark{font-size: 1rem; color: #221814;}
         input {
           font-size: 1rem;
           padding-left: 0.1rem;
           height: 1.2rem;
-          width: 5.6rem;
+          width: 5rem;
           border: none;
           outline: none;
           -webkit-tap-highlight-color: transparent;
+          color: #221814;
+          position: relative;
+          z-index: 22;
+          background-color: transparent;
         }
         input::-webkit-input-placeholder {
           color: #ccc;
+          font-size: 0.3rem;
         }
         input::-moz-placeholder {
           color: #ccc;
+          font-size: 0.3rem;
         }
         input:-ms-input-placeholder {
           color: #ccc;
+          font-size: 0.3rem;
         }
-        span {
+        .all{font-size: 0.3rem;color: #FFA42F;}
+        .tip{
+          position: absolute;
+          z-index: 2;
+          left: 1rem;
+          color:#999;
           font-size: 0.3rem;
         }
       }
+      .error {
+          color: #FF3F3F;
+          font-size: 0.3rem;
+          margin-left: 0.15rem;
+        }
       .tip-info {
         font-size: 0.26rem;
         color: #666;
@@ -613,10 +654,7 @@ export default {
         align-items: center;
         justify-content: space-between;
         margin-top: 0.2rem;
-        .error {
-          color: #cf3815;
-          margin-left: 0.15rem;
-        }
+
         .all-to-cash {
           color: #ffa42f;
         }
@@ -624,7 +662,7 @@ export default {
     }
     .btn-div {
       .btn {
-        background: #ccc;
+        background: rgba(255,164,47,.5);
         font-size: 0.32rem;
         color: #fff;
         border: none;
@@ -632,12 +670,13 @@ export default {
         border-radius: 0.1rem;
         width: 6.3rem;
         // padding: 0.3rem 0;
-        margin-top: 0.5rem;
+        margin-top: 1.2rem;
         pointer-events: none;
+        transition: all 0.3s linear;
       }
       .btn.active {
         pointer-events: auto;
-        background: #f49822;
+        background: rgba(255,164,47,1);
       }
       p {
         margin-top: 0.2rem;
@@ -692,6 +731,20 @@ export default {
       border: 1px solid #999;
       color: #999;
     }
+  }
+}
+.reason-popup{
+  text-align: center;
+  font-size: 0.32rem;
+  p{
+    color: #333;
+    line-height: 1.5;
+  }
+  .btn{
+    color:#fff;
+    border-radius: 0.1rem;
+    width: 2.8rem;
+    background-color: #FFA42F;
   }
 }
 </style>
