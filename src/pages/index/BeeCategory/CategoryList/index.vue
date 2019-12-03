@@ -1,5 +1,5 @@
 <template>
-  <div class="bee-category">
+  <div class="bee-category1">
     <van-nav-bar fixed>
       <van-search
         slot="title"
@@ -102,7 +102,7 @@ export default {
 </script>
 
 <style  lang="less">
-.bee-category {
+.bee-category1 {
   height: 100%;
   .van-nav-bar__title {
     max-width: 6.24rem;
@@ -130,7 +130,7 @@ export default {
       // NOTE 图标使用了vant里的搜索框，所以只能相对定位
       .van-field__left-icon {
         position: relative;
-        left: 1.2rem;
+        // left: 1.2rem;
       }
     }
   }

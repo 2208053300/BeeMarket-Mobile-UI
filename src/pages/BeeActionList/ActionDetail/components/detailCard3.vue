@@ -21,10 +21,10 @@
       </van-button>
     </div>
     <div class="logos">
-      <p class="mark text-center">
+      <p class="mark text-center" v-if="actionDetails.company_info.cooperation_company_list.length > 0">
         - 协作企业 -
       </p>
-      <ul class="logo-list flex flex-wrap">
+      <ul class="logo-list flex flex-center flex-wrap">
         <!-- <li class="flex flex-center">
           <img :src="beeLogo">
         </li>
