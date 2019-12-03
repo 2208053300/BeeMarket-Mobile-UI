@@ -1,17 +1,11 @@
 <template>
   <div class="pay">
     <!-- 身份认证 -->
-    <div
-      v-if="status === 1"
-      class="auth"
-    >
+    <div v-if="status === 1" class="auth">
       <p class="title">
         请填写真实的个人信息
       </p>
-      <form
-        id="formInfo"
-        class="auth-form"
-      >
+      <form id="formInfo" class="auth-form">
         <div class="form-box bg-white">
           <div class="form-group">
             <label for="user_name">用户姓名</label>
@@ -23,10 +17,7 @@
                 placeholder="请填写真实姓名"
                 @input="valiName()"
               >
-              <p
-                v-show="nameError"
-                class="error name-error"
-              >
+              <p v-show="nameError" class="error name-error">
                 请正确输入姓名！
               </p>
             </div>
@@ -42,10 +33,8 @@
                 value=""
                 @input="valiIdNo()"
               >
-              <p
-                v-show="idNoError"
-                class="error id-error"
-              >
+
+              <p v-show="idNoError" class="error id-error">
                 请正确输入身份证号码！
               </p>
               <!--<img src="/static/src/Img/icon_close.png" class="clear-img"/>-->
@@ -53,19 +42,14 @@
           </div>
         </div>
         <p class="tip">
-          身份信息对应关联的提现微信账户，
-          请务必填写本人
+          身份信息对应关联的提现微信账户， 请务必填写本人
           <!-- 真实姓名， 以及 -->
           真实身份证号，否则将无法提现金额！
         </p>
       </form>
       <div class="text-center">
         <!-- <van-button type="buttom" class="submit-btn active" :disabled="!valiName() && !valiIdNo()"> -->
-        <van-button
-          type="buttom"
-          class="submit-btn active"
-          @click="submitFir"
-        >
+        <van-button type="buttom" class="submit-btn active" @click="submitFir">
           下一步
         </van-button>
       </div>
@@ -83,25 +67,22 @@
           <div class="input-box">
             <div class="input-div">
               <span class="mark">￥</span>
-              <input
-                id="inputNum"
-                v-model.trim="money"
-                type="Number"
-                min="1"
-              >
+              <input id="inputNum" v-model.trim="money" type="Number" min="1">
               <span class="all" @click="money = totalNum">全部</span>
-              <span v-show="showBalance" class="tip">可提现{{totalNum}}元</span>
+              <span
+                v-show="showBalance"
+                class="tip"
+              >可提现{{ totalNum }}元</span>
             </div>
-            <div v-show="showError" class="error to-cash-error">{{ cashTip }}</div>
+            <div v-show="showError" class="error to-cash-error">
+              {{ cashTip }}
+            </div>
           </div>
           <div class="tip-info">
             <p>
               <span>有<span id="num">{{ no_sup_balance }}</span>元不可提现</span>
             </p>
-            <span
-              class="all-to-cash"
-              @click="reason = true"
-            >查看原因</span>
+            <span class="all-to-cash" @click="reason = true">查看原因</span>
           </div>
         </div>
       </div>
@@ -122,10 +103,7 @@
     </div>
 
     <!-- 短信验证码 -->
-    <van-popup
-      v-model="show"
-      @closed="closed"
-    >
+    <van-popup v-model="show" @closed="closed">
       <div class="sms bg-white">
         <p class="sms-tip text-center">
           请输入{{ phone }}的短信验证码
@@ -149,41 +127,23 @@
               class="text1"
               :class="{ text2: checkPhoneRight() }"
             >获取验证码</span>
-            <span
-              v-else
-              class="text3"
-            >({{ countDown }}s)</span>
+            <span v-else class="text3">({{ countDown }}s)</span>
           </van-button>
         </div>
         <div class="btn-group flex flex-column  align-center">
-          <van-button
-            round
-            class="btn comfirm-btn"
-            @click="confirmSubmit"
-          >
+          <van-button round class="btn comfirm-btn" @click="confirmSubmit">
             确定
           </van-button>
-          <van-button
-            round
-            class="btn cancel"
-            @click="show = false"
-          >
+          <van-button round class="btn cancel" @click="show = false">
             取消
           </van-button>
         </div>
       </div>
     </van-popup>
     <!-- 短信验证码 -->
-    <van-popup
-      v-model="reason"
-      @closed="closed"
-      class="reason-popup"
-    >
+    <van-popup v-model="reason" class="reason-popup" @closed="closed">
       <p>不可提现的金额为集市留存资金，可在 “蜂集市”APP 中购买商品任意抵扣。</p>
-      <van-button
-        class="btn"
-        @click="reason=false"
-      >
+      <van-button class="btn" @click="reason = false">
         明白了
       </van-button>
     </van-popup>
@@ -531,7 +491,6 @@ export default {
         -webkit-tap-highlight-color: transparent;
         margin-bottom: 0.1rem;
         padding-left: 0.2rem;
-
       }
       .error {
         padding-left: 0.2rem;
@@ -598,7 +557,7 @@ export default {
         color: #221814;
         margin-bottom: 0.3rem;
       }
-      .input-box{
+      .input-box {
         border-bottom: 1px solid #e5e5e5;
         padding-bottom: 0.2rem;
       }
@@ -607,7 +566,10 @@ export default {
         justify-content: space-between;
         align-items: center;
         position: relative;
-        .mark{font-size: 1rem; color: #221814;}
+        .mark {
+          font-size: 1rem;
+          color: #221814;
+        }
         input {
           font-size: 1rem;
           padding-left: 0.1rem;
@@ -633,20 +595,23 @@ export default {
           color: #ccc;
           font-size: 0.3rem;
         }
-        .all{font-size: 0.3rem;color: #FFA42F;}
-        .tip{
+        .all {
+          font-size: 0.3rem;
+          color: #ffa42f;
+        }
+        .tip {
           position: absolute;
           z-index: 2;
           left: 1rem;
-          color:#999;
+          color: #999;
           font-size: 0.3rem;
         }
       }
       .error {
-          color: #FF3F3F;
-          font-size: 0.3rem;
-          margin-left: 0.15rem;
-        }
+        color: #ff3f3f;
+        font-size: 0.3rem;
+        margin-left: 0.15rem;
+      }
       .tip-info {
         font-size: 0.26rem;
         color: #666;
@@ -662,7 +627,7 @@ export default {
     }
     .btn-div {
       .btn {
-        background: rgba(255,164,47,.5);
+        background: rgba(255, 164, 47, 0.5);
         font-size: 0.32rem;
         color: #fff;
         border: none;
@@ -676,7 +641,7 @@ export default {
       }
       .btn.active {
         pointer-events: auto;
-        background: rgba(255,164,47,1);
+        background: rgba(255, 164, 47, 1);
       }
       p {
         margin-top: 0.2rem;
@@ -733,18 +698,18 @@ export default {
     }
   }
 }
-.reason-popup{
+.reason-popup {
   text-align: center;
   font-size: 0.32rem;
-  p{
+  p {
     color: #333;
     line-height: 1.5;
   }
-  .btn{
-    color:#fff;
+  .btn {
+    color: #fff;
     border-radius: 0.1rem;
     width: 2.8rem;
-    background-color: #FFA42F;
+    background-color: #ffa42f;
   }
 }
 </style>
