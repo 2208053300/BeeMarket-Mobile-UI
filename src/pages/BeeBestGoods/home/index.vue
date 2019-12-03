@@ -16,7 +16,8 @@
           :font-color="fontColor"
         />
       </div>
-      <div class="rule-btn flex">
+
+      <div class="rule-btn flex" @click="showRule = true">
         <span>活动规则</span>
       </div>
     </div>
@@ -34,6 +35,9 @@
           class="commodity-details"
           @click="goDetail(item.pid, item.target)"
         >
+          <div v-if="[0,1,2].includes(index)" class="rank" :class="{no1: index===0,'no2':index===1,'no3': index===2}">
+            NO.{{ index + 1 }}
+          </div>
           <div class="flex">
             <div class="commodity-img">
               <img :src="item.tUrl" alt="">
@@ -89,6 +93,51 @@
       @sku-done="$emit('sku-done')"
       @sku-add="$emit('sku-add')"
     />
+    <!-- 规则 -->
+    <van-popup v-model="showRule" position="bottom" class="rule-box">
+      <p class=" rule-title">
+        •活动规则•
+      </p>
+      <div class="rule-content">
+        <div class="rule-item flex">
+          <div class="num flex">
+            <span>1</span>
+          </div>
+          <div class="content">
+            规律所遵循的法则。规则，一般指由群众人统一制定并通过一起遵守的条例和章程;
+          </div>
+        </div>
+        <div class="rule-item flex">
+          <div class="num flex">
+            <span>2</span>
+          </div>
+          <div class="content">
+            规律所遵循的法则。规则，一般指由群众人统一制定并通过一起遵守的条例和章程;
+          </div>
+        </div>
+        <div class="rule-item flex">
+          <div class="num flex">
+            <span>3</span>
+          </div>
+          <div class="content">
+            规律所遵循的法则。规则，一般指由群众人统一制定并通过一起遵守的条例和章程;
+          </div>
+        </div>
+        <div class="rule-item flex">
+          <div class="num flex">
+            <span>4</span>
+          </div>
+          <div class="content">
+            规律所遵循的法则。规则，一般指由群众人统一制定并通过一起遵守的条例和章程;
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <van-button round class="close-btn" @click="showRule = false">
+          我明白了
+        </van-button>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -133,7 +182,8 @@ export default {
       pNumber: 0,
       limitNum: 0,
       selectType: 2,
-
+      // 规则显示
+      showRule: false,
       icon: {
         titleImg: require('@/assets/icon/bestGoods/title.png')
       },
@@ -191,12 +241,6 @@ export default {
       }, 500)
     },
 
-    // 获取活动数据
-    // async getActivityDetailData() {
-    //   const res = await activityDetail({ id: this.$route.query.id })
-    //   this.activity = res.data
-    //   this.loadUID()
-    // },
     // 微信分享
     async loadUID() {
       const res = await getUID()
@@ -317,6 +361,11 @@ export default {
 
 <style scoped  lang="less">
 .best-goods {
+  position: fixed;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 100%;
   background-image: linear-gradient(to right, #9f2440, #610710);
   .banner {
     width: 7.5rem;
@@ -364,10 +413,28 @@ export default {
     margin: 0 auto;
   }
   .commodity-details {
+    position: relative;
     margin-bottom: 0.3rem;
     background-color: #fff;
     padding: .2rem;
     border-radius: 0.1rem;
+    .rank{
+      position: absolute;
+      top: 0;
+      left: .1rem;
+      padding: .1rem;
+      font-size: .2rem;
+      color: #fff;
+      &.no1{
+        background-image:linear-gradient(to bottom,#FDDEAC,#FDDEAC) ;
+      }
+      &.no2{
+        background-image:linear-gradient(to bottom,#DDDBDC,#B0AAAC) ;
+      }
+      &.no3{
+        background-image:linear-gradient(to bottom,#FED5BB,#E6AF8C) ;
+      }
+    }
     .commodity-img {
       width: 2.14rem;
       height: 2.14rem;
@@ -438,6 +505,63 @@ export default {
         margin-top: .2rem;
         border-radius: .3rem;
       }
+  }
+
+  .rule-box{
+    height: 8.48rem;
+    width: 100%;
+    box-sizing: border-box;
+    background: url(../../../assets/icon/bestGoods/rule_popup_bg.png) no-repeat;
+    background-size: 100% ;
+    padding: .92rem .5rem .5rem;
+    .rule-title{
+      display: block;
+      position: relative;
+      font-weight: 600;
+      font-size: .32rem;
+      color: #666;
+      width: 1.6rem;
+      margin: 0 auto 0.9rem;
+      z-index: 55;
+
+      &::after{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0.4rem;
+        width: 80%;
+        height: .14rem;
+        background-color: rgba(232, 181, 152, 1);
+        z-index: -1;
+      }
+    }
+    .rule-item{
+      margin-bottom: .5rem;
+      .num{
+        width: .4rem;
+        height: .4rem;
+        background: url(../../../assets/icon/bestGoods/rule_item_bg.png) no-repeat;
+        background-size: 100% 100%;
+        font-size: .24rem;
+        color: #fff;
+        margin-right: 0.2rem;
+        span{margin: auto}
+      }
+      .content{
+        font-size: .24rem;
+        color: #333;
+        font-weight: 500;
+        line-height: 1.7;
+      }
+    }
+    .close-btn{
+      width:2.72rem;
+      // height:.68rem;
+      background:linear-gradient(90deg,rgba(232,196,176,1),rgba(232,179,149,1));
+      color: #fff;
+      font-size: .32rem;
+      border:none;
+    }
   }
 }
 </style>
