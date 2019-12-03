@@ -58,7 +58,7 @@
                 <button
                   class="go-buy"
                   type="button"
-                  @click.stop="goDetail(item.pid, item.target)"
+                  @click.stop="showSku(item.pid, item.target)"
                 >
                   <span>去抢购</span>
                 </button>
@@ -76,6 +76,19 @@
         </div>
       </van-list>
     </div>
+    <!-- sku -->
+    <bee-sku
+      :show-sku.sync="$store.state.cart.showSku"
+      :pid="pid"
+      :props-id.sync="propsId"
+      :p-number.sync="pNumber"
+      :limit-num="limitNum"
+      :select-type.sync="selectType"
+      @get-sku-name="getSkuName"
+      @get-sku-id="getSkuId"
+      @sku-done="$emit('sku-done')"
+      @sku-add="$emit('sku-add')"
+    />
   </div>
 </template>
 
@@ -85,6 +98,7 @@ import wxapi from '@/utils/wxapi'
 import { getUID } from '@/api/BeeApi/user'
 import { getPreferenceData } from '@/api/BeeApi/home'
 import Swiper from '../components/Swiper'
+import BeeSku from '@/components/BeeSku'
 export default {
   metaInfo() {
     // title: '活动模板1'
@@ -93,7 +107,8 @@ export default {
     }
   },
   components: {
-    Swiper
+    Swiper,
+    BeeSku
   },
   props: {},
   data() {
@@ -107,10 +122,18 @@ export default {
       fontColor1: '#999',
       type: 2,
 
+      // 分页加载
       loading: false,
       finished: false,
       page: 1,
       commodityList: [],
+      // sku
+      pid: 0,
+      propsId: [],
+      pNumber: 0,
+      limitNum: 0,
+      selectType: 2,
+
       icon: {
         titleImg: require('@/assets/icon/bestGoods/title.png')
       },
@@ -186,7 +209,20 @@ export default {
         link: this.activity.share_data.link
       })
     },
-
+    // 显示sku
+    showSku(pid, target) {
+      this.pid = pid
+      this.selectType = 1
+      this.$store.state.cart.showSku = true
+    },
+    getSkuId(id) {
+      this.sku_id = id
+      this.$store.state.cart.skuId = id
+      this.$store.state.cart.pNumber = this.pNumber
+    },
+    getSkuName(skuName) {
+      this.skuName = skuName
+    },
     // 跳转到商品详情页
     // 此处判断浏览器环境，做出跳转
     goDetail(pid, target) {
