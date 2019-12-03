@@ -9,10 +9,18 @@ export function getHome(data) {
   })
 }
 
-// 用户基本信息获取
+// 限量蜂抢
 export function getBeeLimitList(data) {
   return request({
     url: '/home/limited',
+    method: 'post',
+    data
+  })
+}
+// 好物优选
+export function getPreferenceData(data) {
+  return request({
+    url: '/product/preference',
     method: 'post',
     data
   })
