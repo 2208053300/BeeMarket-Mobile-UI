@@ -1,5 +1,14 @@
 <template>
   <div class="earning-way">
+    <transition name="van-slide-right">
+      <div
+        v-if="!osObj.isApp&&showShare"
+        class="share-icon"
+        @click="$router.push({ name: 'shareActive' })"
+      >
+        <van-icon name="share" />
+      </div>
+    </transition>
     <bee-winning-roll
       v-if="showSwipe"
       style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100;"
@@ -113,6 +122,9 @@
 
 <script>
 import { getOs } from '@/utils'
+import wxapi from '@/utils/wxapi'
+import { showShareIcon, hideShareIcon } from '@/utils/share'
+import wait from '@/utils/wait'
 import { newToCash, getCashInfo } from '@/api/BeeApi/alcohol'
 import BeeWinningRoll from '@/components/BeeWinningRoll'
 import SelectNum from '../index/components/SelectNum'
@@ -151,7 +163,8 @@ export default {
 
       showBuy: false,
       // 可提现弹窗
-      showPopup: false
+      showPopup: false,
+      showShare: false
     }
   },
   computed: {},
@@ -159,8 +172,11 @@ export default {
   created() {},
   destroyed() {
     this.$store.commit('SET_BACKTOP_HIDE', false)
+    hideShareIcon()
   },
   mounted() {
+    this.initShare()
+    showShareIcon()
     this.$store.commit('SET_BACKTOP_HIDE', true)
     // 在APP页面显示header
     this.$store.state.app.beeHeader = false
@@ -199,6 +215,36 @@ export default {
       //   this.getRedPacketData()
       // }
     },
+    async initShare() {
+      try {
+        const res = await getUID()
+        this.uid = res.data.uid
+
+        const osObj = getOs()
+        if (osObj.isWx) {
+          wxapi.wxShare({
+            title: '年终狂欢，瓜分10亿',
+            desc: '茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！',
+            imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
+            link: this.uid
+              ? location.origin + '/#/beeAlcohol?uid=' + this.uid
+              : location.origin + '/#/beeAlcohol'
+          })
+          await wait(1000)
+          this.showShare = true
+        } else {
+          window.appShare = () => {
+            if (osObj.isIphone) {
+              window.webkit.messageHandlers.ToLiquorShare.postMessage('')
+            } else if (osObj.isAndroid) {
+              window.beeMarket.ToLiquorShare()
+            }
+          }
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
     // 去使用、去参与
     goIndex() {
       if (this.osObj.isApp) {
@@ -215,6 +261,20 @@ export default {
 p {
   margin: 0;
 }
+.share-icon {
+    position: fixed;
+    top: 0.2rem;
+    right: 0.2rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    color: @BeeDefault;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.6rem;
+    z-index: 100;
+    background-color: #fff;
+    border-radius: 50%;
+  }
 .earning-way {
   position: fixed;
   top: 0;

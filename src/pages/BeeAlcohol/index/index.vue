@@ -102,7 +102,7 @@ import Rule from './components/Rule'
 import SelectNum from './components/SelectNum'
 import Cookies from 'js-cookie'
 import { getUID } from '@/api/BeeApi/user'
-import { showShareIcon } from '@/utils/share'
+import { showShareIcon, hideShareIcon } from '@/utils/share'
 import BeeWinningRoll from '@/components/BeeWinningRoll'
 import wait from '@/utils/wait'
 import { getOs } from '@/utils'
@@ -134,6 +134,7 @@ export default {
   created() {},
   destroyed() {
     this.$store.commit('SET_BACKTOP_HIDE', false)
+    hideShareIcon()
   },
   mounted() {
     this.initShare()
