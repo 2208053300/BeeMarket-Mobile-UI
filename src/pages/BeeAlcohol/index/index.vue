@@ -105,6 +105,7 @@ import { showShareIcon } from '@/utils/share'
 import BeeWinningRoll from '@/components/BeeWinningRoll'
 import wait from '@/utils/wait'
 import { getOs } from '@/utils'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo: {
     title: '年终狂欢 瓜分10亿'
@@ -165,6 +166,14 @@ export default {
 
         const osObj = getOs()
         if (osObj.isWx) {
+          wxapi.wxShare({
+            title: '年终狂欢，瓜分10亿',
+            desc: '茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！',
+            imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
+            link: this.uid
+              ? location.origin + '/#/beeAlcohol?uid=' + this.uid
+              : location.origin + '/#/beeAlcohol'
+          })
           await wait(1000)
           this.showShare = true
         } else {
