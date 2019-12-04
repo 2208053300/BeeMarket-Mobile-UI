@@ -161,10 +161,10 @@ export default {
     checkout(price) {
       this.selectedPrice = price
       this.number = 1
-      if (this.price === this.completePrice && this.completeMaxNumber === 0) {
+      if (this.selectedPrice === this.completePrice && this.completeMaxNumber === 0) {
         this.number = 0
       }
-      if (this.price === this.experiencePrice && this.experienceMaxNumber === 0) {
+      if (this.selectedPrice === this.experiencePrice && this.experienceMaxNumber === 0) {
         this.number = 0
       }
     }
