@@ -57,30 +57,40 @@ export default {
     if (this.$route.query.uid) {
       Cookies.set('uid', this.$route.query.uid)
     }
+
+    if (this.osObj.isWx) {
+      //
+    } else if (this.osObj.isIphone && this.osObj.isApp) {
+      window.webkit.messageHandlers.showShareIcon.postMessage({ mark: false })
+    } else if (this.osObj.isAndroid && this.osObj.isApp) {
+      window.beeMarket.showShareIcon(false)
+    } else {
+      //
+    }
   },
   methods: {
     // 跳转到我的收益
     goRight() {
       if (this.osObj.isApp) {
-        window.location.href = window.location.origin + '/#/beeFriends/myRights'
-      } else {
         window.location.href = window.location.origin + '/beeFriends#/myRights'
+      } else {
+        window.location.href = window.location.origin + '/#/beeFriends/myRights'
       }
     },
     // 跳转到农礼包
     goGiftPackge() {
       if (this.osObj.isApp) {
-        window.location.href = window.location.origin + '/#/beeGiftPackage'
-      } else {
         window.location.href = window.location.origin + '/beeGiftPackage'
+      } else {
+        window.location.href = window.location.origin + '/#/beeGiftPackage'
       }
     },
     // 跳转到贵宾陈酿
     goAlcohol() {
       if (this.osObj.isApp) {
-        window.location.href = window.location.origin + '/#/beeAlcohol'
-      } else {
         window.location.href = window.location.origin + '/beeAlcohol'
+      } else {
+        window.location.href = window.location.origin + '/#/beeAlcohol'
       }
     }
   }
