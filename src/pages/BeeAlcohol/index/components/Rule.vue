@@ -18,14 +18,14 @@
         </div>
         <div class="text">
           <div class="dl">
-            <p>茅台贵宾陈酿VIP30 每购2瓶（体验装）立得补贴3000元；每购6瓶（整箱装）立得补贴10000元，补贴可以<b>使用</b>或者<b>提现</b>。</p>
+            <p>茅台贵宾陈酿VIP30 每购2瓶（体验装）立得补贴3000元；每购6瓶（整箱装）立得补贴10000元，补贴可以<b class="strange">使用</b>或者<b class="strange">提现</b>。</p>
             <p>使用：再次购买全额抵扣，免费再得两箱；</p>
             <p>提现：邀请好友参与活动，立即提现到账。</p>
           </div>
 
           <div class="dl">
             <div style="text-align: center;margin-bottom: 0.15rem">
-              <b>特别说明</b>
+              <b>【特别说明】</b>
             </div>
             1）邀请好友每购2瓶（体验装）可提现补贴1000元；每购6瓶（整箱装）可提现补贴3000元；<br>
             2）本次活动为普惠更多用户，每个微信lD限购10箱（即每个微信ID最高可得10万元）。
@@ -86,6 +86,9 @@ export default {
       padding: 0;
       margin: 0;
       text-indent: 2em;
+    }
+    .strange {
+      color: #f9cc0b;
     }
   }
 }

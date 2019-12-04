@@ -160,6 +160,7 @@ export default {
     },
     checkout(price) {
       this.selectedPrice = price
+      this.number = 1
       if (this.price === this.completePrice && this.completeMaxNumber === 0) {
         this.number = 0
       }
