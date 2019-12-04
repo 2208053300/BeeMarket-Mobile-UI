@@ -22,7 +22,10 @@
       </div>
       <!-- money-info -->
       <div class="money-info">
-        <div v-if="cashInfo.total_amount>0" class="money-detail flex flex-around">
+        <div
+          v-if="cashInfo.total_amount > 0"
+          class="money-detail flex flex-around"
+        >
           <div class="item">
             <p class="txt">
               已使用
@@ -56,14 +59,23 @@
       </div>
       <!-- action -->
       <div class="action">
-        <div v-if="cashInfo.total_amount>0" class="has flex flex-center">
-          <button class="btn go-use" type="button" @click="showBuy=true">
+        <div v-if="cashInfo.total_amount > 0" class="has flex flex-center">
+          <button class="btn go-use" type="button" @click="showBuy = true">
             使用
           </button>
-          <button v-if="cashInfo.activate_amount===0" class="btn to-cash can-not" type="button">
+          <button
+            v-if="cashInfo.activate_amount === 0"
+            class="btn to-cash can-not"
+            type="button"
+          >
             提现
           </button>
-          <button v-if="cashInfo.activate_amount>0" class="btn to-cash" type="button" @click="goCash">
+          <button
+            v-if="cashInfo.activate_amount > 0"
+            class="btn to-cash"
+            type="button"
+            @click="goCash"
+          >
             提现
           </button>
         </div>
@@ -79,6 +91,23 @@
     <img :src="beeIcon.decorate" class="decorate">
 
     <select-num v-model="showBuy" />
+
+    <!-- 可提现提示弹窗 -->
+    <van-popup v-model="showPopup" class="tip-popup">
+      <div class="tip-content text-center">
+        <img :src="beeIcon.txt" class="txt-img">
+        <p class="num">
+          ￥ {{ cashInfo.activate_amount }}
+        </p>
+        <button class="btn" type="button" @click="toBalance">
+          提入余额
+        </button>
+        <p class="tip">
+          请前往“蜂友圈一我的收益”查看余额
+        </p>
+      </div>
+      <img :src="beeIcon.close" class="close" @click="showPopup = false">
+    </van-popup>
   </div>
 </template>
 
@@ -103,7 +132,9 @@ export default {
       beeIcon: {
         titleImg: require('@/assets/icon/alcohol/top_title.png'),
         avatar: require('@/assets/icon/alcohol/avatar.png'),
-        decorate: require('@/assets/icon/alcohol/decorate.png')
+        decorate: require('@/assets/icon/alcohol/decorate.png'),
+        close: require('@/assets/icon/alcohol/red_packge_close.png'),
+        txt: require('@/assets/icon/alcohol/tip_text.png')
       },
       uid: 0,
       // 获取 os 平台
@@ -118,7 +149,9 @@ export default {
         activate_amount: 0
       },
 
-      showBuy: false
+      showBuy: false,
+      // 可提现弹窗
+      showPopup: false
     }
   },
   computed: {},
@@ -139,19 +172,31 @@ export default {
     async getRedPacketData() {
       const res = await getCashInfo()
       this.cashInfo = res.data
+      if (res.data.activate_amount > 0) {
+        this.showPopup = true
+      }
+    },
+    // 转余额
+    async toBalance() {
+      const res = await newToCash()
+      if (res.status_code === 200) {
+        this.getRedPacketData()
+      }
+      this.$toast(res.message)
     },
     // 去提现
     async goCash() {
-      const res = await newToCash()
-      if (res.status_code === 200) {
-        if (this.osObj.isApp) {
-          window.location.href = window.location.origin + '/#/beeFriends/pay'
-        } else {
-          window.location.href = window.location.origin + '/beeFriends#/pay'
-        }
-      } else {
-        this.getRedPacketData()
-      }
+      this.showPopup = true
+      // const res = await newToCash()
+      // if (res.status_code === 200) {
+      //   if (this.osObj.isApp) {
+      //     window.location.href = window.location.origin + '/#/beeFriends/pay'
+      //   } else {
+      //     window.location.href = window.location.origin + '/beeFriends#/pay'
+      //   }
+      // } else {
+      //   this.getRedPacketData()
+      // }
     },
     // 去使用、去参与
     goIndex() {
@@ -177,8 +222,11 @@ p {
   height: 100%;
   background-image: linear-gradient(to bottom, #ea583d, #cd281c);
   padding-top: 0.7rem;
-  .swiper-box1{
-    position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100;
+  .swiper-box1 {
+    position: fixed;
+    top: 0.15rem;
+    left: 0.3rem;
+    z-index: 100;
     width: 3.5rem;
   }
   .title-img {
@@ -202,7 +250,11 @@ p {
     height: 0.8rem;
     margin: 0 auto;
     border-radius: 50%;
-    img{width: 100%; height: 100%; border-radius: 50%;}
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
   }
   .txt1 {
     font-size: 0.24rem;
@@ -262,31 +314,33 @@ p {
 
   .action {
     margin-top: 1.24rem;
-    .has{}
-    .has-not{}
+    .has {
+    }
+    .has-not {
+    }
     .btn {
       border: none;
       width: 2.32rem;
       height: 0.72rem;
-      font-size: .42rem;
+      font-size: 0.42rem;
       color: #fff;
-      border-radius: .36rem;
+      border-radius: 0.36rem;
     }
     .to-cash {
-       background: linear-gradient(
+      background: linear-gradient(
         180deg,
         rgba(255, 220, 31, 1),
         rgba(253, 150, 11, 1)
       );
     }
-    .to-cash.can-not{
-      opacity: .8;
+    .to-cash.can-not {
+      background: rgba(204,204,204,1);
     }
     .go-use {
       border: 1px solid rgba(251, 246, 237, 1);
       border-radius: 36px;
       background: transparent;
-      margin-right: .44rem;
+      margin-right: 0.44rem;
     }
     .go-index {
       width: 4.2rem;
@@ -300,12 +354,58 @@ p {
       font-size: 0.36rem;
     }
   }
-  .decorate{
-      position: fixed;
+  .decorate {
+    position: fixed;
     top: 0;
     left: 0;
     height: auto;
     width: 100%;
-}
+  }
+  .tip-popup {
+    background-color: transparent;
+    .tip-content {
+      width: 7.19rem;
+      height: 7.53rem;
+      background: url(../../../assets/icon/alcohol/popup_bg.png) no-repeat;
+      background-size: 7.19rem 7.53rem;
+      padding-top: 3.11rem;
+      box-sizing: border-box;
+      .txt-img {
+        width: 4.21rem;
+        height: 0.57rem;
+      }
+      .num {
+        font-size: 0.68rem;
+        color: #fff;
+        font-weight: 600;
+        margin: 0.43rem auto .34rem;
+      }
+      .btn {
+        border: none;
+        color: #fff;
+        width: 3.4rem;
+        height: 0.95rem;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 220, 31, 1),
+          rgba(253, 150, 11, 1)
+        );
+        border-radius: 0.5rem;
+        font-size: 0.36rem;
+      }
+      .tip{
+        margin-top: .2rem;
+        color: #fff;
+        font-size: .2rem;
+        opacity: .6;
+      }
+    }
+    .close {
+      margin-left: 50%;
+      width: 0.64rem;
+      height: 0.64rem;
+      transform: translateX(-50%);
+    }
+  }
 }
 </style>
