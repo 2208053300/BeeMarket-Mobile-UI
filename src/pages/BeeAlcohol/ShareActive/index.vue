@@ -71,12 +71,12 @@ export default {
     async getQrcodeData() {
       const res = await cashShareQrcode()
       this.qrcode = 'data:image/jpeg;base64,' + res.data.qr_code
-      this.link = res.data.link
+      this.link = res.data.share.link
       wxapi.wxShare({
-        title: res.data.title, // 分享标题, 请自行替换
-        desc: res.data.desc, // 分享描述, 请自行替换
-        link: res.data.link, // 分享链接，根据自身项目决定是否需要split
-        imgUrl: res.data.img // 分享图标, 请自行替换，需要绝对路径
+        title: res.data.share.title, // 分享标题, 请自行替换
+        desc: res.data.share.desc, // 分享描述, 请自行替换
+        link: res.data.share.link, // 分享链接，根据自身项目决定是否需要split
+        imgUrl: res.data.share.img // 分享图标, 请自行替换，需要绝对路径
       })
       await wait(200)
       this.createImg()

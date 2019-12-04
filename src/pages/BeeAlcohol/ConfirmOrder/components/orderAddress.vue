@@ -109,7 +109,8 @@ export default {
       this.$store.state.app.pushQuery = {
         target: this.$route.query.target,
         origin: 'selectAddress',
-        number: this.$route.query.number
+        number: this.$route.query.number,
+        sid: this.$route.query.sid
       }
       this.$router.push({
         name: 'addressManage',
