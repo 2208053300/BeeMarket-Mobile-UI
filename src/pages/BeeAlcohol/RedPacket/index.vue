@@ -224,6 +224,7 @@ p {
       background-color: #f9cfad;
     }
     .item {
+      text-align: center;
       .txt {
         font-size: 0.28rem;
         color: #ef5821;
