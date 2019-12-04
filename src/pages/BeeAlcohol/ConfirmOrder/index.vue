@@ -28,10 +28,8 @@
 
       <!-- 没有买酒抵扣的时候隐藏 -->
       <van-cell
-        v-if="order.orderDetail.cash_coupon && order.orderDetail.cash_coupon.length > 0"
+        v-if="order.orderDetail.cash_subsidy_amount"
         class="deduction-content"
-        is-link
-        @click="selectCouponVisible=true"
       >
         <div
           slot="title"
@@ -41,12 +39,13 @@
             红包抵扣
           </div>
           <div class="deduction-num">
-            {{ cash_coupon_total }}元现金红包
+            {{ order.orderDetail.cash_subsidy_amount }}元现金红包
           </div>
         </div>
-        <div style="display: flex;align-items: center;justify-content: flex-end">
-          选择
-        </div>
+        <van-checkbox
+          v-model="cash_subsidy_used"
+          :checked-color="BeeDefault"
+        />
       </van-cell>
     </van-cell-group>
     <van-cell-group class="other-info2">
@@ -83,11 +82,6 @@
         提交订单
       </van-button>
     </div>
-    <select-coupon
-      :visible.sync="selectCouponVisible"
-      :order-amount="order.orderDetail.order_amount"
-      :cash-coupon="cash_coupon_list"
-    />
   </div>
 </template>
 
@@ -95,7 +89,6 @@
 import { BeeDefault } from '@/styles/index/variables.less'
 import orderAddress from './components/orderAddress'
 import commodityList from './components/commodityList'
-import SelectCoupon from '@/pages/BeeAlcohol/ConfirmOrder/components/SelectCoupon'
 import { mapState } from 'vuex'
 import { createOrder } from '@/api/BeeApi/order'
 import { goPayFromPayInfo } from '@/utils/wxPay'
@@ -109,8 +102,7 @@ export default {
   },
   components: {
     orderAddress,
-    commodityList,
-    SelectCoupon
+    commodityList
   },
   props: {},
   data() {
@@ -120,10 +112,11 @@ export default {
       selectCouponVisible: false,
       orderTypeText: 'general',
       balance_used: false,
+      cash_subsidy_used: false,
       query: {
         os: 'liquor',
         product: {
-          sid: 0,
+          sid: parseInt(this.$route.query.sid),
           number: parseInt(this.$route.query.number)
         }
       }
@@ -131,50 +124,24 @@ export default {
   },
   computed: {
     ...mapState(['order']),
-    // 已抵扣金额
-    deductedAmount() {
-      if (this.order.orderDetail.cash_coupon) {
-        return this.order.orderDetail.cash_coupon.reduce(
-          (total, item) => {
-            if (item.checked) {
-              return total + item.amount
-            } else {
-              return total
-            }
-          }, 0
-        )
-      } else {
-        return 0
-      }
-    },
     // 抵扣文案
     deductionText() {
-      return this.deductedAmount > 0 ? `(红包抵扣￥${this.deductedAmount})` : ''
+      if (this.cash_subsidy_used) {
+        return `(红包抵扣￥${this.order.orderDetail.cash_subsidy_amount})`
+      } else {
+        return ''
+      }
     },
     // 订单总价
     totalMount() {
-      if (this.deductedAmount > 0) {
-        let amount = this.order.orderDetail.order_amount - this.deductedAmount
+      if (this.cash_subsidy_used) {
+        let amount = this.order.orderDetail.order_amount - this.order.orderDetail.cash_subsidy_amount
         if (amount < 0) {
           amount = 0
         }
         return amount
       } else {
         return this.order.orderDetail.order_amount
-      }
-    },
-    // 所有抵扣券总额
-    cash_coupon_total() {
-      return this.order.orderDetail.cash_coupon.reduce(
-        (total, item) => {
-          return total + item.amount
-        }, 0)
-    },
-    cash_coupon_list() {
-      if (this.order.orderDetail.cash_coupon) {
-        return this.order.orderDetail.cash_coupon
-      } else {
-        return []
       }
     }
   },
@@ -198,21 +165,11 @@ export default {
       // 获取确认订单
       const res = await confirmOrder(this.query)
       if (res.status_code === 200) {
-        this.warpCashCoupon(res.data.cash_coupon)
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
         if (this.order.orderDetail.stores.length === 0) {
           this.$router.go(-1)
         }
-      }
-    },
-    // 为优惠券添加check和disable字段
-    async warpCashCoupon(cash_coupon) {
-      if (cash_coupon) {
-        cash_coupon.forEach(item => {
-          item.checked = false
-          item.disable = false
-        })
       }
     },
     async createOrderData() {
@@ -233,15 +190,6 @@ export default {
           storeData[index].products[index2].number = item2.number
         })
       })
-      // 筛选出已选择的买酒抵扣券id
-      const cash_coupon_ids = []
-      if (this.order.orderDetail.cash_coupon) {
-        this.order.orderDetail.cash_coupon.forEach(item => {
-          if (item.checked) {
-            cash_coupon_ids.push(item.id)
-          }
-        })
-      }
       // TODO 缺少农副产品和限量蜂抢字段获取
       const res = await createOrder(
         JSON.stringify({
@@ -254,7 +202,7 @@ export default {
           os: 'liquor',
           // 此处暂时无赠送好友ot不变
           ot: 'general',
-          cash_coupon_ids: cash_coupon_ids
+          cash_subsidy_used: this.cash_subsidy_used
         })
       )
       if (res.status_code === 200) {

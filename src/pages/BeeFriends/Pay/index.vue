@@ -141,7 +141,11 @@
       </div>
     </van-popup>
     <!-- 短信验证码 -->
-    <van-popup v-model="reason" class="reason-popup" @closed="closed">
+    <van-popup
+      v-model="reason"
+      class="reason-popup"
+      @closed="closed"
+    >
       <p>不可提现的金额为集市留存资金，可在 “蜂集市”APP 中购买商品任意抵扣。</p>
       <van-button class="btn" @click="reason = false">
         明白了
