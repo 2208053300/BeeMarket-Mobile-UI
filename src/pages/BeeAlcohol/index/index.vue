@@ -4,6 +4,7 @@
       v-if="showSwipe"
       style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100"
       type="alcohol"
+      width="4rem"
     />
     <transition name="van-slide-right">
       <div
