@@ -20,7 +20,7 @@
       <!-- avatar -->
       <div class="avatar text-center">
         <div class="avatar-img text-center">
-          <img :src="cashInfo.head_image_url" alt="">
+          <img v-if="cashInfo.head_image_url" :src="cashInfo.head_image_url">
         </div>
         <p class="txt1">
           累计已领取（元）
