@@ -5,6 +5,15 @@
       style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100"
       type="alcohol"
     />
+    <transition name="van-slide-right">
+      <div
+        v-if="!osObj.isApp&&showShare"
+        class="share-icon"
+        @click="$router.push({ name: 'shareActive' })"
+      >
+        <van-icon name="share" />
+      </div>
+    </transition>
     <div style="position: relative">
       <img
         :src="require('@/assets/icon/alcohol/1-首页改版七-切图_01.jpg')"
@@ -95,6 +104,7 @@ import { getUID } from '@/api/BeeApi/user'
 import { showShareIcon, setShareOptions } from '@/utils/share'
 import BeeWinningRoll from '@/components/BeeWinningRoll'
 import wait from '@/utils/wait'
+import { getOs } from '@/utils'
 export default {
   metaInfo: {
     title: '年终狂欢 瓜分10亿'
@@ -112,7 +122,9 @@ export default {
       showRule: false,
       uid: 0,
       showBuy: false,
-      showSwipe: true
+      showSwipe: true,
+      osObj: getOs(),
+      showShare: false
     }
   },
   computed: {},
@@ -160,6 +172,8 @@ export default {
       } catch (error) {
         console.log(error)
       }
+      await wait(1000)
+      this.showShare = true
     },
     // 分享
     appShare() {
@@ -200,6 +214,20 @@ export default {
 .bee-alcohol {
   @videoWidth: 6.68rem;
   @videoHeight: 3.76rem;
+  .share-icon {
+    position: fixed;
+    top: 0.2rem;
+    right: 0.2rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    color: @BeeDefault;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.6rem;
+    z-index: 100;
+    background-color: #fff;
+    border-radius: 50%;
+  }
   // 图片衔接处有白线，随出此下策
   img {
     margin-bottom: -1px;

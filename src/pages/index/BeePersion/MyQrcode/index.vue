@@ -16,9 +16,11 @@
             <img
               :src="qrcode"
               alt="二维码"
-              :onerror="$store.state.app.defaultImg"
             >
           </div>
+        </div>
+        <div class="screenshot">
+          <img :src="screenshotBase64" alt="">
         </div>
       </div>
     </div>
@@ -29,6 +31,8 @@
 // 引入微信分享
 import wxapi from '@/utils/wxapi.js'
 import { getQrcode } from '@/api/BeeApi/user'
+import html2canvas from 'html2canvas/dist/html2canvas.min.js'
+import wait from '@/utils/wait'
 export default {
   metaInfo: {
     title: '我的二维码'
@@ -40,7 +44,8 @@ export default {
       beeIcon: {
         mine_qrcode_img_card: require('@/assets/icon/personalCenter/mine_qrcode_img_card@2x.png')
       },
-      qrcode: ''
+      qrcode: '',
+      screenshotBase64: ''
     }
   },
   computed: {},
@@ -62,6 +67,35 @@ export default {
         link: res.data.link, // 分享链接，根据自身项目决定是否需要split
         imgUrl: res.data.img // 分享图标, 请自行替换，需要绝对路径
       })
+      await wait(1000)
+      this.createImg()
+    },
+    async createImg() {
+      const imgDom = document.querySelector('.qrcode-content')
+      const width = imgDom.offsetWidth
+      const height = imgDom.offsetHeight
+      const canvas = document.createElement('canvas')
+      const scale = 2
+      canvas.width = width * scale
+      canvas.height = height * scale
+      canvas.getContext('2d').scale(scale, scale)
+      try {
+        const canvasImg = await html2canvas(imgDom, {
+          scale: scale,
+          canvas: canvas,
+          // useCORS: true,
+          y: document.querySelector('.qrcode-content').offsetTop,
+          width: width,
+          height: height,
+          // 必须获得其距离顶部距离，避免滚动偏移
+          backgroundColor: null
+        })
+        const img = canvasImg.toDataURL('image/png')
+        this.screenshotBase64 = img
+      } catch (error) {
+        console.log(error)
+        this.$toast('生成专属海报失败！')
+      }
     }
   }
 }
@@ -107,6 +141,13 @@ export default {
             font-weight: bold;
           }
         }
+      }
+      .screenshot{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
       }
     }
   }

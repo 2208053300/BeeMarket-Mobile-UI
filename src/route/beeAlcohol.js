@@ -76,6 +76,11 @@ const router = new Router({
             )
         }
       ]
+    },
+    {
+      path: '/shareActive',
+      name: 'shareActive',
+      component: () => import('@/pages/BeeAlcohol/ShareActive')
     }
 
   ]

@@ -130,6 +130,11 @@ const router = new Router({
                 import(
                   '@/pages/BeeAlcohol/ConfirmOrder'
                 )
+            },
+            {
+              path: 'shareActive',
+              name: 'shareActive',
+              component: () => import('@/pages/BeeAlcohol/ShareActive')
             }
           ]
         },
