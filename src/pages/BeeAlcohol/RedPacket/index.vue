@@ -57,14 +57,14 @@
       <!-- action -->
       <div class="action">
         <div v-if="cashInfo.total_amount>0" class="has flex flex-center">
+          <button class="btn go-use" type="button" @click="showBuy=true">
+            使用
+          </button>
           <button v-if="cashInfo.activate_amount===0" class="btn to-cash can-not" type="button">
             提现
           </button>
           <button v-if="cashInfo.activate_amount>0" class="btn to-cash" type="button" @click="goCash">
             提现
-          </button>
-          <button class="btn go-use" type="button" @click="showBuy=true">
-            使用
           </button>
         </div>
         <div v-else class="has-not flex flex-center" @click="goIndex">
@@ -287,7 +287,6 @@ p {
         rgba(255, 220, 31, 1),
         rgba(253, 150, 11, 1)
       );
-      margin-right: .44rem;
     }
     .to-cash.can-not{
       opacity: .8;
@@ -296,6 +295,7 @@ p {
       border: 1px solid rgba(251, 246, 237, 1);
       border-radius: 36px;
       background: transparent;
+      margin-right: .44rem;
     }
     .go-index {
       width: 4.2rem;
