@@ -97,3 +97,14 @@ export function debounce(fn, wait) {
     timeout = setTimeout(fn, wait)
   }
 }
+export function clipBoard(val) {
+  const input = document.createElement('input')
+  document.body.appendChild(input)
+  input.setAttribute('value', val)
+  input.select()
+  if (document.execCommand('copy')) {
+    document.execCommand('copy')
+    console.log('复制成功')
+  }
+  document.body.removeChild(input)
+}
