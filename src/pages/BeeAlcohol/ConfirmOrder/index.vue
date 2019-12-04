@@ -128,7 +128,8 @@ export default {
     // 抵扣文案
     deductionText() {
       if (this.cash_subsidy_used) {
-        return `(红包抵扣￥${this.order.orderDetail.cash_subsidy_amount})`
+        const amount = this.order.orderDetail.order_amount - this.totalMount
+        return `(红包抵扣￥${amount})`
       } else {
         return ''
       }
@@ -136,10 +137,11 @@ export default {
     // 订单总价
     totalMount() {
       if (this.cash_subsidy_used) {
-        let amount = this.order.orderDetail.order_amount - this.order.orderDetail.cash_subsidy_amount
+        let amount = this.order.orderDetail.order_amount - this.order.orderDetail.freight_amount - this.order.orderDetail.cash_subsidy_amount
         if (amount < 0) {
           amount = 0
         }
+        amount = amount + this.order.orderDetail.freight_amount
         return amount
       } else {
         return this.order.orderDetail.order_amount
