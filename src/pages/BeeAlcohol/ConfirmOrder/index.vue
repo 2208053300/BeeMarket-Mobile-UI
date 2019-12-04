@@ -43,6 +43,7 @@
           </div>
         </div>
         <van-checkbox
+          slot="right-icon"
           v-model="cash_subsidy_used"
           :checked-color="BeeDefault"
         />
