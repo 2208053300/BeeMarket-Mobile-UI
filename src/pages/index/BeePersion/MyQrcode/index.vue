@@ -67,7 +67,7 @@ export default {
         link: res.data.link, // 分享链接，根据自身项目决定是否需要split
         imgUrl: res.data.img // 分享图标, 请自行替换，需要绝对路径
       })
-      await wait(1000)
+      await wait(200)
       this.createImg()
     },
     async createImg() {
