@@ -74,7 +74,7 @@ export default {
   border-top-left-radius: 0.2rem;
   border-top-right-radius: 0.2rem;
   .text {
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     padding-left: 0.28rem;
     padding-right: 0.37rem;
     color: white;
