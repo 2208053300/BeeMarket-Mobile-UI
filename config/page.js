@@ -145,8 +145,14 @@ module.exports = {
     entry: 'src/pages/LcEnrolling/main.js',
     title: '联创大赛'
   },
+  // 贵宾陈酿，瓜分十亿
   beeAlcohol: {
     entry: 'src/pages/BeeAlcohol/main.js',
     title: '年终狂欢 瓜分10亿'
+  },
+  // 好物优选
+  beeBestGoods: {
+    entry: 'src/pages/BeeBestGoods/main.js',
+    title: '好物优选'
   }
 }
