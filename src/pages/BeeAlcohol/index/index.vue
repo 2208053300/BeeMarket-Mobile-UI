@@ -83,7 +83,7 @@
     </div>
     <rule v-model="showRule" />
     <select-num v-model="showBuy" />
-    <img :src="beeIcon.ticketImg" class="ticket-img" @click="goTicket">
+    <img :src="beeIcon.ticketImg" class="ticket-img" @click="goRedPacket">
   </div>
 </template>
 
@@ -186,10 +186,10 @@ export default {
         //
       }
     },
-    // 跳转到现金券列表
-    goTicket() {
+    // 跳转到红包数额页面
+    goRedPacket() {
       this.$router.push({
-        name: 'ticket'
+        name: 'redPacket'
       })
     }
   }

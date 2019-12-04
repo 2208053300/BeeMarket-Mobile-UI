@@ -26,7 +26,7 @@ export default {
       type: Boolean,
       default: true
     },
-    // 0-首页 1-限时蜂抢 2-免费送礼 3-蜂友圈 4-农礼包
+    // 0-首页 1-限时蜂抢 2-免费送礼 3-蜂友圈 4-农礼包 5-贵宾陈酿
     type: {
       type: Number,
       default: 0

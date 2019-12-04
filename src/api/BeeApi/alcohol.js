@@ -26,6 +26,23 @@ export function toCash(data) {
   })
 }
 
+// NOTE 改版后的红包补贴信息
+export function getCashInfo(data) {
+  return request({
+    url: '/user/cash/info',
+    method: 'post',
+    data
+  })
+}
+// NOTE 改版后的红包提现
+export function newToCash(data) {
+  return request({
+    url: '/user/cash/changeBalance',
+    method: 'post',
+    data
+  })
+}
+
 export function maxNumber(data) {
   return request({
     url: '/user/liquor/number',

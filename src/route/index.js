@@ -124,6 +124,16 @@ const router = new Router({
               component: () => import('@/pages/BeeAlcohol/TicketList')
             },
             {
+              path: 'earningWay',
+              name: 'earningWay',
+              component: () => import('@/pages/BeeAlcohol/EarningWay')
+            },
+            {
+              path: 'redPacket',
+              name: 'redPacket',
+              component: () => import('@/pages/BeeAlcohol/RedPacket')
+            },
+            {
               path: 'confirmOrder',
               name: 'alcoholConfirmOrder',
               component: () =>
