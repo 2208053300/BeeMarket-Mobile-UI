@@ -185,7 +185,7 @@ p {
   width: 100%;
   height: 100%;
   background-image: linear-gradient(to bottom, #ea583d, #cd281c);
-  padding-top: 0.56rem;
+  padding-top: 0.7rem;
   .swiper-box1{
     position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100;
     width: 3.5rem;
