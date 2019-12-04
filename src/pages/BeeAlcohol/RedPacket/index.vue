@@ -181,6 +181,7 @@ export default {
       const res = await newToCash()
       if (res.status_code === 200) {
         this.getRedPacketData()
+        this.showPopup = false
       }
       this.$toast(res.message)
     },
