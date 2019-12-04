@@ -92,9 +92,11 @@ import Rule from './components/Rule'
 import SelectNum from './components/SelectNum'
 import Cookies from 'js-cookie'
 import { getUID } from '@/api/BeeApi/user'
-import { showShareIcon, setShareOptions } from '@/utils/share'
+import { showShareIcon } from '@/utils/share'
 import BeeWinningRoll from '@/components/BeeWinningRoll'
 import wait from '@/utils/wait'
+import { getOs } from '@/utils'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo: {
     title: '年终狂欢 瓜分10亿'
@@ -150,13 +152,26 @@ export default {
       try {
         const res = await getUID()
         this.uid = res.data.uid
-        setShareOptions({
-          title: '年终狂欢，瓜分10亿',
-          desc: '茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！',
-          link: this.uid
-            ? location.origin + '/#/beeAlcohol?uid=' + this.uid
-            : location.origin + '/#/beeAlcohol'
-        })
+
+        const osObj = getOs()
+        if (osObj.isWx) {
+          wxapi.wxShare({
+            title: '年终狂欢，瓜分10亿',
+            desc: '茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！',
+            imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
+            link: this.uid
+              ? location.origin + '/#/beeAlcohol?uid=' + this.uid
+              : location.origin + '/#/beeAlcohol'
+          })
+        } else {
+          window.appShare = () => {
+            if (osObj.isIphone) {
+              window.webkit.messageHandlers.ToLiquorShare.postMessage('')
+            } else if (osObj.isAndroid) {
+              window.beeMarket.ToLiquorShare()
+            }
+          }
+        }
       } catch (error) {
         console.log(error)
       }
