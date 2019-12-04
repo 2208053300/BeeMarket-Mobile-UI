@@ -165,14 +165,8 @@ export default {
 
         const osObj = getOs()
         if (osObj.isWx) {
-          wxapi.wxShare({
-            title: '年终狂欢，瓜分10亿',
-            desc: '茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！',
-            imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
-            link: this.uid
-              ? location.origin + '/#/beeAlcohol?uid=' + this.uid
-              : location.origin + '/#/beeAlcohol'
-          })
+          await wait(1000)
+          this.showShare = true
         } else {
           window.appShare = () => {
             if (osObj.isIphone) {
@@ -184,33 +178,6 @@ export default {
         }
       } catch (error) {
         console.log(error)
-      }
-      await wait(1000)
-      this.showShare = true
-    },
-    // 分享
-    appShare() {
-      if (this.osObj.isWx) {
-        //
-      } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.ToShare.postMessage({
-          title: this.activity.share_data.title,
-          desc: this.activity.share_data.desc,
-          img_path: this.activity.share_data.img,
-          // 地址应该放 web 站 网页
-          url: this.activity.share_data.link
-          // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
-        })
-      } else if (this.osObj.isAndroid && this.osObj.isApp) {
-        window.beeMarket.ToShare(
-          this.activity.share_data.title,
-          this.activity.share_data.desc,
-          this.activity.share_data.img,
-          this.activity.share_data.link
-          // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
-        )
-      } else {
-        //
       }
     },
     // 跳转到现金券列表
