@@ -78,7 +78,7 @@ export default {
     padding-left: 0.28rem;
     padding-right: 0.37rem;
     color: white;
-    line-height: 1.2;
+    line-height: 1.6;
     font-size: 0.3rem;
     .dl {
       margin-bottom: 0.3rem;
