@@ -54,26 +54,26 @@ export default {
 
 <style lang="less" scoped>
   .winning-roll {
-    width: 5.5rem;
-    height: 0.55rem;
+    width: 275px;
+    height: 28px;
     background: rgba(0, 0, 0, 0.46);
-    border-radius: 5rem;
+    border-radius: 100px;
     .winning-item {
       display: grid;
-      grid-template-columns: 0.48rem 1fr;
+      grid-template-columns: 28px 1fr;
       align-items: center;
-      grid-column-gap: 0.11rem;
-      column-gap: 0.11rem;
+      grid-column-gap: 5px;
+      column-gap: 5px;
       img {
-        margin-left: 0.04rem;
-        width: 0.44rem;
-        height: 0.44rem;
-        border-radius: 1rem;
+        margin-left: 2px;
+        width: 22px;
+        height: 22px;
+        border-radius: 100px;
       }
       span {
         text-align: start;
         color: white;
-        font-size: 0.24rem;
+        font-size: 12px;
         display: inline-block;
         white-space: nowrap;
         width: 98%;
