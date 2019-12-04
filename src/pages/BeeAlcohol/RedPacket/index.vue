@@ -128,6 +128,7 @@ import wait from '@/utils/wait'
 import { newToCash, getCashInfo } from '@/api/BeeApi/alcohol'
 import BeeWinningRoll from '@/components/BeeWinningRoll'
 import SelectNum from '../index/components/SelectNum'
+import { getUID } from '@/api/BeeApi/user'
 export default {
   metaInfo: {
     title: '年终狂欢 瓜分10亿'
