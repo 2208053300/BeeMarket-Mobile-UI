@@ -155,7 +155,7 @@ export default {
 
       cashInfo: {
         amount: 0,
-        head_image_url: require('@/assets/icon/alcohol/avatar.png'),
+        head_image_url: '',
         total_amount: 0,
         use_amount: 0,
         withdraw_amount: 0,
