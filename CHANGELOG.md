@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+#### v3.0.9 (2019-12-4)
+
+1.修改“瓜分10亿”活动玩法；
+2.新增“赚钱攻略”功能；
+3.修复部分已知bug；
+
 #### v3.0.8 (2019-11-27)
 
 1. 新增“瓜分10亿”活动；
