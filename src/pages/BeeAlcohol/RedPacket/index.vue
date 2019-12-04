@@ -57,7 +57,10 @@
       <!-- action -->
       <div class="action">
         <div v-if="cashInfo.total_amount>0" class="has flex flex-center">
-          <button class="btn to-cash" type="button" @click="goCash">
+          <button v-if="cashInfo.activate_amount===0" class="btn to-cash can-not" type="button">
+            提现
+          </button>
+          <button v-if="cashInfo.activate_amount>0" class="btn to-cash" type="button" @click="goCash">
             提现
           </button>
           <button class="btn go-use" type="button" @click="showBuy=true">
@@ -106,13 +109,16 @@ export default {
       uid: 0,
       // 获取 os 平台
       osObj: getOs(),
+
       cashInfo: {
         amount: 0,
         head_image_url: require('@/assets/icon/alcohol/avatar.png'),
         total_amount: 0,
         use_amount: 0,
-        withdraw_amount: 0
+        withdraw_amount: 0,
+        activate_amount: 0
       },
+
       showBuy: false
     }
   },
@@ -159,11 +165,9 @@ export default {
     // 去使用、去参与
     goIndex() {
       if (this.osObj.isApp) {
-        this.$router.push('/')
+        window.location.href = window.location.origin + '/#/beeAlcohol'
       } else {
-        this.$router.push({
-          path: '/beeAlcohol'
-        })
+        window.location.href = window.location.origin + '/beeAlcohol'
       }
     }
   }
@@ -284,6 +288,9 @@ p {
         rgba(253, 150, 11, 1)
       );
       margin-right: .44rem;
+    }
+    .to-cash.can-not{
+      opacity: .8;
     }
     .go-use {
       border: 1px solid rgba(251, 246, 237, 1);
