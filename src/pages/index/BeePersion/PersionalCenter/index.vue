@@ -80,7 +80,7 @@
       <div class="commonweal">
         <div
           class="img-content"
-          @click="authRoute('/beeFriends/myRights')"
+          @click="authRoute('/beeAlcohol/earningWay')"
         >
           <img
             :src="beeIcon.bee_firend_img_income"
@@ -253,7 +253,7 @@ export default {
         mine_icon_set: require('@/assets/icon/personalCenter/mine_icon_set@2x.png'),
         head_default: require('@/assets/icon/personalCenter/head_default.png'),
         mine_icon_star_partner: require('@/assets/icon/personalCenter/mine_icon_star_partner@2x.png'),
-        bee_firend_img_income: require('@/assets/icon/beeFriends/info/bee_firend_img_income.png')
+        bee_firend_img_income: require('@/assets/icon/beeFriends/info/mine_img_raiders.png')
       },
       userInfo: {
         personal_info: {
