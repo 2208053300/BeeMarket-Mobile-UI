@@ -1,6 +1,14 @@
 <template>
   <div>
-    <van-swipe v-if="list.length > 0" class="winning-roll" :autoplay="5000" :show-indicators="false" :touchable="false" vertical>
+    <van-swipe
+      v-if="list.length > 0"
+      class="winning-roll"
+      :autoplay="5000"
+      :show-indicators="false"
+      :touchable="false"
+      vertical
+      :style="{width: width}"
+    >
       <van-swipe-item v-for="(item, index) in list" :key="index" class="winning-item">
         <img :src="item.user_head_url">
         <span>{{ item.notice }}</span>
@@ -16,6 +24,10 @@ export default {
     type: {
       type: String,
       required: true
+    },
+    width: {
+      type: String,
+      default: () => '5.5rem'
     }
   },
   data() {
