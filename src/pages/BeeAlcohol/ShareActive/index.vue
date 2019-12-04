@@ -35,7 +35,7 @@
 
 <script>
 import wxapi from '@/utils/wxapi.js'
-import { getQrcode } from '@/api/BeeApi/user'
+import { cashShareQrcode } from '@/api/BeeApi/alcohol'
 import html2canvas from 'html2canvas/dist/html2canvas.min.js'
 import wait from '@/utils/wait'
 import { clipBoard } from '@/utils'
@@ -51,7 +51,8 @@ export default {
       liqueur_button_download: require('@/assets/icon/alcohol/liqueur_button_download.png'),
       liqueur_button_link: require('@/assets/icon/alcohol/liqueur_button_link.png'),
       screenshotBase64: '',
-      qrcode: ''
+      qrcode: '',
+      link: ''
     }
   },
   computed: {},
@@ -65,12 +66,12 @@ export default {
   methods: {
     clipBoardFunc() {
       this.$toast('复制成功！')
-      clipBoard(this.$store.state.app.homeUri2 + '#/beeAlcohol' + '  茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！')
+      clipBoard(this.link + '  茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！')
     },
     async getQrcodeData() {
-      const res = await getQrcode()
+      const res = await cashShareQrcode()
       this.qrcode = 'data:image/jpeg;base64,' + res.data.qr_code
-
+      this.link = res.data.link
       wxapi.wxShare({
         title: res.data.title, // 分享标题, 请自行替换
         desc: res.data.desc, // 分享描述, 请自行替换

@@ -50,3 +50,11 @@ export function maxNumber(data) {
     data
   })
 }
+
+export function cashShareQrcode(data) {
+  return request({
+    url: '/user/cash/share',
+    method: 'post',
+    data
+  })
+}
