@@ -2,7 +2,7 @@
   <div class="earning-way">
     <bee-winning-roll
       v-if="showSwipe"
-      style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100"
+      style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100;"
       type="alcohol"
       width="4rem"
     />
