@@ -202,9 +202,9 @@ export default {
     // 去使用、去参与
     goIndex() {
       if (this.osObj.isApp) {
-        window.location.href = window.location.origin + '/#/beeAlcohol'
-      } else {
         window.location.href = window.location.origin + '/beeAlcohol'
+      } else {
+        window.location.href = window.location.origin + '/#/beeAlcohol'
       }
     }
   }

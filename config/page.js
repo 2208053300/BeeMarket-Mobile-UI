@@ -148,7 +148,7 @@ module.exports = {
   // 贵宾陈酿，瓜分十亿
   beeAlcohol: {
     entry: 'src/pages/BeeAlcohol/main.js',
-    title: '年终狂欢 瓜分10亿'
+    title: '加载中...'
   },
   // 好物优选
   beeBestGoods: {
