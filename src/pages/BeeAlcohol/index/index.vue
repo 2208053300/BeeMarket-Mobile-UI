@@ -5,6 +5,15 @@
       style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100"
       type="alcohol"
     />
+    <transition name="van-slide-right">
+      <div
+        v-if="!osObj.isApp&&showShare"
+        class="share-icon"
+        @click="$router.push({ name: 'shareActive' })"
+      >
+        <van-icon name="share" />
+      </div>
+    </transition>
     <div style="position: relative">
       <img
         :src="require('@/assets/icon/alcohol/1-首页改版七-切图_01.jpg')"
@@ -92,9 +101,11 @@ import Rule from './components/Rule'
 import SelectNum from './components/SelectNum'
 import Cookies from 'js-cookie'
 import { getUID } from '@/api/BeeApi/user'
-import { showShareIcon, setShareOptions } from '@/utils/share'
+import { showShareIcon } from '@/utils/share'
 import BeeWinningRoll from '@/components/BeeWinningRoll'
 import wait from '@/utils/wait'
+import { getOs } from '@/utils'
+import wxapi from '@/utils/wxapi'
 export default {
   metaInfo: {
     title: '年终狂欢 瓜分10亿'
@@ -112,7 +123,9 @@ export default {
       showRule: false,
       uid: 0,
       showBuy: false,
-      showSwipe: true
+      showSwipe: true,
+      osObj: getOs(),
+      showShare: false
     }
   },
   computed: {},
@@ -150,44 +163,34 @@ export default {
       try {
         const res = await getUID()
         this.uid = res.data.uid
-        setShareOptions({
-          title: '年终狂欢，瓜分10亿',
-          desc: '茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！',
-          link: this.uid
-            ? location.origin + '/#/beeAlcohol?uid=' + this.uid
-            : location.origin + '/#/beeAlcohol'
-        })
+
+        const osObj = getOs()
+        if (osObj.isWx) {
+          wxapi.wxShare({
+            title: '年终狂欢，瓜分10亿',
+            desc: '茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！',
+            imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
+            link: this.uid
+              ? location.origin + '/#/beeAlcohol?uid=' + this.uid
+              : location.origin + '/#/beeAlcohol'
+          })
+          await wait(1000)
+          this.showShare = true
+        } else {
+          window.appShare = () => {
+            if (osObj.isIphone) {
+              window.webkit.messageHandlers.ToLiquorShare.postMessage('')
+            } else if (osObj.isAndroid) {
+              window.beeMarket.ToLiquorShare()
+            }
+          }
+        }
       } catch (error) {
         console.log(error)
       }
     },
-    // 分享
-    appShare() {
-      if (this.osObj.isWx) {
-        //
-      } else if (this.osObj.isIphone && this.osObj.isApp) {
-        window.webkit.messageHandlers.ToShare.postMessage({
-          title: this.activity.share_data.title,
-          desc: this.activity.share_data.desc,
-          img_path: this.activity.share_data.img,
-          // 地址应该放 web 站 网页
-          url: this.activity.share_data.link
-          // url: this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
-        })
-      } else if (this.osObj.isAndroid && this.osObj.isApp) {
-        window.beeMarket.ToShare(
-          this.activity.share_data.title,
-          this.activity.share_data.desc,
-          this.activity.share_data.img,
-          this.activity.share_data.link
-          // this.$store.state.app.homeUri + '/beeActiveTpl?id=' + this.$route.query.id
-        )
-      } else {
-        //
-      }
-    },
-    // 跳转到红包数额页面
-    goRedPacket() {
+    // 跳转到现金券列表
+    goTicket() {
       this.$router.push({
         name: 'redPacket'
       })
@@ -200,6 +203,20 @@ export default {
 .bee-alcohol {
   @videoWidth: 6.68rem;
   @videoHeight: 3.76rem;
+  .share-icon {
+    position: fixed;
+    top: 0.2rem;
+    right: 0.2rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    color: @BeeDefault;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.6rem;
+    z-index: 100;
+    background-color: #fff;
+    border-radius: 50%;
+  }
   // 图片衔接处有白线，随出此下策
   img {
     margin-bottom: -1px;
