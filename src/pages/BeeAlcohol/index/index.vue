@@ -92,7 +92,7 @@
     </div>
     <rule v-model="showRule" />
     <select-num v-model="showBuy" />
-    <img :src="beeIcon.ticketImg" class="ticket-img" @click="goRedPacket">
+    <img :src="beeIcon.ticketImg" class="ticket-img" @click="goTicket">
   </div>
 </template>
 
@@ -133,7 +133,7 @@ export default {
   created() {},
   destroyed() {
     this.$store.commit('SET_BACKTOP_HIDE', false)
-    window.onresize = null
+    window.onresize = undefined
   },
   mounted() {
     this.initShare()

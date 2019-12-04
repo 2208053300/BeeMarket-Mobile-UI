@@ -1,13 +1,10 @@
 <template>
   <div class="earning-way">
-    <div class="swiper-box1">
-      <Swiper
-        :block="false"
-        :type="type"
-        :bg-color="bgColor"
-        :font-color="fontColor"
-      />
-    </div>
+    <bee-winning-roll
+      v-if="showSwipe"
+      style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100"
+      type="alcohol"
+    />
     <img :src="beeIcon.titleImg" class="title-img">
     <div class="content">
       <!-- avatar -->
@@ -62,7 +59,7 @@
           <button class="btn to-cash" type="button" @click="goCash">
             提现
           </button>
-          <button class="btn go-use" type="button" @click="goIndex">
+          <button class="btn go-use" type="button" @click="showBuy=true">
             使用
           </button>
         </div>
@@ -76,22 +73,22 @@
 
     <!-- 装饰图片 -->
     <img :src="beeIcon.decorate" class="decorate">
+
+    <select-num v-model="showBuy" />
   </div>
 </template>
 
 <script>
 import { getOs } from '@/utils'
-// import Cookies from 'js-cookie'
-// import { getUID } from '@/api/BeeApi/user'
-// import { showShareIcon, setShareOptions } from '@/utils/share'
 import { newToCash, getCashInfo } from '@/api/BeeApi/alcohol'
-import Swiper from '../../BeeBestGoods/components/Swiper'
-// import wait from '@/utils/wait'
+import BeeWinningRoll from '@/components/BeeWinningRoll'
+import SelectNum from '../index/components/SelectNum'
+import wait from '@/utils/wait'
 export default {
   metaInfo: {
     title: '年终狂欢 瓜分10亿'
   },
-  components: { Swiper },
+  components: { BeeWinningRoll, SelectNum },
   props: {},
   data() {
     return {
@@ -100,14 +97,12 @@ export default {
       bgColor: 'RGBA(100, 16, 32, .7)',
       fontColor: '#fff',
       type: 5,
-
       beeIcon: {
         titleImg: require('@/assets/icon/alcohol/top_title.png'),
         avatar: require('@/assets/icon/alcohol/avatar.png'),
         decorate: require('@/assets/icon/alcohol/decorate.png')
       },
       uid: 0,
-
       // 获取 os 平台
       osObj: getOs(),
       cashInfo: {
@@ -116,7 +111,8 @@ export default {
         total_amount: 0,
         use_amount: 0,
         withdraw_amount: 0
-      }
+      },
+      showBuy: false
     }
   },
   computed: {},
@@ -124,6 +120,7 @@ export default {
   created() {},
   destroyed() {
     this.$store.commit('SET_BACKTOP_HIDE', false)
+    window.onresize = undefined
   },
   mounted() {
     this.$store.commit('SET_BACKTOP_HIDE', true)
@@ -131,6 +128,13 @@ export default {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = false
     this.getRedPacketData()
+
+    const that = this
+    window.onresize = async() => {
+      that.showSwipe = false
+      await wait(500)
+      that.showSwipe = true
+    }
   },
   methods: {
     // 获取红包数据
@@ -154,11 +158,8 @@ export default {
     // 去使用、去参与
     goIndex() {
       if (this.osObj.isApp) {
-        console.log(1)
-
         this.$router.push('/')
       } else {
-        console.log(2)
         this.$router.push({
           path: '/beeAlcohol'
         })
