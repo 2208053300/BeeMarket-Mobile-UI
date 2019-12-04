@@ -4,7 +4,7 @@
       v-if="showSwipe"
       style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100"
       type="alcohol"
-      width="4rem"
+      width="200px"
     />
     <transition name="van-slide-right">
       <div
@@ -134,7 +134,6 @@ export default {
   created() {},
   destroyed() {
     this.$store.commit('SET_BACKTOP_HIDE', false)
-    window.onresize = undefined
   },
   mounted() {
     this.initShare()
@@ -146,13 +145,6 @@ export default {
       Cookies.set('uid', this.$route.query.uid)
     }
     showShareIcon()
-
-    const that = this
-    window.onresize = async() => {
-      that.showSwipe = false
-      await wait(1000)
-      that.showSwipe = true
-    }
   },
   methods: {
     // 播放视频
