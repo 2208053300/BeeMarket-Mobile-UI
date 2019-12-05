@@ -76,8 +76,10 @@ export default {
       backimg.composite(qr, 175, 765)
       // 获取base64数据
       this.screenshotBase64 = await backimg.getBase64Async(jimp.MIME_PNG)
-      backimg.background(0xffffffff)
-      this.screenshotBase64End = await backimg.getBase64Async(jimp.MIME_JPEG)
+      setTimeout(async() => {
+        backimg.background(0xffffffff)
+        this.screenshotBase64End = await backimg.getBase64Async(jimp.MIME_JPEG)
+      }, 1000)
       this.link = res.data.share.link
       wxapi.wxShare({
         title: res.data.share.title, // 分享标题, 请自行替换
