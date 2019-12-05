@@ -11,9 +11,13 @@
     </p>
     <div
       class="share-img"
+      :style="{backgroundImage:'url('+liqueur_img_poster_under+')'}"
     >
       <div class="screenshot">
         <img v-show="screenshotBase64" :src="screenshotBase64" alt="">
+      </div>
+      <div class="screenshot" style="opacity: 0">
+        <img v-show="screenshotBase64" :src="screenshotBase64End" alt="">
       </div>
     </div>
     <div class="download-img" @click="$toast('长按图片保存到本地分享')">
@@ -42,6 +46,7 @@ export default {
       liqueur_button_download: require('@/assets/icon/alcohol/liqueur_button_download.png'),
       liqueur_button_link: require('@/assets/icon/alcohol/liqueur_button_link.png'),
       screenshotBase64: '',
+      screenshotBase64End: '',
       qrcode: '',
       link: ''
     }
@@ -69,9 +74,12 @@ export default {
       qr.resize(100, 100)
       // 将二维码放到指定x,y位置
       backimg.composite(qr, 175, 765)
-      backimg.background(0x00000000)
       // 获取base64数据
       this.screenshotBase64 = await backimg.getBase64Async(jimp.MIME_PNG)
+      setTimeout(async() => {
+        backimg.background(0xffffffff)
+        this.screenshotBase64End = await backimg.getBase64Async(jimp.MIME_JPEG)
+      }, 1000)
       this.link = res.data.share.link
       wxapi.wxShare({
         title: res.data.share.title, // 分享标题, 请自行替换
