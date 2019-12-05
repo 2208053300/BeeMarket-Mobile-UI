@@ -272,7 +272,7 @@ import {
   postGenerated,
   postCustom
 } from '@/api/BeeApi/promote'
-import html2canvas from 'html2canvas/dist/html2canvas.min.js'
+import Jimp from 'jimp/es'
 
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
@@ -442,50 +442,26 @@ export default {
     async doneText() {
       // 点击下一步，生成海报
       this.showEnd = true
-      const imgDom = document.querySelector('.van-uploader')
-      // 清晰度
-      const width = imgDom.offsetWidth
-      const height = imgDom.offsetHeight
-      const canvas = document.createElement('canvas')
-      const scale = 8
-      canvas.width = width * scale
-      canvas.height = height * scale
-      canvas.getContext('2d').scale(scale, scale)
+      const qr = await Jimp.read(this.qrcodeBase64)
+      // 如果没有上传的新图，则使用以前上传过的图片
+      const backimg = await Jimp.read({ url: this.commentImgs || this.share_ori })
+      const wenan = await Jimp.read(this.wenan[this.activeText])
+      backimg.resize(750, 1334)
+      backimg.composite(wenan, 0, 0)
+      qr.resize(150, 150)
+      // 将二维码放到指定x,y位置
+      backimg.composite(qr, 520, 1070)
+      backimg.background(0x00000000)
+      // 获取base64数据
+      this.share_img = await backimg.getBase64Async(Jimp.MIME_PNG)
       try {
-        const canvasImg = await html2canvas(imgDom, {
-          scale: scale,
-          useCORS: true,
-          canvas: canvas,
-          scrollX: 0,
-          scrollY: 0,
-          x: imgDom.offsetLeft,
-          // 必须获得其距离顶部距离，避免滚动偏移
-          y:
-            imgDom.offsetTop +
-            document.querySelector('.comment-imgs').offsetTop,
-          width: width,
-          height: height,
-          backgroundColor: null
-        })
-        const context = canvasImg.getContext('2d')
-        // 【重要】关闭抗锯齿
-        context.mozImageSmoothingEnabled = false
-        context.webkitImageSmoothingEnabled = false
-        context.msImageSmoothingEnabled = false
-        context.imageSmoothingEnabled = false
-        const img = canvasImg.toDataURL('image/png')
-        this.share_img = img
-        try {
-          await postGenerated({ image: this.share_img })
-        } catch (error) {
-          this.$toast('上传图片失败！')
-        }
+        await postGenerated({ image: this.share_img })
       } catch (error) {
-        console.log(error)
-        this.$toast('生成专属海报失败！')
+        this.$toast('上传图片失败！')
       }
     },
     async saveImg(e) {
+      this.doneText()
       // APP保存图片与微信保存图片
       if (this.osObj.isApp) {
         e.preventDefault()
@@ -502,31 +478,18 @@ export default {
       }
     },
     async createImg() {
-      const imgDom = document.querySelector('.swiper-slide-active')
-      const width = imgDom.offsetWidth
-      const height = imgDom.offsetHeight
-      const canvas = document.createElement('canvas')
-      const scale = 8
-      canvas.width = width * scale
-      canvas.height = height * scale
-      canvas.getContext('2d').scale(scale, scale)
-      try {
-        const canvasImg = await html2canvas(imgDom, {
-          scale: scale,
-          canvas: canvas,
-          useCORS: true,
-          y: document.querySelector('.full-page-slide-wrapper').offsetTop,
-          width: width,
-          height: height,
-          // 必须获得其距离顶部距离，避免滚动偏移
-          backgroundColor: null
-        })
-        const img = canvasImg.toDataURL('image/png')
-        this.share_img = img
-      } catch (error) {
-        console.log(error)
-        this.$toast('生成专属海报失败！')
-      }
+      const tempImg = document.querySelector('.swiper-slide-active img').getAttribute('src')
+      const qr = await Jimp.read(this.qrcodeBase64)
+      // 如果没有上传的新图，则使用以前上传过的图片
+      const backimg = await Jimp.read(tempImg)
+      backimg.resize(750, 1334)
+      qr.resize(150, 150)
+      // 将二维码放到指定x,y位置
+      backimg.composite(qr, 520, 1070)
+      backimg.background(0x00000000)
+      // 获取base64数据
+      this.share_img = await backimg.getBase64Async(Jimp.MIME_PNG)
+      window.open(this.share_img)
     },
     async saveImg2(e) {
       await this.createImg()
