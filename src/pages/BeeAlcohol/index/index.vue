@@ -56,10 +56,10 @@
               : require('@/assets/icon/alcohol/pw_pic_video.png')
           "
           class="video-body"
+          x5-playsinline="true"
           webkit-playsinline="true"
-          playsinline
-          x5-video-player-type="h5"
-          x5-video-player-fullscreen="false"
+          playsInline="true"
+          x-webkit-airplay="allow"
           :controls="showControls"
         />
         <div v-if="!showControls" class="control">
