@@ -6,7 +6,7 @@
       type="alcohol"
       width="200px"
     />
-    <transition name="van-slide-right">
+    <!-- <transition name="van-slide-right">
       <div
         v-if="!osObj.isApp&&showShare"
         class="share-icon"
@@ -14,7 +14,7 @@
       >
         <van-icon name="share" />
       </div>
-    </transition>
+    </transition> -->
     <div style="position: relative">
       <img
         :src="require('@/assets/icon/alcohol/1-首页改版七-切图_01.jpg')"
