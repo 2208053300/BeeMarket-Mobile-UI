@@ -66,7 +66,7 @@ export function checkToken() {
         encodeURIComponent(window.location.href) +
         '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     }
-  } else {
+  } else if (!osObj.isApp) {
     // 如果是网页端，没有token弹出手机号登录界面
     if (window.theRouter.currentRoute.name !== 'BeeLogin') {
       window.theRouter.replace({
