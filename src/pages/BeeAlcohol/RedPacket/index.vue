@@ -1,6 +1,6 @@
 <template>
   <div class="earning-way">
-    <transition name="van-slide-right">
+    <!-- <transition name="van-slide-right">
       <div
         v-if="!osObj.isApp && showShare"
         class="share-icon"
@@ -8,7 +8,7 @@
       >
         <van-icon name="share" />
       </div>
-    </transition>
+    </transition> -->
     <bee-winning-roll
       v-if="showSwipe"
       style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100;"

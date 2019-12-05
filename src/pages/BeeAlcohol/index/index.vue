@@ -260,8 +260,8 @@ export default {
     position: fixed;
     bottom: 1rem;
     right: 0;
-    width: 2rem;
-    height: 2.2rem;
+    width: 1.99rem;
+    height: 2.31rem;
     animation: shake 1.5s infinite;
   }
 
