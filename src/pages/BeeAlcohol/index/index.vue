@@ -33,10 +33,20 @@
         >
       </div>
     </div>
-    <img
-      :src="require('@/assets/icon/alcohol/1-首页改版七-切图_02.jpg')"
-      alt="head"
-    >
+    <div class="splice-2">
+      <img
+        :src="require('@/assets/icon/alcohol/index_splice_2.jpg')"
+        alt="head"
+      >
+      <img
+        class="heartBeat drink"
+        :src="require('@/assets/icon/alcohol/drink.png')"
+      >
+      <img
+        class="heartBeat earning"
+        :src="require('@/assets/icon/alcohol/earning.png')"
+      >
+    </div>
     <img
       :src="require('@/assets/icon/alcohol/1-首页改版七-切图_03.jpg')"
       alt="head"
@@ -95,11 +105,7 @@
     </div>
     <rule v-model="showRule" />
     <select-num v-model="showBuy" />
-    <img
-      :src="beeIcon.ticketImg"
-      class="ticket-img "
-      @click="goTicket"
-    >
+    <img :src="beeIcon.ticketImg" class="ticket-img " @click="goTicket">
   </div>
 </template>
 
@@ -264,7 +270,6 @@ export default {
     height: 2.31rem;
     animation: shake 1.5s infinite;
   }
-
   @keyframes shake {
     0% {
       transform: rotate(0deg);
@@ -293,7 +298,43 @@ export default {
     40% {
       transform: rotate(0deg);
     }
+  }
+  .splice-2 {
+    position: relative;
+  }
+  .heartBeat {
+    position: absolute;
+    top: 1.9rem;
+    width: 1.33rem;
+    height: 0.56rem;
+    animation:heartBeat 1.3s ease-in-out infinite ;
+  }
+  .drink {
+    left: 1.5rem;
+  }
+  .earning {
+    right: 1.5rem;
+  }
+  @keyframes heartBeat {
+    0% {
+      transform: scale(1);
+    }
 
+    14% {
+      transform: scale(1.3);
+    }
+
+    28% {
+      transform: scale(1);
+    }
+
+    42% {
+      transform: scale(1.3);
+    }
+
+    70% {
+      transform: scale(1);
+    }
   }
 }
 </style>
