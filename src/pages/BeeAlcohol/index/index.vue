@@ -209,6 +209,8 @@ export default {
 .bee-alcohol {
   @videoWidth: 6.68rem;
   @videoHeight: 3.76rem;
+  width: 7.5rem;
+  margin: 0 auto;
   .share-icon {
     position: fixed;
     top: 0.2rem;
