@@ -59,7 +59,6 @@
           webkit-playsinline="true"
           playsinline
           x5-video-player-type="h5"
-          x5-video-player-fullscreen="true"
           :controls="showControls"
         />
         <div v-if="!showControls" class="control">
