@@ -413,9 +413,9 @@ p {
       background: rgba(204, 204, 204, 1);
     }
     .go-use {
-      border: 1px solid rgba(251, 246, 237, 1);
       border-radius: 36px;
-      background: transparent;
+      background: #fff;
+      color: #F24032;
       margin-right: 0.44rem;
     }
     .go-index {
