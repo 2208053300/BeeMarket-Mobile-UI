@@ -15,6 +15,7 @@
         <van-icon name="share" />
       </div>
     </transition> -->
+
     <div style="position: relative">
       <img
         :src="require('@/assets/icon/alcohol/1-首页改版七-切图_01.jpg')"
@@ -97,7 +98,11 @@
     </div>
     <rule v-model="showRule" />
     <select-num v-model="showBuy" />
-    <img :src="beeIcon.ticketImg" class="ticket-img" @click="goTicket">
+    <img
+      :src="beeIcon.ticketImg"
+      class="ticket-img "
+      @click="goTicket"
+    >
   </div>
 </template>
 
@@ -260,6 +265,38 @@ export default {
     right: 0;
     width: 2rem;
     height: 2.2rem;
+    animation: shake 1.5s infinite;
+  }
+
+  @keyframes shake {
+    0% {
+      transform: rotate(0deg);
+    }
+    5% {
+      transform: rotate(10deg);
+    }
+    10% {
+      transform: rotate(0deg);
+    }
+    15% {
+      transform: rotate(-10deg);
+    }
+    20% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(10deg);
+    }
+    30% {
+      transform: rotate(0deg);
+    }
+    35% {
+      transform: rotate(-10deg);
+    }
+    40% {
+      transform: rotate(0deg);
+    }
+
   }
 }
 </style>

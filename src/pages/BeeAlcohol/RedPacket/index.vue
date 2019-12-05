@@ -2,7 +2,7 @@
   <div class="earning-way">
     <transition name="van-slide-right">
       <div
-        v-if="!osObj.isApp&&showShare"
+        v-if="!osObj.isApp && showShare"
         class="share-icon"
         @click="$router.push({ name: 'shareActive' })"
       >
@@ -104,14 +104,25 @@
     <!-- 可提现提示弹窗 -->
     <van-popup v-model="showPopup" class="tip-popup">
       <div class="tip-content text-center">
-        <img :src="beeIcon.txt" class="txt-img">
-        <p class="num">
+        <img v-if="cashInfo.activate_amount > 0" :src="beeIcon.txt" class="txt-img">
+        <img v-if="cashInfo.activate_amount === 0" :src="beeIcon.txtNoCash" class="txt-img" style="height: .6rem;">
+        <p v-if="cashInfo.activate_amount > 0" class="num">
           ￥ {{ cashInfo.activate_amount }}
         </p>
-        <button class="btn" type="button" @click="toBalance">
-          提入余额
+        <div v-if="cashInfo.activate_amount === 0" class="no-cash-tip text-center">
+          分享好友，立即提现！
+        </div>
+        <button class="btn" type="button">
+          <span
+            v-if="cashInfo.activate_amount > 0"
+            @click="toBalance"
+          >提入余额</span>
+          <span
+            v-if="cashInfo.activate_amount === 0"
+            @click="$router.push({ name: 'shareActive' })"
+          >立即分享</span>
         </button>
-        <p class="tip">
+        <p v-if="cashInfo.activate_amount > 0" class="tip">
           请前往“蜂友圈一我的收益”查看余额
         </p>
       </div>
@@ -147,7 +158,8 @@ export default {
         avatar: require('@/assets/icon/alcohol/avatar.png'),
         decorate: require('@/assets/icon/alcohol/decorate.png'),
         close: require('@/assets/icon/alcohol/red_packge_close.png'),
-        txt: require('@/assets/icon/alcohol/tip_text.png')
+        txt: require('@/assets/icon/alcohol/tip_text.png'),
+        txtNoCash: require('@/assets/icon/alcohol/tip_text_no_cash.png')
       },
       uid: 0,
       // 获取 os 平台
@@ -189,9 +201,9 @@ export default {
     async getRedPacketData() {
       const res = await getCashInfo()
       this.cashInfo = res.data
-      if (res.data.activate_amount > 0) {
-        this.showPopup = true
-      }
+      // if (res.data.activate_amount > 0) {
+      this.showPopup = true
+      // }
     },
     // 转余额
     async toBalance() {
@@ -263,19 +275,19 @@ p {
   margin: 0;
 }
 .share-icon {
-    position: fixed;
-    top: 0.2rem;
-    right: 0.2rem;
-    width: 0.6rem;
-    height: 0.6rem;
-    color: @BeeDefault;
-    text-align: center;
-    font-weight: bold;
-    font-size: 0.6rem;
-    z-index: 100;
-    background-color: #fff;
-    border-radius: 50%;
-  }
+  position: fixed;
+  top: 0.2rem;
+  right: 0.2rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  color: @BeeDefault;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.6rem;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 50%;
+}
 .earning-way {
   position: fixed;
   top: 0;
@@ -397,7 +409,7 @@ p {
       );
     }
     .to-cash.can-not {
-      background: rgba(204,204,204,1);
+      background: rgba(204, 204, 204, 1);
     }
     .go-use {
       border: 1px solid rgba(251, 246, 237, 1);
@@ -441,7 +453,18 @@ p {
         font-size: 0.68rem;
         color: #fff;
         font-weight: 600;
-        margin: 0.43rem auto .34rem;
+        margin: 0.43rem auto 0.34rem;
+      }
+      .no-cash-tip {
+        width: 3.83rem;
+        height: 0.79rem;
+        padding-top: 0.14rem;
+        box-sizing: border-box;
+        margin: 0.51rem auto 0.33rem;
+        background: url(../../../assets/icon/alcohol/popup_tip_bg.png) no-repeat;
+        background-size: 100%;
+        font-size: 0.36rem;
+        color: #cc271b;
       }
       .btn {
         border: none;
@@ -455,12 +478,18 @@ p {
         );
         border-radius: 0.5rem;
         font-size: 0.36rem;
+        span {
+          display: block;
+          height: 100%;
+          width: 100%;
+          line-height: 0.95rem;
+        }
       }
-      .tip{
-        margin-top: .2rem;
+      .tip {
+        margin-top: 0.2rem;
         color: #fff;
-        font-size: .2rem;
-        opacity: .6;
+        font-size: 0.2rem;
+        opacity: 0.6;
       }
     }
     .close {
