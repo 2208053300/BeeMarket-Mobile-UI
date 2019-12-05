@@ -36,10 +36,10 @@
           class="cell-title cell-deduction"
         >
           <div style="flex-shrink: 0">
-            红包抵扣
+            抵扣
           </div>
           <div class="deduction-num">
-            {{ order.orderDetail.cash_subsidy_amount }}元现金红包
+            {{ order.orderDetail.cash_subsidy_amount }}元现金补贴
           </div>
         </div>
         <van-checkbox
@@ -129,7 +129,7 @@ export default {
     deductionText() {
       if (this.cash_subsidy_used) {
         const amount = this.order.orderDetail.order_amount - this.totalMount
-        return `(红包抵扣￥${amount})`
+        return `(现金补贴抵扣￥${amount})`
       } else {
         return ''
       }
@@ -168,6 +168,9 @@ export default {
       // 获取确认订单
       const res = await confirmOrder(this.query)
       if (res.status_code === 200) {
+        if (res.data.cash_subsidy_amount > 0) {
+          this.cash_subsidy_used = true
+        }
         this.$store.state.order.orderDetail = res.data
         this.$store.state.order.addrDetail = res.data.addr
         if (this.order.orderDetail.stores.length === 0) {
