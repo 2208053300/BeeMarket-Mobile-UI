@@ -11,7 +11,6 @@
     </p>
     <div
       class="share-img"
-      :style="{backgroundImage:'url('+liqueur_img_poster_under+')'}"
     >
       <div class="screenshot">
         <img v-show="screenshotBase64" :src="screenshotBase64" alt="">
@@ -63,13 +62,14 @@ export default {
     async getQrcodeData() {
       const jimp = await import('jimp')
       const res = await cashShareQrcode()
-      this.qrcode = 'data:image/jpeg;base64,' + res.data.qr_code
+      this.qrcode = 'data:image/png;base64,' + res.data.qr_code
       const qr = await jimp.read(this.qrcode)
       const backimg = await jimp.read(this.liqueur_img_poster_under)
       // 将二维码缩放到100x100 px
       qr.resize(100, 100)
       // 将二维码放到指定x,y位置
       backimg.composite(qr, 175, 765)
+      backimg.background(0x00000000)
       // 获取base64数据
       this.screenshotBase64 = await backimg.getBase64Async(jimp.MIME_PNG)
       this.link = res.data.share.link
