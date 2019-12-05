@@ -5,6 +5,7 @@
       style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100"
       type="alcohol"
       width="200px"
+      :autoplay="3000"
     />
     <!-- <transition name="van-slide-right">
       <div
@@ -56,10 +57,6 @@
               : require('@/assets/icon/alcohol/pw_pic_video.png')
           "
           class="video-body"
-          x5-playsinline="true"
-          webkit-playsinline="true"
-          playsInline="true"
-          x-webkit-airplay="allow"
           :controls="showControls"
         />
         <div v-if="!showControls" class="control">
