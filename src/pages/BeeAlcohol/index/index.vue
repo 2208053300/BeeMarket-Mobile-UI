@@ -5,7 +5,7 @@
       style="position: fixed; top: 0.15rem;left: 0.3rem;z-index: 100"
       type="alcohol"
       width="200px"
-      :autoplay="3000"
+      :autoplay="2000"
     />
     <!-- <transition name="van-slide-right">
       <div
