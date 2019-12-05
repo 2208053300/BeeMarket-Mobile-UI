@@ -120,7 +120,7 @@
           >提入余额</span>
           <span
             v-if="cashInfo.activate_amount === 0"
-            @click="$router.push({ name: 'shareActive' })"
+            @click="goShare"
           >立即分享</span>
         </button>
         <p v-if="cashInfo.activate_amount > 0" class="tip">
@@ -257,6 +257,14 @@ export default {
         }
       } catch (error) {
         console.log(error)
+      }
+    },
+    // 分享页
+    goShare() {
+      if (this.osObj.isApp) {
+        window.location.href = window.location.origin + '/beeAlcohol#/redPacket'
+      } else {
+        window.location.href = window.location.origin + '/#/beeAlcohol/shareActive'
       }
     },
     // 去使用、去参与
