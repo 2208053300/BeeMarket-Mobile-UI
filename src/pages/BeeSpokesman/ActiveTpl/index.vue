@@ -489,7 +489,6 @@ export default {
       backimg.background(0x00000000)
       // 获取base64数据
       this.share_img = await backimg.getBase64Async(Jimp.MIME_PNG)
-      window.open(this.share_img)
     },
     async saveImg2(e) {
       await this.createImg()
