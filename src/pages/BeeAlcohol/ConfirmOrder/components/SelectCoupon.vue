@@ -9,7 +9,7 @@
   >
     <div class="container">
       <div style="margin: 0.4rem;text-align: center;font-size: 0.32rem">
-        红包
+        现金补贴
       </div>
       <div class="desc">
         选择抵扣（可任意搭配 全额抵扣）

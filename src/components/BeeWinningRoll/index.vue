@@ -3,7 +3,7 @@
     <van-swipe
       v-if="list.length > 0"
       class="winning-roll"
-      :autoplay="5000"
+      :autoplay="autoplay"
       :show-indicators="false"
       :touchable="false"
       vertical
@@ -28,6 +28,10 @@ export default {
     width: {
       type: String,
       default: () => '5.5rem'
+    },
+    autoplay: {
+      type: Number,
+      default: () => 5000
     }
   },
   data() {
