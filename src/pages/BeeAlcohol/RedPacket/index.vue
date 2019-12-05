@@ -73,15 +73,15 @@
           <button class="btn go-use" type="button" @click="showBuy = true">
             使用
           </button>
-          <button
+          <!-- <button
             v-if="cashInfo.activate_amount === 0"
             class="btn to-cash can-not"
             type="button"
           >
             提现
-          </button>
+          </button> -->
+          <!-- v-if="cashInfo.activate_amount > 0" -->
           <button
-            v-if="cashInfo.activate_amount > 0"
             class="btn to-cash"
             type="button"
             @click="goCash"
@@ -203,7 +203,7 @@ export default {
       const res = await getCashInfo()
       this.cashInfo = res.data
       // if (res.data.activate_amount > 0) {
-      this.showPopup = true
+      // this.showPopup = true
       // }
     },
     // 转余额
