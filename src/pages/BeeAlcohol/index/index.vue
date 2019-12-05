@@ -227,6 +227,7 @@ export default {
     display: flex;
     justify-content: center;
     .video-body {
+      background: white;
       object-position: center;
       width: @videoWidth;
       height: @videoHeight;
