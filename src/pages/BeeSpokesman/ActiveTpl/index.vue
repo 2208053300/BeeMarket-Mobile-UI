@@ -272,7 +272,6 @@ import {
   postGenerated,
   postCustom
 } from '@/api/BeeApi/promote'
-import Jimp from 'jimp/es'
 
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
@@ -442,6 +441,7 @@ export default {
     async doneText() {
       // 点击下一步，生成海报
       this.showEnd = true
+      const Jimp = await import('jimp')
       const qr = await Jimp.read(this.qrcodeBase64)
       // 如果没有上传的新图，则使用以前上传过的图片
       const backimg = await Jimp.read({ url: this.commentImgs || this.share_ori })
@@ -478,6 +478,7 @@ export default {
       }
     },
     async createImg() {
+      const Jimp = await import('jimp')
       const tempImg = document.querySelector('.swiper-slide-active img').getAttribute('src')
       const qr = await Jimp.read(this.qrcodeBase64)
       // 如果没有上传的新图，则使用以前上传过的图片
