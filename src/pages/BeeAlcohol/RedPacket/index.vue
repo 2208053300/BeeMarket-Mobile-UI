@@ -202,9 +202,12 @@ export default {
     async getRedPacketData() {
       const res = await getCashInfo()
       this.cashInfo = res.data
-      // if (res.data.activate_amount > 0) {
-      // this.showPopup = true
+
+      // 判断头像
+      // if (!this.cashInfo.head_image_url.includes('https')) {
+      //   this.cashInfo.head_image_url.splice(3, 's')
       // }
+      this.cashInfo.head_image_url = this.cashInfo.head_image_url.replace('http://', 'https://')
     },
     // 转余额
     async toBalance() {
