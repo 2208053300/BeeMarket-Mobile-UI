@@ -129,6 +129,8 @@
       </div>
       <img :src="beeIcon.close" class="close" @click="showPopup = false">
     </van-popup>
+
+    <share ref="share" />
   </div>
 </template>
 
@@ -141,11 +143,12 @@ import { newToCash, getCashInfo } from '@/api/BeeApi/alcohol'
 import BeeWinningRoll from '@/components/BeeWinningRoll'
 import SelectNum from '../index/components/SelectNum'
 import { getUID } from '@/api/BeeApi/user'
+import Share from '@/pages/BeeAlcohol/RedPacket/components/Share'
 export default {
   metaInfo: {
     title: '年终狂欢 瓜分10亿'
   },
-  components: { BeeWinningRoll, SelectNum },
+  components: { BeeWinningRoll, SelectNum, Share },
   props: {},
   data() {
     return {
@@ -275,7 +278,8 @@ export default {
           window.beeMarket.ToLiquorShare()
         }
       } else {
-        this.$router.push({ name: 'shareActive' })
+        this.showPopup = false
+        this.$refs.share.showShare()
       }
     }
   }
