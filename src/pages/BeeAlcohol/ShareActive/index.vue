@@ -13,14 +13,11 @@
       class="share-img"
       :style="{backgroundImage:'url('+liqueur_img_poster_under+')'}"
     >
-      <div class="qrcode-content">
-        <img
-          :src="qrcode"
-          alt="二维码"
-        >
-      </div>
       <div class="screenshot">
-        <img :src="screenshotBase64" alt="">
+        <img v-show="screenshotBase64" :src="screenshotBase64" alt="">
+      </div>
+      <div class="screenshot" style="opacity: 0">
+        <img v-show="screenshotBase64" :src="screenshotBase64End" alt="">
       </div>
     </div>
     <div class="download-img" @click="$toast('长按图片保存到本地分享')">
@@ -36,8 +33,6 @@
 <script>
 import wxapi from '@/utils/wxapi.js'
 import { cashShareQrcode } from '@/api/BeeApi/alcohol'
-import html2canvas from 'html2canvas/dist/html2canvas.min.js'
-import wait from '@/utils/wait'
 import { clipBoard } from '@/utils'
 export default {
   metaInfo: {
@@ -51,6 +46,7 @@ export default {
       liqueur_button_download: require('@/assets/icon/alcohol/liqueur_button_download.png'),
       liqueur_button_link: require('@/assets/icon/alcohol/liqueur_button_link.png'),
       screenshotBase64: '',
+      screenshotBase64End: '',
       qrcode: '',
       link: ''
     }
@@ -69,8 +65,21 @@ export default {
       clipBoard(this.link + '  茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！')
     },
     async getQrcodeData() {
+      const jimp = await import('jimp')
       const res = await cashShareQrcode()
-      this.qrcode = 'data:image/jpeg;base64,' + res.data.qr_code
+      this.qrcode = 'data:image/png;base64,' + res.data.qr_code
+      const qr = await jimp.read(this.qrcode)
+      const backimg = await jimp.read(this.liqueur_img_poster_under)
+      // 将二维码缩放到100x100 px
+      qr.resize(100, 100)
+      // 将二维码放到指定x,y位置
+      backimg.composite(qr, 175, 765)
+      // 获取base64数据
+      this.screenshotBase64 = await backimg.getBase64Async(jimp.MIME_PNG)
+      setTimeout(async() => {
+        backimg.background(0xffffffff)
+        this.screenshotBase64End = await backimg.getBase64Async(jimp.MIME_JPEG)
+      }, 1000)
       this.link = res.data.share.link
       wxapi.wxShare({
         title: res.data.share.title, // 分享标题, 请自行替换
@@ -78,35 +87,6 @@ export default {
         link: res.data.share.link, // 分享链接，根据自身项目决定是否需要split
         imgUrl: res.data.share.img // 分享图标, 请自行替换，需要绝对路径
       })
-      await wait(200)
-      this.createImg()
-    },
-    async createImg() {
-      const imgDom = document.querySelector('.share-img')
-      const width = imgDom.offsetWidth
-      const height = imgDom.offsetHeight
-      const canvas = document.createElement('canvas')
-      const scale = 8
-      canvas.width = width * scale
-      canvas.height = height * scale
-      canvas.getContext('2d').scale(scale, scale)
-      try {
-        const canvasImg = await html2canvas(imgDom, {
-          scale: scale,
-          canvas: canvas,
-          // useCORS: true,
-          y: document.querySelector('.share-img').offsetTop,
-          width: width,
-          height: height,
-          // 必须获得其距离顶部距离，避免滚动偏移
-          backgroundColor: null
-        })
-        const img = canvasImg.toDataURL('image/png')
-        this.screenshotBase64 = img
-      } catch (error) {
-        console.log(error)
-        this.$toast('生成专属海报失败！')
-      }
     }
   }
 }
@@ -138,22 +118,13 @@ export default {
     width: 6.44rem;
     background-size: cover;
     position: relative;
-    .qrcode-content{
-      width: 1rem;
-      height: 1rem;
-      padding: 0.05rem;
-      background-color: #fff;
-      position: absolute;
-      bottom: 0.6rem;
-      left: 1.7rem;
-    }
     .screenshot{
         position: absolute;
         width: 100%;
         height: 100%;
         top: 0;
         left: 0;
-      }
+    }
   }
   .download-img{
     width: 5.16rem;
