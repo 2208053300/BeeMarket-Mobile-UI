@@ -25,12 +25,14 @@
       <div
         style="position: absolute;bottom: 0;left: 0;display: flex;justify-content: center;width: 100%"
       >
-        <img
-          :src="beeIcon.rule"
-          alt="活动规则"
-          style="width: 150px;z-index:100;"
-          @click="showRule = true"
-        >
+        <div style="width:150px;height:44.06px;">
+          <img
+            :src="beeIcon.rule"
+            alt="活动规则"
+            style="width: 150px;z-index:100;"
+            @click="showRule = true"
+          >
+        </div>
         <div
           class="active-rule"
           @click="showRule = true"
