@@ -5,7 +5,7 @@
         <van-row>
           <van-col :span="4">
             <div class="logo">
-              <img class="logo-img" :src="img.headerLogo" alt="">
+              <img class="logo-img" src="" alt="">
             </div>
           </van-col>
           <van-col :span="16" offset="4">
