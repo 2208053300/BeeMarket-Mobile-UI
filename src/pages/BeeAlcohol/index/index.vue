@@ -28,9 +28,15 @@
         <img
           :src="beeIcon.rule"
           alt="活动规则"
-          style="width: 150px"
+          style="width: 150px;z-index:100;"
           @click="showRule = true"
         >
+        <div
+          class="active-rule"
+          @click="showRule = true"
+        >
+          活动规则
+        </div>
       </div>
     </div>
     <div class="splice-2">
@@ -154,7 +160,7 @@ export default {
     // 在APP页面显示header
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = false
-    if (this.$route.query.uid) {
+    if ('uid' in this.$route.query) {
       Cookies.set('uid', this.$route.query.uid)
     }
     showShareIcon()
@@ -337,6 +343,20 @@ export default {
     70% {
       transform: scale(1);
     }
+  }
+  .active-rule{
+    width: 150px;
+    height:40px;
+    background:linear-gradient(180deg,rgba(255,220,31,1),rgba(253,150,11,1));
+    border-radius:44px;
+    z-index: 99;
+    position: absolute;
+    font-size:0.3rem;
+    color:rgba(255,255,255,1);
+    line-height:40px;
+    text-shadow:0px 2px 5px rgba(214,63,3,0.55);
+    text-align: center;
+    box-shadow: 0 3px 1px #BB3B03;
   }
 }
 </style>
