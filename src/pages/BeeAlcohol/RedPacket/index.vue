@@ -205,9 +205,7 @@ export default {
     async getRedPacketData() {
       const res = await getCashInfo()
       this.cashInfo = res.data
-      // if (res.data.activate_amount > 0) {
-      // this.showPopup = true
-      // }
+      this.cashInfo.head_image_url = this.cashInfo.head_image_url.replace('http://', 'https://')
     },
     // 转余额
     async toBalance() {
@@ -221,16 +219,6 @@ export default {
     // 去提现
     async goCash() {
       this.showPopup = true
-      // const res = await newToCash()
-      // if (res.status_code === 200) {
-      //   if (this.osObj.isApp) {
-      //     window.location.href = window.location.origin + '/#/beeFriends/pay'
-      //   } else {
-      //     window.location.href = window.location.origin + '/beeFriends#/pay'
-      //   }
-      // } else {
-      //   this.getRedPacketData()
-      // }
     },
     async initShare() {
       try {
