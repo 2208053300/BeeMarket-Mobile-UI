@@ -120,7 +120,7 @@
           >提入余额</span>
           <span
             v-if="cashInfo.activate_amount === 0"
-            @click="$router.push({ name: 'shareActive' })"
+            @click="goShare"
           >立即分享</span>
         </button>
         <p v-if="cashInfo.activate_amount > 0" class="tip">
@@ -265,6 +265,17 @@ export default {
         window.location.href = window.location.origin + '/beeAlcohol'
       } else {
         window.location.href = window.location.origin + '/#/beeAlcohol'
+      }
+    },
+    goShare() {
+      if (this.osObj.isApp) {
+        if (this.osObj.isIphone) {
+          window.webkit.messageHandlers.ToLiquorShare.postMessage('')
+        } else if (this.osObj.isAndroid) {
+          window.beeMarket.ToLiquorShare()
+        }
+      } else {
+        this.$router.push({ name: 'shareActive' })
       }
     }
   }
