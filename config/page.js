@@ -154,10 +154,5 @@ module.exports = {
   beeBestGoods: {
     entry: 'src/pages/BeeBestGoods/main.js',
     title: '好物优选'
-  },
-  // 官网首页
-  beeWebIndex: {
-    entry: 'src/pages/BeeWebIndex/main.js',
-    title: '蜂集市'
   }
 }
