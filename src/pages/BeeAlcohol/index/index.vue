@@ -276,8 +276,8 @@ export default {
     position: fixed;
     bottom: 1rem;
     right: 0;
-    width: 1.99rem;
-    height: 2.31rem;
+    width: 1.12rem;
+    height: 1.35rem;
     animation: shake 1.5s infinite;
   }
   @keyframes shake {
