@@ -38,7 +38,11 @@ module.exports = {
   // 内网穿透
   devServer: {
     disableHostCheck: true
-  }
+  },
+  // 该插件忽略Babel
+  transpileDependencies: [
+    'jimp'
+  ]
 }
 function addStyleResource(rule) {
   rule
