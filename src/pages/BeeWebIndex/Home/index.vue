@@ -8,8 +8,8 @@
               <img class="logo-img" :src="img.headerLogo" alt="">
             </div>
           </van-col>
-          <van-col :span="16" offset="4">
-            <ul class="nav flex flex-end">
+          <van-col :span="12" offset="8">
+            <ul class="nav flex flex-between">
               <li><a href="#">首页</a></li>
               <li><a href="#">了解APP</a></li>
               <li><a href="#">商家入驻</a></li>
@@ -317,6 +317,60 @@
         </div>
       </div>
     </div>
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="container">
+        <van-row>
+          <van-col :span="12">
+            <div class="footer-logo">
+              <img :src="require('@/assets/icon/webIndex/icon/footer_logo.png')">
+            </div>
+            <van-row>
+              <van-col :span="8">
+                <a href="#" class="footer-nav">了解APP</a>
+              </van-col>
+              <van-col :span="8">
+                <a href="#" class="footer-nav">商家入驻</a>
+              </van-col>
+              <van-col :span="8">
+                <a href="#" class="footer-nav">联系我们</a>
+              </van-col>
+            </van-row>
+            <p class="slogen">
+              <span style="margin-right: .4rem;">始于共创共享</span>
+              <span>忠于普惠四方</span>
+            </p>
+          </van-col>
+          <van-col :span="6" class="info">
+            <p>重庆蜂效科技集团有限公司</p>
+            <p class="flex align-center">
+              <img :src="require('@/assets/icon/webIndex/icon/footer_email.png')">
+              <span>kf@beemarket.net.cn</span>
+            </p>
+            <p class="flex align-center">
+              <img :src="require('@/assets/icon/webIndex/icon/footer_address.png')">
+              <span>重庆市渝北区康田·凯旋国际 F18 </span>
+            </p>
+          </van-col>
+          <van-col :span="6" class="qr-code flex flex-between text-center">
+            <div class="item">
+              <img :src="require('@/assets/icon/webIndex/icon/footer_download_qr.png')">
+              <p>扫码下载APP</p>
+            </div>
+            <div class="item">
+              <img :src="require('@/assets/icon/webIndex/icon/footer_wx_qr.png')">
+              <p>扫码关注公众号</p>
+            </div>
+          </van-col>
+        </van-row>
+        <van-row class="copy_right">
+          <van-col :span="24" class="text-center">
+            版权归重庆蜂效科技集团有限公司所有  备案号渝ICP备17008247号
+          </van-col>
+        </van-row>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -389,8 +443,9 @@ export default {
   top: 0;
   left: 0;
   height: 100%;
+  min-width: 12rem;
   width: 100%;
-  overflow-y: scroll;
+  overflow-x: scroll;
   background: #fff;
   // *{
   //   transition: all 0.2s linear;
@@ -446,7 +501,7 @@ a {
   }
   .nav {
     padding: 0.4rem 0;
-    li{margin-left: 1.25rem}
+    li{}
     a {
       font-size: 0.16rem;
       font-weight: 600;
@@ -638,6 +693,66 @@ a {
     img{width: .55rem; height:.51rem; margin-right: .1rem;}
     .name{font-size: .18rem;margin-bottom: .1rem;}
     .tel{font-size: .2rem}
+  }
+}
+.footer{
+  background:#000;
+  padding: 0.4rem 0 0.15rem;
+  .footer-logo{
+    width:1.6rem;
+    height: .44rem;
+    margin-bottom: .37rem;
+  }
+  .footer-nav{
+    font-size: .14rem;
+    color: #fff;
+    position: relative;
+    opacity: .6;
+    &::after{
+      content: '';
+      position: absolute;
+      bottom: -.05rem;
+      left: 0;
+      width:.24rem;
+      height:.03rem;
+      background:rgba(250,153,35,1);
+      border-radius:.02rem
+    }
+  }
+  .slogen{
+    font-size: .16rem;
+    color: #fff;
+    opacity: .6;
+    margin-top: 0.34rem;
+    margin-bottom: 0;
+  }
+  .info{
+    margin-top: .3rem;
+    p{font-size: .14rem;color:#fff; opacity: .6;}
+    img{margin-right: 0.1rem;}
+    p:nth-of-type(2) img{
+      width:.18rem;
+      height: .14rem;
+
+    }
+    p:nth-of-type(3) img{
+      width:.15rem;
+      height: .17rem;
+    }
+  }
+  .qr-code{
+    margin-top: .15rem;
+   img{
+     width:1.08rem;
+     height: 1.08rem;
+   }
+   p{ font-size: .14rem; color: #fff; margin: 0.1rem auto;}
+  }
+  .copy_right{
+    font-size: 0.14rem;
+    color: #fff;
+    opacity: .6;
+    margin-top: .5rem;
   }
 }
 </style>

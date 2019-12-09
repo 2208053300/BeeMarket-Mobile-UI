@@ -158,6 +158,6 @@ module.exports = {
   // 官网首页
   beeWebIndex: {
     entry: 'src/pages/BeeWebIndex/main.js',
-    title: '好物优选'
+    title: '蜂集市'
   }
 }
