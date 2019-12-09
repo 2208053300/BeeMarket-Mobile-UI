@@ -205,7 +205,10 @@ export default {
     async getRedPacketData() {
       const res = await getCashInfo()
       this.cashInfo = res.data
+      console.log('s:', res.data.head_image_url)
+
       this.cashInfo.head_image_url = this.cashInfo.head_image_url.replace('http://', 'https://')
+      console.log('end:', res.data.head_image_url)
     },
     // 转余额
     async toBalance() {
