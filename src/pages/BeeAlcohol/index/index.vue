@@ -275,7 +275,7 @@ export default {
   .ticket-img {
     position: fixed;
     bottom: 1rem;
-    right: 0;
+    right: 0.3rem;
     width: 1.12rem;
     height: 1.35rem;
     animation: shake 1.5s infinite;
