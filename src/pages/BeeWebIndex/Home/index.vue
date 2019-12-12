@@ -10,10 +10,10 @@
           </van-col>
           <van-col :span="12" offset="8">
             <ul class="nav flex flex-between">
-              <li><a href="#">首页</a></li>
-              <li><a href="#">了解APP</a></li>
-              <li><a href="#">商家入驻</a></li>
-              <li><a href="#">联系我们</a></li>
+              <li><a href="">首页</a></li>
+              <li><a href="#" @click="scrollTo('app1')">了解APP</a></li>
+              <li><a href="#" @click="scrollTo('factoryJoin')">商家入驻</a></li>
+              <li><a href="#" @click="scrollTo('contact')">联系我们</a></li>
             </ul>
           </van-col>
         </van-row>
@@ -32,7 +32,7 @@
       </van-swipe-item>
     </van-swipe>
     <!-- app 介绍 -->
-    <div class="app-info container">
+    <div id="app1" class="app-info container">
       <p class="title text-center" data-text="beemarket">
         蜂集市App 创新共享电商平台
       </p>
@@ -51,9 +51,14 @@
           </van-swipe>
         </div>
         <div class="text">
-          <span>
-            蜂集市，一个既能持续共享收益、又能轻松参与公益的，创新共享电商平台。依托全品类产品体系，为用户提供“海量商品、物美价优”的购物体验。
-            <br>蜂集市首创「共享+公益」生态商业模式。</span>
+          <div>
+            <p>
+              蜂集市一个既能持续共享收益、又能轻松参与公益的，创新共享电商平台。依托全品类产品体系，为用户提供“海量商品、物美价优”的购物体验。
+            </p>
+            <p>
+              蜂集市首创「共享+公益」生态商业模式，以“共创共享”为理念，“普惠四方”为愿景，创建“既能共享消费收益，又能轻松参与公益”的生态商业系统。在这里，用户不仅可以体验海量商品超值购，开启“蜂友圈”成为合伙人，还能享受“平台收益持续共享”的权益，通过“以购代捐，消费助农”轻松参与公益，以此形成用户、商家企业与社会的良性融合及联动赋能。
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -187,7 +192,7 @@
     </div>
 
     <!-- 商家入驻 -->
-    <div class="factory-join">
+    <div id="factoryJoin" class="factory-join">
       <div class="container">
         <p class="title text-center" data-text="beemarket">
           商家免费入驻
@@ -207,67 +212,67 @@
           </div>
           <div class="item flex text-center">
             <div class="content">
-              <img :src="require('@/assets/icon/webIndex/join_icon/join_icon_1.png')">
+              <img :src="require('@/assets/icon/webIndex/join_icon/join_icon_2.png')">
               <p class="name">
-                免费入驻
+                轻松上线
               </p>
               <div class="line" />
               <p class="txt">
-                资质齐全 0元入驻
+                1对1服务 全程协助
               </p>
             </div>
           </div>
           <div class="item flex text-center">
             <div class="content">
-              <img :src="require('@/assets/icon/webIndex/join_icon/join_icon_1.png')">
+              <img :src="require('@/assets/icon/webIndex/join_icon/join_icon_3.png')">
               <p class="name">
-                免费入驻
+                运营0风险
               </p>
               <div class="line" />
               <p class="txt">
-                资质齐全 0元入驻
+                保证金&服务费 先收益后缴纳
               </p>
             </div>
           </div>
           <div class="item flex text-center">
             <div class="content">
-              <img :src="require('@/assets/icon/webIndex/join_icon/join_icon_1.png')">
+              <img :src="require('@/assets/icon/webIndex/join_icon/join_icon_4.png')">
               <p class="name">
-                免费入驻
+                流量支持
               </p>
               <div class="line" />
               <p class="txt">
-                资质齐全 0元入驻
+                新鲜入驻 流量倾斜
               </p>
             </div>
           </div>
           <div class="item flex text-center">
             <div class="content">
-              <img :src="require('@/assets/icon/webIndex/join_icon/join_icon_1.png')">
+              <img :src="require('@/assets/icon/webIndex/join_icon/join_icon_5.png')">
               <p class="name">
-                免费入驻
+                闪电结算
               </p>
               <div class="line" />
               <p class="txt">
-                资质齐全 0元入驻
+                权益有保障 7天闪电结
               </p>
             </div>
           </div>
           <div class="item flex text-center">
             <div class="content">
-              <img :src="require('@/assets/icon/webIndex/join_icon/join_icon_1.png')">
+              <img :src="require('@/assets/icon/webIndex/join_icon/join_icon_6.png')">
               <p class="name">
-                免费入驻
+                品牌扶持
               </p>
               <div class="line" />
               <p class="txt">
-                资质齐全 0元入驻
+                生态赋能 战略投资
               </p>
             </div>
           </div>
         </div>
         <div class="text-center">
-          <button class="down-btn">
+          <button class="down-btn" @click="goPage">
             立即咨询
           </button>
         </div>
@@ -275,7 +280,7 @@
     </div>
 
     <!-- 联系我们 -->
-    <div class="contact">
+    <div id="contact" class="contact">
       <div class="container">
         <p class="title text-center" data-text="beemarket">
           联系我们
@@ -371,6 +376,86 @@
         </van-row>
       </div>
     </div>
+
+    <!-- 右侧悬浮 -->
+    <div class="side-bar flex flex-column flex-center">
+      <div class="mini-logo">
+        <img :src="require('@/assets/icon/webIndex/icon/fixed_icon_1.png')">
+      </div>
+      <ul class="list flex flex-column text-center">
+        <li class="item">
+          <div class="info">
+            <img :src="require('@/assets/icon/webIndex/icon/fixed_icon_2.png')">
+            <p>下载APP</p>
+          </div>
+          <div class="block flex flex-column flex-center align-center flex flex-column flex-center align-center">
+            <img class="qr-img" :src="require('@/assets/icon/webIndex/icon/fixed_icon_download.png')">
+            <p class="name">
+              蜂集市APP
+            </p>
+          </div>
+        </li>
+        <li class="item">
+          <div class="info">
+            <img :src="require('@/assets/icon/webIndex/icon/fixed_icon_3.png')">
+            <p>关注我们</p>
+          </div>
+          <div class="block flex flex-column flex-center align-center">
+            <img class="qr-img" :src="require('@/assets/icon/webIndex/icon/fixed_icon_wx.png')">
+            <p class="name">
+              微信扫码关注
+            </p>
+          </div>
+        </li>
+        <li class="item">
+          <div class="info">
+            <img :src="require('@/assets/icon/webIndex/icon/fixed_icon_4.png')">
+            <p>商家入驻</p>
+          </div>
+          <div class="block flex flex-column flex-center align-center">
+            <p class="tel">
+              151-2388-8964
+            </p>
+            <p class="name">
+              入驻咨询
+            </p>
+          </div>
+        </li>
+        <li class="item">
+          <div class="info">
+            <img :src="require('@/assets/icon/webIndex/icon/fixed_icon_5.png')">
+            <p>推广合作</p>
+          </div>
+          <div class="block flex flex-column flex-center align-center">
+            <p class="tel">
+              173-6522-1949
+            </p>
+            <p class="name">
+              推广合作
+            </p>
+          </div>
+        </li>
+        <li class="item">
+          <div class="info">
+            <img :src="require('@/assets/icon/webIndex/icon/fixed_icon_6.png')">
+            <p>联系客服</p>
+          </div>
+          <div class="block flex flex-column flex-center align-center">
+            <p class="tel">
+              400-0808-819
+            </p>
+            <p class="name">
+              咨询客服
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 下载二维码 -->
+    <van-popup v-model="showQr">
+      <img :src="require('@/assets/icon/webIndex/icon/footer_download_qr.png')" class="down-img">
+    </van-popup>
   </div>
 </template>
 
@@ -387,7 +472,8 @@ export default {
     return {
       img: {
         headerLogo: require('@/assets/icon/webIndex/logo2.png')
-      }
+      },
+      showQr: false
     }
   },
   computed: {},
@@ -400,6 +486,49 @@ export default {
     this.$store.state.app.beeFooter.show = false
   },
   methods: {
+
+    scrollTo(id) {
+      // 用 class="nav-content" 添加锚点
+      const jump = document.getElementById(id)
+      const total = jump.offsetTop
+      let distance =
+        document.documentElement.scrollTop || document.body.scrollTop
+      console.log(total, distance)
+
+      // 平滑滚动，时长500ms，每10ms一跳，共50跳
+      let step = total / 50
+      if (total > distance) {
+        smoothDown()
+      } else {
+        const newTotal = distance - total
+        step = newTotal / 50
+        smoothUp()
+      }
+      function smoothDown() {
+        if (distance < total) {
+          distance += step
+          document.body.scrollTop = distance
+          document.documentElement.scrollTop = distance
+          setTimeout(smoothDown, 0)
+        } else {
+          document.body.scrollTop = total
+          document.documentElement.scrollTop = total
+        }
+      }
+      function smoothUp() {
+        if (distance > total) {
+          distance -= step
+          document.body.scrollTop = distance
+          document.documentElement.scrollTop = distance
+          setTimeout(smoothUp, 0)
+        } else {
+          document.body.scrollTop = total
+          document.documentElement.scrollTop = total
+        }
+      }
+    },
+
+    // 防抖动
     debounce(func, wait, immediate) {
       var timeout, args, context, timestamp, result
       var later = function() {
@@ -432,6 +561,10 @@ export default {
 
         return result
       }
+    },
+
+    goPage() {
+      window.open('http://cn.mikecrm.com/6CA4KdS', '_blank')
     }
   }
 }
@@ -439,13 +572,13 @@ export default {
 
 <style scoped  lang="less">
 .web-index {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // height: auto;
   min-width: 12rem;
   width: 100%;
-  overflow-x: scroll;
+  // overflow-x: scroll;
   background: #fff;
   // *{
   //   transition: all 0.2s linear;
@@ -455,12 +588,12 @@ export default {
   width: 12rem;
   margin: 0 auto;
 }
-@media screen and (max-width: 1199px) {
-  .container {
-    width: 90%;
-    margin: 0 auto;
-  }
-}
+// @media screen and (max-width: 1199px) {
+//   .container {
+//     width: 90%;
+//     margin: 0 auto;
+//   }
+// }
 a {
   color: #333;
 }
@@ -501,10 +634,13 @@ a {
   }
   .nav {
     padding: 0.4rem 0;
-    li{}
     a {
       font-size: 0.16rem;
       font-weight: 600;
+      padding-bottom: 0.05rem;
+    }
+    a:active,a:hover{
+      border-bottom: 0.03rem solid #FA9822;
     }
   }
 }
@@ -531,11 +667,18 @@ a {
     background:rgba(245,245,245,1);
     line-height: 2.5;
     display: flex;
-    padding: .7rem .4rem;
+    padding: .4rem;
     box-sizing: border-box;
     border-radius: .15rem;
-    span{
+    height: 3.6rem;
+    div{
       margin: auto;
+      height: 2.49rem;
+      overflow-y: scroll;
+      -ms-overflow-style: none;
+      overflow: -moz-scrollbars-none;
+      &::-webkit-scrollbar { width: 0 !important }
+      &::-webkit-scrollbar {display:none}
     }
   }
 }
@@ -653,8 +796,8 @@ a {
     p{margin: 0;}
     .content{margin: auto}
     img{
-      width: .55rem;
-      height: .49rem;
+      width: .77rem;
+      height: .62rem;
       margin-bottom: .18rem
     }
     .name{
@@ -690,7 +833,7 @@ a {
   .item{
     p{margin: 0;}
     color: #333;
-    img{width: .55rem; height:.51rem; margin-right: .1rem;}
+    img{width: .77rem; height:.62rem; margin-right: .1rem;}
     .name{font-size: .18rem;margin-bottom: .1rem;}
     .tel{font-size: .2rem}
   }
@@ -755,4 +898,63 @@ a {
     margin-top: .5rem;
   }
 }
+.side-bar{
+  position: fixed;
+  top: 50%;
+  right: 1rem;
+  z-index: 5;
+  height: 5.2rem;
+  width: .64rem;
+  transform: translateY(-50%);
+  background-color: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 0 0.1rem rgba(0, 0, 0, .1);
+  p{margin: 0;}
+  .mini-logo{
+    display: flex;
+    margin-bottom: .3rem;
+    img{
+      margin: auto;
+      width: .38rem;
+      height: .42rem;
+    }
+  }
+  .list{}
+  .item{
+    position: relative;
+    border-top: 1px solid #f5f5f5;
+    background-color: #fff;
+    padding: 0.1rem 0;
+
+    &:hover{
+      background-color: #F9C920;
+      .block{
+        display: flex;
+      }
+    }
+    .info{
+      img{max-width: .28rem;max-height: .29rem; margin-bottom: .1rem;}
+      p{font-size: .12rem;color: #333;}
+    }
+    .block{
+      display: none;
+      position: absolute;
+      top: 0;
+      right: .64rem;
+      width: 1.96rem;
+      height: 1.46rem;
+      background: #F9C920;
+      border-radius: 0.05rem 0 0 0.05rem;
+      p{margin-top: .1rem;}
+      .qr-img{width: 0.68rem;height: .68rem;}
+      .tel{font-size: .2rem;color:#333;}
+      .name{font-size: .16rem;color:#333;}
+    }
+  }
+}
+.down-img{
+	width: 1.08rem;
+	height: 1.08rem;
+}
+
 </style>
