@@ -125,7 +125,7 @@
         </button>
         <p v-if="cashInfo.activate_amount > 0" class="tip">
           请前往“蜂友圈一我的收益”查看余额<br>
-          补贴中<span>30%</span>将留存集市，任意消费<span>全额抵扣</span>。
+          <!-- 补贴中<span>30%</span>将留存集市，任意消费<span>全额抵扣</span>。 -->
         </p>
       </div>
       <img :src="beeIcon.close" class="close" @click="showPopup = false">
@@ -450,7 +450,7 @@ p {
       height: 7.53rem;
       background: url(../../../assets/icon/alcohol/popup_bg.png) no-repeat;
       background-size: 7.19rem 7.53rem;
-      padding-top: 3rem;
+      padding-top: 3.11rem;
       box-sizing: border-box;
       .txt-img {
         width: 4.21rem;
