@@ -170,9 +170,9 @@ export default {
     return {
       title: '提现',
       // 姓名
-      name: '',
+      name: '杨超',
       nameError: false,
-      idNo: '',
+      idNo: '50023819920805397x',
       idNoError: false,
       // 金额
       money: null,
@@ -403,7 +403,6 @@ export default {
     adjustMoney1() {
       let value = this.money.toString()
       console.log(value, typeof value)
-
       // 是小数
       if (value.indexOf('.') !== -1) {
         var str = value.split('.')
@@ -415,6 +414,9 @@ export default {
         }
         this.money = +value
       }
+      this.money = +this.money
+      console.log('this.money:', this.money, typeof this.money)
+
       // 判断金额是否在范围内
       if (this.money >= this.totalNum) {
         this.money = this.totalNum
