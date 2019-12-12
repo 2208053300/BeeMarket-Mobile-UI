@@ -142,10 +142,16 @@
       我要提现
     </van-button>
 
-    <van-popup v-model="downloadTip" class="download-tip">
-      <button class="download-btn" @click="goDownload">
-        <span>立即下载</span>
-      </button>
+    <van-popup v-model="downloadTip" class="download-tip flex">
+      <div class="info text-center">
+        <img :src="beeIcon.tipImg" class="tip-img">
+        <p class="txt">
+          为保障交易安全<br>请前往蜂集市App提现
+        </p>
+        <button class="download-btn" @click="goDownload">
+          <span>前往蜂集市</span>
+        </button>
+      </div>
     </van-popup>
   </div>
 </template>
@@ -167,7 +173,8 @@ export default {
         bee_firends_income_icon_gold: require('@/assets/icon/beeFriends/info/bee_firends_gold.png'),
         bee_firends_gold_add: require('@/assets/icon/beeFriends/info/bee_firends_gold_add.png'),
         bee_firends_my_earn: require('@/assets/icon/beeFriends/info/bee_firend_img_income.png'),
-        emptyImg: require('@/assets/icon/public/empty.png')
+        emptyImg: require('@/assets/icon/public/empty.png'),
+        tipImg: require('@/assets/icon/beeFriends/info/tip_img.png')
       },
       // 类型 1在路上（默认为1） 2已到账
       earnType: 1,
@@ -543,23 +550,40 @@ export default {
   width: 6.9rem;
 }
 .download-tip {
+  background: #fff;
+  width: 5.8rem;
+  height: 5.2rem;
+  border-radius: .1rem;
+  .info{
+    margin: auto;
+  }
+  .tip-img{
+    width: 3.21rem;
+    height: .63rem;
+  }
+  .txt{
+    font-size: .28rem;
+    color: #333;
+    line-height: 1.5;
+    margin: .9rem auto .62rem;
+  }
   .download-btn {
     border: none;
     color: #fff;
-    width: 3.4rem;
-    height: 0.95rem;
+    width: 3.2rem;
+    height: 0.72rem;
     background: linear-gradient(
       180deg,
       rgba(255, 220, 31, 1),
       rgba(253, 150, 11, 1)
     );
     border-radius: 0.5rem;
-    font-size: 0.36rem;
+    font-size: 0.32rem;
     span {
       display: block;
       height: 100%;
       width: 100%;
-      line-height: 0.95rem;
+      line-height: 0.72rem;
     }
   }
 }
