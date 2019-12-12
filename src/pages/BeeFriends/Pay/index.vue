@@ -49,7 +49,7 @@
       </form>
       <div class="text-center">
         <!-- <van-button type="buttom" class="submit-btn active" :disabled="!valiName() && !valiIdNo()"> -->
-        <van-button type="buttom" class="submit-btn active" @click="submitFir">
+        <van-button type="buttom" class="submit-btn" :class="{active: canNext}" @click="submitFir">
           下一步
         </van-button>
       </div>
@@ -174,6 +174,7 @@ export default {
       nameError: false,
       idNo: '',
       idNoError: false,
+      canNext: false,
       // 金额
       money: null,
       ticket: '',
@@ -323,10 +324,11 @@ export default {
           money: this.money,
           sms_code: this.sms
         })
-        if (res.status_code === 200) {
+        if (res.code === 1 && res.status_code === 200) {
           this.$toast(res.message)
           this.show = false
           this.totalNum = this.totalNum - this.money
+          this.isActive = false
         }
       } catch (error) {
         this.$toast.fail(error)
@@ -357,13 +359,17 @@ export default {
     async getCanWithdraw() {
       try {
         const res = await getWithdrawNum()
-        if (res.status_code === 200) {
+        if (res.code === 1 && res.status_code === 200) {
           this.totalNum = res.data.sup_balance
           this.no_sup_balance = res.data.no_sup_balance
           this.phone = res.data.phone
+          this.canNext = true
+        } else {
+          this.canNext = false
         }
       } catch (error) {
         this.$toast.fail(error)
+        this.canNext = false
       }
     },
 
