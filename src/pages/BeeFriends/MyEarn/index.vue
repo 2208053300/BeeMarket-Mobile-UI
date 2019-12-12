@@ -306,15 +306,18 @@ export default {
     },
     // 去下载app页面
     goDownload() {
-      window.location.href = window.location.origin + '/beeRegister'
-    },
-
-    // NOTE 跳转到我的权益
-    goMyRights() {
+      // window.location.href = window.location.origin + '/#/beeRegister'
       this.$router.push({
-        path: ''
+        name: 'beeRegister'
       })
     }
+
+    // NOTE 跳转到我的权益
+    // goMyRights() {
+    //   this.$router.push({
+    //     path: ''
+    //   })
+    // }
   }
 }
 </script>
