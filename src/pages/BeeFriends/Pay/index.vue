@@ -186,9 +186,9 @@ export default {
       wxIcon: require('@/assets/icon/beeFriends/info/icon_wx.png'),
       // 是否可提现
       isActive: false,
-      // 单此提现金额最少100，最多1000
+      // 单此提现金额最少100，最多3000
       MIN_MONEY: 100,
-      MAX_MONEY: 1000,
+      MAX_MONEY: 3000,
       // 可提现总金额
       totalNum: 0,
       // 不可提现金额
