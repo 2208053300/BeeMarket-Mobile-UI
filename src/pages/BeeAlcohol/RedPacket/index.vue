@@ -124,7 +124,8 @@
           >立即分享</span>
         </button>
         <p v-if="cashInfo.activate_amount > 0" class="tip">
-          请前往“蜂友圈一我的收益”查看余额
+          请前往“蜂友圈一我的收益”查看余额<br>
+          补贴中<span>30%</span>将留存集市，任意消费<span>全额抵扣</span>。
         </p>
       </div>
       <img :src="beeIcon.close" class="close" @click="showPopup = false">
@@ -206,7 +207,6 @@ export default {
       const res = await getCashInfo()
       this.cashInfo = res.data
       console.log('s:', res.data.head_image_url)
-
       this.cashInfo.head_image_url = this.cashInfo.head_image_url.replace('http://', 'https://')
       console.log('end:', res.data.head_image_url)
     },
@@ -450,7 +450,7 @@ p {
       height: 7.53rem;
       background: url(../../../assets/icon/alcohol/popup_bg.png) no-repeat;
       background-size: 7.19rem 7.53rem;
-      padding-top: 3.11rem;
+      padding-top: 3rem;
       box-sizing: border-box;
       .txt-img {
         width: 4.21rem;
@@ -497,6 +497,10 @@ p {
         color: #fff;
         font-size: 0.2rem;
         opacity: 0.6;
+        line-height: 1.4;
+        span{
+          color: #FFDC1F;
+        }
       }
     }
     .close {
