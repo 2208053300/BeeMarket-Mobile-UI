@@ -21,20 +21,14 @@
               <!-- </div> -->
               <span class="partner-mark">{{ detailData.level_text }}</span>
             </div>
-            <van-button
-              v-if="false"
-              class="rule-button"
-            >
+            <van-button v-if="false" class="rule-button">
               升星规则
             </van-button>
           </div>
         </div>
         <!-- 收益 -->
         <div class="earning-tabs">
-          <div
-            class="my-earn-pic"
-            @click="$router.push({name:'myRights'})"
-          >
+          <div class="my-earn-pic" @click="$router.push({ name: 'myRights' })">
             <img :src="beeIcon.bee_firends_my_earn">
           </div>
           <div class="earning-num text-center">
@@ -60,10 +54,7 @@
             >
               <span class="num">{{ detailData.road_commission }}</span>
               <div class="type-img">
-                <img
-                  :src="beeIcon.bee_firends_income_icon_growingup"
-                  alt=""
-                >
+                <img :src="beeIcon.bee_firends_income_icon_growingup" alt="">
                 <span class="type-text">
                   在路上
                 </span>
@@ -77,10 +68,7 @@
             >
               <span class="num">{{ detailData.get_commission }}</span>
               <div class="type-img">
-                <img
-                  :src="beeIcon.bee_firends_income_icon_gold"
-                  alt=""
-                >
+                <img :src="beeIcon.bee_firends_income_icon_gold" alt="">
                 <span class="type-text">
                   已到账
                 </span>
@@ -97,10 +85,7 @@
         class="detail-title"
       >
         <div class="title-img">
-          <img
-            :src="beeIcon.bee_firends_gold_add"
-            alt=""
-          >
+          <img :src="beeIcon.bee_firends_gold_add" alt="">
         </div>
         <span class="title-text">增长详情</span>
       </div>
@@ -109,19 +94,13 @@
         class="detail-title"
       >
         <div class="title-img">
-          <img
-            :src="beeIcon.bee_firends_gold_add"
-            alt=""
-          >
+          <img :src="beeIcon.bee_firends_gold_add" alt="">
         </div>
         <span class="title-text">增长详情</span>
       </div>
 
       <!-- 有记录 -->
-      <div
-        v-if="!isEmpty"
-        class="detail-content"
-      >
+      <div v-if="!isEmpty" class="detail-content">
         <van-list
           v-model="loading"
           :finished="finished"
@@ -138,14 +117,8 @@
               {{ item.time }}
             </div>
             <div class="info-text">
-              <div
-                v-if="item.logo"
-                class="head-content"
-              >
-                <img
-                  :src="item.logo"
-                  alt="头像"
-                >
+              <div v-if="item.logo" class="head-content">
+                <img :src="item.logo" alt="头像">
               </div>
               {{ item.content }}
             </div>
@@ -154,14 +127,8 @@
         </van-list>
       </div>
       <!-- v-else 无记录-->
-      <div
-        v-if="isEmpty"
-        class="empty-img text-center"
-      >
-        <img
-          :src="beeIcon.emptyImg"
-          alt=""
-        >
+      <div v-if="isEmpty" class="empty-img text-center">
+        <img :src="beeIcon.emptyImg" alt="">
         <p class="tip">
           你好{{ detailData.nickname }}
         </p>
@@ -171,13 +138,21 @@
       </div>
     </div>
 
-    <van-button
-      round
-      class="cash-btn"
-      @click="toCash"
-    >
+    <van-button round class="cash-btn" @click="toCash">
       我要提现
     </van-button>
+
+    <van-popup v-model="downloadTip" class="download-tip flex">
+      <div class="info text-center">
+        <img :src="beeIcon.tipImg" class="tip-img">
+        <p class="txt">
+          为保障交易安全<br>请前往蜂集市App提现
+        </p>
+        <button class="download-btn" @click="goDownload">
+          <span>前往蜂集市</span>
+        </button>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -198,7 +173,8 @@ export default {
         bee_firends_income_icon_gold: require('@/assets/icon/beeFriends/info/bee_firends_gold.png'),
         bee_firends_gold_add: require('@/assets/icon/beeFriends/info/bee_firends_gold_add.png'),
         bee_firends_my_earn: require('@/assets/icon/beeFriends/info/bee_firend_img_income.png'),
-        emptyImg: require('@/assets/icon/public/empty.png')
+        emptyImg: require('@/assets/icon/public/empty.png'),
+        tipImg: require('@/assets/icon/beeFriends/info/tip_img.png')
       },
       // 类型 1在路上（默认为1） 2已到账
       earnType: 1,
@@ -214,7 +190,9 @@ export default {
       osObj: getOs(),
       finished: false,
       // 余额数量
-      withdrawNum: 0
+      withdrawNum: 0,
+      // 下载App弹框
+      downloadTip: false
     }
   },
   computed: {},
@@ -321,16 +299,23 @@ export default {
       if (this.withdrawNum < 100) {
         this.$toast('可提现余额不足100元！')
         return
+      } else if (this.withdrawNum >= 100) {
+        if (this.osObj.isApp) {
+          // NOTE 如果是在app中，跳转到提现页面
+          this.$router.push({
+            name: 'friendPay'
+          })
+        } else {
+          // NOTE 如果是在公众号中，弹框提示，并跳转到下载页面
+          this.downloadTip = true
+        }
       }
-      this.$router.push({
-        name: 'friendPay'
-      })
     },
-
-    // NOTE 跳转到我的权益
-    goMyRights() {
+    // 去下载app页面
+    goDownload() {
+      // window.location.href = window.location.origin + '/#/beeRegister'
       this.$router.push({
-        path: ''
+        name: 'beeRegister'
       })
     }
   }
@@ -556,5 +541,43 @@ export default {
   border: none;
   padding: 0 0.35rem;
   width: 6.9rem;
+}
+.download-tip {
+  background: #fff;
+  width: 5.8rem;
+  height: 5.2rem;
+  border-radius: .1rem;
+  .info{
+    margin: auto;
+  }
+  .tip-img{
+    width: 3.21rem;
+    height: .63rem;
+  }
+  .txt{
+    font-size: .28rem;
+    color: #333;
+    line-height: 1.5;
+    margin: .9rem auto .62rem;
+  }
+  .download-btn {
+    border: none;
+    color: #fff;
+    width: 3.2rem;
+    height: 0.72rem;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 220, 31, 1),
+      rgba(253, 150, 11, 1)
+    );
+    border-radius: 0.5rem;
+    font-size: 0.32rem;
+    span {
+      display: block;
+      height: 100%;
+      width: 100%;
+      line-height: 0.72rem;
+    }
+  }
 }
 </style>
