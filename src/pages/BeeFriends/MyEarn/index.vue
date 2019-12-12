@@ -318,13 +318,6 @@ export default {
         name: 'beeRegister'
       })
     }
-
-    // NOTE 跳转到我的权益
-    // goMyRights() {
-    //   this.$router.push({
-    //     path: ''
-    //   })
-    // }
   }
 }
 </script>
