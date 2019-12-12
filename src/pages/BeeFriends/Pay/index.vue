@@ -578,7 +578,7 @@ export default {
           font-size: 1rem;
           padding-left: 0.1rem;
           height: 1.2rem;
-          width: 5rem;
+          width: 4.9rem;
           border: none;
           outline: none;
           -webkit-tap-highlight-color: transparent;
