@@ -206,9 +206,9 @@ export default {
     async getRedPacketData() {
       const res = await getCashInfo()
       this.cashInfo = res.data
-      console.log('s:', res.data.head_image_url)
+      // console.log('s:', res.data.head_image_url)
       this.cashInfo.head_image_url = this.cashInfo.head_image_url.replace('http://', 'https://')
-      console.log('end:', res.data.head_image_url)
+      // console.log('end:', res.data.head_image_url)
     },
     // 转余额
     async toBalance() {
@@ -219,7 +219,7 @@ export default {
       }
       this.$toast(res.message)
     },
-    // 去提现
+    // 点击 提现 按钮显示弹框
     async goCash() {
       this.showPopup = true
     },
