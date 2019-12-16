@@ -139,7 +139,7 @@ export default {
       beeIcon: {
         title_icon_stop: require('@/assets/icon/public/title_icon_stop@2x.png'),
         rule: require('@/assets/icon/alcohol/liqueur_button_rule.png'),
-        ticketImg: require('@/assets/icon/alcohol/liqueur_pic_red_envelope.png')
+        ticketImg: require('@/assets/icon/alcohol/liqueur_pic_red_envelope1.png')
       },
       showRule: false,
       uid: 0,
@@ -274,10 +274,12 @@ export default {
   }
   .ticket-img {
     position: fixed;
-    bottom: 1.5rem;
+    bottom: 1.2rem;
     right: 0.3rem;
     width: 1.48rem;
     height: 1.78rem;
+    // width: 1.12rem;
+    // height: 1.35rem;
     animation: shake 1.5s infinite;
   }
   @keyframes shake {
