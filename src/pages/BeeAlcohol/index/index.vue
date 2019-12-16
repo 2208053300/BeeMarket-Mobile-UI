@@ -274,10 +274,10 @@ export default {
   }
   .ticket-img {
     position: fixed;
-    bottom: 1rem;
+    bottom: 1.5rem;
     right: 0.3rem;
-    width: 1.12rem;
-    height: 1.35rem;
+    width: 1.48rem;
+    height: 1.78rem;
     animation: shake 1.5s infinite;
   }
   @keyframes shake {
