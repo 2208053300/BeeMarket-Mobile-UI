@@ -117,6 +117,7 @@ img {
       align-items: center;
       img {
         width: 100%;
+        height: auto;
       }
       .item-text {
         padding-left: 0.2rem;
