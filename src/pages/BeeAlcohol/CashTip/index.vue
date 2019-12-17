@@ -56,7 +56,7 @@ export default {
   methods: {
 
     IOSDown() {
-      // console.log('ios')
+      console.log('ios')
       window.location.href = 'https://apps.apple.com/cn/app/%E8%9C%82%E9%9B%86%E5%B8%82/id1382648901'
     },
     androidDown() {
