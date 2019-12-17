@@ -116,8 +116,8 @@ img {
       border-bottom: rgba(255, 255, 255, 0.11) 1px solid;
       align-items: center;
       img {
-        width: 100%;
-        height: auto;
+        width: 0.7rem;
+        height: 0.7rem;
       }
       .item-text {
         padding-left: 0.2rem;
