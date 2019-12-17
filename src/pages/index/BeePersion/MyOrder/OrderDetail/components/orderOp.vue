@@ -1,5 +1,5 @@
 <template>
-  <div class="order-op">
+  <div class="order-detail-op">
     <!-- <div class="left-button">
       <van-button class="back-list">
         返回订单列表
@@ -8,6 +8,21 @@
 
     <!-- orderDetail.s_order!==-1 -->
     <!-- v-if="orderDetail.s_pay===0 || orderDetail.s_order!==-1" -->
+    <van-button
+      v-if="orderDetail.s_order===1 && orderDetail.t_order === 'liquor'"
+      round
+      @click.stop="liquorAction(orderDetail.order_no)"
+    >
+      全额退款
+    </van-button>
+    <van-button
+      v-if="orderDetail.s_order===1 && orderDetail.t_order === 'liquor'"
+      round
+      class="bee-button"
+      @click.stop="liquorAction2(orderDetail.order_no)"
+    >
+      立即发货
+    </van-button>
     <van-button
       v-if="cancelable"
       round
@@ -34,7 +49,7 @@
     </van-button>
 
     <van-button
-      v-if="orderDetail.s_pay===1&&[1].indexOf(orderDetail.s_order)!==-1"
+      v-if="orderDetail.s_pay===1&&[1].indexOf(orderDetail.s_order)!==-1&&orderDetail.t_order !== 'liquor'"
       round
       @click="remindDelivery"
     >
@@ -133,6 +148,42 @@
         </div>
       </div>
     </van-popup>
+    <van-dialog
+      v-model="askLiquor"
+      show-cancel-button
+      cancel-button-text="取消"
+      confirm-button-text="确认退款"
+      confirm-button-color="#fff"
+      class="text-center"
+      @confirm="closeLiquor()"
+    >
+      <van-icon
+        name="warning-o"
+        color="#FFA431"
+        size="1rem"
+        style="margin-top: 0.2rem"
+      />
+      <p>全额退款</p>
+      <p>全额退款，放弃现金补贴</p>
+    </van-dialog>
+    <van-dialog
+      v-model="askLiquor2"
+      show-cancel-button
+      cancel-button-text="取消"
+      confirm-button-text="确认发货"
+      confirm-button-color="#fff"
+      class="text-center"
+      @confirm="doneLiquor()"
+    >
+      <van-icon
+        name="warning-o"
+        color="#FFA431"
+        size="1rem"
+        style="margin-top: 0.2rem"
+      />
+      <p>立即发货</p>
+      <p>发货后，您将失去7天无条件退款权益</p>
+    </van-dialog>
   </div>
 </template>
 
@@ -143,7 +194,8 @@ import {
   closeOrder,
   deleteOrder,
   completeOrder,
-  reBuy
+  reBuy,
+  sendOrder
 } from '@/api/BeeApi/order'
 import { goPayFromOrder } from '@/utils/wxPay'
 
@@ -168,7 +220,10 @@ export default {
         '地址信息填写错误',
         '商品暂时无货',
         '其他'
-      ]
+      ],
+      askLiquor: false,
+      askLiquor2: false
+
     }
   },
   computed: {
@@ -281,14 +336,40 @@ export default {
           query: { order_no: item.order_no, sku_id: item.products[0].sku_id }
         })
       }
+    },
+    liquorAction(order_no) {
+      this.askLiquor = true
+    },
+    liquorAction2(order_no) {
+      this.askLiquor2 = true
+    },
+    async doneLiquor() {
+      const res = await sendOrder({ order_no: this.$route.query.order_no })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+        this.askLiquor = false
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500)
+      }
+    },
+    async closeLiquor() {
+      const res = await closeOrder({ order_no: this.$route.query.order_no })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+        this.askLiquor2 = false
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500)
+      }
     }
   }
 }
 </script>
 
-<style scoped lang="less">
-.order-op {
-  position: fixed;
+<style lang="less">
+.order-detail-op{
+    position: fixed;
   bottom: 0;
   height: 1rem;
   background-color: #fff;
@@ -353,5 +434,9 @@ export default {
       }
     }
   }
+
+  .van-dialog__confirm{
+    color: #fff;
+    background: #FFA431;}
 }
 </style>
