@@ -95,7 +95,7 @@
     <active-list v-if="cashInfo.lists && cashInfo.lists.length > 0" :list="cashInfo.lists" />
     <!-- 椭圆装饰图片 -->
     <img :src="beeIcon.ellipse" class="ellipsis">
-    <div v-if="cashInfo.amount > 0" class="share-btn">
+    <div v-if="cashInfo.total_amount > 0" class="share-btn">
       <button @click="goShare">
         激活提现
       </button>
@@ -133,7 +133,7 @@
       <img :src="beeIcon.close" class="close" @click="showPopup = false">
     </van-popup>
 
-    <share v-if="osObj.isWx" ref="share" />
+    <share v-if="!osObj.isApp" ref="share" />
   </div>
 </template>
 
