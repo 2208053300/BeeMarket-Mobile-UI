@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       show: false,
-      liqueur_img_poster_under: require('@/assets/icon/alcohol/liqueur_img_poster_under.png'),
+      liqueur_img_poster_under: require('@/assets/icon/alcohol/liqueur_img_poster_under_zip.png'),
       posterBase64: '',
       screenshotBase64End: '',
       loading: false
