@@ -10,13 +10,13 @@ import '@/main'
 import '@/utils/flexiable'
 
 // NOTE 引入Vant懒加载
-import { Button, Cell, CellGroup, Checkbox, CheckboxGroup,
+import { Button, Cell, CellGroup, Checkbox, CheckboxGroup, Loading,
   Field, Icon, Lazyload, Popup, Row, Col, NavBar, Tabbar, TabbarItem, Swipe, SwipeItem } from 'vant'
 
 Vue.use(Lazyload, {
   preLoad: 2
 })
-Vue.use(Popup).use(Row).use(Col)
+Vue.use(Popup).use(Row).use(Col).use(Loading)
 
 // NOTE 移动端点击延迟
 const FastClick = require('fastclick')

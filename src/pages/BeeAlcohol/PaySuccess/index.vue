@@ -21,7 +21,10 @@
           现金补贴已到账
         </p>
       </div>
-      <img :src="beeIcon.useBtn" class="use-btn" @click="goIndex">
+      <!-- <img :src="beeIcon.useBtn" class="use-btn" @click="goIndex"> -->
+      <button class="use-button" @click="goIndex">
+        <span>查看并使用</span>
+      </button>
     </div>
   </div>
 </template>
@@ -42,7 +45,10 @@ export default {
         tipImg: require('@/assets/icon/alcohol/liqueur_result_icon_success.png'),
         useBtn: require('@/assets/icon/alcohol/liqueur_result_button.png')
       },
-      result: {}
+      result: {
+        // pay_amount: 1000,
+        // cash_coupon: 1000
+      }
     }
   },
   computed: {},
@@ -121,6 +127,7 @@ export default {
     background-size: 100% 100%;
     width: 7.5rem;
     height:5.02rem;
+    margin: 0 auto;
     position: relative;
   }
   .sub-price{
@@ -142,6 +149,25 @@ export default {
    bottom: .3rem;
    left: 50%;
    transform: translateX(-50%)
+  }
+  .use-button{
+    border: none;
+    color: #fff;
+    width: 3.2rem;
+    height: 0.88rem;
+    background:linear-gradient(180deg,rgba(255,220,31,1),rgba(253,150,11,1));
+    border-radius: 0.5rem;
+    font-size: 0.36rem;
+    position: absolute;
+    bottom: .3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    span {
+      display: block;
+      height: 100%;
+      width: 100%;
+      line-height: 0.88rem;
+    }
   }
 }
 </style>

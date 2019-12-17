@@ -72,3 +72,11 @@ export function orderVerify(data) {
     data
   })
 }
+// 确认领酒
+export function sendOrder(data) {
+  return request({
+    url: '/user/liquor/sendOrder',
+    method: 'post',
+    data
+  })
+}
