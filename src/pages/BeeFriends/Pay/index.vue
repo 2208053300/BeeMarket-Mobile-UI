@@ -189,7 +189,7 @@ export default {
       isActive: false,
       // 单此提现金额最少100，最多5000
       MIN_MONEY: 100,
-      MAX_MONEY: 5000,
+      MAX_MONEY: 3000,
       // 可提现总金额
       totalNum: 0,
       // 不可提现金额
@@ -328,7 +328,7 @@ export default {
           this.$toast(res.message)
           this.show = false
           this.totalNum = this.totalNum - this.money
-          // this.isActive = false
+          this.isActive = false
         }
       } catch (error) {
         this.$toast.fail(error)
