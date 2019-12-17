@@ -6,6 +6,9 @@
       transition="van-fade"
     >
       <div class="canvas-content">
+        <van-loading v-if="loading" size="24px" vertical>
+          加载中...
+        </van-loading>
         <img
           v-show="posterBase64"
           ref="shareImgPre"
@@ -32,17 +35,21 @@ export default {
       show: false,
       liqueur_img_poster_under: require('@/assets/icon/alcohol/liqueur_img_poster_under.png'),
       posterBase64: '',
-      screenshotBase64End: ''
+      screenshotBase64End: '',
+      loading: false
     }
   },
   mounted() {
-    this.getQrcodeData()
   },
   methods: {
     showShare() {
       this.show = true
+      if (!(this.screenshotBase64End && this.posterBase64)) {
+        this.getQrcodeData()
+      }
     },
     async getQrcodeData() {
+      this.loading = true
       const jimp = await import('jimp')
       const res = await cashShareQrcode()
       const qrcode = 'data:image/png;base64,' + res.data.qr_code
@@ -56,6 +63,7 @@ export default {
       this.posterBase64 = await backimg.getBase64Async(jimp.MIME_PNG)
       backimg.background(0xffffffff)
       this.screenshotBase64End = await backimg.getBase64Async(jimp.MIME_JPEG)
+      this.loading = false
     }
   }
 }
@@ -74,6 +82,7 @@ export default {
     }
 
     .canvas-content {
+      text-align: center;
       width: 5.02rem;
       height: auto;
       border-radius: 0.16rem;

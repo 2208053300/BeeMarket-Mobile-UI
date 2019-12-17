@@ -82,7 +82,7 @@
           </button>
         </div>
         <div v-else class="has-not flex flex-center" @click="goIndex">
-          <button class="btn go-index" type="button" style="position: relative;z-index: 1">
+          <button class="btn go-index" type="button">
             立即参与
           </button>
         </div>
@@ -405,6 +405,8 @@ p {
 
   .action {
     margin-top: 1.24rem;
+    position: relative;
+    z-index: 1;
     .has {
     }
     .has-not {
