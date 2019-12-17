@@ -98,7 +98,8 @@
             确认提现
           </span>
         </vueTencentCaptcha>
-        <p>合伙人每日单次提现金额为{{ MIN_MONEY }}-{{ MAX_MONEY }}}元！</p>
+        <p>合伙人每日提现一次，金额为{{ MIN_MONEY }}-{{ MAX_MONEY }}元！</p>
+        <!-- <p>合伙人每日单次提现金额为{{ MIN_MONEY }}-{{ MAX_MONEY }}元！</p> -->
       </div>
     </div>
 
