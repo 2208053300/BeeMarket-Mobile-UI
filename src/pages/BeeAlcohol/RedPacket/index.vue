@@ -95,7 +95,7 @@
     <active-list v-if="cashInfo.lists && cashInfo.lists.length > 0" :list="cashInfo.lists" />
     <!-- 椭圆装饰图片 -->
     <img :src="beeIcon.ellipse" class="ellipsis">
-    <div v-if="cashInfo.lists && cashInfo.lists.length > 0" class="share-btn">
+    <div class="share-btn">
       <button @click="goShare">
         激活提现
       </button>
@@ -311,7 +311,7 @@ p {
   background-image: linear-gradient(to bottom, #ea583d, #cd281c);
   padding-top: 0.7rem;
   position: relative;
-  height: calc(100vh - 0.7rem);
+  min-height: calc(100vh - 0.7rem);
   .swiper-box1 {
     position: fixed;
     top: 0.15rem;
@@ -528,7 +528,7 @@ p {
   }
 
   .share-btn {
-    padding-top: 0.2rem;
+    padding-top: 0.5rem;
     padding-bottom: 0.3rem;
     text-align: center;
     font-size: 0.20rem;
