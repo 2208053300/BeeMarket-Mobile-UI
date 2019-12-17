@@ -119,15 +119,15 @@ img {
         width: 100%;
       }
       .item-text {
-        display: flex;
-        flex-direction: column;
         padding-left: 0.2rem;
         color: white;
         .nick {
-          font-size: 0.28px;
+          font-size: 0.28rem;
           font-weight: 500;
+          display: block;
         }
         .desc {
+          display: block;
           margin-top: 0.14rem;
           font-size: 0.22rem;
           font-weight:500;
