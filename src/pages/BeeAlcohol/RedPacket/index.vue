@@ -77,7 +77,7 @@
           >
             立即使用
           </button>
-          <button v-if="osObj.isApp" class="btn go-use" type="button" @click="goOrderList">
+          <button v-if="!osObj.isApp" class="btn go-use" type="button" @click="goOrderList">
             查看订单
           </button>
         </div>
@@ -279,10 +279,10 @@ export default {
     },
     // 查看订单列表
     goOrderList() {
-      if (this.osObj.isIphone) {
-        window.webkit.messageHandlers.ToOrderList.postMessage({ index: 0 })
-      } else if (this.osObj.isAndroid) {
-        window.beeMarket.ToOrderList(0)
+      if (window.location.pathname === '/') {
+        this.$router.push('/persion/order')
+      } else {
+        window.location.href = '/#/persion/order'
       }
     }
   }
