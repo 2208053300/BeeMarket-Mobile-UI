@@ -70,23 +70,15 @@
       <!-- action -->
       <div class="action">
         <div v-if="cashInfo.total_amount > 0" class="has flex flex-center">
-          <button class="btn go-use" type="button" @click="showBuy = true">
-            使用
-          </button>
-          <!-- <button
-            v-if="cashInfo.activate_amount === 0"
-            class="btn to-cash can-not"
-            type="button"
-          >
-            提现
-          </button> -->
-          <!-- v-if="cashInfo.activate_amount > 0" -->
           <button
             class="btn to-cash"
             type="button"
-            @click="goCash"
+            @click="showBuy = true"
           >
-            提现
+            立即使用
+          </button>
+          <button v-if="osObj.isApp" class="btn go-use" type="button" @click="goOrderList">
+            查看订单
           </button>
         </div>
         <div v-else class="has-not flex flex-center" @click="goIndex">
@@ -99,7 +91,17 @@
 
     <!-- 装饰图片 -->
     <img :src="beeIcon.decorate" class="decorate">
-
+    <!-- 激活详情 -->
+    <active-list v-if="cashInfo.lists && cashInfo.lists.length > 0" :list="cashInfo.lists" />
+    <!-- 椭圆装饰图片 -->
+    <img :src="beeIcon.ellipse" class="ellipsis">
+    <div v-if="cashInfo.amount > 0" class="share-btn">
+      <button @click="goShare">
+        激活提现
+      </button>
+      <br>
+      邀好友购茅台&emsp;激活提现权益
+    </div>
     <select-num v-model="showBuy" />
 
     <!-- 可提现提示弹窗 -->
@@ -131,7 +133,7 @@
       <img :src="beeIcon.close" class="close" @click="showPopup = false">
     </van-popup>
 
-    <share ref="share" />
+    <share v-if="osObj.isWx" ref="share" />
   </div>
 </template>
 
@@ -145,11 +147,12 @@ import BeeWinningRoll from '@/components/BeeWinningRoll'
 import SelectNum from '../index/components/SelectNum'
 import { getUID } from '@/api/BeeApi/user'
 import Share from '@/pages/BeeAlcohol/RedPacket/components/Share'
+import ActiveList from '@/pages/BeeAlcohol/RedPacket/components/ActiveList'
 export default {
   metaInfo: {
     title: '年终狂欢 瓜分10亿'
   },
-  components: { BeeWinningRoll, SelectNum, Share },
+  components: { BeeWinningRoll, SelectNum, Share, ActiveList },
   props: {},
   data() {
     return {
@@ -164,7 +167,8 @@ export default {
         decorate: require('@/assets/icon/alcohol/decorate.png'),
         close: require('@/assets/icon/alcohol/red_packge_close.png'),
         txt: require('@/assets/icon/alcohol/tip_text.png'),
-        txtNoCash: require('@/assets/icon/alcohol/tip_text_no_cash.png')
+        txtNoCash: require('@/assets/icon/alcohol/tip_text_no_cash.png'),
+        ellipse: require('@/assets/icon/alcohol/Ellipse.png')
       },
       uid: 0,
       // 获取 os 平台
@@ -206,9 +210,9 @@ export default {
     async getRedPacketData() {
       const res = await getCashInfo()
       this.cashInfo = res.data
-      console.log('s:', res.data.head_image_url)
+      // console.log('s:', res.data.head_image_url)
       this.cashInfo.head_image_url = this.cashInfo.head_image_url.replace('http://', 'https://')
-      console.log('end:', res.data.head_image_url)
+      // console.log('end:', res.data.head_image_url)
     },
     // 转余额
     async toBalance() {
@@ -219,7 +223,7 @@ export default {
       }
       this.$toast(res.message)
     },
-    // 去提现
+    // 点击 提现 按钮显示弹框
     async goCash() {
       this.showPopup = true
     },
@@ -272,6 +276,14 @@ export default {
         this.showPopup = false
         this.$refs.share.showShare()
       }
+    },
+    // 查看订单列表
+    goOrderList() {
+      if (this.osObj.isIphone) {
+        window.webkit.messageHandlers.ToOrderList.postMessage({ index: 0 })
+      } else if (this.osObj.isAndroid) {
+        window.beeMarket.ToOrderList(0)
+      }
     }
   }
 }
@@ -296,13 +308,10 @@ p {
   border-radius: 50%;
 }
 .earning-way {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   background-image: linear-gradient(to bottom, #ea583d, #cd281c);
   padding-top: 0.7rem;
+  position: relative;
+  min-height: calc(100vh - 0.7rem);
   .swiper-box1 {
     position: fixed;
     top: 0.15rem;
@@ -396,6 +405,8 @@ p {
 
   .action {
     margin-top: 1.24rem;
+    position: relative;
+    z-index: 1;
     .has {
     }
     .has-not {
@@ -404,7 +415,7 @@ p {
       border: none;
       width: 2.32rem;
       height: 0.72rem;
-      font-size: 0.42rem;
+      font-size: 0.36rem;
       color: #fff;
       border-radius: 0.36rem;
     }
@@ -422,7 +433,7 @@ p {
       border-radius: 36px;
       background: #fff;
       color: #F24032;
-      margin-right: 0.44rem;
+      margin-left: 0.44rem;
     }
     .go-index {
       width: 4.2rem;
@@ -437,8 +448,15 @@ p {
     }
   }
   .decorate {
-    position: fixed;
+    position: absolute;
     top: 0;
+    left: 0;
+    height: auto;
+    width: 100%;
+  }
+  .ellipsis {
+    position: absolute;
+    bottom: 0;
     left: 0;
     height: auto;
     width: 100%;
@@ -508,6 +526,31 @@ p {
       width: 0.64rem;
       height: 0.64rem;
       transform: translateX(-50%);
+    }
+  }
+
+  .share-btn {
+    padding-top: 0.5rem;
+    padding-bottom: 0.3rem;
+    text-align: center;
+    font-size: 0.20rem;
+    font-weight: 500;
+    color:rgba(255,255,255,0.6);
+    button {
+      position: relative;
+      z-index: 1;
+      border: none;
+      width:4.20rem;
+      line-height:0.90rem;
+      background:linear-gradient(180deg,rgba(255,220,31,1),rgba(253,150,11,1));
+      border-radius:45px;
+      padding: 0;
+      font-size:0.36rem;
+      font-weight:bold;
+      color:rgba(255,255,255,1);
+      text-shadow:0 2px 5px rgba(216,73,20,0.5);
+      margin-bottom: 0.2rem;
+      box-shadow: 0 3px 0 #e6501eb0;
     }
   }
 }

@@ -35,6 +35,11 @@ const router = new Router({
       component: () => import('@/pages/BeeAlcohol/RedPacket')
     },
     {
+      path: '/cashTip',
+      name: 'cashTip',
+      component: () => import('@/pages/BeeAlcohol/CashTip')
+    },
+    {
       path: '/confirmOrder',
       name: 'alcoholConfirmOrder',
       component: () =>
