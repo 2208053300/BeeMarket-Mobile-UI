@@ -51,13 +51,13 @@ export default {
   methods: {
     getText(item) {
       let text = ''
-      text += item.sku_type === 1 ? '参与“整箱装”' : '参与“体验装”'
+      text += item.sku_type === 1 ? '参与“整箱装”，' : '参与“体验装”，'
       if ([0, 1].includes(item.status)) {
-        text += `，为您激活${item.amount}元`
+        text += `为您激活${item.amount}元。`
       } else if (item.status === 2) {
-        text += `。提现到账${item.amount}元`
+        text += `提现到账${item.amount}元。`
       } else {
-        text += `，${item.amount}元已失效`
+        text += `${item.amount}元已失效。`
       }
       return text
     },
