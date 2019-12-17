@@ -15,9 +15,6 @@
           alt=""
           :src="posterBase64"
         >
-        <div class="screenshot">
-          <img v-show="screenshotBase64End" :src="screenshotBase64End" alt="">
-        </div>
       </div>
       <div v-if="!loading" class="text-tip">
         <span>长按保存图片到本地</span>
@@ -35,8 +32,8 @@ export default {
       show: false,
       liqueur_img_poster_under: require('@/assets/icon/alcohol/liqueur_img_poster_under_zip.png'),
       posterBase64: '',
-      screenshotBase64End: '',
-      loading: false
+      loading: false,
+      res: ''
     }
   },
   mounted() {
@@ -49,36 +46,47 @@ export default {
   methods: {
     showShare() {
       this.show = true
-      if (!(this.screenshotBase64End && this.posterBase64)) {
+      if (!this.posterBase64) {
         this.getQrcodeData()
       }
     },
     async loadJimp() {
       this.jimp = await import('jimp')
+      this.res = await cashShareQrcode()
       if (this.callback) {
         await this.callback()
       }
     },
     async getQrcodeData() {
       this.loading = true
-      if (!this.jimp) {
+      if (!this.res) {
         this.callback = this.getQrcodeData
         return
       }
-      const jimp = this.jimp
-      const res = await cashShareQrcode()
-      const qrcode = 'data:image/png;base64,' + res.data.qr_code
-      const qr = await jimp.read(qrcode)
-      const backimg = await jimp.read(this.liqueur_img_poster_under)
+      const start = new Date().getTime()
+      const qrcode = 'data:image/png;base64,' + this.res.data.qr_code
+      const qr = await this.jimp.read(qrcode)
+      const res3 = new Date().getTime()
+      console.log('qrcode:', res3 - start)
+      const backimg = await this.jimp.read(this.liqueur_img_poster_under)
+
+      const res4 = new Date().getTime()
+      console.log('backimg:', res4 - res3)
       // 将二维码缩放到100x100 px
       qr.resize(100, 100)
       // 将二维码放到指定x,y位置
       backimg.composite(qr, 175, 765)
-      // 获取base64数据
-      this.posterBase64 = await backimg.getBase64Async(jimp.MIME_PNG)
+      const res5 = new Date().getTime()
+      console.log('composite:', res5 - res4)
       backimg.background(0xffffffff)
-      this.screenshotBase64End = await backimg.getBase64Async(jimp.MIME_JPEG)
+      const res6 = new Date().getTime()
+      console.log('background:', res6 - res5)
+      this.posterBase64 = await backimg.getBase64Async(this.jimp.MIME_JPEG)
+      const res7 = new Date().getTime()
+      console.log('getBase64Async2:', res7 - res6)
       this.loading = false
+      const end = new Date().getTime()
+      console.log('total:', end - start)
     }
   }
 }
@@ -101,6 +109,7 @@ export default {
       width: 5.02rem;
       height: auto;
       border-radius: 0.16rem;
+      background: white;
       padding: 0.16rem;
       position: relative;
       .canvas-img {

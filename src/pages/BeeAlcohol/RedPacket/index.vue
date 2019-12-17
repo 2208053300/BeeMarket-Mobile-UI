@@ -81,7 +81,7 @@
             查看订单
           </button>
         </div>
-        <div v-else class="has-not flex flex-center" @click="goIndex">
+        <div v-else class="has-not flex flex-center" @click="showBuy = true">
           <button class="btn go-index" type="button">
             立即参与
           </button>
