@@ -9,19 +9,19 @@
       <div v-for="(item, index) in list" :key="index" class="item">
         <img :src="item.head_image_url" alt="" style="border-radius: 10rem">
         <div class="item-text">
-          <span class="nick">{{ item.nick_name }}</span>
+          <span class="nick">{{ item.nickname }}</span>
           <span class="desc">{{ getText(item) }}</span>
         </div>
-        <button v-if="item.status === 1">
+        <button v-if="item.status === 1" class="orange-btn" @click="toBalance(item.id)">
           提现
         </button>
-        <button v-if="item.status === 2">
+        <button v-if="item.status === 0" class="white-btn">
           在路上
         </button>
-        <button v-if="item.status === 3">
+        <button v-if="item.status === 2" class="gray-btn">
           已提现
         </button>
-        <button v-if="item.status === 4">
+        <button v-if="item.status === -1" class="gray-btn">
           已失效
         </button>
       </div>
@@ -30,6 +30,9 @@
 </template>
 
 <script>
+import { newToCash } from '@/api/BeeApi/alcohol'
+import { getOs } from '@/utils'
+
 export default {
   props: {
     list: {
@@ -48,9 +51,28 @@ export default {
   methods: {
     getText(item) {
       let text = ''
-      text += item.type === 1 ? '参与”整箱装”，' : '参与”体验装，'
-      text += '为您激活3000元'
+      text += item.sku_type === 1 ? '参与“整箱装”' : '参与“体验装”'
+      if ([0, 1].includes(item.status)) {
+        text += `，为您激活${item.amount}元`
+      } else if (item.status === 2) {
+        text += `。提现到账${item.amount}元`
+      } else {
+        text += `，${item.amount}元已失效`
+      }
       return text
+    },
+    // 转余额
+    async toBalance(id) {
+      if (getOs().isWx) {
+        this.$router.push({ name: 'cashTip' })
+        return
+      }
+      const res = await newToCash({ id })
+      if (res.status_code === 200) {
+        window.location.href = '/beeFriends#/pay'
+      } else {
+        this.$toast(res.message)
+      }
     }
   }
 }
@@ -120,6 +142,19 @@ img {
         padding: 0;
         font-size: 0.26rem;
         border-radius: 0.12rem;
+        font-weight: 500;
+      }
+      .gray-btn {
+        background: #CCCCCC;
+        color: white;
+      }
+      .white-btn {
+        background: white;
+        color: #E6402C;
+      }
+      .orange-btn {
+        background: linear-gradient(180deg,rgba(255,220,31,1),rgba(253,150,11,1));
+        color: white;
       }
     }
   }

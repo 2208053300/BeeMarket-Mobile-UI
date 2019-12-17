@@ -69,7 +69,7 @@
       </div>
       <!-- action -->
       <div class="action">
-        <div v-if="cashInfo.total_amount == 0" class="has flex flex-center">
+        <div v-if="cashInfo.total_amount > 0" class="has flex flex-center">
           <button
             class="btn to-cash"
             type="button"
@@ -77,7 +77,7 @@
           >
             立即使用
           </button>
-          <button class="btn go-use" type="button">
+          <button v-if="osObj.isApp" class="btn go-use" type="button" @click="goOrderList">
             查看订单
           </button>
         </div>
@@ -92,11 +92,15 @@
     <!-- 装饰图片 -->
     <img :src="beeIcon.decorate" class="decorate">
     <!-- 激活详情 -->
-    <active-list :list="list" />
-    <div class="share-btn">
-      <button @click="goShare">激活提现</button>
+    <active-list v-if="cashInfo.lists && cashInfo.lists.length > 0" :list="cashInfo.lists" />
+    <!-- 椭圆装饰图片 -->
+    <img :src="beeIcon.ellipse" class="ellipsis">
+    <div v-if="cashInfo.lists && cashInfo.lists.length > 0" class="share-btn">
+      <button @click="goShare">
+        激活提现
+      </button>
       <br>
-      邀好友购茅台 激活提现权益
+      邀好友购茅台&emsp;激活提现权益
     </div>
     <select-num v-model="showBuy" />
 
@@ -163,7 +167,8 @@ export default {
         decorate: require('@/assets/icon/alcohol/decorate.png'),
         close: require('@/assets/icon/alcohol/red_packge_close.png'),
         txt: require('@/assets/icon/alcohol/tip_text.png'),
-        txtNoCash: require('@/assets/icon/alcohol/tip_text_no_cash.png')
+        txtNoCash: require('@/assets/icon/alcohol/tip_text_no_cash.png'),
+        ellipse: require('@/assets/icon/alcohol/Ellipse.png')
       },
       uid: 0,
       // 获取 os 平台
@@ -184,22 +189,7 @@ export default {
       showShare: false
     }
   },
-  computed: {
-    list() {
-      const list = []
-      for (let i = 0; i < 20; i++) {
-        list.push(
-          {
-            head_image_url: 'https://thirdwx.qlogo.cn/mmopen/vi_32/IM2JvRB8ibNWxMFeqTnkL4PgLsCfTmfd6TeRQW81bCu3LiczU7Hw3ZWbIvWLW2FDiaIT0ADWjgsfuj9AK25j9DFSA/132',
-            nick_name: '昵称',
-            type: 1,
-            status: 1
-          }
-        )
-      }
-      return list
-    }
-  },
+  computed: {},
   watch: {},
   created() {},
   destroyed() {
@@ -286,6 +276,14 @@ export default {
         this.showPopup = false
         this.$refs.share.showShare()
       }
+    },
+    // 查看订单列表
+    goOrderList() {
+      if (this.osObj.isIphone) {
+        window.webkit.messageHandlers.ToOrderList.postMessage({ index: 0 })
+      } else if (this.osObj.isAndroid) {
+        window.beeMarket.ToOrderList(0)
+      }
     }
   }
 }
@@ -312,6 +310,8 @@ p {
 .earning-way {
   background-image: linear-gradient(to bottom, #ea583d, #cd281c);
   padding-top: 0.7rem;
+  position: relative;
+  height: calc(100vh - 0.7rem);
   .swiper-box1 {
     position: fixed;
     top: 0.15rem;
@@ -452,6 +452,13 @@ p {
     height: auto;
     width: 100%;
   }
+  .ellipsis {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: auto;
+    width: 100%;
+  }
   .tip-popup {
     background-color: transparent;
     .tip-content {
@@ -528,6 +535,8 @@ p {
     font-weight: 500;
     color:rgba(255,255,255,0.6);
     button {
+      position: relative;
+      z-index: 1;
       border: none;
       width:4.20rem;
       line-height:0.90rem;
@@ -537,8 +546,9 @@ p {
       font-size:0.36rem;
       font-weight:bold;
       color:rgba(255,255,255,1);
-      text-shadow:0px 2px 5px rgba(216,73,20,0.5);
+      text-shadow:0 2px 5px rgba(216,73,20,0.5);
       margin-bottom: 0.2rem;
+      box-shadow: 0 3px 0 #e6501eb0;
     }
   }
 }
