@@ -240,6 +240,7 @@ import {
   sendOrder
 } from '@/api/BeeApi/order'
 import { goPayFromOrder } from '@/utils/wxPay'
+import wait from '@/utils/wait'
 
 export default {
   components: {},
@@ -329,6 +330,7 @@ export default {
         const res = await deleteOrder({ order_no: order_no })
         if (res.status_code === 200) {
           this.$toast(res.message)
+          await wait(1000)
           this.$parent.changeOrder()
         }
       } catch (e) {
@@ -345,6 +347,7 @@ export default {
         const res = await completeOrder({ order_no: this.orderNo })
         if (res.status_code === 200) {
           this.$toast(res.message)
+          await wait(1000)
           this.$parent.changeOrder(-1)
         }
       } catch (e) {
@@ -389,6 +392,7 @@ export default {
       if (res.status_code === 200) {
         this.$toast(res.message)
         this.askLiquor = false
+        await wait(1000)
         this.$parent.changeOrder(-1)
       }
     },
@@ -397,6 +401,7 @@ export default {
       if (res.status_code === 200) {
         this.$toast(res.message)
         this.askLiquor2 = false
+        await wait(1000)
         this.$parent.changeOrder(-1)
       }
     }
