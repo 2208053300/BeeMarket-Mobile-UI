@@ -137,7 +137,6 @@ img {
       button {
         border: none;
         width: 1.2rem;
-        height: 0.46rem;
         line-height: 0.46rem;
         padding: 0;
         font-size: 0.26rem;
@@ -155,6 +154,8 @@ img {
       .orange-btn {
         background: linear-gradient(180deg,rgba(255,220,31,1),rgba(253,150,11,1));
         color: white;
+        position: relative;
+        z-index: 10;
       }
     }
   }
