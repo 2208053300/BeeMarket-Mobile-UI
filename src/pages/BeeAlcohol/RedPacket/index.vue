@@ -133,7 +133,7 @@
       <img :src="beeIcon.close" class="close" @click="showPopup = false">
     </van-popup>
 
-    <share ref="share" />
+    <share v-if="osObj.isWx" ref="share" />
   </div>
 </template>
 
