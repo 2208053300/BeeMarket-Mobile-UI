@@ -316,7 +316,7 @@ export default {
   }
   .heartBeat {
     position: absolute;
-    top: .9rem;
+    top: 0.9rem;
     width: 1.33rem;
     height: 0.56rem;
     animation:heartBeat 1.3s ease-in-out infinite ;

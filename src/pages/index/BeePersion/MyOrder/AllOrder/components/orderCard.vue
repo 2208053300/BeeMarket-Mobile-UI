@@ -22,7 +22,12 @@
         <div class="card-title">
           <div
             class="store-name"
-            @click.stop="$router.push({path:'/category/store',query:{mid:card.merchant_id}})"
+            @click.stop="
+              $router.push({
+                path: '/category/store',
+                query: { mid: card.merchant_id }
+              })
+            "
           >
             {{ card.store_name }}
             <van-icon name="arrow" />
@@ -39,10 +44,7 @@
             class="product-content"
           >
             <div class="product-img">
-              <img
-                :src="product.thumb_url"
-                alt=""
-              >
+              <img :src="product.thumb_url" alt="">
             </div>
             <div class="product-details">
               <div class="name-price">
@@ -73,7 +75,23 @@
         </div>
         <div class="order-op">
           <van-button
-            v-if="[-1, 4,5].indexOf(card.s_order) !== -1 || card.s_pay === -1"
+            v-if="card.s_order===1 && card.t_order === 'liquor'"
+            round
+            class="order-button del-button"
+            @click.stop="liquorAction(card.order_no)"
+          >
+            全额退款
+          </van-button>
+          <van-button
+            v-if="card.s_order===1 && card.t_order === 'liquor'"
+            round
+            class="order-button"
+            @click.stop="liquorAction2(card.order_no)"
+          >
+            立即发货
+          </van-button>
+          <van-button
+            v-if="[-1, 4, 5].indexOf(card.s_order) !== -1 || card.s_pay === -1"
             round
             class="order-button del-button"
             @click="deleteOrderData(card.order_no)"
@@ -96,7 +114,7 @@
             评价晒单
           </van-button>
           <van-button
-            v-if="[-1, 4,5].indexOf(card.s_order) !== -1"
+            v-if="[-1, 4, 5].indexOf(card.s_order) !== -1"
             round
             class="order-button"
             @click.stop="buyAgain(card)"
@@ -120,7 +138,7 @@
             确认收货
           </van-button>
           <van-button
-            v-if="card.s_order === 1"
+            v-if="card.s_order === 1&&card.t_order !== 'liquor'"
             round
             class="order-button"
             @click="remindDelivery(card.order_no)"
@@ -128,7 +146,7 @@
             提醒发货
           </van-button>
           <van-button
-            v-if="card.s_pay === 0&&card.s_order !== -1"
+            v-if="card.s_pay === 0 && card.s_order !== -1"
             round
             class="order-button"
             @click.stop="goPay(card)"
@@ -161,9 +179,50 @@
       class="text-center"
       @confirm="confirmComplete()"
     >
-      <van-icon name="warning-o" color="#FFA431" size="1rem" style="margin-top: 0.2rem" />
+      <van-icon
+        name="warning-o"
+        color="#FFA431"
+        size="1rem"
+        style="margin-top: 0.2rem"
+      />
       <p>请确认商品完好</p>
       <p>确认收货后，不支持7天无理由退货</p>
+    </van-dialog>
+    <van-dialog
+      v-model="askLiquor"
+      show-cancel-button
+      cancel-button-text="取消"
+      confirm-button-text="确认退款"
+      confirm-button-color="#fff"
+      class="text-center"
+      @confirm="closeLiquor()"
+    >
+      <van-icon
+        name="warning-o"
+        color="#FFA431"
+        size="1rem"
+        style="margin-top: 0.2rem"
+      />
+      <p>全额退款</p>
+      <p>全额退款，放弃现金补贴</p>
+    </van-dialog>
+    <van-dialog
+      v-model="askLiquor2"
+      show-cancel-button
+      cancel-button-text="取消"
+      confirm-button-text="确认发货"
+      confirm-button-color="#fff"
+      class="text-center"
+      @confirm="doneLiquor()"
+    >
+      <van-icon
+        name="warning-o"
+        color="#FFA431"
+        size="1rem"
+        style="margin-top: 0.2rem"
+      />
+      <p>立即发货</p>
+      <p>发货后，您将失去7天无条件退款权益</p>
     </van-dialog>
   </div>
 </template>
@@ -174,7 +233,12 @@ import {
   addShopcartProduct,
   remindOrder
 } from '@/api/BeeApi/user'
-import { deleteOrder, completeOrder } from '@/api/BeeApi/order'
+import {
+  deleteOrder,
+  completeOrder,
+  closeOrder,
+  sendOrder
+} from '@/api/BeeApi/order'
 import { goPayFromOrder } from '@/utils/wxPay'
 
 export default {
@@ -196,7 +260,9 @@ export default {
       loading: false,
       finished: false,
       askExit: false,
-      orderNo: null
+      orderNo: null,
+      askLiquor: false,
+      askLiquor2: false
     }
   },
   computed: {},
@@ -279,7 +345,7 @@ export default {
         const res = await completeOrder({ order_no: this.orderNo })
         if (res.status_code === 200) {
           this.$toast(res.message)
-          this.$parent.changeOrder()
+          this.$parent.changeOrder(-1)
         }
       } catch (e) {
         this.$toast(e)
@@ -308,6 +374,30 @@ export default {
           path: '/persion/order/logisticsDetail',
           query: { order_no: item.order_no }
         })
+      }
+    },
+    liquorAction(order_no) {
+      this.askLiquor = true
+      this.orderNo = order_no
+    },
+    liquorAction2(order_no) {
+      this.askLiquor2 = true
+      this.orderNo = order_no
+    },
+    async doneLiquor() {
+      const res = await sendOrder({ order_no: this.orderNo })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+        this.askLiquor = false
+        this.$parent.changeOrder(-1)
+      }
+    },
+    async closeLiquor() {
+      const res = await closeOrder({ order_no: this.orderNo })
+      if (res.status_code === 200) {
+        this.$toast(res.message)
+        this.askLiquor2 = false
+        this.$parent.changeOrder(-1)
       }
     }
   }
@@ -425,8 +515,9 @@ export default {
       }
     }
   }
-  .van-dialog__confirm{
+  .van-dialog__confirm {
     color: #fff;
-    background: #FFA431;}
+    background: #ffa431;
+  }
 }
 </style>

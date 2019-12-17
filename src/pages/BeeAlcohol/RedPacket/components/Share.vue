@@ -6,17 +6,19 @@
       transition="van-fade"
     >
       <div class="canvas-content">
+        <div v-if="loading" style="padding: 0.5rem 0">
+          <van-loading size="24px" vertical>
+            二维码生成中...
+          </van-loading>
+        </div>
         <img
           v-show="posterBase64"
           ref="shareImgPre"
           alt=""
           :src="posterBase64"
         >
-        <div class="screenshot">
-          <img v-show="screenshotBase64End" :src="screenshotBase64End" alt="">
-        </div>
       </div>
-      <div class="text-tip">
+      <div v-if="!loading" class="text-tip">
         <span>长按保存图片到本地</span>
       </div>
     </van-popup>
@@ -30,32 +32,49 @@ export default {
   data() {
     return {
       show: false,
-      liqueur_img_poster_under: require('@/assets/icon/alcohol/liqueur_img_poster_under.png'),
+      liqueur_img_poster_under: require('@/assets/icon/alcohol/liqueur_img_poster_under_zip.png'),
       posterBase64: '',
-      screenshotBase64End: ''
+      loading: false,
+      res: ''
     }
   },
   mounted() {
-    this.getQrcodeData()
+    this.loadJimp()
+  },
+  destroyed() {
+    this.jimp = undefined
+    this.callback = undefined
   },
   methods: {
     showShare() {
       this.show = true
+      if (!this.posterBase64) {
+        this.getQrcodeData()
+      }
+    },
+    async loadJimp() {
+      this.jimp = await import('jimp')
+      this.res = await cashShareQrcode()
+      if (this.callback) {
+        await this.callback()
+      }
     },
     async getQrcodeData() {
-      const jimp = await import('jimp')
-      const res = await cashShareQrcode()
-      const qrcode = 'data:image/png;base64,' + res.data.qr_code
-      const qr = await jimp.read(qrcode)
-      const backimg = await jimp.read(this.liqueur_img_poster_under)
+      this.loading = true
+      if (!this.res) {
+        this.callback = this.getQrcodeData
+        return
+      }
+      const qrcode = 'data:image/png;base64,' + this.res.data.qr_code
+      const qr = await this.jimp.read(qrcode)
+      const backimg = await this.jimp.read(this.liqueur_img_poster_under)
       // 将二维码缩放到100x100 px
       qr.resize(100, 100)
       // 将二维码放到指定x,y位置
       backimg.composite(qr, 175, 765)
-      // 获取base64数据
-      this.posterBase64 = await backimg.getBase64Async(jimp.MIME_PNG)
       backimg.background(0xffffffff)
-      this.screenshotBase64End = await backimg.getBase64Async(jimp.MIME_JPEG)
+      this.posterBase64 = await backimg.getBase64Async(this.jimp.MIME_JPEG)
+      this.loading = false
     }
   }
 }
@@ -74,22 +93,14 @@ export default {
     }
 
     .canvas-content {
+      text-align: center;
       width: 5.02rem;
       height: auto;
-      border-radius: 0.16rem;
-      padding: 0.16rem;
+      background: white;
       position: relative;
-      .canvas-img {
-        width: 100%;
-        height: 100%;
-      }
-      .screenshot {
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: auto;
+      border-radius: 0.1rem;
+      img {
+        border-radius: 0.1rem;
       }
     }
   }
