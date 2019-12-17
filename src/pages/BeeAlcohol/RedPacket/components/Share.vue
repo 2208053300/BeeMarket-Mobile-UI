@@ -7,19 +7,13 @@
     >
       <div class="canvas-content">
         <van-loading v-if="loading" size="24px" vertical>
-          加载中...
+          二维码生成中...
         </van-loading>
-        <img
-          v-show="posterBase64"
-          ref="shareImgPre"
-          alt=""
-          :src="posterBase64"
-        >
         <div class="screenshot">
           <img v-show="screenshotBase64End" :src="screenshotBase64End" alt="">
         </div>
       </div>
-      <div class="text-tip">
+      <div v-if="!loading" class="text-tip">
         <span>长按保存图片到本地</span>
       </div>
     </van-popup>
@@ -34,7 +28,6 @@ export default {
     return {
       show: false,
       liqueur_img_poster_under: require('@/assets/icon/alcohol/liqueur_img_poster_under.png'),
-      posterBase64: '',
       screenshotBase64End: '',
       loading: false
     }
@@ -44,7 +37,7 @@ export default {
   methods: {
     showShare() {
       this.show = true
-      if (!(this.screenshotBase64End && this.posterBase64)) {
+      if (!this.screenshotBase64End) {
         this.getQrcodeData()
       }
     },
@@ -60,8 +53,6 @@ export default {
       // 将二维码放到指定x,y位置
       backimg.composite(qr, 175, 765)
       // 获取base64数据
-      this.posterBase64 = await backimg.getBase64Async(jimp.MIME_PNG)
-      backimg.background(0xffffffff)
       this.screenshotBase64End = await backimg.getBase64Async(jimp.MIME_JPEG)
       this.loading = false
     }
@@ -88,10 +79,6 @@ export default {
       border-radius: 0.16rem;
       padding: 0.16rem;
       position: relative;
-      .canvas-img {
-        width: 100%;
-        height: 100%;
-      }
       .screenshot {
         opacity: 0;
         position: absolute;
