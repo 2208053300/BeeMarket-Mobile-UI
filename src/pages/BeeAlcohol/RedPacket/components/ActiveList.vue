@@ -30,7 +30,7 @@
       <div class="info text-center">
         <img :src="icon.tipImg" class="tip-img" alt="交易提示">
         <!--eslint-disable-next-line-->
-        <p class="txt">{{ tipsText }}</p>
+        <p class="txt" v-html="tipsText"/>
         <button class="download-btn" @click="showTips = false">
           <span>知道了</span>
         </button>
