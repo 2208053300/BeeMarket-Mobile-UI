@@ -843,7 +843,7 @@ export default {
 }
 .rule-btn{
   text-decoration: underline;
-  font-style: italic;
+  // font-style: italic;
 }
 .download-tip {
     background: #fff;
