@@ -162,7 +162,7 @@
       class="rule-box"
       @closed="closed"
     >
-      <p class="text-center">
+      <p class="text-center" style="margin-top:0;">
         <label>免费提现</label>
       </p>
       <p>1.“蜂集市”提供免费提现功能；</p>
@@ -190,6 +190,16 @@
         确定
       </van-button>
     </van-popup>
+    <van-popup v-model="showTips" class="download-tip flex">
+      <div class="info text-center">
+        <img :src="tipImg" class="tip-img" alt="交易提示">
+        <!--eslint-disable-next-line-->
+        <p class="txt">{{ tipsText }}</p>
+        <button class="download-btn" @click="showTips = false">
+          <span>知道了</span>
+        </button>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -207,6 +217,7 @@ export default {
   props: {},
   data() {
     return {
+      tipImg: require('@/assets/icon/beeFriends/info/tip_img.png'),
       title: '提现',
       // 姓名
       name: '',
@@ -261,7 +272,10 @@ export default {
       showBalance: true,
       showError: false,
       // 激活id
-      activate_id: this.$route.query.id || null
+      activate_id: this.$route.query.id || null,
+
+      showTips: false,
+      tipsText: ''
 
     }
   },
@@ -390,11 +404,16 @@ export default {
         if (res.code === 1 && res.status_code === 200) {
           this.$toast(res.message)
           this.show = false
-          this.totalNum = this.totalNum - this.money
-          this.isActive = false
+          // this.totalNum = this.totalNum - this.money
+          // this.isActive = false
+          setTimeout(() => {
+            this.getCanWithdraw()
+          }, 1000)
         }
       } catch (error) {
-        this.$toast.fail(error)
+        this.tipsText = error
+        this.showTips = true
+        // this.$toast.fail(error)
       }
     },
     // 验证姓名
@@ -448,6 +467,9 @@ export default {
           this.count_limit = res.data.count_limit
           this.amount_limit = res.data.amount_limit
           this.canNext = true
+          if (this.count_limit === 0) {
+            this.isActive = false
+          }
         } else {
           this.canNext = false
         }
@@ -474,21 +496,7 @@ export default {
       this.sms = ''
       this.countDown = 0
     },
-    // 调整金额
-    // adjustMoney() {
-    //   if (!this.money) {
-    //     this.money === null
-    //     this.isActive = false
-    //   } else {
-    //     this.money = Math.floor(this.money)
-    //     // 只判断是否在最大最小范围内
-    //     if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
-    //       this.isActive = true
-    //     } else {
-    //       this.isActive = false
-    //     }
-    //   }
-    // },
+
     // 调整金额
     adjustMoney1() {
       let value = this.money.toString()
@@ -511,6 +519,7 @@ export default {
       //   this.maxMoneyTip = true
       // }
       if (this.money >= this.totalNum) {
+        this.maxMoneyTip = true
         this.money = this.totalNum
         if (this.totalNum < this.MIN_MONEY) {
           this.isActive = false
@@ -828,4 +837,43 @@ export default {
   text-decoration: underline;
   font-style: italic;
 }
+.download-tip {
+    background: #fff;
+    width: 5.8rem;
+    height: 5.2rem;
+    border-radius: .1rem;
+    .info{
+      margin: auto;
+    }
+    .tip-img{
+      width: 3.21rem;
+      height: .63rem;
+    }
+    .txt{
+      font-size: .28rem;
+      color: #333;
+      line-height: 1.5;
+      margin: .9rem auto .62rem;
+      white-space: pre-wrap;
+    }
+    .download-btn {
+      border: none;
+      color: #fff;
+      width: 3.2rem;
+      height: 0.72rem;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 220, 31, 1),
+        rgba(253, 150, 11, 1)
+      );
+      border-radius: 0.5rem;
+      font-size: 0.32rem;
+      span {
+        display: block;
+        height: 100%;
+        width: 100%;
+        line-height: 0.72rem;
+      }
+    }
+  }
 </style>
