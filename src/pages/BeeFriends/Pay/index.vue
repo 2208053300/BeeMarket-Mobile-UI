@@ -209,9 +209,9 @@ export default {
     return {
       title: '提现',
       // 姓名
-      name: '杨超',
+      name: '',
       nameError: false,
-      idNo: '50023819920805397x',
+      idNo: '',
       idNoError: false,
       canNext: false,
       // 金额
@@ -509,9 +509,9 @@ export default {
       this.money = +this.money
       console.log('this.money:', this.money, typeof this.money)
       // 判断金额是否在范围内
-      if (this.money > this.MAX_MONEY) {
-        this.maxMoneyTip = true
-      }
+      // if (this.money > this.MAX_MONEY) {
+      //   this.maxMoneyTip = true
+      // }
       if (this.money >= this.totalNum) {
         this.money = this.totalNum
         if (this.totalNum < this.MIN_MONEY) {
