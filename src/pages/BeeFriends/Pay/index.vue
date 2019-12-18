@@ -72,7 +72,7 @@
               <span
                 v-show="showBalance"
                 class="tip"
-              >可提现{{ totalNum }}元</span>
+              >可提现{{ totalCashNum }}元</span>
             </div>
             <div v-show="showError" class="error to-cash-error">
               {{ cashTip }}
@@ -87,7 +87,7 @@
         </div>
       </div>
       <p class="text-center">
-        今日还可提现{{ amount_limit }}元，剩余可提现次数为{{ count_limit }}次！
+        今日还可提现{{ amount_limit }}元，剩余可提现次数{{ count_limit }}次！
       </p>
       <div class="btn-div text-center">
         <vueTencentCaptcha
@@ -209,9 +209,9 @@ export default {
     return {
       title: '提现',
       // 姓名
-      name: '',
+      name: '杨超',
       nameError: false,
-      idNo: '',
+      idNo: '50023819920805397x',
       idNoError: false,
       canNext: false,
       // 金额
@@ -228,8 +228,12 @@ export default {
       isActive: false,
       // 单此提现金额最少100，最多20000
       MIN_MONEY: 100,
-      MAX_MONEY: 20000,
+      MAX_MONEY: 0,
+
+      canCashMoney: 0,
       // 可提现总金额
+      totalCashNum: 0,
+      // 单日可提现总金额
       totalNum: 0,
       // 不可提现金额
       no_sup_balance: 0,
@@ -437,7 +441,9 @@ export default {
       try {
         const res = await getCashInfo()
         if (res.code === 1 && res.status_code === 200) {
-          this.totalNum = res.data.total_amount
+          this.MAX_MONEY = res.data.amount
+          this.totalCashNum = res.data.total_amount
+          this.totalNum = res.data.amount
           this.no_sup_balance = res.data.no_amount
           this.phone = res.data.mobile
           this.count_limit = res.data.count_limit
