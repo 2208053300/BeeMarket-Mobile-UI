@@ -451,6 +451,9 @@ export default {
           this.count_limit = res.data.count_limit
           this.amount_limit = res.data.amount_limit
           this.canNext = true
+          if (this.count_limit === 0) {
+            this.isActive = false
+          }
         } else {
           this.canNext = false
         }
