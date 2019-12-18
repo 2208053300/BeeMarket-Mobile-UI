@@ -459,7 +459,9 @@ export default {
     // 获取 (不)可提现数量
     async getCanWithdraw() {
       try {
-        const res = await getCashInfo()
+        const res = await getCashInfo({
+          activate_id: this.id
+        })
         if (res.code === 1 && res.status_code === 200) {
           this.MAX_MONEY = res.data.amount
           this.totalCashNum = res.data.total_amount
