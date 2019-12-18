@@ -192,7 +192,7 @@
     </van-popup>
     <van-popup v-model="showTips" class="download-tip flex">
       <div class="info text-center">
-        <img :src="icon.tipImg" class="tip-img" alt="交易提示">
+        <img :src="tipImg" class="tip-img" alt="交易提示">
         <!--eslint-disable-next-line-->
         <p class="txt">{{ tipsText }}</p>
         <button class="download-btn" @click="showTips = false">
@@ -217,6 +217,7 @@ export default {
   props: {},
   data() {
     return {
+      tipImg: require('@/assets/icon/beeFriends/info/tip_img.png'),
       title: '提现',
       // 姓名
       name: '',
