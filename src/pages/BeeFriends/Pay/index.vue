@@ -307,7 +307,7 @@ export default {
     // 提交第一步
     async submitFir() {
       if (!this.valiName() && !this.valiIdNo()) {
-        this.$toast('请正确填写姓名、身份证号码')
+        // this.$toast('请正确填写姓名、身份证号码')
         return false
       }
       try {
@@ -460,7 +460,7 @@ export default {
     async getCanWithdraw() {
       try {
         const res = await getCashInfo({
-          activate_id: this.id
+          activate_id: this.activate_id
         })
         if (res.code === 1 && res.status_code === 200) {
           this.MAX_MONEY = res.data.amount
