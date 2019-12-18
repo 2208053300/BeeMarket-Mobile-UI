@@ -12,7 +12,7 @@
           <span class="nick">{{ item.nickname }}</span>
           <span class="desc">{{ getText(item) }}</span>
         </div>
-        <button v-if="[1,3].includes(item.status)" class="orange-btn" @click="toBalance">
+        <button v-if="[1,3].includes(item.status)" class="orange-btn" @click="toBalance(item.id)">
           提现
         </button>
         <button v-if="item.status === 0" class="white-btn">
@@ -80,7 +80,7 @@ export default {
       return text
     },
     // 转余额
-    async toBalance() {
+    async toBalance(id) {
       if (getOs().isWx) {
         this.$router.push({ name: 'cashTip' })
         return
@@ -90,7 +90,7 @@ export default {
         this.tipsText = res.message
         this.showTips = true
       } else {
-        window.location.href = '/beeFriends#/pay'
+        window.location.href = '/beeFriends#/pay?id=' + id
       }
     }
   }
