@@ -206,13 +206,30 @@ export default {
     this.getRedPacketData()
   },
   methods: {
+    // 伪造激活详细数据
+    fakeList() {
+      const list = []
+      function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      }
+      for (let i = 0; i < 20; i++) {
+        list.push({
+          nickname: '舞法天女',
+          head_image_url: 'http://thirdwx.qlogo.cn/mmopen/vi_32/9EQqOyFKcbfKV5vgJUufBwG4gO9pUgXN0rpxkicibOt4jB1jBXuZQbDM3mliaZL34lCS5w7OoggeBHl8bwwsu9diaQ/132',
+          status: getRndInteger(-1, 3),
+          amount: [2000, 3000, 30000][getRndInteger(0, 2)],
+          withdrawn: [2000.45, 3000, 30000][getRndInteger(0, 2)]
+        })
+      }
+      return list
+    },
+
     // 获取红包数据
     async getRedPacketData() {
       const res = await getCashInfo()
       this.cashInfo = res.data
-      // console.log('s:', res.data.head_image_url)
+      // this.cashInfo.lists = this.fakeList()
       this.cashInfo.head_image_url = this.cashInfo.head_image_url.replace('http://', 'https://')
-      // console.log('end:', res.data.head_image_url)
     },
     // 转余额
     async toBalance() {
@@ -222,10 +239,6 @@ export default {
         this.showPopup = false
       }
       this.$toast(res.message)
-    },
-    // 点击 提现 按钮显示弹框
-    async goCash() {
-      this.showPopup = true
     },
     async initShare() {
       try {
@@ -255,14 +268,6 @@ export default {
         }
       } catch (error) {
         console.log(error)
-      }
-    },
-    // 去使用、去参与
-    goIndex() {
-      if (this.osObj.isApp) {
-        window.location.href = window.location.origin + '/beeAlcohol'
-      } else {
-        window.location.href = window.location.origin + '/#/beeAlcohol'
       }
     },
     goShare() {

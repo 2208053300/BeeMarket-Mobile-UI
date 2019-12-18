@@ -12,7 +12,7 @@
           <span class="nick">{{ item.nickname }}</span>
           <span class="desc">{{ getText(item) }}</span>
         </div>
-        <button v-if="item.status === 1" class="orange-btn" @click="toBalance(item.id)">
+        <button v-if="[1,3].includes(item.status)" class="orange-btn" @click="toBalance(item.id)">
           提现
         </button>
         <button v-if="item.status === 0" class="white-btn">
@@ -26,6 +26,16 @@
         </button>
       </div>
     </div>
+    <van-popup v-model="showTips" class="download-tip flex">
+      <div class="info text-center">
+        <img :src="icon.tipImg" class="tip-img" alt="交易提示">
+        <!--eslint-disable-next-line-->
+        <p class="txt">{{ tipsText }}</p>
+        <button class="download-btn" @click="showTips = false">
+          <span>知道了</span>
+        </button>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -44,8 +54,11 @@ export default {
     return {
       icon: {
         dotLeft: require('@/assets/icon/alcohol/redpack_dot-left.png'),
-        dotRight: require('@/assets/icon/alcohol/redpack_dot-right.png')
-      }
+        dotRight: require('@/assets/icon/alcohol/redpack_dot-right.png'),
+        tipImg: require('@/assets/icon/beeFriends/info/tip_img.png')
+      },
+      showTips: false,
+      tipsText: ''
     }
   },
   methods: {
@@ -56,7 +69,12 @@ export default {
         text += `为您激活${item.amount}元。`
       } else if (item.status === 2) {
         text += `提现到账${item.amount}元。`
-      } else {
+      } else if (item.status === 3) {
+        // 已提现 =  总额 - 剩余
+        let withdrawn = item.amount - item.remain_amount
+        withdrawn = String(withdrawn).includes('.') ? withdrawn.toFixed(2) : withdrawn
+        text += `提现到账${withdrawn}元，\r\n剩余${item.remain_amount}元未提现。`
+      } else if (item.status === -1) {
         text += `${item.amount}元已失效。`
       }
       return text
@@ -68,10 +86,11 @@ export default {
         return
       }
       const res = await newToCash({ id })
-      if (res.status_code === 200) {
-        window.location.href = '/beeFriends#/pay'
+      if (res.data === 1) {
+        this.tipsText = res.message
+        this.showTips = true
       } else {
-        this.$toast(res.message)
+        window.location.href = '/beeFriends#/pay'
       }
     }
   }
@@ -105,8 +124,7 @@ img {
   }
 
   .list {
-    padding: 0 0.2rem;
-    padding-bottom: 0.2rem;
+    padding: 0 0.2rem 0.2rem;
     max-height: 12rem;
     overflow: scroll;
     .item {
@@ -115,12 +133,13 @@ img {
       grid-template-columns: 0.7rem 1fr 1.2rem;
       border-bottom: rgba(255, 255, 255, 0.11) 1px solid;
       align-items: center;
+      min-height: 1.1rem;
       img {
         width: 0.7rem;
         height: 0.7rem;
       }
       .item-text {
-        padding-left: 0.2rem;
+        padding: 0 0.2rem;
         color: white;
         .nick {
           font-size: 0.28rem;
@@ -128,11 +147,13 @@ img {
           display: block;
         }
         .desc {
+          white-space: pre-wrap;
           display: block;
           margin-top: 0.14rem;
           font-size: 0.22rem;
           font-weight:500;
           opacity: 0.5;
+          line-height: 1.4;
         }
       }
       button {
@@ -157,6 +178,46 @@ img {
         color: white;
         position: relative;
         z-index: 10;
+      }
+    }
+  }
+
+  .download-tip {
+    background: #fff;
+    width: 5.8rem;
+    height: 5.2rem;
+    border-radius: .1rem;
+    .info{
+      margin: auto;
+    }
+    .tip-img{
+      width: 3.21rem;
+      height: .63rem;
+    }
+    .txt{
+      font-size: .28rem;
+      color: #333;
+      line-height: 1.5;
+      margin: .9rem auto .62rem;
+      white-space: pre-wrap;
+    }
+    .download-btn {
+      border: none;
+      color: #fff;
+      width: 3.2rem;
+      height: 0.72rem;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 220, 31, 1),
+        rgba(253, 150, 11, 1)
+      );
+      border-radius: 0.5rem;
+      font-size: 0.32rem;
+      span {
+        display: block;
+        height: 100%;
+        width: 100%;
+        line-height: 0.72rem;
       }
     }
   }
