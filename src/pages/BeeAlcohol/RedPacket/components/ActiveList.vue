@@ -12,7 +12,7 @@
           <span class="nick">{{ item.nickname }}</span>
           <span class="desc">{{ getText(item) }}</span>
         </div>
-        <button v-if="[1,3].includes(item.status)" class="orange-btn" @click="toBalance(item.id)">
+        <button v-if="[1,3].includes(item.status)" class="orange-btn" @click="toBalance">
           提现
         </button>
         <button v-if="item.status === 0" class="white-btn">
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { newToCash } from '@/api/BeeApi/alcohol'
+import { withdrawCheck } from '@/api/BeeApi/alcohol'
 import { getOs } from '@/utils'
 
 export default {
@@ -80,12 +80,12 @@ export default {
       return text
     },
     // 转余额
-    async toBalance(id) {
+    async toBalance() {
       if (getOs().isWx) {
         this.$router.push({ name: 'cashTip' })
         return
       }
-      const res = await newToCash({ id })
+      const res = await withdrawCheck()
       if (res.data === 1) {
         this.tipsText = res.message
         this.showTips = true

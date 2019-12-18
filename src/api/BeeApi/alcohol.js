@@ -34,10 +34,10 @@ export function getCashInfo(data) {
     data
   })
 }
-// NOTE 改版后的红包提现
-export function newToCash(data) {
+// NOTE 检查提现的是否超额
+export function withdrawCheck(data) {
   return request({
-    url: '/user/cash/changeBalance',
+    url: '/user/cash/withdraw',
     method: 'post',
     data
   })
