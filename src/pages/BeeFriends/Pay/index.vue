@@ -67,8 +67,8 @@
           <div class="input-box">
             <div class="input-div">
               <span class="mark">￥</span>
-              <input id="inputNum" v-model.trim="money" type="Number" min="1">
-              <span class="all" @click="money = totalNum">全部</span>
+              <input id="inputNum" v-model.trim="money" type="Number" min="1" :disabled="isInput">
+              <span class="all" :class="{disable: isInput}" @click="money = totalNum">全部</span>
               <span
                 v-show="showBalance"
                 class="tip"
@@ -219,6 +219,8 @@ export default {
     return {
       tipImg: require('@/assets/icon/beeFriends/info/tip_img.png'),
       title: '提现',
+      // 是否可以输入
+      isInput: false,
       // 姓名
       name: '',
       nameError: false,
@@ -467,7 +469,8 @@ export default {
           this.count_limit = res.data.count_limit
           this.amount_limit = res.data.amount_limit
           this.canNext = true
-          if (this.count_limit === 0) {
+          if (+this.count_limit === 0 || +this.totalNum === 0) {
+            this.isInput = true
             this.isActive = false
           }
         } else {
@@ -705,6 +708,10 @@ export default {
         .all {
           font-size: 0.3rem;
           color: #ffa42f;
+          pointer-events: auto;
+        }
+        .all.disable{
+          pointer-events: none;
         }
         .tip {
           position: absolute;
