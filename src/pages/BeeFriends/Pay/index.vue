@@ -274,7 +274,7 @@ export default {
       showBalance: true,
       showError: false,
       // 激活id
-      activate_id: this.$route.query.id || null,
+      activate_id: +this.$route.query.id || null,
 
       showTips: false,
       tipsText: ''
@@ -520,11 +520,10 @@ export default {
       this.money = +this.money
       console.log('this.money:', this.money, typeof this.money)
       // 判断金额是否在范围内
-      // if (this.money > this.MAX_MONEY) {
-      //   this.maxMoneyTip = true
-      // }
-      if (this.money >= this.totalNum) {
+      if (this.money > this.amount_limit) {
         this.maxMoneyTip = true
+      }
+      if (this.money >= this.totalNum) {
         this.money = this.totalNum
         if (this.totalNum < this.MIN_MONEY) {
           this.isActive = false
