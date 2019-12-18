@@ -496,7 +496,6 @@ export default {
     adjustMoney1() {
       let value = this.money.toString()
       console.log(value, typeof value)
-
       // 是小数
       if (value.indexOf('.') !== -1) {
         var str = value.split('.')

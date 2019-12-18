@@ -104,35 +104,6 @@
     </div>
     <select-num v-model="showBuy" />
 
-    <!-- 可提现提示弹窗 -->
-    <van-popup v-model="showPopup" class="tip-popup">
-      <div class="tip-content text-center">
-        <img v-if="cashInfo.activate_amount > 0" :src="beeIcon.txt" class="txt-img">
-        <img v-if="cashInfo.activate_amount === 0" :src="beeIcon.txtNoCash" class="txt-img" style="height: .6rem;">
-        <p v-if="cashInfo.activate_amount > 0" class="num">
-          ￥ {{ cashInfo.activate_amount }}
-        </p>
-        <div v-if="cashInfo.activate_amount === 0" class="no-cash-tip text-center">
-          分享好友，立即提现！
-        </div>
-        <button class="btn" type="button">
-          <span
-            v-if="cashInfo.activate_amount > 0"
-            @click="toBalance"
-          >提入余额</span>
-          <span
-            v-if="cashInfo.activate_amount === 0"
-            @click="goShare"
-          >立即分享</span>
-        </button>
-        <p v-if="cashInfo.activate_amount > 0" class="tip">
-          请前往“蜂友圈一我的收益”查看余额<br>
-          <!-- 补贴中<span>30%</span>将留存集市，任意消费<span>全额抵扣</span>。 -->
-        </p>
-      </div>
-      <img :src="beeIcon.close" class="close" @click="showPopup = false">
-    </van-popup>
-
     <share v-if="!osObj.isApp" ref="share" />
   </div>
 </template>
@@ -142,7 +113,7 @@ import { getOs } from '@/utils'
 import wxapi from '@/utils/wxapi'
 import { showShareIcon, hideShareIcon } from '@/utils/share'
 import wait from '@/utils/wait'
-import { newToCash, getCashInfo } from '@/api/BeeApi/alcohol'
+import { getCashInfo } from '@/api/BeeApi/alcohol'
 import BeeWinningRoll from '@/components/BeeWinningRoll'
 import SelectNum from '../index/components/SelectNum'
 import { getUID } from '@/api/BeeApi/user'
@@ -184,8 +155,6 @@ export default {
       },
 
       showBuy: false,
-      // 可提现弹窗
-      showPopup: false,
       showShare: false
     }
   },
@@ -206,26 +175,30 @@ export default {
     this.getRedPacketData()
   },
   methods: {
+    // 伪造激活详细数据
+    fakeList() {
+      const list = []
+      function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      }
+      for (let i = 0; i < 20; i++) {
+        list.push({
+          nickname: '舞法天女',
+          head_image_url: 'http://thirdwx.qlogo.cn/mmopen/vi_32/9EQqOyFKcbfKV5vgJUufBwG4gO9pUgXN0rpxkicibOt4jB1jBXuZQbDM3mliaZL34lCS5w7OoggeBHl8bwwsu9diaQ/132',
+          status: getRndInteger(-1, 3),
+          amount: [2000, 3000, 30000][getRndInteger(0, 2)],
+          withdrawn: [2000.45, 3000, 30000][getRndInteger(0, 2)]
+        })
+      }
+      return list
+    },
+
     // 获取红包数据
     async getRedPacketData() {
       const res = await getCashInfo()
       this.cashInfo = res.data
-      // console.log('s:', res.data.head_image_url)
+      // this.cashInfo.lists = this.fakeList()
       this.cashInfo.head_image_url = this.cashInfo.head_image_url.replace('http://', 'https://')
-      // console.log('end:', res.data.head_image_url)
-    },
-    // 转余额
-    async toBalance() {
-      const res = await newToCash()
-      if (res.status_code === 200) {
-        this.getRedPacketData()
-        this.showPopup = false
-      }
-      this.$toast(res.message)
-    },
-    // 点击 提现 按钮显示弹框
-    async goCash() {
-      this.showPopup = true
     },
     async initShare() {
       try {
@@ -257,14 +230,6 @@ export default {
         console.log(error)
       }
     },
-    // 去使用、去参与
-    goIndex() {
-      if (this.osObj.isApp) {
-        window.location.href = window.location.origin + '/beeAlcohol'
-      } else {
-        window.location.href = window.location.origin + '/#/beeAlcohol'
-      }
-    },
     goShare() {
       if (this.osObj.isApp) {
         if (this.osObj.isIphone) {
@@ -273,7 +238,6 @@ export default {
           window.beeMarket.ToLiquorShare()
         }
       } else {
-        this.showPopup = false
         this.$refs.share.showShare()
       }
     },
