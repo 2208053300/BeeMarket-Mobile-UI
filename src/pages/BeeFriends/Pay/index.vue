@@ -230,7 +230,6 @@ export default {
       MIN_MONEY: 100,
       MAX_MONEY: 0,
 
-      canCashMoney: 0,
       // 可提现总金额
       totalCashNum: 0,
       // 单日可提现总金额
