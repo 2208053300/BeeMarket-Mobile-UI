@@ -72,7 +72,7 @@
               <span
                 v-show="showBalance"
                 class="tip"
-              >可提现{{ totalNum }}元</span>
+              >可提现{{ totalCashNum }}元</span>
             </div>
             <div v-show="showError" class="error to-cash-error">
               {{ cashTip }}
@@ -86,6 +86,9 @@
           </div>
         </div>
       </div>
+      <p class="text-center">
+        今日还可提现{{ amount_limit }}元，剩余可提现次数{{ count_limit }}次！
+      </p>
       <div class="btn-div text-center">
         <vueTencentCaptcha
           style="height:42px;"
@@ -98,9 +101,10 @@
             确认提现
           </span>
         </vueTencentCaptcha>
-        <p>合伙人每日提现一次，金额为{{ MIN_MONEY }}-{{ MAX_MONEY }}元！</p>
-        <!-- <p>合伙人每日单次提现金额为{{ MIN_MONEY }}-{{ MAX_MONEY }}元！</p> -->
       </div>
+      <p class="text-center rule-btn" @click="rule = true">
+        交易规则
+      </p>
     </div>
 
     <!-- 短信验证码 -->
@@ -141,7 +145,7 @@
         </div>
       </div>
     </van-popup>
-    <!-- 短信验证码 -->
+    <!-- 不可提现提示 -->
     <van-popup
       v-model="reason"
       class="reason-popup"
@@ -152,12 +156,46 @@
         明白了
       </van-button>
     </van-popup>
+    <!-- 规则 -->
+    <van-popup
+      v-model="rule"
+      class="rule-box"
+      @closed="closed"
+    >
+      <p class="text-center">
+        <label>免费提现</label>
+      </p>
+      <p>1.“蜂集市”提供免费提现功能；</p>
+      <p>2.用户所提现金额会自动提现至其绑定微信的零钱钱包之中。</p>
+      <p class="text-center">
+        <label>提现规则</label>
+      </p>
+      <p>1.提现金额及次数等相应条例，依据微信支付规则而定；</p>
+      <p>1.1.集市用户享受每日至多 5 次提现机会（单次 100 - 20000元）；</p>
+      <p>1.2.集市用户每日最多 20000 元。</p>
+      <div class="text-center">
+        <van-button class="btn" @click="rule = false">
+          明白了
+        </van-button>
+      </div>
+    </van-popup>
+    <!-- 最大金额提示 -->
+    <van-popup
+      v-model="maxMoneyTip"
+      class="reason-popup"
+      @closed="closed"
+    >
+      <p>由于微信支付金额限制，每位用户单日最高提现额度为20000元！</p>
+      <van-button class="btn" @click="maxMoneyTip = false">
+        确定
+      </van-button>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { getOs } from '@/utils'
-import { getWithdrawNum, toCash, getMobile } from '@/api/BeeApi/user'
+import { getWithdrawNum, toCash, getMobile, getCashInfo } from '@/api/BeeApi/user'
 
 export default {
   metaInfo() {
@@ -188,13 +226,20 @@ export default {
       wxIcon: require('@/assets/icon/beeFriends/info/icon_wx.png'),
       // 是否可提现
       isActive: false,
-      // 单此提现金额最少100，最多5000
+      // 单此提现金额最少100，最多20000
       MIN_MONEY: 100,
-      MAX_MONEY: 3000,
+      MAX_MONEY: 0,
+
       // 可提现总金额
+      totalCashNum: 0,
+      // 单日可提现总金额
       totalNum: 0,
       // 不可提现金额
       no_sup_balance: 0,
+      // 次数限制
+      count_limit: 0,
+      // 金额限制
+      amount_limit: 0,
       // 金额提示
       cashTip: '请输入提现金额！',
       // 短信验证码弹框
@@ -208,9 +253,16 @@ export default {
       osObj: getOs(),
       // 查看原因开关
       reason: false,
+      // 最大金额提示
+      maxMoneyTip: false,
+      // 交易规则弹框
+      rule: false,
       // 提示可提现余额
       showBalance: true,
-      showError: false
+      showError: false,
+      // 激活id
+      activate_id: this.$route.query.id || null
+
     }
   },
   computed: {},
@@ -264,7 +316,6 @@ export default {
       // 通过防水墙，发送验证码，验证短信验证码，通过则提交数据
       if (res.ret === 0) {
         // console.log(res)
-
         this.ticket = res.ticket
         this.rand_str = res.randstr
         try {
@@ -320,11 +371,22 @@ export default {
         return false
       }
       try {
-        const res = await toCash({
-          status: 4,
-          money: this.money,
-          sms_code: this.sms
-        })
+        let data
+        if (this.activate_id) {
+          data = {
+            status: 4,
+            money: this.money,
+            sms_code: this.sms,
+            activate_id: this.activate_id
+          }
+        } else {
+          data = {
+            status: 4,
+            money: this.money,
+            sms_code: this.sms
+          }
+        }
+        const res = await toCash(data)
         if (res.code === 1 && res.status_code === 200) {
           this.$toast(res.message)
           this.show = false
@@ -357,13 +419,34 @@ export default {
     },
 
     // 获取 (不)可提现数量
-    async getCanWithdraw() {
+    async getCanWithdraw1() {
       try {
         const res = await getWithdrawNum()
         if (res.code === 1 && res.status_code === 200) {
           this.totalNum = res.data.sup_balance
           this.no_sup_balance = res.data.no_sup_balance
           this.phone = res.data.phone
+          this.canNext = true
+        } else {
+          this.canNext = false
+        }
+      } catch (error) {
+        this.$toast.fail(error)
+        this.canNext = false
+      }
+    },
+    // 获取 (不)可提现数量
+    async getCanWithdraw() {
+      try {
+        const res = await getCashInfo()
+        if (res.code === 1 && res.status_code === 200) {
+          this.MAX_MONEY = res.data.amount
+          this.totalCashNum = res.data.total_amount
+          this.totalNum = res.data.amount
+          this.no_sup_balance = res.data.no_amount
+          this.phone = res.data.mobile
+          this.count_limit = res.data.count_limit
+          this.amount_limit = res.data.amount_limit
           this.canNext = true
         } else {
           this.canNext = false
@@ -424,6 +507,9 @@ export default {
       this.money = +this.money
       console.log('this.money:', this.money, typeof this.money)
       // 判断金额是否在范围内
+      // if (this.money > this.MAX_MONEY) {
+      //   this.maxMoneyTip = true
+      // }
       if (this.money >= this.totalNum) {
         this.money = this.totalNum
         if (this.totalNum < this.MIN_MONEY) {
@@ -723,5 +809,23 @@ export default {
     width: 2.8rem;
     background-color: #ffa42f;
   }
+}
+.rule-box{
+  font-size: 0.3rem;
+  label{font-size:.32rem; }
+  p {
+    color: #333;
+    line-height: 1.5;
+  }
+  .btn {
+    color: #fff;
+    border-radius: 0.1rem;
+    width: 2.8rem;
+    background-color: #ffa42f;
+  }
+}
+.rule-btn{
+  text-decoration: underline;
+  font-style: italic;
 }
 </style>
