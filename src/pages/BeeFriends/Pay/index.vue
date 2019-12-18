@@ -162,7 +162,7 @@
       class="rule-box"
       @closed="closed"
     >
-      <p class="text-center">
+      <p class="text-center" style="margin-top:0;">
         <label>免费提现</label>
       </p>
       <p>1.“蜂集市”提供免费提现功能；</p>
