@@ -517,6 +517,7 @@ export default {
       //   this.maxMoneyTip = true
       // }
       if (this.money >= this.totalNum) {
+        this.maxMoneyTip = true
         this.money = this.totalNum
         if (this.totalNum < this.MIN_MONEY) {
           this.isActive = false
