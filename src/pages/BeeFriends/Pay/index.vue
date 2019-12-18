@@ -390,8 +390,11 @@ export default {
         if (res.code === 1 && res.status_code === 200) {
           this.$toast(res.message)
           this.show = false
-          this.totalNum = this.totalNum - this.money
-          this.isActive = false
+          // this.totalNum = this.totalNum - this.money
+          // this.isActive = false
+          setTimeout(() => {
+            this.getCanWithdraw()
+          }, 1000)
         }
       } catch (error) {
         this.$toast.fail(error)
