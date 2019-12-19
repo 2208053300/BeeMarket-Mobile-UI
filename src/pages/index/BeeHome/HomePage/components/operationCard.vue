@@ -130,12 +130,12 @@
     <div class="op-item" @click="goSinglePage('lcEnrolling#/')">
       <div class="img-content">
         <img
-          :src="beeIcon.home_icon_agricultural_products"
-          alt="联创大赛"
+          :src="beeIcon.home_icon_medical"
+          alt="医疗服务"
         >
       </div>
       <p class="op-text">
-        联创大赛
+        医疗服务
       </p>
     </div>
     <div
@@ -172,7 +172,7 @@ export default {
         home_icon_bee_robbing: require('@/assets/icon/home/index/home_icon_bee_robbing@2x.png'),
         home_icon_endorsement: require('@/assets/icon/home/index/home_icon_endorsement@2x.png'),
         home_icon_gift_package: require('@/assets/icon/home/index/home_icon_farm@2x.png'),
-        home_icon_agricultural_products: require('@/assets/icon/home/index/home_icon_agricultural_products@2x.png'),
+        home_icon_medical: require('@/assets/icon/home/index/home_icon_medical.png'),
         home_icon_settled: require('@/assets/icon/home/index/home_icon_settled@2x.png'),
         home_icon_billion: require('@/assets/icon/home/index/home_icon_billion.png')
       }
