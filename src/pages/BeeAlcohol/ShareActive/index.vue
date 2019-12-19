@@ -62,7 +62,7 @@ export default {
   methods: {
     clipBoardFunc() {
       this.$toast('复制成功！')
-      clipBoard(this.link + '  茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！')
+      clipBoard(this.link + '  购茅台1箱，送现金一万！\n全民抢酒，全民抢钱！')
     },
     async getQrcodeData() {
       const jimp = await import('jimp')
