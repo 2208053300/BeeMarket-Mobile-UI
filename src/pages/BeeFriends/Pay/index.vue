@@ -67,12 +67,12 @@
           <div class="input-box">
             <div class="input-div">
               <span class="mark">￥</span>
-              <input id="inputNum" v-model.trim="money" type="Number" min="1">
-              <span class="all" @click="money = totalNum">全部</span>
+              <input id="inputNum" v-model.trim="money" type="Number" min="1" :disabled="isInput">
+              <span class="all" :class="{disable: isInput}" @click="money = totalNum">全部</span>
               <span
                 v-show="showBalance"
                 class="tip"
-              >可提现{{ totalNum }}元</span>
+              >可提现{{ totalCashNum }}元</span>
             </div>
             <div v-show="showError" class="error to-cash-error">
               {{ cashTip }}
@@ -86,6 +86,9 @@
           </div>
         </div>
       </div>
+      <p class="text-center">
+        今日还可提现{{ amount_limit }}元，剩余可提现次数{{ count_limit }}次！
+      </p>
       <div class="btn-div text-center">
         <vueTencentCaptcha
           style="height:42px;"
@@ -98,9 +101,10 @@
             确认提现
           </span>
         </vueTencentCaptcha>
-        <p>合伙人每日提现一次，金额为{{ MIN_MONEY }}-{{ MAX_MONEY }}元！</p>
-        <!-- <p>合伙人每日单次提现金额为{{ MIN_MONEY }}-{{ MAX_MONEY }}元！</p> -->
       </div>
+      <p class="text-center rule-btn" @click="rule = true">
+        交易规则
+      </p>
     </div>
 
     <!-- 短信验证码 -->
@@ -141,7 +145,7 @@
         </div>
       </div>
     </van-popup>
-    <!-- 短信验证码 -->
+    <!-- 不可提现提示 -->
     <van-popup
       v-model="reason"
       class="reason-popup"
@@ -152,12 +156,56 @@
         明白了
       </van-button>
     </van-popup>
+    <!-- 规则 -->
+    <van-popup
+      v-model="rule"
+      class="rule-box"
+      @closed="closed"
+    >
+      <p class="text-center" style="margin-top:0;">
+        <label>免费提现</label>
+      </p>
+      <p>1.“蜂集市”提供免费提现功能；</p>
+      <p>2.用户所提现金额会自动提现至其绑定微信的零钱钱包之中。</p>
+      <p class="text-center">
+        <label>提现规则</label>
+      </p>
+      <p>1.提现金额及次数等相应条例，依据微信支付规则而定；</p>
+      <p>1.1.集市用户享受每日至多 5 次提现机会（单次 100 - 20000元）；</p>
+      <p>1.2.集市用户每日最多 20000 元。</p>
+      <div class="text-center">
+        <van-button class="btn" @click="rule = false">
+          明白了
+        </van-button>
+      </div>
+    </van-popup>
+    <!-- 最大金额提示 -->
+    <van-popup
+      v-model="maxMoneyTip"
+      class="reason-popup"
+      @closed="closed"
+    >
+      <p>由于微信支付金额限制，每位用户单日最高提现额度为20000元！</p>
+      <van-button class="btn" @click="maxMoneyTip = false">
+        确定
+      </van-button>
+    </van-popup>
+    <van-popup v-model="showTips" class="download-tip flex">
+      <div class="info text-center">
+        <img :src="tipImg" class="tip-img" alt="交易提示">
+        <!--eslint-disable-next-line-->
+        <p class="txt" v-html="tipsText"/>
+        <button class="download-btn" @click="showTips = false">
+          <span>知道了</span>
+        </button>
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { getOs } from '@/utils'
-import { getWithdrawNum, toCash, getMobile } from '@/api/BeeApi/user'
+import { getWithdrawNum, toCash, getMobile, getCashInfo } from '@/api/BeeApi/user'
 
 export default {
   metaInfo() {
@@ -169,7 +217,10 @@ export default {
   props: {},
   data() {
     return {
+      tipImg: require('@/assets/icon/beeFriends/info/tip_img.png'),
       title: '提现',
+      // 是否可以输入
+      isInput: false,
       // 姓名
       name: '',
       nameError: false,
@@ -188,13 +239,20 @@ export default {
       wxIcon: require('@/assets/icon/beeFriends/info/icon_wx.png'),
       // 是否可提现
       isActive: false,
-      // 单此提现金额最少100，最多5000
+      // 单此提现金额最少100，最多20000
       MIN_MONEY: 100,
-      MAX_MONEY: 3000,
+      MAX_MONEY: 0,
+
       // 可提现总金额
+      totalCashNum: 0,
+      // 单日可提现总金额
       totalNum: 0,
       // 不可提现金额
       no_sup_balance: 0,
+      // 次数限制
+      count_limit: 0,
+      // 金额限制
+      amount_limit: 0,
       // 金额提示
       cashTip: '请输入提现金额！',
       // 短信验证码弹框
@@ -208,9 +266,19 @@ export default {
       osObj: getOs(),
       // 查看原因开关
       reason: false,
+      // 最大金额提示
+      maxMoneyTip: false,
+      // 交易规则弹框
+      rule: false,
       // 提示可提现余额
       showBalance: true,
-      showError: false
+      showError: false,
+      // 激活id
+      activate_id: +this.$route.query.id || null,
+
+      showTips: false,
+      tipsText: ''
+
     }
   },
   computed: {},
@@ -239,7 +307,7 @@ export default {
     // 提交第一步
     async submitFir() {
       if (!this.valiName() && !this.valiIdNo()) {
-        this.$toast('请正确填写姓名、身份证号码')
+        // this.$toast('请正确填写姓名、身份证号码')
         return false
       }
       try {
@@ -264,7 +332,6 @@ export default {
       // 通过防水墙，发送验证码，验证短信验证码，通过则提交数据
       if (res.ret === 0) {
         // console.log(res)
-
         this.ticket = res.ticket
         this.rand_str = res.randstr
         try {
@@ -320,19 +387,35 @@ export default {
         return false
       }
       try {
-        const res = await toCash({
-          status: 4,
-          money: this.money,
-          sms_code: this.sms
-        })
+        let data
+        if (this.activate_id) {
+          data = {
+            status: 4,
+            money: this.money,
+            sms_code: this.sms,
+            activate_id: this.activate_id
+          }
+        } else {
+          data = {
+            status: 4,
+            money: this.money,
+            sms_code: this.sms
+          }
+        }
+        const res = await toCash(data)
         if (res.code === 1 && res.status_code === 200) {
           this.$toast(res.message)
           this.show = false
-          this.totalNum = this.totalNum - this.money
-          this.isActive = false
+          // this.totalNum = this.totalNum - this.money
+          // this.isActive = false
+          setTimeout(() => {
+            this.getCanWithdraw()
+          }, 1000)
         }
       } catch (error) {
-        this.$toast.fail(error)
+        this.tipsText = error
+        this.showTips = true
+        // this.$toast.fail(error)
       }
     },
     // 验证姓名
@@ -357,7 +440,7 @@ export default {
     },
 
     // 获取 (不)可提现数量
-    async getCanWithdraw() {
+    async getCanWithdraw1() {
       try {
         const res = await getWithdrawNum()
         if (res.code === 1 && res.status_code === 200) {
@@ -365,6 +448,33 @@ export default {
           this.no_sup_balance = res.data.no_sup_balance
           this.phone = res.data.phone
           this.canNext = true
+        } else {
+          this.canNext = false
+        }
+      } catch (error) {
+        this.$toast.fail(error)
+        this.canNext = false
+      }
+    },
+    // 获取 (不)可提现数量
+    async getCanWithdraw() {
+      try {
+        const res = await getCashInfo({
+          activate_id: this.activate_id
+        })
+        if (res.code === 1 && res.status_code === 200) {
+          this.MAX_MONEY = res.data.amount
+          this.totalCashNum = res.data.total_amount
+          this.totalNum = res.data.amount
+          this.no_sup_balance = res.data.no_amount
+          this.phone = res.data.mobile
+          this.count_limit = res.data.count_limit
+          this.amount_limit = res.data.amount_limit
+          this.canNext = true
+          if (+this.count_limit === 0 || +this.totalNum === 0) {
+            this.isInput = true
+            this.isActive = false
+          }
         } else {
           this.canNext = false
         }
@@ -391,26 +501,11 @@ export default {
       this.sms = ''
       this.countDown = 0
     },
-    // 调整金额
-    // adjustMoney() {
-    //   if (!this.money) {
-    //     this.money === null
-    //     this.isActive = false
-    //   } else {
-    //     this.money = Math.floor(this.money)
-    //     // 只判断是否在最大最小范围内
-    //     if (this.money >= this.MIN_MONEY && this.money <= this.MAX_MONEY) {
-    //       this.isActive = true
-    //     } else {
-    //       this.isActive = false
-    //     }
-    //   }
-    // },
+
     // 调整金额
     adjustMoney1() {
       let value = this.money.toString()
       console.log(value, typeof value)
-
       // 是小数
       if (value.indexOf('.') !== -1) {
         var str = value.split('.')
@@ -425,6 +520,9 @@ export default {
       this.money = +this.money
       console.log('this.money:', this.money, typeof this.money)
       // 判断金额是否在范围内
+      if (this.money > this.amount_limit) {
+        this.maxMoneyTip = true
+      }
       if (this.money >= this.totalNum) {
         this.money = this.totalNum
         if (this.totalNum < this.MIN_MONEY) {
@@ -611,6 +709,10 @@ export default {
         .all {
           font-size: 0.3rem;
           color: #ffa42f;
+          pointer-events: auto;
+        }
+        .all.disable{
+          pointer-events: none;
         }
         .tip {
           position: absolute;
@@ -725,4 +827,61 @@ export default {
     background-color: #ffa42f;
   }
 }
+.rule-box{
+  font-size: 0.3rem;
+  label{font-size:.32rem; }
+  p {
+    color: #333;
+    line-height: 1.5;
+  }
+  .btn {
+    color: #fff;
+    border-radius: 0.1rem;
+    width: 2.8rem;
+    background-color: #ffa42f;
+  }
+}
+.rule-btn{
+  text-decoration: underline;
+  // font-style: italic;
+}
+.download-tip {
+    background: #fff;
+    width: 5.8rem;
+    height: 5.2rem;
+    border-radius: .1rem;
+    .info{
+      margin: auto;
+    }
+    .tip-img{
+      width: 3.21rem;
+      height: .63rem;
+    }
+    .txt{
+      font-size: .28rem;
+      color: #333;
+      line-height: 1.5;
+      margin: .9rem auto .62rem;
+      white-space: pre-wrap;
+    }
+    .download-btn {
+      border: none;
+      color: #fff;
+      width: 3.2rem;
+      height: 0.72rem;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 220, 31, 1),
+        rgba(253, 150, 11, 1)
+      );
+      border-radius: 0.5rem;
+      font-size: 0.32rem;
+      span {
+        display: block;
+        height: 100%;
+        width: 100%;
+        line-height: 0.72rem;
+      }
+    }
+  }
 </style>

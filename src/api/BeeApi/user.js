@@ -695,3 +695,11 @@ export function getEquity(data) {
     data
   })
 }
+// 蜂友圈提现获取金额信息
+export function getCashInfo(data) {
+  return request({
+    url: '/user/partner/withdraw_info',
+    method: 'post',
+    data
+  })
+}
