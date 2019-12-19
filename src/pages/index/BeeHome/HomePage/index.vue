@@ -35,6 +35,7 @@
     <operation-card />
     <bee-product :home-data="homeData" />
     <everyday-product :home-data="homeData" />
+    <healthy-life :home-data="homeData" />
     <bee-product2 :home-data="homeData" />
     <farm-product :home-data="homeData" />
     <bottom-card :home-data="homeData" />
@@ -57,6 +58,7 @@ import beeProduct from './components/beeProduct'
 import beeProduct2 from './components/beeProduct2'
 import newProduct from './components/newProduct'
 import farmProduct from './components/farmProduct'
+import healthyLife from './components/healthyLife'
 import actionList from './components/actionList'
 import guessLike from './components/guessLike'
 // import actionPop from './components/actionPop'
@@ -82,7 +84,8 @@ export default {
     actionList,
     guessLike,
     // actionPop,
-    WinningRoll
+    WinningRoll,
+    healthyLife
   },
   props: {},
   data() {

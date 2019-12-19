@@ -1,14 +1,14 @@
 <template>
-  <div class="everyday-product">
+  <div class="bottom-card">
     <div class="card-bottom">
-      <div class="left-action">
+      <div class="action-card">
         <img
           :src="homeData.limited_plan.left.show_image ||$store.state.app.defaultImg3"
           alt="限量蜂抢"
           @click="$router.push('/beeLimit')"
         >
       </div>
-      <div class="right-action">
+      <div class="action-card">
         <img
           :src="homeData.limited_plan.right.show_image ||$store.state.app.defaultImg3"
           alt="集市活动"
@@ -67,16 +67,19 @@ export default {
 </script>
 
 <style scoped lang="less">
-.everyday-product {
+.bottom-card {
   margin: 0.2rem 0.16rem 0;
-  background-color: #fff;
-  border-radius: 0.2rem;
   box-shadow: 0 0 0.2rem @Grey6;
   overflow: hidden;
   .card-bottom {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1.86rem;
+    grid-column-gap: 0.1rem;
+    .action-card{
+      border-radius: 0.2rem;
+      overflow: hidden;
+    }
   }
 }
 </style>

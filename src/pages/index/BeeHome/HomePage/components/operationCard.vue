@@ -127,7 +127,7 @@
       </p>
     </div>
 
-    <div class="op-item" @click="goSinglePage('lcEnrolling#/')">
+    <div class="op-item" @click="$router.push({path: '/category/SecCategoryList',query: { cid: 78 }})">
       <div class="img-content">
         <img
           :src="beeIcon.home_icon_medical"
