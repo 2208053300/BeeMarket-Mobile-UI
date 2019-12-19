@@ -182,7 +182,7 @@ export default {
         if (osObj.isWx) {
           wxapi.wxShare({
             title: '年终狂欢，瓜分10亿',
-            desc: '茅台免费喝，现金轻松赚！\n全民抢酒，全民抢钱！',
+            desc: '购茅台1箱，送现金一万！\n全民抢酒，全民抢钱！',
             imgUrl: 'https://img.fengjishi.com/app/images/share_logo.jpg',
             link: this.uid
               ? location.origin + '/#/beeAlcohol?uid=' + this.uid
