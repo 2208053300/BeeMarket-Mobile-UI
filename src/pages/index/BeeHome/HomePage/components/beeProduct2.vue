@@ -4,7 +4,9 @@
       class="bee-product"
       :style="{backgroundImage:'url('+(homeData.plan.show_image ||$store.state.app.defaultImg3)+')'}"
       @click="goUrl(homeData.plan.url,homeData.plan.plan_id)"
-    />
+    >
+      <img :src="homeData.plan.show_image ||$store.state.app.defaultImg3" alt="">
+    </div>
   </div>
 </template>
 
@@ -45,11 +47,10 @@ export default {
   .bee-product {
     margin: 0.2rem 0.16rem 0;
     height: 2.2rem;
-    background-color: #fff;
+    // background-color: #fff;
     border-radius: 0.2rem;
-    box-shadow: 0 0 0.2rem @Grey6;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    // box-shadow: 0 0 0.2rem @Grey6;
+    overflow: hidden;
   }
 }
 </style>

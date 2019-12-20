@@ -13,7 +13,7 @@
     </div>
     <div class="product-list">
       <div
-        v-for="product in homeData.produce"
+        v-for="product in homeData.health_product"
         :key="product.product_id"
         class="product-detail"
         @click="goDetail(product.product_id, product.target)"
@@ -68,7 +68,6 @@ export default {
         path: '/category/details',
         query: { pid: pid, target: target }
       })
-      this.$store.state.order.source = 'produce'
     }
   }
 }
