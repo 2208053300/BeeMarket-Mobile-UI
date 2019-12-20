@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+#### v3.1.1 (2019-12-20)
+
+1. 上线“医疗服务”功能；
+2. 新增“健康甄选”板块；
+3. 修复部分已知bug。
+
 #### v3.1.0 (2019-12-17)
 
 1. “瓜分10亿”活动上线“七天无理由退换货”功能；

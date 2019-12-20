@@ -97,10 +97,10 @@
     <img :src="beeIcon.ellipse" class="ellipsis">
     <div v-if="cashInfo.total_amount > 0" class="share-btn">
       <button @click="goShare">
-        激活提现
+        分享提现
       </button>
       <br>
-      邀好友购茅台&emsp;激活提现权益
+      分享好友参与&emsp;立即激活提现
     </div>
     <select-num v-model="showBuy" />
 
