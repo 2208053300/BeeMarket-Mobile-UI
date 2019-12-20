@@ -195,6 +195,7 @@ export default {
 .sec-category {
   .van-tabs__wrap {
     z-index: 0;
+    padding-right: 0.9rem;
   }
   .van-tabs__nav {
     background: #f4f4f4;
