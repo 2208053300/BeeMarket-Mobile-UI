@@ -99,9 +99,13 @@
       :src="require('@/assets/icon/alcohol/1-首页改版七-切图_07.jpg')"
       alt="head"
     >
+    <img
+      :src="require('@/assets/icon/alcohol/1-首页改版七-切图_08.jpg')"
+      alt="head"
+    >
     <div style="position: relative">
       <img
-        :src="require('@/assets/icon/alcohol/1-首页改版七-切图_08.jpg')"
+        :src="require('@/assets/icon/alcohol/2-首页改版八-切图_09.jpg')"
         alt="head"
       >
       <img
