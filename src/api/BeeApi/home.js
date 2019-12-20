@@ -5,6 +5,7 @@ export function getHome(data) {
   return request({
     url: '/home/index',
     method: 'post',
+    timeout: 10000,
     data
   })
 }

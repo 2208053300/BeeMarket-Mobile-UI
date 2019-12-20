@@ -74,7 +74,7 @@ export default {
   .card-bottom {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1.86rem;
+    grid-template-rows: 2.12rem;
     grid-column-gap: 0.1rem;
     .action-card{
       border-radius: 0.2rem;
