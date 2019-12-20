@@ -139,7 +139,7 @@ export default {
       this.categoryThirdList = res.data.cats
       // this.condition.cid = this.categoryThirdList[0].cid
       if (this.$route.query.target) {
-        this.$refs.ProductsList.condition.cid = this.$route.query.cid
+        this.$refs.ProductsList.condition.cid = this.$route.query.cid || this.categoryThirdList[0].cid
         const catList = this.categoryThirdList.map(item => {
           return item.cid
         })

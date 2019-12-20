@@ -1,13 +1,7 @@
 <template>
   <div class="share-avtive">
     <p class="share-title">
-      邀好友购茅台  激活提现权益
-    </p>
-    <p class="share-desc">
-      好友扫描二维码-加入您的蜂友圈
-    </p>
-    <p class="share-desc2">
-      和蜂集市一起共享收益
+      分享好友参与  立即激活提现
     </p>
     <div
       class="share-img"
@@ -23,9 +17,8 @@
     <div class="download-img" @click="$toast('长按图片保存到本地分享')">
       <img :src="liqueur_button_download" alt="">
     </div>
-    <div class="share-link" @click="clipBoardFunc">
+    <div class="download-img share-link" @click="clipBoardFunc">
       <img :src="liqueur_button_link" alt="">
-      分享活动链接
     </div>
   </div>
 </template>
@@ -103,15 +96,7 @@ export default {
   .share-title{
     font-size: 0.36rem;
     font-weight: 800;
-  }
-  .share-desc{
-    font-size: 0.24rem;
-    color: @Grey1;
-    margin-top: 0.3rem;
-  }
-  .share-desc2{
-    font-size: 0.24rem;
-    color: @Grey1;
+    margin-bottom: 0.5rem;
   }
   .share-img{
     height: 9.25rem;
@@ -127,26 +112,9 @@ export default {
     }
   }
   .download-img{
-    width: 5.16rem;
-    height: 1.72rem;
+    width: 5rem;
+    height: 1.3rem;
     margin: auto;
-  }
-  .share-link{
-    text-align: center;
-    font-size: 0.3rem;
-    color: @BeeDefault;
-    border: 0.02rem solid @BeeDefault;
-    height: 0.88rem;
-    width: 5.16rem;
-    line-height: 0.88rem;
-    border-radius: 0.44rem;
-    box-sizing: border-box;
-    margin: auto;
-    img{
-      vertical-align: text-bottom;
-      width: 0.35rem;
-      height: 0.35rem;
-    }
   }
 }
 </style>

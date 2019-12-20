@@ -101,7 +101,7 @@ export default {
       let data = this.filterParams(this.condition)
       // 如果是农产品分类
       if (this.$route.query.target) {
-        data = { ...data, target: 'produce' }
+        data = { ...data, target: this.$route.query.target }
       }
       if (this.waitLoad) {
         return

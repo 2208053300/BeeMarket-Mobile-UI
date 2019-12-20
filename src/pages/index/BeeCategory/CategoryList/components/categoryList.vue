@@ -147,6 +147,7 @@ export default {
       }
     },
     goList(item) {
+      // 分类中单独跳农产品和医疗服务
       if ('produce' in item) {
         this.$router.push({
           path: '/category/SecCategoryList',
