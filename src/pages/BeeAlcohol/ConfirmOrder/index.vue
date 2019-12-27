@@ -306,7 +306,7 @@ export default {
     margin-top: 0.2rem;
     margin-left: 0.3rem;
     color: @Grey1;
-    font-size: 0.14rem;
+    font-size: 0.28rem;
     text-align: center;
   }
   .submit-order {
