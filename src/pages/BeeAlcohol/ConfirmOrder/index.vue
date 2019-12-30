@@ -63,6 +63,9 @@
         />
       </van-cell>
     </van-cell-group>
+    <div v-if="order.orderDetail.cash_subsidy_amount" class="tips">
+      注：使用现金补贴的订单不享受7天无条件全额退款权益。
+    </div>
     <div class="submit-order">
       <div class="total-price">
         <div>
@@ -298,6 +301,13 @@ export default {
         vertical-align: middle;
       }
     }
+  }
+  .tips {
+    margin-top: 0.2rem;
+    margin-left: 0.3rem;
+    color: @Grey1;
+    font-size: 0.24rem;
+    text-align: center;
   }
   .submit-order {
     z-index: 2;
