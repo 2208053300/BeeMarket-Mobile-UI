@@ -255,21 +255,24 @@ export default {
     // 此处判断浏览器环境，做出跳转
     goDetail(pid, target) {
       const osObj = getOs()
+      // const urlHeader = this.$store.state.app.homeUri
+      const urlHeader = process.env.NODE_ENV === 'production' ? 'https://app.fengjishi.com/#' : 'https://app.fengjishi.com.cn/#'
+
       if (osObj.isWx) {
         window.location.href =
-          this.$store.state.app.homeUri +
+          urlHeader +
           '/category/details?' +
           'pid=' +
           pid +
           '&target=' +
           target
-        // this.$router.push({
-        //   path: '/category/details',
-        //   query: {
-        //     pid,
-        //     target
-        //   }
-        // })
+        // window.location.href =
+        //   this.$store.state.app.homeUri +
+        //   '/category/details?' +
+        //   'pid=' +
+        //   pid +
+        //   '&target=' +
+        //   target
       } else if (osObj.isIphone && osObj.isApp) {
         window.webkit.messageHandlers.ToProductDetail.postMessage({
           pid: pid,
@@ -279,7 +282,7 @@ export default {
         window.beeMarket.ToProductDetail(pid, target)
       } else {
         window.location.href =
-          this.$store.state.app.homeUri +
+          urlHeader +
           '/category/details?' +
           'pid=' +
           pid +
