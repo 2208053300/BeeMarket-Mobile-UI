@@ -256,7 +256,7 @@ export default {
     goDetail(pid, target) {
       const osObj = getOs()
       // const urlHeader = this.$store.state.app.homeUri
-      const urlHeader = process.env.NODE_ENV === 'production' ? 'https://app.fengjishi.com/#' : 'https://app.fengjishi.com.cn/#'
+      const urlHeader = process.env.NODE_ENV === 'production' ? 'https://app.fengjishi.com/#' : 'http://app.fengjishi.com.cn/#'
 
       if (osObj.isWx) {
         window.location.href =
