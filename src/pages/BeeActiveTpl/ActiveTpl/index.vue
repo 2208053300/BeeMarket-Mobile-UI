@@ -326,7 +326,6 @@ export default {
           result = func.apply(context, args)
           context = args = null
         }
-
         return result
       }
     },
