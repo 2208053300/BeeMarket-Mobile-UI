@@ -147,6 +147,7 @@ export default {
   mounted() {
     this.$store.state.app.beeHeader = false
     this.$store.state.app.beeFooter.show = true
+
     this.loadUID()
     this.getHomeData()
     // 获取用户消息
